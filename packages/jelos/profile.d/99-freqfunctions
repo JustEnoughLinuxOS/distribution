@@ -5,7 +5,12 @@
 . /etc/os-release
 
 set_gov() {
-  for HANDLE in ${CPU_FREQ} ${GPU_FREQ} ${DMC_FREQ}
+  for POLICY in ${CPU_FREQ[@]}
+  do
+    echo $1 >${POLICY} 2>/dev/null
+  done
+
+  for HANDLE in ${GPU_FREQ} ${DMC_FREQ}
   do
     echo $1 >${HANDLE} 2>/dev/null || echo dmc_$1 >${HANDLE} 2>/dev/null
   done
