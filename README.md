@@ -2,9 +2,12 @@
 Just Enough Linux Operating System (JELOS) is a simple Linux distribution for ARM based devices that specializes in handhelds.  My goal is to build an operating system that has the features and capabilities that I need, and to have fun building it.
 
 ## Features
+* Supports the Anbernic RG552 handheld.
 * A 64bit Operating System.
-* Support for FAT32, ExFAT, and EXT4 file systems.
+* Supports FAT32, ExFAT, and EXT4 file systems.
 * Filesystem compatibility with Android
+
+> Support for the RG351 series coming soon.
 
 ## Licenses
 JELOS is a Linux distribution that is made up of many open-source components.  Components are provided under their respective licenses.  This distribution includes components licensed for non-commercial use only.
