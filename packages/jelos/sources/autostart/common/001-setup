@@ -1,0 +1,35 @@
+#!/bin/sh
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+if [ -d "/storage/.config/distribution/configs" ]
+then
+  EXCLUDE="--exclude=configs"
+fi
+
+rsync -a /usr/config/.OS* /storage/.config
+rsync -a --delete ${EXCLUDE} /usr/config/distribution/ /storage/.config/distribution/
+rsync -a --delete /usr/config/locale/ /storage/.config/emulationstation/locale/
+
+cp -f /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt
+cp -f /usr/config/ppsspp/PSP/SYSTEM/controls.ini /storage/.config/ppsspp/PSP/SYSTEM/controls.ini
+
+if [ ! -L "/storage/.emulationstation" ]
+then
+  ln -sf /storage/.config/emulationstation /storage/.emulationstation
+fi
+
+if [ -d "/storage/cache/.cores" ]
+then
+  rm -rf /storage/cache/.cores
+fi
+
+if [ ! -d "/tmp/cache" ]
+then
+  mkdir /tmp/cache
+fi
+
+ln -sf /tmp/cache /storage/cache/.cores
+

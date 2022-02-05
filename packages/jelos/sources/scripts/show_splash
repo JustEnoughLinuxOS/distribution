@@ -1,0 +1,39 @@
+#!/bin/sh
+
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2019-present SumavisionQ5 (https://github.com/SumavisionQ5)
+# Modifications by Shanti Gilbert (https://github.com/shantigilbert)
+# Copyright (C) 2020-present Fewtarius
+
+. /etc/profile
+
+SPLASH_TYPE="$1"
+
+hres="$(fbset 2>/dev/null | awk '/geometry/ { print $2 }')"
+
+if [ "$SPLASH_TYPE" == "intro" ] || [ "$SPLASH_TYPE" == "exit" ] || [ "$SPLASH_TYPE" == "shutdown" ]
+then
+  if [ "${DISPLAY_ROTATED}" == true ]
+  then
+    SPLASH="/usr/config/splash/splash-${hres}l.png"
+  else
+    SPLASH="/usr/config/splash/splash-${hres}.png"
+  fi
+fi
+
+[[ "${PLATFORM}" != "intro" ]] && VIDEO=0 || VIDEO=$(get_setting bootvideo.enabled)
+
+if [[ -f "/storage/.config/distribution/configs/novideo" ]] && [[ ${VIDEO} != "1" ]]
+then
+  /usr/bin/ply-image "${SPLASH}" > /dev/null 2>&1
+else
+  # Show intro video
+  SPLASH=${VIDEOSPLASH}
+  set_audio alsa
+  /usr/bin/mpv "$SPLASH" > /dev/null 2>&1
+  touch "/storage/.config/distribution/configs/novideo"
+fi
+
+# Wait for the time specified in splash_delay setting in distribution.conf
+SPLASHTIME=$(get_setting splash.delay)
+[ ! -z "$SPLASHTIME" ] && sleep $SPLASHTIME

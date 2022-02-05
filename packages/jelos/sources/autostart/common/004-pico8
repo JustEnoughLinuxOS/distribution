@@ -1,0 +1,11 @@
+#!/bin/sh
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+PICO_DIR="/storage/roms/pico-8"
+if [ ! -d "${PICO_DIR}" ]
+then
+  mkdir "${PICO_DIR}"
+fi
+cp -f  "/usr/bin/pico-8.sh" "${PICO_DIR}/Start Pico-8.sh"
+

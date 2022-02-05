@@ -1,0 +1,58 @@
+#!/bin/bash
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2020-present Fewtarius
+
+###
+### Simple script to build JELOS
+###
+
+if [ !"${ARCH}" == true ]
+then
+  echo "export ARCH before building."
+  exit 1
+fi
+
+export OS_VERSION=$(date +%Y%m%d)
+export BUILD_DATE=$(date)
+export DISTRO=JELOS
+export PROJECT=Rockchip
+
+echo "Building ${DISTRO} for ${DEVICE}"
+if [ ! -d "target" ]
+then
+  mkdir target
+fi
+
+# If this variable exists in the environment, expand it and clean those packages too.
+PKG_CLEAN="${PKG_CLEAN} emulationstation retroarch lib32 jelos"
+
+# Clean a few packages to ensure the build date and version are updated
+for package in ${PKG_CLEAN}
+do
+  ./scripts/clean ${package}
+done
+
+if [ "${ARCH}" == "aarch64" ]
+then
+  make image
+elif [ "${ARCH}" == "arm" ]
+then
+  make system
+  scripts/install arm32
+fi
+
+if [ ! $? == 0 ]
+then
+  echo "Build failed..exiting."
+  exit 1
+fi
+
+if [ "${ARCH}" == "aarch64" ]
+then
+  if [ -d "release/${ARCH}/${DEVICE}" ]
+  then
+    rm -rf "release/${ARCH}/${DEVICE}"
+  fi
+mkdir -p release/${ARCH}/${DEVICE}
+mv target/* "release/${ARCH}/${DEVICE}/"
+fi

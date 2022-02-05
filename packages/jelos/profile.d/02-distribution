@@ -1,0 +1,83 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
+# Copyright (C) 2020-present Fewtarius
+
+. /etc/os-release
+
+export PATH="$PATH:/usr/local/bin:/usr/bin:/storage/bin"
+
+export SDL_GAMECONTROLLERCONFIG_FILE="/storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt"
+
+J_DIR="/storage/.config/distribution"
+J_CONF="${J_DIR}/configs/distribution.conf"
+ES_CONF="/storage/.emulationstation/es_settings.cfg"
+EE_DEVICE=${HW_DEVICE}
+
+JSLISTENCONF="/storage/.config/distribution/configs/jslisten.cfg"
+
+get_setting() {
+  awk -F: '/'${1}'/ { st = index($0,"=");print substr($0,st+1)}' ${J_CONF}
+}
+
+set_setting() {
+	sed -i "/$1=/d" "${J_CONF}"
+	[ $2 == "disable" ] && echo "#${1}=" >> "${J_CONF}" || echo "${1}=${2}" >> "${J_CONF}"
+}
+
+set_audio() {
+  case ${1} in
+  "default")
+    AUDIO="alsa"
+  ;;
+  *)
+    AUDIO=${1}
+  ;;
+  esac
+  /usr/bin/rr_audio.sh ${AUDIO}
+}
+
+get_es_setting() {
+	echo $(sed -n "s|\s*<${1} name=\"${2}\" value=\"\(.*\)\" />|\1|p" ${ES_CONF})
+}
+
+check_bios() {
+
+PLATFORM="${1}"
+CORE="${2}"
+EMULATOR="${3}"
+ROMNAME="${4}"
+LOG="${5}"
+
+if [[ -z "$LOG" ]]; then
+	LOG="/var/log/exec.log"
+	cat /etc/motd > "$LOG"
+fi
+
+MISSINGBIOS="$(batocera-systems --strictfilter ${PLATFORM})"
+if [ "$?" == "2" ]; then
+
+# formating so it looks nice :)
+PLATFORMNAME="${MISSINGBIOS##*>}"  # read from -P onwards
+PLATFORMNAME="${PLATFORMNAME%%MISSING*}"  # until a space is found
+PLATFORMNAME=$(echo $PLATFORMNAME | sed -e 's/\\n//g')
+
+if [[ -f "${LOG}" ]]; then
+echo "${CORE} ${EMULATOR} ${ROMNAME}" >> $LOG
+echo "${PLATFORMNAME} missing BIOS - Could not find all BIOS: " >> $LOG
+echo "please make sure you copied the files into the corresponding folder " >> $LOG
+echo "${MISSINGBIOS}" >> $LOG
+fi
+	MISSINGBIOS=$(echo "$MISSINGBIOS" | sed -e 's/$/\\n/g')
+
+	/usr/bin/error.sh "${PLATFORMNAME} missing BIOS" "Could not find all BIOS/files in /storage/roms, the game may not work:\n\n ${MISSINGBIOS}\n\nPlease make sure you copied the files into the corresponding folder."
+	error_process="$!"
+	pkill -P $error_process
+fi
+}
+
+# read config files from /storage/.config/profile.d
+  for config in /storage/.config/profile.d/*; do
+    if [ -f "$config" ] ; then
+      . $config
+    fi
+done

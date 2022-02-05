@@ -1,0 +1,35 @@
+#!/bin/sh
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+for service in /usr/lib/autostart/daemons
+do
+  if [ ! -d "/storage/.cache/services" ]
+  then
+    mkdir -p "/storage/.cache/services"
+  fi
+
+  if [ -e "/storage/.cache/services/${CONF}" ]
+  then
+    rm -f "/storage/.cache/services/${CONF}"
+  fi
+
+  statemgr() {
+    for daemon in ${DAEMONS[@]}
+    do
+      systemctl ${1} ${daemon}
+    done
+  }
+
+  case "$STATE" in
+    "1")
+      touch "/storage/.cache/services/${CONF}"
+      statemgr start
+    ;;
+    *)
+      statemgr stop
+    ;;
+  esac
+done

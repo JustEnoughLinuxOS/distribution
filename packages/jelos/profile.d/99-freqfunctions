@@ -1,0 +1,25 @@
+#!/bin/sh
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/os-release
+
+set_gov() {
+  for HANDLE in ${CPU_FREQ} ${GPU_FREQ} ${DMC_FREQ}
+  do
+    echo $1 >${HANDLE} 2>/dev/null || echo dmc_$1 >${HANDLE} 2>/dev/null
+  done
+}
+
+maxperf() {
+  set_gov performance
+}
+
+normperf() {
+  set_gov ondemand
+}
+
+powersave() {
+  set_gov powersave
+}
+

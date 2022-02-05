@@ -1,0 +1,34 @@
+#!/bin/sh
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2020 Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+. /etc/os-release
+
+BOOTLOG="/var/log/boot.log"
+maxperf 2>&1 >${BOOTLOG}
+
+/usr/bin/show_splash intro 2>&1 >>${BOOTLOG}
+
+### Run common start scripts
+for script in /usr/lib/autostart/common/*
+do
+  echo "Executing ${script}" 2>&1 >>${BOOTLOG}
+  ${script} 2>&1 >>${BOOTLOG}
+done
+
+### Run device specific start scripts
+for script in /usr/lib/autostart/${HW_DEVICE}/*
+do
+  echo "Executing ${script}" 2>&1 >>${BOOTLOG}
+  ${script} 2>&1 >>${BOOTLOG}
+done
+
+normperf 2>&1 >>${BOOTLOG}
+
+clear >/dev/console
+
+### Lock is a prerequisite for emustation
+rm /var/lock/start.games 2>&1 >>${BOOTLOG}
+touch /var/lock/start.games 2>&1 >>${BOOTLOG}
+systemctl start emustation 2>&1 >>${BOOTLOG}

@@ -1,0 +1,21 @@
+#!/bin/sh
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+### Variables may need to be device specific here.
+BRIGHTNESS=$(get_setting system.brightness)
+if [[ ! "${BRIGHTNESS}" =~ [0-9] ]]
+then
+  BRIGHTNESS=${DEVICE_BRIGHTNESS}
+fi
+
+# Ensure user doesn't get "locked out" with super low brightness
+if [[ "${BRIGHTNESS}" -lt "3" ]]
+then
+  BRIGHTNESS=3
+fi
+BRIGHTNESS=$(printf "%.0f" ${BRIGHTNESS})
+printf "%.0f" $(echo "${BRIGHTNESS} * 2.56" | bc) > /sys/class/backlight/backlight/brightness
+set_setting system.brightness ${BRIGHTNESS}

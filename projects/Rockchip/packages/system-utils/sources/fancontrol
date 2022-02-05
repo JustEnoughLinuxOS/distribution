@@ -1,0 +1,37 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+if [ -e "/storage/.config/fancontrol.conf" ]
+then
+  DEBUG && echo "Loading configuration file"
+  source /storage/.config/fancontrol.conf
+else
+  DEBUG && echo "Configuration not found, loading defaults"
+  FAN_PWM="${DEVICE_PWM_FAN}"
+  SPEEDS=(255 127 85 0)
+  TEMPS=(75000 65000 55000 0)
+fi
+
+while true
+do
+  INDEX=0
+  CPU_TEMP=$(printf "%.0f" $(cat /sys/devices/virtual/thermal/thermal_zone*/temp | awk '{ total += $1; count++ } END { print total/count }'))
+  $DEBUG && echo "CPU TEMP: ${CPU_TEMP}"
+  for TEMP in "${TEMPS[@]}"
+  do
+    $DEBUG && echo "INDEX: ${INDEX}"
+    $DEBUG && echo "CHK: ${TEMP}"
+    if (( "${CPU_TEMP}" > "${TEMP}" ))
+    then
+      $DEBUG && echo "Setting PWM FAN to ${SPEEDS[${INDEX}]} (${TEMP})"
+      echo ${SPEEDS[${INDEX}]} >${FAN_PWM}
+      break
+    fi
+    INDEX=$(( $INDEX + 1 ))
+  done
+  sleep 2
+  $DEBUG && echo "Loop"
+done

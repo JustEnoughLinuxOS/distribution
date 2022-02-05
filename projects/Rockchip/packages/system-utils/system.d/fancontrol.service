@@ -1,0 +1,13 @@
+[Unit]
+Description=Simple Fan Control Service
+ConditionPathExists=/sys/class/hwmon/hwmon0/pwm1
+Before=jelos.target
+
+[Service]
+Environment=HOME=/storage
+EnvironmentFile=/etc/profile
+ExecStart=/usr/bin/fancontrol
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

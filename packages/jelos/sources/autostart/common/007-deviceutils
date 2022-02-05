@@ -1,0 +1,33 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+if [ "${DEVICE_HAS_FAN}" == "true" ]
+then
+  systemctl start fancontrol
+else
+  systemctl stop fancontrol
+fi
+
+if [ "${DEVICE_POWER_LED}" == "true" ]
+then
+  systemctl start battery
+else
+  systemctl stop battery
+fi
+
+if [ "${DEVICE_FAKE_JACKSENSE}" == "true" ]
+then
+  systemctl start headphones
+else
+  systemctl stop headphones
+fi
+
+if [ "${DEVICE_VOLUMECTL}" == "true" ]
+then
+  systemctl start volume
+else
+  systemctl stop volume
+fi

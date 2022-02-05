@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2016-2020 Team LibreELEC
+# Copyright (C) 2020-present 351ELEC (https://github.com/351ELEC)
+
+PKG_NAME="bash"
+PKG_VERSION="5.1.16"
+PKG_LICENSE="GPL"
+PKG_SITE="http://www.gnu.org/software/bash/"
+PKG_URL="http://ftpmirror.gnu.org/bash/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_DEPENDS_TARGET="toolchain ncurses readline"
+PKG_LONGDESC="The GNU Bourne Again shell."
+
+PKG_CONFIGURE_OPTS_TARGET="--with-curses \
+                           --enable-readline \
+                           --without-bash-malloc \
+                           --with-installed-readline"

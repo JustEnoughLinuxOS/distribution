@@ -1,0 +1,38 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+. /etc/os-release
+
+# Copy in the configuration
+if [ ! -e "/storage/.config/asound.conf" ]
+then
+  cp /usr/config/asound.conf /storage/.config
+fi
+
+# Link Alsa state
+if [ ! -e "/storage/.config/asound.state" ]
+then
+          cp /usr/config/asound.state /storage/.config/
+fi
+
+if [ ! -e "/storage/.config/asound.state" ]
+then
+          mkdir -p /var/lib/alsa
+          ln -s /storage/.config/asound.state /var/lib/alsa/asound.state
+fi
+
+alsactl --no-ucm init
+alsactl --no-ucm restore -f /storage/.config/asound.state
+aplay /usr/lib/autostart/sounds/silence.ogg
+
+VOL=$(get_setting "audio.volume" 2>/dev/null)
+if [[ "${HW_DEVICE}" =~ RG552 ]]
+then
+          MIXER="Master"
+  else
+          MIXER="Playback"
+fi
+alsactl --no-ucm store -f /storage/.config/asound.state
+amixer set "${MIXER}" ${VOL}%

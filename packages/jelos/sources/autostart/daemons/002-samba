@@ -1,0 +1,4 @@
+STATE=$(get_setting samba.enabled)
+SVC="samba"
+CONF="smb.conf"
+DAEMONS=("nmbd" "smbd")

@@ -1,0 +1,17 @@
+#!/bin/sh
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+if [ ! -d "/var/log/retroarch" ]
+then
+  mkdir /var/log/retroarch
+fi
+
+if [ -d "/storage/.config/retroarch/logs" ]
+then
+  rm -rf /storage/.config/retroarch/logs
+fi
+
+ln -s /var/log/retroarch /storage/.config/retroarch/logs
