@@ -62,9 +62,9 @@ limitations under the License.
 * Will you support my device?
   * If you send me a device and source code, I'll consider it.
 * How can I disable root password rotation?
-  * SSH to the handheld and run the following commands
+  * SSH to the handheld and run the following commands.
     * ```set_setting rotate.root.password 0```
     * ```passwd root```
     * ```smbpasswd root```
-  * Alternatively, copy your ssh key with ssh-copy-id, and leave rotation enabled
+  * Alternatively, copy your ssh key with ssh-copy-id, and leave rotation enabled.
     * ```ssh-copy-id root@jelos```
