@@ -50,7 +50,7 @@ limitations under the License.
 * Reboot the device, and the update will begin automatically.
 
 ## Network Access
-* The username for ssh and samba access is "root".  The root password is generated during every boot. It can be found in the Network Settings menu.
+* The username for ssh and samba access is "root".  The root password is generated during every boot, it can be found in the Network Settings menu.
 
 ## Frequently Asked Questions
 * Does JELOS offer any support?
