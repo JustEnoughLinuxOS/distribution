@@ -61,4 +61,10 @@ limitations under the License.
   * Those platforms perform best in Android on the 552, and I have no interest in them.  I recommend that you use Android instead for those.
 * Will you support my device?
   * If you send me a device and source code, I'll consider it.
-
+* How can I disable root password rotation?
+  * SSH to the handheld and run the following commands
+    * ```set_setting rotate.root.password 0```
+    * ```passwd root```
+    * ```smbpasswd root```
+  * Alternatively, copy your ssh key with ssh-copy-id, and leave rotation enabled
+    * ```ssh-copy-id root@jelos```
