@@ -17,7 +17,7 @@ PKG_TOOLCHAIN="make"
 PKG_UI="emulationstation"
 
 PKG_EMUS="common-shaders glsl-shaders libretro-database retroarch ${LIBRETRO_CORES} advancemame \
-          hatarisa openbor scummvmsa duckstation PPSSPPSDL"
+          hatarisa openbor scummvmsa PPSSPPSDL"
 
 LIBRETRO_CORES="2048 81 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce beetle-pcfx          \
                 beetle-supafaust beetle-supergrafx beetle-vb beetle-wswan bluemsx cannonball       \
