@@ -15,7 +15,7 @@ PKG_GIT_CLONE_DEPTH="1"
 
 if [[ "${DEVICE}" =~ RG351 ]]
 then
-  PKG_VERSION="2b575e133fa1280dcf07f0bc5ebc4e6a48ea7132"
+  PKG_VERSION="de6c620c0a"
   PKG_URL="https://github.com/fewtarius/uboot_rg351.git"
 fi
 
