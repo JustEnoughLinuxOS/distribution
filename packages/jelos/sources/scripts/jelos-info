@@ -32,9 +32,6 @@ V_ARCH=$(uname -m)
 
 [[ "$V_CPUMODEL1" ]] || V_CPUMODEL1="${HW_CPU}"
 
-V_CPUFREQ=$(( $(cat /sys/devices/system/cpu/cpufreq/policy*/scaling_cur_freq  | sort | tail -n 1) / 1000 ))
-V_CPUMAXFREQ=$(( $(cat /sys/devices/system/cpu/cpufreq/policy*/cpuinfo_max_freq | sort | tail -n 1) / 1000 ))
-
 # battery
 BATT=$(cat /sys/class/power_supply/{BAT,bat}*/uevent 2>/dev/null | grep -E "^POWER_SUPPLY_CAPACITY=" | sed -e s+'^POWER_SUPPLY_CAPACITY='++ | sort -rn | head -1)
 
@@ -63,8 +60,11 @@ if test -n "${TEMPE}"
 then
     echo "CPU TEMPERATURE: ${TEMPE}°"
 fi
-echo "CURRENT FREQUENCY: ${V_CPUFREQ}MHz"
-echo "MAXIMUM FREQUENCY: ${V_CPUMAXFREQ}MHz"
+for CPUFREQ in /sys/devices/system/cpu/cpufreq/*
+do
+  echo "CURRENT FREQUENCY OF CORES $(cat ${CPUFREQ}/related_cpus): $(( $(cat ${CPUFREQ}/scaling_cur_freq  | sort | tail -n 1) / 1000))MHz"
+  echo "MAXIMUM FREQUENCY OF CORES $(cat ${CPUFREQ}/related_cpus): $(( $(cat ${CPUFREQ}/cpuinfo_max_freq | sort | tail -n 1) / 1000))MHz"
+done
 echo "KERNEL: ${V_SYSTEM} (${V_ARCH})"
 echo "OS ARCHITECTURE: ${V_OSARCH}"
 echo "OS BUILD ID: ${BUILD_ID:0:7}"
