@@ -44,13 +44,13 @@ limitations under the License.
 * Decompress the image.
 * Write the image to an SDCARD using an imaging tool.  Common imaging tools include [Balena Etcher](https://www.balena.io/etcher/), [Raspberry Pi Imager](https://www.raspberrypi.com/software/), and [Win32 Disk Imager](https://sourceforge.net/projects/win32diskimager/).  If you're skilled with the command line, dd works fine too.
 
-## Upgrading JELOS
+## Upgrading
 * Download the latest [version of JELOS](https://github.com/JustEnoughLinuxOS/distribution/releases) (.tar or .img.gz) for your device.
 * Copy the update to your device over the network or to the sdcard's update folder.
 * Reboot the device, and the update will begin automatically.
 
 ## Network Access
-* The username for ssh and samba access is "root".  The default password is generated on boot. It can be found in the Network Settings menu.
+* The username for ssh and samba access is "root".  The root password is generated during every boot, it can be found in the Network Settings menu.
 
 ## Frequently Asked Questions
 * Does JELOS offer any support?

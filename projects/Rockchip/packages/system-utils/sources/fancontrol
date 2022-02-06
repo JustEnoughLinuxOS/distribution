@@ -6,10 +6,10 @@
 
 if [ -e "/storage/.config/fancontrol.conf" ]
 then
-  DEBUG && echo "Loading configuration file"
+  $DEBUG && echo "Loading configuration file" 2>/dev/null
   source /storage/.config/fancontrol.conf
 else
-  DEBUG && echo "Configuration not found, loading defaults"
+  $DEBUG && echo "Configuration not found, loading defaults" 2>/dev/null
   FAN_PWM="${DEVICE_PWM_FAN}"
   SPEEDS=(255 127 85 0)
   TEMPS=(75000 65000 55000 0)
@@ -19,19 +19,19 @@ while true
 do
   INDEX=0
   CPU_TEMP=$(printf "%.0f" $(cat /sys/devices/virtual/thermal/thermal_zone*/temp | awk '{ total += $1; count++ } END { print total/count }'))
-  $DEBUG && echo "CPU TEMP: ${CPU_TEMP}"
+  $DEBUG && echo "CPU TEMP: ${CPU_TEMP}" 2>/dev/null
   for TEMP in "${TEMPS[@]}"
   do
-    $DEBUG && echo "INDEX: ${INDEX}"
-    $DEBUG && echo "CHK: ${TEMP}"
+    $DEBUG && echo "INDEX: ${INDEX}" 2>/dev/null
+    $DEBUG && echo "CHK: ${TEMP}" 2>/dev/null
     if (( "${CPU_TEMP}" > "${TEMP}" ))
     then
-      $DEBUG && echo "Setting PWM FAN to ${SPEEDS[${INDEX}]} (${TEMP})"
+      $DEBUG && echo "Setting PWM FAN to ${SPEEDS[${INDEX}]} (${TEMP})" 2>/dev/null
       echo ${SPEEDS[${INDEX}]} >${FAN_PWM}
       break
     fi
     INDEX=$(( $INDEX + 1 ))
   done
   sleep 2
-  $DEBUG && echo "Loop"
+  $DEBUG && echo "Loop" 2>/dev/null
 done
