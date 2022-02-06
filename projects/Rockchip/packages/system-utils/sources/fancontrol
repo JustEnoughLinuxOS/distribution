@@ -6,10 +6,10 @@
 
 if [ -e "/storage/.config/fancontrol.conf" ]
 then
-  DEBUG && echo "Loading configuration file" 2>/dev/null
+  $DEBUG && echo "Loading configuration file" 2>/dev/null
   source /storage/.config/fancontrol.conf
 else
-  DEBUG && echo "Configuration not found, loading defaults" 2>/dev/null
+  $DEBUG && echo "Configuration not found, loading defaults" 2>/dev/null
   FAN_PWM="${DEVICE_PWM_FAN}"
   SPEEDS=(255 127 85 0)
   TEMPS=(75000 65000 55000 0)
