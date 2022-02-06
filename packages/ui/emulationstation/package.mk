@@ -3,13 +3,13 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="emulationstation"
+PKG_VERSION="ccf495d"
 PKG_GIT_CLONE_BRANCH="main"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/JustEnoughLinuxOS/emulationstation"
 PKG_URL="$PKG_SITE.git"
-PKG_VERSION="2bdab29"
 PKG_DEPENDS_TARGET="boost toolchain SDL2 freetype curl freeimage bash rapidjson ${OPENGLES} SDL2_mixer fping p7zip vlc"
 PKG_NEED_UNPACK="busybox"
 PKG_SHORTDESC="Emulationstation emulator frontend"
