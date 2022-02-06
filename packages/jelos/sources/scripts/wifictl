@@ -10,13 +10,6 @@ PSK="$(get_setting wifi.key)" 2>/dev/null
 WIFICFG="/storage/.cache/connman/wifi.config"
 
 set_wifi() {
-  if [ ! -e "/sys/class/gpio/gpio${DEVICE_WIFI}/direction" ]
-  then
-    # Enable the GPIO
-    echo ${DEVICE_WIFI} > /sys/class/gpio/export 2>/dev/null
-  fi
-  echo out > /sys/class/gpio/gpio${DEVICE_WIFI}/direction 2>/dev/null
-
   case "${1}" in
     "enable")
       set_setting wifi.enabled 1
@@ -25,29 +18,31 @@ set_wifi() {
 [global]
 Name=${OS_NAME}
 
-[service_default]
+[service_${OS_NAME}_default]
 Type=wifi
 Name=${SSID}
-${PSK}
+Passphrase=${PSK}
 EOF
 
-      echo 1 > /sys/class/gpio/gpio${DEVICE_WIFI}/value 2>/dev/null
       connmanctl enable wifi 2>/dev/null
       connmanctl scan wifi 2>/dev/null
     ;;
     "disable")
       connmanctl disable wifi 2>/dev/null
-      echo 0 > /sys/class/gpio/gpio${DEVICE_WIFI}/value 2>/dev/null
       rm -f "${WIFICFG}" 2>/dev/null
       set_setting wifi.enabled 0
     ;;
     "list")
       connmanctl services | cut -b 5- | sed -e s+'^\([^ ]*\).*$'+'\1'+ | grep -vE '^Wired$|^<hidden>$' 2>/dev/null
     ;;
+    "scan")
+      connmanctl scan 2>/dev/null
+    ;;
+    "scanlist")
+      set_wifi scan 2>/dev/null
+      set_wifi list 2>/dev/null
+    ;;
   esac
-
-  # Disable the GPIO
-  echo ${DEVICE_WIFI} > /sys/class/gpio/unexport
 }
 
 if [ ! -d "" ]
