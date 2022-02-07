@@ -52,10 +52,17 @@ done
 
 declare -a CF MF
 
+CNTR=0
 for CPUFREQ in /sys/devices/system/cpu/cpufreq/*
 do
-  CF+=("CURRENT FREQUENCY (CORE $(cat ${CPUFREQ}/related_cpus)): $(( $(cat ${CPUFREQ}/scaling_cur_freq  | sort | tail -n 1) / 1000))MHz")
-  MF+=("MAXIMUM FREQUENCY (CORE $(cat ${CPUFREQ}/related_cpus)): $(( $(cat ${CPUFREQ}/cpuinfo_max_freq | sort | tail -n 1) / 1000))MHz")
+  if [ "${CNTR}" -eq 0 ]
+  then
+    CF+=("CURRENT FREQUENCY")
+    MF+=("MAXIMUM FREQUENCY")
+  fi
+  CF+=("CORES $(cat ${CPUFREQ}/related_cpus | awk '{print $1"-"$NF}'): $(( $(cat ${CPUFREQ}/scaling_cur_freq  | sort | tail -n 1) / 1000))MHz")
+  MF+=("CORES $(cat ${CPUFREQ}/related_cpus | awk '{print $1"-"$NF}'): $(( $(cat ${CPUFREQ}/cpuinfo_max_freq | sort | tail -n 1) / 1000))MHz")
+  CNTR=$(( CNTR + 1 ))
 done
 
 
@@ -63,8 +70,15 @@ done
 # Unit: millidegree Celsius
 TEMPE=$(cat /sys/devices/virtual/thermal/thermal_zone*/temp 2>/dev/null | sort -rn | head -1 | sed -e s+"[0-9][0-9][0-9]$"++)
 
-echo "OPERATING SYSTEM: ${OS_NAME}"
+echo "OPERATING SYSTEM: ${OS_NAME} - ${HOME_URL}"
+echo "BUILD ID: ${BUILD_ID:0:7}"
+echo "ARCHITECTURE: ${V_OSARCH}"
+echo "KERNEL: ${V_SYSTEM} (${V_ARCH})"
 echo "CPU: ${V_CPUMODEL1} (${V_CPUNB} Cores)"
+if test -n "${TEMPE}"
+then
+    echo "CPU TEMPERATURE: ${TEMPE}°"
+fi
 for C in "${CF[@]}"
 do
   echo ${C}
@@ -73,13 +87,6 @@ for M in "${MF[@]}"
 do
   echo ${M}
 done
-if test -n "${TEMPE}"
-then
-    echo "AVG CPU TEMPERATURE: ${TEMPE}°"
-fi
-echo "KERNEL: ${V_SYSTEM} (${V_ARCH})"
-echo "OS ARCHITECTURE: ${V_OSARCH}"
-echo "OS BUILD ID: ${BUILD_ID:0:7}"
 if test -n "${BATT}"
 then
     echo "BATTERY: ${BATT}%"

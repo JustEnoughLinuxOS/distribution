@@ -14,13 +14,13 @@
   DESCRIPTION="An Open Source firmware."
 
 # Distribution Home URL
-  HOME_URL="https://www.jelos.org"
+  HOME_URL="https://github.com/JustEnoughLinuxOS"
 
 # Documentation URL
-  WIKI_URL="https://www.jelos.org"
+  #WIKI_URL=""
 
 # Where to report bugs
-  BUG_REPORT_URL="https://www.jelos.org"
+  #BUG_REPORT_URL=""
 
 # Root password to integrate in the target system
   ROOT_PASSWORD="jelos"
