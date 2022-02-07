@@ -13,8 +13,6 @@ unset _CACHE_PACKAGE_LOCAL _CACHE_PACKAGE_GLOBAL _DEBUG_DEPENDS_LIST _DEBUG_PACK
 
 show_config
 
-${SCRIPTS}/checkdeps
-
 # Setup both toolchain cmake configs to avoid potentially racy behaviour later.
 # Use a fork for host to isolate any variable modifications.
 ( setup_toolchain host )
