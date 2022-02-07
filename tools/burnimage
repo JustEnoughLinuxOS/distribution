@@ -28,7 +28,7 @@ done
 
 if [ ! -z "${SDDEVICE}" ]
 then
-  if [ -d "cd release/aarch64/${DEVICE}" ]
+  if [ -d "release/aarch64/${DEVICE}" ]
   then
 	
     cd release/aarch64/${DEVICE}
