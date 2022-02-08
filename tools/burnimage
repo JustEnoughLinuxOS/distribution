@@ -2,7 +2,12 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
 
-export OS_VERSION=$(date +%Y%m%d)
+if [ -z "$1" ]
+then
+  export OS_VERSION=$(date +%Y%m%d)
+else
+  OS_VERSION=$1
+fi
 
 if [ -z "${DISTRO}" ] || [ -z "${DEVICE}" ] || [ -z "${ARCH}" ]
 then
