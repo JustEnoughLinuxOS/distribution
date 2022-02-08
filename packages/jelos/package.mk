@@ -16,8 +16,9 @@ PKG_TOOLCHAIN="make"
 
 PKG_UI="emulationstation"
 
-PKG_EMUS="common-shaders glsl-shaders libretro-database retroarch ${LIBRETRO_CORES} advancemame \
-          hatarisa openbor scummvmsa PPSSPPSDL"
+BASE_PACKAGES="plymouth-lite grep wget ffmpeg libjpeg-turbo MC util-linux xmlstarlet jslisten git \
+               gnupg gzip patchelf imagemagick system-utils terminus-font vim bash pyudev dialog  \
+               dbus-python pygobject coreutils dialog six textviewer bluetool"
 
 LIBRETRO_CORES="2048 81 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce beetle-pcfx          \
                 beetle-supafaust beetle-supergrafx beetle-vb beetle-wswan bluemsx cannonball       \
@@ -32,16 +33,16 @@ LIBRETRO_CORES="2048 81 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce be
                 snes9x2010 stella stella-2014 swanstation TIC-80 tgbdual tyrquake xrick uae4arm    \
                 uzem vba-next vbam vecx vice yabasanshiro xmil"
 
+PKG_EMUS="common-shaders glsl-shaders libretro-database retroarch ${LIBRETRO_CORES} advancemame \
+          hatarisa openbor scummvmsa PPSSPPSDL"
+
 PKG_COMPAT="lib32 gamecontrollerdb"
 
-PKG_TOOLS="plymouth-lite grep wget ffmpeg libjpeg-turbo MC util-linux xmlstarlet sixaxis jslisten   \
-           evtest mpv bluetool jslisten gnupg gzip patchelf imagemagick rg351p-js2xbox gptokeyb     \
-           system-utils textviewer 351files jstest-sdl terminus-font vim bash pyudev dialog six git \
-           dbus-python pygobject coreutils"
+PKG_TOOLS="evtest mpv sixaxis rg351p-js2xbox gptokeyb 351files jstest-sdl"
 
 PKG_EXPERIMENTAL=""
 
-PKG_DEPENDS_TARGET+=" ${PKG_UI} ${PKG_TOOLS} ${PKG_EMUS} ${LIBRETRO_CORES} ${PKG_COMPAT} ${PKG_EXPERIMENTAL}"
+PKG_DEPENDS_TARGET+="${BASE_PACKAGES} ${PKG_UI} ${PKG_TOOLS} ${PKG_EMUS} ${LIBRETRO_CORES} ${PKG_COMPAT} ${PKG_EXPERIMENTAL}"
 
 make_target() {
   :
