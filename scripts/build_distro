@@ -14,8 +14,6 @@ fi
 
 export OS_VERSION=$(date +%Y%m%d)
 export BUILD_DATE=$(date)
-export DISTRO=JELOS
-export PROJECT=Rockchip
 
 echo "Building ${DISTRO} for ${DEVICE}"
 if [ ! -d "target" ]

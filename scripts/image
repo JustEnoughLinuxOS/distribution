@@ -13,6 +13,8 @@ unset _CACHE_PACKAGE_LOCAL _CACHE_PACKAGE_GLOBAL _DEBUG_DEPENDS_LIST _DEBUG_PACK
 
 show_config
 
+${SCRIPTS}/checkdeps
+
 # Setup both toolchain cmake configs to avoid potentially racy behaviour later.
 # Use a fork for host to isolate any variable modifications.
 ( setup_toolchain host )
@@ -114,7 +116,7 @@ for directory in etc dev proc run sys tmp usr var flash storage; do
 done
 
 # Build image contents
-if [ "${TARGET_ARCH}" = "arm" ];
+if [ "${ARCH}" = "arm" ];
 then
   MTADDONBUILD=no start_multithread_build arm32 || die "Parallel build failure - see log for details. Time of failure: $(date)"
   exit 0

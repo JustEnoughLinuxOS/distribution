@@ -69,16 +69,31 @@ done
 # temperature
 # Unit: millidegree Celsius
 TEMPE=$(cat /sys/devices/virtual/thermal/thermal_zone*/temp 2>/dev/null | sort -rn | head -1 | sed -e s+"[0-9][0-9][0-9]$"++)
-
+echo "SYSTEM INFORMATION:"
 echo "OPERATING SYSTEM: ${OS_NAME}"
-echo "PROJECT URL: ${HOME_URL}"
+echo "VERSION: ${OS_VERSION}"
 echo "BUILD ID: ${BUILD_ID:0:7}"
+echo "CPU: ${V_CPUMODEL1} (${V_CPUNB} Cores)"
 echo "ARCHITECTURE: ${V_OSARCH}"
 echo "KERNEL: ${V_SYSTEM} (${V_ARCH})"
+echo "DISK SPACE:"
+echo "/storage: $(df -h /storage | awk '/dev/ {print $3"/"$2" ("$5")"}')"
+echo "/storage/roms: $(df -h /storage/roms | awk '/dev/ {print $3"/"$2" ("$5")"}')"
+
+echo "BATTERY INFORMATION:"
 if test -n "${BATT}"
 then
     echo "BATTERY REMAINING: ${BATT}%"
+    if [ -e "/sys/class/power_supply/bat/health" ]
+    then
+      echo "BATTERY HEALTH: $(cat /sys/class/power_supply/bat/health)"
+    fi
+    if [ -e "/sys/class/power_supply/bat/status" ]
+    then
+      echo "BATTERY STATE: $(cat /sys/class/power_supply/bat/status)"
+    fi
 fi
+echo "CPU INFORMATION:"
 echo "CPU: ${V_CPUMODEL1} (${V_CPUNB} Cores)"
 if test -n "${TEMPE}"
 then

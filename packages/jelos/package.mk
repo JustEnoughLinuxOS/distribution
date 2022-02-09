@@ -4,7 +4,7 @@
 PKG_NAME="jelos"
 PKG_VERSION="${OS_VERSION}"
 PKG_ARCH="any"
-PKG_LICENSE="proprietary"
+PKG_LICENSE="apache2"
 PKG_SITE=""
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain ${OPENGLES}"
@@ -14,11 +14,14 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_TOOLCHAIN="make"
 
+PKG_BASEOS="plymouth-lite grep wget libjpeg-turbo util-linux xmlstarlet bluetool gnupg gzip patchelf \
+            imagemagick system-utils terminus-font vim bash pyudev dialog six git dbus-python        \
+            coreutils miniupnpc nss-mdns avahi MC"
+
 PKG_UI="emulationstation"
 
-BASE_PACKAGES="plymouth-lite grep wget ffmpeg libjpeg-turbo MC util-linux xmlstarlet jslisten git \
-               gnupg gzip patchelf imagemagick system-utils terminus-font vim bash pyudev dialog  \
-               dbus-python pygobject coreutils dialog six textviewer bluetool"
+PKG_EMUS="common-shaders glsl-shaders libretro-database retroarch advancemame hatarisa openbor \
+          scummvmsa PPSSPPSDL"
 
 LIBRETRO_CORES="2048 81 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce beetle-pcfx          \
                 beetle-supafaust beetle-supergrafx beetle-vb beetle-wswan bluemsx cannonball       \
@@ -33,16 +36,16 @@ LIBRETRO_CORES="2048 81 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce be
                 snes9x2010 stella stella-2014 swanstation TIC-80 tgbdual tyrquake xrick uae4arm    \
                 uzem vba-next vbam vecx vice yabasanshiro xmil"
 
-PKG_EMUS="common-shaders glsl-shaders libretro-database retroarch ${LIBRETRO_CORES} advancemame \
-          hatarisa openbor scummvmsa PPSSPPSDL"
+PKG_COMPAT="lib32"
 
-PKG_COMPAT="lib32 gamecontrollerdb"
+PKG_MULTIMEDIA="ffmpeg mpv vlc"
 
-PKG_TOOLS="evtest mpv sixaxis rg351p-js2xbox gptokeyb 351files jstest-sdl"
+PKG_GAMESUPPORT="sixaxis jslisten evtest rg351p-js2xbox gptokeyb textviewer 351files jstest-sdl \
+                 pygobject gamecontrollerdb"
 
 PKG_EXPERIMENTAL=""
 
-PKG_DEPENDS_TARGET+=" ${BASE_PACKAGES} ${PKG_UI} ${PKG_TOOLS} ${PKG_EMUS} ${LIBRETRO_CORES} ${PKG_COMPAT} ${PKG_EXPERIMENTAL}"
+PKG_DEPENDS_TARGET+=" ${PKG_BASEOS} ${PKG_UI} ${PKG_EMUS} ${LIBRETRO_CORES} ${PKG_COMPAT} ${PKG_MULTIMEDIA} ${PKG_GAMESUPPORT} ${PKG_EXPERIMENTAL}"
 
 make_target() {
   :
@@ -89,10 +92,7 @@ post_install() {
   cp ${PKG_DIR}/sources/autostart/sounds/* ${INSTALL}/usr/lib/autostart/sounds
   cp ${PKG_DIR}/sources/autostart/common/* ${INSTALL}/usr/lib/autostart/common
   cp ${PKG_DIR}/sources/autostart/daemons/* ${INSTALL}/usr/lib/autostart/daemons
-  if [ -d "${PKG_DIR}/sources/autostart/${DEVICE}" ]
-  then
-    cp ${PKG_DIR}/sources/autostart/${DEVICE}/* ${INSTALL}/usr/lib/autostart/${DEVICE}
-  fi
+  cp ${PKG_DIR}/sources/autostart/${DEVICE}/* ${INSTALL}/usr/lib/autostart/${DEVICE}
   chmod -R 0755 ${INSTALL}/usr/lib/autostart ${INSTALL}/usr/bin/autostart
   enable_service jelos-autostart.service
 
