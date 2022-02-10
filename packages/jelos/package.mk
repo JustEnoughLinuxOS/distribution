@@ -90,14 +90,17 @@ post_install() {
 
   # Split this up into other packages
   cp ${PKG_DIR}/sources/autostart/autostart ${INSTALL}/usr/bin
-  mkdir -p ${INSTALL}/usr/lib/autostart/${DEVICE}
   mkdir -p ${INSTALL}/usr/lib/autostart/common
   mkdir -p ${INSTALL}/usr/lib/autostart/sounds
   mkdir -p ${INSTALL}/usr/lib/autostart/daemons
   cp ${PKG_DIR}/sources/autostart/sounds/* ${INSTALL}/usr/lib/autostart/sounds
   cp ${PKG_DIR}/sources/autostart/common/* ${INSTALL}/usr/lib/autostart/common
   cp ${PKG_DIR}/sources/autostart/daemons/* ${INSTALL}/usr/lib/autostart/daemons
-  cp ${PKG_DIR}/sources/autostart/${DEVICE}/* ${INSTALL}/usr/lib/autostart/${DEVICE}
+  if [ -d "${PKG_DIR}/sources/autostart/${DEVICE}" ]
+  then
+    mkdir -p ${INSTALL}/usr/lib/autostart/${DEVICE}
+    cp ${PKG_DIR}/sources/autostart/${DEVICE}/* ${INSTALL}/usr/lib/autostart/${DEVICE}
+  fi
   chmod -R 0755 ${INSTALL}/usr/lib/autostart ${INSTALL}/usr/bin/autostart
   enable_service jelos-autostart.service
 
