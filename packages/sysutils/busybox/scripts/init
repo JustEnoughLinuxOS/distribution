@@ -698,10 +698,6 @@ mount_storage() {
     # /storage should always be writable
     mount -t tmpfs none /storage
   fi
-  if [ ! -f "/storage/.configured" ]
-  then
-    echo -ne "\033[100H\033[2K==> Initializing system, please wait.." >/dev/console
-  fi
 }
 
 mount_games() {

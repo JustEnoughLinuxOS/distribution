@@ -16,7 +16,7 @@ PKG_SHORTDESC="Emulationstation emulator frontend"
 PKG_BUILD_FLAGS="-gold"
 GET_HANDLER_SUPPORT="git"
 
-PKG_PATCH_DIRS="${DEVICE}"
+PKG_PATCH_DIRS+="${DEVICE}"
 
 # themes for Emulationstation
 PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} es-theme-art-book-next"

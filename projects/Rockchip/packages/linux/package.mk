@@ -151,10 +151,6 @@ pre_make_target() {
 }
 
 make_target() {
-  kernel_make modules
-  kernel_make INSTALL_MOD_PATH=$INSTALL/$(get_kernel_overlay_dir) modules_install
-  rm -f $INSTALL/$(get_kernel_overlay_dir)/lib/modules/*/build
-  rm -f $INSTALL/$(get_kernel_overlay_dir)/lib/modules/*/source
 
   if [ "$PKG_BUILD_PERF" = "yes" ] ; then
     ( cd tools/perf
@@ -209,6 +205,9 @@ make_target() {
   # file with symbols from built-in and external modules.
   # Without that it'll contain only the symbols from the kernel
   kernel_make $KERNEL_TARGET $KERNEL_MAKE_EXTRACMD modules
+  kernel_make INSTALL_MOD_PATH=$INSTALL/$(get_kernel_overlay_dir) modules_install
+  rm -f $INSTALL/$(get_kernel_overlay_dir)/lib/modules/*/build
+  rm -f $INSTALL/$(get_kernel_overlay_dir)/lib/modules/*/source
 
   if [ -n "$KERNEL_UIMAGE_TARGET" ] ; then
 

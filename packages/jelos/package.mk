@@ -91,9 +91,7 @@ post_install() {
   # Split this up into other packages
   cp ${PKG_DIR}/sources/autostart/autostart ${INSTALL}/usr/bin
   mkdir -p ${INSTALL}/usr/lib/autostart/common
-  mkdir -p ${INSTALL}/usr/lib/autostart/sounds
   mkdir -p ${INSTALL}/usr/lib/autostart/daemons
-  cp ${PKG_DIR}/sources/autostart/sounds/* ${INSTALL}/usr/lib/autostart/sounds
   cp ${PKG_DIR}/sources/autostart/common/* ${INSTALL}/usr/lib/autostart/common
   cp ${PKG_DIR}/sources/autostart/daemons/* ${INSTALL}/usr/lib/autostart/daemons
   if [ -d "${PKG_DIR}/sources/autostart/${DEVICE}" ]
@@ -116,11 +114,10 @@ EOF
   cp ${PKG_DIR}/sources/pico-8.sh ${INSTALL}/usr/bin
   cp ${PKG_DIR}/sources/scripts/* ${INSTALL}/usr/bin
 
-  if [[ ${DEVICE} =~ RG351 ]]; then
-    cp ${PKG_DIR}/sources/asound/rg351/asound.conf ${INSTALL}/usr/config/
-  elif [[ ${DEVICE} =~ RG552 ]]; then
-    cp ${PKG_DIR}/sources/asound/rg552/asound.conf ${INSTALL}/usr/config/
-    cp ${PKG_DIR}/sources/asound/rg552/asound.state ${INSTALL}/usr/config/
+
+  if [ -d "${PKG_DIR}/sources/asound/${DEVICE}" ]
+  then
+    cp ${PKG_DIR}/sources/asound/${DEVICE}/* ${INSTALL}/usr/config/
   fi
 
   rm -f ${INSTALL}/usr/bin/{sh,bash,busybox,sort}
