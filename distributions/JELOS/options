@@ -14,13 +14,13 @@
   DESCRIPTION="An Open Source firmware."
 
 # Distribution Home URL
-  HOME_URL="https://github.com/JustEnoughLinuxOS"
+  HOME_URL="https://www.jelos.org"
 
 # Documentation URL
-  #WIKI_URL=""
+  WIKI_URL="https://www.jelos.org"
 
 # Where to report bugs
-  #BUG_REPORT_URL=""
+  BUG_REPORT_URL="https://www.jelos.org"
 
 # Root password to integrate in the target system
   ROOT_PASSWORD="jelos"
@@ -70,7 +70,7 @@
 # for a list of additional drivers see packages/linux-drivers
 # Space separated list is supported,
 # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-  ADDITIONAL_DRIVERS=""
+#  ADDITIONAL_DRIVERS="RTL8192CU RTL8192DU RTL8192EU RTL8188EU RTL8812AU RTL8821CU"
 
 # build and install bluetooth support (yes / no)
   BLUETOOTH_SUPPORT="yes"
@@ -191,7 +191,7 @@
 
 # Distribution Specific source location
   DISTRO_MIRROR="http://sources.libreelec.tv/mirror"
-  DISTRO_SRC="https://github.com/JustEnoughLinuxOS/distribution"
+  DISTRO_SRC="https://github.com/JELOS/JELOS"
 
 # Addon Server Url
   ADDON_SERVER_URL=""

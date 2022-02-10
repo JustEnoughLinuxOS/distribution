@@ -116,13 +116,7 @@ for directory in etc dev proc run sys tmp usr var flash storage; do
 done
 
 # Build image contents
-if [ "${ARCH}" = "arm" ];
-then
-  MTADDONBUILD=no start_multithread_build arm32 || die "Parallel build failure - see log for details. Time of failure: $(date)"
-  exit 0
-else
-  MTADDONBUILD=no start_multithread_build image || die "Parallel build failure - see log for details. Time of failure: $(date)"
-fi
+MTADDONBUILD=no start_multithread_build image || die "Parallel build failure - see log for details. Time of failure: $(date)"
 
 echo "Successful build!  Building image root..." >&2
 

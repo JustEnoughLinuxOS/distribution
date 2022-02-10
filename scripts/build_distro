@@ -35,7 +35,7 @@ then
   make image
 elif [ "${ARCH}" == "arm" ]
 then
-  make system
+  scripts/build_compat
   scripts/install arm32
 fi
 

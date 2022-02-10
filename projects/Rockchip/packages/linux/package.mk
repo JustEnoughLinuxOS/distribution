@@ -5,7 +5,7 @@
 
 PKG_NAME="linux"
 PKG_URL="https://github.com/JustEnoughLinuxOS/rockchip-kernel.git"
-PKG_VERSION="56b635d"
+PKG_VERSION="3d7e419b4"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kernel.org"
 PKG_DEPENDS_HOST="ccache:host openssl:host"
@@ -211,6 +211,7 @@ make_target() {
   kernel_make $KERNEL_TARGET $KERNEL_MAKE_EXTRACMD modules
 
   if [ -n "$KERNEL_UIMAGE_TARGET" ] ; then
+
     # determine compression used for kernel image
     KERNEL_UIMAGE_COMP=${KERNEL_UIMAGE_TARGET:7}
     KERNEL_UIMAGE_COMP=${KERNEL_UIMAGE_COMP:-none}

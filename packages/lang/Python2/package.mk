@@ -11,7 +11,7 @@ PKG_LICENSE="OSS"
 PKG_SITE="http://www.python.org/"
 PKG_URL="http://www.python.org/ftp/python/$PKG_VERSION/${PKG_NAME::-1}-$PKG_VERSION.tar.xz"
 PKG_DEPENDS_HOST="zlib:host bzip2:host sqlite:host libffi:host"
-PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl libffi Python2:host ncurses readline"
+PKG_DEPENDS_TARGET="toolchain sqlite expat zlib bzip2 openssl Python2:host ncurses readline"
 PKG_LONGDESC="Python2 is an interpreted object-oriented programming language."
 
 PKG_TOOLCHAIN="autotools"
@@ -22,7 +22,6 @@ PKG_PY_DISABLED_MODULES="_tkinter nis gdbm bsddb ossaudiodev"
 PKG_CONFIGURE_OPTS_HOST="--cache-file=config.cache \
                          --without-cxx-main \
                          --with-threads \
-			 --with-system-ffi \
                          --enable-unicode=ucs4"
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_file_dev_ptc=no \
