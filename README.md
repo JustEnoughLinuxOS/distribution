@@ -70,4 +70,6 @@ limitations under the License.
     * ```ssh-copy-id root@jelos```
 * After the 20220210 update I have no volume indicator in ES, but volume control works fine.
   * SSH to the device and run the following command to switch the audio device:
+    * ```systemctl stop emustation```
     * ```sed -i 's#<string name="AudioDevice" value="'.*'" />#<string name="AudioDevice" value="DAC" />#' .emulationstation/es_settings.cfg```
+    * ```systemctl start emustation```
