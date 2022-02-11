@@ -56,7 +56,6 @@ TEE_PID=""
 
 # common functions
 . /functions 2>/dev/null
-. /device.config 2>/dev/null
 . /device.init 2>/dev/null
 
 # Get a serial number if present (eg. RPi) otherwise use MAC address from eth0
@@ -1103,6 +1102,11 @@ prepare_sysroot() {
   fi
 
   [ -f "/sysroot/usr/lib/systemd/systemd" ] || error "final_check" "Could not find systemd!"
+
+  if [ ! -f "/sysroot/storage/.configured" ]
+  then
+    echo -ne "\033[100H\033[2K==> Initializing system, please wait.." >/dev/console
+  fi
 }
 
 check_amlogic_dtb() {

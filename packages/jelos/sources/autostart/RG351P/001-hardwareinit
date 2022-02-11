@@ -1,3 +1,4 @@
+. /etc/profile
 # Enable GPIO 77 for power LED manipulation
 echo ${DEVICE_LED} > /sys/class/gpio/export 2>/dev/null
 

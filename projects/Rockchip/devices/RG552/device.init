@@ -1,10 +1,5 @@
-# Silence PWM
-echo 0 > /sys/class/pwm/${DEVICE_PWM_MOTOR}/export 2>/dev/null
-echo 1000000 > /sys/class/pwm/${DEVICE_PWM_MOTOR}/pwm0/period 2>/dev/null
-echo 1 > /sys/class/pwm/${DEVICE_PWM_MOTOR}/pwm0/enable 2>/dev/null
-echo 1000000 > /sys/class/pwm/${DEVICE_PWM_MOTOR}/pwm0/duty_cycle 2>/dev/null
-# Enable WIFI
-echo ${DEVICE_WIFI} > /sys/class/gpio/export 2>/dev/null
-echo out > /sys/class/gpio/gpio${DEVICE_WIFI}/direction 2>/dev/null
-echo 1 > /sys/class/gpio/gpio${DEVICE_WIFI}/value 2>/dev/null
+# Inform init that this is a rotated display
+DISPLAY_ROTATED=true
+
+# Rotate the display on the 552.
 fbset -g 1152 1920 1152 1920 32 2>/dev/null

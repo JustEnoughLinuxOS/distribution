@@ -10,15 +10,15 @@ maxperf 2>&1 >${BOOTLOG}
 
 /usr/bin/show_splash intro 2>&1 >>${BOOTLOG}
 
-### Run common start scripts
-for script in /usr/lib/autostart/common/*
+### Run device specific start scripts
+for script in /usr/lib/autostart/${HW_DEVICE}/*
 do
   echo "Executing ${script}" 2>&1 >>${BOOTLOG}
   ${script} 2>&1 >>${BOOTLOG}
 done
 
-### Run device specific start scripts
-for script in /usr/lib/autostart/${HW_DEVICE}/*
+### Run common start scripts
+for script in /usr/lib/autostart/common/*
 do
   echo "Executing ${script}" 2>&1 >>${BOOTLOG}
   ${script} 2>&1 >>${BOOTLOG}
