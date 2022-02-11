@@ -10,5 +10,8 @@ then
   cp /usr/config/asound.conf /storage/.config
 fi
 
+# Set the mixer in ES
+sed -i 's#<string name="AudioDevice" value="'.*'" />#<string name="AudioDevice" value="'${DEVICE_AUDIO_MIXER}'" />#' .emulationstation/es_settings.cfg
+
 VOL=$(get_setting "audio.volume" 2>/dev/null)
 amixer set "${DEVICE_AUDIO_MIXER}" ${VOL}%
