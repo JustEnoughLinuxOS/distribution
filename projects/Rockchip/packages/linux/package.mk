@@ -5,8 +5,8 @@
 
 PKG_NAME="linux"
 PKG_URL="https://github.com/JustEnoughLinuxOS/rockchip-kernel.git"
-PKG_VERSION="3d7e419b4"
-PKG_GIT_CLONE_BRANCH="main"
+PKG_VERSION="7517060"
+PKG_GIT_CLONE_BRANCH="dev"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kernel.org"
 PKG_DEPENDS_HOST="ccache:host openssl:host"
@@ -19,11 +19,11 @@ PKG_STAMP="$KERNEL_TARGET $KERNEL_MAKE_EXTRACMD"
 PKG_PATCH_DIRS+="${DEVICE}"
 GET_HANDLER_SUPPORT="git"
 
-if [[ "${DEVICE}" =~ RG351 ]]
-then
-  PKG_VERSION="f325187"
-  PKG_GIT_CLONE_BRANCH="dev"
-fi
+#if [[ "${DEVICE}" =~ RG351 ]]
+#then
+#  PKG_VERSION="f325187"
+#  PKG_GIT_CLONE_BRANCH="dev"
+#fi
 
 PKG_KERNEL_CFG_FILE=$(kernel_config_path) || die
 
