@@ -56,7 +56,7 @@ makeinstall_target() {
 
 	if [ "${DEVICE}" == "RG552" ]
 	then
-	   sed -i 's#<string name="AudioDevice" value="Playback" />#<string name="AudioDevice" value="Master" />#' $INSTALL/usr/config/emulationstation/es_settings.cfg
+	   sed -i 's#<string name="AudioDevice" value="Playback" />#<string name="AudioDevice" value="DAC" />#' $INSTALL/usr/config/emulationstation/es_settings.cfg
 	fi
 
 	chmod +x $INSTALL/usr/config/emulationstation/scripts/*

@@ -220,9 +220,11 @@ makeinstall_init() {
   cp $PKG_DIR/scripts/functions $INSTALL
   cp $PKG_DIR/scripts/init $INSTALL
 
-  cp ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/device.config ${INSTALL}
-  cp ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/device.init ${INSTALL}
-  chmod 755 ${INSTALL}/device.config ${INSTALL}/device.init
+  if [ -e "${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/device.init" ]
+  then
+    cp ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/device.init ${INSTALL}
+    chmod 755 ${INSTALL}/device.init
+  fi
 
   sed -e "s/@DISTRONAME@/$DISTRONAME/g" \
       -e "s/@KERNEL_NAME@/$KERNEL_NAME/g" \

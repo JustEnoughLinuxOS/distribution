@@ -132,6 +132,7 @@ pre_make_target() {
   git clone https://github.com/arter97/exfat-linux.git
   cd exfat-linux
   git checkout old
+  rm -rf .git
   cd $PKG_BUILD/fs
   if [ -d "exfat" ]
   then
