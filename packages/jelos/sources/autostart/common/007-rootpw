@@ -4,6 +4,12 @@
 
 . /etc/profile
 
+if [ ! -d "/storage/.cache/samba" ]
+then
+  mkdir -p /storage/.cache/samba
+  touch /storage/.cache/samba/smbpasswd
+fi
+
 ROTATION=$(get_setting rotate.root.password)
 if [ "${ROTATION}" == "0" ]
 then
