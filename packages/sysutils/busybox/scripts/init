@@ -56,10 +56,7 @@ TEE_PID=""
 
 # common functions
 . /functions 2>/dev/null
-if [ -e "/device.init" ]
-then
-  . /device.init 2>/dev/null
-fi
+. /device.init 2>/dev/null
 
 # Get a serial number if present (eg. RPi) otherwise use MAC address from eth0
 MACHINE_UID="$(awk '/^Serial/{s='0000000' $3; print substr(s, length(s) - 7)}' /proc/cpuinfo 2>/dev/null)"
