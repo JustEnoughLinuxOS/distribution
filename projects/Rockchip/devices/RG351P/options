@@ -27,27 +27,34 @@
 
   # Kernel target
     KERNEL_TARGET="Image"
+    LINUX="RG351MP"
+    BOOTLOADER="u-boot"
+    DEVICE_DTB="rk3326-rg351mp-linux"
+    UBOOT_SYSTEM="rg351mp"
+    PKG_SOC="px30"
+    PKG_DATAFILE="$PKG_RKBIN/bin/rk33/rk3326_ddr_333MHz_v1.15.bin"
+    PKG_LOADER="$PKG_RKBIN/bin/rk33/rk3326_miniloader_v1.20.bin"
+    PKG_BL31="$PKG_RKBIN/bin/rk33/rk3326_bl31_v1.21.elf"
+    PKG_LOAD_ADDR="0x00200000"
+    BOOT_INI=true
 
   # Additional kernel make parameters (for example to specify the u-boot loadaddress)
     KERNEL_MAKE_EXTRACMD=""
-    KERNEL_MAKE_EXTRACMD+=" rockchip/rk3326-rg351p-linux.dtb"
-    KERNEL_MAKE_EXTRACMD+=" rockchip/rk3326-rg351p-linux-oc.dtb"
+    KERNEL_MAKE_EXTRACMD+=" rockchip/${DEVICE_DTB}.dtb"
     
   # Mali GPU family
     MALI_FAMILY="g31"
     OPENGLES="libmali"
+    MALIDRIVER="libmali-bifrost-g31-r13p0-gbm"
 
   # Define the CPU
     HW_CPU="Rockchip RK3326"
 
   # kernel serial console
-    EXTRA_CMDLINE="console=ttyFIQ0 console=tty0 net.iframes=0 fbcon=rotate:3 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
+    EXTRA_CMDLINE="quiet console=ttyFIQ0 console=tty0 net.iframes=0 fbcon=rotate:3 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
     
-    LINUX="RG351P"
-    UBOOT_SYSTEM="rg351p"
-
   # additional packages to install
-    ADDITIONAL_PACKAGES="dtc jelos"
+  # ADDITIONAL_PACKAGES=""
 
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
@@ -58,7 +65,7 @@
   # for a list of additional drivers see packages/linux-drivers
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-    ADDITIONAL_DRIVERS="RTL8812AU" #RTL8188EU RTL8814AU RTL8192DU RTL8812AU RTL8821CU RTL8192CU RTL8192EU
+  #  ADDITIONAL_DRIVERS="RTL8812AU" #RTL8188EU RTL8814AU RTL8192DU RTL8812AU RTL8821CU RTL8192CU RTL8192EU
 
   # build and install driver addons (yes / no)
     DRIVER_ADDONS_SUPPORT="no"
