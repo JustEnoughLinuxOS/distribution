@@ -223,8 +223,10 @@ makeinstall_init() {
   if [ -e "${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/device.init" ]
   then
     cp ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/device.init ${INSTALL}
-    chmod 755 ${INSTALL}/device.init
+  else
+    touch ${INSTALL}/device.init
   fi
+  chmod 755 ${INSTALL}/device.init
 
   sed -e "s/@DISTRONAME@/$DISTRONAME/g" \
       -e "s/@KERNEL_NAME@/$KERNEL_NAME/g" \
