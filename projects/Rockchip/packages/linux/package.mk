@@ -19,11 +19,11 @@ PKG_STAMP="$KERNEL_TARGET $KERNEL_MAKE_EXTRACMD"
 PKG_PATCH_DIRS+="${DEVICE}"
 GET_HANDLER_SUPPORT="git"
 
-#if [[ "${DEVICE}" =~ RG351 ]]
-#then
-#  PKG_VERSION="f325187"
-#  PKG_GIT_CLONE_BRANCH="dev"
-#fi
+if [[ "${DEVICE}" =~ RG351 ]]
+then
+  PKG_URL="https://github.com/fewtarius/kernel_rg351.git"
+  PKG_VERSION="6f43f25"
+fi
 
 PKG_KERNEL_CFG_FILE=$(kernel_config_path) || die
 
