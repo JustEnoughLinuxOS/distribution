@@ -12,10 +12,7 @@ PKG_LONGDESC="ZDoom is a family of enhanced ports of the Doom engine for running
 GET_HANDLER_SUPPORT="git"
 PKG_TOOLCHAIN="cmake-make"
 
-if [ "${DEVICE}" = "RG351MP" ]
-then
-  PKG_PATCH_DIRS="RG351MP"
-fi
+PKG_PATCH_DIRS+="${DEVICE}"
 
 pre_build_host() {
   HOST_CMAKE_OPTS=""
@@ -43,10 +40,7 @@ makeinstall_target() {
   cp $PKG_BUILD/.$TARGET_NAME/lzdoom $INSTALL/usr/bin
 
   mkdir -p $INSTALL/usr/config/distribution/lzdoom
-  if [ "${DEVICE}" = "RG351MP" ]; then
-    cp $PKG_DIR/config/RG351MP/* $INSTALL/usr/config/distribution/lzdoom
-  else
-    cp $PKG_DIR/config/RG351P/* $INSTALL/usr/config/distribution/lzdoom
+  cp $PKG_DIR/config/${DEVICE}/* $INSTALL/usr/config/distribution/lzdoom
   fi
   cp $PKG_BUILD/.$TARGET_NAME/*.pk3 $INSTALL/usr/config/distribution/lzdoom
   cp -r $PKG_BUILD/.$TARGET_NAME/soundfonts $INSTALL/usr/config/distribution/lzdoom

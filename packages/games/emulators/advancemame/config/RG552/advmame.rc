@@ -25,7 +25,7 @@ sound_latency 0.10
 sound_normalize no
 display_vsync no
 device_video_clock 10-180 / 30-80 / 50-70
-display_mode 320x224x32
+display_mode 1152x1920x32
 device_joystick raw
 input_map[coin1] joystick_button[gosuper_gamepad,button13]
 input_map[start1] joystick_button[gosuper_gamepad,button14]

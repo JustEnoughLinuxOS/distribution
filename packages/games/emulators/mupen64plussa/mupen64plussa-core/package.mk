@@ -40,9 +40,7 @@ makeinstall_target() {
   cp ${PKG_BUILD}/src/api/m64p_*.h ${INSTALL}/usr/local/include/mupen64plus
   chmod 0644 ${INSTALL}/usr/local/include/mupen64plus/*
 
-  if [ "${DEVICE}" = "RG552" ]; then
-    cp ${PKG_DIR}/config/mupen64plus-RG351MP.cfg ${INSTALL}/usr/local/share/mupen64plus/mupen64plus.cfg
-  fi
+  cp ${PKG_DIR}/config/mupen64plus-${DEVICE}.cfg ${INSTALL}/usr/local/share/mupen64plus/mupen64plus.cfg
   chmod 644 ${INSTALL}/usr/local/share/mupen64plus/mupen64plus.cfg
   mkdir -p ${INSTALL}/usr/bin
   cp ${PKG_DIR}/m64p.sh ${INSTALL}/usr/bin

@@ -13,11 +13,6 @@ PKG_LONGDESC="GZDoom is a modder-friendly OpenGL and Vulkan source port based on
 GET_HANDLER_SUPPORT="git"
 PKG_TOOLCHAIN="cmake-make"
 
-if [ ! "${DEVICE}" = "RG351MP" ]
-then
-  PKG_PATCH_DIRS="RG351P"
-fi
-
 pre_build_host() {
   HOST_CMAKE_OPTS=""
 }
@@ -52,11 +47,7 @@ makeinstall_target() {
   cp $PKG_BUILD/.$TARGET_NAME/gzdoom $INSTALL/usr/bin
 
   mkdir -p $INSTALL/usr/config/distribution/gzdoom
-  if [ "${DEVICE}" = "RG351MP" ]; then
-    cp $PKG_DIR/config/RG351MP/* $INSTALL/usr/config/distribution/gzdoom
-  else
-    cp $PKG_DIR/config/RG351P/* $INSTALL/usr/config/distribution/gzdoom
-  fi
+  cp $PKG_DIR/config/${DEVICE}/* $INSTALL/usr/config/distribution/gzdoom
   cp $PKG_BUILD/.$TARGET_NAME/*.pk3 $INSTALL/usr/config/distribution/gzdoom
   cp -r $PKG_BUILD/.$TARGET_NAME/soundfonts $INSTALL/usr/config/distribution/gzdoom
   cp -r $PKG_BUILD/.$TARGET_NAME/fm_banks $INSTALL/usr/config/distribution/gzdoom

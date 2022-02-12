@@ -12,10 +12,7 @@ PKG_LONGDESC="Raze is a fork of Build engine games backed by GZDoom tech and com
 GET_HANDLER_SUPPORT="git"
 PKG_TOOLCHAIN="cmake-make"
 
-if [ ! "${DEVICE}" = "RG351MP" ]
-then
-  PKG_PATCH_DIRS="RG351P"
-fi
+PKG_PATCH_DIRS+="${DEVICE}"
 
 pre_build_host() {
   HOST_CMAKE_OPTS=""
@@ -51,11 +48,7 @@ makeinstall_target() {
   cp $PKG_BUILD/.$TARGET_NAME/raze $INSTALL/usr/bin
 
   mkdir -p $INSTALL/usr/config/distribution/raze
-  if [ "${DEVICE}" = "RG351MP" ]; then
-    cp $PKG_DIR/config/RG351MP/* $INSTALL/usr/config/distribution/raze
-  else
-    cp $PKG_DIR/config/RG351P/* $INSTALL/usr/config/distribution/raze
-  fi
+  cp $PKG_DIR/config/${DEVICE}/* $INSTALL/usr/config/distribution/raze
   cp $PKG_BUILD/.$TARGET_NAME/*.pk3 $INSTALL/usr/config/distribution/raze
   cp -r $PKG_BUILD/.$TARGET_NAME/soundfonts $INSTALL/usr/config/distribution/raze
 }

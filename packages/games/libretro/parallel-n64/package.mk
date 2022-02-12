@@ -16,18 +16,7 @@ PKG_TOOLCHAIN="make"
 PKG_BUILD_FLAGS="-lto"
 PKG_PATCH_DIRS+="${DEVICE}"
 
-if [[ "$ARCH" == "arm" ]]; then
-	PKG_MAKE_OPTS_TARGET=" platform=${PROJECT}"
-	
-	if [[ "${DEVICE}" =~ RG351 ]]; then
-		PKG_MAKE_OPTS_TARGET=" platform=Odroidgoa"
-	else
-		PKG_MAKE_OPTS_TARGET=" platform=Amlogic"
-	fi
-else
-	PKG_MAKE_OPTS_TARGET=" platform=emuelec64-armv8"
-	
-fi
+PKG_MAKE_OPTS_TARGET=" platform=emuelec64-armv8"
 
 pre_configure_target() {
   sed -i 's/"GFX Plugin; auto|glide64|gln64|rice/"GFX Plugin; rice|auto|glide64|gln64/g' $PKG_BUILD/libretro/libretro.c
