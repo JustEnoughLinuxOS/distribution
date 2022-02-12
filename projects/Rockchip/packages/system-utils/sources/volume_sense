@@ -18,10 +18,9 @@ set -o pipefail
 # type 1 (EV_KEY), code 114 (KEY_VOLUMEDOWN), value 1
 # type 1 (EV_KEY), code 115 (KEY_VOLUMEUP), value 1
 
+DEVICE="${DEVICE_VOLUME_DEV}"  # Device for volume key events
 
-DEVICE='/dev/input/by-path/platform-volume-keys-event'  # Device for volume key events
-
-CONTROLLER_DEVICE='/dev/input/by-path/platform-singleadc-joypad-event-joystick' # Joystick events (for Fn key)
+CONTROLLER_DEVICE="${DEVICE_CONTROLLER_DEV}" # Joystick events (for Fn key)
 
 VOL_EVENT='*(KEY_VOLUME*, value *' # This matches all volume events
 
