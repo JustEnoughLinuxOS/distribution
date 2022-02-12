@@ -24,7 +24,7 @@ enable_cores() {
 }
 
 disable_cores() {
-    for CORE in ${FAST_CORES}
+  for CORE in ${1}
   do
     echo 0 >/sys/devices/system/cpu/cpu${CORE}/online
   done
