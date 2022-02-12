@@ -16,7 +16,13 @@ PKG_TOOLCHAIN="make"
 PKG_BUILD_FLAGS="-lto"
 PKG_PATCH_DIRS+="${DEVICE}"
 
-PKG_MAKE_OPTS_TARGET=" platform=emuelec64-armv8"
+if [ "${ARCH}" = "arm" ]
+then
+  PKG_MAKE_OPTS_TARGET=" platform=Amlogic"
+else
+  PKG_MAKE_OPTS_TARGET=" platform=rpi4_64"
+  #PKG_MAKE_OPTS_TARGET=" platform=emuelec64-armv8"
+fi
 
 pre_configure_target() {
   sed -i 's/"GFX Plugin; auto|glide64|gln64|rice/"GFX Plugin; rice|auto|glide64|gln64/g' $PKG_BUILD/libretro/libretro.c
@@ -28,10 +34,10 @@ pre_configure_target() {
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/lib/libretro
-  if [[ "$ARCH" == "aarch64" ]]
-  then
-    cp -vP $PKG_BUILD/../../build.${DISTRO}-${DEVICE}.arm/parallel-n64-*/.install_pkg/usr/lib/libretro/parallel_n64_libretro.so ${INSTALL}/usr/lib/libretro/
-  else
+  #if [[ "$ARCH" == "aarch64" ]]
+  #then
+  #  cp -vP $PKG_BUILD/../../build.${DISTRO}-${DEVICE}.arm/parallel-n64-*/.install_pkg/usr/lib/libretro/parallel_n64_libretro.so ${INSTALL}/usr/lib/libretro/
+  #else
     cp parallel_n64_libretro.so $INSTALL/usr/lib/libretro/
-  fi
+  #fi
 }
