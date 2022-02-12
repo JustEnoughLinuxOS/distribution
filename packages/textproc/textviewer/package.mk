@@ -6,7 +6,7 @@ PKG_VERSION="6820fd6e036e33f3d56b036978e6ec3c870c6b28"
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/lethal-guitar/TvTextViewer"
 PKG_URL="$PKG_SITE.git"
-PKG_DEPENDS_TARGET="toolchain gamecontrollerdb"
+PKG_DEPENDS_TARGET="toolchain ${OPENGLES} SDL2"
 PKG_SHORTDESC="Full-screen text viewer tool with gamepad controls"
 PKG_TOOLCHAIN="make"
 GET_HANDLER_SUPPORT="git"
@@ -16,7 +16,7 @@ pre_patch() {
 }
 
 pre_configure_target() {
-  sed -i "s|sdl2-config|$SYSROOT_PREFIX/usr/bin/sdl2-config|g" Makefile
+  sed -i "s|sdl2-config|${SYSROOT_PREFIX}/usr/bin/sdl2-config|g" Makefile
   sed -i 's|ImGui::SetNextWindowFocus();|ImGui::SetFocusID(ImGui::GetID("Close"), ImGui::GetCurrentWindow());\n    ImGui::GetCurrentContext()->NavDisableHighlight = false;\n    ImGui::GetCurrentContext()->NavDisableMouseHover = true;|g' view.cpp
   sed -i 's|ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(ImColor(94, 11, 22, 255))); // Set window background to red|ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(ImColor(100, 0, 0, 255)));\n    ImGui::PushStyleColor(ImGuiCol_NavHighlight, ImVec4(ImColor(180, 0, 0, 255)));\n    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(ImColor(180, 0, 0, 255)));|g' main.cpp
   sed -i 's|ImColor(94, 11, 22,|ImColor(180, 0, 0,|g' main.cpp
