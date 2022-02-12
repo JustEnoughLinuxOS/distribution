@@ -19,14 +19,14 @@ set_gov() {
 enable_cores() {
   for CORE in ${1}
   do
-    echo 1 >/sys/devices/system/cpu/cpu${CORE}
+    echo 1 >/sys/devices/system/cpu/cpu${CORE}/online
   done
 }
 
 disable_cores() {
     for CORE in ${FAST_CORES}
   do
-    echo 0 >/sys/devices/system/cpu/cpu${CORE}
+    echo 0 >/sys/devices/system/cpu/cpu${CORE}/online
   done
 }
 

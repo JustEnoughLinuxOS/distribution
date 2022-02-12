@@ -21,6 +21,9 @@ then
   ln -sf /storage/.config/emulationstation /storage/.emulationstation
 fi
 
+# Set enhanced ES power saver to reduce CPU and improve battery life a bit.
+sed -i 's#<string name="PowerSaverMode" value="'.*'" />#<string name="PowerSaverMode" value="enhanced" />#' .emulationstation/es_settings.cfg
+
 if [ -d "/storage/cache/.cores" ]
 then
   rm -rf /storage/cache/.cores
