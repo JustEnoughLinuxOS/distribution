@@ -95,8 +95,10 @@ fi
 ### Set the performance mode
 if [ $(get_setting "maxperf" "${PLATFORM}" "${ROMNAME##*/}") == "0" ]; then
   normperf &
+  EMUPERF="${SLOW_CORES}"
 else
   maxperf &
+  EMUPERF="${FAST_CORES}"
 fi
 
 # Disable netplay by default

@@ -16,35 +16,15 @@ set_gov() {
   done
 }
 
-enable_cores() {
-  for CORE in ${1}
-  do
-    echo 1 >/sys/devices/system/cpu/cpu${CORE}/online
-  done
-}
-
-disable_cores() {
-  for CORE in ${1}
-  do
-    echo 0 >/sys/devices/system/cpu/cpu${CORE}/online
-  done
-}
-
 maxperf() {
-  enable_cores "${FAST_CORES}"
-  disable_cores "${SLOW_CORES}"
   set_gov performance
 }
 
 normperf() {
-  enable_cores "${SLOW_CORES}"
-  disable_cores "${FAST_CORES}"
   set_gov ondemand
 }
 
 powersave() {
-  enable_cores "${SLOW_CORES}"
-  disable_cores "${FAST_CORES}"
   set_gov powersave
 }
 

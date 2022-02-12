@@ -25,6 +25,7 @@ else
   V_OSARCH="arm"
 fi
 
+V_CPUNB=$(grep -E $'^processor\t:' /proc/cpuinfo | wc -l)
 V_CPUMODEL1=$(grep -E $'^model name\t:' /proc/cpuinfo | head -1 | sed -e s+'^model name\t: '++)
 V_SYSTEM=$(uname -rs)
 V_ARCH=$(uname -m)
@@ -92,12 +93,11 @@ then
     fi
 fi
 echo "CPU INFORMATION:"
-echo "CPU: ${V_CPUMODEL1}"
+echo "CPU: ${V_CPUMODEL1} (${V_CPUNB} Cores)"
 if test -n "${TEMPE}"
 then
     echo "CPU TEMPERATURE: ${TEMPE}°"
 fi
-echo "CPU ACTIVE CORES: $(cat /sys/devices/system/cpu/online)"
 for C in "${CF[@]}"
 do
   echo ${C}
