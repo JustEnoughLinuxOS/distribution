@@ -16,11 +16,7 @@ then
   ## cp -iRp /usr/config/* /storage/.config/ &>/dev/null
   ## ignore es_systems.cfg and switch to rsync
   rsync -a --ignore-existing --exclude=es_systems.cfg /usr/config/* /storage/.config/
-  if [ "${HW_DEVICE}" == "RG351P" ]; then
-    cp -f /usr/config/splash/splash-480l.png /storage/.config/emulationstation/resources/logo.png
-  elif [ "${HW_DEVICE}" == "RG351V" ] || [ "${HW_DEVICE}" == "RG351MP" ]; then
-    cp -f /usr/config/splash/splash-640.png /storage/.config/emulationstation/resources/logo.png
-  elif [ "${HW_DEVICE}" == "RG552" ]; then
+  if [ "${HW_DEVICE}" == "RG552" ]; then
     cp -f /usr/config/splash/splash-1152.png /storage/.config/emulationstation/resources/logo.png
   fi
   touch /storage/.configured

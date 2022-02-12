@@ -41,10 +41,8 @@ makeinstall_target() {
 
 post_make_target() {
   mkdir -p $INSTALL/usr/share/advance
-  if [ "${DEVICE}" = "RG351MP" ]; then
-    cp -r $PKG_DIR/config/RG351MP/advmame.rc $INSTALL/usr/share/advance/advmame.rc
-  else
-    cp -r $PKG_DIR/config/RG351P/advmame.rc $INSTALL/usr/share/advance/advmame.rc
+  if [ "${DEVICE}" = "RG552" ]; then
+    cp -r $PKG_DIR/config/RG552/advmame.rc $INSTALL/usr/share/advance/advmame.rc
   fi
   mkdir -p $INSTALL/usr/bin
   cp -r $PKG_DIR/bin/* $INSTALL/usr/bin

@@ -13,12 +13,7 @@ GET_HANDLER_SUPPORT="git"
 PKG_DEPENDS_TARGET="toolchain libdrm"
 PKG_LONGDESC="OpenGL ES user-space binary for the ARM Mali GPU family"
 
-if [[ "${DEVICE}" =~ RG351 ]]
-then
-  PKG_PATCH_DIRS+="RG351"
-else
-  PKG_PATCH_DIRS+="${DEVICE}"
-fi
+PKG_PATCH_DIRS+="${DEVICE}"
 
 MALIVERSION="1.9.0"
 

@@ -212,16 +212,6 @@ EOF
 		aplay "/usr/share/sounds/Mallet.wav"
 	    fi
 	fi
-    elif [[ "${arch}" =~ RG351 ]]
-    then
-	case "${mode}" in
-	    "auto"|"speakers")
-		amixer cset name='Playback Path' SPK
-		;;
-	    "headphone")
-		amixer cset name='Playback Path' HP
-		;;
-	esac
     fi
     exit 0
 fi

@@ -38,16 +38,9 @@ pre_make_target() {
 }
 
 pre_configure_target() {
-  if [[ "${DEVICE}" =~ RG351 ]]; then
-	PKG_MAKE_OPTS_TARGET=" platform=armv8-neon-hardfloat-cortex-a35"
-	sed -i 's/CCOMFLAGS += -mstructure-size-boundary=32//g' Makefile
-	sed -i 's/-DSDLMAME_NO64BITIO//g' Makefile
-	sed -i 's/LDFLAGS += -Wl,--fix-cortex-a8 -Wl,--no-as-needed//g' Makefile
-  else
-        PKG_MAKE_OPTS_TARGET=" platform=armv8-neon-hardfloat-cortex-a53"
-        sed -i 's/CCOMFLAGS += -mstructure-size-boundary=32//g' Makefile
-        sed -i 's/LDFLAGS += -Wl,--fix-cortex-a8 -Wl,--no-as-needed//g' Makefile
-  fi
+  PKG_MAKE_OPTS_TARGET=" platform=armv8-neon-hardfloat-cortex-a53"
+  sed -i 's/CCOMFLAGS += -mstructure-size-boundary=32//g' Makefile
+  sed -i 's/LDFLAGS += -Wl,--fix-cortex-a8 -Wl,--no-as-needed//g' Makefile
 }
 
 makeinstall_target() {

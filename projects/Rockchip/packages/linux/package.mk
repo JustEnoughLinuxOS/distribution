@@ -13,18 +13,11 @@ PKG_DEPENDS_HOST="ccache:host openssl:host"
 PKG_DEPENDS_TARGET="toolchain linux:host cpio:host kmod:host xz:host wireless-regdb keyutils $KERNEL_EXTRA_DEPENDS_TARGET"
 PKG_DEPENDS_INIT="toolchain"
 PKG_NEED_UNPACK="$LINUX_DEPENDS $(get_pkg_directory busybox)"
-PKG_LONGDESC="This package contains the kernel for the RG351P/M/V/MP"
+PKG_LONGDESC="This package builds the kernel for the RG552"
 PKG_IS_KERNEL_PKG="yes"
 PKG_STAMP="$KERNEL_TARGET $KERNEL_MAKE_EXTRACMD"
 PKG_PATCH_DIRS+="${DEVICE}"
 GET_HANDLER_SUPPORT="git"
-
-if [[ "${DEVICE}" =~ RG351 ]]
-then
-  PKG_URL="https://github.com/JustEnoughLinuxOS/rg351-kernel.git"
-  PKG_VERSION="83b7412"
-  PKG_GIT_CLONE_BRANCH="main"
-fi
 
 PKG_KERNEL_CFG_FILE=$(kernel_config_path) || die
 

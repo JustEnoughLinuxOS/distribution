@@ -7,8 +7,6 @@ Just Enough Linux Operating System (JELOS) is a simple Linux distribution for AR
 * Supports FAT32, ExFAT, and EXT4 file systems.
 * Filesystem compatibility with Android
 
-> NOTE: Support for the RG351 series coming soon.
-
 ## Licenses
 JELOS is a Linux distribution that is made up of many open-source components.  Components are provided under their respective licenses.  This distribution includes components licensed for non-commercial use only.
 

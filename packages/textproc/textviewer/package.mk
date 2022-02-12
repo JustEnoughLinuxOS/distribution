@@ -22,11 +22,8 @@ pre_configure_target() {
   sed -i 's|ImColor(94, 11, 22,|ImColor(180, 0, 0,|g' main.cpp
   sed -i 's|BUTTON_START|BUTTON_INVALID|g' main.cpp
 
-  if [[ "$DEVICE" == "RG351P" ]] || [[ "$DEVICE" == "RG552" ]]; then
-    sed -i 's|    ImGui::GetIO().Fonts->AddFontDefault(&config);|    ImGui::GetIO().Fonts->AddFontDefault(\&config);\n  }\n  else\n  {\n    ImFontConfig config;\n    config.SizePixels = 13;\n    ImGui::GetIO().Fonts->AddFontDefault(\&config);|g' main.cpp
-  else
-    sed -i 's|    ImGui::GetIO().Fonts->AddFontDefault(&config);|    ImGui::GetIO().Fonts->AddFontDefault(\&config);\n  }\n  else\n  {\n    ImFontConfig config;\n    config.SizePixels = 20;\n    ImGui::GetIO().Fonts->AddFontDefault(\&config);|g' main.cpp
-  fi
+  # For RG552
+  sed -i 's|    ImGui::GetIO().Fonts->AddFontDefault(&config);|    ImGui::GetIO().Fonts->AddFontDefault(\&config);\n  }\n  else\n  {\n    ImFontConfig config;\n    config.SizePixels = 13;\n    ImGui::GetIO().Fonts->AddFontDefault(\&config);|g' main.cpp
 
 }
 

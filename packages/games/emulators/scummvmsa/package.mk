@@ -34,9 +34,7 @@ post_makeinstall_target() {
     rm -rf "$INSTALL/usr/local/share/scummvm/$i"
   done
 
-  if [[ "$DEVICE" == RG351P ]]; then
-    mkdir -p $INSTALL/usr/local/share/scummvm/
-    cp -rf $PKG_DIR/scummremastered.zip $INSTALL/usr/local/share/scummvm/
-  fi
+  mkdir -p $INSTALL/usr/local/share/scummvm/
+  cp -rf $PKG_DIR/scummremastered.zip $INSTALL/usr/local/share/scummvm/
 }
 

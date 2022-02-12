@@ -13,12 +13,6 @@ PKG_VERSION="543c8d3"
 GET_HANDLER_SUPPORT="git"
 PKG_GIT_CLONE_DEPTH="1"
 
-if [[ "${DEVICE}" =~ RG351 ]]
-then
-  PKG_VERSION="de6c620c0a"
-  PKG_URL="https://github.com/JustEnoughLinuxOS/rg351-uboot.git"
-fi
-
 PKG_IS_KERNEL_PKG="yes"
 PKG_STAMP="$UBOOT_SYSTEM"
 

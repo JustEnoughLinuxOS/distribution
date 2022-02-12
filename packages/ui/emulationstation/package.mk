@@ -62,9 +62,6 @@ makeinstall_target() {
 	chmod +x $INSTALL/usr/config/emulationstation/scripts/*
 	find $INSTALL/usr/config/emulationstation/scripts/ -type f -exec chmod o+x {} \;
 
-	if [[ ${DEVICE} =~ RG351 ]]; then
-	  sed -i "s|, vertical||g" "$INSTALL/usr/config/emulationstation/es_features.cfg"
-	fi
 }
 
 post_install() {

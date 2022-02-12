@@ -62,9 +62,6 @@ makeinstall_target() {
   if [ "${DEVICE}" == "RG552" ]
   then
     cp ${PKG_DIR}/sources/RG552/* ${INSTALL}/usr/config/ppsspp/PSP/SYSTEM
-  elif [[ "${DEVICE}" =~ RG351 ]]
-  then
-    cp ${PKG_DIR}/sources/RG351/* ${INSTALL}/usr/config/ppsspp/PSP/SYSTEM
   fi
   rm ${INSTALL}/usr/config/ppsspp/assets/gamecontrollerdb.txt
 }
