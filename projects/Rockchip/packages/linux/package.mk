@@ -21,8 +21,8 @@ GET_HANDLER_SUPPORT="git"
 
 if [[ "${DEVICE}" =~ RG351 ]]
 then
-  PKG_URL="https://github.com/fewtarius/kernel_rg351.git"
-  PKG_VERSION="8bdcf1f3d"
+  PKG_URL="https://github.com/JustEnoughLinuxOS/rg351-kernel.git"
+  PKG_VERSION="83b7412"
   PKG_GIT_CLONE_BRANCH="main"
 fi
 
