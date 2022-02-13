@@ -134,9 +134,6 @@ makeinstall_target() {
 
   mkdir -p $INSTALL/usr/lib/coreelec
     cp $PKG_DIR/scripts/functions $INSTALL/usr/lib/coreelec
-    cp $PKG_DIR/scripts/fs-resize $INSTALL/usr/lib/coreelec
-    sed -e "s/@DISTRONAME@/$DISTRONAME/g" \
-        -i $INSTALL/usr/lib/coreelec/fs-resize
 
     if listcontains "${FIRMWARE}" "rpi-eeprom"; then
       cp $PKG_DIR/scripts/rpi-flash-firmware $INSTALL/usr/lib/libreelec
@@ -184,7 +181,6 @@ post_install() {
   enable_service shell.service
   enable_service show-version.service
   enable_service var.mount
-  enable_service fs-resize.service
   listcontains "${FIRMWARE}" "rpi-eeprom" && enable_service rpi-flash-firmware.service
 
   # cron support
