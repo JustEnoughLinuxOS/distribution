@@ -2,8 +2,9 @@
 Just Enough Linux Operating System (JELOS) is a simple Linux distribution for ARM based devices that specializes in handhelds.  My goal is to build an operating system that has the features and capabilities that I need, and to have fun building it.
 
 ## Features
+* Supports the Anbernic RG552 handheld.
 * A 64bit Operating System.
-* Support for FAT32, ExFAT, and EXT4 file systems.
+* Supports FAT32, ExFAT, and EXT4 file systems.
 * Filesystem compatibility with Android
 
 ## Licenses
@@ -41,13 +42,16 @@ limitations under the License.
 * Decompress the image.
 * Write the image to an SDCARD using an imaging tool.  Common imaging tools include [Balena Etcher](https://www.balena.io/etcher/), [Raspberry Pi Imager](https://www.raspberrypi.com/software/), and [Win32 Disk Imager](https://sourceforge.net/projects/win32diskimager/).  If you're skilled with the command line, dd works fine too.
 
-## Upgrading JELOS
+## Upgrading
 * Download the latest [version of JELOS](https://github.com/JustEnoughLinuxOS/distribution/releases) (.tar or .img.gz) for your device.
 * Copy the update to your device over the network or to the sdcard's update folder.
 * Reboot the device, and the update will begin automatically.
 
 ## Network Access
-* The username for ssh and samba access is "root".  The default password is generated on boot. It can be found in the Network Settings menu.
+* The username for ssh and samba access is "root".  The root password is generated during every boot, it can be found in the Network Settings menu.
+
+## Credits
+Like any Linux distribution, this project is not the work of one person.  It is the work of many persons all over the world who have developed the open source bits without which this project could not exist.  Special thanks to 351ELEC, EmuELEC, CoreELEC, LibreELEC, Anbernic, and developers across the ARM handheld community.
 
 ## Frequently Asked Questions
 * Does JELOS offer any support?
@@ -58,3 +62,10 @@ limitations under the License.
   * Those platforms perform best in Android on the 552, and I have no interest in them.  I recommend that you use Android instead for those.
 * Will you support my device?
   * If you send me a device and source code, I'll consider it.
+* How can I disable root password rotation?
+  * SSH to the handheld and run the following commands.
+    * ```set_setting rotate.root.password 0```
+    * ```passwd root```
+    * ```smbpasswd root```
+  * Alternatively, copy your ssh key with ssh-copy-id, and leave rotation enabled.
+    * ```ssh-copy-id root@jelos```
