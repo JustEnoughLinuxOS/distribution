@@ -152,7 +152,6 @@ function quit() {
 	bluetooth enable
 	jslisten stop
 	clear_screen
-	${TBASH} /usr/bin/show_splash exit
 	normperf
 	set_audio default
 	exit $1
@@ -430,10 +429,6 @@ fi
 SETSETTINGS_PID=$!
 
 clear_screen
-$VERBOSE && log "Show splash screen"
-# Show splash screen if enabled
-SPL=$(get_setting splash.enabled)
-[ "$SPL" -eq "1" ] && (${TBASH} /usr/bin/show_splash "${ROMNAME}") &
 
 ### Wait for background jobs to complete before continuing.
 wait ${SETSETTINGS_PID}  #Don't wait for show splash
