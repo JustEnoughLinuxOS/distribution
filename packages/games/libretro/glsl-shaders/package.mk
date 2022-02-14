@@ -20,13 +20,13 @@
 ################################################################################
 
 PKG_NAME="glsl-shaders"
-PKG_VERSION="8b6ad6265a7d16f67f162a95c74dfe8bdf3f7d92"
-PKG_SHA256="a777877c037777fb701da594e6902ed317d474b925d5ebdce86cfa1a98ffadf5"
+PKG_VERSION="61f4c919371bb8efb9aca344a639ca1a882c56cb"
+PKG_SHA256="9e8728e7b52c6b0fafe553f2560fe11aceb8435601200dd7f17ca8fb179c577c"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/libretro/glsl-shaders"
-PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
+PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
@@ -38,16 +38,10 @@ PKG_TOOLCHAIN="make"
 PKG_AUTORECONF="no"
 
 configure_target() {
-  cd $PKG_BUILD
+  cd ${PKG_BUILD}
 }
 
 makeinstall_target() {
-  make install INSTALLDIR="$INSTALL/usr/share/common-shaders"
-  cp -r $PKG_DIR/shaders/* $INSTALL/usr/share/common-shaders
-}
-
-post_makeinstall_target() {
-  cp $PKG_DIR/removeshaders.sh .
-  chmod 755 removeshaders.sh
-  /bin/sh removeshaders.sh $INSTALL
+  make install INSTALLDIR="${INSTALL}/usr/share/common-shaders"
+  rsync -a ${PKG_DIR}/shaders/* ${INSTALL}/usr/share/common-shaders
 }
