@@ -13,7 +13,7 @@ source "${DISTPACKAGE}"
 
 if [ ! "${1}" ]
 then
-  PACKAGES_ALL=" ${PKG_BASEOS} ${PKG_UI} ${PKG_EMUS} ${LIBRETRO_CORES} ${PKG_COMPAT} ${PKG_MULTIMEDIA} ${PKG_GAMESUPPORT} ${PKG_EXPERIMENTAL}"
+  PACKAGES_ALL=" ${PKG_EMUS} ${LIBRETRO_CORES}"
 else
   PACKAGES_ALL="$*"
 fi
@@ -38,11 +38,6 @@ do
   source config/options "${p}"
   source "${f}"
   PKG_SITE=$(echo ${PKG_URL} | sed 's/\/archive.*//g')
-  if [[ ! "${PKG_URL}" =~ .git$ ]]
-  then
-    echo "${PKG_NAME} is not a git repo, skipping."
-    continue
-  fi
   [ -n "${PKG_GIT_BRANCH}" ] && PKG_GIT_CLONE_BRANCH="${PKG_GIT_BRANCH}"
   [ -n "${PKG_GIT_CLONE_BRANCH}" ] && GIT_HEAD="heads/${PKG_GIT_CLONE_BRANCH}" || GIT_HEAD="HEAD"
   UPS_VERSION=`git ls-remote ${PKG_SITE} | grep ${GIT_HEAD}$ | awk '{ print substr($1,1,40) }'`
