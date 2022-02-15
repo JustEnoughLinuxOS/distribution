@@ -14,8 +14,8 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_TOOLCHAIN="make"
 
-PKG_BASEOS="plymouth-lite grep wget libjpeg-turbo util-linux xmlstarlet bluetool gnupg gzip patchelf \
-            imagemagick util-linux terminus-font vim bash pyudev dialog six git dbus-python        \
+PKG_BASEOS="plymouth-lite grep wget libjpeg-turbo util-linux xmlstarlet bluetool gnupg gzip patchelf     \
+            imagemagick util-linux system-utils terminus-font vim bash pyudev dialog six git dbus-python \
             coreutils miniupnpc nss-mdns avahi MC fbgrab"
 
 PKG_UI="emulationstation"
@@ -23,17 +23,17 @@ PKG_UI="emulationstation"
 PKG_EMUS="common-shaders glsl-shaders libretro-database retroarch advancemame hatarisa openbor \
           scummvmsa PPSSPPSDL"
 
-LIBRETRO_CORES="2048 81 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce beetle-pcfx          \
-                beetle-supafaust beetle-supergrafx beetle-vb beetle-wswan bluemsx cannonball       \
-                cap32 crocods daphne dinothawr dosbox-svn dosbox-pure easyrpg fbalpha2012          \
-                fbalpha2019 fbneo fceumm fmsx flycast freechaf freeintv freej2me fuse-libretro     \
-                gambatte gearboy gearcoleco gearsystem genesis-plus-gx genesis-plus-gx-wide gme    \
-                gpsp gw-libretro handy hatari mame2000 mame2003-plus mame2010 mame2015 mame        \
-                meowpc98 mgba mrboom mupen64plus mupen64plus-nx neocd_libretro nestopia np2kai     \
-                nxengine o2em opera parallel-n64 parallel-n64_gln64 pcsx_rearmed picodrive         \
-                pokemini potator ppsspp prboom prosystem puae px68k quasi88 quicknes race          \
-                reminiscence sameboy sameduck scummvm smsplus-gx snes9x snes9x2002 snes9x2005_plus \
-                snes9x2010 stella stella-2014 swanstation TIC-80 tgbdual tyrquake xrick uae4arm    \
+LIBRETRO_CORES="2048 81 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce beetle-pcfx            \
+                beetle-supafaust beetle-supergrafx beetle-vb beetle-wswan bluemsx                    \
+                cannonball cap32 crocods daphne dinothawr dosbox-svn dosbox-pure easyrpg fbalpha2012 \
+                fbalpha2019 fbneo fceumm fmsx flycast freechaf freeintv freej2me fuse-libretro       \
+                gambatte gearboy gearcoleco gearsystem genesis-plus-gx genesis-plus-gx-wide gme      \
+                gpsp gw-libretro handy hatari mame2000 mame2003-plus mame2010 mame2015 mame          \
+                meowpc98 mgba mrboom mupen64plus mupen64plus-nx neocd_libretro nestopia np2kai       \
+                nxengine o2em opera parallel-n64 parallel-n64_gln64 pcsx_rearmed picodrive           \
+                pokemini potator ppsspp prboom prosystem puae px68k quasi88 quicknes race            \
+                reminiscence sameboy sameduck scummvm smsplus-gx snes9x snes9x2002 snes9x2005_plus   \
+                snes9x2010 stella stella-2014 swanstation TIC-80 tgbdual tyrquake xrick uae4arm      \
                 uzem vba-next vbam vecx vice yabasanshiro xmil"
 
 PKG_COMPAT="lib32"

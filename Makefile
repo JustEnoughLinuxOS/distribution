@@ -1,6 +1,6 @@
 BUILD_DIRS=build.*
 
-all:
+all: world
 
 system:
 	./scripts/image
@@ -23,9 +23,7 @@ distclean:
 src-pkg:
 	tar cvJf sources.tar.xz sources .stamps
 
-world:
-	DEVICE=RG552 ARCH=arm ./scripts/build_distro
-	DEVICE=RG552 ARCH=aarch64 ./scripts/build_distro
+world: update RG552 FORCE
 
 RG552:
 	DEVICE=RG552 ARCH=arm ./scripts/build_distro
