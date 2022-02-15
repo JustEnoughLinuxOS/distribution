@@ -41,7 +41,6 @@ makeinstall_target() {
 
   mkdir -p $INSTALL/usr/config/distribution/lzdoom
   cp $PKG_DIR/config/${DEVICE}/* $INSTALL/usr/config/distribution/lzdoom
-  fi
   cp $PKG_BUILD/.$TARGET_NAME/*.pk3 $INSTALL/usr/config/distribution/lzdoom
   cp -r $PKG_BUILD/.$TARGET_NAME/soundfonts $INSTALL/usr/config/distribution/lzdoom
   cp -r $PKG_BUILD/.$TARGET_NAME/fm_banks $INSTALL/usr/config/distribution/lzdoom

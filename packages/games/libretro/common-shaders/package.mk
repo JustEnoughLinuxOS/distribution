@@ -21,34 +21,25 @@
 
 ### Don't update, newer commits have issues.
 PKG_NAME="common-shaders"
-PKG_VERSION="b7cdc50258908e8f1906f8fc13a2fac4a9796dc6"
-PKG_SHA256="9cf8ac14e3f971b29421d556cf65b4234468f350d15b466abc635b7cec9ab6fa"
+PKG_VERSION="55e401834b732e62c34411321c4ffd82524345d4"
+PKG_SHA256="6dae9d4464febf556f4b419df51d2eb9c09f1e62666493e03cf6cc6cc447aa86"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/RetroPie/common-shaders"
+PKG_SITE="https://github.com/libretro/common-shaders"
 PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
-PKG_SECTION="emuelec"
-PKG_SHORTDESC="Manually converted libretro/common-shaders for arm devices treebranch pi"
-PKG_LONGDESC="Manually converted libretro/common-shaders for arm devices treebranch pi"
-PKG_GIT_CLONE_BRANCH="rpi"
-
-PKG_IS_ADDON="no"
-PKG_TOOLCHAIN="make"
-PKG_AUTORECONF="no"
-
-
+PKG_SECTION="libretro"
+PKG_SHORTDESC="Libretro common shaders"
+PKG_LONGDESC="Libretro common shaders"
 
 make_target() {
-  : not
+  :
 }
 
 makeinstall_target() {
-  #make install INSTALLDIR="$INSTALL/usr/share/common-shaders/pi"
-
-mkdir -p $INSTALL/usr/share/common-shaders/rpi
-    cp -rf $BUILD/$PKG_NAME-$PKG_VERSION/* $INSTALL/usr/share/common-shaders/rpi
+  mkdir -p ${INSTALL}/usr/share/common-shaders
+  rsync -a ${BUILD}/${PKG_NAME}-${PKG_VERSION}/* ${INSTALL}/usr/share/common-shaders/
+  rm -f ${INSTALL}/usr/share/common-shaders/{Makefile,configure}
 }
-

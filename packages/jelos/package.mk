@@ -15,8 +15,8 @@ PKG_AUTORECONF="no"
 PKG_TOOLCHAIN="make"
 
 PKG_BASEOS="plymouth-lite grep wget libjpeg-turbo util-linux xmlstarlet bluetool gnupg gzip patchelf \
-            imagemagick system-utils terminus-font vim bash pyudev dialog six git dbus-python        \
-            coreutils miniupnpc nss-mdns avahi MC"
+            imagemagick util-linux terminus-font vim bash pyudev dialog six git dbus-python        \
+            coreutils miniupnpc nss-mdns avahi MC fbgrab"
 
 PKG_UI="emulationstation"
 

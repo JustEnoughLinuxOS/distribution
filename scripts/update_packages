@@ -6,8 +6,6 @@
 
 OPTIONS="distributions/JELOS/options"
 DISTPACKAGE="packages/jelos/package.mk"
-RAPACKAGES="retroarch retroarch-assets libretro-database core-info glsl-shaders"
-EMUPACKAGES="$LIBRETRO_CORES advancemame PPSSPPSDL amiberry hatarisa openbor scummvmsa solarus lzdoom mupen64plussa-audio-sdl mupen64plussa-core mupen64plussa-input-sdl mupen64plussa-rsp-hle mupen64plussa-ui-console mupen64plussa-video-glide64mk2 mupen64plussa-video-rice"
 BLOCKLIST="config/blocklist"
 
 source "${OPTIONS}"
@@ -15,7 +13,7 @@ source "${DISTPACKAGE}"
 
 if [ ! "${1}" ]
 then
-  PACKAGES_ALL=" ${RAPACKAGES} ${LIBRETRO_CORES} ${EMUPACKAGES}"
+  PACKAGES_ALL=" ${PKG_EMUS} ${LIBRETRO_CORES}"
 else
   PACKAGES_ALL="$*"
 fi
@@ -24,13 +22,19 @@ for p in $PACKAGES_ALL
 do
   PKG_PATH="./packages"
   echo "Operating on ${p}"
-  f=$(find ${PKG_PATH} -wholename */${p}/package.mk)
+  f=$(find ${PKG_PATH} -type d -name "${p}")
   if [ "$(grep ${p} ${BLOCKLIST})" ]
   then
     echo "Skipping ${p}"
     continue
   fi
+  f="${f}/package.mk"
   echo "${p}: ${f}"
+  if [ ! "${p}" ] && [ ! "${f}" ]
+  then
+    echo "Package not found, skipping."
+    continue
+  fi
   source config/options "${p}"
   source "${f}"
   PKG_SITE=$(echo ${PKG_URL} | sed 's/\/archive.*//g')
