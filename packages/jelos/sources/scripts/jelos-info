@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source /etc/os-release
+source /etc/profile
 
 ### short version (for osd)
 if test "$1" = "--short"
@@ -97,6 +97,17 @@ echo "CPU: ${V_CPUMODEL1} (${V_CPUNB} Cores)"
 if test -n "${TEMPE}"
 then
     echo "CPU TEMPERATURE: ${TEMPE}°"
+fi
+if [ "${DEVICE_HAS_FAN}" = "true" ]
+then
+  FANSPEED=$(cat ${DEVICE_PWM_FAN})
+  if [ "${FANSPEED}" = "0" ]
+  then
+    FANSPEED="OFF"
+  else
+    FANSPEED="${FANSPEED} RPM"
+  fi
+  echo "CPU FAN: ${FANSPEED}"
 fi
 for C in "${CF[@]}"
 do

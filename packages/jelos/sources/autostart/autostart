@@ -24,6 +24,16 @@ do
   ${script} 2>&1 >>${BOOTLOG}
 done
 
+### Run custom start scripts
+if [ -d "/storage/.config/autostart" ]
+then
+  for script in /storage/.config/autostart/*
+  do
+    echo "Executing ${script}" 2>&1 >>${BOOTLOG}
+  ${script} 2>&1 >>${BOOTLOG}
+  done
+fi
+
 normperf 2>&1 >>${BOOTLOG}
 
 clear >/dev/console
