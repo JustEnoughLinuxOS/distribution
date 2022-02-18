@@ -69,3 +69,8 @@ Like any Linux distribution, this project is not the work of one person.  It is 
     * ```smbpasswd root```
   * Alternatively, copy your ssh key with ssh-copy-id, and leave rotation enabled.
     * ```ssh-copy-id root@jelos```
+* I want to add games to SD Card 1 and see them in my EmulationStation games list.
+  * A custom facility has been added to JELOS to enable things such as this, to use it add a script to /storage/.config/autostart to create a bind mount and add your games to the directory on your primary SD card.  They will appear in ES after a restart of the ES service or a reboot.  To create a bind mount, use the example below, changing as necessary.
+    * ```#!/bin/bash```
+    * ```mkdir -p /storage/c64```
+    * ```mount --bind /storage/roms/c64 /storage/c64```
