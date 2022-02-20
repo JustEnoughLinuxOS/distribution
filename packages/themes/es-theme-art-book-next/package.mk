@@ -4,7 +4,7 @@
 
 PKG_NAME="es-theme-art-book-next"
 PKG_REV="1"
-PKG_VERSION="09b5e0d"
+PKG_VERSION="eb75225"
 PKG_ARCH="any"
 PKG_LICENSE="CUSTOM"
 PKG_SITE="https://github.com/anthonycaccese/es-theme-art-book-next"
