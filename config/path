@@ -10,7 +10,7 @@ set -e
   SOURCES=${SOURCES_DIR:-$ROOT/sources}
   BUILD_ROOT=${BUILD_DIR:-$ROOT}
   BUILD_BASE=build
-  TARGET_IMG=${TARGET_DIR:-$ROOT/target}
+  TARGET_IMG=${TARGET_DIR:-$ROOT/release}
   ADDONS=addons
 
 # include ARCH specific options

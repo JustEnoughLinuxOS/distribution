@@ -51,6 +51,4 @@ then
   then
     rm -rf "release/${ARCH}/${DEVICE}"
   fi
-mkdir -p release/${ARCH}/${DEVICE}
-mv target/* "release/${ARCH}/${DEVICE}/"
 fi
