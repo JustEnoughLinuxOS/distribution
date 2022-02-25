@@ -25,6 +25,9 @@
 # Root password to integrate in the target system
   ROOT_PASSWORD="jelos"
 
+# Remove kernel and system files from the release directory.
+  COREELEC_TARGET_REMOVE="kernel_system"
+
 # Install glibc locales to the build (yes / no)
   GLIBC_LOCALES="yes"
 
