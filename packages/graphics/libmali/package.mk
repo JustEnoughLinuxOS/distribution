@@ -5,9 +5,9 @@
 PKG_NAME="libmali"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="nonfree"
-PKG_SITE="https://github.com/rockchip-linux/libmali"
-PKG_URL="https://github.com/rockchip-linux/libmali.git"
-PKG_VERSION="ad4c289"
+PKG_SITE="https://github.com/JustEnoughLinuxOS/libmali"
+PKG_URL="${PKG_SITE}.git"
+PKG_VERSION="a1776f4"
 PKG_GIT_CLONE_DEPTH=1
 GET_HANDLER_SUPPORT="git"
 PKG_DEPENDS_TARGET="toolchain libdrm"
