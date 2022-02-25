@@ -50,6 +50,16 @@ limitations under the License.
 ## Network Access
 * The username for ssh and samba access is "root".  The root password is generated during every boot, it can be found in the Network Settings menu.
 
+## RetroArch Hotkeys
+* Hotkey Enable: Select (Hold)
+  * Exit: Start (Press Twice)
+  * Menu: Y
+  * Show/Hide FPS: X
+  * Save State: R1
+  * Load State: L1
+  * Rewind: L2
+  * Fast-Forward Toggle: R2
+
 ## Credits
 Like any Linux distribution, this project is not the work of one person.  It is the work of many persons all over the world who have developed the open source bits without which this project could not exist.  Special thanks to 351ELEC, EmuELEC, CoreELEC, LibreELEC, Anbernic, and developers across the ARM handheld community.
 
