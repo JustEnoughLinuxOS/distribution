@@ -2,11 +2,10 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="plymouth-lite"
-PKG_VERSION="0.6.0"
-PKG_SHA256="fa7b581bdd38c5751668243ff9d2ebaee7c45753358cbb310fb50cfcd3a8081b"
+PKG_VERSION="9aacbd1"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.meego.com"
-PKG_URL="$DISTRO_SRC/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_SITE="https://github.com/JustEnoughLinuxOS/plymouth-lite"
+PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_INIT="toolchain ccache:init libpng"
 PKG_DEPENDS_TARGET="toolchain libpng"
 PKG_LONGDESC="Boot splash screen based on Fedora's Plymouth code"
