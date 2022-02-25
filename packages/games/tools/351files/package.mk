@@ -2,7 +2,7 @@
 # Copyright (C) 2021-present 351ELEC (https://github.com/351elec)
 
 PKG_NAME="351files"
-PKG_VERSION="bab7144d2b3dccdc090445608d0a21210e3d438b"
+PKG_VERSION="a7bb75dafca5c3f8e50e0f456b7ec249a69e1346"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
@@ -25,4 +25,3 @@ makeinstall_target() {
   cp 351Files $INSTALL/usr/bin/
   cp -rf res $INSTALL/usr/share/351files/
 }
-
