@@ -33,11 +33,9 @@ done
 
 if [ ! -z "${SDDEVICE}" ]
 then
-  if [ -d "release/aarch64/${DEVICE}" ]
+  if [ -e "release/${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img.gz" ]
   then
-	
-    cd release/aarch64/${DEVICE}
-
+    cd release
     echo "Extracting ${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img.gz"
     gunzip ${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img.gz
 
