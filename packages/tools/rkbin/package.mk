@@ -2,7 +2,7 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="rkbin"
-PKG_VERSION="7fd0297"
+PKG_VERSION="9f36db2"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="nonfree"
 PKG_SITE="https://github.com/JustEnoughLinuxOS/rkbin"
