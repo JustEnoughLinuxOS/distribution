@@ -33,7 +33,7 @@ EOF
       set_setting wifi.enabled 0
     ;;
     "list")
-      connmanctl services | cut -b 5- | sed -e s+'^\([^ ]*\).*$'+'\1'+ | grep -vE '^Wired$|^<hidden>$' 2>/dev/null
+      connmanctl services | cut -b 5- | awk '/wifi/ {sub(/\s+wifi_.*$/,"",$0);print}' | uniq
     ;;
     "scan")
       connmanctl scan 2>/dev/null
