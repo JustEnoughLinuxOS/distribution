@@ -20,8 +20,8 @@
 ################################################################################
 
 PKG_NAME="cap32"
-PKG_VERSION="dc70139d067291cccf7ce726dfa1da7de2f65ccf"
-PKG_SHA256="b236669fe745ada36beef3a82491be8b6fa3752be6bf32bbece6b03f40af1291"
+PKG_VERSION="46a77ab30bde04a3555731878dfa68733f7d3040"
+PKG_SHA256="f4914983a3a5d0b37f9a8670e787a2fa4094453384debfe6c1023906ae85dd45"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
