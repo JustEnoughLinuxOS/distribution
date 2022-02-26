@@ -194,7 +194,7 @@
 
 # Distribution Specific source location
   DISTRO_MIRROR="http://sources.libreelec.tv/mirror"
-  DISTRO_SRC="https://github.com/JELOS/JELOS"
+  DISTRO_SRC="https://github.com/JustEnoughLinuxOS"
 
 # Addon Server Url
   ADDON_SERVER_URL=""
