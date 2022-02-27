@@ -46,7 +46,7 @@
  
   # Mali GPU family
     MALI_FAMILY="midgard-t86x"
-    DRIVER_VERSION="r18p0"
+    MALI_VERSION="r18p0"
     OPENGLES="libmali"
     GRAPHIC_DRIVERS=""
 
