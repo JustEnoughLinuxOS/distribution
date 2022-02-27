@@ -7,17 +7,12 @@ PKG_ARCH="arm aarch64"
 PKG_LICENSE="nonfree"
 PKG_SITE="https://github.com/JustEnoughLinuxOS/libmali"
 PKG_URL="${PKG_SITE}.git"
-PKG_VERSION="b901124"
-PKG_GIT_CLONE_DEPTH=1
+PKG_VERSION="7d7e1a4"
+MALI_VERSION="1.9.0"
 GET_HANDLER_SUPPORT="git"
 PKG_DEPENDS_TARGET="toolchain libdrm"
 PKG_LONGDESC="OpenGL ES user-space binary for the ARM Mali GPU family"
-
 PKG_PATCH_DIRS+="${DEVICE}"
-
-MALIVERSION="1.9.0"
-
-PKG_STAMP="${MALI_FAMILY}"
 
 if [ "${TARGET_ARCH}" = "aarch64" ]; then
   INSTARCH="aarch64-linux-gnu"
@@ -27,54 +22,15 @@ fi
 
 PKG_CMAKE_OPTS_TARGET+=" -DMALI_ARCH=${INSTARCH}"
 
-pre_configure_target() {
-  if [ -e "${PKG_BUILD}/CMakeLists.txt" ]
-  then
-    sed -i "s#arm-linux-gnueabihf/libmali-bifrost-g31-rxp0-wayland-gbm.so#${INSTARCH}/${MALIDRIVER}.so#g" ${PKG_BUILD}/CMakeLists.txt 
-  fi
-}
+PKG_MESON_OPTS_TARGET+=" -Darch=${TARGET_ARCH} \
+                         -Dgpu=${MALI_FAMILY} \
+                         -Dplatform=gbm \
+                         -Dkhr-header=true"
 
 post_makeinstall_target() {
-  rm -f "${INSTALL}/usr/lib/*mali*"
-
-  cp -f "${PKG_BUILD}/lib/${INSTARCH}/${MALIDRIVER}.so" "${SYSROOT_PREFIX}/usr/lib"
-  cp -f "${PKG_BUILD}/lib/${INSTARCH}/${MALIDRIVER}.so" "${INSTALL}/usr/lib"
-
-  ln -sf "${MALIDRIVER}.so" "${SYSROOT_PREFIX}/usr/lib/libmali.so.${MALIVERSION}"
-  ln -sf "${MALIDRIVER}.so" "${INSTALL}/usr/lib/libmali.so.${MALIVERSION}"
-
-  ln -sf libmali.so.${MALIVERSION} ${SYSROOT_PREFIX}/usr/lib/libvulkan.so.1
-  ln -sf libmali.so.${MALIVERSION} ${INSTALL}/usr/lib/libvulkan.so.1
-  ln -sf libvulkan.so.1 ${SYSROOT_PREFIX}/usr/lib/libvulkan.so
-  ln -sf libvulkan.so.1 ${INSTALL}/usr/lib/libvulkan.so
-
-  ln -sf libmali.so.${MALIVERSION} ${SYSROOT_PREFIX}/usr/lib/libmali.so.1
-  ln -sf libmali.so.${MALIVERSION} ${INSTALL}/usr/lib/libmali.so.1
-
-  ln -sf libmali.so.1 ${SYSROOT_PREFIX}/usr/lib/libmali.so
-  ln -sf libmali.so.1 ${INSTALL}/usr/lib/libmali.so
-
-  ln -sf libmali.so.1 ${SYSROOT_PREFIX}/usr/lib/libgbm.so.1
-  ln -sf libgbm.so.1 ${SYSROOT_PREFIX}/usr/lib/libgbm.so
-  ln -sf libmali.so.1 ${INSTALL}/usr/lib/libgbm.so.1
-  ln -sf libgbm.so.1 ${INSTALL}/usr/lib/libgbm.so
-
-  for lib in \
-           libGLESv1_CM.so.1 \
-           libGLESv1_CM.so \
-           libGLESv2.so.2 \
-           libGLESv2.so \
-           libGLESv3.so.3 \
-           libGLESv3.so \
-           libEGL.so.1 \
-           libEGL.so \
-           libMaliOpenCL.so.1 \
-           libMaliOpenCL.so
+  for lib in libEGL.so.1 libgbm.so.1 libGLESv1_CM.so.1 libGLESv2.so.2 libMaliOpenCL.so.1
   do
-        rm -f ${INSTALL}/usr/lib/${lib}
-        ln -sf libmali.so ${INSTALL}/usr/lib/${lib}
-        rm -f ${SYSROOT_PREFIX}/usr/lib/${lib}
-        ln -sf libmali.so ${SYSROOT_PREFIX}/usr/lib/${lib}
+    rm -f ${PKG_BUILD}/.install_pkg/usr/lib/${lib}
+    ln -s libmali.so.${MALI_VERSION} ${PKG_BUILD}/.install_pkg/usr/lib/${lib}
   done
-  rm -f $(ls ${INSTALL}/usr/lib/libmali-* | grep -v ${MALIDRIVER})
 }

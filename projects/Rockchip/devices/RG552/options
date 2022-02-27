@@ -45,9 +45,8 @@
     HW_CPU="Rockchip RK3399"
  
   # Mali GPU family
-    MALI_FAMILY="t860"
+    MALI_FAMILY="midgard-t86x"
     OPENGLES="libmali"
-    MALIDRIVER="libmali-midgard-t86x-r18p0-gbm"
     GRAPHIC_DRIVERS=""
 
   # kernel serial console

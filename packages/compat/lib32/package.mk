@@ -9,7 +9,6 @@ PKG_DEPENDS_TARGET="toolchain retroarch SDL2 libsndfile libmodplug"
 PKG_SHORTDESC="ARM 32bit bundle for aarch64"
 PKG_PRIORITY="optional"
 PKG_TOOLCHAIN="manual"
-MALIVERSION="1.9.0"
 
 makeinstall_target() {
   cd ${PKG_BUILD}
@@ -78,10 +77,8 @@ makeinstall_target() {
     do
       find ${LIBROOT}/usr/lib -name ${lib}* -exec cp -vP \{} ${INSTALL}/usr/lib32 \;
     done
-    cp -f ${LIBROOT}/usr/lib/${MALIDRIVER}.so ${INSTALL}/usr/lib32
-    ln -sf ${MALIDRIVER}.so ${INSTALL}/usr/lib32/libmali.so.${MALIVERSION}
-    ln -sf libmali.so.${MALIVERSION} ${INSTALL}/usr/lib32/libmali.so.1
-    ln -sf libmali.so.1 ${INSTALL}/usr/lib32/libmali.so
+    cp ${PKG_BUILD}/../../build.${DISTRONAME}-${DEVICE}.arm/libmali*/.install_pkg/usr/lib/* ${INSTALL}/usr/lib32
+
     chmod -f +x ${INSTALL}/usr/lib32/* || :
   fi
   mkdir -p ${INSTALL}/usr/lib
