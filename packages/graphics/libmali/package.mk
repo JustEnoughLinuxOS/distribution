@@ -33,5 +33,7 @@ post_makeinstall_target() {
   do
     rm -f ${PKG_BUILD}/.install_pkg/usr/lib/${lib}
     ln -s libmali.so.${MALI_LIB_VERSION} ${PKG_BUILD}/.install_pkg/usr/lib/${lib}
+    rm -f ${SYSROOT_PREFIX}/usr/lib/${lib}
+    ln -s libmali.so.${MALI_LIB_VERSION} ${SYSROOT_PREFIX}/usr/lib/${lib}
   done
 }

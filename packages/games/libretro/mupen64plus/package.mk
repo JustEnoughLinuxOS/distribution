@@ -40,36 +40,9 @@ pre_make_target() {
 }
 
 pre_configure_target() {
-  
-   case $PROJECT in
-    Amlogic-ng)
-    if [ $ARCH == "arm" ]; then
-		PKG_MAKE_OPTS_TARGET="platform=odroid board=c2"
-      else
-		PKG_MAKE_OPTS_TARGET="platform=odroid64 board=n2 HAVE_NEON=0"
-      fi
-    ;;
-    Amlogic)
-    if [ $ARCH == "arm" ]; then
-		PKG_MAKE_OPTS_TARGET="platform=odroid BOARD=c2"
-      else
-		PKG_MAKE_OPTS_TARGET="platform=odroid64 BOARD=c2 HAVE_NEON=0"
-      fi
-    ;;
-  esac
- 
- if [[ "$DEVICE" =~ RG351 ]] || [[ "$DEVICE" =~ RG552 ]]; then 
-	if [[ "$ARCH" == "arm" ]]; then
-		CFLAGS="$CFLAGS -DLINUX -DEGL_API_FB"
-		CPPFLAGS="$CPPFLAGS -DLINUX -DEGL_API_FB"
-		PKG_MAKE_OPTS_TARGET=" platform=unix GLES=1 FORCE_GLES=1 HAVE_NEON=1 WITH_DYNAREC=arm"
-	else 
-		CFLAGS="$CFLAGS -DLINUX -DEGL_API_FB"
-		CPPFLAGS="$CPPFLAGS -DLINUX -DEGL_API_FB"
-		PKG_MAKE_OPTS_TARGET=" platform=unix GLES=1 FORCE_GLES=1 HAVE_NEON=0 WITH_DYNAREC=aarch64"
-	fi
- fi
-  
+  CFLAGS="$CFLAGS -DLINUX -DEGL_API_FB"
+  CPPFLAGS="$CPPFLAGS -DLINUX -DEGL_API_FB"
+  PKG_MAKE_OPTS_TARGET=" platform=RK3399"
 }
 
 makeinstall_target() {

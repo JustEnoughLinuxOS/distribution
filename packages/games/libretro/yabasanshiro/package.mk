@@ -35,10 +35,7 @@ PKG_TOOLCHAIN="make"
 GET_HANDLER_SUPPORT="git"
 
 pre_configure_target() {
-  # For some reason linkin to GLESv2 gives error, so we link it to GLESv3
-  sed -i "s|-lGLESv2|-lGLESv3|g" $PKG_BUILD/yabause/src/libretro/Makefile.common
-  sed -i "s|-mcpu=cortex-a53 -mtune=cortex-a53|-mcpu=cortex-a35 -mtune=cortex-a35|g" $PKG_BUILD/yabause/src/libretro/Makefile
-  PKG_MAKE_OPTS_TARGET+=" -C yabause/src/libretro platform=arm64_cortex_a53_gles3"
+  PKG_MAKE_OPTS_TARGET+=" -C yabause/src/libretro platform=rockpro64 HAVE_NEON=0"
 }
 
 makeinstall_target() {

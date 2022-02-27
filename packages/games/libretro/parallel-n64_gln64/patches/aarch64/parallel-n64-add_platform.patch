@@ -47,7 +47,7 @@ diff -rupN parallel-n64.orig/Makefile parallel-n64.new/Makefile
 +   LDFLAGS += -static-libgcc #-static-libstdc++
 +   fpic = -fPIC
 +   GLES = 1
-+   GL_LIB := -lGLESv3
++   GL_LIB := -lGLESv2
 +   HAVE_OPENGL = 0
 +   HAVE_NEON = 1
 +   FORCE_GLES = 1
