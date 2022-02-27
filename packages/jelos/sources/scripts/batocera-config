@@ -7,8 +7,8 @@ if [ ! "$1" ];then
 	echo -e "usage : batocera-config [command] [args]\nWith command in\n\toverscan [enable|disable]\n\tlsaudio\n\tgetaudio\n\taudio [hdmi|jack|auto|custom|x,y]\n\tcanupdate\n\tupdate\n\twifi [enable|disable] ssid key\n\tstorage [current|list|INTERNAL|ANYEXTERNAL|RAM|DEV UUID]\n\tsetRootPassword [password]\n\tgetRootPassword\n\ttz [|tz]"
 	exit 1
 fi
-configFile="/storage/.config/distribution/configs/config.txt"
-storageFile="/storage/.config/distribution/configs/batocera-boot.conf"
+configFile="/storage/.config/system/configs/config.txt"
+storageFile="/storage/.config/system/configs/batocera-boot.conf"
 command="$1"
 mode="$2"
 extra1="$3"
@@ -283,7 +283,7 @@ fi
 if [ "$command" == "tz" ];then
     if test "$mode" == ""
     then
-	cat /storage/.config/distribution/configs/tz
+	cat /storage/.config/system/configs/tz
     else
 	if test -f "/usr/share/zoneinfo/${mode}"
 	then

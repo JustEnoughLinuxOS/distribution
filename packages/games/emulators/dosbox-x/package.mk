@@ -33,7 +33,7 @@ pre_make_target() {
 
 post_makeinstall_target() {
   # Create config directory & install config
-  mkdir -p ${INSTALL}/usr/config/distribution/configs/dosbox/
+  mkdir -p ${INSTALL}/usr/config/game/configs/dosbox/
   cp -a ${PKG_DIR}/scripts/* ${INSTALL}/usr/bin/
-  cp -a ${PKG_DIR}/config/*  ${INSTALL}/usr/config/distribution/configs/dosbox/
+  cp -a ${PKG_DIR}/config/*  ${INSTALL}/usr/config/game/configs/dosbox/
 }

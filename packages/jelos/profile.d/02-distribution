@@ -8,12 +8,12 @@ export PATH="$PATH:/usr/local/bin:/usr/bin:/storage/bin"
 
 export SDL_GAMECONTROLLERCONFIG_FILE="/storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt"
 
-J_DIR="/storage/.config/distribution"
-J_CONF="${J_DIR}/configs/distribution.conf"
+J_DIR="/storage/.config/system"
+J_CONF="${J_DIR}/configs/system.cfg"
 ES_CONF="/storage/.emulationstation/es_settings.cfg"
 EE_DEVICE=${HW_DEVICE}
 
-JSLISTENCONF="/storage/.config/distribution/configs/jslisten.cfg"
+JSLISTENCONF="/storage/.config/system/configs/jslisten.cfg"
 
 get_setting() {
   awk -F: '/'${1}'/ { st = index($0,"=");print substr($0,st+1)}' ${J_CONF}

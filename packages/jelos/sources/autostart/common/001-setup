@@ -4,13 +4,35 @@
 
 . /etc/profile
 
-if [ -d "/storage/.config/distribution/configs" ]
+### Migrate distribution, and split games.
+if [ -d "/storage/.config/distribution" ]
+then
+  mv /storage/.config/distribution /storage/.config/system
+  mv /storage/.config/system/distribution.conf /storage/.config/system/system.cfg
+fi
+
+if [ ! -d "/storage/.config/game/configs" ]
+then
+  mkdir -p /storage/.config/game/configs
+  for dir in $(find /storage/.config/system/configs/ -type d -maxdepth 1)
+  do
+    if [ "${dir}" = "all" ]
+    then
+      continue
+    fi
+    mv ${dir} /storage/.config/game/configs
+  done
+fi
+
+### Resume normal startup stuff.
+if [ -d "/storage/.config/system/configs" ]
 then
   EXCLUDE="--exclude=configs"
 fi
 
-rsync -a /usr/config/.OS* /storage/.config
-rsync -a --delete ${EXCLUDE} /usr/config/distribution/ /storage/.config/distribution/
+rsync -a --delete ${EXCLUDE} /usr/config/system/ /storage/.config/system/
+rsync -a /usr/config/modules /storage/.config/
+rsync -a /usr/config/game /storage/.config/
 rsync -a --delete /usr/config/locale/ /storage/.config/emulationstation/locale/
 
 cp -f /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt

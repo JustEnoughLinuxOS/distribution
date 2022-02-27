@@ -48,7 +48,7 @@ makeinstall_target() {
   cp $PKG_BUILD/ecwolf $INSTALL/usr/bin/
   cp $PKG_DIR/ecwolf.sh $INSTALL/usr/bin/
   
-  mkdir -p $INSTALL/usr/config/distribution/ecwolf
-  cp $PKG_BUILD/ecwolf.pk3 $INSTALL/usr/config/distribution/ecwolf/
-  cp $PKG_DIR/config/* $INSTALL/usr/config/distribution/ecwolf/
+  mkdir -p $INSTALL/usr/config/game/ecwolf
+  cp $PKG_BUILD/ecwolf.pk3 $INSTALL/usr/config/game/ecwolf/
+  cp $PKG_DIR/config/* $INSTALL/usr/config/game/ecwolf/
 }

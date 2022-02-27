@@ -8,9 +8,9 @@ diff -rupN jslisten.orig/src/jslisten.c jslisten.new/src/jslisten.c
 -#define myConfFile "/.kodi/addons/script.emuelec.Amlogic.launcher/config/jslisten.cfg"
 -#define myConfFileNG "/.kodi/addons/script.emuelec.Amlogic-ng.launcher/config/jslisten.cfg"
 -#define myGlConfFile "/emuelec/configs/jslisten.cfg"
-+#define myConfFile "/storage/.config/distribution/configs/jslisten.cfg"
-+#define myConfFileNG "/storage/.config/distribution/configs/jslisten.cfg"
-+#define myGlConfFile "/storage/.config/distribution/configs/jslisten.cfg"
++#define myConfFile "/storage/.config/system/configs/jslisten.cfg"
++#define myConfFileNG "/storage/.config/system/configs/jslisten.cfg"
++#define myGlConfFile "/storage/.config/system/configs/jslisten.cfg"
  //#define MY_LOG_LEVEL LOG_NOTICE //LOG_DEBUG //LOG_NOTICE
  
  #define INI_BUFFERSIZE      512

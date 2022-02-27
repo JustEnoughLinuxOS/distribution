@@ -27,8 +27,8 @@ makeinstall_target() {
   mkdir -p $INSTALL/usr/lib/libretro
   cp ${PKG_BUILD}/src/libretro/freej2me_libretro.so $INSTALL/usr/lib/libretro/
 
-  mkdir -p $INSTALL/usr/config/distribution/freej2me
-  cp ${PKG_BUILD}/build/freej2me-lr.jar $INSTALL/usr/config/distribution/freej2me
+  mkdir -p $INSTALL/usr/config/game/freej2me
+  cp ${PKG_BUILD}/build/freej2me-lr.jar $INSTALL/usr/config/game/freej2me
 
   mkdir -p $INSTALL/usr/bin
   cp ${PKG_DIR}/freej2me.sh $INSTALL/usr/bin

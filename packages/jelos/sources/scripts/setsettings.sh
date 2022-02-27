@@ -21,7 +21,7 @@ NOANALOGUE=(n64 psx wonderswan wonderswancolor psp pspminis dreamcast)
 IS32BITCORE=(pcsx_rearmed parallel_n64)
 
 INDEXRATIOS=(4/3 16/9 16/10 16/15 21/9 1/1 2/1 3/2 3/4 4/1 9/16 5/4 6/5 7/9 8/3 8/7 19/12 19/14 30/17 32/9 config squarepixel core custom)
-CONF="/storage/.config/distribution/configs/distribution.conf"
+CONF="/storage/.config/system/configs/system.cfg"
 SOURCERACONF="/usr/config/retroarch/retroarch.cfg"
 RACONF="/storage/.config/retroarch/retroarch.cfg"
 RAAPPENDCONF="/tmp/raappend.cfg"
@@ -131,7 +131,7 @@ log "Core: ${CORE}"
 ### Wifi
 ## Cleanup old settings first
 #sed -i "/wifi_enabled/d" ${RACONF}
-## Get configuration from distribution.conf and set to retroarch.cfg
+## Get configuration from system.cfg and set to retroarch.cfg
 #if [ "$(get_setting wifi.enabled)" = "1" ]; then
 #	echo 'wifi_enabled = "true"' >> ${RACONF}
 #else
@@ -167,13 +167,13 @@ fi
 ##
 
 ## FPS
-# Get configuration from distribution.conf and set to retroarch.cfg
+# Get configuration from system.cfg and set to retroarch.cfg
 get_setting "showFPS"
 [ "${EES}" == "1" ] && echo 'fps_show = "true"' >> ${RAAPPENDCONF} || echo 'fps_show = "false"' >> ${RAAPPENDCONF}
 
 
 ## RetroAchievements / Cheevos
-# Get configuration from distribution.conf and set to retroarch.cfg
+# Get configuration from system.cfg and set to retroarch.cfg
 get_setting "retroachievements"
 for i in "${!RETROACHIEVEMENTS[@]}"; do
 	if [[ "${RETROACHIEVEMENTS[$i]}" = "${PLATFORM}" ]]; then
@@ -250,7 +250,7 @@ for i in "${!RETROACHIEVEMENTS[@]}"; do
 done
 
 ## Netplay
-# Get configuration from distribution.conf and set to retroarch.cfg
+# Get configuration from system.cfg and set to retroarch.cfg
 get_setting "netplay"
 if [ "${EES}" == "false" ] || [ "${EES}" == "none" ] || [ "${EES}" == "0" ]; then
 	echo 'netplay = false' >> ${RAAPPENDCONF}
@@ -300,7 +300,7 @@ else
 fi
 
 ## AI Translation Service
-# Get configuration from distribution.conf and set to retroarch.cfg
+# Get configuration from system.cfg and set to retroarch.cfg
 get_setting "ai_service_enabled"
 if [ "${EES}" == "false" ] || [ "${EES}" == "none" ] || [ "${EES}" == "0" ]; then
 	echo 'ai_service_enable = "false"' >> ${RAAPPENDCONF}
@@ -348,7 +348,7 @@ fi
 ##
 
 ## Ratio
-# Get configuration from distribution.conf and set to retroarch.cfg
+# Get configuration from system.cfg and set to retroarch.cfg
 get_setting "ratio"
 if [[ "${EES}" == "false" ]]; then
 	# 22 is the "Core Provided" aspect ratio and its set by default if no other is selected
@@ -363,22 +363,22 @@ done
 fi
 
 ## Bilinear filtering
-# Get configuration from distribution.conf and set to retroarch.cfg
+# Get configuration from system.cfg and set to retroarch.cfg
 get_setting "smooth"
 [ "${EES}" == "1" ] && echo 'video_smooth = "true"' >> ${RAAPPENDCONF} || echo 'video_smooth = "false"' >> ${RAAPPENDCONF}
 
 ## Video Integer Scale
-# Get configuration from distribution.conf and set to retroarch.cfg
+# Get configuration from system.cfg and set to retroarch.cfg
 get_setting "integerscale"
 [ "${EES}" == "1" ] && echo 'video_scale_integer = "true"' >> ${RAAPPENDCONF} || echo 'video_scale_integer = "false"' >> ${RAAPPENDCONF}
 
 ## RGA Scaling / CTX Scaling
-# Get configuration from distribution.conf and set to retroarch.cfg
+# Get configuration from system.cfg and set to retroarch.cfg
 get_setting	"rgascale"
 [ "${EES}" == "1" ] && echo 'video_ctx_scaling = "true"' >> ${RAAPPENDCONF} || echo 'video_ctx_scaling = "false"' >> ${RAAPPENDCONF}
 
 ## Shaderset
-# Get configuration from distribution.conf and set to retroarch.cfg
+# Get configuration from system.cfg and set to retroarch.cfg
 get_setting "shaderset"
 if [ "${EES}" == "false" ] || [ "${EES}" == "none" ] || [ "${EES}" == "0" ]; then
 	echo 'video_shader_enable = "false"' >> ${RAAPPENDCONF}
@@ -390,7 +390,7 @@ else
 fi
 
 ## Filterset
-# Get configuration from distribution.conf and set to retroarch.cfg
+# Get configuration from system.cfg and set to retroarch.cfg
 get_setting "filterset"
 if [ "${EES}" == "false" ] || [ "${EES}" == "none" ]; then
 	echo 'video_filter = ""' >> ${RAAPPENDCONF}
@@ -415,7 +415,7 @@ else
 fi
 
 ## Rewind
-# Get configuration from distribution.conf and set to retroarch.cfg
+# Get configuration from system.cfg and set to retroarch.cfg
 get_setting "rewind"
 (for e in "${NORUNAHEAD[@]}"; do [[ "${e}" == "${PLATFORM}" ]] && exit 0; done) && RA=0 || RA=1
 if [ $RA == 1 ] && [ "${EES}" == "1" ]; then
@@ -425,7 +425,7 @@ else
 fi
 
 ## Incrementalsavestates
-# Get configuration from distribution.conf and set to retroarch.cfg
+# Get configuration from system.cfg and set to retroarch.cfg
 get_setting "incrementalsavestates"
 if [ "${EES}" == "false" ] || [ "${EES}" == "none" ] || [ "${EES}" == "0" ]; then
 	echo 'savestate_auto_index = "false"' >> ${RAAPPENDCONF}
@@ -436,7 +436,7 @@ else
 fi
 
 ## Autosave
-# Get configuration from distribution.conf and set to retroarch.cfg
+# Get configuration from system.cfg and set to retroarch.cfg
 get_setting "autosave"
 if [ "${EES}" == "false" ] || [ "${EES}" == "none" ] || [ "${EES}" == "0" ]; then
 	echo 'savestate_auto_save = "false"' >> ${RAAPPENDCONF}
@@ -463,7 +463,7 @@ then
 fi
 
 ## Runahead
-# Get configuration from distribution.conf and set to retroarch.cfg
+# Get configuration from system.cfg and set to retroarch.cfg
 get_setting "runahead"
 (for e in "${NORUNAHEAD[@]}"; do [[ "${e}" == "${PLATFORM}" ]] && exit 0; done) && RA=0 || RA=1
 if [ $RA == 1 ]; then
@@ -477,7 +477,7 @@ if [ $RA == 1 ]; then
 fi
 
 ## Secondinstance
-# Get configuration from distribution.conf and set to retroarch.cfg
+# Get configuration from system.cfg and set to retroarch.cfg
 get_setting "secondinstance"
 (for e in "${NORUNAHEAD[@]}"; do [[ "${e}" == "${PLATFORM}" ]] && exit 0; done) && RA=0 || RA=1
 if [ $RA == 1 ]; then
@@ -485,8 +485,8 @@ if [ $RA == 1 ]; then
 fi
 
 
-## D-Pad to Analogue support, option in ES is missing atm but is managed as global.analogue=1 in distribution.conf (that is made by postupdate.sh)
-# Get configuration from distribution.conf and set to retroarch.cfg
+## D-Pad to Analogue support, option in ES is missing atm but is managed as global.analogue=1 in system.cfg (that is made by postupdate.sh)
+# Get configuration from system.cfg and set to retroarch.cfg
 get_setting "analogue"
 (for e in "${NOANALOGUE[@]}"; do [[ "${e}" == "${PLATFORM}" ]] && exit 0; done) && RA=1 || RA=0
 if [ $RA == 1 ] || [ "${EES}" == "false" ] || [ "${EES}" == "0" ]; then
@@ -502,7 +502,7 @@ fi
 ## atari800 core needs other settings when emulation atari5200
 if [ "${CORE}" == "atari800" ]; then
 	log "Atari 800 section"
-	ATARICONF="/storage/.config/distribution/configs/atari800.cfg"
+	ATARICONF="/storage/.config/system/configs/atari800.cfg"
 	ATARI800CONF="/storage/.config/retroarch/config/Atari800/Atari800.opt"
 	[[ ! -f "$ATARI800CONF" ]] && touch "$ATARI800CONF"
 
@@ -609,7 +609,7 @@ else #Must be the V then
 		['wonderswancolor']="96 96 448 288"
 	)
 fi
-# Get configuration from distribution.conf and set to retroarch.cfg
+# Get configuration from system.cfg and set to retroarch.cfg
 BEZEL=$(get_setting 'bezel' ${PLATFORM} "${ROM}")
 if [[ -z "${BEZEL}" ]]; then
    BEZEL=default

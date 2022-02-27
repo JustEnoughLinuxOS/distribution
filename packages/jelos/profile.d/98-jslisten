@@ -7,7 +7,7 @@
 export PATH="$PATH:/usr/local/bin:/usr/bin:/storage/bin"
 
 jslisten() {
-        JSLISTENCONF="/storage/.config/distribution/configs/jslisten.cfg"
+        JSLISTENCONF="/storage/.config/system/configs/jslisten.cfg"
         if [ "$1" == "set" ]
         then
                 systemctl stop jslisten

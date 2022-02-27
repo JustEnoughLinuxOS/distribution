@@ -46,9 +46,9 @@ makeinstall_target() {
   cp $PKG_DIR/gzdoom.sh $INSTALL/usr/bin/
   cp $PKG_BUILD/.$TARGET_NAME/gzdoom $INSTALL/usr/bin
 
-  mkdir -p $INSTALL/usr/config/distribution/gzdoom
-  cp $PKG_DIR/config/${DEVICE}/* $INSTALL/usr/config/distribution/gzdoom
-  cp $PKG_BUILD/.$TARGET_NAME/*.pk3 $INSTALL/usr/config/distribution/gzdoom
-  cp -r $PKG_BUILD/.$TARGET_NAME/soundfonts $INSTALL/usr/config/distribution/gzdoom
-  cp -r $PKG_BUILD/.$TARGET_NAME/fm_banks $INSTALL/usr/config/distribution/gzdoom
+  mkdir -p $INSTALL/usr/config/game/gzdoom
+  cp $PKG_DIR/config/${DEVICE}/* $INSTALL/usr/config/game/gzdoom
+  cp $PKG_BUILD/.$TARGET_NAME/*.pk3 $INSTALL/usr/config/game/gzdoom
+  cp -r $PKG_BUILD/.$TARGET_NAME/soundfonts $INSTALL/usr/config/game/gzdoom
+  cp -r $PKG_BUILD/.$TARGET_NAME/fm_banks $INSTALL/usr/config/game/gzdoom
 }

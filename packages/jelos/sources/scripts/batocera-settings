@@ -10,7 +10,7 @@
 #           shortform:  <file> <cmd> <key> <value>
 #
 #           --command    load write enable disable status
-#           --key        any key in distribution.conf (kodi.enabled...)
+#           --key        any key in system.cfg (kodi.enabled...)
 #           --value      any alphanumerical string
 #                        use quotation marks to avoid globbing use slashes escape special characters 
 
@@ -31,7 +31,7 @@
 # by cyperghost - 2019/12/30
 
 ##### INITS #####
-BATOCERA_CONFIGFILE="/storage/.config/distribution/configs/distribution.conf"
+BATOCERA_CONFIGFILE="/storage/.config/system/configs/system.cfg"
 COMMENT_CHAR_SEARCH="[#|;]"
 COMMENT_CHAR="#"
 ##### INITS #####
@@ -115,7 +115,7 @@ val=" Usage of BASE COMMAND:
            shortform: <file> <cmd> <key> <value>
 
            --command    load write enable disable status
-           --key        any key in distribution.conf (kodi.enabled...)
+           --key        any key in system.cfg (kodi.enabled...)
            --value      any alphanumerical string
                         use quotation marks to avoid globbing
 
@@ -128,7 +128,7 @@ val=" Usage of BASE COMMAND:
                        exit 11 = value found, but not activated
                        exit 12 = value not found
 
-           If you don't set a filename then default is '~/storage/.config/distribution.conf'"
+           If you don't set a filename then default is '~/storage/.config/system.cfg'"
 
 echo "$val"
 

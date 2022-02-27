@@ -8,17 +8,17 @@
 
 EE_DEVICE=${HW_DEVICE}
 RUN_DIR="/storage/roms/build"
-CONFIG="/storage/.config/distribution/raze/raze.ini"
+CONFIG="/storage/.config/game/raze/raze.ini"
 SAVE_DIR="/storage/roms/gamedata/raze"
 
 if [ ! -L "/storage/.config/raze" ]
 then
-  ln -sf "/storage/.config/distribution/raze" "/storage/.config/raze"
+  ln -sf "/storage/.config/game/raze" "/storage/.config/raze"
 fi
 
-if [ ! -f "/storage/.config/distribution/raze/raze.ini" ]
+if [ ! -f "/storage/.config/game/raze/raze.ini" ]
 then
-  cp -rf /usr/config/distribution/raze/raze.ini /storage/.config/distribution/raze/
+  cp -rf /usr/config/game/raze/raze.ini /storage/.config/game/raze/
 fi
 
 mkdir -p ${SAVE_DIR}

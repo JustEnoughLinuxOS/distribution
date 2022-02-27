@@ -16,7 +16,7 @@ sed -i "s|gcc|${CC}|" Makefile
 }
 
 makeinstall_target() {
-mkdir -p $INSTALL/usr/config/distribution/bin
-cp -rf test_gamepad_SDL2 $INSTALL/usr/config/distribution/bin
-cp -rf map_gamepad_SDL2 $INSTALL/usr/config/distribution/bin
+mkdir -p $INSTALL/usr/bin
+cp -rf test_gamepad_SDL2 $INSTALL/usr/bin
+cp -rf map_gamepad_SDL2 $INSTALL/usr/bin
 }

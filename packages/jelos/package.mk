@@ -16,7 +16,7 @@ PKG_TOOLCHAIN="make"
 
 PKG_BASEOS="plymouth-lite grep wget libjpeg-turbo util-linux xmlstarlet bluetool gnupg gzip patchelf     \
             imagemagick util-linux system-utils terminus-font vim bash pyudev dialog six git dbus-python \
-            coreutils miniupnpc nss-mdns avahi MC fbgrab"
+            coreutils miniupnpc nss-mdns avahi MC fbgrab modules"
 
 PKG_UI="emulationstation"
 
@@ -60,8 +60,8 @@ makeinstall_target() {
 
   mkdir -p ${INSTALL}/usr/config/
   rsync -av ${PKG_DIR}/config/* ${INSTALL}/usr/config/
-  ln -sf /storage/.config/distribution ${INSTALL}/distribution
-  find ${INSTALL}/usr/config/distribution/ -type f -exec chmod o+x {} \;
+  ln -sf /storage/.config/system ${INSTALL}/system
+  find ${INSTALL}/usr/config/system/ -type f -exec chmod o+x {} \;
 
   mkdir -p ${INSTALL}/usr/bin/
 

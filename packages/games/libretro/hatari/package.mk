@@ -53,7 +53,7 @@ make_target() {
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/lib/libretro
-  mkdir -p $INSTALL/usr/config/distribution/configs/hatari
+  mkdir -p $INSTALL/usr/config/game/configs/hatari
   cp ../hatari_libretro.so $INSTALL/usr/lib/libretro/
-  cp -rf ${PKG_DIR}/config/* $INSTALL/usr/config/distribution/configs/hatari/
+  cp -rf ${PKG_DIR}/config/* $INSTALL/usr/config/game/configs/hatari/
 }

@@ -8,17 +8,17 @@
 
 EE_DEVICE=${HW_DEVICE}
 RUN_DIR="/storage/roms/doom"
-CONFIG="/storage/.config/distribution/lzdoom/lzdoom.ini"
+CONFIG="/storage/.config/game/lzdoom/lzdoom.ini"
 SAVE_DIR="/storage/roms/gamedata/lzdoom"
 
 if [ ! -L "/storage/.config/lzdoom" ]
 then
-  ln -sf "/storage/.config/distribution/lzdoom" "/storage/.config/lzdoom"
+  ln -sf "/storage/.config/game/lzdoom" "/storage/.config/lzdoom"
 fi
 
-if [ ! -f "/storage/.config/distribution/lzdoom/lzdoom.ini" ]
+if [ ! -f "/storage/.config/game/lzdoom/lzdoom.ini" ]
 then
-  cp -rf /usr/config/distribution/lzdoom/lzdoom.ini /storage/.config/distribution/lzdoom/
+  cp -rf /usr/config/game/lzdoom/lzdoom.ini /storage/.config/game/lzdoom/
 fi
 
 mkdir -p ${SAVE_DIR}

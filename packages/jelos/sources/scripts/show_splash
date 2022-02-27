@@ -23,7 +23,7 @@ fi
 
 [[ "${PLATFORM}" != "intro" ]] && VIDEO=0 || VIDEO=$(get_setting bootvideo.enabled)
 
-if [[ -f "/storage/.config/distribution/configs/novideo" ]] && [[ ${VIDEO} != "1" ]]
+if [[ -f "/storage/.config/system/configs/novideo" ]] && [[ ${VIDEO} != "1" ]]
 then
   /usr/bin/ply-image "${SPLASH}" > /dev/null 2>&1
 else
@@ -31,9 +31,9 @@ else
   SPLASH=${VIDEOSPLASH}
   set_audio alsa
   /usr/bin/mpv "$SPLASH" > /dev/null 2>&1
-  touch "/storage/.config/distribution/configs/novideo"
+  touch "/storage/.config/system/configs/novideo"
 fi
 
-# Wait for the time specified in splash_delay setting in distribution.conf
+# Wait for the time specified in splash_delay setting in system.cfg
 SPLASHTIME=$(get_setting splash.delay)
 [ ! -z "$SPLASHTIME" ] && sleep $SPLASHTIME

@@ -39,9 +39,9 @@ makeinstall_target() {
   cp $PKG_DIR/lzdoom.sh $INSTALL/usr/bin/
   cp $PKG_BUILD/.$TARGET_NAME/lzdoom $INSTALL/usr/bin
 
-  mkdir -p $INSTALL/usr/config/distribution/lzdoom
-  cp $PKG_DIR/config/${DEVICE}/* $INSTALL/usr/config/distribution/lzdoom
-  cp $PKG_BUILD/.$TARGET_NAME/*.pk3 $INSTALL/usr/config/distribution/lzdoom
-  cp -r $PKG_BUILD/.$TARGET_NAME/soundfonts $INSTALL/usr/config/distribution/lzdoom
-  cp -r $PKG_BUILD/.$TARGET_NAME/fm_banks $INSTALL/usr/config/distribution/lzdoom
+  mkdir -p $INSTALL/usr/config/game/lzdoom
+  cp $PKG_DIR/config/${DEVICE}/* $INSTALL/usr/config/game/lzdoom
+  cp $PKG_BUILD/.$TARGET_NAME/*.pk3 $INSTALL/usr/config/game/lzdoom
+  cp -r $PKG_BUILD/.$TARGET_NAME/soundfonts $INSTALL/usr/config/game/lzdoom
+  cp -r $PKG_BUILD/.$TARGET_NAME/fm_banks $INSTALL/usr/config/game/lzdoom
 }

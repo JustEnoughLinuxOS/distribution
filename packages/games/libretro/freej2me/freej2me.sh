@@ -9,7 +9,7 @@
 clear > /dev/console
 
 if [ ! -f "/storage/roms/bios/freej2me-lr.jar" ]; then
-    cp /usr/config/distribution/freej2me/freej2me-lr.jar /storage/roms/bios
+    cp /usr/config/game/freej2me/freej2me-lr.jar /storage/roms/bios
 fi
 
 JDKDEST="/storage/jdk"
@@ -41,7 +41,7 @@ if [ ${JDKINSTALLED} == "no" ]; then
       rm -rf ${JDKDEST}/${del}
   done
   echo "JDK done! loading core!" > /dev/console
-  cp -rf /usr/config/distribution/freej2me/freej2me-lr.jar /storage/roms/bios
+  cp -rf /usr/config/game/freej2me/freej2me-lr.jar /storage/roms/bios
 fi
 
 clear > /dev/console < /dev/null 2>&1

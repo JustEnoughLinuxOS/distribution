@@ -8,7 +8,8 @@
 . /etc/profile
 
 TZ=$(get_setting system.timezone)
-echo -n "TIMEZONE=$TZ" > /storage/.cache/timezone
+echo -n "TIMEZONE=${TZ}" > /storage/.cache/timezone
+echo -n "${TZ}" >/storage/.cache/system_timezone
 systemctl restart tz-data.service
 
 # create charmap used for translations

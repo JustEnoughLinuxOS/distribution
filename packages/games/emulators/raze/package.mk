@@ -47,8 +47,8 @@ makeinstall_target() {
   cp $PKG_DIR/raze.sh $INSTALL/usr/bin/
   cp $PKG_BUILD/.$TARGET_NAME/raze $INSTALL/usr/bin
 
-  mkdir -p $INSTALL/usr/config/distribution/raze
-  cp $PKG_DIR/config/${DEVICE}/* $INSTALL/usr/config/distribution/raze
-  cp $PKG_BUILD/.$TARGET_NAME/*.pk3 $INSTALL/usr/config/distribution/raze
-  cp -r $PKG_BUILD/.$TARGET_NAME/soundfonts $INSTALL/usr/config/distribution/raze
+  mkdir -p $INSTALL/usr/config/game/raze
+  cp $PKG_DIR/config/${DEVICE}/* $INSTALL/usr/config/game/raze
+  cp $PKG_BUILD/.$TARGET_NAME/*.pk3 $INSTALL/usr/config/game/raze
+  cp -r $PKG_BUILD/.$TARGET_NAME/soundfonts $INSTALL/usr/config/game/raze
 }

@@ -3,7 +3,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="emulationstation"
-PKG_VERSION="ce0d5c359ab3c1c6137a2af39ee4a053adb75cac"
+PKG_VERSION="7f02269"
 PKG_GIT_CLONE_BRANCH="main"
 PKG_REV="1"
 PKG_ARCH="any"
@@ -61,6 +61,7 @@ makeinstall_target() {
 
 	chmod +x $INSTALL/usr/config/emulationstation/scripts/*
 	find $INSTALL/usr/config/emulationstation/scripts/ -type f -exec chmod o+x {} \;
+	ln -sf /storage/.cache/system_timezone ${INSTALL}/etc/timezone
 
 }
 

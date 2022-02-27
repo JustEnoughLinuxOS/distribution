@@ -8,18 +8,18 @@
 . /etc/os-release
 
 EE_DEVICE=${HW_DEVICE}
-CONFIG_DIR="/storage/.config/distribution/ecwolf"
+CONFIG_DIR="/storage/.config/game/ecwolf"
 CONFIG_FILE="${CONFIG_DIR}/ecwolf.cfg"
 SAVE_DIR="/storage/roms/gamedata/ecwolf"
 
 if [ ! -L "/storage/.config/ecwolf" ]
 then
-  ln -sf "/storage/.config/distribution/ecwolf" "/storage/.config/ecwolf"
+  ln -sf "/storage/.config/game/ecwolf" "/storage/.config/ecwolf"
 fi
 
-if [ ! -f "/storage/.config/distribution/ecwolf/ecwolf.cfg" ]
+if [ ! -f "/storage/.config/game/ecwolf/ecwolf.cfg" ]
 then
-  cp -rf /usr/config/distribution/ecwolf/ecwolf.cfg /storage/.config/distribution/ecwolf/
+  cp -rf /usr/config/game/ecwolf/ecwolf.cfg /storage/.config/game/ecwolf/
 fi
 
 mkdir -p ${SAVE_DIR}

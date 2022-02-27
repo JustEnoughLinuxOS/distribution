@@ -19,7 +19,7 @@ case "${1}" in
     zip -9 -r ${BACKUPFILE} \
     /storage/.cache/bluetooth/* \
     /storage/.cache/connman* \
-    /storage/.config/distribution/configs/distribution.conf \
+    /storage/.config/system/configs/system.cfg \
     /storage/.emulationstation/es_*.cfg \
     /tmp/joypads/* \
     /storage/.config/ppsspp/* \
