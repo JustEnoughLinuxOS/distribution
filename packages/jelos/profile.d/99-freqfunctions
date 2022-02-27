@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
 
@@ -7,7 +7,12 @@
 set_gov() {
   for POLICY in ${CPU_FREQ[@]}
   do
-    echo $1 >${POLICY} 2>/dev/null
+    if [ "${POLICY}" = "${NO_MAX_PERF}" ] && [ "$1" = "performance" ]
+    then
+      continue
+    else
+      echo $1 >${POLICY} 2>/dev/null
+    fi
   done
 
   for HANDLE in ${GPU_FREQ} ${DMC_FREQ}
