@@ -78,5 +78,16 @@
 		<thumbnail>./downloaded_images/filemanager-thumb.png</thumbnail>
 		<image>./downloaded_images/filemanager.png</image>
 	</game>
+	
+	<game>
+		<path>/storage/roms/ports/PortMaster.sh</path>
+		<name>PortMaster</name>
+		<desc>Game port installer</desc>
+		<developer>christianhaitian</developer>
+		<publisher>Jelos</publisher>
+		<rating>1.0</rating>
+		<releasedate>2021</releasedate>
+		<genre>Script</genre>
+	</game>
 
 </gameList>
