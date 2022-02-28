@@ -1,13 +1,9 @@
 #!/bin/sh
 
-# Source predefined functions and variables
-. /etc/profile
-
-# get system.hostname setting
-HOSTNAME=$(get_setting system.hostname)
-
 # setup hostname
-echo $HOSTNAME > /proc/sys/kernel/hostname
+if [ -f /storage/.cache/hostname ]; then
+  cat /storage/.cache/hostname > /proc/sys/kernel/hostname
+fi
 
 # setup /etc/hosts
 rm -f /run/libreelec/hosts
