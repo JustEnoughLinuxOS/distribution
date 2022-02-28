@@ -72,6 +72,8 @@ Like any Linux distribution, this project is not the work of one person.  It is 
   * Those platforms perform best in Android on the 552, and I have no interest in them.  I recommend that you use Android instead for those.
 * Will you support my device?
   * If you send me a device and source code, I'll consider it.
+* I'm using brand-y microSD and after flashing it partitions, reboots, and hangs.
+  * When this happens the indicator is a short vibration like it's restarting normally but the power LED does not turn on.  Press reset, and it will continue normally.
 * How can I disable root password rotation?
   * SSH to the handheld and run the following commands.
     * ```set_setting rotate.root.password 0```
