@@ -595,7 +595,20 @@ if [ "${EE_DEVICE}" == "RG351P" ]; then
 		['wonderswan']="16 16 448 288"
 		['wonderswancolor']="16 16 448 288"
 	)
-else #Must be the V then
+elif [ "${EE_DEVICE}" == "RG552" ]; then
+	declare -A SystemViewport=(
+		['standard']="1 1 1920 1152"
+		['gb']="320 0 1280 1152"
+		['gbc']="320 0 1280 1152"
+		['supervision']="400 16 1120 1120"
+		['gamegear']="320 0 1280 1152"
+		['pokemini']="96 0 1728 1152"
+		['ngp']="400 44 1120 1064"
+		['ngpc']="400 44 1120 1064"
+		['wonderswan']="64 0 1792 1152"
+		['wonderswancolor']="64 0 1792 1152"
+	)
+else #Must be the V or MP then
 	declare -A SystemViewport=(
 		['standard']="1 1 639 479"
 		['gb']="80 24 480 432"
