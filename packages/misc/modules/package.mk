@@ -2,12 +2,12 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="modules"
-PKG_VERSION="${OS_VERSION}"
+PKG_VERSION="$(date +%Y%m%d)"
 PKG_ARCH="any"
-PKG_LICENSE="apache2"
+PKG_LICENSE="custom"
 PKG_SITE=""
 PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain ${OPENGLES}"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_SHORTDESC="OS Modules Package"
 PKG_LONGDESC="OS Modules Package"
 PKG_IS_ADDON="no"

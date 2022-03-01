@@ -2,7 +2,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="jelos"
-PKG_VERSION="${OS_VERSION}"
+PKG_VERSION="$(date +%Y%m%d)"
 PKG_ARCH="any"
 PKG_LICENSE="apache2"
 PKG_SITE=""
