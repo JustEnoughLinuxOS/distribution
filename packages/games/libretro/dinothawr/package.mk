@@ -20,8 +20,8 @@
 ################################################################################
 
 PKG_NAME="dinothawr"
-PKG_VERSION="d9ed9c8da3d7c2829a4329aadb1fb65f526c326f"
-PKG_SHA256="4ca6b7ab50b131f592d5961bdd29da2aedeae77276d359776a8cf7d4b90a5eb2"
+PKG_VERSION="33973e961ecfce8c2b06ab12123390cd9d984032"
+PKG_SHA256="33bda069d04929e134435f2f9420b8fd209b684ddd1ecebdcdd69f65ee45f5f6"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="Non-commercial"
