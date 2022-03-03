@@ -18,7 +18,7 @@ export BUILD_DATE=$(date)
 echo "Building ${DISTRO} for ${DEVICE}"
 
 # If this variable exists in the environment, expand it and clean those packages too.
-PKG_CLEAN="${PKG_CLEAN} emulationstation retroarch lib32 jelos"
+PKG_CLEAN="${PKG_CLEAN} modules emulationstation retroarch lib32 jelos"
 
 # Clean a few packages to ensure the build date and version are updated
 for package in ${PKG_CLEAN}

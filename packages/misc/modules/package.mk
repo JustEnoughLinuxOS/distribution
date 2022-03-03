@@ -14,6 +14,10 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_TOOLCHAIN="manual"
 
+make_target() {
+  :
+}
+
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/config/modules
   cp -rf ${PKG_DIR}/sources/* ${INSTALL}/usr/config/modules
