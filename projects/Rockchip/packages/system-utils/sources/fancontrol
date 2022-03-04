@@ -4,16 +4,40 @@
 
 . /etc/profile
 
-if [ -e "/storage/.config/fancontrol.conf" ]
+DEBUG=false
+COOLING_PROFILE=$(get_setting "cooling.profile")
+FAN_PWM="${DEVICE_PWM_FAN}"
+
+$DEBUG && echo "Setting profile to ${COOLING_PROFILE}"
+
+if [ -e "/storage/.config/fancontrol.conf" ] && [ "${COOLING_PROFILE}" = "custom" ]
 then
   $DEBUG && echo "Loading configuration file" 2>/dev/null
   source /storage/.config/fancontrol.conf
+  if [ ! $? = 0 ]
+  then
+    WARN="Custom fan profile could not be loaded, defaulting to quiet."
+    $DEBUG && echo "${WARN}"
+    logger -t fancontrol "${WARN}"
+    COOLING_PROFILE="quiet"
+    set_setting cooling.profile quiet
+  fi
+fi
+
+if [ "${COOLING_PROFILE}" = "aggressive" ]
+then
+  SPEEDS=(255)
+  TEMPS=(0)
+elif [ "${COOLING_PROFILE}" = "moderate" ]
+then
+  SPEEDS=(255 190 125 85)
+  TEMPS=(70000 60000 50000 0)
 else
-  $DEBUG && echo "Configuration not found, loading defaults" 2>/dev/null
-  FAN_PWM="${DEVICE_PWM_FAN}"
+  # Quiet.
   SPEEDS=(255 127 85 0)
   TEMPS=(75000 65000 55000 0)
 fi
+
 
 while true
 do

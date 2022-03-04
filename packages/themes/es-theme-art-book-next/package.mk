@@ -15,6 +15,6 @@ PKG_LONGDESC="Art Book theme"
 PKG_TOOLCHAIN="manual"
 
 makeinstall_target() {
-  mkdir -p ${INSTALL}/usr/config/emulationstation/themes/${PKG_NAME}
-  cp -rf * ${INSTALL}/usr/config/emulationstation/themes/${PKG_NAME}
+  mkdir -p ${INSTALL}/usr/share/themes/${PKG_NAME}
+  cp -rf * ${INSTALL}/usr/share/themes/${PKG_NAME}
 }

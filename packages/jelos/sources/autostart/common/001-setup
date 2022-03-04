@@ -4,24 +4,14 @@
 
 . /etc/profile
 
-### Migrate distribution, and split games.
-if [ -d "/storage/.config/distribution" ]
-then
-  mv /storage/.config/distribution /storage/.config/system
-  mv /storage/.config/system/distribution.conf /storage/.config/system/system.cfg
-fi
+### Switch the theme to system-theme if it hasn't already been done
 
-if [ ! -d "/storage/.config/game/configs" ]
+if [ ! -L /storage/.config/emulationstation/themes/system-theme ]
 then
-  mkdir -p /storage/.config/game/configs
-  for dir in $(find /storage/.config/system/configs/ -type d -maxdepth 1)
-  do
-    if [ "${dir}" = "all" ]
-    then
-      continue
-    fi
-    mv ${dir} /storage/.config/game/configs
-  done
+  rm -rf /storage/.config/emulationstation/themes/es-theme-art-book-next
+  mkdir -p /storage/.config/emulationstation/themes
+  ln -s /usr/share/themes/es-theme-art-book-next /storage/.config/emulationstation/themes/system-theme
+  sed -i 's#<string name="ThemeSet" value="es-theme-art-book-next"/>#<string name="ThemeSet" value="system-theme"/>#' /storage/.config/emulationstation/es_settings.cfg
 fi
 
 ### Resume normal startup stuff.

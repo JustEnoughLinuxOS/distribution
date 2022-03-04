@@ -16,6 +16,8 @@ then
   ## cp -iRp /usr/config/* /storage/.config/ &>/dev/null
   ## ignore es_systems.cfg and switch to rsync
   rsync -a --ignore-existing --exclude=es_systems.cfg /usr/config/* /storage/.config/
+  mkdir -p /storage/.config/emulationstation/themes
+  ln -s /usr/share/themes/es-theme-art-book-next /storage/.config/emulationstation/themes/system-theme 
   if [ "${HW_DEVICE}" == "RG552" ]; then
     cp -f /usr/config/splash/splash-1152.png /storage/.config/emulationstation/resources/logo.png
   fi
