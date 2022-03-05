@@ -4,8 +4,13 @@ Just Enough Linux Operating System (JELOS) is a simple Linux distribution for AR
 ## Features
 * Supports the Anbernic RG552 handheld.
 * A 64bit Operating System.
-* Supports FAT32, ExFAT, and EXT4 file systems.
-* Filesystem compatibility with Android
+* Filesystem compatibility with Android.
+* Utilizes the whole SDCARD for EXT4 storage.
+* Supports FAT32, ExFAT, and EXT4 file systems on the second card.
+* Provides overclock and cooling profiles.
+* Supports 2.4GHz and 5GHz 802.11 A/B/G/N/AC WIFI.
+* Includes RetroArch, a variety of cores, Stand Alone Emulators, as well as PortMaster.
+* Maintained by a small but growing community of contributors.
 
 ## Licenses
 JELOS is a Linux distribution that is made up of many open-source components.  Components are provided under their respective licenses.  This distribution includes components licensed for non-commercial use only.
@@ -64,10 +69,10 @@ limitations under the License.
 Like any Linux distribution, this project is not the work of one person.  It is the work of many persons all over the world who have developed the open source bits without which this project could not exist.  Special thanks to 351ELEC, EmuELEC, CoreELEC, LibreELEC, Anbernic, and developers across the ARM handheld community.
 
 ## Frequently Asked Questions
-* Does JELOS offer any support?
-  * No. JELOS is something that I develop for fun, it is provided as-is.  If you require a distribution with support, I recommend you choose a community supported distribution instead.
+* Does JELOS offer any formal support?
+  * No. JELOS is something that we develop for fun, it is provided as-is.  There are a variety of avenues to seek community help, but this is a tinkerer's distribution so you may need to get your hands dirty to solve your problems.
 * Do you plan to add additional ports, software, or emulators?
-  * I add things to JELOS as I have an itch to scratch. The community has updated PortMaster to work with JELOS.
+  * I add things to JELOS as I have an itch to scratch, as does the community of contributors.  If you would like to add something to JELOS, pull requests are welcomed.
 * What about N64, Dreamcast, Saturn, Jaguar, PSP, etc on the 552?
   * Those platforms perform best in Android on the 552, and I have no interest in them.  I recommend that you use Android instead for those.
 * Will you support my device?
