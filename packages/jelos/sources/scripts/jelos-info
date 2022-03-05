@@ -61,7 +61,7 @@ do
     MF+=("MAXIMUM FREQUENCY:")
   fi
   CF+=("CORES $(cat ${CPUFREQ}/related_cpus | awk '{print $1"-"$NF}'): $(( $(cat ${CPUFREQ}/scaling_cur_freq  | sort | tail -n 1) / 1000))MHz")
-  MF+=("CORES $(cat ${CPUFREQ}/related_cpus | awk '{print $1"-"$NF}'): $(( $(cat ${CPUFREQ}/cpuinfo_max_freq | sort | tail -n 1) / 1000))MHz")
+  MF+=("CORES $(cat ${CPUFREQ}/related_cpus | awk '{print $1"-"$NF}'): $(( $(cat ${CPUFREQ}/scaling_max_freq | sort | tail -n 1) / 1000))MHz")
   CNTR=$(( CNTR + 1 ))
 done
 

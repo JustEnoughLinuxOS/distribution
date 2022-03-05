@@ -1,0 +1,57 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+if [ $# -eq 0 ]
+then
+  PROFILE=$(get_setting system.overclock)
+else
+  PROFILE=$1
+fi
+
+### Default clocks when not using OC.
+LITTLE_CORES="1512000"
+BIG_CORES="2016000"
+GPU="800000000"
+DRAM="856000000"
+
+freqset() {
+  echo "${LITTLE_CORES}" >${CPU_FREQ[0]}/scaling_max_freq
+  echo "${BIG_CORES}" >${CPU_FREQ[1]}/scaling_max_freq
+  echo ${GPU} >${GPU_FREQ}/max_freq
+  echo ${DRAM} >${DMC_FREQ}/max_freq
+}
+
+cooling_profile() {
+  set_setting cooling.profile $1
+  systemctl restart fancontrol
+}
+
+case ${PROFILE} in
+  mem)
+    DRAM="933000000"
+    cooling_profile quiet
+  ;;
+  gpu)
+    GPU="900000000"
+    DRAM="933000000"
+    cooling_profile moderate
+  ;;
+  cpu)
+    LITTLE_CORES="1800000"
+    BIG_CORES="2208000"
+    DRAM="933000000"
+    cooling_profile moderate
+  ;;
+  max)
+    LITTLE_CORES="1800000"
+    BIG_CORES="2208000"
+    GPU="900000000"
+    DRAM="933000000"
+    cooling_profile aggressive
+  ;;
+esac
+
+freqset

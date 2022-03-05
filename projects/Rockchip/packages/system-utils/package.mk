@@ -18,6 +18,7 @@ makeinstall_target() {
   cp system_utils ${INSTALL}/usr/bin
   cp volume_sense ${INSTALL}/usr/bin
   cp battery ${INSTALL}/usr/bin
+  cp overclock ${INSTALL}/usr/bin
   chmod 0755 ${INSTALL}/usr/bin/*
 
   mkdir -p $INSTALL/usr/config

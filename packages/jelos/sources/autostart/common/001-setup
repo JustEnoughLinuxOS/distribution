@@ -15,6 +15,13 @@ then
 fi
 
 ### Resume normal startup stuff.
+OVERCLOCK=$(get_setting system.overclock)
+if [ -z ${OVERCLOCK} ]
+then
+  set_setting system.overclock off
+fi
+/usr/bin/overclock ${OVERCLOCK}
+
 if [ -d "/storage/.config/system/configs" ]
 then
   EXCLUDE="--exclude=configs"
