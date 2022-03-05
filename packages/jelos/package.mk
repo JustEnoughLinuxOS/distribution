@@ -24,8 +24,8 @@ PKG_EMUS="common-shaders glsl-shaders libretro-database retroarch advancemame ha
           scummvmsa PPSSPPSDL"
 
 LIBRETRO_CORES="2048 81 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce beetle-pcfx            \
-                beetle-supafaust beetle-supergrafx beetle-vb beetle-wswan bluemsx                    \
-                cannonball cap32 crocods daphne dinothawr dosbox-svn dosbox-pure easyrpg fbalpha2012 \
+                beetle-supafaust beetle-supergrafx beetle-vb beetle-wswan bluemsx cannonball cap32   \
+                crocods daphne dinothawr dosbox-svn dosbox-pure duckstation easyrpg fbalpha2012      \
                 fbalpha2019 fbneo fceumm fmsx flycast freechaf freeintv freej2me fuse-libretro       \
                 gambatte gearboy gearcoleco gearsystem genesis-plus-gx genesis-plus-gx-wide gme      \
                 gpsp gw-libretro handy hatari mame2000 mame2003-plus mame2010 mame2015 mame          \
