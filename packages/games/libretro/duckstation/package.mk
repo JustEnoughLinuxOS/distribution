@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
-# Maintenance 2022-present BrooksyTech (https://github.com/brooksytech)
+# Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="duckstation"
-PKG_VERSION="fa005db2e6c997afe8fc3af8de94953247232c2d"
+PKG_VERSION="0162b33835e09984ab9dca6f0b1295343e2dcbc3"
 PKG_ARCH="aarch64"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/brooksytech/duckstation-libretro"
