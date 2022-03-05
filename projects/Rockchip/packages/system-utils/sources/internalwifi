@@ -12,11 +12,11 @@ fi
 case $1 in
   disable)
     rmmod ${DEVICE_WIFI_MODULE}
-    set_setting internal.wifi=0
+    set_setting internal.wifi 0
   ;;
   enable)
     modprobe ${DEVICE_WIFI_MODULE}
-    set_setting internal.wifi=1
+    set_setting internal.wifi 1
   ;;
 esac
 
