@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
-# Maintenance 2022-present BrooksyTech (https://github.com/brooksytech)
+# Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="portmaster"
 PKG_VERSION="1.0"
