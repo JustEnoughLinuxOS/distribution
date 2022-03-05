@@ -50,7 +50,7 @@ case ${PROFILE} in
     BIG_CORES="2208000"
     GPU="900000000"
     DRAM="933000000"
-    cooling_profile aggressive
+    cooling_profile moderate 
   ;;
 esac
 
