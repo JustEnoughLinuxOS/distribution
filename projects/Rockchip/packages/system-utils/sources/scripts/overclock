@@ -12,14 +12,10 @@ else
 fi
 
 ### Default clocks when not using OC.
-LITTLE_CORES="1512000"
-BIG_CORES="2016000"
 GPU="800000000"
 DRAM="856000000"
 
 freqset() {
-  echo "${LITTLE_CORES}" >${CPU_FREQ[0]}/scaling_max_freq
-  echo "${BIG_CORES}" >${CPU_FREQ[1]}/scaling_max_freq
   echo ${GPU} >${GPU_FREQ}/max_freq
   echo ${DRAM} >${DMC_FREQ}/max_freq
 }
@@ -38,19 +34,6 @@ case ${PROFILE} in
     GPU="900000000"
     DRAM="933000000"
     cooling_profile moderate
-  ;;
-  cpu)
-    LITTLE_CORES="1800000"
-    BIG_CORES="2208000000"
-    DRAM="933000000"
-    cooling_profile moderate
-  ;;
-  max)
-    LITTLE_CORES="1800000"
-    BIG_CORES="2208000000"
-    GPU="900000000"
-    DRAM="933000000"
-    cooling_profile moderate 
   ;;
 esac
 

@@ -5,7 +5,7 @@
 
 PKG_NAME="linux"
 PKG_URL="https://github.com/JustEnoughLinuxOS/rockchip-kernel.git"
-PKG_VERSION="1df89fdfc"
+PKG_VERSION="263f128a1"
 PKG_GIT_CLONE_BRANCH="oc"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kernel.org"
