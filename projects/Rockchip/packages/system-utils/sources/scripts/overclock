@@ -41,13 +41,13 @@ case ${PROFILE} in
   ;;
   cpu)
     LITTLE_CORES="1800000"
-    BIG_CORES="2100000"
+    BIG_CORES="2208000000"
     DRAM="933000000"
     cooling_profile moderate
   ;;
   max)
     LITTLE_CORES="1800000"
-    BIG_CORES="2100000"
+    BIG_CORES="2208000000"
     GPU="900000000"
     DRAM="933000000"
     cooling_profile moderate 
