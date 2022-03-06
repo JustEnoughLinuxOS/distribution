@@ -59,8 +59,8 @@ limitations under the License.
 ## RetroArch Hotkeys
 * Hotkey Enable: Select (Hold)
   * Exit: Start (Press Twice)
-  * Menu: Y
-  * Show/Hide FPS: X
+  * Menu: X
+  * Show/Hide FPS: Y
   * Save State: R1
   * Load State: L1
   * Rewind: L2
