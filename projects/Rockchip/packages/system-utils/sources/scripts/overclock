@@ -47,7 +47,7 @@ case ${PROFILE} in
   ;;
   max)
     LITTLE_CORES="1800000"
-    BIG_CORES="2208000"
+    BIG_CORES="2100000"
     GPU="900000000"
     DRAM="933000000"
     cooling_profile moderate 
