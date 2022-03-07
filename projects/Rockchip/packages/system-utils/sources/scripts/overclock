@@ -53,7 +53,7 @@ case ${PROFILE} in
   ;;
   max-stable)
     LITTLE_CORES="1704000"
-    BIG_CORES="2208000"
+    BIG_CORES="2088000"
     GPU="900000000"
     DRAM="933000000"
     cooling_profile aggressive
