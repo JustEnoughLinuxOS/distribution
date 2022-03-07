@@ -4,7 +4,7 @@
 
 PKG_NAME="emulationstation"
 PKG_VERSION="e45b530"
-PKG_GIT_CLONE_BRANCH="oc"
+PKG_GIT_CLONE_BRANCH="main"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
