@@ -12,10 +12,14 @@ else
 fi
 
 ### Default clocks when not using OC.
+LITTLE_CORES="1416000"
+BIG_CORES="1800000"
 GPU="800000000"
 DRAM="856000000"
 
 freqset() {
+  echo "${LITTLE_CORES}" >${CPU_FREQ[0]}/scaling_max_freq
+  echo "${BIG_CORES}" >${CPU_FREQ[1]}/scaling_max_freq
   echo ${GPU} >${GPU_FREQ}/max_freq
   echo ${DRAM} >${DMC_FREQ}/max_freq
 }
@@ -34,6 +38,43 @@ case ${PROFILE} in
     GPU="900000000"
     DRAM="933000000"
     cooling_profile moderate
+  ;;
+  cpu-stable)
+    LITTLE_CORES="1608000"
+    BIG_CORES="2088000"
+    DRAM="933000000"
+    cooling_profile aggressive
+  ;;
+  cpu-unstable)
+    LITTLE_CORES="1704000"
+    BIG_CORES="2184000"
+    DRAM="933000000"
+    cooling_profile aggressive
+  ;;
+  max-stable)
+    LITTLE_CORES="1704000"
+    BIG_CORES="2208000"
+    GPU="900000000"
+    DRAM="933000000"
+    cooling_profile aggressive
+  ;;
+  max-unstable)
+    LITTLE_CORES="1704000"
+    BIG_CORES="2184000"
+    GPU="900000000"
+    DRAM="933000000"
+    cooling_profile aggressive
+  ;;
+  probably-fire)
+    # Can only enable this one over ssh..
+    # DO NOT USE!
+    # You are responsible if you break it.
+    # If your device catches on fire, well you were warned.
+    LITTLE_CORES="1704000"
+    BIG_CORES="2208000"
+    GPU="1100000000"
+    DRAM="1056000000"
+    cooling_profile aggressive
   ;;
 esac
 

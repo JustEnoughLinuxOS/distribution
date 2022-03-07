@@ -23,12 +23,14 @@ then
   fi
 fi
 
+
+
 if [ ! "${COOLING_PROFILE}" = "custom" ]
 then
   if [ "${COOLING_PROFILE}" = "aggressive" ]
   then
-    SPEEDS=(255)
-    TEMPS=(0)
+    SPEEDS=(255 225 195)
+    TEMPS=(55000 45000 0)
   elif [ "${COOLING_PROFILE}" = "moderate" ]
   then
     SPEEDS=(255 190 125 85)
