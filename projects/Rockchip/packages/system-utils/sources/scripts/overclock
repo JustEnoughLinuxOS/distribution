@@ -39,28 +39,40 @@ case ${PROFILE} in
     DRAM="933000000"
     cooling_profile moderate
   ;;
+  cpu-nominal)
+    BIG_CORES="1992000"
+    LITTLE_CORES="1512000"
+    DRAM="933000000"
+    cooling_profile moderate
+  ;;
   cpu-stable)
-    LITTLE_CORES="1608000"
     BIG_CORES="2088000"
+    LITTLE_CORES="1608000"
     DRAM="933000000"
     cooling_profile aggressive
   ;;
-  cpu-unstable)
-    LITTLE_CORES="1704000"
+  cpu-aggressive)
     BIG_CORES="2184000"
+    LITTLE_CORES="1704000"
     DRAM="933000000"
     cooling_profile aggressive
+  ;;
+  max-nominal)
+    BIG_CORES="1992000"
+    LITTLE_CORES="1512000"
+    GPU="900000000"
+    DRAM="933000000"
   ;;
   max-stable)
-    LITTLE_CORES="1704000"
     BIG_CORES="2088000"
+    LITTLE_CORES="1608000"
     GPU="900000000"
     DRAM="933000000"
     cooling_profile aggressive
   ;;
   max-unstable)
-    LITTLE_CORES="1704000"
     BIG_CORES="2184000"
+    LITTLE_CORES="1704000"
     GPU="900000000"
     DRAM="933000000"
     cooling_profile aggressive
