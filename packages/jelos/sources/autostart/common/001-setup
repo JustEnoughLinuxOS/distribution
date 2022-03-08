@@ -27,6 +27,7 @@ rsync -a --delete /usr/config/locale/ /storage/.config/emulationstation/locale/
 
 cp -f /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt
 cp -f /usr/config/ppsspp/PSP/SYSTEM/controls.ini /storage/.config/ppsspp/PSP/SYSTEM/controls.ini
+cp -f /usr/config/emulationstation/es_input.cfg /storage/.config/emulationstation
 
 if [ ! -L "/storage/.emulationstation" ]
 then
