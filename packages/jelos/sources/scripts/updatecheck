@@ -1,0 +1,34 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+DEBUG=true
+PROJECT="JustEnoughLinuxOS/distribution"
+GIT_REPO="https://github.com/${PROJECT}"
+GIT_API="https://api.github.com/repos/${PROJECT}"
+
+function check_network() {
+  GW=$(ip route | awk '/eth0/ {a=$0} END{print $1}')
+  if [[ ${GW} =~ [0-9] ]]
+  then
+    echo true
+  else
+    echo false
+  fi
+}
+
+ONLINE_STATUS=$(check_network)
+if [ "${ONLINE_STATUS}" == true ]
+then
+  LATEST_RELEASE_TAG=$(curl -H 'Cache-Control: no-cache' -Ls "${GIT_API}/releases" | python -c "import sys, json; print(json.load(sys.stdin)[0]['tag_name'])")
+
+  if [ "${OS_VERSION}" -lt "${LATEST_RELEASE_TAG}" ]
+  then
+    echo "${TAG}"
+    exit 0
+  fi
+fi
+
+exit 12
