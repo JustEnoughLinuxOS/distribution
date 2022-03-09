@@ -4,4 +4,11 @@
 
 . /etc/profile
 
+# If there is no defined overclock, make sure it's "off".
+OVERCLOCK=$(get_setting system.overclock)
+if [ -z ${OVERCLOCK} ]
+then
+  set_setting system.overclock off
+fi
+
 /usr/bin/overclock
