@@ -1,0 +1,19 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+ROOTPASS="$1"
+
+# Turn it into a usable hash
+NEW=$(cryptpw -m sha512 "${ROOTPASS}" 2>/dev/null)
+
+# Set the root password.
+sed -i "s#root:${CURRENT}:${LPC}::::::#root:${NEW}:${LPC}::::::#g" /storage/.cache/shadow 2>/dev/null
+
+# Create a root user and set the password.
+echo -ne "${ROOTPASS}\n${ROOTPASS}\n" | smbpasswd -sa root 2>/dev/null
+
+# Save the password so we can display it in ES
+set_setting root.password "${ROOTPASS}"

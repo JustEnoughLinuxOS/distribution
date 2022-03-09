@@ -9,6 +9,7 @@ then
   PROFILE=$(get_setting system.overclock)
 else
   PROFILE=$1
+  SET_COOLING_PROFILE=true
 fi
 
 ### Default clocks when not using OC.
@@ -25,8 +26,11 @@ freqset() {
 }
 
 cooling_profile() {
-  set_setting cooling.profile $1
-  systemctl restart fancontrol
+  if [ "${SET_COOLING_PROFILE}" == true ]
+  then
+    set_setting cooling.profile $1
+    systemctl restart fancontrol
+  fi
 }
 
 case ${PROFILE} in
