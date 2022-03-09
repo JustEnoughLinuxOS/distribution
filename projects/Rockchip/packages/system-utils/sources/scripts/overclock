@@ -4,11 +4,15 @@
 
 . /etc/profile
 
-if [ $# -eq 0 ]
+if [ $# -eq 0 ] || [ "$1" == "boot" ]
 then
   PROFILE=$(get_setting system.overclock)
 else
   PROFILE=$1
+fi
+
+if [ ! "$1" == "boot" ]
+then
   SET_COOLING_PROFILE=true
 fi
 

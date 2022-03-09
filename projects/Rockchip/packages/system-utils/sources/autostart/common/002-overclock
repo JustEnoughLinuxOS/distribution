@@ -11,4 +11,4 @@ then
   set_setting system.overclock off
 fi
 
-/usr/bin/overclock
+/usr/bin/overclock boot
