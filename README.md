@@ -3,7 +3,6 @@
 Just Enough Linux Operating System (JELOS) is a simple Linux distribution for ARM based devices that specializes in handhelds.  My goal is to build an operating system that has the features and capabilities that I need, and to have fun building it.
 
 ## Features
-* Supports the Anbernic RG552 handheld.
 * A 64bit Operating System.
 * Filesystem compatibility with Android.
 * Utilizes the whole SDCARD for EXT4 storage.
@@ -11,6 +10,7 @@ Just Enough Linux Operating System (JELOS) is a simple Linux distribution for AR
 * Provides overclock and cooling profiles.
 * Supports 2.4GHz and 5GHz 802.11 A/B/G/N/AC WIFI.
 * Includes RetroArch, a variety of cores, Stand Alone Emulators, as well as PortMaster.
+* Supports the Anbernic RG552 handheld.
 * Maintained by a small but growing community of contributors.
 
 ## Licenses
@@ -49,6 +49,7 @@ limitations under the License.
 * Write the image to an SDCARD using an imaging tool.  Common imaging tools include [Balena Etcher](https://www.balena.io/etcher/), [Raspberry Pi Imager](https://www.raspberrypi.com/software/), and [Win32 Disk Imager](https://sourceforge.net/projects/win32diskimager/).  If you're skilled with the command line, dd works fine too.
 
 ## Upgrading
+* Download and install the update online via the System Settings menu.
 * Download the latest [version of JELOS](https://github.com/JustEnoughLinuxOS/distribution/releases) (.tar or .img.gz) for your device.
 * Copy the update to your device over the network or to the sdcard's update folder.
 * Reboot the device, and the update will begin automatically.
