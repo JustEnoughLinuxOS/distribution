@@ -74,13 +74,13 @@ curl -o "${UPDATE_PATH}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}
 
 echo -e "\nVerifying download, please wait..." >/dev/console
 # Verify
-MYSUM=$(sha256sum ${USTAGE}/${UFILE} | awk '{print $1}')
-DLSUM=$(cat ${USTAGE}/${UFILE}.sha256 | awk '{print $1}')
+MYSUM=$(sha256sum ${UPDATE_PATH}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.tar | awk '{print $1}')
+DLSUM=$(cat ${UPDATE_PATH}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.tar.sha256 | awk '{print $1}')
 
 if [ ! "${MYSUM}" == "${DLSUM}" ]
 then
   echo "Verification failed, cleaning up and exiting..." >/dev/console
-  rm -f ${USTAGE}/*
+  rm -f ${UPDATE_PATH}/*
   sleep 4
   clear >/dev/console
   systemctl start emustation
