@@ -6,6 +6,9 @@
 
 ROOTPASS="$1"
 
+LPC=$(awk -F: '/^root/{print $3}' /storage/.cache/shadow)
+CURRENT=$(awk -F: '/^root/{print $2}' /storage/.cache/shadow)
+
 # Turn it into a usable hash
 NEW=$(cryptpw -m sha512 "${ROOTPASS}" 2>/dev/null)
 

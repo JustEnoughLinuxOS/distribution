@@ -17,9 +17,6 @@ then
   exit 0
 fi
 
-LPC=$(awk -F: '/^root/{print $3}' /storage/.cache/shadow)
-CURRENT=$(awk -F: '/^root/{print $2}' /storage/.cache/shadow)
-
 # Randomly generate the root password on startup
 ROOTPASS=$(openssl rand -base64 10 2>/dev/null | sed "s#==##g")
 
