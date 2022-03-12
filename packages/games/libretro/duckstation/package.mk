@@ -4,6 +4,7 @@
 
 PKG_NAME="duckstation"
 PKG_VERSION="0162b33835e09984ab9dca6f0b1295343e2dcbc3"
+PKG_SHA256="2e419f6a57d4135a548d025252b7cc293204c0c0f80af49b9d72bf1c7c9d0634"
 PKG_ARCH="aarch64"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/brooksytech/duckstation-libretro"
