@@ -5,7 +5,7 @@
 
 PKG_NAME="linux"
 PKG_URL="https://github.com/JustEnoughLinuxOS/rockchip-kernel.git"
-PKG_VERSION="e54fd3caf"
+PKG_VERSION="fafaf3016"
 PKG_GIT_CLONE_BRANCH="main"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kernel.org"
@@ -120,23 +120,6 @@ pre_make_target() {
     FW_LIST="$(find $PKG_BUILD/external-firmware \( -type f -o -type l \) \( -iname '*.bin' -o -iname '*.fw' -o -path '*/intel-ucode/*' \) | sed 's|.*external-firmware/||' | sort | xargs)"
     sed -i "s|CONFIG_EXTRA_FIRMWARE=.*|CONFIG_EXTRA_FIRMWARE=\"${FW_LIST}\"|" $PKG_BUILD/.config
   fi
-
-  # Add EXFat, kinda gross but I don't want it as a module.
-  PREEXF=`pwd`
-  cd $PKG_BUILD/fs
-  git clone https://github.com/arter97/exfat-linux.git
-  cd exfat-linux
-  git checkout old
-  rm -rf .git
-  cd $PKG_BUILD/fs
-  if [ -d "exfat" ]
-  then
-    rm -rf exfat
-  fi
-  mv exfat-linux exfat
-  sed -i '/source "fs\/fat\/Kconfig"/a source "fs\/exfat\/Kconfig"' Kconfig
-  sed -i '/obj-$(CONFIG_FAT_FS).*+= fat\//a obj-$(CONFIG_EXFAT_FS)\t\t+= exfat\/' Makefile
-  cd ${PREEXF}
 
   kernel_make oldconfig
 
