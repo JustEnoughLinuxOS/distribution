@@ -16,9 +16,6 @@ then
   mkdir -p "${ROM_DIR}"
 fi
 
-ROMNAME=$(basename "${1}")
-BIOS=""
-
 if [ ! -e "${ROM_DIR}/${ROM_DIR}/input.cfg" ]
 then
   GAMEPAD=$(grep -b4 $(readlink ${DEVICE_CONTROLLER_DEV} | sed "s#^.*/##") /proc/bus/input/devices | awk 'BEGIN {FS="\""}; /Name/ {printf $2}')
