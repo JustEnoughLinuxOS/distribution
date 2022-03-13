@@ -320,6 +320,10 @@ then
 			jslisten set "mpv"
 			RUNTHIS='${TBASH} /usr/bin/mpv_video.sh "${ROMNAME}"'
 		;;
+		"saturn")
+			jslisten set "yabasanshiro"
+			RUNTHIS='${TBASH} yabasanshiro.sh "${ROMNAME}"'
+		;;
 		"shell")
 			RUNTHIS='${TBASH} "${ROMNAME}"'
 		;;
