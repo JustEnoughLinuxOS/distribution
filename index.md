@@ -70,4 +70,4 @@ Like any Linux distribution, this project is not the work of one person.  It is 
   * Alternatively, copy your ssh key with ssh-copy-id, and leave rotation enabled.
     * ```ssh-copy-id root@jelos```
 * Which emulators and game engines are supported by JELOS?
-  * See [JELOS emulators and game engines](https://github.com/romadu/distribution/blob/gh-pages/JELOS%20emulators%20and%20game%20engines.md)
+  * See [JELOS emulators and game engines](https://github.com/JustEnoughLinuxOS/distribution/blob/gh-pages/JELOS%20emulators%20and%20game%20engines.md)
