@@ -19,26 +19,23 @@
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
-PKG_NAME="glsl-shaders"
-PKG_VERSION="20801b38aa2c89a2beb9f57ffbbbcea7256e2523"
-PKG_SHA256="d4fc1d591b658f0c579b0a2ed0df92682dd22fddaae3d3ffa269646b68905977"
+PKG_NAME="retropie-shaders"
+PKG_VERSION="b7cdc50258908e8f1906f8fc13a2fac4a9796dc6"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/libretro/glsl-shaders"
+PKG_SITE="https://github.com/RetroPie/common-shaders"
 PKG_URL="${PKG_SITE}.git"
-PKG_DEPENDS_TARGET="toolchain"
+PKG_GIT_CLONE_BRANCH="rpi"
+PKG_DEPENDS_TARGET="toolchain glsl-shaders"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
-PKG_SHORTDESC="Common GSLS shaders for RetroArch"
-PKG_LONGDESC="Common GSLS shaders for RetroArch"
+PKG_SHORTDESC="Libretro common shaders from retropie"
+PKG_LONGDESC="Libretro common shaders from retropie"
+PKG_TOOLCHAIN="manual"
 
-PKG_IS_ADDON="no"
-PKG_TOOLCHAIN="make"
-PKG_AUTORECONF="no"
-
-configure_target() {
-  cd ${PKG_BUILD}
+make_target() {
+  :
 }
 
 makeinstall_target() {
@@ -46,5 +43,6 @@ makeinstall_target() {
   then
     mkdir -p ${INSTALL}/usr/share/common-shaders
   fi
-  make install INSTALLDIR="${INSTALL}/usr/share/common-shaders"
+  rsync -a ${BUILD}/${PKG_NAME}-${PKG_VERSION}/* ${INSTALL}/usr/share/common-shaders/
+  rm -f ${INSTALL}/usr/share/common-shaders/{Makefile,configure}
 }

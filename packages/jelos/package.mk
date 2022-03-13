@@ -15,12 +15,17 @@ PKG_AUTORECONF="no"
 PKG_TOOLCHAIN="make"
 
 PKG_BASEOS="plymouth-lite grep wget libjpeg-turbo util-linux xmlstarlet bluetool gnupg gzip patchelf     \
-            imagemagick util-linux system-utils terminus-font vim bash pyudev dialog six git dbus-python \
-            coreutils miniupnpc nss-mdns avahi MC fbgrab modules"
+            imagemagick terminus-font vim bash pyudev dialog six git dbus-python coreutils miniupnpc \
+            nss-mdns avahi MC fbgrab modules"
+
+if [ "${PROJECT}" == "Rockchip" ]
+then
+  PKG_BASEOS+=" system-utils"
+fi
 
 PKG_UI="emulationstation"
 
-PKG_EMUS="common-shaders glsl-shaders libretro-database retroarch advancemame hatarisa openbor \
+PKG_EMUS="common-shaders retropie-shaders glsl-shaders libretro-database retroarch advancemame hatarisa openbor \
           scummvmsa PPSSPPSDL"
 
 LIBRETRO_CORES="2048 81 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce beetle-pcfx            \
