@@ -82,10 +82,8 @@ Like any Linux distribution, this project is not the work of one person.  It is 
 * I'm using brand-y microSD and after flashing it partitions, reboots, and hangs.
   * When this happens the indicator is a short vibration like it's restarting normally but the power LED does not turn on.  Press reset, and it will continue normally.
 * How can I disable root password rotation?
-  * SSH to the handheld and run the following commands.
-    * ```set_setting rotate.root.password 0```
-    * ```passwd root```
-    * ```smbpasswd root```
+  * Password rotation can be disabled in the System Settings menu.  Once committed the root password may be edited in the same menu.
+  * To set the root password over ssh and keep it in sync with EmulationStation, use ```setrootpass mynewpassword```.
   * Alternatively, copy your ssh key with ssh-copy-id, and leave rotation enabled.
     * ```ssh-copy-id root@jelos```
 * I want to add games to SD Card 1 and see them in my EmulationStation games list.
