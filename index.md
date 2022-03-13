@@ -69,3 +69,5 @@ Like any Linux distribution, this project is not the work of one person.  It is 
     * ```smbpasswd root```
   * Alternatively, copy your ssh key with ssh-copy-id, and leave rotation enabled.
     * ```ssh-copy-id root@jelos```
+* Which emulators and game engines are supported by JELOS?
+  *
