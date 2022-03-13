@@ -369,9 +369,9 @@ SELECT+R2:    fast-forward toggle
 ```sg-1000```</td><td>.bin .BIN .sg .SG .zip .ZIP .7z .7Z</td><td><a href="https://docs.libretro.com/library/gearsystem/#bios">gearsystem</a>, <a href="https://docs.libretro.com/library/genesis_plus_gx/#bios">genesis_plus_gx</a>, <a href="https://docs.libretro.com/library/picodrive/#bios">picodrive</a></td>
   </tr>
   <tr>
-    <td rowspan="3" valign="top">SNK</td><td>Neo Geo CD</td><td>RA: <strong>(neocd)</strong>, <a href="https://docs.libretro.com/library/fbneo">fbneo</a></td><td>
+    <td rowspan="3" valign="top">SNK</td><td>Neo Geo CD</td><td>RA: <a href="https://github.com/libretro/neocd_libretro"><strong>(neocd)</strong></a>, <a href="https://docs.libretro.com/library/fbneo">fbneo</a></td><td>
 
-```neocd```</td><td>.cue .CUE .iso .ISO .chd .CHD</td><td><a href="https://docs.libretro.com/library/fbneo/#bios">fbneo</a></td>
+```neocd```</td><td>.cue .CUE .iso .ISO .chd .CHD</td><td><a href="https://github.com/libretro/neocd_libretro#required-bios-files">neocd</a>, <a href="https://docs.libretro.com/library/fbneo/#bios">fbneo</a></td>
   </tr>
   <tr>
     <td>Neo Geo Pocket</td><td>RA: <a href="https://docs.libretro.com/library/beetle_neopop"><strong>(beetle_ngp)</strong></a>, race</td><td>
@@ -389,7 +389,7 @@ SELECT+R2:    fast-forward toggle
 ```psx```</td><td>.bin .BIN .cue .CUE .img .IMG .mdf .MDF .pbp .PBP .toc .TOC .cbn .CBN .m3u .M3U .ccd .CCD .chd .CHD .iso .ISO</td><td><a href="https://docs.libretro.com/library/pcsx_rearmed/#bios">pcsx_rearmed</a></td>
   </tr>
   <tr>
-    <td rowspan="2" valign="top">PlayStation Portable</td><td>SA: <strong>(PPSSPPSDL)</strong></td><td rowspan=2>
+    <td rowspan="2" valign="top">PlayStation Portable</td><td>SA: <a href="https://github.com/hrydgard/ppsspp"><strong>(PPSSPPSDL)</strong></a></td><td rowspan=2>
 
 ```psp```</td><td rowspan="2">.iso .ISO .cso .CSO .pbp .PBP</td><td></td>
   </tr>
@@ -397,7 +397,7 @@ SELECT+R2:    fast-forward toggle
     <td>RA: <a href="https://docs.libretro.com/library/ppsspp">ppsspp</a></td><td><a href="https://docs.libretro.com/library/ppsspp/#bios">ppsspp</a></td>
   </tr>
   <tr>
-    <td rowspan="2">PSP Minis</td><td>SA: <strong>(PPSSPPSDL)</strong></td><td rowspan=2>
+    <td rowspan="2">PSP Minis</td><td>SA: <a href="https://github.com/hrydgard/ppsspp"><strong>(PPSSPPSDL)</strong></a></td><td rowspan=2>
 
 ```pspminis```</td><td rowspan="2">.iso .ISO .cso .CSO .pbp .PBP</td><td></td>
   </tr>
@@ -423,7 +423,7 @@ SELECT+R2:    fast-forward toggle
     <th align="left">Manufacturer</th><th align="left">System</th><th align="left">Core</th><th>Rom Folder</th><th align="left">Extensions</th><th align="left">Bios</th>
   </tr>
   <tr>
-    <td>Amstrad</td><td>Amstrad CPC</td><td>RA: <strong>(crocods)</strong>, cap32</td><td>
+    <td>Amstrad</td><td>Amstrad CPC</td><td>RA: <a href="https://docs.libretro.com/library/crocods"<strong>(crocods)</strong></a>, <a href="https://docs.libretro.com/library/caprice32">cap32</a></td><td>
 
 ```amstradcpc```</td><td>.dsk .DSK .sna .SNA .tap .TAP .cdt .CDT .kcr .KCR .voc .VOC .m3u .M3U .zip .ZIP .7z .7Z</td><td></td>
   </tr>
@@ -438,43 +438,43 @@ SELECT+R2:    fast-forward toggle
 ```atarist```</td><td rowspan="2" valign="top">.st .ST .msa .MSA .stx .STX .dim .DIM .ipf .IPF .m3u .M3U .zip .ZIP .7z .7Z</td><td rowspan="2" valign="top"><a href="https://docs.libretro.com/library/hatari/#bios">hatari</a></td>
   </tr>
   <tr>
-    <td>SA: HATARISA</td>
+    <td>SA: <a href="https://git.tuxfamily.org/hatari/hatari.git">HATARISA</a></td>
   </tr>
   <tr>
-    <td rowspan="7" valign="top">Commodore</td><td rowspan="2">Amiga</td><td>RA: <strong>(puae)</strong>, uae4arm</td><td rowspan=2>
+    <td rowspan="7" valign="top">Commodore</td><td rowspan="2">Amiga</td><td>RA: <a href="https://docs.libretro.com/library/puae"><strong>(puae)</strong></a>, <a href="https://github.com/libretro/uae4arm-libretro">uae4arm</a></td><td rowspan=2>
 
-```amiga```</td><td rowspan=2>.zip .ZIP .adf .ADF .uae .UAE .ipf .IPF .dms .DMS .adz .ADZ .lha .LHA .m3u .M3U .hdf .HDF .hdz .HDZ</td><td rowspan=2></td>
+```amiga```</td><td rowspan=2>.zip .ZIP .adf .ADF .uae .UAE .ipf .IPF .dms .DMS .adz .ADZ .lha .LHA .m3u .M3U .hdf .HDF .hdz .HDZ</td><td><a href="https://docs.libretro.com/library/puae/#bios">puae</a>, <a href="https://github.com/libretro/uae4arm-libretro#uae4arm-libretro">uae4arm</a></td>
   </tr>
   <tr>
-    <td>SA: AMIBERRY</td>
+    <td>SA: <a href="https://github.com/midwan/amiberry/wiki">AMIBERRY</a></td><td><a href="https://github.com/midwan/amiberry/wiki/Kickstart-ROMs-(BIOS)">amiberry</a></td>
   </tr>
   <tr>
-    <td>Amiga CD32</td><td>RA: <strong>(puae)</strong>, uae4arm</td><td>
+    <td>Amiga CD32</td><td>RA: <a href="https://docs.libretro.com/library/puae"><strong>(puae)</strong></a>, <a href="https://github.com/libretro/uae4arm-libretro">uae4arm</a></td><td>
 
-```amigacd32```</td><td>.iso .ISO .cue .CUE .lha .LHA .chd .CHD</td><td></td>
+```amigacd32```</td><td>.iso .ISO .cue .CUE .lha .LHA .chd .CHD</td><td><a href="https://docs.libretro.com/library/puae/#bios">puae</a>, <a href="https://github.com/libretro/uae4arm-libretro#uae4arm-libretro">uae4arm</a></td>
   </tr>
   <tr>
-    <td>Commodore 128</td><td>RA: <strong>(vice_x128)</strong></td><td>
+    <td>Commodore 128</td><td>RA: <a href="https://docs.libretro.com/library/vice"><strong>(vice_x128)</strong></a></td><td>
 
-```c128```</td><td>.d64 .D64 .d71 .D71 .d80 .D80 .d81 .D81 .d82 .D82 .g64 .G64 .g41 .G41 .x64 .X64 .t64 .T64 .tap .TAP .prg .PRG .p00 .P00 .crt .CRT .bin .BIN .d6z .D6Z .d7z .D7Z .d8z .D8Z .g6z .G6Z .g4z .G4Z .x6z .X6Z .cmd .CMD .m3u .M3U .vsf .VSF .nib .NIB .nbz .NBZ .zip .ZIP</td><td></td>
+```c128```</td><td>.d64 .D64 .d71 .D71 .d80 .D80 .d81 .D81 .d82 .D82 .g64 .G64 .g41 .G41 .x64 .X64 .t64 .T64 .tap .TAP .prg .PRG .p00 .P00 .crt .CRT .bin .BIN .d6z .D6Z .d7z .D7Z .d8z .D8Z .g6z .G6Z .g4z .G4Z .x6z .X6Z .cmd .CMD .m3u .M3U .vsf .VSF .nib .NIB .nbz .NBZ .zip .ZIP</td><td><a href="https://docs.libretro.com/library/vice/#c128">vice x128</a></td>
   </tr>
   <tr>
-    <td>Commodore 16</td><td>RA: <strong>(vice_xplus4)</strong></td><td>
+    <td>Commodore 16</td><td>RA: <a href="https://docs.libretro.com/library/vice"><strong>(vice_xplus4)</strong></a></td><td>
 
 ```c16```</td><td>.d64 .D64 .d71 .D71 .d80 .D80 .d81 .D81 .d82 .D82 .g64 .G64 .g41 .G41 .x64 .X64 .t64 .T64 .tap .TAP .prg .PRG .p00 .P00 .crt .CRT .bin .BIN .d6z .D6Z .d7z .D7Z .d8z .D8Z .g6z .G6Z .g4z .G4Z .x6z .X6Z .cmd .CMD .m3u .M3U .vsf .VSF .nib .NIB .nbz .NBZ .zip .ZIP</td><td></td>
   </tr>
   <tr>
-    <td>Commodore 64</td><td>RA: <strong>(vice_x64)</strong></td><td>
+    <td>Commodore 64</td><td>RA: <a href="https://docs.libretro.com/library/vice"><strong>(vice_x64)</strong></a></td><td>
 
-```c64```</td><td>.d64 .D64 .d71 .D71 .d80 .D80 .d81 .D81 .d82 .D82 .g64 .G64 .g41 .G41 .x64 .X64 .t64 .T64 .tap .TAP .prg .PRG .p00 .P00 .crt .CRT .bin .BIN .d6z .D6Z .d7z .D7Z .d8z .D8Z .g6z .G6Z .g4z .G4Z .x6z .X6Z .cmd .CMD .m3u .M3U .vsf .VSF .nib .NIB .nbz .NBZ .zip .ZIP</td><td></td>
+```c64```</td><td>.d64 .D64 .d71 .D71 .d80 .D80 .d81 .D81 .d82 .D82 .g64 .G64 .g41 .G41 .x64 .X64 .t64 .T64 .tap .TAP .prg .PRG .p00 .P00 .crt .CRT .bin .BIN .d6z .D6Z .d7z .D7Z .d8z .D8Z .g6z .G6Z .g4z .G4Z .x6z .X6Z .cmd .CMD .m3u .M3U .vsf .VSF .nib .NIB .nbz .NBZ .zip .ZIP</td><td><a href="https://docs.libretro.com/library/vice/#c64-fastaccurate">vice x64</a></td>
   </tr>
   <tr>
-    <td>Commodore VIC-20</td><td>RA: <strong>(vice_xvic)</strong></td><td>
+    <td>Commodore VIC-20</td><td>RA: <a href="https://docs.libretro.com/library/vice"><strong>(vice_xvic)</strong></a></td><td>
 
 ```vic20```</td><td>.20 .40 .60 .a0 .A0 .b0 .B0 .d64 .D64 .d71 .D71 .d80 .D80 .d81 .D81 .d82 .D82 .g64 .G64 .g41 .G41 .x64 .X64 .t64 .T64 .tap .TAP .prg .PRG .p00 .P00 .crt .CRT .bin .BIN .gz .GZ .d6z .D6Z .d7z .D7Z .d8z .D8Z .g6z .G6Z .g4z .G4Z .x6z .X6Z .cmd .CMD .m3u .M3U .vsf .VSF .nib .NIB .nbz .NBZ .zip .ZIP</td><td></td>
   </tr>
   <tr>
-    <td rowspan="3" valign="top">Microsoft</td><td>MS-DOS</td><td>RA: <strong>(dosbox_pure)</strong>, dosbox_svn</td><td>
+    <td rowspan="3" valign="top">Microsoft</td><td>MS-DOS</td><td>RA: <a href="https://github.com/schellingb/dosbox-pure"><strong>(dosbox_pure)</strong></a>, <a href="https://github.com/libretro/dosbox-svn">dosbox_svn</a></td><td>
 
 ```pc```</td><td>.com .COM .bat .BAT .exe .EXE .dosz .DOSZ</td><td></td>
   </tr>
@@ -489,12 +489,12 @@ SELECT+R2:    fast-forward toggle
 ```msx2```</td><td>.dsk .DSK .mx1 .MX1 .mx2 .MX2 .rom .ROM .zip .ZIP .7z .7Z .M3U .m3u</td><td><a href="https://docs.libretro.com/library/bluemsx/#bios">bluemsx</a>, <a href="https://docs.libretro.com/library/fmsx/#bios">fmsx</a></td>
   </tr>
   <tr>
-    <td rowspan="2" valign="top">NEC</td><td>PC-8800</td><td>RA: <strong>(quasi88)</strong></td><td>
+    <td rowspan="2" valign="top">NEC</td><td>PC-8800</td><td>RA: <a href="https://docs.libretro.com/library/quasi88"><strong>(quasi88)</strong></a></td><td>
 
-```pc88```</td><td>.d88 .D88 .m3u .M3U</td><td></td>
+```pc88```</td><td>.d88 .D88 .m3u .M3U</td><td><a href="https://docs.libretro.com/library/quasi88/#bios">quasi88</a></td>
   </tr>
   <tr>
-    <td>PC-9800</td><td>RA: <a href="https://docs.libretro.com/library/neko_project_ii_kai"<strong>(np2kai)</strong></a>, nekop2</td><td>
+    <td>PC-9800</td><td>RA: <a href="https://docs.libretro.com/library/neko_project_ii_kai"<strong>(np2kai)</strong></a>, <a href="https://github.com/libretro/libretro-meowPC98">nekop2</a></td><td>
 
 ```pc98```</td><td>.d98 .zip .98d .fdi .fdd .2hd .tfd .d88 .88d .hdm .xdf .dup .hdi .thd .nhd .hdd .hdn</td><td><a href="https://docs.libretro.com/library/neko_project_ii_kai/#bios">np2kai</a></td>
   </tr>
@@ -504,7 +504,7 @@ SELECT+R2:    fast-forward toggle
 ```sc-3000```</td><td>.bin .BIN .sg .SG .zip .ZIP .7z .7Z</td><td><a href="https://docs.libretro.com/library/bluemsx/#bios">bluemsx</a></td>
   </tr>
   <tr>
-    <td rowspan="2" valign="top">Sharp</td><td>Sharp X1</td><td>RA: <strong>(x1)</strong></td><td>
+    <td rowspan="2" valign="top">Sharp</td><td>Sharp X1</td><td>RA: <a href="https://github.com/r-type/xmil-libretro"><strong>(x1)</strong></a></td><td>
 
 ```x1```</td><td>.dx1 .DX1 .2d .2D .2hd .2HD .tfd .TFD .d88 .D88 .88d .88D .hdm .HDM .xdf .XDF .dup .DUP .tap .TAP .cmd .CMD .zip .ZIP .7z .7Z</td><td></td>
   </tr>
@@ -618,4 +618,3 @@ Retrieve details of selected core by viewing core info file (e.g. yabasanshiro)
 ```
 cat /tmp/cores/yabasanshiro_libretro.info  
 ```  
-
