@@ -18,14 +18,9 @@ PKG_BASEOS="plymouth-lite grep wget libjpeg-turbo util-linux xmlstarlet bluetool
             imagemagick terminus-font vim bash pyudev dialog six git dbus-python coreutils miniupnpc \
             nss-mdns avahi MC fbgrab modules"
 
-if [ "${PROJECT}" == "Rockchip" ]
-then
-  PKG_BASEOS+=" system-utils"
-fi
-
 PKG_UI="emulationstation"
 
-PKG_EMUS="common-shaders retropie-shaders glsl-shaders libretro-database retroarch advancemame hatarisa openbor \
+PKG_EMUS="common-shaders glsl-shaders libretro-database retroarch advancemame hatarisa openbor \
           scummvmsa PPSSPPSDL"
 
 LIBRETRO_CORES="2048 81 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce beetle-pcfx            \
@@ -49,6 +44,13 @@ PKG_GAMESUPPORT="sixaxis jslisten evtest rg351p-js2xbox gptokeyb textviewer 351f
                  gamecontrollerdb portmaster"
 
 PKG_EXPERIMENTAL=""
+
+### Project/Device specific items
+if [ "${PROJECT}" == "Rockchip" ]
+then
+  PKG_BASEOS+=" system-utils"
+  PKG_EMUS+=" retropie-shaders"
+fi
 
 if [ ! -z "${BASE_ONLY}" ]
 then
