@@ -251,7 +251,7 @@ SELECT+R2:    fast-forward toggle
 ```n64```</td><td rowspan=2>.z64 .Z64 .n64 .N64 .v64 .V64 .zip .ZIP .7z .7Z</td><td rowspan=2></td>
   </tr>
   <tr>
-    <td>SA: m64p_gl64mk2, m64p_rice</td>
+    <td>SA: <a href="https://github.com/mupen64plus/mupen64plus-video-glide64mk2">m64p_gl64mk2</a>, <a href="https://github.com/mupen64plus/mupen64plus-video-rice">m64p_rice</a></td>
   </tr>
   <tr>
     <td>Nintendo Entertainment System</td><td>RA: <a href="https://docs.libretro.com/library/fceumm">fceumm</a>, <a href="https://docs.libretro.com/library/nestopia_ue"><strong>(nestopia)</strong></a>, <a href="https://docs.libretro.com/library/quicknes/">quicknes</a></td><td>
