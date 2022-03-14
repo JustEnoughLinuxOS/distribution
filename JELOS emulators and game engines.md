@@ -397,9 +397,11 @@ SELECT+R2:    fast-forward toggle
 ```megadrive```</td><td>.bin .BIN .gen .GEN .md .MD .sg .SG .smd .SMD .zip .ZIP .7z .7Z</td><td><a href="https://docs.libretro.com/library/genesis_plus_gx/#bios">genesis_plus_gx</a>, <a href="https://docs.libretro.com/library/picodrive/#bios">picodrive</a></td>
   </tr>
   <tr>
-    <td>Sega Saturn</td><td>RA: <strong>(yabasanshiro)</strong></td><td>
+    <td rowspan=2>Sega Saturn</td><td>RA: <a href="https://docs.libretro.com/library/yabause">Yabasanshiro</a></td><td rowspan=2>
 
-```saturn```</td><td>.cue .CUE .chd .CHD .iso .ISO</td><td><a href="https://docs.libretro.com/library/yabause/#bios">yabause</a></td>
+```saturn```</td><td rowspan=2>.cue .CUE .chd .CHD .iso .ISO</td><td rowspan=2><a href="https://docs.libretro.com/library/yabause/#bios">yabause</a></td>
+  <tr>
+    <td>SA: <a href="http://www.uoyabause.org"><strong>(Yabasanshiro)</strong></td>
   </tr>
   <tr>
     <td>SG-1000</td><td>RA: <a href="https://docs.libretro.com/library/gearsystem"><strong>(gearsystem)</strong></a>, <a href="https://docs.libretro.com/library/genesis_plus_gx">genesis_plus_gx</a>, <a href="https://docs.libretro.com/library/picodrive">picodrive</a></td><td>
