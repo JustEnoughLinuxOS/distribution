@@ -77,6 +77,8 @@ Like any Linux distribution, this project is not the work of one person.  It is 
   * I add things to JELOS as I have an itch to scratch, as does the community of contributors.  If you would like to add something to JELOS, pull requests are welcomed.
 * What about N64, Dreamcast, Saturn, Jaguar, PSP, etc on the 552?
   * Those platforms perform best in Android on the 552, and I have no interest in them.  I recommend that you use Android instead for those.
+* Which emulators and game engines are supported by JELOS?
+  * [See JELOS emulators and game engines](https://github.com/JustEnoughLinuxOS/distribution/blob/gh-pages/JELOS%20emulators%20and%20game%20engines.md)
 * Will you support my device?
   * If you send me a device and source code, I'll consider it.
 * I'm using brand-y microSD and after flashing it partitions, reboots, and hangs.
