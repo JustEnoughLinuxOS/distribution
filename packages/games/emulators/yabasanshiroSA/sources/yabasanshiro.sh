@@ -32,4 +32,15 @@ EOF
   fi
 fi
 
-yabasanshiro -r 2 -i "${1}" -b /storage/roms/bios/saturn_bios.bin >/var/log/exec.log 2>&1 ||:
+BIOS=""
+for BIOS in saturn_bios.bin sega_101.bin mpr-17933.bin mpr-18811-mx.ic1 mpr-19367-mx.ic1 stvbios.zip
+do
+  BIOS=$(find /storage/roms/bios -name ${BIOS} -print 2>/dev/null)
+  if [ ! -z "${BIOS}" ]
+  then
+    BIOS="-b ${BIOS}"
+    break
+  fi
+done
+
+yabasanshiro -r 2 -i "${1}" ${BIOS} >/var/log/exec.log 2>&1 ||:
