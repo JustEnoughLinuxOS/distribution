@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="portmaster"
-PKG_VERSION="1.0"
+PKG_VERSION=""
 PKG_ARCH="any"
 PKG_URL="https://github.com/christianhaitian/PortMaster/raw/main/PortMaster.zip"
 PKG_PRIORITY="optional"
@@ -12,7 +12,7 @@ PKG_SHORTDESC="A simple tool that allows you to download various game ports that
 PKG_TOOLCHAIN="manual"
 
 pre_unpack() {
-  unzip sources/portmaster/portmaster-1.0.zip -d $PKG_BUILD
+  unzip sources/portmaster/portmaster-*.zip -d ${PKG_BUILD}
 }
 
 makeinstall_target() {
