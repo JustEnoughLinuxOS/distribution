@@ -12,7 +12,7 @@ PKG_SHORTDESC="A simple tool that allows you to download various game ports that
 PKG_TOOLCHAIN="manual"
 
 pre_unpack() {
-  unzip sources/portmaster/portmaster-.zip -d $PKG_BUILD
+  unzip sources/portmaster/portmaster-*.zip -d ${PKG_BUILD}
 }
 
 makeinstall_target() {
