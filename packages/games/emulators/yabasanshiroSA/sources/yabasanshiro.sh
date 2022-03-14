@@ -10,10 +10,16 @@
 ROM_DIR="/storage/roms/saturn/yabasanshiro"
 CONFIG_DIR="/storage/.config/game/configs/yabasanshiro"
 SOURCE_DIR="/usr/config/game/configs/yabasanshiro"
+BIOS_BACKUP="/storage/roms/bios/yabasanshiro"
 
 if [ ! -d "${ROM_DIR}" ]
 then
   mkdir -p "${ROM_DIR}"
+fi
+
+if [ ! -d "${BIOS_BACKUP}" ]
+then
+  mkdir -p "${BIOS_BACKUP}"
 fi
 
 if [ ! -e "${ROM_DIR}/${ROM_DIR}/input.cfg" ]
