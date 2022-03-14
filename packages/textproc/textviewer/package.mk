@@ -23,7 +23,7 @@ pre_configure_target() {
   sed -i 's|BUTTON_START|BUTTON_INVALID|g' main.cpp
 
   # For RG552
-  sed -i 's|    ImGui::GetIO().Fonts->AddFontDefault(&config);|    ImGui::GetIO().Fonts->AddFontDefault(\&config);\n  }\n  else\n  {\n    ImFontConfig config;\n    config.SizePixels = 13;\n    ImGui::GetIO().Fonts->AddFontDefault(\&config);|g' main.cpp
+  sed -i 's|    ImGui::GetIO().Fonts->AddFontDefault(&config);|    ImGui::GetIO().Fonts->AddFontDefault(\&config);\n  }\n  else\n  {\n    ImFontConfig config;\n    config.SizePixels = 48;\n    ImGui::GetIO().Fonts->AddFontDefault(\&config);|g' main.cpp
 
 }
 
