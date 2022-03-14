@@ -13,7 +13,6 @@ fi
 ROTATION=$(get_setting rotate.root.password)
 if [ "${ROTATION}" == "0" ]
 then
-  set_setting root.password "MANUALLY SET"
   exit 0
 fi
 
