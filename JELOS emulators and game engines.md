@@ -28,6 +28,9 @@ https://github.com/JustEnoughLinuxOS/distribution
     <td><a href="https://github.com/drfrag666/gzdoom">lzdoom</a></td><td><a href="https://zdoom.org/wiki/IWAD">Game Engine</a></td>
   </tr>
   <tr>
+    <td><a href="https://github.com/mupen64plus/mupen64plus-video-glide64mk2">mupen64plus (mupen64plussa)</a></td><td><a href="https://mupen64plus.org/docs">Standalone</a></td>
+  </tr>
+  <tr>
     <td><a href="https://github.com/DCurrent/openbor">Openbor</a></td><td><a href="https://www.chronocrash.com/forum/index.php?resources/">Standalone</a></td>
   </tr>
   <tr>
