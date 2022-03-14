@@ -7,22 +7,59 @@ https://github.com/JustEnoughLinuxOS/distribution
     <th align="left">Emulator</th><th align="left">Notes</th>
   </tr>
   <tr>
-    <td><a href="https://www.advancemame.it/readme">AdvanceMame</a></td><td>Standalone</td>
+    <td><a href="https://www.advancemame.it/readme">AdvanceMame</a></td><td><a href="https://www.advancemame.it/download">Standalone</a></td>
   </tr>
   <tr>
-    <td><a href="https://git.tuxfamily.org/hatari/hatari.git">Hatari (Hatarisa)</a></td><td>Standalone</td>
+    <td><a href="https://github.com/midwan/amiberry/wiki">Amiberry</a></td><td><a href="https://github.com/midwan/amiberry/wiki/Kickstart-ROMs-(BIOS)">Standalone</a></td>
   </tr>
   <tr>
-    <td><a href="https://github.com/DCurrent/openbor">Openbor</a></td><td>Standalone</td>
+    <td><a href="http://maniacsvault.net/ecwolf/wiki/Main_Page">ecwolf</a></td><td><a href="http://maniacsvault.net/ecwolf/wiki/Game_data">Game Engine</a></td>
   </tr>
   <tr>
-    <td><a href="https://github.com/hrydgard/ppsspp">PPSSPPSDL</a></td><td>Standalone</td>
+    <td><a href="https://github.com/coelckers/gzdoom">gzdoom</a></td><td><a href="https://zdoom.org/wiki/IWAD">Game Engine</a></td>
   </tr>
   <tr>
-    <td><a href="https://www.scummvm.org">Scummmvm (Scummvmsa)</a></td><td>Standalone</td>
+    <td><a href="https://git.tuxfamily.org/hatari/hatari.git">Hatari (Hatarisa)</a></td><td><a href="https://docs.libretro.com/library/hatari/#bios">Standalone</a></td>
   </tr>
   <tr>
-    <td><a href="https://www.retroarch.com">Retroarch with Libretro Cores (<strong>RA:</strong>)</a></td><td>64-bit and 32-bit versions use shared config files
+    <td><a href="https://github.com/DirtBagXon/hypseus-singe">Hypseus</a></td><td><a href="https://www.daphne-emu.com:9443/mediawiki/index.php/Main_Page">Standalone</a></td>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/drfrag666/gzdoom">lzdoom</a></td><td><a href="https://zdoom.org/wiki/IWAD">Game Engine</a></td>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/DCurrent/openbor">Openbor</a></td><td><a href="https://www.chronocrash.com/forum/index.php?resources/">Standalone</a></td>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/hrydgard/ppsspp">PPSSPPSDL</a></td><td><a href="https://www.ppsspp.org/faq.html">Standalone</a></td>
+  </tr>
+  <tr>
+    <td><a href="https://zdoom.org/wiki/Raze">Raze</a></td><td><a href="https://zdoom.org/wiki/Raze#Supported_games">Game Engine</a></td>
+  </tr>
+  <tr>
+    <td><a href="https://www.scummvm.org">Scummmvm (Scummvmsa)</a></td><td><a href="https://www.scummvm.org/compatibility/">Standalone</a></td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="http://wiki.yabause.org/index.php5?title=Documentations">Yabasanshiro</a></td><td><a href="http://www.uoyabause.org">Standalone</a>
+    
+```
+SELECT        menu
+START         start
+D-PAD         up/down/left/right
+Y             a
+B             b
+A             c
+X             x
+L1 (shoulder) y
+R1 (shoulder) z
+L2 (trigger)  l
+R2 (trigger)  r
+LEFT ANALOG   analog stick
+```
+</td>
+  </tr>
+  <tr>
+    <td valign="top"><a href="https://www.retroarch.com">Retroarch with Libretro Cores (<strong>RA:</strong>)</a></td><td>64-bit and 32-bit versions use shared config files
     
 ```
 SELECT+START: exit (press twice)
@@ -41,6 +78,7 @@ SELECT+R2:    fast-forward toggle
     <td><a href="https://github.com/christianhaitian/arkos/wiki/PortMaster">Port Master</a></td><td><a href="https://github.com/christianhaitian/arkos/wiki/ArkOS-Emulators-and-Ports-information#ports">Port Installer</a></td>
   </tr>
 </table>
+
 
 ## Arcade
 
@@ -359,9 +397,11 @@ SELECT+R2:    fast-forward toggle
 ```megadrive```</td><td>.bin .BIN .gen .GEN .md .MD .sg .SG .smd .SMD .zip .ZIP .7z .7Z</td><td><a href="https://docs.libretro.com/library/genesis_plus_gx/#bios">genesis_plus_gx</a>, <a href="https://docs.libretro.com/library/picodrive/#bios">picodrive</a></td>
   </tr>
   <tr>
-    <td>Sega Saturn</td><td>RA: <strong>(yabasanshiro)</strong></td><td>
+    <td rowspan=2>Sega Saturn</td><td>RA: <a href="https://docs.libretro.com/library/yabause">Yabasanshiro</a></td><td rowspan=2>
 
-```saturn```</td><td>.cue .CUE .chd .CHD .iso .ISO</td><td><a href="https://docs.libretro.com/library/yabause/#bios">yabause</a></td>
+```saturn```</td><td rowspan=2>.cue .CUE .chd .CHD .iso .ISO</td><td rowspan=2><a href="https://docs.libretro.com/library/yabause/#bios">yabause</a></td>
+  <tr>
+    <td>SA: <a href="http://www.uoyabause.org"><strong>(Yabasanshiro)</strong></td>
   </tr>
   <tr>
     <td>SG-1000</td><td>RA: <a href="https://docs.libretro.com/library/gearsystem"><strong>(gearsystem)</strong></a>, <a href="https://docs.libretro.com/library/genesis_plus_gx">genesis_plus_gx</a>, <a href="https://docs.libretro.com/library/picodrive">picodrive</a></td><td>
