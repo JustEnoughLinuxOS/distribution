@@ -2,6 +2,7 @@
 
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2021-present 351ELEC (https://github.com/351ELEC)
+# Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 . /etc/profile
 
@@ -82,11 +83,9 @@ if [ "${EES}" == "zlswap" ]; then
 	#cat $INPUTCFGBASE <(echo) $SHARE/zlswap.ini > $TMP/InputAutoCfg.ini
 	cp $SHARE/zlswap.ini $TMP/InputAutoCfg.ini
 elif [ "${EES}" == "custom" ]; then
-	#cat $INPUTCFGBASE <(echo) $GAMEDATA/custominput.ini $TMP/InputAutoCfg.ini
 	cp $GAMEDATA/custominput.ini $TMP/InputAutoCfg.ini
 else
 	# Default
-	#cat $INPUTCFGBASE <(echo) $SHARE/default.ini > $TMP/InputAutoCfg.ini
 	cp $SHARE/default.ini $TMP/InputAutoCfg.ini
 fi
 
