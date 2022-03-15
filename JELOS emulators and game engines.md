@@ -596,7 +596,7 @@ https://github.com/JustEnoughLinuxOS/distribution
 SELECT        menu
 START         start
 B             a
-X             b
+Y             b
 RIGHT ANALOG  C-stick
 LEFT ANALOG   analog
 L1            Z
