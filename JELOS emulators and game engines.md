@@ -554,7 +554,7 @@ https://github.com/JustEnoughLinuxOS/distribution
   <tr>
     <td>Wolfenstein 3D</td><td>id Software</td><td>SA: <a href="http://maniacsvault.net/ecwolf/wiki/Main_Page"><strong>(ecwolf)</strong></a></td><td>
 
-```ecwolf```</td><td>.ecwolf</td><td><a href="http://maniacsvault.net/ecwolf/wiki/Game_data">Game data</a></td>
+```ecwolf```</td><td><a href="https://351elec.de/System-Wolfenstein-3D#how-to-create-a-ecwolf-file">.ecwolf</a></td><td><a href="http://maniacsvault.net/ecwolf/wiki/Game_data">Game data</a></td>
   </tr>
   <tr>
     <td><a href="https://github.com/christianhaitian/arkos/wiki/PortMaster">Port Master</a></td><td>Ports</td><td><a href="https://github.com/christianhaitian/arkos/wiki/ArkOS-Emulators-and-Ports-information#ports">various</a></td><td>
