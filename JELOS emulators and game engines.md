@@ -618,6 +618,8 @@ B             jump
 Y             special
 D-PAD         up/down/left/right
 SELECT        cancel, screenshot
+
+note: pressing A on title screen will exit
 ```
 </td>
   </tr>
