@@ -624,7 +624,23 @@ note: pressing A on title screen will exit
 </td>
   </tr>
   <tr>
-    <td><a href="https://github.com/hrydgard/ppsspp">PPSSPPSDL</a></td><td><a href="https://www.ppsspp.org/faq.html">Standalone</a></td>
+    <td><a href="https://github.com/hrydgard/ppsspp">PPSSPPSDL</a></td><td><a href="https://www.ppsspp.org/faq.html">Standalone</a>
+
+```
+START         start
+SELECT        select
+B             cross
+A             circle
+X             triangle
+Y             square
+L1            L
+R1            R
+ANALOG LEFT   analog
+ANALOG RIGHT  cross(down) circle(right) triangle(up) square(left)
+D-PAD         up/down/left/right
+R3            PPSSPPSDL menu
+```
+</td>
   </tr>
   <tr>
     <td><a href="https://zdoom.org/wiki/Raze">Raze</a></td><td><a href="https://zdoom.org/wiki/Raze#Supported_games">Game Engine</a></td>
