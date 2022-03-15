@@ -80,7 +80,7 @@ get_setting "input_configuration"
 echo ${EES}
 if [ "${EES}" == "zlswap" ]; then
 	#cat $INPUTCFGBASE <(echo) $SHARE/zlswap.ini > $TMP/InputAutoCfg.ini
-	cp $SHARE/zlswap.ini > $TMP/InputAutoCfg.ini
+	cp $SHARE/zlswap.ini $TMP/InputAutoCfg.ini
 elif [ "${EES}" == "custom" ]; then
 	#cat $INPUTCFGBASE <(echo) $GAMEDATA/custominput.ini $TMP/InputAutoCfg.ini
 	cp $GAMEDATA/custominput.ini $TMP/InputAutoCfg.ini
