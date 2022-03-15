@@ -21,7 +21,7 @@ PKG_BASEOS="plymouth-lite grep wget libjpeg-turbo util-linux xmlstarlet bluetool
 PKG_UI="emulationstation"
 
 PKG_EMUS="common-shaders glsl-shaders libretro-database retroarch advancemame hatarisa openbor \
-          scummvmsa PPSSPPSDL yabasanshiroSA"
+          scummvmsa PPSSPPSDL yabasanshiroSA mupen64plussa"
 
 LIBRETRO_CORES="2048 81 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce beetle-pcfx            \
                 beetle-supafaust beetle-supergrafx beetle-vb beetle-wswan bluemsx cannonball cap32   \
