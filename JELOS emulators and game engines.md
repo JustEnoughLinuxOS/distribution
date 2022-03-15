@@ -606,7 +606,22 @@ R2            R
 </td>
   </tr>
   <tr>
-    <td><a href="https://github.com/DCurrent/openbor">Openbor</a></td><td><a href="https://www.chronocrash.com/forum/index.php?resources/">Standalone</a></td>
+    <td><a href="https://github.com/DCurrent/openbor">Openbor</a></td><td><a href="https://www.chronocrash.com/forum/index.php?resources/">Standalone</a>
+    
+```
+START         start, confirm
+A             attack 1
+X             attack 2
+L1            attack 3
+R1            attack 4
+B             jump
+Y             special
+D-PAD         up/down/left/right
+SELECT        cancel, screenshot
+
+note: pressing A on title screen will exit
+```
+</td>
   </tr>
   <tr>
     <td><a href="https://github.com/hrydgard/ppsspp">PPSSPPSDL</a></td><td><a href="https://www.ppsspp.org/faq.html">Standalone</a></td>
