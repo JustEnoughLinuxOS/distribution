@@ -13,9 +13,9 @@ PLATFORM="n64"
 SHARE="/usr/local/share/mupen64plus"
 INPUTCFGBASE="$SHARE/InputAutoCfg.ini"
 CONF="/storage/.config/system/configs/system.cfg"
-M64PCONF="/storage/.config/mupen64plussa/mupen64plus.cfg"
+M64PCONF="/storage/.config/game/configs/mupen64plussa/mupen64plus.cfg"
 TMP="/tmp/mupen64plussa"
-GAMEDATA="/storage/.config/mupen64plussa"
+GAMEDATA="/storage/.config/game/configs/mupen64plussa"
 
 rm -rf $TMP
 mkdir -p $TMP
@@ -44,7 +44,7 @@ if [[ ! -f "$GAMEDATA/custominput.ini" ]]; then
 fi
 
 if [[ ! -f "$M64PCONF" ]]; then
-	mkdir -p /storage/.config/mupen64plussa
+	mkdir -p /storage/.config/game/configs/mupen64plussa
 	cp $SHARE/mupen64plus.cfg $M64PCONF
 fi
 
