@@ -4,6 +4,7 @@
 
 . /etc/profile
 
+DEBUG=false
 COOLING_PROFILE=$(get_setting "cooling.profile")
 FAN_PWM="${DEVICE_PWM_FAN}"
 
@@ -22,7 +23,6 @@ then
     set_setting cooling.profile quiet
   fi
 fi
-
 
 
 if [ ! "${COOLING_PROFILE}" = "custom" ]
