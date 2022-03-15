@@ -6,9 +6,6 @@ case $1 in
     cat /sys/class/backlight/backlight/brightness > /storage/.brightness
     # Store sound state. Try to avoid having max volume after resume
     alsactl store -f /tmp/asound.state
-    # workaround until dwc2 is fixed
-    #modprobe -r dwc2
-    # stop hotkey service
     systemctl stop headphones
  
     # This file is used by ES to determine if we just woke up from sleep
@@ -21,12 +18,8 @@ case $1 in
     VOL=$(get_setting "audio.volume" 2>/dev/null)
     MIXER="Master"
     amixer set "${MIXER}" ${VOL}% 2>&1 >/dev/null
-    # workaround until dwc2 is fixed
-    #(echo $(lsmod 2>/dev/null) | grep dwc2 >/dev/null) && modprobe -r dwc2
-    #modprobe -i dwc2
     # Restore system brightness
     cat /storage/.brightness > /sys/class/backlight/backlight/brightness
-
     # re-detect and reapply sound, brightness and hp state
     systemctl start headphones
 	;;
