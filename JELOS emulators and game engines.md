@@ -593,16 +593,35 @@ https://github.com/JustEnoughLinuxOS/distribution
     <td><a href="https://github.com/mupen64plus/mupen64plus-video-glide64mk2">mupen64plus (mupen64plussa)</a></td><td><a href="https://mupen64plus.org/docs">Standalone</a>
     
 ```
-SELECT        menu
+SELECT        hotkey enable
 START         start
 B             a
 Y             b
 RIGHT ANALOG  C-stick
 LEFT ANALOG   analog
-L1            Z
-R1            L
-R2            R
+L1            L
+L2            Z
+R1            R
+
+HOTKEYS
+=======
+SELECT+START  exit to EmulationStation ("ES")
+SELECT+R1     save state
+SELECT+L1     load state
+SELECT+Y      screenshot
+SELECT+B      reset current game
 ```
+CONTROLLER PROFILES
+
+Z and L button assignment can be changed in ES.
+
+* Highlight the game and press X
+* Select ADVANCED GAME OPTIONS (A to confirm)
+* Set EMULATOR to either MUPEN64PLUSSA
+* Change INPUT CONFIGURATION
+  * DEFAULT:       L1 = L, L2 = Z
+  * Z & L SWAP:    L1 = Z, L2 = L
+  * CUSTOM:        Users can create their own controller layout in ```/storage/.configs/game/configs/mupen64plussa```
 </td>
   </tr>
   <tr>
