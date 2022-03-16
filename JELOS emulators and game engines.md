@@ -554,7 +554,7 @@ https://github.com/JustEnoughLinuxOS/distribution
   <tr>
     <td>Wolfenstein 3D</td><td>id Software</td><td>SA: <a href="http://maniacsvault.net/ecwolf/wiki/Main_Page"><strong>(ecwolf)</strong></a></td><td>
 
-```ecwolf```</td><td>.ecwolf</td><td><a href="http://maniacsvault.net/ecwolf/wiki/Game_data">Game data</a></td>
+```ecwolf```</td><td><a href="https://351elec.de/System-Wolfenstein-3D#how-to-create-a-ecwolf-file">.ecwolf</a></td><td><a href="http://maniacsvault.net/ecwolf/wiki/Game_data">Game data</a></td>
   </tr>
   <tr>
     <td><a href="https://github.com/christianhaitian/arkos/wiki/PortMaster">Port Master</a></td><td>Ports</td><td><a href="https://github.com/christianhaitian/arkos/wiki/ArkOS-Emulators-and-Ports-information#ports">various</a></td><td>
@@ -590,23 +590,42 @@ https://github.com/JustEnoughLinuxOS/distribution
     <td><a href="https://github.com/drfrag666/gzdoom">lzdoom</a></td><td><a href="https://zdoom.org/wiki/IWAD">Game Engine</a></td>
   </tr>
   <tr>
-    <td><a href="https://github.com/mupen64plus/mupen64plus-video-glide64mk2">mupen64plus (mupen64plussa)</a></td><td><a href="https://mupen64plus.org/docs">Standalone</a>
+    <td valign="top">><a href="https://github.com/mupen64plus/mupen64plus-video-glide64mk2">mupen64plus (mupen64plussa)</a></td><td><a href="https://mupen64plus.org/docs">Standalone</a>
     
 ```
-SELECT        menu
+SELECT        hotkey enable
 START         start
 B             a
 Y             b
 RIGHT ANALOG  C-stick
 LEFT ANALOG   analog
-L1            Z
-R1            L
-R2            R
+L1            L
+L2            Z
+R1            R
+
+HOTKEYS
+=======
+SELECT+START  exit to EmulationStation ("ES")
+SELECT+R1     save state
+SELECT+L1     load state
+SELECT+Y      screenshot
+SELECT+B      reset current game
 ```
+CONTROLLER PROFILES
+
+Z and L button assignment can be changed in ES.
+
+* Highlight the game and press X
+* Select ADVANCED GAME OPTIONS (A to confirm)
+* Set EMULATOR to either MUPEN64PLUSSA
+* Change INPUT CONFIGURATION
+  * DEFAULT:       L1 = L, L2 = Z
+  * Z & L SWAP:    L1 = Z, L2 = L
+  * CUSTOM:        Users can create their own controller layout in ```/storage/.configs/game/configs/mupen64plussa```
 </td>
   </tr>
   <tr>
-    <td><a href="https://github.com/DCurrent/openbor">Openbor</a></td><td><a href="https://www.chronocrash.com/forum/index.php?resources/">Standalone</a>
+    <td valign="top">><a href="https://github.com/DCurrent/openbor">Openbor</a></td><td><a href="https://www.chronocrash.com/forum/index.php?resources/">Standalone</a>
     
 ```
 START         start, confirm
@@ -624,7 +643,7 @@ note: pressing A on title screen will exit
 </td>
   </tr>
   <tr>
-    <td><a href="https://github.com/hrydgard/ppsspp">PPSSPPSDL</a></td><td><a href="https://www.ppsspp.org/faq.html">Standalone</a>
+    <td valign="top"><a href="https://github.com/hrydgard/ppsspp">PPSSPPSDL</a></td><td><a href="https://www.ppsspp.org/faq.html">Standalone</a>
 
 ```
 START         start
@@ -686,6 +705,43 @@ SELECT+R2:    fast-forward toggle
   <tr>
     <td><a href="https://github.com/christianhaitian/arkos/wiki/PortMaster">Port Master</a></td><td><a href="https://github.com/christianhaitian/arkos/wiki/ArkOS-Emulators-and-Ports-information#ports">Port Installer</a></td>
   </tr>
+  <tr>
+  <td valign="top"><a href="https://github.com/JustEnoughLinuxOS/distribution/blob/5ae14a65cc446c1e6f7083ac47adeafc806134a6/packages/ui/emulationstation/config/es_input.cfg#L63">JELOS Button Codes</a></td><td>
+
+```
+RETROGAME_JOYPAD
+
+DIGITAL
+A               1  (305)
+B               0  (304)
+X               2  (307)
+Y               3  (308)
+L1              4  (310)
+L2              6  (312)
+L3              11 (317)
+R1              5  (311)
+R2              7  (313)
+R3              12 (318)
+SELECT          8  (314)
+START           9  (315)
+HOTKEY ENABLE   10 (316)
+DPAD UP         13 (544)
+DPAD DOWN       14 (545)
+DPAD LEFT       15 (546)
+DPAD RIGHT      16 (547)
+
+ANALOG
+LEFTANALOGLEFT   AXIS 0 -ve
+LEFTANALOGRIGHT  AXIS 0 +ve
+LEFTANALOGUP     AXIS 1 -ve
+LEFTANALOGDOWN   AXIS 1 +ve
+RIGHTANALOGLEFT  AXIS 2 -ve
+RIGHTANALOGRIGHT AXIS 2 +ve
+RIGHTANALOGUP    AXIS 3 -ve
+RIGHTANALOGDOWN  AXIS 3 +ve
+```
+</td>
+  </tr>
 </table>
 
 ### Retrieving emulator and core details from JELOS
@@ -703,4 +759,4 @@ ls -l /tmp/cores/*info
 Retrieve details of selected core by viewing core info file (e.g. yabasanshiro)
 ```
 cat /tmp/cores/yabasanshiro_libretro.info  
-```  
+```
