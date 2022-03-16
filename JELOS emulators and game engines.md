@@ -643,7 +643,7 @@ note: pressing A on title screen will exit
 </td>
   </tr>
   <tr>
-    <td><a href="https://github.com/hrydgard/ppsspp">PPSSPPSDL</a></td><td><a href="https://www.ppsspp.org/faq.html">Standalone</a>
+    <td valign="top"><a href="https://github.com/hrydgard/ppsspp">PPSSPPSDL</a></td><td><a href="https://www.ppsspp.org/faq.html">Standalone</a>
 
 ```
 START         start
@@ -704,6 +704,43 @@ SELECT+R2:    fast-forward toggle
   </tr>
   <tr>
     <td><a href="https://github.com/christianhaitian/arkos/wiki/PortMaster">Port Master</a></td><td><a href="https://github.com/christianhaitian/arkos/wiki/ArkOS-Emulators-and-Ports-information#ports">Port Installer</a></td>
+  </tr>
+  <tr>
+  <td valign="top">JELOS Button Codes</td><td>
+
+```
+RETROGAME_JOYPAD
+
+DIGITAL
+A               1  (305)
+B               0  (304)
+X               2  (307)
+Y               3  (308)
+L1              4  (310)
+L2              6  (312)
+L3              11 (317)
+R1              5  (311)
+R2              7  (313)
+R3              12 (318)
+SELECT          8  (314)
+START           9  (315)
+HOTKEY ENABLE   10 (316)
+DPAD UP         13 (544)
+DPAD DOWN       14 (545)
+DPAD LEFT       15 (546)
+DPAD RIGHT      16 (547)
+
+ANALOG
+LEFTANALOGLEFT   AXIS 0 -ve
+LEFTANALOGRIGHT  AXIS 0 +ve
+LEFTANALOGUP     AXIS 1 -ve
+LEFTANALOGDOWN   AXIS 1 +ve
+RIGHTANALOGLEFT  AXIS 2 -ve
+RIGHTANALOGRIGHT AXIS 2 +ve
+RIGHTANALOGUP    AXIS 3 -ve
+RIGHTANALOGDOWN  AXIS 3 +ve
+```
+</td>
   </tr>
 </table>
 
