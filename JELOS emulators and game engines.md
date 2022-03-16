@@ -590,7 +590,7 @@ https://github.com/JustEnoughLinuxOS/distribution
     <td><a href="https://github.com/drfrag666/gzdoom">lzdoom</a></td><td><a href="https://zdoom.org/wiki/IWAD">Game Engine</a></td>
   </tr>
   <tr>
-    <td><a href="https://github.com/mupen64plus/mupen64plus-video-glide64mk2">mupen64plus (mupen64plussa)</a></td><td><a href="https://mupen64plus.org/docs">Standalone</a>
+    <td valign="top">><a href="https://github.com/mupen64plus/mupen64plus-video-glide64mk2">mupen64plus (mupen64plussa)</a></td><td><a href="https://mupen64plus.org/docs">Standalone</a>
     
 ```
 SELECT        hotkey enable
@@ -625,7 +625,7 @@ Z and L button assignment can be changed in ES.
 </td>
   </tr>
   <tr>
-    <td><a href="https://github.com/DCurrent/openbor">Openbor</a></td><td><a href="https://www.chronocrash.com/forum/index.php?resources/">Standalone</a>
+    <td valign="top">><a href="https://github.com/DCurrent/openbor">Openbor</a></td><td><a href="https://www.chronocrash.com/forum/index.php?resources/">Standalone</a>
     
 ```
 START         start, confirm
@@ -706,7 +706,7 @@ SELECT+R2:    fast-forward toggle
     <td><a href="https://github.com/christianhaitian/arkos/wiki/PortMaster">Port Master</a></td><td><a href="https://github.com/christianhaitian/arkos/wiki/ArkOS-Emulators-and-Ports-information#ports">Port Installer</a></td>
   </tr>
   <tr>
-  <td valign="top">JELOS Button Codes</td><td>
+  <td valign="top"><a href="https://github.com/JustEnoughLinuxOS/distribution/blob/5ae14a65cc446c1e6f7083ac47adeafc806134a6/packages/ui/emulationstation/config/es_input.cfg#L63">JELOS Button Codes</a></td><td>
 
 ```
 RETROGAME_JOYPAD
@@ -759,4 +759,4 @@ ls -l /tmp/cores/*info
 Retrieve details of selected core by viewing core info file (e.g. yabasanshiro)
 ```
 cat /tmp/cores/yabasanshiro_libretro.info  
-```  
+```
