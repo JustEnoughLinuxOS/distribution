@@ -4,7 +4,7 @@
 
 . /etc/profile
 
-if [ "$(cat /storage/.config/boot.hint)" = "UPGRADE" ]
+if [ "$(cat /storage/.config/boot.hint 2>/dev/null)" = "UPDATE" ]
 then
   if [ -e "/usr/share/post-update" ]
   then
