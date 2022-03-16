@@ -1,0 +1,22 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+### This script contains items that we only want to execute after a JELOS upgrade.
+
+### Switch the theme to system-theme if it hasn't already been done
+if [ ! -L /storage/.config/emulationstation/themes/system-theme ]
+then
+  rm -rf /storage/.config/emulationstation/themes/es-theme-art-book-next
+  mkdir -p /storage/.config/emulationstation/themes
+  ln -s /usr/share/themes/es-theme-art-book-next /storage/.config/emulationstation/themes/system-theme
+  sed -i 's#<string name="ThemeSet" value="es-theme-art-book-next"/>#<string name="ThemeSet" value="system-theme"/>#' /storage/.config/emulationstation/es_settings.cfg
+fi
+
+### Always update these after an upgrade incase there are necessary changes
+cp -f /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt
+cp -f /usr/config/emulationstation/es_input.cfg /storage/.config/emulationstation
+cp -f /usr/config/emulationstation/es_features.cfg /storage/.config/emulationstation
+

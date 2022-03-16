@@ -4,31 +4,17 @@
 
 . /etc/profile
 
-### Switch the theme to system-theme if it hasn't already been done
-
-if [ ! -L /storage/.config/emulationstation/themes/system-theme ]
-then
-  rm -rf /storage/.config/emulationstation/themes/es-theme-art-book-next
-  mkdir -p /storage/.config/emulationstation/themes
-  ln -s /usr/share/themes/es-theme-art-book-next /storage/.config/emulationstation/themes/system-theme
-  sed -i 's#<string name="ThemeSet" value="es-theme-art-book-next"/>#<string name="ThemeSet" value="system-theme"/>#' /storage/.config/emulationstation/es_settings.cfg
-fi
-
-### Resume normal startup stuff.
 if [ -d "/storage/.config/system/configs" ]
 then
   EXCLUDE="--exclude=configs"
 fi
 
-rsync -a --delete ${EXCLUDE} /usr/config/system/ /storage/.config/system/
-rsync -a /usr/config/modules /storage/.config/
-rsync -a /usr/config/game /storage/.config/
-rsync -a --delete /usr/config/locale/ /storage/.config/emulationstation/locale/
+rsync -a --delete ${EXCLUDE} /usr/config/system/ /storage/.config/system/ &
+rsync -a /usr/config/modules /storage/.config/ &
+rsync -a /usr/config/game /storage/.config/ &
+rsync -a --delete /usr/config/locale/ /storage/.config/emulationstation/locale/ &
 
-cp -f /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt
-cp -f /usr/config/ppsspp/PSP/SYSTEM/controls.ini /storage/.config/ppsspp/PSP/SYSTEM/controls.ini
-cp -f /usr/config/emulationstation/es_input.cfg /storage/.config/emulationstation
-cp -f /usr/config/emulationstation/es_features.cfg /storage/.config/emulationstation
+wait < <(jobs -p)
 
 if [ ! -L "/storage/.emulationstation" ]
 then

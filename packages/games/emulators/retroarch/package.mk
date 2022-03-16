@@ -92,6 +92,18 @@ makeinstall_target() {
 }
 
 post_install() {
+  mkdir -p ${INSTALL}/etc/retroarch-joypad-autoconfig
+  cp -r ${PKG_DIR}/gamepads/* ${INSTALL}/etc/retroarch-joypad-autoconfig
+
+  # Remove unnecesary Retroarch Assets and overlays
+  for i in branding nuklear nxrgui pkg switch wallpapers zarch COPYING; do
+    rm -rf "${INSTALL}/usr/share/retroarch-assets/$i"
+  done
+
+  for i in automatic dot-art flatui neoactive pixel retroactive retrosystem systematic convert.sh NPMApng2PMApng.py; do
+    rm -rf "${INSTALL}/usr/share/retroarch-assets/xmb/$i"
+  done
+
   enable_service retroarch.service
   enable_service tmp-cores.mount
   enable_service tmp-joypads.mount
