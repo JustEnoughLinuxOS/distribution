@@ -20,7 +20,8 @@
 ################################################################################
 
 PKG_NAME="retropie-shaders"
-PKG_VERSION="b7cdc50258908e8f1906f8fc13a2fac4a9796dc6"
+PKG_VERSION="015fe2aaad5f4a219c8fd85b9a4fd71bc4f1f731"
+PKG_SHA256=""
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

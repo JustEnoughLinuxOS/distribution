@@ -22,7 +22,7 @@
 ### Don't update, newer commits have issues.
 PKG_NAME="common-shaders"
 PKG_VERSION="55e401834b732e62c34411321c4ffd82524345d4"
-PKG_SHA256="6dae9d4464febf556f4b419df51d2eb9c09f1e62666493e03cf6cc6cc447aa86"
+PKG_SHA256=""
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
