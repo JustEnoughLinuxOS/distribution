@@ -18,9 +18,11 @@ PKG_PATCH_DIRS+="${DEVICE}"
 
 if [ "${ARCH}" = "arm" ]
 then
-  PKG_MAKE_OPTS_TARGET=" platform=Amlogic"
+  PKG_MAKE_OPTS_TARGET=" platform=rg552"
 else
-  PKG_MAKE_OPTS_TARGET=" platform=rpi4_64"
+  make_target() {
+    :
+  }
 fi
 
 pre_configure_target() {
