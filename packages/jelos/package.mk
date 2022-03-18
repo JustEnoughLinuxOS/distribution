@@ -116,7 +116,7 @@ EOF
   cp ${PKG_DIR}/sources/shutdown.sh ${INSTALL}/usr/bin
   cp ${PKG_DIR}/sources/pico-8.sh ${INSTALL}/usr/bin
   cp ${PKG_DIR}/sources/scripts/* ${INSTALL}/usr/bin
-
+  chmod 0755${INSTALL}/usr/bin/pico-8.sh
 
   if [ -d "${PKG_DIR}/sources/asound/${DEVICE}" ]
   then

@@ -43,4 +43,5 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin
   cp -a ${PKG_BUILD}/src/retro_arena/yabasanshiro ${INSTALL}/usr/bin
   cp -a ${PKG_DIR}/sources/* ${INSTALL}/usr/bin
+  chmod 0755 ${INSTALL}/usr/bin/yabasanshiro.sh
 } 
