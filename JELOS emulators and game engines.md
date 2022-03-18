@@ -557,9 +557,9 @@ https://github.com/JustEnoughLinuxOS/distribution
 ```ecwolf```</td><td><a href="https://351elec.de/System-Wolfenstein-3D#how-to-create-a-ecwolf-file">.ecwolf</a></td><td><a href="http://maniacsvault.net/ecwolf/wiki/Game_data">Game data</a></td>
   </tr>
   <tr>
-    <td><a href="https://github.com/christianhaitian/arkos/wiki/PortMaster">Port Master</a></td><td>Ports</td><td><a href="https://github.com/christianhaitian/arkos/wiki/ArkOS-Emulators-and-Ports-information#ports">various</a></td><td>
+    <td><a href="https://github.com/christianhaitian/PortMaster/blob/main/README.md">Port Master</a></td><td>Ports</td><td><a href="https://github.com/christianhaitian/PortMaster/wiki">various</a></td><td>
     
-```ports```</td><td>.sh</td><td><a href="https://github.com/christianhaitian/arkos/wiki/ArkOS-Emulators-and-Ports-information#ports">various</a></td>
+```ports```</td><td>.sh</td><td><a href="https://github.com/christianhaitian/PortMaster/wiki">various</a></td>
   </tr>
 </table>
 
@@ -703,7 +703,7 @@ SELECT+R2:    fast-forward toggle
   </td>
   </tr>
   <tr>
-    <td><a href="https://github.com/christianhaitian/arkos/wiki/PortMaster">Port Master</a></td><td><a href="https://github.com/christianhaitian/arkos/wiki/ArkOS-Emulators-and-Ports-information#ports">Port Installer</a></td>
+    <td><a href="https://github.com/christianhaitian/PortMaster/blob/main/README.md">Port Master</a></td><td><a href="https://github.com/christianhaitian/PortMaster/wiki">Port Installer</a></td>
   </tr>
   <tr>
   <td valign="top"><a href="https://github.com/JustEnoughLinuxOS/distribution/blob/5ae14a65cc446c1e6f7083ac47adeafc806134a6/packages/ui/emulationstation/config/es_input.cfg#L63">JELOS Button Codes</a></td><td>
