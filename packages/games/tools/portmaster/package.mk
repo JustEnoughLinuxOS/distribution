@@ -17,7 +17,8 @@ pre_unpack() {
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/share/
-  cp -r $PKG_BUILD/PortMaster $INSTALL/usr/share/
+  cp -r ${PKG_BUILD}/PortMaster ${INSTALL}/usr/share/
+  chmod 0755 $INSTALL/usr/share/PortMaster
 
   mkdir -p ${INSTALL}/usr/lib/autostart/common
   cp ${PKG_DIR}/sources/autostart/common/* ${INSTALL}/usr/lib/autostart/common
