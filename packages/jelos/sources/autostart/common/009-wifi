@@ -4,6 +4,14 @@
 
 . /etc/profile
 
+
+if [ "$(get_setting internal.wifi)" == 0 ] && [ "${DEVICE_INTERNAL_WIFI}" = true ]
+then
+  rmmod ${DEVICE_WIFI_MODULE}
+else
+  set_setting internal.wifi 1
+fi
+
 if [ "$(get_setting wifi.enabled)" == "0" ] || [ "$1" == "disable" ]
 then
   connmanctl disable wifi

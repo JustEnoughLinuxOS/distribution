@@ -33,17 +33,17 @@ done
 
 if [ ! -z "${SDDEVICE}" ]
 then
-  if [ -e "release/${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img.gz" ]
+  if [ -e "release/${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img" ] || [ -e "release/${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img.gz" ]
   then
     cd release
-    echo "Extracting ${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img.gz"
-    gunzip ${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img.gz
+    echo "Extracting ${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img"
+    gunzip ${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img.gz 2>/dev/null
 
     echo "Writing ${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img to ${SDDEVICE}"
     sudo dd if=${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img of=/dev/${SDDEVICE} bs=1M
     sync
   else
-    echo "Release directory not found, aborting."
+    echo "Release not found, aborting."
     exit 1
   fi
 else

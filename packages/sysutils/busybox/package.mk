@@ -62,7 +62,7 @@ pre_build_init() {
 
 configure_host() {
   cd $PKG_BUILD/.$HOST_NAME
-    cp $PKG_DIR/config/busybox-host.conf .config
+    cp ${PKG_DIR}/config/busybox-host.conf .config
 
     # set install dir
     sed -i -e "s|^CONFIG_PREFIX=.*$|CONFIG_PREFIX=\"$PKG_BUILD/.install_host\"|" .config
@@ -76,7 +76,7 @@ configure_target() {
     cp $FOUND_PATH .config
 
     # set install dir
-    sed -i -e "s|^CONFIG_PREFIX=.*$|CONFIG_PREFIX=\"$INSTALL/usr\"|" .config
+    sed -i -e "s|^CONFIG_PREFIX=.*$|CONFIG_PREFIX=\"${INSTALL}/usr\"|" .config
 
     if [ ! "$CRON_SUPPORT" = "yes" ] ; then
       sed -i -e "s|^CONFIG_CROND=.*$|# CONFIG_CROND is not set|" .config
@@ -105,7 +105,7 @@ configure_init() {
     cp $FOUND_PATH .config
 
     # set install dir
-    sed -i -e "s|^CONFIG_PREFIX=.*$|CONFIG_PREFIX=\"$INSTALL/usr\"|" .config
+    sed -i -e "s|^CONFIG_PREFIX=.*$|CONFIG_PREFIX=\"${INSTALL}/usr\"|" .config
 
     # optimize for size
     CFLAGS=`echo $CFLAGS | sed -e "s|-Ofast|-Os|"`
@@ -123,56 +123,56 @@ makeinstall_host() {
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/bin
-    [ $TARGET_ARCH = x86_64 ] && cp $PKG_DIR/scripts/getedid $INSTALL/usr/bin
-    cp $PKG_DIR/scripts/createlog $INSTALL/usr/bin/
-    cp $PKG_DIR/scripts/dtfile $INSTALL/usr/bin
-    cp $PKG_DIR/scripts/dtname $INSTALL/usr/bin
-    cp $PKG_DIR/scripts/lsb_release $INSTALL/usr/bin/
-    cp $PKG_DIR/scripts/pastebinit $INSTALL/usr/bin/
-    ln -sf pastebinit $INSTALL/usr/bin/paste
+  mkdir -p ${INSTALL}/usr/bin
+    [ $TARGET_ARCH = x86_64 ] && cp ${PKG_DIR}/scripts/getedid ${INSTALL}/usr/bin
+    cp ${PKG_DIR}/scripts/createlog ${INSTALL}/usr/bin/
+    cp ${PKG_DIR}/scripts/dtfile ${INSTALL}/usr/bin
+    cp ${PKG_DIR}/scripts/dtname ${INSTALL}/usr/bin
+    cp ${PKG_DIR}/scripts/lsb_release ${INSTALL}/usr/bin/
+    cp ${PKG_DIR}/scripts/pastebinit ${INSTALL}/usr/bin/
+    ln -sf pastebinit ${INSTALL}/usr/bin/paste
 
-  mkdir -p $INSTALL/usr/lib/coreelec
-    cp $PKG_DIR/scripts/functions $INSTALL/usr/lib/coreelec
-    cp $PKG_DIR/scripts/fs-resize $INSTALL/usr/lib/coreelec
+  mkdir -p ${INSTALL}/usr/lib/coreelec
+    cp ${PKG_DIR}/scripts/functions ${INSTALL}/usr/lib/coreelec
+    cp ${PKG_DIR}/scripts/fs-resize ${INSTALL}/usr/lib/coreelec
     sed -e "s/@DISTRONAME@/$DISTRONAME/g" \
-        -i $INSTALL/usr/lib/coreelec/fs-resize
+        -i ${INSTALL}/usr/lib/coreelec/fs-resize
 
     if listcontains "${FIRMWARE}" "rpi-eeprom"; then
-      cp $PKG_DIR/scripts/rpi-flash-firmware $INSTALL/usr/lib/libreelec
+      cp ${PKG_DIR}/scripts/rpi-flash-firmware ${INSTALL}/usr/lib/libreelec
     fi
 
-  mkdir -p $INSTALL/etc
-    cp $PKG_DIR/config/profile $INSTALL/etc
-    cp $PKG_DIR/config/inputrc $INSTALL/etc
-    cp $PKG_DIR/config/httpd.conf $INSTALL/etc
-    cp $PKG_DIR/config/suspend-modules.conf $INSTALL/etc
+  mkdir -p ${INSTALL}/etc
+    cp ${PKG_DIR}/config/profile ${INSTALL}/etc
+    cp ${PKG_DIR}/config/inputrc ${INSTALL}/etc
+    cp ${PKG_DIR}/config/httpd.conf ${INSTALL}/etc
+    cp ${PKG_DIR}/config/suspend-modules.conf ${INSTALL}/etc
 
   # /etc/fstab is needed by...
-    touch $INSTALL/etc/fstab
+    touch ${INSTALL}/etc/fstab
 
   # /etc/machine-id, needed by systemd and dbus
-    ln -sf /storage/.cache/systemd-machine-id $INSTALL/etc/machine-id
+    ln -sf /storage/.cache/systemd-machine-id ${INSTALL}/etc/machine-id
 
   # /etc/mtab is needed by udisks etc...
-    ln -sf /proc/self/mounts $INSTALL/etc/mtab
+    ln -sf /proc/self/mounts ${INSTALL}/etc/mtab
 
   # create /etc/hostname
-    ln -sf /proc/sys/kernel/hostname $INSTALL/etc/hostname
+    ln -sf /proc/sys/kernel/hostname ${INSTALL}/etc/hostname
 
   # add webroot
-    mkdir -p $INSTALL/usr/www
-      echo "It works" > $INSTALL/usr/www/index.html
+    mkdir -p ${INSTALL}/usr/www
+      echo "It works" > ${INSTALL}/usr/www/index.html
 
-    mkdir -p $INSTALL/usr/www/error
-      echo "404" > $INSTALL/usr/www/error/404.html
+    mkdir -p ${INSTALL}/usr/www/error
+      echo "404" > ${INSTALL}/usr/www/error/404.html
 }
 
 post_install() {
-  ROOT_PWD="`$TOOLCHAIN/bin/cryptpw -m sha512 $ROOT_PASSWORD`"
+  ROOT_PWD="`$TOOLCHAIN/bin/cryptpw -m sha512 ${ROOT_PASSWORD}`"
 
-  echo "chmod 4755 $INSTALL/usr/bin/busybox" >> $FAKEROOT_SCRIPT
-  echo "chmod 000 $INSTALL/usr/cache/shadow" >> $FAKEROOT_SCRIPT
+  echo "chmod 4755 ${INSTALL}/usr/bin/busybox" >> $FAKEROOT_SCRIPT
+  echo "chmod 000 ${INSTALL}/usr/cache/shadow" >> $FAKEROOT_SCRIPT
 
   add_user root "$ROOT_PWD" 0 0 "Root User" "/storage" "/bin/sh"
   add_group root 0
@@ -188,36 +188,36 @@ post_install() {
 
   # cron support
   if [ "$CRON_SUPPORT" = "yes" ] ; then
-    mkdir -p $INSTALL/usr/lib/systemd/system
-      cp $PKG_DIR/system.d.opt/cron.service $INSTALL/usr/lib/systemd/system
+    mkdir -p ${INSTALL}/usr/lib/systemd/system
+      cp ${PKG_DIR}/system.d.opt/cron.service ${INSTALL}/usr/lib/systemd/system
       enable_service cron.service
-    mkdir -p $INSTALL/usr/share/services
-      cp -P $PKG_DIR/default.d/*.conf $INSTALL/usr/share/services
-      cp $PKG_DIR/system.d.opt/cron-defaults.service $INSTALL/usr/lib/systemd/system
+    mkdir -p ${INSTALL}/usr/share/services
+      cp -P ${PKG_DIR}/default.d/*.conf ${INSTALL}/usr/share/services
+      cp ${PKG_DIR}/system.d.opt/cron-defaults.service ${INSTALL}/usr/lib/systemd/system
       enable_service cron-defaults.service
   fi
 }
 
 makeinstall_init() {
-  mkdir -p $INSTALL/bin
-    ln -sf busybox $INSTALL/usr/bin/sh
-    ln -sf busybox $INSTALL/usr/bin/bc
-    chmod 4755 $INSTALL/usr/bin/busybox
+  mkdir -p ${INSTALL}/bin
+    ln -sf busybox ${INSTALL}/usr/bin/sh
+    ln -sf busybox ${INSTALL}/usr/bin/bc
+    chmod 4755 ${INSTALL}/usr/bin/busybox
 
-  mkdir -p $INSTALL/etc
-    touch $INSTALL/etc/fstab
-    ln -sf /proc/self/mounts $INSTALL/etc/mtab
+  mkdir -p ${INSTALL}/etc
+    touch ${INSTALL}/etc/fstab
+    ln -sf /proc/self/mounts ${INSTALL}/etc/mtab
 
   if find_file_path initramfs/platform_init; then
-    cp ${FOUND_PATH} $INSTALL
-    sed -e "s/@BOOT_LABEL@/$DISTRO_BOOTLABEL/g" \
-        -e "s/@DISK_LABEL@/$DISTRO_DISKLABEL/g" \
-        -i $INSTALL/platform_init
-    chmod 755 $INSTALL/platform_init
+    cp ${FOUND_PATH} ${INSTALL}
+    sed -e "s/@BOOT_LABEL@/${DISTRO_BOOTLABEL}/g" \
+        -e "s/@DISK_LABEL@/${DISTRO_DISKLABEL}/g" \
+        -i ${INSTALL}/platform_init
+    chmod 755 ${INSTALL}/platform_init
   fi
 
-  cp $PKG_DIR/scripts/functions $INSTALL
-  cp $PKG_DIR/scripts/init $INSTALL
+  cp ${PKG_DIR}/scripts/functions ${INSTALL}
+  cp ${PKG_DIR}/scripts/init ${INSTALL}
 
   if [ -e "${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/device.init" ]
   then
@@ -227,8 +227,8 @@ makeinstall_init() {
   fi
   chmod 755 ${INSTALL}/device.init
 
-  sed -e "s/@DISTRONAME@/$DISTRONAME/g" \
-      -e "s/@KERNEL_NAME@/$KERNEL_NAME/g" \
-      -i $INSTALL/init
-  chmod 755 $INSTALL/init
+  sed -e "s/@DISTRONAME@/${DISTRONAME}/g" \
+      -e "s/@KERNEL_NAME@/${KERNEL_NAME}/g" \
+      -i ${INSTALL}/init
+  chmod 755 ${INSTALL}/init
 }

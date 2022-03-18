@@ -1,7 +1,7 @@
 #!/bin/sh
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
-# Maintenance 2022-present BrooksyTech (https://github.com/brooksytech)
+# Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 #If PortMaster does not exist copy PortMaster folder to roms/ports
 if [ ! -e "/storage/roms/ports/PortMaster" ]

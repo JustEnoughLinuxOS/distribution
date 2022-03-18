@@ -24,20 +24,23 @@ then
   fi
 fi
 
-if [ "${COOLING_PROFILE}" = "aggressive" ]
-then
-  SPEEDS=(255)
-  TEMPS=(0)
-elif [ "${COOLING_PROFILE}" = "moderate" ]
-then
-  SPEEDS=(255 190 125 85)
-  TEMPS=(70000 60000 50000 0)
-else
-  # Quiet.
-  SPEEDS=(255 127 85 0)
-  TEMPS=(75000 65000 55000 0)
-fi
 
+if [ ! "${COOLING_PROFILE}" = "custom" ]
+then
+  if [ "${COOLING_PROFILE}" = "aggressive" ]
+  then
+    SPEEDS=(255 225 195)
+    TEMPS=(55000 45000 0)
+  elif [ "${COOLING_PROFILE}" = "moderate" ]
+  then
+    SPEEDS=(255 190 125 85)
+    TEMPS=(65000 55000 45000 0)
+  else
+    # Quiet.
+    SPEEDS=(255 127 85 0)
+    TEMPS=(75000 65000 55000 0)
+  fi
+fi
 
 while true
 do

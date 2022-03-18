@@ -1,6 +1,7 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2022-present Fewtarius
 #
 #  This Program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -23,7 +24,7 @@ PKG_VERSION="69aaeb2d8bf17eee565ac3e46a98809a9ebe4df0"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/easyrpg/player"
-PKG_URL="$PKG_SITE.git"
+PKG_URL="${PKG_SITE}.git"
 PKG_GIT_CLONE_BRANCH="0-7-0-stable"
 PKG_DEPENDS_TARGET="toolchain zlib libfmt liblcf pixman libspeexdsp mpg123 libsndfile libvorbis opusfile wildmidi libxmp-lite fluidsynth-git harfbuzz libpng"
 PKG_PRIORITY="optional"
@@ -41,14 +42,15 @@ PKG_CMAKE_OPTS_TARGET="-DPLAYER_TARGET_PLATFORM=libretro \
                        -DCMAKE_BUILD_TYPE=Release"
 
 pre_make_target() {
-  find $PKG_BUILD -name flags.make -exec sed -i "s:isystem :I:g" \{} \;
-  find $PKG_BUILD -name build.ninja -exec sed -i "s:isystem :I:g" \{} \;
+  find ${PKG_BUILD} -name flags.make -exec sed -i "s:isystem :I:g" \{} \;
+  find ${PKG_BUILD} -name build.ninja -exec sed -i "s:isystem :I:g" \{} \;
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp $PKG_BUILD/.$TARGET_NAME/easyrpg_libretro.so $INSTALL/usr/lib/libretro/
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  cp $PKG_BUILD/.$TARGET_NAME/easyrpg_libretro.so ${INSTALL}/usr/lib/libretro/
 
-  mkdir -p $INSTALL/usr/bin
-  cp ${PKG_DIR}/easyrpg.sh $INSTALL/usr/bin
+  mkdir -p ${INSTALL}/usr/bin
+  cp ${PKG_DIR}/easyrpg.sh ${INSTALL}/usr/bin
+  chmod 0755 ${INSTALL}/usr/bin/easyrpg.sh
 }

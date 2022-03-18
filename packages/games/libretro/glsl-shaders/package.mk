@@ -21,12 +21,11 @@
 
 PKG_NAME="glsl-shaders"
 PKG_VERSION="20801b38aa2c89a2beb9f57ffbbbcea7256e2523"
-PKG_SHA256="d4fc1d591b658f0c579b0a2ed0df92682dd22fddaae3d3ffa269646b68905977"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/libretro/glsl-shaders"
-PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
+PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"

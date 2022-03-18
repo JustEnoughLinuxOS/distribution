@@ -4,9 +4,9 @@
 # Copyright (C) 2021-present Fewtarius
 
 PKG_NAME="RTL8821CU"
-PKG_VERSION="ef3ff12"
+PKG_VERSION="14798a1"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/brektrou/rtl8821CU"
+PKG_SITE="https://github.com/morrownr/8821cu-20210118"
 PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain linux"
 PKG_NEED_UNPACK="${LINUX_DEPENDS}"

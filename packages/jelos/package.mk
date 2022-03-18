@@ -15,17 +15,17 @@ PKG_AUTORECONF="no"
 PKG_TOOLCHAIN="make"
 
 PKG_BASEOS="plymouth-lite grep wget libjpeg-turbo util-linux xmlstarlet bluetool gnupg gzip patchelf     \
-            imagemagick util-linux system-utils terminus-font vim bash pyudev dialog six git dbus-python \
-            coreutils miniupnpc nss-mdns avahi MC fbgrab modules"
+            imagemagick terminus-font vim bash pyudev dialog six git dbus-python coreutils miniupnpc \
+            nss-mdns avahi MC fbgrab modules"
 
 PKG_UI="emulationstation"
 
 PKG_EMUS="common-shaders glsl-shaders libretro-database retroarch advancemame hatarisa openbor \
-          scummvmsa PPSSPPSDL"
+          scummvmsa PPSSPPSDL yabasanshiroSA mupen64plussa vicesa"
 
 LIBRETRO_CORES="2048 81 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce beetle-pcfx            \
-                beetle-supafaust beetle-supergrafx beetle-vb beetle-wswan bluemsx                    \
-                cannonball cap32 crocods daphne dinothawr dosbox-svn dosbox-pure easyrpg fbalpha2012 \
+                beetle-supafaust beetle-supergrafx beetle-vb beetle-wswan bluemsx cannonball cap32   \
+                crocods daphne dinothawr dosbox-svn dosbox-pure duckstation easyrpg fbalpha2012      \
                 fbalpha2019 fbneo fceumm fmsx flycast freechaf freeintv freej2me fuse-libretro       \
                 gambatte gearboy gearcoleco gearsystem genesis-plus-gx genesis-plus-gx-wide gme      \
                 gpsp gw-libretro handy hatari mame2000 mame2003-plus mame2010 mame2015 mame          \
@@ -44,6 +44,13 @@ PKG_GAMESUPPORT="sixaxis jslisten evtest rg351p-js2xbox gptokeyb textviewer 351f
                  gamecontrollerdb portmaster"
 
 PKG_EXPERIMENTAL=""
+
+### Project/Device specific items
+if [ "${PROJECT}" == "Rockchip" ]
+then
+  PKG_BASEOS+=" system-utils"
+  PKG_EMUS+=" retropie-shaders"
+fi
 
 if [ ! -z "${BASE_ONLY}" ]
 then
@@ -72,17 +79,6 @@ makeinstall_target() {
 }
 
 post_install() {
-  # Remove unnecesary Retroarch Assets and overlays
-  for i in branding nuklear nxrgui pkg switch wallpapers zarch COPYING; do
-    rm -rf "${INSTALL}/usr/share/retroarch-assets/$i"
-  done
-
-  for i in automatic dot-art flatui neoactive pixel retroactive retrosystem systematic convert.sh NPMApng2PMApng.py; do
-    rm -rf "${INSTALL}/usr/share/retroarch-assets/xmb/$i"
-  done
-
-  mkdir -p ${INSTALL}/etc/retroarch-joypad-autoconfig
-  cp -r ${PKG_DIR}/gamepads/* ${INSTALL}/etc/retroarch-joypad-autoconfig
   ln -sf jelos.target ${INSTALL}/usr/lib/systemd/system/default.target
 
   mkdir -p ${INSTALL}/etc/profile.d
@@ -102,6 +98,13 @@ post_install() {
   chmod -R 0755 ${INSTALL}/usr/lib/autostart ${INSTALL}/usr/bin/autostart
   enable_service jelos-autostart.service
 
+  if [ ! -d "${INSTALL}/usr/share" ]
+  then
+    mkdir "${INSTALL}/usr/share"
+  fi
+  cp ${PKG_DIR}/sources/post-update ${INSTALL}/usr/share
+  chmod 755 ${INSTALL}/usr/share/post-update
+
   # Issue banner
   cp ${PKG_DIR}/sources/issue ${INSTALL}/etc
   ln -s /etc/issue ${INSTALL}/etc/motd
@@ -113,25 +116,11 @@ EOF
   cp ${PKG_DIR}/sources/shutdown.sh ${INSTALL}/usr/bin
   cp ${PKG_DIR}/sources/pico-8.sh ${INSTALL}/usr/bin
   cp ${PKG_DIR}/sources/scripts/* ${INSTALL}/usr/bin
-
+  chmod 0755 ${INSTALL}/usr/bin/pico-8.sh
 
   if [ -d "${PKG_DIR}/sources/asound/${DEVICE}" ]
   then
     cp ${PKG_DIR}/sources/asound/${DEVICE}/* ${INSTALL}/usr/config/
   fi
-
-  rm -f ${INSTALL}/usr/bin/{sh,bash,busybox,sort}
-  cp $(get_build_dir busybox)/.install_pkg/usr/bin/busybox ${INSTALL}/usr/bin
-  cp $(get_build_dir bash)/.install_pkg/usr/bin/bash ${INSTALL}/usr/bin
-  cp $(get_build_dir coreutils)/.install_pkg/usr/bin/sort ${INSTALL}/usr/bin
-
-  ln -sf bash ${INSTALL}/usr/bin/sh
-  mkdir -p ${INSTALL}/etc
-  echo "/usr/bin/bash" >>${INSTALL}/etc/shells
-  echo "/usr/bin/sh" >>${INSTALL}/etc/shells
-
-  echo "chmod 4755 ${INSTALL}/usr/bin/bash" >> ${FAKEROOT_SCRIPT}
-  echo "chmod 4755 ${INSTALL}/usr/bin/busybox" >> ${FAKEROOT_SCRIPT}
-  find ${INSTALL}/usr/ -type f -iname "*.sh" -exec chmod +x {} \;
 
 }

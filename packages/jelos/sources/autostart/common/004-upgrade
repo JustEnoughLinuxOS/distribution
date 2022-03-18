@@ -1,0 +1,14 @@
+#!/bin/sh
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+if [ "$(cat /storage/.config/boot.hint 2>/dev/null)" = "UPDATE" ]
+then
+  if [ -e "/usr/share/post-update" ]
+  then
+    /usr/share/post-update
+  fi
+  rm /storage/.config/boot.hint
+fi

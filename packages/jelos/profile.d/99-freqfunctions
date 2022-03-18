@@ -7,17 +7,12 @@
 set_gov() {
   for POLICY in ${CPU_FREQ[@]}
   do
-    if [ "${POLICY}" = "${NO_MAX_PERF}" ] && [ "$1" = "performance" ]
-    then
-      continue
-    else
-      echo $1 >${POLICY} 2>/dev/null
-    fi
+    echo $1 >${POLICY}/scaling_governor 2>/dev/null
   done
 
   for HANDLE in ${GPU_FREQ} ${DMC_FREQ}
   do
-    echo $1 >${HANDLE} 2>/dev/null || echo dmc_$1 >${HANDLE} 2>/dev/null
+    echo $1 >${HANDLE}/governor 2>/dev/null || echo dmc_$1 >${HANDLE}/governor 2>/dev/null
   done
 }
 

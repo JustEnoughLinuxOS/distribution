@@ -16,11 +16,11 @@ EE_DEVICE=${HW_DEVICE}
 JSLISTENCONF="/storage/.config/system/configs/jslisten.cfg"
 
 get_setting() {
-  awk -F: '/'${1}'/ { st = index($0,"=");print substr($0,st+1)}' ${J_CONF}
+  awk -F: '/'^${1}'/ { st = index($0,"=");print substr($0,st+1)}' ${J_CONF}
 }
 
 set_setting() {
-	sed -i "/$1=/d" "${J_CONF}"
+	sed -i "/^$1=/d" "${J_CONF}"
 	[ $2 == "disable" ] && echo "#${1}=" >> "${J_CONF}" || echo "${1}=${2}" >> "${J_CONF}"
 }
 

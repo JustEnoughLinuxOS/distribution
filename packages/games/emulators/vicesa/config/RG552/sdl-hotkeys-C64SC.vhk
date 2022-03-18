@@ -1,0 +1,52 @@
+# VICE hotkey mapping file
+#
+# A hotkey map is read in as a patch to the current map.
+#
+# File format:
+# - comment lines start with '#'
+# - keyword lines start with '!keyword'
+# - normal line has 'keynum path&to&menuitem'
+#
+# Keywords and their lines are:
+# '!CLEAR'    clear all mappings
+#
+
+!CLEAR
+
+300 Machine settings&Joystick settings&Swap native joystick ports
+1072 Drive&Attach disk image to drive 10
+1073 Drive&Attach disk image to drive 11
+1076 Printer&Printer #4 form feed
+1077 Printer&Printer #5 form feed
+1078 Printer&Printer #6 form feed
+1080 Drive&Attach disk image to drive 8
+1081 Drive&Attach disk image to drive 9
+1121 Autostart image
+1122 Statusbar
+1123 Cartridge&Attach CRT image
+1125 Snapshot&Set recording milestone
+1128 Monitor&Start monitor
+1129 Drive&Fliplist settings&Add current image to fliplist
+1130 Machine settings&Joystick settings&Swap native joystick ports
+1131 Drive&Fliplist settings&Remove current image from fliplist
+1132 Snapshot&Load snapshot image
+1133 Machine settings&Mouse emulation&Grab mouse events
+1134 Drive&Fliplist settings&Attach next image in fliplist
+1136 Pause
+1137 Quit emulator
+1139 Snapshot&Save snapshot image
+1140 Tape&Attach tape image
+1141 Snapshot&Return to milestone
+1143 Speed settings&Warp mode
+1146 Cartridge&Cartridge freeze
+1151 Edit&Copy to Clipboard
+1301 Edit&Paste from Clipboard
+1314 Reset&Soft
+1315 Snapshot&Quickload snapshot.vsf
+1316 Snapshot&Quicksave snapshot.vsf
+1317 Reset&Hard
+1642 Machine settings&Joystick settings&Allow keyset joystick
+1648 Advance Frame
+1650 Save media file
+1651 Save media file&Create sound recording&Stop recording
+3182 Drive&Fliplist settings&Attach previous image in fliplist

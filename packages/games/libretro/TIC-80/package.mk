@@ -20,7 +20,7 @@
 ################################################################################
 
 PKG_NAME="TIC-80"
-PKG_VERSION="263b3213f90362fd427d9f8a281698f5fe7284a6"
+PKG_VERSION="a1f80a22e682ec7d28a7b0ee78140ddb8732bc69"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"

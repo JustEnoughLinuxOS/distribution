@@ -1,0 +1,94 @@
+#!/bin/bash
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2020-present Fewtarius
+
+. /etc/profile
+
+DEBUG=true
+PROJECT="JustEnoughLinuxOS/distribution"
+GIT_REPO="https://github.com/${PROJECT}"
+GIT_API="https://api.github.com/repos/${PROJECT}"
+UPDATE_PATH="/storage/.update"
+
+function check_network() {
+  GW=$(ip route | awk '/eth0/ {a=$0} END{print $1}')
+  if [[ ${GW} =~ [0-9] ]]
+  then
+    echo true
+  else
+    echo false
+  fi
+}
+
+get_available() {
+  echo $(df | awk '/'$1'/ {printf $4; exit}')
+}
+
+get_size() {
+  echo $(df | awk '/'$1'/ {printf $2; exit}')
+}
+
+check_space() {
+  MYSIZE="$(get_$1 $2)"
+  VOLNAME="$3"
+  REQUIRED="$4"
+  if [ "${MYSIZE}" -lt "${REQUIRED}" ]
+  then
+    NEEDED=$(( (${REQUIRED} - ${MYSIZE} ) / 1024 ))
+    echo -e "There is not enough free space available ${VOLNAME} to install this update.  Free up an additional ${NEEDED}MB, or reflash the newer version."
+    systemctl start emustation &
+    exit 1
+  fi
+}
+
+systemctl stop emustation
+clear >/dev/console
+
+ONLINE_STATUS=$(check_network)
+if [ ! "${ONLINE_STATUS}" == true ]
+then
+  echo "System not online, cannot continue..." >/dev/console
+  exit 0
+fi
+
+echo -e "=> ${OS_NAME} UPGRADE UTILITY" >/dev/console
+
+
+# Check storage
+check_space size mmcblk0p1 boot 2048000
+check_space available mmcblk0p2 GAMES 3072000
+
+# Download
+LATEST_RELEASE_TAG=$(curl -H 'Cache-Control: no-cache' -Ls "${GIT_API}/releases" | python -c "import sys, json; print(json.load(sys.stdin)[0]['tag_name'])")
+if [ "${OS_VERSION}" -ge "${LATEST_RELEASE_TAG}" ]
+then
+  echo "No new updates are available..." >/dev/console
+  systemctl start emustation &
+  exit 0
+fi
+
+echo -e "\nFetching: ${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.tar" >/dev/console
+curl -Lo "${UPDATE_PATH}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.tar" "${GIT_REPO}/releases/download/${LATEST_RELEASE_TAG}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.tar" 2>/dev/console
+echo -e "Fetching: ${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.tar.sha256" >/dev/console
+curl -Lo "${UPDATE_PATH}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.tar.sha256" "${GIT_REPO}/releases/download/${LATEST_RELEASE_TAG}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.tar.sha256" 2>/dev/console
+
+echo -e "\nVerifying download, please wait..." >/dev/console
+# Verify
+MYSUM=$(sha256sum ${UPDATE_PATH}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.tar | awk '{print $1}')
+DLSUM=$(cat ${UPDATE_PATH}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.tar.sha256 | awk '{print $1}')
+
+if [ ! "${MYSUM}" == "${DLSUM}" ]
+then
+  echo "Verification failed, cleaning up and exiting..." >/dev/console
+  rm -f ${UPDATE_PATH}/*
+  sleep 4
+  clear >/dev/console
+  systemctl start emustation
+  exit 1
+else
+  echo "Verification successful..." >/dev/console
+fi
+
+echo -e "\nRebooting to complete OS upgrade..." >/dev/console
+sync
+reboot

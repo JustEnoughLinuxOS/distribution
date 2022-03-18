@@ -2,7 +2,7 @@
 # Copyright (C) 2021-present 351ELEC (https://github.com/351ELEC)
 
 PKG_NAME="retroarch"
-PKG_VERSION="3e4201ed3038eb56da01d2c5b3851d428dc6b333"
+PKG_VERSION="6d67c1650773090a2e4fa09b333280b308c6c568"
 PKG_SITE="https://github.com/libretro/RetroArch"
 PKG_URL="$PKG_SITE.git"
 PKG_LICENSE="GPLv3"
@@ -92,6 +92,18 @@ makeinstall_target() {
 }
 
 post_install() {
+  mkdir -p ${INSTALL}/etc/retroarch-joypad-autoconfig
+  cp -r ${PKG_DIR}/gamepads/* ${INSTALL}/etc/retroarch-joypad-autoconfig
+
+  # Remove unnecesary Retroarch Assets and overlays
+  for i in branding nuklear nxrgui pkg switch wallpapers zarch COPYING; do
+    rm -rf "${INSTALL}/usr/share/retroarch-assets/$i"
+  done
+
+  for i in automatic dot-art flatui neoactive pixel retroactive retrosystem systematic convert.sh NPMApng2PMApng.py; do
+    rm -rf "${INSTALL}/usr/share/retroarch-assets/xmb/$i"
+  done
+
   enable_service retroarch.service
   enable_service tmp-cores.mount
   enable_service tmp-joypads.mount

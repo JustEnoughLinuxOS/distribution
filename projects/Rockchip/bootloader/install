@@ -5,26 +5,26 @@
 PKG_RKBIN="$(get_build_dir rkbin)"
 source ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
 
-if [ -n "$PKG_DATAFILE" -a -n "$PKG_LOADER" ]; then
+if [ -n "${PKG_DATAFILE}" -a -n "${PKG_LOADER}" ]; then
   tools/mkimage -n ${PKG_SOC} -T rksd -d "${PKG_DATAFILE}" idbloader.img
-  cat "$PKG_LOADER" >> idbloader.img
-  cp -av idbloader.img $INSTALL/usr/share/bootloader
+  cat "${PKG_LOADER}" >> idbloader.img
+  cp -av idbloader.img ${INSTALL}/usr/share/bootloader
 fi
 
 if [ ! -n "${PKG_LOAD_ADDR}" ]; then
   PKG_LOAD_ADDR="0x00200000"
 fi
 
-$PKG_RKBIN/tools/loaderimage --pack --uboot u-boot-dtb.bin uboot.img ${PKG_LOAD_ADDR}
-cp -av uboot.img $INSTALL/usr/share/bootloader
+${PKG_RKBIN}/tools/loaderimage --pack --uboot u-boot-dtb.bin uboot.img ${PKG_LOAD_ADDR}
+cp -av uboot.img ${INSTALL}/usr/share/bootloader
 
-if [ -n "$PKG_BL31" ]; then
+if [ -n "${PKG_BL31}" ]; then
   cat >trust.ini <<EOF
 [BL30_OPTION]
 SEC=0
 [BL31_OPTION]
 SEC=1
-PATH=$PKG_BL31
+PATH=${PKG_BL31}
 ADDR=0x00010000
 [BL32_OPTION]
 SEC=0
@@ -39,13 +39,13 @@ EOF
   else
     TROPTS="--verbose"
   fi
-  $PKG_RKBIN/tools/trust_merger ${TROPTS} trust.ini
-  cp -av trust.img $INSTALL/usr/share/bootloader
+  ${PKG_RKBIN}/tools/trust_merger ${TROPTS} trust.ini
+  cp -av trust.img ${INSTALL}/usr/share/bootloader
 fi
 
 if [ "${BOOT_INI}" == true ]
 then
-cat >$INSTALL/usr/share/bootloader/boot.ini <<EOF
+cat >${INSTALL}/usr/share/bootloader/boot.ini <<EOF
 odroidgoa-uboot-config
 
 setenv fdt_addr_r "0x01f00000"
@@ -58,3 +58,11 @@ sysboot mmc 1:1 any \${scriptaddr} /extlinux/extlinux.conf
 
 EOF
 fi
+
+mkdir -p "${INSTALL}/usr/share/bootloader/extlinux"
+cat << EOF > "${INSTALL}/usr/share/bootloader/extlinux/extlinux.conf"
+LABEL ${DISTRO}
+  LINUX /${KERNEL_NAME}
+  FDT /${DEVICE_DTB}.dtb
+  APPEND boot=UUID=@BOOT_UUID@ disk=UUID=@DISK_UUID@ ${EXTRA_CMDLINE}
+EOF

@@ -320,9 +320,16 @@ then
 			jslisten set "mpv"
 			RUNTHIS='${TBASH} /usr/bin/mpv_video.sh "${ROMNAME}"'
 		;;
+		"saturn")
+			jslisten set "yabasanshiro"
+			RUNTHIS='${TBASH} yabasanshiro.sh "${ROMNAME}"'
+		;;
 		"shell")
 			RUNTHIS='${TBASH} "${ROMNAME}"'
 		;;
+		*)
+			jslisten set "${CORE}"
+			RUNTHIS='${TBASH} "start_${CORE}.sh" "${ROMNAME}"'
 		esac
 else
 	$VERBOSE && log "Configuring for a libretro core"
@@ -333,7 +340,7 @@ else
 
 	### Check if we need retroarch 32 bits or 64 bits
 	RABIN="retroarch"
-	if [[ "${CORE}" =~ "pcsx_rearmed" ]] || [[ "${CORE}" =~ "parallel_n64" ]]
+	if [[ "${CORE}" =~ "pcsx_rearmed" ]] || [[ "${CORE}" =~ "parallel_n64" ]] || [[ "${CORE}" =~ "parallel_n64_gln64" ]]
 	then
 		export LD_LIBRARY_PATH="/usr/lib32"
 		RABIN="retroarch32"
