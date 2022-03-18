@@ -21,7 +21,6 @@ then
   PKG_MAKE_OPTS_TARGET=" platform=Amlogic"
 else
   PKG_MAKE_OPTS_TARGET=" platform=rpi4_64"
-  #PKG_MAKE_OPTS_TARGET=" platform=emuelec64-armv8"
 fi
 
 pre_configure_target() {

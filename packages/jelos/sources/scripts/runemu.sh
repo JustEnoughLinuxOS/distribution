@@ -327,6 +327,9 @@ then
 		"shell")
 			RUNTHIS='${TBASH} "${ROMNAME}"'
 		;;
+		*)
+			jslisten set "${CORE}"
+			RUNTHIS='${TBASH} "start_${CORE}.sh" "${ROMNAME}"'
 		esac
 else
 	$VERBOSE && log "Configuring for a libretro core"
