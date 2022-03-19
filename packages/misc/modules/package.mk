@@ -21,5 +21,6 @@ make_target() {
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/config/modules
   cp -rf ${PKG_DIR}/sources/* ${INSTALL}/usr/config/modules
+  chmod 0755 ${INSTALL}/usr/config/modules/*
 }
 
