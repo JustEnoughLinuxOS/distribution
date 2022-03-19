@@ -48,7 +48,7 @@ post_make_target() {
   fi
   mkdir -p ${INSTALL}/usr/bin
   cp -r ${PKG_DIR}/sources/start_advmame.sh ${INSTALL}/usr/bin
-  chmod +x ${INSTALL}/usr/bin/advmame.sh
+  chmod +x ${INSTALL}/usr/bin/start_advmame.sh
   cp -r ${PKG_BUILD}/obj/mame/linux/blend/advmame ${INSTALL}/usr/bin
   cp -r ${PKG_BUILD}/support/category.ini ${INSTALL}/usr/share/advance
   cp -r ${PKG_BUILD}/support/sysinfo.dat ${INSTALL}/usr/share/advance
