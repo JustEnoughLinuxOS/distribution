@@ -55,6 +55,7 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin
   cp ${PKG_DIR}/sources/start_PPSSPPSDL.sh ${INSTALL}/usr/bin
   cp `find . -name "PPSSPPSDL" | xargs echo` ${INSTALL}/usr/bin/PPSSPPSDL
+  chmod 0755 ${INSTALL}/usr/bin/*
   ln -sf /storage/.config/ppsspp/assets ${INSTALL}/usr/bin/assets
   mkdir -p ${INSTALL}/usr/config/ppsspp/PSP/SYSTEM
   cp -r `find . -name "assets" | xargs echo` ${INSTALL}/usr/config/ppsspp/
@@ -64,5 +65,4 @@ makeinstall_target() {
     cp ${PKG_DIR}/sources/${DEVICE}/* ${INSTALL}/usr/config/ppsspp/PSP/SYSTEM
   fi
   rm ${INSTALL}/usr/config/ppsspp/assets/gamecontrollerdb.txt
-  chmod 0755 ${INSTALL}/usr/bin/*
 }
