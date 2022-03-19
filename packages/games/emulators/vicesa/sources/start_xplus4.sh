@@ -4,6 +4,11 @@
 
 . /etc/profile
 
+if [ ! -d "/storage/.config/vice" ]
+then
+  rsync -a /usr/config/vice /storage/.config
+fi
+
 ARG=${1//[\\]/}
 export SDL_AUDIODRIVER=alsa
 echo "[${ARG}]"
