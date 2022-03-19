@@ -96,3 +96,7 @@ Like any Linux distribution, this project is not the work of one person.  It is 
     * ```mkdir -p /storage/roms/c64 /storage/c64 2>&1 >/dev/null```
     * ```mount --bind /storage/roms/c64 /storage/c64```
     * Make it executable with chmod. ```chmod 0755 /storage/.config/autostart/001-bind```
+* Since the latest release I can no longer use 351FILES.
+  * This is a known issue and will be resolved in the next release.  It can be corrected simply via ssh.
+    * SSH into your device
+    * Run ```chmod 0755 /storage/.config/modules/*```
