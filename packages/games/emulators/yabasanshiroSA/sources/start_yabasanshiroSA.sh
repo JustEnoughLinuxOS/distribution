@@ -49,4 +49,4 @@ do
   fi
 done
 
-yabasanshiro -r 2 -i "${1}" ${BIOS} >/var/log/exec.log 2>&1 ||:
+yabasanshiroSA -r 2 -i "${1}" ${BIOS} >/var/log/exec.log 2>&1 ||:
