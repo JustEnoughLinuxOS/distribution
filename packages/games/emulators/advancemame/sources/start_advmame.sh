@@ -1,5 +1,4 @@
-#!/bin/sh
-
+#!/bin/bash
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2021-present 351ELEC (https://github.com/351ELEC)
 # Copyright (C) 2022-present Fewtarius
@@ -11,11 +10,8 @@ CONFIG_DIR="/storage/.advance"
 if [ ! -d "${CONFIG_DIR}" ]; then
  mkdir -p ${CONFIG_DIR}
  cp -rf /usr/share/advance/* ${CONFIG_DIR}/
-fi
-
-if [ ! -f "${CONFIG_DIR}/advmame.rc" ]; then
  GAMEPAD=$(grep -b4 $(readlink ${DEVICE_CONTROLLER_DEV} | sed "s#^.*/##") /proc/bus/input/devices | awk 'BEGIN {FS="\""}; /Name/ {printf $2}')
- cat /usr/share/advance/advmame.rc | sed -i "s#@DEVICE_GAMEPAD@#${GAMEPAD}#g" ${CONFIG_DIR}/advmame.rc
+ cat /usr/share/advance/advmame.rc | sed "s#@DEVICE_GAMEPAD@#${GAMEPAD}#g" >${CONFIG_DIR}/advmame.rc
 fi
 
 if [[ "$1" = *"roms/arcade"* ]]; then
