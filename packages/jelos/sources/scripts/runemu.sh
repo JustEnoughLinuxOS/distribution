@@ -220,13 +220,6 @@ then
 		"setup")
 				RUNTHIS='${TBASH} "${ROMNAME}"'
 		;;
-		"mame"|"arcade")
-			jslisten set "advmame"
-			if [ "$EMU" = "AdvanceMame" ]
-			then
-				RUNTHIS='${TBASH} /usr/bin/advmame.sh "${ROMNAME}"'
-			fi
-		;;
 		"nds")
 			jslisten set "drastic"
 			RUNTHIS='${TBASH} /usr/bin/drastic.sh "${ROMNAME}"'
