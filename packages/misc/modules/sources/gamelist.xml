@@ -89,5 +89,15 @@
 		<releasedate>2021</releasedate>
 		<genre>Script</genre>
 	</game>
+	<game>
+		<path>/storage/roms/ports/JelosAddOns.sh</path>
+		<name>JelosAddOns</name>
+		<desc>Game port installer</desc>
+		<developer>brooksytech</developer>
+		<publisher>Jelos</publisher>
+		<rating>1.0</rating>
+		<releasedate>2021</releasedate>
+		<genre>Script</genre>
+	</game>
 
 </gameList>
