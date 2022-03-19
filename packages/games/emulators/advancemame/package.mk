@@ -43,6 +43,7 @@ makeinstall_target() {
 post_make_target() {
   mkdir -p ${INSTALL}/usr/share/advance
   if [ -d "${PKG_DIR}/config/${DEVICE}" ]
+  then
     cp -r ${PKG_DIR}/config/${DEVICE}/advmame.rc ${INSTALL}/usr/share/advance/advmame.rc
   fi
   mkdir -p ${INSTALL}/usr/bin
