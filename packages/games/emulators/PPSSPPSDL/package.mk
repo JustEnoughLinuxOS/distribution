@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
-
+# Copyright (C) 2022-present Fewtarius
 PKG_NAME="PPSSPPSDL"
 PKG_VERSION="97bc7a1ae3b3a87bff211bd3ece33e9c3012725a"
 PKG_REV="1"
@@ -53,15 +53,16 @@ pre_make_target() {
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin
-  cp ${PKG_DIR}/ppsspp.sh ${INSTALL}/usr/bin/ppsspp.sh
+  cp ${PKG_DIR}/sources/start_PPSSPPSDL.sh ${INSTALL}/usr/bin
   cp `find . -name "PPSSPPSDL" | xargs echo` ${INSTALL}/usr/bin/PPSSPPSDL
   ln -sf /storage/.config/ppsspp/assets ${INSTALL}/usr/bin/assets
   mkdir -p ${INSTALL}/usr/config/ppsspp/PSP/SYSTEM
   cp -r `find . -name "assets" | xargs echo` ${INSTALL}/usr/config/ppsspp/
   cp -rf ${PKG_DIR}/config/* ${INSTALL}/usr/config/ppsspp/
-  if [ "${DEVICE}" == "RG552" ]
+  if [ -d "${PKG_DIR}/sources/${DEVICE}" ]
   then
-    cp ${PKG_DIR}/sources/RG552/* ${INSTALL}/usr/config/ppsspp/PSP/SYSTEM
+    cp ${PKG_DIR}/sources/${DEVICE}/* ${INSTALL}/usr/config/ppsspp/PSP/SYSTEM
   fi
   rm ${INSTALL}/usr/config/ppsspp/assets/gamecontrollerdb.txt
+  chmod 0755 ${INSTALL}/usr/bin/*
 }
