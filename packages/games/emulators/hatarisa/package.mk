@@ -6,7 +6,7 @@ PKG_VERSION="c895a8b5f0f5637bc0ed8e7f17633823558953bd"
 PKG_SHA256="a765713166dce3ce9275a88846190009f00bf88e2de22ff4735c12187e842a4f"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/hatari/hatari"
-PKG_URL="https://github.com/hatari/hatari/archive/$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/hatari/hatari/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain linux glibc systemd alsa-lib SDL2 portaudio zlib capsimg libpng"
 PKG_LONGDESC="Hatari is an Atari ST/STE/TT/Falcon emulator"
 
@@ -15,29 +15,30 @@ pre_configure_target() {
   PKG_CMAKE_OPTS_TARGET="-DCMAKE_SKIP_RPATH=ON \
                          -DDATADIR="/usr/config/hatari" \
                          -DBIN2DATADIR="../../storage/.config/hatari" \
-                         -DCAPSIMAGE_INCLUDE_DIR=$PKG_BUILD/src/include \
-                         -DCAPSIMAGE_LIBRARY=$PKG_BUILD/libcapsimage.so.5.1"
+                         -DCAPSIMAGE_INCLUDE_DIR=${PKG_BUILD}/src/include \
+                         -DCAPSIMAGE_LIBRARY=${PKG_BUILD}/libcapsimage.so.5.1"
 
   # copy IPF Support Library include files
-  mkdir -p $PKG_BUILD/src/includes/caps/
-  cp -R $(get_build_dir capsimg)/LibIPF/* $PKG_BUILD/src/includes/caps/
-  cp -R $(get_build_dir capsimg)/Core/CommonTypes.h $PKG_BUILD/src/includes/caps/
-  cp -R $(get_build_dir capsimg)/.install_pkg/usr/lib/libcapsimage.so.5.1 $PKG_BUILD/
+  mkdir -p ${PKG_BUILD}/src/includes/caps/
+  cp -R $(get_build_dir capsimg)/LibIPF/* ${PKG_BUILD}/src/includes/caps/
+  cp -R $(get_build_dir capsimg)/Core/CommonTypes.h ${PKG_BUILD}/src/includes/caps/
+  cp -R $(get_build_dir capsimg)/.install_pkg/usr/lib/libcapsimage.so.5.1 ${PKG_BUILD}/
 
   # add library search path for loading libcapsimage library
-  LDFLAGS="$LDFLAGS -Wl,-rpath='$PKG_BUILD'"
+  LDFLAGS="$LDFLAGS -Wl,-rpath='${PKG_BUILD}'"
 }
 
 makeinstall_target() {
   # create directories
-  mkdir -p $INSTALL/usr/bin
-  mkdir -p $INSTALL/usr/config/hatari
+  mkdir -p ${INSTALL}/usr/bin
+  mkdir -p ${INSTALL}/usr/config/hatari
 
   # copy config files  
-  touch $INSTALL/usr/config/hatari/hatari.nvram
-  cp -R $PKG_DIR/config/* $INSTALL/usr/config/hatari
+  touch ${INSTALL}/usr/config/hatari/hatari.nvram
+  cp -R ${PKG_DIR}/config/* ${INSTALL}/usr/config/hatari
 
   # copy binary & start script
-  cp src/hatari $INSTALL/usr/bin
-  cp -R $PKG_DIR/scripts/* $INSTALL/usr/bin/
+  cp src/hatari ${INSTALL}/usr/bin/hatarisa
+  cp -R ${PKG_DIR}/scripts/start_hatarisa.sh ${INSTALL}/usr/bin/
+  chmod 0755 ${INSTALL}/usr/bin/start_hatarisa.sh
 }
