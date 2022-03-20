@@ -206,10 +206,6 @@ if [ -z ${RETROARCH} ]
 then
 	$VERBOSE && log "Configuring for a non-libretro emulator"
 	case ${PLATFORM} in
-		"openbor")
-				jslisten set "OpenBOR"
-				RUNTHIS='${TBASH} /usr/bin/openbor.sh "${ROMNAME}"'
-		;;
 		"setup")
 				RUNTHIS='${TBASH} "${ROMNAME}"'
 		;;
