@@ -6,7 +6,7 @@
  
 +# (armv8 a35, hard point, neon based) ###
 +# PlayStation Classic
-+else ifeq ($(platform), emuelec)
++else ifeq ($(platform), rg552)
 +	TARGET := $(TARGET_NAME)_libretro.so
 +	fpic := -fPIC
 +    LDFLAGS := -shared -Wl,--version-script=link.T  -Wl,--no-undefined

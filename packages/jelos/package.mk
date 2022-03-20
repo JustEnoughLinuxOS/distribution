@@ -23,7 +23,7 @@ PKG_UI="emulationstation"
 PKG_EMUS="common-shaders glsl-shaders libretro-database retroarch hatarisa openbor \
           scummvmsa PPSSPPSDL yabasanshiroSA mupen64plussa vicesa"
 
-LIBRETRO_CORES="2048 81 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce beetle-pcfx            \
+LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce beetle-pcfx      \
                 beetle-supafaust beetle-supergrafx beetle-vb beetle-wswan bluemsx cannonball cap32   \
                 crocods daphne dinothawr dosbox-svn dosbox-pure duckstation easyrpg fbalpha2012      \
                 fbalpha2019 fbneo fceumm fmsx flycast freechaf freeintv freej2me fuse-libretro       \
