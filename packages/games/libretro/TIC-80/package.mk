@@ -20,12 +20,12 @@
 ################################################################################
 
 PKG_NAME="TIC-80"
-PKG_VERSION="a1f80a22e682ec7d28a7b0ee78140ddb8732bc69"
+PKG_VERSION="d6e385ca6b006611f6c8aa5bab7c90033293dbd4"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/nesbox/TIC-80"
-PKG_URL="$PKG_SITE.git"
+PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
@@ -37,13 +37,15 @@ PKG_BUILD_FLAGS="+pic"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_TARGET="-DBUILD_PLAYER=OFF \
+PKG_CMAKE_OPTS_TARGET="-DBUILD_PLAYER=ON \
                        -DBUILD_SOKOL=OFF \
                        -DBUILD_SDL=OFF \
                        -DBUILD_DEMO_CARTS=OFF \
-                       -DBUILD_LIBRETRO=ON"
+                       -DBUILD_LIBRETRO=ON \
+		       -DBUILD_WITH_MRUBY=OFF \
+		       -DCMAKE_BUILD_TYPE=Release"
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp $PKG_BUILD/.$TARGET_NAME/lib/tic80_libretro.so $INSTALL/usr/lib/libretro/tic80_libretro.so
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  cp ${PKG_BUILD}/.$TARGET_NAME/lib/tic80_libretro.so ${INSTALL}/usr/lib/libretro/tic80_libretro.so
 }
