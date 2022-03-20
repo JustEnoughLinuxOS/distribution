@@ -20,12 +20,12 @@ get_setting() {
 }
 
 set_setting() {
-  sed -i "/^$1=/d" "${J_CONF}"
   if [ "$2" == "disable" ]
   then
     sed -i "/^#$1=/d" "${J_CONF}"
     echo "#${1}=" >> "${J_CONF}"
   else
+    sed -i "/^$1=/d" "${J_CONF}"
     echo "${1}=${2}" >> "${J_CONF}"
   fi
 }
