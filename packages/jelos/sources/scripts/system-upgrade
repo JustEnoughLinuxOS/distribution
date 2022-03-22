@@ -48,6 +48,8 @@ ONLINE_STATUS=$(check_network)
 if [ ! "${ONLINE_STATUS}" == true ]
 then
   echo "System not online, cannot continue..." >/dev/console
+  sleep 3
+  systemctl start emustation &
   exit 0
 fi
 
@@ -55,14 +57,15 @@ echo -e "=> ${OS_NAME} UPGRADE UTILITY" >/dev/console
 
 
 # Check storage
-check_space size mmcblk0p1 boot 2048000
-check_space available mmcblk0p2 GAMES 3072000
+check_space size flash boot 2048000
+check_space available .update GAMES 3072000
 
 # Download
 LATEST_RELEASE_TAG=$(curl -H 'Cache-Control: no-cache' -Ls "${GIT_API}/releases" | python -c "import sys, json; print(json.load(sys.stdin)[0]['tag_name'])")
 if [ "${OS_VERSION}" -ge "${LATEST_RELEASE_TAG}" ]
 then
   echo "No new updates are available..." >/dev/console
+  sleep 3
   systemctl start emustation &
   exit 0
 fi
@@ -81,7 +84,7 @@ if [ ! "${MYSUM}" == "${DLSUM}" ]
 then
   echo "Verification failed, cleaning up and exiting..." >/dev/console
   rm -f ${UPDATE_PATH}/*
-  sleep 4
+  sleep 3
   clear >/dev/console
   systemctl start emustation
   exit 1
@@ -91,4 +94,5 @@ fi
 
 echo -e "\nRebooting to complete OS upgrade..." >/dev/console
 sync
+sleep 3
 reboot
