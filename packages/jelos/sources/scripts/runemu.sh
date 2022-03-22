@@ -311,7 +311,7 @@ else
 
 	### Check if we need retroarch 32 bits or 64 bits
 	RABIN="retroarch"
-	if [[ "${CORE}" =~ "pcsx_rearmed" ]] || [[ "${CORE}" =~ "parallel_n64" ]] || [[ "${CORE}" =~ "parallel_n64_gln64" ]]
+	if [[ "${CORE}" =~ "pcsx_rearmed" ]] || [[ "${CORE}" =~ "parallel_n64" ]] || [[ "${CORE}" =~ "parallel_n64_gln64" ]] || [[ "${CORE}" =~ "parallel_n64_glide64" ]]
 	then
 		export LD_LIBRARY_PATH="/usr/lib32"
 		RABIN="retroarch32"
