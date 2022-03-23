@@ -11,16 +11,18 @@ PKG_SITE="https://github.com/libretro/pcsx_rearmed"
 PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SHORTDESC="ARM optimized PCSX fork"
-PKG_TOOLCHAIN="manual"
+PKG_TOOLCHAIN="make"
 PKG_BUILD_FLAGS="+speed -gold"
 PKG_PATCH_DIRS+="${DEVICE}"
 
-make_target() {
-  cd ${PKG_BUILD}
-  if [ ! "${ARCH}" = "aarch64" ]; then
-    make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=rpi3
-  fi
-}
+if [ "${ARCH}" = "arm" ]
+then
+  PKG_MAKE_OPTS_TARGET=" platform=rg552"
+else
+  make_target() {
+    :
+  }
+fi
 
 makeinstall_target() {
   INSTALLTO="/usr/lib/libretro/"
