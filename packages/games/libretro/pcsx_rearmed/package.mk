@@ -11,7 +11,7 @@ PKG_SITE="https://github.com/libretro/pcsx_rearmed"
 PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SHORTDESC="ARM optimized PCSX fork"
-PKG_TOOLCHAIN="manual"
+PKG_TOOLCHAIN="make"
 PKG_BUILD_FLAGS="+speed -gold"
 PKG_PATCH_DIRS+="${DEVICE}"
 
