@@ -11,13 +11,13 @@ PKG_SITE="https://github.com/libretro/pcsx_rearmed"
 PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SHORTDESC="ARM optimized PCSX fork"
-PKG_TOOLCHAIN="make"
+PKG_TOOLCHAIN="manual"
 PKG_BUILD_FLAGS="+speed -gold"
 PKG_PATCH_DIRS+="${DEVICE}"
 
 if [ "${ARCH}" = "arm" ]
 then
-  PKG_MAKE_OPTS_TARGET=" platform=rg552"
+  make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=rg552
 else
   make_target() {
     :
