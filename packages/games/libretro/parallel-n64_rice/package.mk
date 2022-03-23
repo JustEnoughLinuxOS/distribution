@@ -42,6 +42,6 @@ cp -vP ${PKG_BUILD}/../../build.${DISTRO}-${DEVICE}.arm/parallel-n64_rice-*/.ins
     cp -vP ${PKG_BUILD}/../core-info-*/parallel_n64_libretro.info ${INSTALL}/usr/lib/libretro/parallel_n64_rice_libretro.info
     sed -i 's/ParaLLEl N64/ParaLLEl N64 Rice/g' ${INSTALL}/usr/lib/libretro/parallel_n64_rice_libretro.info
   else
-    cp parallel_n64_libretro.so ${INSTALL}/usr/lib/libretro/parallel_n64_libretro_rice.so
+    cp parallel_n64_libretro.so ${INSTALL}/usr/lib/libretro/parallel_n64_rice_libretro.so
   fi
 }
