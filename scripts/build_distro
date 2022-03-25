@@ -29,6 +29,9 @@ done
 # Clean out old builds before starting the new one.
 rm -f ./release/${DISTRO}-${DEVICE}.${ARCH}-*
 
+# Remove the image root as it should be regenerated for every build.
+rm -rf ./build.${DISTRO}-${DEVICE}.${ARCH}/image
+
 if [ "${ARCH}" == "aarch64" ]
 then
   make image
