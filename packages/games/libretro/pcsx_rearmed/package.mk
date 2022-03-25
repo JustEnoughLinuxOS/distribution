@@ -17,7 +17,7 @@ PKG_PATCH_DIRS+="${DEVICE}"
 
 if [ "${ARCH}" = "arm" ]
 then
-  make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} PKG_MAKE_OPTS_TARGET+=" platform=rg552"
+ make -f Makefile.libretro clean && make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} PKG_MAKE_OPTS_TARGET+=" platform=rg552"
 else
   make_target() {
     :
