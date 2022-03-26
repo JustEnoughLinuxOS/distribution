@@ -17,7 +17,10 @@ PKG_CONFIGURE_OPTS_TARGET+="--disable-pdf-docs"
 
 post_makeinstall_target() {
   mkdir -p ${INSTALL}/usr/config/vice
-  cp -f ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/config/vice
+  if [ -d "${PKG_DIR}/config/${DEVICE}" ]
+  then
+    cp -f ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/config/vice
+  fi
   cp -f ${PKG_DIR}/sources/* ${INSTALL}/usr/bin
   chmod 0755 ${INSTALL}/usr/bin/*
 }
