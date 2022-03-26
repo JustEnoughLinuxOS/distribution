@@ -23,11 +23,23 @@ distclean:
 src-pkg:
 	tar cvJf sources.tar.xz sources .stamps
 
-world: update RG552 FORCE
+world: update RG552 RG351P RG351V RG351MP FORCE
 
 RG552:
 	DEVICE=RG552 ARCH=arm ./scripts/build_distro
 	DEVICE=RG552 ARCH=aarch64 ./scripts/build_distro
+
+RG351P:
+	DEVICE=RG351P ARCH=arm ./scripts/build_distro
+	DEVICE=RG351P ARCH=aarch64 ./scripts/build_distro
+
+RG351V:
+	DEVICE=RG351V ARCH=arm ./scripts/build_distro
+	DEVICE=RG351V ARCH=aarch64 ./scripts/build_distro
+
+RG351MP:
+	DEVICE=RG351MP ARCH=arm ./scripts/build_distro
+	DEVICE=RG351MP ARCH=aarch64 ./scripts/build_distro
 
 update:
 	DEVICE=RG552 ARCH=aarch64 ./scripts/update_packages
