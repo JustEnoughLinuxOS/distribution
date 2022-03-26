@@ -19,7 +19,13 @@ PKG_PATCH_DIRS+="${DEVICE}"
 
 pre_configure_target() {
   sed -e "s|^GIT_VERSION ?.*$|GIT_VERSION := \" ${PKG_VERSION:0:7}\"|" -i Makefile
-  PKG_MAKE_OPTS_TARGET+=" platform=RK3399"
+  if [[ "${DEVICE}" =~ RG351 ]]
+  then
+    PKG_MAKE_OPTS_TARGET=" platform=RK3326"
+  elif [[ "${DEVICE}" =~ RG552 ]]
+  then
+    PKG_MAKE_OPTS_TARGET=" platform=RK3399"
+  fi
 }
 
 makeinstall_target() {
