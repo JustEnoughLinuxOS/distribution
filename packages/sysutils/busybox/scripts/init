@@ -482,12 +482,7 @@ load_splash() {
       if [ -z "$SPLASHIMAGE" ]; then
         vres="$(fbset 2>/dev/null | awk '/geometry/ { print $3 }')"
         hres="$(fbset 2>/dev/null | awk '/geometry/ { print $2 }')"
-        if [ "${hres}" = "640" ] || [ "${hres}" = "1152" ]
-        then
-          RES="${hres}"
-        else
-          RES="${vres}"
-        fi
+        RES="${hres}"
 
         if [ "${DISPLAY_ROTATED}" == true ]
         then
