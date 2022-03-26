@@ -42,7 +42,13 @@ pre_make_target() {
 pre_configure_target() {
   CFLAGS="$CFLAGS -DLINUX -DEGL_API_FB"
   CPPFLAGS="$CPPFLAGS -DLINUX -DEGL_API_FB"
-  PKG_MAKE_OPTS_TARGET=" platform=RK3399"
+  if [[ "${DEVICE}" =~ RG351 ]]
+  then
+    PKG_MAKE_OPTS_TARGET=" platform=RK3326"
+  elif [[ "${DEVICE}" =~ RG552 ]]
+  then
+    PKG_MAKE_OPTS_TARGET=" platform=RK3399"
+  fi
 }
 
 makeinstall_target() {
