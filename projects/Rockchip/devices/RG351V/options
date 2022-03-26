@@ -45,7 +45,7 @@
   # Mali GPU family
     MALI_FAMILY="bifrost-g31"
     OPENGLES="libmali"
-    MALI_VERSION="g2p0"
+    MALI_VERSION="g13p0"
     GRAPHIC_DRIVERS=""
 
   # Define the CPU
