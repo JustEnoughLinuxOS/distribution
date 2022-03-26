@@ -18,7 +18,13 @@ PKG_PATCH_DIRS+="${DEVICE}"
 
 if [ "${ARCH}" = "arm" ]
 then
-  PKG_MAKE_OPTS_TARGET=" platform=rg552"
+  if [[ "${DEVICE}" =~ RG351 ]]
+  then
+    PKG_MAKE_OPTS_TARGET=" platform=RG351x"
+  elif [[ "${DEVICE}" =~ RG552 ]]
+  then
+    PKG_MAKE_OPTS_TARGET=" platform=RG552"
+  fi
 else
   make_target() {
     :

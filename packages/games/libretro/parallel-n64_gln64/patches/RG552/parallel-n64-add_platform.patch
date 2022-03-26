@@ -7,7 +7,7 @@ diff -rupN parallel-n64.orig/Makefile parallel-n64/Makefile
  
 +#######################################
 +# Anbernic RG552
-+else ifneq (,$(findstring rg552,$(platform)))
++else ifneq (,$(findstring RG552,$(platform)))
 +   TARGET := $(TARGET_NAME)_libretro.so
 +   CPUFLAGS += -marm -mtune=cortex-a73.cortex-a53 -mfpu=neon-fp-armv8 -mfloat-abi=hard
 +   ASFLAGS += -D__ARM_NEON__ -marm -mtune=cortex-a35 -mfpu=neon-fp-armv8 -mfloat-abi=hard
