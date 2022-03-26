@@ -43,8 +43,8 @@ makeinstall_target() {
   if [ -e "${PKG_DIR}/config/mupen64plus-${DEVICE}.cfg" ]
   then
     cp ${PKG_DIR}/config/mupen64plus-${DEVICE}.cfg ${INSTALL}/usr/local/share/mupen64plus/mupen64plus.cfg
+    chmod 644 ${INSTALL}/usr/local/share/mupen64plus/mupen64plus.cfg
   fi
-  chmod 644 ${INSTALL}/usr/local/share/mupen64plus/mupen64plus.cfg
   mkdir -p ${INSTALL}/usr/bin
   cp ${PKG_DIR}/m64p.sh ${INSTALL}/usr/bin
   chmod 755 ${INSTALL}/usr/bin/m64p.sh
