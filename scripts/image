@@ -10,6 +10,7 @@ unset _CACHE_PACKAGE_LOCAL _CACHE_PACKAGE_GLOBAL _DEBUG_DEPENDS_LIST _DEBUG_PACK
 . config/options ""
 . config/multithread
 . config/show_config
+. projects/${PROJECT}/devices/${DEVICE}/options
 
 show_config
 
@@ -41,7 +42,7 @@ function do_mkimage() {
     UUID_STORAGE="${UUID_STORAGE}" \
     DISTRO_BOOTLABEL="${DISTRO_BOOTLABEL}" \
     DISTRO_DISKLABEL="${DISTRO_DISKLABEL}" \
-    UBOOT_SYSTEM="${UBOOT_SYSTEM}" \
+    UBOOT_DTB="${UBOOT_DTB}" \
     UBOOT_VERSION="${UBOOT_VERSION}" \
     EXTRA_CMDLINE="${EXTRA_CMDLINE}" \
     SYSTEM_SIZE="${SYSTEM_SIZE}" \
@@ -86,10 +87,6 @@ else
     IMAGE_NAME="${DISTRONAME}-${LIBREELEC_ARCH}-${OS_VERSION}-${OS_VERSION}"
   else
     IMAGE_NAME="${DISTRONAME}-${TARGET_VERSION}"
-  fi
-
-  if [ -n "${UBOOT_SYSTEM}" ] && [ "${UBOOT_SYSTEM}" != "${DEVICE:-${PROJECT}}" ]; then
-    IMAGE_NAME="${IMAGE_NAME}"
   fi
 fi
 
@@ -294,14 +291,10 @@ if [ "${1}" = "release" -o "${1}" = "mkimage" -o "${1}" = "noobs" ]; then
     UUID_SYSTEM="$(date '+%d%m')-$(date '+%M%S')"
     UUID_STORAGE="$(uuidgen)"
 
-    DEVICE_BOARDS=$(${SCRIPTS}/uboot_helper "${PROJECT}" "${DEVICE}")
-
-    if [ "${BOOTLOADER}" = "u-boot" -a -z "${UBOOT_SYSTEM}" -a -n "${DEVICE}" -a -n "${DEVICE_BOARDS}" ]; then
-      for UBOOT_SYSTEM in ${DEVICE_BOARDS}; do
-
+    if [ "${BOOTLOADER}" = "u-boot" -a -z "${UBOOT_CONFIG}" -a -n "${DEVICE}" -a -n "${DEVICE_BOARDS}" ]; then
         # Re-install u-boot package
         rm ${STAMPS_INSTALL}/u-boot/install_target
-        UBOOT_SYSTEM="${UBOOT_SYSTEM}" ${SCRIPTS}/install u-boot
+        ${SCRIPTS}/install u-boot
 
         # Re-run bootloader/release
         if find_file_path bootloader/release ${BOOTLOADER_DIR}/release; then
@@ -309,8 +302,7 @@ if [ "${1}" = "release" -o "${1}" = "mkimage" -o "${1}" = "noobs" ]; then
           . ${FOUND_PATH}
         fi
 
-        do_mkimage "${IMAGE_NAME}-${UBOOT_SYSTEM}"
-      done
+        do_mkimage "${IMAGE_NAME}-${DEVICE}"
     else
       if [ -n "${SUBDEVICES}" ]; then
         [ "${PROJECT}" = "Amlogic" -o "${PROJECT}" = "Amlogic-ng" ] && SUBDEVICES+=" Generic"

@@ -27,10 +27,10 @@
 
   # Kernel target
     KERNEL_TARGET="Image"
-    LINUX="RG351MP"
     BOOTLOADER="u-boot"
     DEVICE_DTB="rk3326-rg351mp-linux"
-    UBOOT_SYSTEM="rg351mp"
+    UBOOT_DTB="${DEVICE_DTB}"
+    UBOOT_CONFIG="odroidgoa_defconfig"
     PKG_SOC="px30"
     PKG_DATAFILE="$PKG_RKBIN/bin/rk33/rk3326_ddr_333MHz_v1.15.bin"
     PKG_LOADER="$PKG_RKBIN/bin/rk33/rk3326_miniloader_v1.28.bin"

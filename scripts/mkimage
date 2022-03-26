@@ -13,6 +13,7 @@
 # set variables
 LE_TMP=$(mktemp -d)
 SAVE_ERROR="${LE_TMP}/save_error"
+. projects/${PROJECT}/devices/${DEVICE}/options
 
 if [ -z "${SYSTEM_SIZE}" -o -z "${SYSTEM_PART_START}" ]; then
   echo "mkimage: SYSTEM_SIZE and SYSTEM_PART_START must be configured!"
@@ -216,14 +217,13 @@ EOF
     mcopy -s "${RELEASE_DIR}/3rdparty/bootloader/overlays" ::
   fi
 
-elif [ "${BOOTLOADER}" = "u-boot" -a \( -n "${UBOOT_SYSTEM}" -o "${UBOOT_VERSION}" = "vendor" \) ]; then
+elif [ "${BOOTLOADER}" = "u-boot" -a \( -n "${UBOOT_CONFIG}" -o "${UBOOT_VERSION}" = "vendor" \) ]; then
   # create bootloader configuration
   echo "image: creating bootloader configuration... (u-boot)"
 
   if [ "${UBOOT_VERSION}" != "vendor" ]; then
-    DTB="$(${SCRIPTS}/uboot_helper ${PROJECT} ${DEVICE} ${UBOOT_SYSTEM} dtb)"
-    if [ -f "${RELEASE_DIR}/3rdparty/bootloader/${DTB}" ]; then
-      mcopy "${RELEASE_DIR}/3rdparty/bootloader/${DTB}" ::
+    if [ -f "${RELEASE_DIR}/3rdparty/bootloader/${DEVICE_DTB}" ]; then
+      mcopy "${RELEASE_DIR}/3rdparty/bootloader/${DEVICE_DTB}" ::
     fi
   fi
 

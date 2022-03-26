@@ -17,20 +17,23 @@ export BUILD_DATE=$(date)
 
 echo "Building ${DISTRO} for ${DEVICE}"
 
-# If this variable exists in the environment, expand it and clean those packages too.
-PKG_CLEAN="${PKG_CLEAN} modules emulationstation retroarch lib32 jelos"
+if [ ! "${DIRTY}" = true ]
+then
+  # If this variable exists in the environment, expand it and clean those packages too.
+  PKG_CLEAN="${PKG_CLEAN} modules emulationstation retroarch lib32 jelos"
 
-# Clean a few packages to ensure the build date and version are updated
-for package in ${PKG_CLEAN}
-do
-  ./scripts/clean ${package}
-done
+  # Clean a few packages to ensure the build date and version are updated
+  for package in ${PKG_CLEAN}
+  do
+    ./scripts/clean ${package}
+  done
 
-# Clean out old builds before starting the new one.
-rm -f ./release/${DISTRO}-${DEVICE}.${ARCH}-*
+  # Clean out old builds before starting the new one.
+  rm -f ./release/${DISTRO}-${DEVICE}.${ARCH}-*
 
-# Remove the image root as it should be regenerated for every build.
-rm -rf ./build.${DISTRO}-${DEVICE}.${ARCH}/image
+  # Remove the image root as it should be regenerated for every build.
+  rm -rf ./build.${DISTRO}-${DEVICE}.${ARCH}/image
+fi
 
 if [ "${ARCH}" == "aarch64" ]
 then

@@ -12,8 +12,14 @@ PKG_URL="${PKG_SITE}.git"
 PKG_VERSION="23f4a5d"
 GET_HANDLER_SUPPORT="git"
 
+if [[ "${DEVICE}" =~ RG351 ]]
+then
+  PKG_URL="git@github.com:JustEnoughLinuxOS/rg351x-uboot.git"
+  PKG_VERSION="2b575e1"
+fi
+
 PKG_IS_KERNEL_PKG="yes"
-PKG_STAMP="${UBOOT_SYSTEM}"
+PKG_STAMP="${UBOOT_CONFIG}"
 
 [ -n "${ATF_PLATFORM}" ] && PKG_DEPENDS_TARGET+=" atf"
 
@@ -23,8 +29,8 @@ PKG_NEED_UNPACK="${PROJECT}_DIR/${PROJECT}/bootloader"
 PKG_PATCH_DIRS="patches/${DEVICE}"
 
 post_patch() {
-  if [ -n "${UBOOT_SYSTEM}" ] && find_file_path bootloader/config; then
-    PKG_CONFIG_FILE="${PKG_BUILD}/configs/$(${ROOT}/${SCRIPTS}/uboot_helper ${PROJECT} ${DEVICE} ${UBOOT_SYSTEM} config)"
+  if [ -n "${UBOOT_CONFIG}" ] && find_file_path bootloader/config; then
+    PKG_CONFIG_FILE="${UBOOT_CONFIG}"
     if [ -f "$PKG_CONFIG_FILE" ]; then
       cat $FOUND_PATH >> "$PKG_CONFIG_FILE"
     fi
@@ -32,14 +38,13 @@ post_patch() {
 }
 
 make_target() {
-  if [ -z "${UBOOT_SYSTEM}" ]; then
-    echo "UBOOT_SYSTEM must be set to build an image"
-    echo "see './scripts/uboot_helper' for more information"
+  if [ -z "${UBOOT_CONFIG}" ]; then
+    echo "UBOOT_CONFIG must be set to build an image"
   else
     [ "${BUILD_WITH_DEBUG}" = "yes" ] && PKG_DEBUG=1 || PKG_DEBUG=0
     [ -n "${ATF_PLATFORM}" ] &&  cp -av $(get_build_dir atf)/bl31.bin .
     DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm make mrproper
-    DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm make $(${ROOT}/${SCRIPTS}/uboot_helper ${PROJECT} ${DEVICE} ${UBOOT_SYSTEM} config)
+    DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm make ${UBOOT_CONFIG}
     DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm _python_sysroot="${TOOLCHAIN}" _python_prefix=/ _python_exec_prefix=/ make HOSTCC="$HOST_CC" HOSTLDFLAGS="-L${TOOLCHAIN}/lib" HOSTSTRIP="true" CONFIG_MKIMAGE_DTC_PATH="scripts/dtc/dtc"
   fi
 }
@@ -47,7 +52,7 @@ make_target() {
 makeinstall_target() {
     mkdir -p ${INSTALL}/usr/share/bootloader
     # Only install u-boot.img et al when building a board specific image
-    if [ -n "${UBOOT_SYSTEM}" ]; then
+    if [ -n "${UBOOT_CONFIG}" ]; then
       find_file_path bootloader/install && . ${FOUND_PATH}
     fi
 
