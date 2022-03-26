@@ -6,7 +6,7 @@ PKG_RKBIN="$(get_build_dir rkbin)"
 source ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
 
 if [ -n "${PKG_DATAFILE}" -a -n "${PKG_LOADER}" ]; then
-  tools/mkimage -n ${PKG_SOC} -T rksd -d "${PKG_DATAFILE}" idbloader.img
+  tools/mkimage -n ${PKG_SOC} -T rksd -d "${PKG_DATAFILE}" -C bzip2 idbloader.img
   cat "${PKG_LOADER}" >> idbloader.img
   cp -av idbloader.img ${INSTALL}/usr/share/bootloader
 fi
@@ -33,12 +33,7 @@ SEC=0
 [OUTPUT]
 PATH=trust.img
 EOF
-  if [[ "${DEVICE}" =~ RG351 ]]
-  then
-    TROPTS="--rsa 3 --verbose"
-  else
-    TROPTS="--verbose"
-  fi
+  TROPTS="--verbose"
   ${PKG_RKBIN}/tools/trust_merger ${TROPTS} trust.ini
   cp -av trust.img ${INSTALL}/usr/share/bootloader
 fi
