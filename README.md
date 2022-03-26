@@ -10,7 +10,7 @@ Just Enough Linux Operating System (JELOS) is a simple Linux distribution for AR
 * Provides overclock and cooling profiles.
 * Supports 2.4GHz and 5GHz 802.11 A/B/G/N/AC WIFI.
 * Includes RetroArch, a variety of cores, Stand Alone Emulators, as well as PortMaster.
-* Supports the Anbernic RG552, RG351P/M, RG351V, and RG351V handhelds.
+* Supports the Anbernic RG552, RG351P/M, RG351MP, and RG351V handhelds.
 * Maintained by a small but growing community of contributors.
 
 ## Licenses
