@@ -18,7 +18,13 @@ PKG_PATCH_DIRS+="${DEVICE}"
 
 if [ "${ARCH}" = "arm" ]
 then
-  PKG_MAKE_OPTS_TARGET=" platform=rg552"
+  if [[ "${DEVICE}" =~ RG351 ]]
+  then
+    PKG_MAKE_OPTS_TARGET=" platform=RG351x"
+  elif [[ "${DEVICE}" =~ RG552 ]]
+  then
+    PKG_MAKE_OPTS_TARGET=" platform=RG552"
+  fi
 else
   make_target() {
     :
@@ -36,7 +42,7 @@ pre_configure_target() {
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
-  if [[ "${DEVICE}" =~ RG552 ]] && [[ "${ARCH}" == "aarch64" ]]
+  if [[ "${ARCH}" == "aarch64" ]]
   then
     cp -vP ${PKG_BUILD}/../../build.${DISTRO}-${DEVICE}.arm/parallel-n64_glide64-*/.install_pkg/usr/lib/libretro/parallel_n64_glide64_libretro.so ${INSTALL}/usr/lib/libretro/parallel_n64_glide64_libretro.so
     cp -vP ${PKG_BUILD}/../core-info-*/parallel_n64_libretro.info ${INSTALL}/usr/lib/libretro/parallel_n64_glide64_libretro.info
