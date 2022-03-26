@@ -19,7 +19,13 @@ if [ "${ARCH}" = "arm" ]
 then
   make_target() {
     cd ${PKG_BUILD}
-    make -f Makefile.libretro clean && make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} PKG_MAKE_OPTS_TARGET+=" platform=rg552"
+    if [[ "${DEVICE}" =~ RG351 ]]
+    then
+      make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=classic_armv8_a35
+    elif [[ "${DEVICE}" =~ RG552 ]]
+    then
+      make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=rpi3
+    fi
   }
 else
   make_target() {
