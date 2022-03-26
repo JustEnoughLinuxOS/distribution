@@ -1,0 +1,2 @@
+# Inform init that this is a rotated display
+DISPLAY_ROTATED=true
