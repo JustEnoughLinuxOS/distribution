@@ -17,7 +17,6 @@ PKG_SHORTDESC="xa is a high-speed, two-pass portable cross-assembler."
 makeinstall_host() {
   mkdir -p ${TOOLCHAIN}/bin
   cp -f file65 ldo65 mkrom.sh printcbm reloc65 uncpk xa ${TOOLCHAIN}/bin
-  ln -s xa ${TOOLCHAIN}/xa64
 }
 
 makeinstall_target() {
