@@ -23,5 +23,4 @@ makeinstall_host() {
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin
   cp -f file65 ldo65 mkrom.sh printcbm reloc65 uncpk xa ${INSTALL}/usr/bin
-  ln -s xa ${INSTALL}/usr/bin/xa64
 }
