@@ -2,8 +2,8 @@
 # Copyright (C) 2020 Trond Haugland (trondah@gmail.com)
 
 PKG_NAME="pcsx_rearmed"
-PKG_VERSION="e4072f7f86a2ce035593856fd5854f316843fb39"
-PKG_SHA256="866b57175497a198a272527d3027aa0f889627b7f3b418477c939240b4d3b32c"
+PKG_VERSION="75d5614bce62f7c2b3ca196574cf28bc9d050cdb"
+PKG_SHA256="c8eedaafa1977d1f6d429541681bbf133c9e8aa04e09c7015bf582cc4e146ab5"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
@@ -21,10 +21,9 @@ then
     cd ${PKG_BUILD}
     if [[ "${DEVICE}" =~ RG351 ]]
     then
-      make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=classic_armv8_a35
-    elif [[ "${DEVICE}" =~ RG552 ]]
-    then
-      make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=rpi3
+      make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=RG351x
+    else
+      make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=${DEVICE}
     fi
   }
 else
