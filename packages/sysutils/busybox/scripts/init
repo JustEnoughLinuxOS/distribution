@@ -707,14 +707,19 @@ mount_games() {
       /usr/bin/busybox mkdir -p /storage/roms >/dev/null 2>&1
     fi
 
-    for DEV in $(blkid | awk 'BEGIN {FS=":"}; /ext4/ || /fat/ {print $1}' | sort -r)
-    do
-      if [ -e "${DEV}" ] && [ ! -e "/storage/.please_resize_me" ]
-      then
-          mount ${DEV} /storage/roms >/dev/null 2>&1
-          break
-      fi
-    done
+    # Only want to try and mount additional cards if the slots exist.
+    CARDS=$(awk '/mmcblk[0-9]$/{print $4}' /proc/partitions | wc -l)
+    if [ ${CARDS} -gt 1 ]
+    then
+      for DEV in $(blkid | awk 'BEGIN {FS=":"}; /ext4/ || /fat/ {print $1}' | sort -r)
+      do
+        if [ -e "${DEV}" ] && [ ! -e "/storage/.please_resize_me" ]
+        then
+            mount ${DEV} /storage/roms >/dev/null 2>&1
+            break
+        fi
+      done
+    fi
 
     if [ -d "/storage/.update" ] && [ ! -e "/storage/.please_resize_me" ]
     then
