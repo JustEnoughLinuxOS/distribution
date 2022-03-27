@@ -1,7 +1,0 @@
-#!/bin/bash
-. /etc/profile
-
-if [[ "${HW_DEVICE}" =~ RG351P ]]
-then
-  amixer set ${DEVICE_AUDIO_MIXER} 100%
-fi
