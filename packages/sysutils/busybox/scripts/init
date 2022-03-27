@@ -1111,6 +1111,8 @@ prepare_sysroot() {
   if [ ! -f "/sysroot/storage/.configured" ]
   then
     echo -ne "\033[100H\033[2K==> Initializing system, please wait.." >/dev/console
+  else
+    echo -ne "\033[100H\033[2K==> Loading, please wait.." >/dev/console
   fi
 }
 

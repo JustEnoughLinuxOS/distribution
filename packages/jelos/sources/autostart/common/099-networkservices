@@ -19,7 +19,7 @@ do
   statemgr() {
     for daemon in ${DAEMONS[@]}
     do
-      systemctl ${1} ${daemon}
+      nohup systemctl ${1} ${daemon} &
     done
   }
 
