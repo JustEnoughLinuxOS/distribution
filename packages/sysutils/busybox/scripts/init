@@ -732,7 +732,10 @@ mount_games() {
       /usr/bin/busybox mkdir -p /storage/roms/update >/dev/null 2>&1
     fi
 
-    /usr/bin/busybox mountpoint -q /storage/roms >/dev/null 2>&1
+    if [ ${CARDS} -gt 1 ]
+    then
+      /usr/bin/busybox mountpoint -q /storage/roms >/dev/null 2>&1
+    fi
     if [ $? == "0" ] && [ ! -e "/storage/.please_resize_me" ]
     then
       /usr/bin/busybox mkdir -p "$UPDATE_ROOT" >/dev/null 2>&1

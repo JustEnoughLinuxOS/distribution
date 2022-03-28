@@ -4,7 +4,20 @@
 
 . /etc/profile
 
-### This script contains items that we only want to execute after a JELOS upgrade.
+### This script contains items that we only want to execute after a JELOS upgrade,
+### or after a fresh installation.
+
+if [ -d "/storage/.config/system/configs" ]
+then
+  EXCLUDE="--exclude=configs"
+fi
+
+rsync -a --delete ${EXCLUDE} /usr/config/system/ /storage/.config/system/ &
+rsync -a /usr/config/modules /storage/.config/ &
+rsync -a /usr/config/game /storage/.config/ &
+rsync -a --delete /usr/config/locale/ /storage/.config/emulationstation/locale/ &
+
+wait < <(jobs -p)
 
 ### Switch the theme to system-theme if it hasn't already been done
 if [ ! -L /storage/.config/emulationstation/themes/system-theme ]

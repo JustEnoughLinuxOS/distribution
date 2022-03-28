@@ -1,20 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
 
 . /etc/profile
-
-if [ -d "/storage/.config/system/configs" ]
-then
-  EXCLUDE="--exclude=configs"
-fi
-
-rsync -a --delete ${EXCLUDE} /usr/config/system/ /storage/.config/system/ &
-rsync -a /usr/config/modules /storage/.config/ &
-rsync -a /usr/config/game /storage/.config/ &
-rsync -a --delete /usr/config/locale/ /storage/.config/emulationstation/locale/ &
-
-wait < <(jobs -p)
 
 if [ ! -L "/storage/.emulationstation" ]
 then

@@ -21,5 +21,4 @@ then
 
   hres="$(fbset 2>/dev/null | awk '/geometry/ { print $2 }')"
   cp -f /usr/config/splash/splash-${hres}.png /storage/.config/emulationstation/resources/logo.png
-  touch /storage/.configured
 fi
