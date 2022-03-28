@@ -20,3 +20,5 @@ cp -f /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/.config/SDL
 cp -f /usr/config/emulationstation/es_input.cfg /storage/.config/emulationstation
 cp -f /usr/config/emulationstation/es_features.cfg /storage/.config/emulationstation
 
+### Start the time service by default
+set_setting wts.enabled 1

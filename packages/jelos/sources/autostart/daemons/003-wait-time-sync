@@ -1,0 +1,4 @@
+STATE=$(get_setting wts.enabled)
+SVC="wait-time-sync"
+CONF="wait-time-sync"
+DAEMONS=("wait-time-sync")
