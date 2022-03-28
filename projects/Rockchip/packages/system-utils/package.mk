@@ -22,8 +22,13 @@ makeinstall_target() {
   cp ${PKG_DIR}/sources/scripts/system_utils ${INSTALL}/usr/bin
   cp ${PKG_DIR}/sources/scripts/volume_sense ${INSTALL}/usr/bin
   cp ${PKG_DIR}/sources/scripts/battery ${INSTALL}/usr/bin
-  cp ${PKG_DIR}/sources/scripts/overclock ${INSTALL}/usr/bin
   cp ${PKG_DIR}/sources/scripts/internalwifi ${INSTALL}/usr/bin
+  if [ -e "${PKG_DIR}/sources/devices/${DEVICE}/overclock" ]
+  then
+    cp ${PKG_DIR}/sources/devices/${DEVICE}/overclock ${INSTALL}/usr/bin
+    mkdir -p ${INSTALL}/usr/lib/autostart/${DEVICE}
+    cp ${PKG_DIR}/sources/autostart/${DEVICE}/002-overclock ${INSTALL}/usr/lib/autostart/${DEVICE}
+  fi
   chmod 0755 ${INSTALL}/usr/bin/*
 
   mkdir -p ${INSTALL}/usr/config
