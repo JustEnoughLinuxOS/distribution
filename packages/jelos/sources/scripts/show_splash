@@ -10,6 +10,7 @@
 SPLASH_TYPE="$1"
 
 hres="$(fbset 2>/dev/null | awk '/geometry/ { print $2 }')"
+hres="$(fbset 2>/dev/null | awk '/geometry/ { print $3 }')"
 
 if [ "$SPLASH_TYPE" == "intro" ] || [ "$SPLASH_TYPE" == "exit" ] || [ "$SPLASH_TYPE" == "shutdown" ]
 then
@@ -25,7 +26,13 @@ fi
 
 if [[ -f "/storage/.config/system/configs/novideo" ]] && [[ ${VIDEO} != "1" ]]
 then
-  convert "${SPLASH}" -background black -gravity center bgra:/dev/fb0 > /dev/null 2>&1
+  if [ "${SPLASH_LOADER}" = "plymouth" ] || [ -z "${SPLASH_LOADER}" ]
+  then
+    ply-image "${SPLASH}" 2>/dev/null
+  elif [ "${SPLASH_LOADER}" = "imagemagick" ]
+  then
+    convert "${SPLASH}" -background black -gravity center bgra:/dev/fb0 > /dev/null 2>&1
+  fi
 else
   # Show intro video
   SPLASH=${VIDEOSPLASH}

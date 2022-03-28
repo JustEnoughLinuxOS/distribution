@@ -8,6 +8,8 @@
 BOOTLOG="/var/log/boot.log"
 maxperf 2>&1 >${BOOTLOG}
 
+date 2>&1 >>${BOOTLOG}
+
 /usr/bin/show_splash intro 2>&1 >>${BOOTLOG}
 
 ### Run device specific start scripts
@@ -42,3 +44,5 @@ clear >/dev/console
 rm /var/lock/start.games 2>&1 >>${BOOTLOG}
 touch /var/lock/start.games 2>&1 >>${BOOTLOG}
 systemctl start emustation 2>&1 >>${BOOTLOG}
+
+date 2>&1 >>${BOOTLOG}

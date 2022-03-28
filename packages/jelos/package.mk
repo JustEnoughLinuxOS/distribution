@@ -125,6 +125,8 @@ EOF
     cp ${PKG_DIR}/sources/asound/${DEVICE}/* ${INSTALL}/usr/config/
   fi
 
+  sed -i "s#@DEVICENAME@#${DEVICE}#g" ${INSTALL}/usr/config/system/configs/system.cfg
+
   if [[ "${DEVICE}" =~ RG351P ]]
   then
     sed -i "s#.integerscale=1#.integerscale=0#g" ${INSTALL}/usr/config/system/configs/system.cfg

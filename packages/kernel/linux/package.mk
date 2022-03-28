@@ -108,8 +108,8 @@ pre_make_target() {
   # set initramfs source
   ${PKG_BUILD}/scripts/config --set-str CONFIG_INITRAMFS_SOURCE "$(kernel_initramfs_confs) ${BUILD}/initramfs"
 
-  # set default hostname based on ${DISTRONAME}
-  ${PKG_BUILD}/scripts/config --set-str CONFIG_DEFAULT_HOSTNAME "${DISTRONAME}"
+  # set default hostname based on ${DEVICE}
+  ${PKG_BUILD}/scripts/config --set-str CONFIG_DEFAULT_HOSTNAME "${DEVICE}"
 
   # disable swap support if not enabled
   if [ ! "${SWAP_SUPPORT}" = yes ]; then
