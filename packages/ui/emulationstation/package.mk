@@ -30,42 +30,42 @@ pre_configure_target() {
 }
 
 makeinstall_target() {
-	mkdir -p $INSTALL/usr/config/locale
-	cp -rf $PKG_BUILD/locale/lang/* $INSTALL/usr/config/locale/
+	mkdir -p ${INSTALL}/usr/config/locale
+	cp -rf ${PKG_BUILD}/locale/lang/* ${INSTALL}/usr/config/locale/
 
-	mkdir -p $INSTALL/usr/lib
-	ln -sf /storage/.config/emulationstation/locale $INSTALL/usr/lib/locale
+	mkdir -p ${INSTALL}/usr/lib
+	ln -sf /storage/.config/emulationstation/locale ${INSTALL}/usr/lib/locale
 
-	mkdir -p $INSTALL/usr/config/emulationstation/resources
-	cp -rf $PKG_BUILD/resources/* $INSTALL/usr/config/emulationstation/resources/
-	rm -rf $INSTALL/usr/config/emulationstation/resources/logo.png
+	mkdir -p ${INSTALL}/usr/config/emulationstation/resources
+	cp -rf ${PKG_BUILD}/resources/* ${INSTALL}/usr/config/emulationstation/resources/
+	rm -rf ${INSTALL}/usr/config/emulationstation/resources/logo.png
 
-	mkdir -p $INSTALL/usr/lib/${PKG_PYTHON_VERSION}
-	cp -rf $PKG_DIR/bluez/* $INSTALL/usr/lib/${PKG_PYTHON_VERSION}
+	mkdir -p ${INSTALL}/usr/lib/${PKG_PYTHON_VERSION}
+	cp -rf ${PKG_DIR}/bluez/* ${INSTALL}/usr/lib/${PKG_PYTHON_VERSION}
 
-	mkdir -p $INSTALL/usr/bin
-	ln -sf /storage/.config/emulationstation/resources $INSTALL/usr/bin/resources
-	cp -rf $PKG_BUILD/emulationstation $INSTALL/usr/bin
+	mkdir -p ${INSTALL}/usr/bin
+	ln -sf /storage/.config/emulationstation/resources ${INSTALL}/usr/bin/resources
+	cp -rf ${PKG_BUILD}/emulationstation ${INSTALL}/usr/bin
 
-	mkdir -p $INSTALL/etc/emulationstation/
-	ln -sf /storage/.config/emulationstation/themes $INSTALL/etc/emulationstation/
-	ln -sf /usr/config/emulationstation/es_systems.cfg $INSTALL/etc/emulationstation/es_systems.cfg
+	mkdir -p ${INSTALL}/etc/emulationstation/
+	ln -sf /storage/.config/emulationstation/themes ${INSTALL}/etc/emulationstation/
+	ln -sf /usr/config/emulationstation/es_systems.cfg ${INSTALL}/etc/emulationstation/es_systems.cfg
 
-        cp -rf $PKG_DIR/config/*.cfg $INSTALL/usr/config/emulationstation
-        cp -rf $PKG_DIR/config/scripts $INSTALL/usr/config/emulationstation
+        cp -rf ${PKG_DIR}/config/*.cfg ${INSTALL}/usr/config/emulationstation
+        cp -rf ${PKG_DIR}/config/scripts ${INSTALL}/usr/config/emulationstation
 
 	if [ "${DEVICE}" == "RG552" ]
 	then
-	   sed -i 's#<string name="AudioDevice" value="Playback" />#<string name="AudioDevice" value="DAC" />#' $INSTALL/usr/config/emulationstation/es_settings.cfg
+	   sed -i 's#<string name="AudioDevice" value="Playback" />#<string name="AudioDevice" value="DAC" />#' ${INSTALL}/usr/config/emulationstation/es_settings.cfg
 	fi
 
-	chmod +x $INSTALL/usr/config/emulationstation/scripts/*
-	find $INSTALL/usr/config/emulationstation/scripts/ -type f -exec chmod o+x {} \;
+	chmod +x ${INSTALL}/usr/config/emulationstation/scripts/*
+	find ${INSTALL}/usr/config/emulationstation/scripts/ -type f -exec chmod o+x {} \;
 	ln -sf /storage/.cache/system_timezone ${INSTALL}/etc/timezone
 
 }
 
 post_install() {
-	mkdir -p $INSTALL/usr/share
-	ln -sf /storage/.config/emulationstation/locale $INSTALL/usr/share/locale
+	mkdir -p ${INSTALL}/usr/share
+	ln -sf /storage/.config/emulationstation/locale ${INSTALL}/usr/share/locale
 }
