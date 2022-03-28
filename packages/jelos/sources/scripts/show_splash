@@ -25,7 +25,7 @@ fi
 
 if [[ -f "/storage/.config/system/configs/novideo" ]] && [[ ${VIDEO} != "1" ]]
 then
-  /usr/bin/ply-image "${SPLASH}" > /dev/null 2>&1
+  convert "${SPLASH}" -background black -gravity center bgra:/dev/fb0 > /dev/null 2>&1
 else
   # Show intro video
   SPLASH=${VIDEOSPLASH}
