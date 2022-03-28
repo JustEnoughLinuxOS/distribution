@@ -10,7 +10,7 @@
 SPLASH_TYPE="$1"
 
 hres="$(fbset 2>/dev/null | awk '/geometry/ { print $2 }')"
-hres="$(fbset 2>/dev/null | awk '/geometry/ { print $3 }')"
+vres="$(fbset 2>/dev/null | awk '/geometry/ { print $3 }')"
 
 if [ "$SPLASH_TYPE" == "intro" ] || [ "$SPLASH_TYPE" == "exit" ] || [ "$SPLASH_TYPE" == "shutdown" ]
 then

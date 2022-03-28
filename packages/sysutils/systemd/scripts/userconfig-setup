@@ -1,9 +1,9 @@
-#!/bin/sh
+#!/bin/bash
 
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
-. /etc/os-release
+. /etc/profile
 
 # Remove those sample files that we manage
 for sample in $(find /storage/.config -name '*.sample' 2>/dev/null); do
@@ -17,9 +17,9 @@ then
   ## ignore es_systems.cfg and switch to rsync
   rsync -a --ignore-existing --exclude=es_systems.cfg /usr/config/* /storage/.config/
   mkdir -p /storage/.config/emulationstation/themes
-  ln -s /usr/share/themes/es-theme-art-book-next /storage/.config/emulationstation/themes/system-theme 
-  if [ "${HW_DEVICE}" == "RG552" ]; then
-    cp -f /usr/config/splash/splash-1152.png /storage/.config/emulationstation/resources/logo.png
-  fi
+  ln -s /usr/share/themes/es-theme-art-book-next /storage/.config/emulationstation/themes/system-theme
+
+  hres="$(fbset 2>/dev/null | awk '/geometry/ { print $2 }')"
+  cp -f /usr/config/splash/splash-${hres}.png /storage/.config/emulationstation/resources/logo.png
   touch /storage/.configured
 fi
