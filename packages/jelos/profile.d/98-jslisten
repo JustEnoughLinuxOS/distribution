@@ -39,9 +39,9 @@ EOF
                         cat <<EOF >>${JSLISTENCONF}
 [exit]
 program="/usr/bin/manage_mpv.sh quit"
-button1=${DEVICE_BTN_TL}
-button2=${DEVICE_BTN_SELECT}
-button3=${DEVICE_BTN_START}
+button1=${DEVICE_BTN_SELECT}
+button2=${DEVICE_BTN_START}
+evdev="auto"
 
 [Pause]
 program="/usr/bin/manage_mpv.sh pause"
