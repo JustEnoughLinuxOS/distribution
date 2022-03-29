@@ -38,7 +38,7 @@ fi
 
 normperf 2>&1 >>${BOOTLOG}
 
-clear >/dev/console
+/usr/bin/show_splash intro 2>&1 >>${BOOTLOG}
 
 ### Lock is a prerequisite for emustation
 rm /var/lock/start.games 2>&1 >>${BOOTLOG}
