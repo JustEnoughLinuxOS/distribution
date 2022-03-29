@@ -135,7 +135,7 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/coreelec
     cp ${PKG_DIR}/scripts/functions ${INSTALL}/usr/lib/coreelec
     cp ${PKG_DIR}/scripts/fs-resize ${INSTALL}/usr/lib/coreelec
-    sed -e "s/@DEVICENAME@/${DEVICE}/g" \
+    sed -e "s/@DISTRONAME@/${DISTRONAME}/g" \
         -i ${INSTALL}/usr/lib/coreelec/fs-resize
 
     if listcontains "${FIRMWARE}" "rpi-eeprom"; then
@@ -228,6 +228,7 @@ makeinstall_init() {
   chmod 755 ${INSTALL}/device.init
 
   sed -e "s/@DISTRONAME@/${DISTRONAME}/g" \
+      -e "s/@DEVICENAME@/${DEVICE}/g" \
       -e "s/@KERNEL_NAME@/${KERNEL_NAME}/g" \
       -i ${INSTALL}/init
   chmod 755 ${INSTALL}/init
