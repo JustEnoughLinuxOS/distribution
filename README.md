@@ -87,7 +87,7 @@ Like any Linux distribution, this project is not the work of one person.  It is 
   * Password rotation can be disabled in the System Settings menu.  Once committed the root password may be edited in the same menu.
   * To set the root password over ssh and keep it in sync with EmulationStation, use ```setrootpass mynewpassword```.
   * Alternatively, copy your ssh key with ssh-copy-id, and leave rotation enabled.
-    * ```ssh-copy-id root@jelos```
+    * ```ssh-copy-id root@rg552``` Use the name of your device, rg552, rg351mp, etc.
 * I want to add games to SD Card 1 and see them in my EmulationStation games list.
   * A custom facility has been added to JELOS to enable things such as this, to use it add a script to /storage/.config/autostart to create a bind mount and add your games to the directory on your primary SD card.  They will appear in ES after a restart of the ES service or a reboot.  To create a bind mount, use the example below, changing as necessary.
     * This example uses file name 001-bind.
