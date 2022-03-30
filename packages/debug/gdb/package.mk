@@ -8,7 +8,7 @@ PKG_SHA256="cccfcc407b20d343fb320d4a9a2110776dd3165118ffd41f4b1b162340333f94"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/gdb/"
 PKG_URL="http://ftpmirror.gnu.org/gdb/$PKG_NAME-$PKG_VERSION.tar.xz"
-PKG_DEPENDS_TARGET="toolchain zlib ncurses expat"
+PKG_DEPENDS_TARGET="toolchain zlib ncurses expat gmp"
 PKG_LONGDESC="GNU Project debugger, allows you to see what is going on inside another program while it executes."
 # gdb could fail on runtime if build with LTO support
 
