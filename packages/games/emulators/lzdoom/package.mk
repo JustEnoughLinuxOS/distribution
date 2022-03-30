@@ -30,18 +30,21 @@ makeinstall_host() {
 pre_configure_target() {
 PKG_CMAKE_OPTS_TARGET=" -DNO_GTK=ON \
                         -DFORCE_CROSSCOMPILE=ON \
-                        -DIMPORT_EXECUTABLES=$PKG_BUILD/.$HOST_NAME/ImportExecutables.cmake \
+                        -DIMPORT_EXECUTABLES=${PKG_BUILD}/.$HOST_NAME/ImportExecutables.cmake \
                         -DCMAKE_BUILD_TYPE=Release"
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/bin
-  cp $PKG_DIR/lzdoom.sh $INSTALL/usr/bin/
-  cp $PKG_BUILD/.$TARGET_NAME/lzdoom $INSTALL/usr/bin
+  mkdir -p ${INSTALL}/usr/bin
+  cp ${PKG_DIR}/lzdoom.sh ${INSTALL}/usr/bin/
+  cp ${PKG_BUILD}/.$TARGET_NAME/lzdoom ${INSTALL}/usr/bin
 
-  mkdir -p $INSTALL/usr/config/game/lzdoom
-  cp $PKG_DIR/config/${DEVICE}/* $INSTALL/usr/config/game/lzdoom
-  cp $PKG_BUILD/.$TARGET_NAME/*.pk3 $INSTALL/usr/config/game/lzdoom
-  cp -r $PKG_BUILD/.$TARGET_NAME/soundfonts $INSTALL/usr/config/game/lzdoom
-  cp -r $PKG_BUILD/.$TARGET_NAME/fm_banks $INSTALL/usr/config/game/lzdoom
+  mkdir -p ${INSTALL}/usr/config/game/lzdoom
+  if [ -d "${PKG_DIR}/config/${DEVICE}" ]
+  then
+    cp ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/config/game/lzdoom
+  fi
+  cp ${PKG_BUILD}/.$TARGET_NAME/*.pk3 ${INSTALL}/usr/config/game/lzdoom
+  cp -r ${PKG_BUILD}/.$TARGET_NAME/soundfonts ${INSTALL}/usr/config/game/lzdoom
+  cp -r ${PKG_BUILD}/.$TARGET_NAME/fm_banks ${INSTALL}/usr/config/game/lzdoom
 }
