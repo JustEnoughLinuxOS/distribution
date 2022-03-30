@@ -88,6 +88,8 @@ Like any Linux distribution, this project is not the work of one person.  It is 
   * To set the root password over ssh and keep it in sync with EmulationStation, use ```setrootpass mynewpassword```.
   * Alternatively, copy your ssh key with ssh-copy-id, and leave rotation enabled.
     * ```ssh-copy-id root@rg552``` Use the name of your device, rg552, rg351mp, etc.
+* I have an RG351P and I can't see the games partition in Windows.
+  * JELOS does not create an ExFAT partition on SD1, and expands the full card using ext4.  The best way to copy files back and forth to this device is to enable SAMBA, and connect to the device over a network by entering ```\\RG351P``` into the address bar in Windows Explorer.  The root password is required for access.
 * I want to add games to SD Card 1 and see them in my EmulationStation games list.
   * A custom facility has been added to JELOS to enable things such as this, to use it add a script to /storage/.config/autostart to create a bind mount and add your games to the directory on your primary SD card.  They will appear in ES after a restart of the ES service or a reboot.  To create a bind mount, use the example below, changing as necessary.
     * This example uses file name 001-bind.
