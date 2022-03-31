@@ -38,6 +38,7 @@ fi
 
 normperf 2>&1 >>${BOOTLOG}
 
+clear >/dev/console 2>&1 >>${BOOTLOG}
 /usr/bin/show_splash intro 2>&1 >>${BOOTLOG}
 
 ### Lock is a prerequisite for emustation

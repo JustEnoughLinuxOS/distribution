@@ -430,8 +430,7 @@ set_consolefont() {
     if [ "${hres}" -lt "1152" ]
     then
       setfont -C /dev/tty0 ter-v14n.psf
-    elif [ "${hres}" -ge "1152" ]
-    then
+    else
       setfont -C /dev/tty0 ter-v32n.psf
     fi
   fi

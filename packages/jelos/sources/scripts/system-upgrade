@@ -70,9 +70,9 @@ then
   exit 0
 fi
 
-# Continue to use the .tar extension for a while
-# and cut over for all updates after this date.
-if [ "${LATEST_RELEASE_TAG}" -lt "20220409" ]
+# Continue to use the .tar extension until this update
+# and then cut over to the new format for all updates.
+if [ "${LATEST_RELEASE_TAG}" -lt "20220401" ]
 then
   EXTENSION="tar"
 else
