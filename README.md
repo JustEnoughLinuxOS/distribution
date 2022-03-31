@@ -70,35 +70,9 @@ limitations under the License.
 ## Credits
 Like any Linux distribution, this project is not the work of one person.  It is the work of many persons all over the world who have developed the open source bits without which this project could not exist.  Special thanks to 351ELEC, EmuELEC, CoreELEC, LibreELEC, Anbernic, and developers across the ARM handheld community.
 
-## Frequently Asked Questions
-* Does JELOS offer any formal support?
-  * No. JELOS is something that we develop for fun, it is provided as-is.  There are a variety of avenues to seek community help, but this is a tinkerer's distribution so you may need to get your hands dirty to solve your problems.
-* Do you plan to add additional ports, software, or emulators?
-  * I add things to JELOS as I have an itch to scratch, as does the community of contributors.  If you would like to add something to JELOS, pull requests are welcomed.
-* What about N64, Dreamcast, Saturn, Jaguar, PSP, etc on the 552?
-  * Those platforms perform best in Android on the 552, and I have no interest in them.  I recommend that you use Android instead for those.
-* Which emulators and game engines are supported by JELOS?
-  * [See JELOS emulators and game engines](https://github.com/JustEnoughLinuxOS/distribution/blob/gh-pages/JELOS%20emulators%20and%20game%20engines.md)
-* Will you support my device?
-  * If you send me a device and source code, I'll consider it.
-* I'm using brand-y microSD and after flashing it partitions, reboots, and hangs.
-  * When this happens the indicator is a short vibration like it's restarting normally but the power LED does not turn on.  Press reset, and it will continue normally.
-* How can I disable root password rotation?
-  * Password rotation can be disabled in the System Settings menu.  Once committed the root password may be edited in the same menu.
-  * To set the root password over ssh and keep it in sync with EmulationStation, use ```setrootpass mynewpassword```.
-  * Alternatively, copy your ssh key with ssh-copy-id, and leave rotation enabled.
-    * ```ssh-copy-id root@rg552``` Use the name of your device, rg552, rg351mp, etc.
-* I have an RG351P and I can't see the games partition in Windows.
-  * JELOS does not create an ExFAT partition on SD1, and expands the full card using ext4.  The best way to copy files back and forth to this device is to enable SAMBA, and connect to the device over a network by entering ```\\RG351P``` into the address bar in Windows Explorer.  The root password is required for access.
-* I want to add games to SD Card 1 and see them in my EmulationStation games list.
-  * A custom facility has been added to JELOS to enable things such as this, to use it add a script to /storage/.config/autostart to create a bind mount and add your games to the directory on your primary SD card.  They will appear in ES after a restart of the ES service or a reboot.  To create a bind mount, use the example below, changing as necessary.
-    * This example uses file name 001-bind.
-    * If /storage/.config/autostart does not exist, make it with mkdir. ```mkdir /storage/.config/autostart```
-    * ```#!/bin/bash```
-    * ```mkdir -p /storage/roms/c64 /storage/c64 2>&1 >/dev/null```
-    * ```mount --bind /storage/roms/c64 /storage/c64```
-    * Make it executable with chmod. ```chmod 0755 /storage/.config/autostart/001-bind```
-* Since the latest release I can no longer use 351FILES.
-  * This is a known issue and will be resolved in the next release.  It can be corrected simply via ssh.
-    * SSH into your device
-    * Run ```chmod 0755 /storage/.config/modules/*```
+## Documentation
+* [Home](https://github.com/JustEnoughLinuxOS/distribution/wiki)
+* [Frequently asked Questions](https://github.com/JustEnoughLinuxOS/distribution/wiki/Frequently-Asked-Questions)
+* [HotKeys](https://github.com/JustEnoughLinuxOS/distribution/wiki/Hotkeys)
+* [Emulators and Game Engines](https://github.com/JustEnoughLinuxOS/distribution/wiki/JELOS-emulators-and-game-engines)
+
