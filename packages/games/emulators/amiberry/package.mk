@@ -33,10 +33,8 @@ pre_configure_target() {
       ;;
   esac
  
-fi
-
-sed -i "s|AS     = as|AS     \?= as|" Makefile
-PKG_MAKE_OPTS_TARGET+=" all PLATFORM=${AMIBERRY_PLATFORM} SDL_CONFIG=${SYSROOT_PREFIX}/usr/bin/sdl2-config"
+  sed -i "s|AS     = as|AS     \?= as|" Makefile
+  PKG_MAKE_OPTS_TARGET+=" all PLATFORM=${AMIBERRY_PLATFORM} SDL_CONFIG=${SYSROOT_PREFIX}/usr/bin/sdl2-config"
 }
 
 makeinstall_target() {
