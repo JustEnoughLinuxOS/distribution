@@ -17,14 +17,14 @@ pre_configure_target() {
   export SYSROOT_PREFIX=${SYSROOT_PREFIX}
   if [[ "${DEVICE}" =~ RG552 ]]
   then
-    AMIBERRY_PLATFORM="PLATFORM=rpi4"
+    AMIBERRY_PLATFORM="PLATFORM=n2"
   elif [[ "${DEVICE}" =~ RG351 ]]
   then
     AMIBERRY_PLATFORM="PLATFORM=oga"
   fi
  
   sed -i "s|AS     = as|AS     \?= as|" Makefile
-  PKG_MAKE_OPTS_TARGET+=" all SDL_CONFIG=${SYSROOT_PREFIX}/usr/bin/sdl2-config"
+  PKG_MAKE_OPTS_TARGET+="${AMIBERRY_PLATFORM} all SDL_CONFIG=${SYSROOT_PREFIX}/usr/bin/sdl2-config"
 }
 
 makeinstall_target() {
