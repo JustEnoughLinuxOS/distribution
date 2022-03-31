@@ -67,12 +67,12 @@ limitations under the License.
   * Rewind: L2
   * Fast-Forward Toggle: R2
 
-## Credits
-Like any Linux distribution, this project is not the work of one person.  It is the work of many persons all over the world who have developed the open source bits without which this project could not exist.  Special thanks to 351ELEC, EmuELEC, CoreELEC, LibreELEC, Anbernic, and developers across the ARM handheld community.
-
 ## Documentation
 * [Home](https://github.com/JustEnoughLinuxOS/distribution/wiki)
 * [Frequently asked Questions](https://github.com/JustEnoughLinuxOS/distribution/wiki/Frequently-Asked-Questions)
 * [HotKeys](https://github.com/JustEnoughLinuxOS/distribution/wiki/Hotkeys)
 * [Emulators and Game Engines](https://github.com/JustEnoughLinuxOS/distribution/wiki/JELOS-emulators-and-game-engines)
+
+## Credits
+Like any Linux distribution, this project is not the work of one person.  It is the work of many persons all over the world who have developed the open source bits without which this project could not exist.  Special thanks to 351ELEC, EmuELEC, CoreELEC, LibreELEC, Anbernic, and developers across the ARM handheld community.
 
