@@ -35,7 +35,7 @@ PKG_CMAKE_OPTS_HOST=" -DZMUSIC_LIBRARIES=$(get_build_dir zmusic)/build_host/sour
 pre_configure_target() {
 PKG_CMAKE_OPTS_TARGET=" -DNO_GTK=ON \
                         -DFORCE_CROSSCOMPILE=ON \
-                        -DIMPORT_EXECUTABLES=$PKG_BUILD/.$HOST_NAME/ImportExecutables.cmake \
+                        -DIMPORT_EXECUTABLES=${PKG_BUILD}/.${HOST_NAME}/ImportExecutables.cmake \
                         -DCMAKE_BUILD_TYPE=Release \
                         -DHAVE_GLES2=ON \
                         -DHAVE_VULKAN=OFF \
@@ -43,12 +43,15 @@ PKG_CMAKE_OPTS_TARGET=" -DNO_GTK=ON \
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/bin
-  cp $PKG_DIR/raze.sh $INSTALL/usr/bin/
-  cp $PKG_BUILD/.$TARGET_NAME/raze $INSTALL/usr/bin
+  mkdir -p ${INSTALL}/usr/bin
+  cp ${PKG_DIR}/raze.sh ${INSTALL}/usr/bin/
+  cp ${PKG_BUILD}/.${TARGET_NAME}/raze ${INSTALL}/usr/bin
 
-  mkdir -p $INSTALL/usr/config/game/raze
-  cp $PKG_DIR/config/${DEVICE}/* $INSTALL/usr/config/game/raze
-  cp $PKG_BUILD/.$TARGET_NAME/*.pk3 $INSTALL/usr/config/game/raze
-  cp -r $PKG_BUILD/.$TARGET_NAME/soundfonts $INSTALL/usr/config/game/raze
+  mkdir -p ${INSTALL}/usr/config/game/raze
+  if [ -d "${PKG_DIR}/config/${DEVICE}" ]
+  then
+    cp ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/config/game/raze
+  fi
+  cp ${PKG_BUILD}/.${TARGET_NAME}/*.pk3 ${INSTALL}/usr/config/game/raze
+  cp -r ${PKG_BUILD}/.${TARGET_NAME}/soundfonts ${INSTALL}/usr/config/game/raze
 }
