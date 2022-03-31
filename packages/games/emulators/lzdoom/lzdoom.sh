@@ -45,4 +45,4 @@ else
 fi
 
 cd "${RUN_DIR}"
-/usr/bin/lzdoom ${params} >/tmp/logs/lzdoom.log 2>&1
+/usr/bin/lzdoom ${params} >/var/log/lzdoom.log 2>&1

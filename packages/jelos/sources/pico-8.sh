@@ -16,7 +16,7 @@ fi
 if [ ! -d "/storage/roms/pico-8" ]
 then
   mkdir -p "/storage/roms/pico-8"
-  echo "Extract your purchased pico-8 binaries and place them in the pico-8 directory on your games partition" >/tmp/logs/exec.log
+  echo "Extract your purchased pico-8 binaries and place them in the pico-8 directory on your games partition" >/var/log/exec.log
 fi
 
 cp -f /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/roms/pico-8/sdl_controllers.txt

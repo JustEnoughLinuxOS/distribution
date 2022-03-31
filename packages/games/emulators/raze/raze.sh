@@ -42,5 +42,5 @@ fi
 
 if [[ ! "RUN_DIR" == "/storage/roms/build" ]]; then
   cd "${RUN_DIR}"
-  /usr/bin/raze ${params} >/tmp/logs/raze.log 2>&1
+  /usr/bin/raze ${params} >/var/log/raze.log 2>&1
 fi
