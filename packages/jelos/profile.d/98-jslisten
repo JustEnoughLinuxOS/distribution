@@ -12,61 +12,53 @@ jslisten() {
         then
                 systemctl stop jslisten
 
-                cat <<EOF >${JSLISTENCONF}
-[Generic]
+                if [ "$2" == "mpv" ]
+                then
+
+                        cat <<EOF >${JSLISTENCONF}
+[Pause]
+program="/usr/bin/manage_mpv.sh pause"
+button1=${DEVICE_BTN_START}
+
+[Exit]
+program="/usr/bin/manage_mpv.sh quit"
+button1=${DEVICE_BTN_SELECT}
+button2=${DEVICE_BTN_START}
+
+[Skip5s]
+program="/usr/bin/manage_mpv.sh skip5s"
+button1=${DEVICE_BTN_TR}
+
+[Back5s]
+program="/usr/bin/manage_mpv.sh back5s"
+button1=${DEVICE_BTN_TL}
+
+[Skip60s]
+program="/usr/bin/manage_mpv.sh skip60s"
+button1=${DEVICE_BTN_TR2}
+
+[Back60s]
+program="/usr/bin/manage_mpv.sh back60s"
+button1=${DEVICE_BTN_TL2}
+
+EOF
+
+                cat <<EOF >>${JSLISTENCONF}
+[KillAll]
 program="/usr/bin/killall ${2}"
 button1=${DEVICE_BTN_TL}
 button2=${DEVICE_BTN_SELECT}
 button3=${DEVICE_BTN_START}
-evdev="auto"
 
 [BrightnessUp]
 program="/usr/bin/brightness up"
 button1=${DEVICE_BTN_TL}
 button2=${DEVICE_BTN_DPAD_UP}
-evdev="auto"
 
 [BrightnessDown]
 program="/usr/bin/brightness down"
 button1=${DEVICE_BTN_TL}
 button2=${DEVICE_BTN_DPAD_DOWN}
-evdev="auto"
-
-EOF
-                if [ "$2" == "mpv" ]
-                then
-
-                        cat <<EOF >>${JSLISTENCONF}
-[exit]
-program="/usr/bin/manage_mpv.sh quit"
-button1=${DEVICE_BTN_SELECT}
-button2=${DEVICE_BTN_START}
-evdev="auto"
-
-[Pause]
-program="/usr/bin/manage_mpv.sh pause"
-button1=${DEVICE_BTN_START}
-evdev="auto"
-
-[Skip5s]
-program="/usr/bin/manage_mpv.sh skip5s"
-button1=${DEVICE_BTN_TR}
-evdev="auto"
-
-[Back5s]
-program="/usr/bin/manage_mpv.sh back5s"
-button1=${DEVICE_BTN_TL}
-evdev="auto"
-
-[Skip60s]
-program="/usr/bin/manage_mpv.sh skip60s"
-button1=${DEVICE_BTN_TR2}
-evdev="auto"
-
-[Back60s]
-program="/usr/bin/manage_mpv.sh back60s"
-button1=${DEVICE_BTN_TL2}
-evdev="auto"
 
 EOF
                 fi

@@ -360,8 +360,9 @@ else
 	### Configure netplay
 	if [[ ${NETPLAY} != "No" ]]; then
 		NETPLAY_NICK=$(get_setting netplay.nickname)
-		[[ -z "$NETPLAY_NICK" ]] && NETPLAY_NICK="351ELEC"
-		
+		[[ -z "$NETPLAY_NICK" ]] && NETPLAY_NICK="${uuidgen | awk 'BEGIN {FS="-"} {print toupper($1)}'}"
+		set_setting netplay.nickname ${NETPLAY_NICK}
+
 		if [[ "${NETPLAY}" == *"connect"* ]]; then
 			NETPLAY_PORT="${arguments##*--port }"  # read from -netplayport  onwards
 			NETPLAY_PORT="${NETPLAY_PORT%% *}"  # until a space is found

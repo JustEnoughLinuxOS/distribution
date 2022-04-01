@@ -5,7 +5,7 @@ After=graphical.target
 
 [Service]
 Environment=HOME=/storage
-ExecStart=/usr/bin/jslisten --mode hold
+ExecStart=/usr/bin/jslisten --mode hold --device /dev/js0
 Restart=on-failure
 
 [Install]

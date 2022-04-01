@@ -1,15 +1,13 @@
-diff -rupN jslisten.orig/src/jslisten.c jslisten.new/src/jslisten.c
---- jslisten.orig/src/jslisten.c	2021-01-31 20:22:41.960845892 -0500
-+++ jslisten.new/src/jslisten.c	2021-01-31 20:23:51.734140471 -0500
-@@ -53,9 +53,9 @@
+diff -rupN jslisten.orig/src/jslisten.c jslisten/src/jslisten.c
+--- jslisten.orig/src/jslisten.c	2022-03-31 19:24:44.150929212 -0400
++++ jslisten/src/jslisten.c	2022-03-31 19:25:43.158549592 -0400
+@@ -53,8 +53,8 @@
  
  #define NAME_LENGTH 128
  #define MYPROGNAME "jslisten"
--#define myConfFile "/.kodi/addons/script.emuelec.Amlogic.launcher/config/jslisten.cfg"
--#define myConfFileNG "/.kodi/addons/script.emuelec.Amlogic-ng.launcher/config/jslisten.cfg"
--#define myGlConfFile "/emuelec/configs/jslisten.cfg"
-+#define myConfFile "/storage/.config/system/configs/jslisten.cfg"
-+#define myConfFileNG "/storage/.config/system/configs/jslisten.cfg"
+-#define myConfFile "/.jslisten"
+-#define myGlConfFile "/etc/jslisten.cfg"
++#define myConfFile "/.config/system/configs/jslisten.cfg"
 +#define myGlConfFile "/storage/.config/system/configs/jslisten.cfg"
  //#define MY_LOG_LEVEL LOG_NOTICE //LOG_DEBUG //LOG_NOTICE
  

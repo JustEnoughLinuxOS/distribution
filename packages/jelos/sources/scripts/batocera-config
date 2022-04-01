@@ -264,7 +264,7 @@ if [ "$command" == "canupdate" ];then
 fi
 
 if [ "$command" == "update" ];then
-	351elec-upgrade
+	system-upgrade
 	exit $?
 fi
 
