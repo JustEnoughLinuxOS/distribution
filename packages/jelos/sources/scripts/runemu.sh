@@ -227,10 +227,6 @@ then
 				RUNTHIS='${TBASH} /usr/bin/m64p.sh "${CORE}" "${ROMNAME}"'
 			fi
 		;;
-		"scummvm")
-			jslisten set "scummvm"
-			RUNTHIS='${TBASH} /usr/bin/scummvm.start sa "${ROMNAME}"'
-		;;
 		"daphne")
 			jslisten set "hypseus"
 			if [ "$EMU" = "HYPSEUS" ]
