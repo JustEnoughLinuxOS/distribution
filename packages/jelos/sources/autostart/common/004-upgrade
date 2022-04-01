@@ -15,3 +15,6 @@ then
   rm /storage/.config/boot.hint
   touch /storage/.configured
 fi
+
+clear >/dev/console
+/usr/bin/show_splash intro 2>&1 >>${BOOTLOG}

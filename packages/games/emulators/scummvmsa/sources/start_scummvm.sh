@@ -9,8 +9,15 @@
 CONFIG_DIR="/storage/.config/scummvm"
 ROMSPATH="/storage/roms"
 BIOSPATH="${ROMSPATH}/bios"
-GAME=$2
 RATMPCONF="/storage/.config/retroarch/retroarch.cfg"
+
+shopt -s extglob
+if [[ "$1" =~ ?(add|create|libretro) ]]
+then
+  GAME="$2"
+else
+  GAME="$1"
+fi
 
 if [ ! -d "${CONFIG_DIR}/games" ]
 then
@@ -55,9 +62,7 @@ case $1 in
   ;;
 
   *)
-    set_audio "fluidsynth"
     GAME=$(cat "${GAME}")
-    eval /usr/bin/scummvm --fullscreen --joystick=0 --themepath=/usr/config/scummvm/themes ${GAME}
-    set_audio "pulseaudio"
+    eval /usr/bin/scummvm --fullscreen --joystick=0 --themepath=/usr/config/scummvm/themes "${GAME}"
   ;;
 esac
