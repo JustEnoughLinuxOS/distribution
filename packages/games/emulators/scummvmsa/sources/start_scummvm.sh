@@ -6,7 +6,7 @@
 # Source predefined functions and variables
 . /etc/profile
 
-CONFIG_DIR="/storage/.config/game/configs/scummvm"
+CONFIG_DIR="/storage/.config/scummvm"
 ROMSPATH="/storage/roms"
 BIOSPATH="${ROMSPATH}/bios"
 GAME=$2
@@ -38,13 +38,6 @@ if [ ! -d "$CONFIG_DIR" ]; then
 fi
 
 case $1 in
-  "sa")
-    set_audio "fluidsynth"
-    GAME=$(cat "${GAME}")
-    eval /usr/bin/scummvm --fullscreen --joystick=0 --themepath=/usr/config/scummvm/themes ${GAME}
-    set_audio "pulseaudio"
-  ;;
-
   "libretro")
     GAME=$(cat "${GAME}" | awk 'BEGIN {FS="\""}; {print $2}')
     cd "${GAME}"
@@ -61,4 +54,10 @@ case $1 in
     create_svm
   ;;
 
+  *)
+    set_audio "fluidsynth"
+    GAME=$(cat "${GAME}")
+    eval /usr/bin/scummvm --fullscreen --joystick=0 --themepath=/usr/config/scummvm/themes ${GAME}
+    set_audio "pulseaudio"
+  ;;
 esac
