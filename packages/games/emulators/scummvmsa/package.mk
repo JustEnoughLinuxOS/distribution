@@ -23,7 +23,7 @@ post_makeinstall_target() {
   cp -rf ${PKG_DIR}/config/* ${INSTALL}/usr/config/scummvm/
 
   mkdir -p ${INSTALL}/usr/config/scummvm/themes
-  cp -rf ${PKG_DIR}/gui/themes ${INSTALL}/usr/config/scummvm/themes
+  cp -rf ${PKG_BUILD}/gui/themes ${INSTALL}/usr/config/scummvm/themes
 
   mv ${INSTALL}/usr/local/bin ${INSTALL}/usr/
   cp -rf ${PKG_DIR}/sources/* ${INSTALL}/usr/bin
