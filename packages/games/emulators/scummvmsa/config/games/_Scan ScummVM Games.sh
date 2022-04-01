@@ -4,19 +4,12 @@
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 # Copyright (C) 2020-present Fewtarius
 
-EE_DEVICE=$(cat /ee_arch)
-
-source /usr/bin/env.sh
 . /etc/profile
 
-rp_registerAllModules
-
-joy2keyStart
-ear >/dev/console
-message_stream "Scanning for games...\n" 0
-bash /usr/bin/start_scummvm.sh add
-message_stream "Adding games...\n" 0
-bash /usr/bin/start_scummvm.sh create
-message_stream "Restarting EmulationStation...\n" 0
+clear >/dev/console
+echo "Scanning for games..." >/dev/console
+bash /usr/bin/start_scummvm.sh add >/dev/console
+echo "Adding games..." >/dev/console
+bash /usr/bin/start_scummvm.sh create >/dev/console
 systemctl restart emustation
 clear >/dev/console
