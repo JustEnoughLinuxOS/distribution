@@ -213,33 +213,11 @@ then
 			jslisten set "drastic"
 			RUNTHIS='${TBASH} /usr/bin/drastic.sh "${ROMNAME}"'
 		;;
-		"pico-8")
-			jslisten set "pico8_dyn"
-			RUNTHIS='${TBASH} /usr/bin/pico-8.sh "${ROMNAME}"'
-		;;
 		"ecwolf")
 			jslisten set "ecwolf"
 			if [ "$EMU" = "ecwolf" ]
 			then
 				RUNTHIS='${TBASH} /usr/bin/ecwolf.sh "${ROMNAME}"'
-			fi
-                ;;
-		"doom")
-			if [ "$EMU" = "lzdoom" ]
-			then
-				jslisten set "lzdoom"
-				RUNTHIS='${TBASH} /usr/bin/lzdoom.sh "${ROMNAME}"'
-			elif [ "$EMU" = "gzdoom" ]
-			then
-				jslisten set "gzdoom"
-				RUNTHIS='${TBASH} /usr/bin/gzdoom.sh "${ROMNAME}"'
-			fi
-                ;;
-		"build")
-			if [ "$EMU" = "raze" ]
-			then
-				jslisten set "raze"
-				RUNTHIS='${TBASH} /usr/bin/raze.sh "${ROMNAME}"'
 			fi
                 ;;
 		"solarus")
@@ -254,13 +232,6 @@ then
 			if [ "$EMU" = "M64P" ]
 			then
 				RUNTHIS='${TBASH} /usr/bin/m64p.sh "${CORE}" "${ROMNAME}"'
-			fi
-		;;
-		"amiga"|"amigacd32")
-			jslisten set "amiberry"
-			if [ "$EMU" = "AMIBERRY" ]
-			then
-				RUNTHIS='${TBASH} /usr/bin/amiberry.start "${ROMNAME}"'
 			fi
 		;;
 		"scummvm")

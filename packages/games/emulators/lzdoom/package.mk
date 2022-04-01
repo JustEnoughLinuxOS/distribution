@@ -36,8 +36,9 @@ PKG_CMAKE_OPTS_TARGET=" -DNO_GTK=ON \
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin
-  cp ${PKG_DIR}/lzdoom.sh ${INSTALL}/usr/bin/
+  cp ${PKG_DIR}/sources/start_lzdoom.sh ${INSTALL}/usr/bin/
   cp ${PKG_BUILD}/.$TARGET_NAME/lzdoom ${INSTALL}/usr/bin
+  chmod 0755 ${INSTALL}/usr/bin/*
 
   mkdir -p ${INSTALL}/usr/config/game/lzdoom
   if [ -d "${PKG_DIR}/config/${DEVICE}" ]

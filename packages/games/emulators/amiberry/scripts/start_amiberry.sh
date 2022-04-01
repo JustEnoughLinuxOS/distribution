@@ -2,11 +2,12 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 0riginally created by Escalade (https://github.com/escalade)
 # Copyright (C) 2018-present 5schatten (https://github.com/5schatten)
+# Copyright (C) 2022-present Fewtarius
 
 . /etc/profile
 
 # Set some common variables
-AMIBERRY_DIR=/storage/.config/amiberry
+AMIBERRY_DIR=/storage/.config/game/configs/amiberry
 AMIBERRY_CONFIG_DIR=$AMIBERRY_DIR/conf
 AMIBERRY_TMP_DIR=/tmp/emulation/amiberry
 AMIBERRY_TMP_CONFIG="$AMIBERRY_TMP_DIR"/.amiberry_conf.uae
@@ -15,6 +16,11 @@ MAX_DRIVES=4
 i=0
 
 echo "Amiberry Log" > "$AMIBERRY_LOG"
+
+if [ ! -d "${AMIBERRY_DIR}" ]
+then
+  cp -rf /usr/config/amiberry ${AMIBERRY_DIR}
+fi
 
 find_gamepad() {
 # Search for connected gamepads based s0 and extract the name to $GAMEPAD
