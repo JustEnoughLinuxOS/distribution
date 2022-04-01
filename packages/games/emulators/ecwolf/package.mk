@@ -47,7 +47,7 @@ PKG_CMAKE_OPTS_TARGET=" -DNO_GTK=ON \
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin
   cp ${PKG_BUILD}/ecwolf ${INSTALL}/usr/bin/
-  cp ${PKG_DIR}/start_ecwolf.sh ${INSTALL}/usr/bin/
+  cp ${PKG_DIR}/sources/start_ecwolf.sh ${INSTALL}/usr/bin/
   chmod 0755 ${INSTALL}/usr/bin/*
 
   mkdir -p ${INSTALL}/usr/config/game/ecwolf
