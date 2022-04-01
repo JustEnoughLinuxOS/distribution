@@ -76,7 +76,7 @@ if [ "${LATEST_RELEASE_TAG}" -lt "20220401" ]
 then
   EXTENSION="tar"
 else
-  EXTENSION="img.gz"
+  EXTENSION="img"
 fi
 
 echo -e "\nFetching: ${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.${EXTENSION}" >/dev/console

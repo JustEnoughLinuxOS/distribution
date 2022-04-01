@@ -315,17 +315,13 @@ if [ "${PROJECT}" = "Generic" ]; then
   [ -n "${SUDO_USER}" ] && chown "${SUDO_USER}:" "${DISK_BASENAME}.ova"
 fi
 
-# gzip
-echo "image: compressing..."
-pigz --best --force "${DISK}"
-
 # set owner
 if [ -n "${SUDO_USER}" ]; then
-  chown "${SUDO_USER}:" "${DISK}.gz"
+  chown "${SUDO_USER}:" "${DISK}"
 fi
 # create sha256 checksum of image
 ( cd "${TARGET_IMG}"
-  sha256sum $(basename "${DISK}").gz > $(basename "${DISK}").gz.sha256
+  sha256sum $(basename "${DISK}") > $(basename "${DISK}").sha256
 )
 
 # cleanup
