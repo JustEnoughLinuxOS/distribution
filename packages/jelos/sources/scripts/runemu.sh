@@ -213,13 +213,6 @@ then
 			jslisten set "drastic"
 			RUNTHIS='${TBASH} /usr/bin/drastic.sh "${ROMNAME}"'
 		;;
-		"ecwolf")
-			jslisten set "ecwolf"
-			if [ "$EMU" = "ecwolf" ]
-			then
-				RUNTHIS='${TBASH} /usr/bin/ecwolf.sh "${ROMNAME}"'
-			fi
-                ;;
 		"solarus")
 			if [ "$EMU" = "solarus" ]
 			then
