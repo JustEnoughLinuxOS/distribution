@@ -58,7 +58,7 @@ echo -e "=> ${OS_NAME} UPGRADE UTILITY" >/dev/console
 
 # Check storage
 check_space size flash boot 2048000
-check_space available .update GAMES 3072000
+check_space available .update GAMES 4096000
 
 # Download
 LATEST_RELEASE_TAG=$(curl -H 'Cache-Control: no-cache' -Ls "${GIT_API}/releases" | python -c "import sys, json; print(json.load(sys.stdin)[0]['tag_name'])")
@@ -76,7 +76,7 @@ if [ "${LATEST_RELEASE_TAG}" -lt "20220401" ]
 then
   EXTENSION="tar"
 else
-  EXTENSION="img"
+  EXTENSION="img.gz"
 fi
 
 echo -e "\nFetching: ${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.${EXTENSION}" >/dev/console
