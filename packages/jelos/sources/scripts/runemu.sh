@@ -101,6 +101,26 @@ else
   EMUPERF="${FAST_CORES}"
 fi
 
+### Set the cores to use
+CORES=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
+if [ "${CORES}" = "little" ]
+then
+  EMUPERF="${SLOW_CORES}"
+elif [ "${CORES}" = "big" ] 
+  EMUPERF="${FAST_CORES}"
+else
+  ### All..
+  unset EMUPERF
+fi
+
+### Set the overclock mode
+OVERCLOCK=$(get_setting "overclock" "${PLATFORM}" "${ROMNAME##*/}")
+COOLINGPROFILE=$(get_setting cooling.profile)
+if [ ! -z "${OVERCLOCK}" ]
+then
+  /usr/bin/overclock ${OVERCLOCK}
+fi
+
 # Disable netplay by default
 set_setting "netplay.client.ip" "disable"
 set_setting "netplay.client.port" "disable"
@@ -399,6 +419,18 @@ else
 fi
 
 clear_screen
+
+### Restore the overclock mode
+OVERCLOCK=$(get_setting "system.overclock")
+if [ ! -z "${OVERCLOCK}" ]
+then
+  /usr/bin/overclock ${OVERCLOCK}
+  if [ "${DEVICE_HAS_FAN}" = "true" ]
+  then
+    set_setting cooling.profile ${COOLINGPROFILE}
+    systemctl restart fancontrol
+  fi
+fi
 
 $VERBOSE && log "Checking errors: ${ret_error} "
 if [ "${ret_error}" == "0" ]

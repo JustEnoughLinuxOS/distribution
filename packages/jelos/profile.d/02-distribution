@@ -16,7 +16,13 @@ EE_DEVICE=${HW_DEVICE}
 JSLISTENCONF="/storage/.config/system/configs/jslisten.cfg"
 
 get_setting() {
-  awk -F: '/'^${1}'/ { st = index($0,"=");print substr($0,st+1)}' ${J_CONF}
+  if [ ! -z "${3}" ]
+  then
+    VAR="$2\[\"$(echo ${3} | sed 's/[^a-zA-Z 0-9]/\\&/g')\"\]\.$1"
+    awk 'BEGIN {FS="="} /'"^${VAR}"'/ {print $NF}' ${J_CONF}
+  else
+    awk -F: '/'^${1}'/ { st = index($0,"=");print substr($0,st+1)}' ${J_CONF}
+  fi
 }
 
 set_setting() {
