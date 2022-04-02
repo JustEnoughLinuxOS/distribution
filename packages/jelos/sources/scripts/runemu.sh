@@ -93,7 +93,8 @@ if [[ "$arguments" == *"--connect"* ]]; then
 fi
 
 ### Set the performance mode
-if [ $(get_setting "maxperf" "${PLATFORM}" "${ROMNAME##*/}") == "0" ]; then
+if [ $(get_setting "maxperf" "${PLATFORM}" "${ROMNAME##*/}") == "0" ]
+then
   normperf &
   EMUPERF="${SLOW_CORES}"
 else
@@ -106,7 +107,8 @@ CORES=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
 if [ "${CORES}" = "little" ]
 then
   EMUPERF="${SLOW_CORES}"
-elif [ "${CORES}" = "big" ] 
+elif [ "${CORES}" = "big" ]
+then
   EMUPERF="${FAST_CORES}"
 else
   ### All..
