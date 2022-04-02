@@ -96,10 +96,8 @@ fi
 if [ $(get_setting "maxperf" "${PLATFORM}" "${ROMNAME##*/}") == "0" ]
 then
   normperf &
-  EMUPERF="${SLOW_CORES}"
 else
   maxperf &
-  EMUPERF="${FAST_CORES}"
 fi
 
 ### Set the cores to use
@@ -115,12 +113,25 @@ else
   unset EMUPERF
 fi
 
+### We need the original system cooling profile later so get it now!
+COOLINGPROFILE=$(get_setting cooling.profile)
+
 ### Set the overclock mode
 OVERCLOCK=$(get_setting "overclock" "${PLATFORM}" "${ROMNAME##*/}")
-COOLINGPROFILE=$(get_setting cooling.profile)
 if [ ! -z "${OVERCLOCK}" ]
 then
   /usr/bin/overclock ${OVERCLOCK}
+fi
+
+if [ "${DEVICE_HAS_FAN}" = "true" ]
+then
+  ### Set any custom fan profile (make this better!)
+  GAMEFAN=$(get_setting "cooling.profile" "${PLATFORM}" "${ROMNAME##*/}")
+  if [ ! -z "${GAMEFAN}" ]
+  then
+    set_setting cooling.profile ${GAMEFAN}
+    systemctl restart fancontrol
+  fi
 fi
 
 # Disable netplay by default
