@@ -169,6 +169,12 @@ makeinstall_target() {
 }
 
 post_install() {
+  ### This resolves a conflict with the bash package.
+  if [ "$(readlink ${INSTALL}/usr/bin/sh)" = "busybox" ]
+  then
+    rm -f ${INSTALL}/usr/bin/sh
+    ln -s bash ${INSTALL}/usr/bin/sh
+  fi
   ROOT_PWD="`$TOOLCHAIN/bin/cryptpw -m sha512 ${ROOT_PASSWORD}`"
 
   echo "chmod 4755 ${INSTALL}/usr/bin/busybox" >> $FAKEROOT_SCRIPT
