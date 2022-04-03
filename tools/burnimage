@@ -15,7 +15,7 @@ then
   exit 1
 fi
 
-MAXSIZE="64000000"
+MAXSIZE="192000000"
 
 SDDEVICES=($(awk '/sd*[a-z]$/ {print $3":"$4}' /proc/partitions))
 
