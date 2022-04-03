@@ -19,7 +19,10 @@ PKG_PATCH_DIRS="${PROJECT}"
 
 if [ "${ARCH}" = "arm" ]
 then
-  make -f Makefile.libretro platform=armv6
+  make_target() {
+    cd ${PKG_BUILD}
+    make -f Makefile.libretro platform=armv6
+  }
 else
   make_target() {
     :
