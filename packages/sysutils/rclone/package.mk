@@ -23,7 +23,7 @@ makeinstall_target() {
   cp ${PKG_DIR}/sources/cloud_restore ${INSTALL}/usr/bin/
   cp ${PKG_BUILD}/rclone-v${PKG_VERSION}-linux-arm64/rclone ${INSTALL}/usr/bin/
   chmod 0755 ${INSTALL}/usr/bin/*
-  cp ${PKG_DIR}/rsync-rules.conf ${INSTALL}/usr/config/
-  cp ${PKG_DIR}/rsync.conf ${INSTALL}/usr/config/
+  cp ${PKG_DIR}/sources/rsync-rules.conf ${INSTALL}/usr/config/
+  cp ${PKG_DIR}/sources/rsync.conf ${INSTALL}/usr/config/
   chmod 755 ${INSTALL}/usr/bin/rclone
 }
