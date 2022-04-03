@@ -13,8 +13,8 @@ then
 fi
 
 rsync -a --delete ${EXCLUDE} /usr/config/system/ /storage/.config/system/ &
+rsync -a --ignore-existing /usr/config/game /storage/.config/ &
 rsync -a /usr/config/modules /storage/.config/ &
-rsync -a /usr/config/game /storage/.config/ &
 rsync -a --delete /usr/config/locale/ /storage/.config/emulationstation/locale/ &
 
 wait < <(jobs -p)
@@ -32,6 +32,9 @@ fi
 cp -f /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt
 cp -f /usr/config/emulationstation/es_input.cfg /storage/.config/emulationstation
 cp -f /usr/config/emulationstation/es_features.cfg /storage/.config/emulationstation
+
+rsync --ignore-existing /usr/config/rsync-rules.conf /storage/.config/
+rsync --ignore-existing /usr/config/rsync.conf /storage/.config/
 
 ### Start the time service by default
 set_setting wts.enabled 1

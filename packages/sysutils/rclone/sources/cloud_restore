@@ -13,4 +13,4 @@ else
   BACKUPPATH="/storage/roms"
 fi
 rclonectl mount ${MOUNTPATH} >/var/log/backup.log 2>&1
-rsync -raiv --include-from="${CONFIGPATH}/rsync-exclude-rules" ${MOUNTPATH}/${SYNCPATH}/ ${BACKUPPATH}/ >>/var/log/backup.log 2>&1
+rsync -raiv --include-from="${CONFIGPATH}/rsync-rules.conf" ${MOUNTPATH}/${SYNCPATH}/ ${BACKUPPATH}/ >>/var/log/backup.log 2>&1
