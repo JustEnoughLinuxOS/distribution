@@ -14,3 +14,4 @@ else
 fi
 rclonectl mount ${MOUNTPATH} >/var/log/backup.log 2>&1
 rsync -raiv --include-from="${CONFIGPATH}/rsync-rules.conf" --prune-empty-dirs ${BACKUPPATH}/ ${MOUNTPATH}/${SYNCPATH}/ >>/var/log/backup.log 2>&1
+rclonectl unmount ${MOUNTPATH} >>/var/log/backup.log 2>&1

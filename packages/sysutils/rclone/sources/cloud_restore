@@ -12,5 +12,6 @@ else
   SYNCPATH="GAMES"
   BACKUPPATH="/storage/roms"
 fi
-rclonectl mount ${MOUNTPATH} >/var/log/backup.log 2>&1
-rsync -raiv --include-from="${CONFIGPATH}/rsync-rules.conf" ${MOUNTPATH}/${SYNCPATH}/ ${BACKUPPATH}/ >>/var/log/backup.log 2>&1
+rclonectl mount ${MOUNTPATH} >/var/log/restore.log 2>&1
+rsync -raiv --include-from="${CONFIGPATH}/rsync-rules.conf" ${MOUNTPATH}/${SYNCPATH}/ ${BACKUPPATH}/ >>/var/log/restore.log 2>&1
+rclonectl unmount ${MOUNTPATH} >>/var/log/restore.log 2>&1
