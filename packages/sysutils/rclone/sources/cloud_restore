@@ -1,0 +1,16 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2020-present Fewtarius
+
+CONFIGPATH="/storage/.config"
+
+if [ -e "${CONFIGPATH}/rsync.conf" ]
+then
+  source ${CONFIGPATH}/rsync.conf
+else
+  MOUNTPATH="/storage/cloud"
+  SYNCPATH="GAMES"
+  BACKUPPATH="/storage/roms"
+fi
+rclonectl mount ${MOUNTPATH}
+rsync -raiv --include-from="${CONFIGPATH}/rsync-exclude-rules" ${MOUNTPATH}/${SYNCPATH}/ ${BACKUPPATH}/

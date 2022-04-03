@@ -1,6 +1,67 @@
 <?xml version="1.0"?>
 <gameList>
 
+        <game>
+                <path>./351Files.sh</path>
+                <name>351Files</name>
+                <desc>Single panel file manager</desc>
+                <developer>Tardigrade</developer>
+                <publisher>JELOS</publisher>
+                <rating>1.0</rating>
+                <releasedate>2021</releasedate>
+                <genre>Script</genre>
+                <thumbnail>./downloaded_images/filemanager-thumb.png</thumbnail>
+                <image>./downloaded_images/filemanager.png</image>
+        </game>
+
+        <game>
+                <path>/usr/bin/cloud_backup</path>
+                <name>Cloud Backup</name>
+                <desc>Backup your saves to a cloud drive.</desc>
+                <developer>JELOS</developer>
+                <publisher>JELOS</publisher>
+                <rating>1.0</rating>
+                <releasedate>2022</releasedate>
+                <genre>Script</genre>
+                <thumbnail>./downloaded_images/rclone-thumb.png</thumbnail>
+                <image>./downloaded_images/rclone-back.png</image>
+        </game>
+
+        <game>
+                <path>/usr/bin/cloud_restore</path>
+                <name>Cloud Restore</name>
+                <desc>Restores your saves from a cloud drive.</desc>
+                <developer>JELOS</developer>
+                <publisher>JELOS</publisher>
+                <rating>1.0</rating>
+                <releasedate>2022</releasedate>
+                <genre>Script</genre>
+                <thumbnail>./downloaded_images/rclone-thumb.png</thumbnail>
+                <image>./downloaded_images/rclone-back.png</image>
+        </game>
+
+        <game>
+                <path>/storage/roms/ports/JelosAddOns.sh</path>
+                <name>JelosAddOns</name>
+                <desc>Game port installer</desc>
+                <developer>brooksytech</developer>
+                <publisher>Jelos</publisher>
+                <rating>1.0</rating>
+                <releasedate>2021</releasedate>
+                <genre>Script</genre>
+        </game>
+
+        <game>
+                <path>/storage/roms/ports/PortMaster.sh</path>
+                <name>PortMaster</name>
+                <desc>Game port installer</desc>
+                <developer>christianhaitian</developer>
+                <publisher>Jelos</publisher>
+                <rating>1.0</rating>
+                <releasedate>2021</releasedate>
+                <genre>Script</genre>
+        </game>
+
 	<game>
 		<path>./Start PPSSPP.sh</path>
 		<name>Start PPSSPP</name>
@@ -64,40 +125,6 @@
 		<genre>Script</genre>
 		<thumbnail>./downloaded_images/clean-thumb.png</thumbnail>
 		<image>./downloaded_images/clean.png</image>
-	</game>
-
-	<game>
-		<path>./351Files.sh</path>
-		<name>351Files</name>
-		<desc>Single panel file manager</desc>
-		<developer>Tardigrade</developer>
-		<publisher>JELOS</publisher>
-		<rating>1.0</rating>
-		<releasedate>2021</releasedate>
-		<genre>Script</genre>
-		<thumbnail>./downloaded_images/filemanager-thumb.png</thumbnail>
-		<image>./downloaded_images/filemanager.png</image>
-	</game>
-	
-	<game>
-		<path>/storage/roms/ports/PortMaster.sh</path>
-		<name>PortMaster</name>
-		<desc>Game port installer</desc>
-		<developer>christianhaitian</developer>
-		<publisher>Jelos</publisher>
-		<rating>1.0</rating>
-		<releasedate>2021</releasedate>
-		<genre>Script</genre>
-	</game>
-	<game>
-		<path>/storage/roms/ports/JelosAddOns.sh</path>
-		<name>JelosAddOns</name>
-		<desc>Game port installer</desc>
-		<developer>brooksytech</developer>
-		<publisher>Jelos</publisher>
-		<rating>1.0</rating>
-		<releasedate>2021</releasedate>
-		<genre>Script</genre>
 	</game>
 
 </gameList>

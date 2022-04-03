@@ -6,7 +6,13 @@ CONFIGPATH="/storage/.config"
 
 if [ -z "$2" ]
 then
-  MOUNTPATH="/storage/cloud"
+  if [ -e "${CONFIGPATH}/rsync.conf" ]
+  then
+    source ${CONFIGPATH}/rsync.conf
+  else
+    MOUNTPATH="/storage/cloud"
+    SYNCPATH="GAMES"
+  fi
 else
   MOUNTPATH=${2}
 fi
