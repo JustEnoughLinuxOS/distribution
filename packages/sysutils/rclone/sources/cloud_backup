@@ -12,5 +12,5 @@ else
   SYNCPATH="GAMES"
   BACKUPPATH="/storage/roms"
 fi
-rclonectl mount ${MOUNTPATH}
-rsync -raiv --include-from="${CONFIGPATH}/rsync-exclude-rules" --prune-empty-dirs ${BACKUPPATH}/ ${MOUNTPATH}/${SYNCPATH}/
+rclonectl mount ${MOUNTPATH} >/var/log/backup.log 2>&1
+rsync -raiv --include-from="${CONFIGPATH}/rsync-exclude-rules" --prune-empty-dirs ${BACKUPPATH}/ ${MOUNTPATH}/${SYNCPATH}/ >>/var/log/backup.log 2>&1
