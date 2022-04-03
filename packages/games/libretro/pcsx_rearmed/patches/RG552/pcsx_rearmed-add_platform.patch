@@ -1,24 +1,21 @@
 diff -rupN pcsx_rearmed.orig/Makefile.libretro pcsx_rearmed/Makefile.libretro
---- pcsx_rearmed.orig/Makefile.libretro        2022-03-22 22:45:18.406511156 +0000
-+++ pcsx_rearmed/Makefile.libretro     2022-03-23 00:58:28.073644000 +0000
-@@ -362,6 +362,19 @@ else ifeq ($(platform), rpi4_64)
-       DYNAREC = ari64
+--- pcsx_rearmed.orig/Makefile.libretro 2022-04-03 01:27:52.509284300 +0200
++++ pcsx_rearmed/Makefile.libretro      2022-04-03 01:28:38.192433888 +0200
+@@ -363,6 +363,17 @@ else ifeq ($(platform), rpi4_64)
          fpic := -fPIC
          CFLAGS += -march=armv8-a+crc+simd -mtune=cortex-a72 -ftree-vectorize
-+
-+#######################################
-+# Anbernic RG552
-+else ifeq ($(platform), RG552)
-+   TARGET := $(TARGET_NAME)_libretro.so
-+   CFLAGS += -marm -mtune=cortex-a72.cortex-a53 -mfpu=crypto-neon-fp-armv8 -mfloat-abi=hard
-+   ASFLAGS += -mtune=cortex-a72.cortex-a53 -mfpu=crypto-neon-fp-armv8 -mfloat-abi=hard
-+   fpic := -fPIC
-+   HAVE_NEON = 1
-+   ARCH = arm
-+   BUILTIN_GPU = neon
-+   DYNAREC = ari64
-+
 
++# RG552 (32 bit)
++else ifeq ($(platform), RG552)
++    TARGET := $(TARGET_NAME)_libretro.so
++    fpic := -fPIC
++    CFLAGS += -march=armv8-a -marm -mfpu=neon-fp-armv8 -mfloat-abi=hard
++    HAVE_NEON = 1
++    ARCH = arm
++    BUILTIN_GPU = neon
++    DYNAREC = ari64
++    LDFLAGS += -static-libgcc -static-libstdc++ -fPIC
++
  # Classic Platforms ####################
  # Platform affix = classic_<ISA>_<µARCH>
-
+ # Help at https://modmyclassic.com/comp
