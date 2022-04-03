@@ -15,7 +15,7 @@
         </game>
 
         <game>
-                <path>./cloud_backup</path>
+                <path>./cloud_backup.sh</path>
                 <name>Cloud Backup</name>
                 <desc>Backup your saves to a cloud drive.</desc>
                 <developer>JELOS</developer>
@@ -28,7 +28,7 @@
         </game>
 
         <game>
-                <path>./cloud_restore</path>
+                <path>./cloud_restore.sh</path>
                 <name>Cloud Restore</name>
                 <desc>Restores your saves from a cloud drive.</desc>
                 <developer>JELOS</developer>
