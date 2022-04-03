@@ -31,5 +31,11 @@ fi
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
-  cp ${PKG_BUILD}/picodrive_libretro.so ${INSTALL}/usr/lib/libretro/
+  if [ "${ARCH}" = "aarch64" ]
+  then
+    cp -vP ${PKG_BUILD}/../../build.${DISTRO}-${DEVICE}.arm/picodrive-*/.install_pkg/usr/lib/libretro/picodrive_libretro.so ${INSTALL}/usr/lib/libretro/
+  else
+    cp ${PKG_BUILD}/picodrive_libretro.so ${INSTALL}/usr/lib/libretro/
+  fi
 }
+
