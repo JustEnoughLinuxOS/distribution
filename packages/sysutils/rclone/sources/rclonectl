@@ -17,10 +17,13 @@ else
   MOUNTPATH=${2}
 fi
 
-if [ ! -d "${CONFIGPATH}/cloud-sync-rules.conf" ]
-then
-  cp -rf /usr/config/cloud-sync-rules.conf ${CONFIGPATH}/cloud-sync-rules.conf
-fi
+for CONFIG in rsync.conf rsync-rules.conf 
+do
+  if [ ! -d "${CONFIGPATH}/${CONFIG}" ]
+  then
+    cp -rf /usr/config/${CONFIG} ${CONFIGPATH}/${CONFIG}
+  fi
+done
 
 function checkconfig() {
   if [ ! -e "${CONFIGPATH}/rclone/rclone.conf" ]
