@@ -76,7 +76,11 @@ makeinstall_target() {
 
     # General configuration
     mkdir -p ${INSTALL}/usr/config/retroarch/
-    cp -rf ${PKG_DIR}/sources/* ${INSTALL}/usr/config/retroarch/
+    if [ -d "${PKG_DIR}/sources/${DEVICE}" ]; then
+		cp -rf ${PKG_DIR}/sources/${DEVICE}/* ${INSTALL}/usr/config/retroarch/
+	else
+		cp -rf ${PKG_DIR}/sources/* ${INSTALL}/usr/config/retroarch/
+	fi
   else
     mkdir -p ${INSTALL}/usr/bin
     cp ${PKG_BUILD}/retroarch ${INSTALL}/usr/bin
