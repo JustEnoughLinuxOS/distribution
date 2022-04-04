@@ -2,7 +2,7 @@ PKG_NAME="picodrive"
 PKG_VERSION="6a0f515f95ea2080c8ac6b0bd2c194b48d991892"
 PKG_LICENSE="MAME"
 PKG_SITE="https://github.com/libretro/picodrive"
-PKG_URL="$PKG_SITE.git"
+PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
@@ -22,12 +22,12 @@ configure_target() {
 }
 
 make_target() {
-  cd $PKG_BUILD
-#  $PKG_BUILD/configure --platform=generic
+  cd ${PKG_BUILD}
+#  ${PKG_BUILD}/configure --platform=generic
   make -f Makefile.libretro
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp $PKG_BUILD/picodrive_libretro.so $INSTALL/usr/lib/libretro/
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  cp ${PKG_BUILD}/picodrive_libretro.so ${INSTALL}/usr/lib/libretro/
 }
