@@ -1,10 +1,11 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2021-present 351ELEC (https://github.com/351ELEC)
+# Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="raze"
-PKG_VERSION="47001e6bab0229561109ff74fa65802863509fab"
+PKG_VERSION="85fd984"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/dhwz/Raze"
+PKG_SITE="https://github.com/JustEnoughLinuxOS/Raze"
 PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain SDL2 raze:host zmusic libvpx"
 PKG_SHORTDESC="Raze is a fork of Build engine games backed by GZDoom tech and combines Duke Nukem 3D, Blood, Redneck Rampage, Shadow Warrior and Exhumed/Powerslave in a single package."
