@@ -3,7 +3,7 @@
 # Copyright (C) 2022 Fewtarius
 
 PKG_NAME="gzdoom"
-PKG_VERSION="8eb9c09"
+PKG_VERSION="8eb9c095f31c201533a16ccbae33892c11721373"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/JustEnoughLinuxOS/gzdoom"
 PKG_URL="${PKG_SITE}.git"
