@@ -72,7 +72,8 @@ limitations under the License.
 * [Frequently asked Questions](https://github.com/JustEnoughLinuxOS/distribution/wiki/Frequently-Asked-Questions)
 * [HotKeys](https://github.com/JustEnoughLinuxOS/distribution/wiki/Hotkeys)
 * [Emulators and Game Engines](https://github.com/JustEnoughLinuxOS/distribution/wiki/JELOS-emulators-and-game-engines)
+* [Using Cloud Drives](https://github.com/JustEnoughLinuxOS/distribution/wiki/Using-Cloud-Drives)
 
 ## Credits
-Like any Linux distribution, this project is not the work of one person.  It is the work of many persons all over the world who have developed the open source bits without which this project could not exist.  Special thanks to 351ELEC, EmuELEC, CoreELEC, LibreELEC, Anbernic, and developers across the ARM handheld community.
+Like any Linux distribution, this project is not the work of one person.  It is the work of many persons all over the world who have developed the open source bits without which this project could not exist.  Special thanks to CoreELEC, LibreELEC, Anbernic, and to developers and contributors across the ARM handheld community.
 
