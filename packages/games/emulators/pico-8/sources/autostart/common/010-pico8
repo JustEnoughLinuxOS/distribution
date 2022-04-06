@@ -7,5 +7,6 @@ if [ ! -d "${PICO_DIR}" ]
 then
   mkdir "${PICO_DIR}"
 fi
-cp -f  "/usr/bin/pico-8.sh" "${PICO_DIR}/Start Pico-8.sh"
+
+cp -f  "/usr/bin/start_pico8.sh" "${PICO_DIR}/Start Pico-8.sh"
 
