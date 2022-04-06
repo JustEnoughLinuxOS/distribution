@@ -17,9 +17,11 @@ cp -f /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/roms/pico-8
 
 if [ -e "/storage/roms/pico-8/pico8_64" ]
 then
+  jslisten set "pico8_64"
   /storage/roms/pico-8/pico8_64 -home -root_path /storage/roms/pico-8 -joystick 0 ${OPTIONS} "${CART}"
 elif [ -e "/storage/roms/pico-8/pico8_dyn" ] && [ ! -e "/storage/roms/pico-8/pico8_64" ]
 then
+  jslisten set "pico8_dyn"
   patchelf --set-interpreter /usr/lib32/ld-linux-armhf.so.3 /storage/roms/pico-8/pico8_dyn
   export LD_LIBRARY_PATH=/usr/lib32
   /storage/roms/pico-8/pico8_dyn -home -root_path /storage/roms/pico-8 -joystick 0 ${OPTIONS} "${CART}"
