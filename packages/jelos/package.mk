@@ -24,7 +24,7 @@ PKG_EMUS="common-shaders glsl-shaders libretro-database retroarch hatarisa openb
           scummvmsa PPSSPPSDL yabasanshiroSA vicesa mupen64plussa-audio-sdl         \
           mupen64plussa-input-sdl mupen64plussa-ui-console mupen64plussa-video-rice \
           mupen64plussa-core mupen64plussa-rsp-hle mupen64plussa-video-glide64mk2   \
-          lzdoom gzdoom ecwolf amiberry raze"
+          lzdoom gzdoom ecwolf amiberry raze pico-8"
 
 LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce beetle-pcfx      \
                 beetle-supafaust beetle-supergrafx beetle-vb beetle-wswan bluemsx cannonball cap32   \
@@ -118,9 +118,7 @@ post_install() {
 EOF
 
   cp ${PKG_DIR}/sources/shutdown.sh ${INSTALL}/usr/bin
-  cp ${PKG_DIR}/sources/start_pico8_dyn.sh ${INSTALL}/usr/bin
   cp ${PKG_DIR}/sources/scripts/* ${INSTALL}/usr/bin
-  chmod 0755 ${INSTALL}/usr/bin/start_pico8_dyn.sh
 
   if [ -d "${PKG_DIR}/sources/asound/${DEVICE}" ]
   then
