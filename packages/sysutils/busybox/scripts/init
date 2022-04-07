@@ -703,7 +703,6 @@ mount_games() {
       /usr/bin/busybox mkdir -p /storage/roms >/dev/null 2>&1
     fi
 
-    CARDS=$(awk '/mmcblk[0-9]$/{print $4}' /proc/partitions | wc -l)
     for DEV in $(blkid | awk 'BEGIN {FS=":"}; /ext4/ || /fat/ {print $1}' | sort -r)
     do
       NULL=$(grep ${DEV} /proc/mounts >/dev/null 2>&1)
@@ -725,11 +724,7 @@ mount_games() {
       /usr/bin/busybox mkdir -p /storage/roms/update >/dev/null 2>&1
     fi
 
-    if [ ${CARDS} -gt 1 ]
-    then
-      /usr/bin/busybox mountpoint -q /storage/roms >/dev/null 2>&1
-    fi
-    if [ $? == "0" ] && [ ! -e "/storage/.please_resize_me" ]
+    if [ ! -e "/storage/.please_resize_me" ]
     then
       /usr/bin/busybox mkdir -p "$UPDATE_ROOT" >/dev/null 2>&1
       mount --bind /storage/roms/update "$UPDATE_ROOT" >/dev/null 2>&1
