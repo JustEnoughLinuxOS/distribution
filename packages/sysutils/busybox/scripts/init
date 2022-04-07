@@ -31,7 +31,7 @@ MODULE_DIR=/usr/lib/modules
 UPDATE_ROOT=/storage/.update
 UPDATE_DIR="$UPDATE_ROOT"
 
-UPDATE_KERNEL="KERNEL"
+UPDATE_KERNEL="@KERNEL_NAME@"
 UPDATE_SYSTEM="SYSTEM"
 IMAGE_KERNEL="@KERNEL_NAME@"
 IMAGE_SYSTEM="SYSTEM"
@@ -703,19 +703,16 @@ mount_games() {
       /usr/bin/busybox mkdir -p /storage/roms >/dev/null 2>&1
     fi
 
-    # Only want to try and mount additional cards if the slots exist.
     CARDS=$(awk '/mmcblk[0-9]$/{print $4}' /proc/partitions | wc -l)
-    if [ ${CARDS} -gt 1 ]
-    then
-      for DEV in $(blkid | awk 'BEGIN {FS=":"}; /ext4/ || /fat/ {print $1}' | sort -r)
-      do
-        if [ -e "${DEV}" ] && [ ! -e "/storage/.please_resize_me" ]
-        then
-            mount ${DEV} /storage/roms >/dev/null 2>&1
-            break
-        fi
-      done
-    fi
+    for DEV in $(blkid | awk 'BEGIN {FS=":"}; /ext4/ || /fat/ {print $1}' | sort -r)
+    do
+      NULL=$(grep ${DEV} /proc/mounts >/dev/null 2>&1)
+      if [ ! "$?" = "0" ] && [ -e "${DEV}" ] && [ ! -e "/storage/.please_resize_me" ]
+      then
+          mount ${DEV} /storage/roms >/dev/null 2>&1
+          break
+      fi
+    done
 
     if [ -d "/storage/.update" ] && [ ! -e "/storage/.please_resize_me" ]
     then
@@ -841,10 +838,10 @@ check_update() {
     return 0
   fi
 
-  echo "${UPDATE_TAR} ${UPDATE_IMG} ${UPDATE_IMG_GZ}" 2>&1 | grep JELOS 2>&1 >/dev/null
+  echo "${UPDATE_TAR} ${UPDATE_IMG} ${UPDATE_IMG_GZ}" 2>&1 | grep @DISTRONAME@ 2>&1 >/dev/null
   if [ "$?" -ne "0" ]
   then
-    echo "Unsupported operating system update.  Please only use JELOS update packages with this distribution."
+    echo "Unsupported operating system update.  Please only use @DISTRONAME@ update packages with this distribution."
     do_cleanup
     StartProgress countdown "Reboot in 5s... " 5 "now"
     reboot
@@ -874,7 +871,7 @@ check_update() {
   clear >/dev/console
   echo "UPDATE IN PROGRESS"
   echo ""
-  echo "Please do not reboot or turn off your @DISTRONAME@ device!"
+  echo "Please do not reboot or turn off your device!"
   echo ""
 
   if [ -f "$UPDATE_TAR" ]; then
