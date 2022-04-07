@@ -17,5 +17,9 @@ then
   BRIGHTNESS=3
 fi
 BRIGHTNESS=$(printf "%.0f" ${BRIGHTNESS})
-printf "%.0f" $(echo "${BRIGHTNESS} * 2.56" | bc) > /sys/class/backlight/backlight/brightness
+if [ "$(cat /sys/class/backlight/backlight/max_brightness)" = 255 ]
+then
+  FACTOR="* 2.56"
+fi
+printf "%.0f" $(echo "${BRIGHTNESS} ${FACTOR}" | bc) > /sys/class/backlight/backlight/brightness
 set_setting system.brightness ${BRIGHTNESS}
