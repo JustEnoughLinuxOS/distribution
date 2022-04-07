@@ -20,32 +20,45 @@
 ################################################################################
 
 PKG_NAME="gpsp"
-PKG_VERSION="e554360dd3ed283696fc607877024a219248b735"
-PKG_SHA256="d989408ccc6e6fc20caa3af8727bcd4cdeb3ed68b6e5f2a6b4312576cf7fc700"
+PKG_VERSION="d4547baf26dd70a18eeb38d231ce3f998004ec30"
+PKG_SHA256="2d47d9019817d4eed16139b73281d53664ff58388055014f6b9c0f344ebf34aa"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/gpsp"
-PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
+PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="gpSP for libretro."
 PKG_LONGDESC="gameplaySP is a Gameboy Advance emulator for Playstation Portable"
-
+PKG_PATCH_DIRS+="${DEVICE}"
 PKG_IS_ADDON="no"
 PKG_TOOLCHAIN="make"
 PKG_AUTORECONF="no"
 
-make_target() {
-  if [ "$ARCH" == "arm" ]; then
-    make CC=$CC platform=arm
-  else
-    make CC=$CC platform=arm64
-  fi  
-}
+if [ "${ARCH}" = "arm" ]
+then
+  make_target() {
+    cd ${PKG_BUILD}
+    if [[ "${DEVICE}" =~ RG351 ]]
+    then
+      make -f Makefile.libretro platform=RG351x
+    else
+      make -f Makefile.libretro platform=${DEVICE}
+  }
+else
+  make_target() {
+    :
+  }
+fi
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp gpsp_libretro.so $INSTALL/usr/lib/libretro/
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  if [ "${ARCH}" = "aarch64" ]
+  then
+    cp -vP ${PKG_BUILD}/../../build.${DISTRO}-${DEVICE}.arm/gpsp-*/.install_pkg/usr/lib/libretro/gpsp_libretro.so ${INSTALL}/usr/lib/libretro/
+  else
+    cp ${PKG_BUILD}/gpsp_libretro.so ${INSTALL}/usr/lib/libretro/
+  fi
 }
