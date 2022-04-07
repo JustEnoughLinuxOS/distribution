@@ -1,0 +1,110 @@
+diff --git a/source/common/rendering/gles/gles_system.cpp b/source/common/rendering/gles/gles_system.cpp
+index 51f8ee6a2..24904a7b0 100644
+--- a/source/common/rendering/gles/gles_system.cpp
++++ b/source/common/rendering/gles/gles_system.cpp
+@@ -10,7 +10,7 @@ CVAR(Bool, gles_force_glsl_v100, false, 0);
+ CVAR(Int, gles_max_lights_per_surface, 32, 0);
+ EXTERN_CVAR(Bool, gl_customshader);
+ 
+-
++#define __ANDROID__
+ #if USE_GLES2
+ 
+ PFNGLMAPBUFFERRANGEEXTPROC glMapBufferRange = NULL;
+@@ -182,6 +182,7 @@ namespace OpenGLESRenderer
+ #if USE_GLES2
+ 		gles.depthStencilAvailable = CheckExtension("GL_OES_packed_depth_stencil");
+ 		gles.npotAvailable = CheckExtension("GL_OES_texture_npot");
++		gles.useMappedBuffers = true;
+ 		gles.depthClampAvailable = CheckExtension("GL_EXT_depth_clamp");
+ #else
+ 		gles.depthStencilAvailable = true;
+diff --git a/source/common/rendering/gles/gles_system.h b/source/common/rendering/gles/gles_system.h
+index d7f6ed139..a43e4e52f 100644
+--- a/source/common/rendering/gles/gles_system.h
++++ b/source/common/rendering/gles/gles_system.h
+@@ -23,7 +23,7 @@
+ #include <sys/stat.h>
+ #include <fcntl.h>
+ 
+-#define USE_GLES2 0
++#define USE_GLES2 1
+ 
+ #if (USE_GLES2)
+ 	#include "glad/glad.h"
+diff --git a/source/games/duke/src/game_misc.cpp b/source/games/duke/src/game_misc.cpp
+index c0a1fa0c2..1ec1bfbdf 100644
+--- a/source/games/duke/src/game_misc.cpp
++++ b/source/games/duke/src/game_misc.cpp
+@@ -239,8 +239,6 @@ void drawoverlays(double smoothratio)
+ 	int cposx, cposy, cang;
+ 
+ 	pp = &ps[screenpeek];
+-	// set palette here, in case the 3D view is off.
+-	setgamepalette(setpal(pp));
+ 
+ 	float blend[4] = {};
+ 
+diff --git a/wadsrc/static/language.def b/wadsrc/static/language.def
+new file mode 100644
+index 000000000..210cdfb4e
+--- /dev/null
++++ b/wadsrc/static/language.def
+@@ -0,0 +1,4 @@
++[default]
++
++// Engine strings
++CNTRLMNU_OPEN_MAIN				= "Open Main Menu";
+diff --git a/wadsrc/static/menudef.txt b/wadsrc/static/menudef.txt
+index 964fdbcac..f4a39981c 100644
+--- a/wadsrc/static/menudef.txt
++++ b/wadsrc/static/menudef.txt
+@@ -737,6 +737,7 @@ OptionMenu "OtherControlsMenu" protected
+ 	Control    "$CNTRLMNU_ADJUST_GAMMA"    , "bumpgamma"
+ 
+ 	StaticText ""
++	Control    "$CNTRLMNU_OPEN_MAIN"       , "menu_main"
+ 	ifnotgame(Exhumed)
+ 	{
+ 		Control    "$CNTRLMNU_OPEN_HELP"       , "openhelpmenu"
+@@ -1694,33 +1695,14 @@ OptionMenu CustomResolutionMenu protected
+ 
+ 	StaticText "$VIDMNU_RESPRESETHEAD"
+ 	StaticText ""
+-	StaticText "$VIDMNU_ASPECT43"
++	Command "320x240", "menu_resolution_set_custom 320 240"
++	Command "360x240", "menu_resolution_set_custom 360 240"
++	Command "400x300", "menu_resolution_set_custom 400 300"
++	Command "450x300", "menu_resolution_set_custom 450 300"
++	Command "480x320", "menu_resolution_set_custom 480 320"
++	Command "480x360", "menu_resolution_set_custom 480 360"
++	Command "512x384", "menu_resolution_set_custom 512 384"
+ 	Command "640x480", "menu_resolution_set_custom 640 480"
+-	Command "1024x768", "menu_resolution_set_custom 1024 768"
+-	Command "1280x960", "menu_resolution_set_custom 1280 960"
+-	Command "1600x1200", "menu_resolution_set_custom 1600 1200"
+-	StaticText ""
+-	StaticText "$VIDMNU_ASPECT54"
+-	Command "1280x1024", "menu_resolution_set_custom 1280 1024"
+-	StaticText ""
+-	StaticText "$VIDMNU_ASPECT169"
+-	Command "960x540", "menu_resolution_set_custom 960 540"
+-	Command "(720p HD)   1280x720", "menu_resolution_set_custom 1280 720"
+-	Command "1366x768", "menu_resolution_set_custom 1366 768"
+-	Command "(1080p HD) 1920x1080", "menu_resolution_set_custom 1920 1080"
+-	Command "(1440p HD) 2560x1440", "menu_resolution_set_custom 2560 1440"
+-	Command "(4K UHD) 3840x2160", "menu_resolution_set_custom 3840 2160"
+-	StaticText ""
+-	StaticText "$VIDMNU_ASPECT1610"
+-	Command "960x600", "menu_resolution_set_custom 960 600"
+-	Command "1280x800", "menu_resolution_set_custom 1280 800"
+-	Command "1440x900", "menu_resolution_set_custom 1440 900"
+-	Command "1680x1050", "menu_resolution_set_custom 1680 1050"
+-	Command "1920x1200", "menu_resolution_set_custom 1920 1200"
+-	StaticText ""
+-	StaticText "$VIDMNU_ASPECT219"
+-	Command "1920x810", "menu_resolution_set_custom 1920 810"
+-	Command "2560x1080", "menu_resolution_set_custom 2560 1080"
+ }
+ 
+ 
