@@ -40,12 +40,12 @@ PKG_AUTORECONF="no"
 if [ "${ARCH}" = "arm" ]
 then
   make_target() {
-    cd ${PKG_BUILD}
     if [[ "${DEVICE}" =~ RG351 ]]
     then
-      make -f Makefile.libretro platform=RG351x
+      make CC=$CC platform=RG351x
     else
-      make -f Makefile.libretro platform=${DEVICE}
+      make CC=$CC platform=${DEVICE}
+    fi
   }
 else
   make_target() {
