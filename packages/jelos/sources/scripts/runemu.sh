@@ -118,9 +118,12 @@ COOLINGPROFILE=$(get_setting cooling.profile)
 
 ### Set the overclock mode
 OVERCLOCK=$(get_setting "overclock" "${PLATFORM}" "${ROMNAME##*/}")
-if [ ! -z "${OVERCLOCK}" ]
+if [ ! "${OVERCLOCK}" = "system" ]
 then
-  /usr/bin/overclock ${OVERCLOCK}
+  if [ ! -z "${OVERCLOCK}" ]
+  then
+    /usr/bin/overclock ${OVERCLOCK}
+  fi
 fi
 
 if [ "${DEVICE_HAS_FAN}" = "true" ]
