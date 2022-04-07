@@ -3,14 +3,14 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 # Copyright (C) 2021-present Fewtarius
 
-PKG_NAME="RTL8812BU"
-PKG_VERSION="fc2b5fd"
+PKG_NAME="RTL8814AU"
+PKG_VERSION="a538e38"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/fastoe/RTL8812BU_for_Raspbian"
+PKG_SITE="https://github.com/morrownr/8814au"
 PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain linux"
 PKG_NEED_UNPACK="${LINUX_DEPENDS}"
-PKG_LONGDESC="Realtek 8812BU driver for 4.4-5.x"
+PKG_LONGDESC="Realtek 8814AU driver for 4.4-5.x"
 PKG_IS_KERNEL_PKG="yes"
 
 pre_make_target() {
