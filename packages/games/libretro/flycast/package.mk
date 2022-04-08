@@ -16,7 +16,7 @@ pre_configure_target() {
                          -DWITH_SYSTEM_ZLIB=ON \
                          -DUSE_OPENMP=ON \
                          -DUSE_VULKAN=OFF
-                         -DUSE_GLES2=ON"
+                         -DUSE_GLES=ON"
 }
 
 makeinstall_target() {

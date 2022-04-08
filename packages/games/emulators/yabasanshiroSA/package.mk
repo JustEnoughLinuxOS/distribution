@@ -34,6 +34,7 @@ pre_configure_target() {
                          -DOPENGL_opengl_LIBRARY=${SYSROOT_PREFIX}/usr/lib \
                          -DOPENGL_glx_LIBRARY=${SYSROOT_PREFIX}/usr/lib \
                          -DLIBPNG_LIB_DIR=${SYSROOT_PREFIX}/usr/lib \
+                         -DUSE_EGL=ON \
 			 -Dpng_STATIC_LIBRARIES=${SYSROOT_PREFIX}/usr/lib/libpng16.so \
 			 -DCMAKE_BUILD_TYPE=Release"
                          
