@@ -4,7 +4,7 @@ ConditionPathExists=/var/lock/start.games
 
 [Service]
 Environment=HOME=/storage
-EnvironmentFile=/storage/.config/emulationstation/scripts/es_env.sh
+EnvironmentFile=/etc/profile
 ExecStartPre=/usr/bin/emustation-config
 ExecStart=/usr/bin/emulationstation --log-path /var/log
 KillMode=process

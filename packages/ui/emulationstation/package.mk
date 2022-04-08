@@ -3,7 +3,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="emulationstation"
-PKG_VERSION="5bb4996"
+PKG_VERSION="5d7d2eb"
 PKG_GIT_CLONE_BRANCH="main"
 PKG_REV="1"
 PKG_ARCH="any"
@@ -52,15 +52,12 @@ makeinstall_target() {
 	ln -sf /usr/config/emulationstation/es_systems.cfg ${INSTALL}/etc/emulationstation/es_systems.cfg
 
         cp -rf ${PKG_DIR}/config/*.cfg ${INSTALL}/usr/config/emulationstation
-        cp -rf ${PKG_DIR}/config/scripts ${INSTALL}/usr/config/emulationstation
 
 	if [ "${DEVICE}" == "RG552" ]
 	then
 	   sed -i 's#<string name="AudioDevice" value="Playback" />#<string name="AudioDevice" value="DAC" />#' ${INSTALL}/usr/config/emulationstation/es_settings.cfg
 	fi
 
-	chmod +x ${INSTALL}/usr/config/emulationstation/scripts/*
-	find ${INSTALL}/usr/config/emulationstation/scripts/ -type f -exec chmod o+x {} \;
 	ln -sf /storage/.cache/system_timezone ${INSTALL}/etc/timezone
 
 }
