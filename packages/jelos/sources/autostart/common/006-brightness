@@ -19,7 +19,8 @@ fi
 BRIGHTNESS=$(printf "%.0f" ${BRIGHTNESS})
 if [ "$(cat /sys/class/backlight/backlight/max_brightness)" = 255 ]
 then
-  FACTOR="* 2.56"
+  printf "%.0f" $(echo "${BRIGHTNESS} * 2.56" | bc) > /sys/class/backlight/backlight/brightness
+else
+  printf "%.0f" $(echo "${BRIGHTNESS}") > /sys/class/backlight/backlight/brightness
 fi
-printf "%.0f" $(echo "${BRIGHTNESS} ${FACTOR}" | bc) > /sys/class/backlight/backlight/brightness
 set_setting system.brightness ${BRIGHTNESS}
