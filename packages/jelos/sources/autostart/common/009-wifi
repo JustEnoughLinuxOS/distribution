@@ -15,8 +15,8 @@ fi
 
 if [ "$(get_setting wifi.enabled)" == "0" ] || [ "$1" == "disable" ]
 then
-  nohup connmanctl disable wifi &
+  nohup wifictl disable &
 elif [ "$(get_setting wifi.enabled)" == "1" ] || [ "$1" == "enable" ]
 then
-  nohup connmanctl enable wifi &
+  nohup wifictl enable &
 fi

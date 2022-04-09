@@ -18,9 +18,25 @@ JSLISTENCONF="/storage/.config/system/configs/jslisten.cfg"
 get_setting() {
   if [ ! -z "${3}" ]
   then
+    ### Test to see if we have a game setting.
     VAR="$2\[\"$(echo ${3} | sed 's/[^a-zA-Z 0-9]/\\&/g')\"\]\.$1"
-    awk 'BEGIN {FS="="} /'"^${VAR}"'/ {print $NF}' ${J_CONF}
+    OUTPUT=$(awk 'BEGIN {FS="="} /'"^${VAR}"'/ {print $NF}' ${J_CONF})
+    if [ ! -z "${OUTPUT}" ]
+    then
+      echo ${OUTPUT}
+      return
+    else
+      ### If not, check to see if we have a system setting.
+      awk -F: '/'^${2}.${1}'/ { st = index($0,"=");print substr($0,st+1)}' ${J_CONF}
+      return
+    fi
+  elif [ -z "${3}" ] && [ ! -z "${2}" ]
+  then
+      ### Check to see if we have a system setting.
+      awk -F: '/'^${2}.${1}'/ { st = index($0,"=");print substr($0,st+1)}' ${J_CONF}
+      return
   else
+    ### Check to see if we have a global setting
     awk -F: '/'^${1}'/ { st = index($0,"=");print substr($0,st+1)}' ${J_CONF}
   fi
 }
