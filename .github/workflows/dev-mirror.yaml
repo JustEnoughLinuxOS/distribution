@@ -2,6 +2,8 @@ name: Mirroring
 
 on: [push, delete]
 
+if: github.repository == distribution
+
 env:
   BRANCH: dev
 
@@ -9,7 +11,6 @@ jobs:
   to_distribution_dev:
     runs-on: ubuntu-latest
     steps:
-      if: github.repository == distribution
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
