@@ -39,6 +39,28 @@
                 <thumbnail>./downloaded_images/rclone-thumb.png</thumbnail>
                 <image>./downloaded_images/rclone-back.png</image>
         </game>
+	
+	<game>
+                <path>./DraStic\ Install.sh</path>
+                <name>DraStic Install</name>
+                <desc>Install optional Nintendo DS emulator DraStic.</desc>
+                <developer>JELOS</developer>
+                <publisher>JELOS</publisher>
+                <rating>1.0</rating>
+                <releasedate>2022</releasedate>
+                <genre>Script</genre>
+        </game>
+	
+	<game>
+                <path>./DraStic\ Uninstall.sh</path>
+                <name>Drastic Uninstall</name>
+                <desc>Install optional Nintendo DS emulator DraStic.</desc>
+                <developer>JELOS</developer>
+                <publisher>JELOS</publisher>
+                <rating>1.0</rating>
+                <releasedate>2022</releasedate>
+                <genre>Script</genre>
+        </game>
 
         <game>
                 <path>/storage/roms/ports/JelosAddOns.sh</path>
