@@ -1,0 +1,21 @@
+name: Mirroring
+
+on: [push, delete]
+
+env:
+  BRANCH: dev
+
+jobs:
+  to_distribution_dev:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: pixta-dev/repository-mirroring-action@v1
+        with:
+          target_repo_url:
+            git@github.com:JustEnoughLinuxOS/distribution-dev.git
+          ssh_private_key:
+            ${{ secrets.JELOS_MIRROR }}
+
