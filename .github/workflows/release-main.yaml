@@ -5,6 +5,7 @@
 ### Based on work by @pkegg
 
 name: release-main
+on:
   workflow_dispatch:
 
 env:
