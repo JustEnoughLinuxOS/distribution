@@ -40,6 +40,11 @@ then
   make image
 elif [ "${ARCH}" == "arm" ]
 then
+  if [ "${BASE_ONLY}" = true ]
+  then
+    echo "Skipping 32bit."
+    exit 0
+  fi
   scripts/build_compat
   scripts/install arm32
 fi
