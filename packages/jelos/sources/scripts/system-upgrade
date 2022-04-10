@@ -4,10 +4,18 @@
 
 . /etc/profile
 
-DEBUG=true
-PROJECT="JustEnoughLinuxOS/distribution"
-GIT_REPO="https://github.com/${PROJECT}"
-GIT_API="https://api.github.com/repos/${PROJECT}"
+ORGANIZATION="JustEnoughLinuxOS"
+
+BRANCH="$(get_setting os.update.branch)"
+if [ "${BRANCH}" == "dev" ]
+then
+  PROJECT="distribution-dev"
+else
+  PROJECT="distribution"
+fi
+
+GIT_REPO="https://github.com/${ORGANIZATION}/${PROJECT}"
+GIT_API="https://api.github.com/repos/${ORGANIZATION}/${PROJECT}"
 UPDATE_PATH="/storage/.update"
 EXTENSION="tar"
 
@@ -63,7 +71,7 @@ check_space available .update GAMES 4096000
 
 # Download
 LATEST_RELEASE_TAG=$(curl -H 'Cache-Control: no-cache' -Ls "${GIT_API}/releases" | python -c "import sys, json; print(json.load(sys.stdin)[0]['tag_name'])")
-if [ "${OS_VERSION}" -ge "${LATEST_RELEASE_TAG}" ]
+if [ "${OS_VERSION}" -ge "${LATEST_RELEASE_TAG}" ] && [ ! "${BRANCH}" = "dev" ]
 then
   echo "No new updates are available..." >/dev/console
   sleep 3
