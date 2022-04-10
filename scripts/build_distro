@@ -17,7 +17,7 @@ export BUILD_DATE=$(date)
 
 echo "Building ${DISTRO} for ${DEVICE}"
 
-if [ ! "${DIRTY}" = true ]
+if [ ! "${DIRTY}" == true ]
 then
   # If this variable exists in the environment, expand it and clean those packages too.
   PKG_CLEAN="${PKG_CLEAN} modules emulationstation retroarch lib32 jelos"
@@ -40,7 +40,7 @@ then
   make image
 elif [ "${ARCH}" == "arm" ]
 then
-  if [ "${BASE_ONLY}" = true ]
+  if [ "${BASE_ONLY}" == true ]
   then
     echo "Skipping 32bit."
     exit 0
