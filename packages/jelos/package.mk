@@ -45,7 +45,7 @@ PKG_COMPAT="lib32"
 PKG_MULTIMEDIA="ffmpeg mpv vlc"
 
 PKG_GAMESUPPORT="sixaxis jslisten evtest rg351p-js2xbox gptokeyb textviewer 351files jstest-sdl \
-                 gamecontrollerdb portmaster jelosaddons libgo2 rclone"
+                 gamecontrollerdb jelosaddons libgo2 rclone"
 
 PKG_EXPERIMENTAL=""
 

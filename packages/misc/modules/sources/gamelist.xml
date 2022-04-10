@@ -149,4 +149,15 @@
 		<image>./downloaded_images/clean.png</image>
 	</game>
 
+        <game>
+                <path>/storage/roms/ports/ThemeMaster.sh</path>
+                <name>ThemeMaster</name>
+                <desc>Theme installer</desc>
+                <developer>JohnIrvine1433</developer>
+                <publisher>Jelos</publisher>
+                <rating>1.0</rating>
+                <releasedate>2022</releasedate>
+                <genre>Script</genre>
+        </game>
+
 </gameList>
