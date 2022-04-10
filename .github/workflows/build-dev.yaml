@@ -1,0 +1,140 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2021-present 351ELEC
+# Copyright (C) 2022-present Fewtarius
+
+### Based on work by @pkegg
+
+name: build-dev
+on:
+  repository_dispatch:
+    types: [release-dev]
+
+concurrency:
+  group: dev
+
+jobs:
+  build:
+    timeout-minutes: 1440
+    runs-on: dev
+    steps:
+      - uses: hmarr/debug-action@v2
+        name: debug
+      - name: get current branch as it may not be 'default branch;
+        id: branch
+        run: |
+            branch_arg="${{ github.event.client_payload.branch }}"
+            if [[ -z "$branch_arg" ]]; then
+              branch_arg="$GITHUB_REF_NAME"
+            fi
+            echo "::set-output name=branch::$branch_arg"
+      - uses: actions/checkout@v2
+        name: checkout
+        with:
+          clean: false
+          ref: "${{ steps.branch.outputs.branch }}"
+      - name: Get date for artifacts
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y%m%d%H%M')"
+      - name: Get short SHA for artifacts
+        id: sha
+        run: echo "::set-output name=sha::$(git rev-parse --short HEAD)"
+      - name: Get dev version
+        id: version
+        run: |
+           set -e
+           echo "full name: ${{ github.event.repository.full_name }}"
+           if [[ "${{ github.event.client_payload.release_tag }}" != "" ]]; then
+               echo "::set-output name=version::${{ github.event.client_payload.release_tag }}"
+           else
+               echo "::set-output name=version::${{ steps.date.outputs.date }}-${{ steps.sha.outputs.sha }}"
+           fi
+      - name: Build World
+        run: |
+            set -e
+            export CUSTOM_VERSION="${{ steps.version.outputs.version }}"
+            export DOCKER_WORK_DIR="/work"
+            export PYTHON_EGG_CACHE="${DOCKER_WORK_DIR}/.egg_cache"
+            make docker-world
+            release/
+      - name: Create dev release as draft at first to hide during uploads
+        if: github.event.action == 'release-dev'
+        uses: ncipollo/release-action@v1
+        with:
+          tag: "${{ steps.version.outputs.version }}"
+          body: |
+            &nbsp;&nbsp;<img src="https://raw.githubusercontent.com/JustEnoughLinuxOS/distribution/dev/distributions/JELOS/logos/jelos-logo.png" width=192>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![Latest Version](https://img.shields.io/github/release/JustEnoughLinuxOS/distribution.svg?color=5998FF&label=latest%20version&style=flat-square)](https://github.com/JustEnoughLinuxOS/distribution/releases/latest) [![Activity](https://img.shields.io/github/commit-activity/m/JustEnoughLinuxOS/distribution?color=5998FF&style=flat-square)](https://github.com/JustEnoughLinuxOS/distribution/commits) [![Pull Requests](https://img.shields.io/github/issues-pr-closed/JustEnoughLinuxOS/distribution?color=5998FF&style=flat-square)](https://github.com/JustEnoughLinuxOS/distribution/pulls) [![Discord Server](https://img.shields.io/discord/948029830325235753?color=5998FF&label=chat&style=flat-square)](https://discord.gg/seTxckZjJy)
+            #
+            Just Enough Linux Operating System (JELOS) is a simple Linux distribution for ARM based devices that specializes in handhelds.  My goal is to build an operating system that has the features and capabilities that I need, and to have fun building it.
+
+            ## Licenses
+            JELOS is a Linux distribution that is made up of many open-source components.  Components are provided under their respective licenses.  This distribution includes components licensed for non-commercial use only.
+
+            ### JELOS Branding
+            JELOS branding and images are licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+
+            #### You are free to
+            * Share — copy and redistribute the material in any medium or format
+            * Adapt — remix, transform, and build upon the material
+
+            #### Under the following terms
+            * Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+            * NonCommercial — You may not use the material for commercial purposes.
+            * ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
+
+            ### JELOS Software
+            Copyright 2021-present Fewtarius
+
+            Licensed under the Apache License, Version 2.0 (the "License");
+            you may not use this file except in compliance with the License.
+            You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+            Unless required by applicable law or agreed to in writing, software
+            distributed under the License is distributed on an "AS IS" BASIS,
+            WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+            See the License for the specific language governing permissions and
+            limitations under the License.
+
+            ## Installation
+            * Download the latest [version of JELOS](https://github.com/JustEnoughLinuxOS/distribution/releases) (.img.gz) for your device.
+            * Decompress the image.
+            * Write the image to an SDCARD using an imaging tool.  Common imaging tools include [Balena Etcher](https://www.balena.io/etcher/), [Raspberry Pi Imager](https://www.raspberrypi.com/software/), and [Win32 Disk Imager](https://sourceforge.net/projects/win32diskimager/).  If you're skilled with the command line, dd works fine too.
+
+            ## Upgrading
+            * Download and install the update online via the System Settings menu.
+            * Download the latest [version of JELOS](https://github.com/JustEnoughLinuxOS/distribution/releases) (.tar) for your device.
+            * Copy the update to your device over the network or to the sdcard's update folder.
+            * Reboot the device, and the update will begin automatically.
+
+            ## Documentation
+            * [Home](https://github.com/JustEnoughLinuxOS/distribution/wiki)
+            * [Frequently asked Questions](https://github.com/JustEnoughLinuxOS/distribution/wiki/Frequently-Asked-Questions)
+            * [HotKeys](https://github.com/JustEnoughLinuxOS/distribution/wiki/Hotkeys)
+            * [Emulators and Game Engines](https://github.com/JustEnoughLinuxOS/distribution/wiki/JELOS-emulators-and-game-engines)
+            * [Using Cloud Drives](https://github.com/JustEnoughLinuxOS/distribution/wiki/Using-Cloud-Drives)
+
+            ## Change Log
+            ```${{ github.event.client_payload.release_notes }}```
+
+          artifacts: "release/*"
+          prerelease: true
+          draft: true
+          token: ${{ secrets.REPO_ACCESS }}
+          owner: JustEnoughLinuxOS
+          repo: distribution-dev
+      - name: Switch draft to start showing release
+        if: github.event.action == 'release-dev'
+        uses: ncipollo/release-action@v1
+        with:
+          tag: "${{ steps.version.outputs.version }}"
+          allowUpdates: true
+          draft: false
+          prerelease: true
+          token: ${{ secrets.REPO_ACCESS }}
+          owner: JustEnoughLinuxOS
+          repo: distribution-dev
+          omitBodyDuringUpdate: true
+          omitNameDuringUpdate: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}

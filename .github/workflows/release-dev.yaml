@@ -1,0 +1,56 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2021-present 351ELEC
+# Copyright (C) 2022-present Fewtarius
+
+### Based on work by @pkegg
+
+name: release-dev
+on:
+  schedule:
+    - cron:  '0 17 * * *'
+      
+  workflow_dispatch:
+
+env:
+  BRANCH: dev
+
+jobs:
+  launch-dev-release-if-needed:
+      runs-on: ubuntu-20.04
+      steps:
+        - uses: actions/checkout@v2
+          name: checkout
+          with:
+            clean: false
+            fetch-depth: 0
+            ref: "${{env.BRANCH}}"
+            
+        - name: repository full name
+          id: full_name
+          run: |
+               echo "::set-output name=full_name::$(git config --get remote.origin.url | sed 's|^.*github.com/||g' | sed 's/.git$//g')"
+        
+        - name: changes
+          id: changes
+          run: |
+               release_notes="$(git log --after="$(date --date="yesterday" +"%Y-%m-%d %H:%m")" --before="$(date +"%Y-%m-%d %H:%m")" --pretty=format:"* %h: %s")"
+               echo "::set-output name=changes::$(echo ${release_notes} | wc -l)"
+               echo "::set-output name=release_notes::${release_notes}"
+        - name: Get date for artifacts
+          id: date
+          run: echo "::set-output name=date::$(date +'%Y%m%d%H%M')"
+  
+        - name: Repository Dispatch
+          if: steps.changes.outputs.changes != '0'
+          uses: peter-evans/repository-dispatch@v1
+          with:
+            token: ${{ secrets.REPO_ACCESS }}
+            repository: ${{ steps.full_name.outputs.full_name }}
+            event-type: release-dev
+            client-payload: |
+               {
+                 "branch" : "${{ env.BRANCH }}",
+                 "release_tag" : "${{steps.date.outputs.date}}",
+                 "release_notes" : ${{toJSON(steps.changes.outputs.release_notes)}}
+               }
+            
