@@ -15,7 +15,7 @@ env:
   BRANCH: dev
 
 jobs:
-  launch-dev-release-if-needed:
+  launch-dev-release:
       runs-on: ubuntu-20.04
       steps:
         - uses: actions/checkout@v2
@@ -24,7 +24,11 @@ jobs:
             clean: false
             fetch-depth: 0
             ref: "${{env.BRANCH}}"
-            
+
+        - name: only run on the primary repository
+          if: ${{ !startsWith(github.repository_owner, 'JustEnoughLinuxOS') }}
+          run: exit 0
+
         - name: repository full name
           id: full_name
           run: |
