@@ -8,6 +8,7 @@ DEBUG=true
 PROJECT="JustEnoughLinuxOS/distribution"
 GIT_REPO="https://github.com/${PROJECT}"
 GIT_API="https://api.github.com/repos/${PROJECT}"
+FORCE="$(get_setting updates.force)"
 
 function check_network() {
   GW=$(ip route | awk '/eth0/ {a=$0} END{print $1}')
@@ -24,7 +25,7 @@ if [ "${ONLINE_STATUS}" == true ]
 then
   LATEST_RELEASE_TAG=$(curl -H 'Cache-Control: no-cache' -Ls "${GIT_API}/releases" | python -c "import sys, json; print(json.load(sys.stdin)[0]['tag_name'])")
 
-  if [ "${OS_VERSION}" -lt "${LATEST_RELEASE_TAG}" ]
+  if [ "${OS_VERSION}" -lt "${LATEST_RELEASE_TAG}" ] || [ "${FORCE}" == "1" ]
   then
     echo "${TAG}"
     exit 0
