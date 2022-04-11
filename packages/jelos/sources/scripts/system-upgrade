@@ -6,13 +6,15 @@
 
 ORGANIZATION="JustEnoughLinuxOS"
 
-BRANCH="$(get_setting os.update.branch)"
+BRANCH="$(get_setting updates.branch)"
 if [ "${BRANCH}" == "dev" ]
 then
   PROJECT="distribution-dev"
 else
   PROJECT="distribution"
 fi
+
+FORCE="$(get_setting updates.force)"
 
 GIT_REPO="https://github.com/${ORGANIZATION}/${PROJECT}"
 GIT_API="https://api.github.com/repos/${ORGANIZATION}/${PROJECT}"
@@ -71,7 +73,7 @@ check_space available .update GAMES 4096000
 
 # Download
 LATEST_RELEASE_TAG=$(curl -H 'Cache-Control: no-cache' -Ls "${GIT_API}/releases" | python -c "import sys, json; print(json.load(sys.stdin)[0]['tag_name'])")
-if [ "${OS_VERSION}" -ge "${LATEST_RELEASE_TAG}" ] && [ ! "${BRANCH}" = "dev" ]
+if [ "${OS_VERSION}" -ge "${LATEST_RELEASE_TAG}" ] && [ ! "${FORCE}" = "1" ]
 then
   echo "No new updates are available..." >/dev/console
   sleep 3
@@ -99,6 +101,11 @@ then
   exit 1
 else
   echo "Verification successful..." >/dev/console
+fi
+
+if [ "${FORCE}" == "1" ]
+then
+  set_setting updates.force 0
 fi
 
 echo -e "\nRebooting to complete OS upgrade..." >/dev/console
