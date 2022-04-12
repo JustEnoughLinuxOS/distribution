@@ -12,6 +12,9 @@ then
   exit 1
 fi
 
+### Remember to make this more dynamic.
+export DISTRO="JELOS"
+
 export OS_VERSION=$(date +%Y%m%d)
 export BUILD_DATE=$(date)
 
