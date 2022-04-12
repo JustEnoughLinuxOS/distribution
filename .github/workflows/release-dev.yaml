@@ -45,7 +45,7 @@ jobs:
         - name: changes
           id: changes
           run: |
-               release_notes="$(git log ${LASTCOMMIT}..HEAD --pretty=format:"* %h: %s")"
+               release_notes="$(git log ${{ env.LASTCOMMIT }}..HEAD --pretty=format:"* %h: %s")"
                echo "::set-output name=changes::$(echo ${release_notes} | wc -l)"
                echo "::set-output name=release_notes::${release_notes}"
           continue-on-error: true
