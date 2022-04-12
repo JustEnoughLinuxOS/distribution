@@ -4,10 +4,19 @@
 
 . /etc/profile
 
-DEBUG=true
-PROJECT="JustEnoughLinuxOS/distribution"
-GIT_REPO="https://github.com/${PROJECT}"
-GIT_API="https://api.github.com/repos/${PROJECT}"
+ORGANIZATION="JustEnoughLinuxOS"
+
+BRANCH="$(get_setting updates.branch)"
+if [ "${BRANCH}" == "dev" ]
+then
+  PROJECT="distribution-dev"
+else
+  PROJECT="distribution"
+fi
+
+GIT_REPO="https://github.com/${ORGANIZATION}/${PROJECT}"
+GIT_API="https://api.github.com/repos/${ORGANIZATION}/${PROJECT}"
+
 FORCE="$(get_setting updates.force)"
 
 function check_network() {

@@ -72,7 +72,7 @@ TEMPE=$(cat /sys/devices/virtual/thermal/thermal_zone*/temp 2>/dev/null | sort -
 echo "SYSTEM INFORMATION:"
 echo "OPERATING SYSTEM: ${OS_NAME}"
 echo "VERSION: ${OS_VERSION}"
-echo "BUILD ID: ${BUILD_ID:0:7}"
+echo "BUILD ID: ${BUILD_ID:0:7} (${BUILD_BRANCH})"
 echo "ARCHITECTURE: ${V_OSARCH}"
 echo "KERNEL: ${V_SYSTEM} (${V_ARCH})"
 echo "DISK SPACE:"

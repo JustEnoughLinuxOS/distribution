@@ -139,6 +139,7 @@ HW_ARCH="${ARCH}"
 HW_CPU="${HW_CPU}"
 HOME_URL="${HOME_URL}"
 BUILD_ID="${GIT_HASH}"
+BUILD_BRANCH="$(git branch --show-current)"
 BUILD_DATE="${BUILD_DATE}"
 EOF
 
