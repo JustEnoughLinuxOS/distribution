@@ -125,7 +125,7 @@ jobs:
             ```${{ github.event.client_payload.release_notes }}```
 
           artifacts: "release/*"
-          prerelease: true
+          prerelease: false
           draft: true
           token: ${{ secrets.REPO_ACCESS }}
           owner: JustEnoughLinuxOS
