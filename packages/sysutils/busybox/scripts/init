@@ -890,8 +890,9 @@ check_update() {
       check_out_of_space "archive"
 
       do_cleanup
-      StartProgress countdown "Normal startup in 30s... " 30 "NOW"
-      return 0
+      StartProgress countdown "Reboot in 5... " 5 "NOW"
+      sync
+      reboot
     fi
   elif [ -f "$UPDATE_IMG_GZ" -o -f "$UPDATE_IMG" ]; then
     mkdir -p $UPDATE_DIR/.tmp/mnt &>/dev/null
@@ -913,8 +914,9 @@ check_update() {
         check_out_of_space "compressed image"
 
         do_cleanup
-        StartProgress countdown "Normal startup in 30s... " 30 "NOW"
-        return 0
+        StartProgress countdown "Reboot in 5... " 5 "NOW"
+        sync
+        reboot
       fi
     else
       echo "Found new image file"
