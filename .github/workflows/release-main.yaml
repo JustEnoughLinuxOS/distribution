@@ -6,6 +6,17 @@
 
 name: release-main
 on:
+  push:
+    paths-ignore:
+      - '.github/**'
+      - '*.md'
+      - 'Dockerfile'
+      - '.dockerignore'
+      - '.gitignore'
+      - 'licenses/**'
+      - 'tools/**'
+    branches:
+      - main
   workflow_dispatch:
 
 env:
