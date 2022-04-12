@@ -34,7 +34,11 @@ jobs:
         - name: changes
           id: changes
           run: |
-               release_notes="$(git log --after="$(date --date="yesterday" +"%Y-%m-%d %H:%m")" --before="$(date +"%Y-%m-%d %H:%m")" --pretty=format:"* %h: %s")"
+               prevrelcommit="$(git rev-list --tags --max-count=1)"
+               release_notes="$(git log ${prevrelcommit}..HEAD --pretty=format:"* %h: %s")"
+               release_notes="${release_notes//'%'/'%25'}"
+               release_notes="${release_notes//$'\n'/'%0A'}"
+               release_notes="${release_notes//$'\r'/'%0D'}"
                echo "::set-output name=changes::$(echo ${release_notes} | wc -l)"
                echo "::set-output name=release_notes::${release_notes}"
         - name: Get date for artifacts
