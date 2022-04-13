@@ -10,15 +10,12 @@ PKG_URL="$PKG_SITE.git"
 PKG_DEPENDS_TARGET="toolchain $OPENGLES alsa SDL2 libzip zip"
 PKG_LONGDESC="Flycast is a multiplatform Sega Dreamcast, Naomi and Atomiswave emulator"
 PKG_TOOLCHAIN="cmake"
-PKG_GIT_CLONE_BRANCH="master"
 
-
-if [ "${ARCH}" == "arm" ]; then
-	PKG_PATCH_DIRS="arm"
-fi
 pre_configure_target() {
 export CXXFLAGS="${CXXFLAGS} -Wno-error=array-bounds"
-PKG_CMAKE_OPTS_TARGET+="-DUSE_GLES=ON -DUSE_VULKAN=OFF"
+PKG_CMAKE_OPTS_TARGET+="-DUSE_GLES=ON \
+			-DUSE_VULKAN=OFF \
+			-DUSE_OPENMP=ON"
 }
 
 makeinstall_target() {
