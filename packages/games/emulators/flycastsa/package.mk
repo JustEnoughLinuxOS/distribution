@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2021-present Shanti Gilbert (https://github.com/shantigilbert)
+# Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="flycastsa"
 PKG_VERSION="fd50529d864c0af7007f2f283a84bf67851fe0e4"
