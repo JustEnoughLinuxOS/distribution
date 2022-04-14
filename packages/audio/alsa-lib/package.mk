@@ -4,7 +4,6 @@
 
 PKG_NAME="alsa-lib"
 PKG_VERSION="1.2.6.1"
-PKG_SHA256="ad582993d52cdb5fb159a0beab60a6ac57eab0cc1bdf85dc4db6d6197f02333f"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.alsa-project.org/"
 PKG_URL="ftp://ftp.alsa-project.org/pub/lib/alsa-lib-${PKG_VERSION}.tar.bz2"
@@ -29,8 +28,12 @@ post_configure_target() {
 }
 
 post_makeinstall_target() {
-  rm -rf ${INSTALL}/usr/bin
+  #rm -rf ${INSTALL}/usr/bin
 
   mkdir -p ${INSTALL}/usr/config
     cp -PR ${PKG_DIR}/config/modprobe.d ${INSTALL}/usr/config
+}
+
+post_install() {
+  add_group audio 63
 }

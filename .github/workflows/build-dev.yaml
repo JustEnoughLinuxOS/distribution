@@ -65,9 +65,6 @@ jobs:
             #
             Just Enough Linux Operating System (JELOS) is a simple Linux distribution for ARM based devices that specializes in handhelds.  My goal is to build an operating system that has the features and capabilities that I need, and to have fun building it.
 
-            ## Development Build Repository
-            This is a repository for JELOS development builds, these builds may be unstable and are not recommended for daily driving. Visit /JustEnoughLinuxOS/distribution for stable builds.
-
             ## Licenses
             JELOS is a Linux distribution that is made up of many open-source components.  Components are provided under their respective licenses.  This distribution includes components licensed for non-commercial use only.
 

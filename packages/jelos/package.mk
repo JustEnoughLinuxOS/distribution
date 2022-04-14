@@ -115,7 +115,6 @@ post_install() {
   cat <<EOF >> ${INSTALL}/etc/issue
 ==> Build Date: ${BUILD_DATE}
 ==> Version: ${OS_VERSION}
-
 EOF
 
   cp ${PKG_DIR}/sources/shutdown.sh ${INSTALL}/usr/bin
@@ -133,5 +132,12 @@ EOF
     sed -i "s#.integerscale=1#.integerscale=0#g" ${INSTALL}/usr/config/system/configs/system.cfg
     sed -i "s#.rgascale=0#.rgascale=1#g" ${INSTALL}/usr/config/system/configs/system.cfg
     sed -i "s#audio.volume=.*\$#audio.volume=100#g" ${INSTALL}/usr/config/system/configs/system.cfg
+  fi
+
+  ### Defaults for non-main builds.
+  BUILD_BRANCH="$(git branch --show-current)"
+  if [[ ! "${BUILD_BRANCH}" =~ main ]]
+  then
+    sed -i "s#ssh.enabled=0#ssh.enabled=1#g" ${INSTALL}/usr/config/system/configs/system.cfg
   fi
 }
