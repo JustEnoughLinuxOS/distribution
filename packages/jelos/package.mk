@@ -115,6 +115,7 @@ post_install() {
   cat <<EOF >> ${INSTALL}/etc/issue
 ==> Build Date: ${BUILD_DATE}
 ==> Version: ${OS_VERSION}
+
 EOF
 
   cp ${PKG_DIR}/sources/shutdown.sh ${INSTALL}/usr/bin

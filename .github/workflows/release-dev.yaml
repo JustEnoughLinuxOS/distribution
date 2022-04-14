@@ -7,14 +7,31 @@
 name: release-dev
 on:
   schedule:
-    - cron:  '0 17 * * *'
-      
+    - cron:  '0 0 * * *'
+  push:
+    paths-ignore:
+      - '.github/**'
+      - '*.md'
+      - 'Dockerfile'
+      - '.dockerignore'
+      - '.gitignore'
+      - 'licenses/**'
+      - 'tools/**'
+    branches:
+      - dev      
   workflow_dispatch:
 
 env:
   BRANCH: dev
 
 jobs:
+  cancel:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel any earlier workflow actions still running
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ secrets.ACCESS_TOKEN }}
   launch-dev-release:
       runs-on: ubuntu-20.04
       steps:

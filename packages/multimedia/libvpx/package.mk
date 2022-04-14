@@ -1,14 +1,18 @@
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2021-present 351ELEC (https://github.com/351ELEC)
+# Copyright (C) 2022-present Fewtarius
+
 PKG_NAME="libvpx"
-PKG_VERSION="1.11.0"
+PKG_VERSION="626ff35" # 1.11.0
 PKG_LICENSE="BSD"
-PKG_SITE="https://www.webmproject.org"
-PKG_URL="https://github.com/webmproject/libvpx/archive/v${PKG_VERSION}.tar.gz"
+PKG_SITE="https://github.com/webmproject/libvpx"
+PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="WebM VP8/VP9 Codec"
 
 configure_target() {
 
-  case $ARCH in
+  case ${ARCH} in
     aarch64)
       PKG_TARGET_NAME_LIBVPX="arm64-linux-gcc"
       ;;
@@ -21,9 +25,9 @@ configure_target() {
   esac
 
   $PKG_CONFIGURE_SCRIPT --prefix=/usr \
-                        --extra-cflags="$CFLAGS" \
+                        --extra-cflags="${CFLAGS}" \
                         --as=nasm \
-                        --target=$PKG_TARGET_NAME_LIBVPX \
+                        --target=${PKG_TARGET_NAME_LIBVPX} \
                         --disable-docs \
                         --disable-examples \
                         --disable-shared \

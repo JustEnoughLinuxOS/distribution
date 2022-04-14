@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="4.3.1-Matrix-Beta1"
-PKG_SHA256="0b209a9b15f2335e516bf2ad1249fffc6b55425145f17c9674dc430abf6a67ad"
+PKG_VERSION="4.4.1-Nexus-Alpha1"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
 PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
@@ -49,11 +49,9 @@ if [ "${V4L2_SUPPORT}" = "yes" ]; then
     PKG_DEPENDS_TARGET+=" systemd"
     PKG_NEED_UNPACK+=" $(get_pkg_directory systemd)"
     PKG_FFMPEG_V4L2+=" --enable-libudev --enable-v4l2-request"
-  else
-    PKG_FFMPEG_V4L2+=" --disable-libudev --disable-v4l2-request"
   fi
 else
-  PKG_FFMPEG_V4L2="--disable-v4l2_m2m --disable-libudev --disable-v4l2-request"
+  PKG_FFMPEG_V4L2="--disable-v4l2_m2m"
 fi
 
 if [ "${VAAPI_SUPPORT}" = "yes" ]; then
