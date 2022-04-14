@@ -7,8 +7,18 @@
 name: release-dev
 on:
   schedule:
-    - cron:  '0 17 * * *'
-      
+    - cron:  '0 0 * * *'
+  push:
+    paths-ignore:
+      - '.github/**'
+      - '*.md'
+      - 'Dockerfile'
+      - '.dockerignore'
+      - '.gitignore'
+      - 'licenses/**'
+      - 'tools/**'
+    branches:
+      - dev      
   workflow_dispatch:
 
 env:
