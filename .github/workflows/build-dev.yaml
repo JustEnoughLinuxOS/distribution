@@ -11,6 +11,7 @@ on:
 
 concurrency:
   group: dev
+  cancel-in-progress: true
 
 jobs:
   build:
