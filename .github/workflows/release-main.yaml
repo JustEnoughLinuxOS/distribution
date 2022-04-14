@@ -23,6 +23,13 @@ env:
   BRANCH: main
 
 jobs:
+  cancel:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel any earlier workflow actions still running
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ secrets.ACCESS_TOKEN }}
   launch-main-release-if-needed:
       runs-on: ubuntu-20.04
       steps:
