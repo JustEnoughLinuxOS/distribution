@@ -13,8 +13,9 @@ PKG_SHORTDESC="A simple tool that allows you to download various themes."
 PKG_TOOLCHAIN="manual"
 
 makeinstall_target() {
-  mkdir -p ${INSTALL}/usr/share/ThemeMaster
-  cp -r ${PKG_BUILD}/ThemeMaster ${INSTALL}/usr/share/ThemeMaster
+  mkdir -p ${INSTALL}/usr/share
+  cp -r ${PKG_BUILD}/ThemeMaster ${INSTALL}/usr/share
+  cp ${PKG_BUILD}/ThemeMaster.sh ${INSTALL}/usr/share/ThemeMaster
   chmod 0755 ${INSTALL}/usr/share/ThemeMaster ${INSTALL}/usr/share/ThemeMaster/ThemeMaster.sh
 
   mkdir -p ${INSTALL}/usr/lib/autostart/common
