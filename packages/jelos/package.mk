@@ -134,4 +134,11 @@ EOF
     sed -i "s#.rgascale=0#.rgascale=1#g" ${INSTALL}/usr/config/system/configs/system.cfg
     sed -i "s#audio.volume=.*\$#audio.volume=100#g" ${INSTALL}/usr/config/system/configs/system.cfg
   fi
+
+  ### Defaults for non-main builds.
+  BUILD_BRANCH="$(git branch --show-current)"
+  if [[ ! "${BUILD_BRANCH}" =~ main ]]
+  then
+    sed -i "s#ssh.enabled=0#ssh.enabled=1#g" ${INSTALL}/usr/config/system/configs/system.cfg
+  fi
 }

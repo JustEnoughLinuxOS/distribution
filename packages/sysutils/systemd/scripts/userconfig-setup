@@ -22,3 +22,8 @@ then
   hres="$(fbset 2>/dev/null | awk '/geometry/ { print $2 }')"
   cp -f /usr/config/splash/splash-${hres}.png /storage/.config/emulationstation/resources/logo.png
 fi
+
+if [ ! -d "/storage/.config/emulationstation/locale/" ]
+then
+  rsync -a --delete /usr/config/locale/ /storage/.config/emulationstation/locale/
+fi

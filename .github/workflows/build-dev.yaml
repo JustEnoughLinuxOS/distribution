@@ -117,7 +117,7 @@ jobs:
             * [Using Cloud Drives](https://github.com/JustEnoughLinuxOS/distribution/wiki/Using-Cloud-Drives)
 
             ## Change Log
-            ```${{ github.event.client_payload.release_notes }}```
+            ${{ github.event.client_payload.release_notes }}
 
           artifacts: "release/*"
           prerelease: false
