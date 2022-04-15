@@ -22,6 +22,7 @@ wait < <(jobs -p)
 cp -f /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt
 cp -f /usr/config/emulationstation/es_input.cfg /storage/.config/emulationstation
 cp -f /usr/config/emulationstation/es_features.cfg /storage/.config/emulationstation
+cp -f /usr/config/emulationstation/es_systems.cfg /storage/.config/emulationstation
 cp -f /usr/config/modules/gamelist.xml /storage/.config/modules
 
 rsync --ignore-existing /usr/config/rsync-rules.conf /storage/.config/
