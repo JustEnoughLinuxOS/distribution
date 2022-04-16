@@ -247,7 +247,7 @@ then
 		;;
 		"nds")
 			jslisten set "drastic"
-			RUNTHIS='${TBASH} /usr/bin/drastic.sh "${ROMNAME}"'
+			RUNTHIS='${TBASH} /storage/.config/drastic/drastic.sh "${ROMNAME}"'
 		;;
 		"solarus")
 			if [ "$EMU" = "solarus" ]
