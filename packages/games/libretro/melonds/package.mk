@@ -11,7 +11,7 @@ PKG_URL="$PKG_SITE.git"
 PKG_DEPENDS_TARGET="toolchain $OPENGLES"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
-PKG_SHORTDESC="MeloDS - Nintendo DS emulator for libretro"
+PKG_SHORTDESC="MelonDS - Nintendo DS emulator for libretro"
 PKG_TOOLCHAIN="make"
 
 pre_make_target() {
