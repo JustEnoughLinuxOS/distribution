@@ -11,16 +11,16 @@ PKG_LONGDESC="Amiberry is an optimized Amiga emulator for ARM-based boards."
 GET_HANDLER_SUPPORT="git"
 PKG_TOOLCHAIN="make"
 PKG_GIT_CLONE_BRANCH="master"
+PKG_PATCH_DIRS+="${DEVICE}"
 
 pre_configure_target() {
   cd ${PKG_BUILD}
   export SYSROOT_PREFIX=${SYSROOT_PREFIX}
-  if [[ "${DEVICE}" =~ RG552 ]]
+  if [[ "${DEVICE}" =~ RG351 ]]
   then
-    AMIBERRY_PLATFORM="PLATFORM=n2"
-  elif [[ "${DEVICE}" =~ RG351 ]]
-  then
-    AMIBERRY_PLATFORM="PLATFORM=oga"
+    AMIBERRY_PLATFORM="PLATFORM=RG351x"
+  else
+    AMIBERRY_PLATFORM="PLATFORM=${DEVICE}"
   fi
  
   sed -i "s|AS     = as|AS     \?= as|" Makefile
