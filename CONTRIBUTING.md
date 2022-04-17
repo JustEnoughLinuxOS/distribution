@@ -1,7 +1,6 @@
 # Contributing to JELOS
-We want to make contributing to this project as easy and transparent as possible.  Contributors are able to 
+Welcome new contributor!  Your contribution will help JELOS become a better Linux distribution, so thank you! We want to make contributing to this project as easy and transparent as possible.  Contributors are able to:
 
-- Report a bug
 - Discuss the current state of the code
 - Submit a fix
 - Propose new features
@@ -13,33 +12,19 @@ When contributing to JELOS you are expected to become the maintainer of your con
 * Watch the issue tracker and resolve issues related to your contribution.
 
 ## We Develop with Github
-We use Gith to host code, to track issues and feature requests, as well as accept pull requests.
+We use Github to host code, to track issues and feature requests, as well as accept pull requests.
 
 ## We Use [Github Flow](https://guides.github.com/introduction/flow/index.html), So All Code Changes Happen Through Pull Requests
 Pull requests are the best way to propose changes to the codebase (we use [Github Flow](https://guides.github.com/introduction/flow/index.html)). We actively welcome your pull requests:
 
-1. Fork the repo and create your branch from `main`.
-2. Ensure your code is built locally and tested.
-3. Any changes should be reflected in the documentation.
-6. Issue a pull request.
+1. Join our discord and chat with us, we'll be happy to help you success with your change.
+2. Fork the repo and create your branch from `dev`.
+3. Ensure your code is built locally and tested.
+4. Any changes should be reflected in the documentation.
+5. Issue a pull request back to our `dev` branch.
 
 ## Any contributions you make will be under the Apache 2 Software License
 In short, when you submit code changes, your submissions are understood to be contributed under the same license as the original project code or under [Apache 2](https://choosealicense.com/licenses/apache-2.0/) license when no other license applies.
-
-## Report bugs using Github's [issues](https://github.com/jelos/distribution/issues)
-We use GitHub issues to track public bugs. Report a bug by [opening a new issue](); it's that easy!
-
-## Write bug reports with detail, background, and sample code
-
-**Great Bug Reports** tend to have:
-
-- A quick summary and/or background
-- Steps to reproduce
-  - Be specific!
-  - Give sample code if you can.
-- What you expected would happen
-- What actually happens
-- Notes (possibly including why you think this might be happening, or stuff you tried that didn't work)
 
 ## Use a Consistent Coding Style
 * Follow the same style as the source you are editing.
