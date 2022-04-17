@@ -46,6 +46,7 @@ makeinstall_target() {
 		libpulsecommon-12 \
 		libdbus-1 \
 		libdav1d \
+		libFLAC \
 		libspeex \
 		libssl \
 		libcrypt \
