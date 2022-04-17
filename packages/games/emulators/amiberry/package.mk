@@ -11,16 +11,16 @@ PKG_LONGDESC="Amiberry is an optimized Amiga emulator for ARM-based boards."
 GET_HANDLER_SUPPORT="git"
 PKG_TOOLCHAIN="make"
 PKG_GIT_CLONE_BRANCH="master"
+PKG_PATCH_DIRS+="${DEVICE}"
 
 pre_configure_target() {
   cd ${PKG_BUILD}
   export SYSROOT_PREFIX=${SYSROOT_PREFIX}
-  if [[ "${DEVICE}" =~ RG552 ]]
+  if [[ "${DEVICE}" =~ RG351 ]]
   then
-    AMIBERRY_PLATFORM="PLATFORM=n2"
-  elif [[ "${DEVICE}" =~ RG351 ]]
-  then
-    AMIBERRY_PLATFORM="PLATFORM=oga"
+    AMIBERRY_PLATFORM="PLATFORM=RG351x"
+  else
+    AMIBERRY_PLATFORM="PLATFORM=${DEVICE}"
   fi
  
   sed -i "s|AS     = as|AS     \?= as|" Makefile
@@ -40,10 +40,9 @@ makeinstall_target() {
   cp -a savestates                    ${INSTALL}/usr/config/amiberry/
   cp -a screenshots                   ${INSTALL}/usr/config/amiberry/
   cp -a whdboot                       ${INSTALL}/usr/config/amiberry/
-  ln -s /storage/roms/bios 			  ${INSTALL}/usr/config/amiberry/kickstarts
+  ln -s /storage/roms/bios            ${INSTALL}/usr/config/amiberry/kickstarts
 
   # Create links to Retroarch controller files
-  # ln -s /usr/share/retroarch/autoconfig/udev/8Bitdo_Pro_SF30_BT_B.cfg "${INSTALL}/usr/config/amiberry/controller/8Bitdo SF30 Pro.cfg"
   ln -s "/tmp/joypads" "${INSTALL}/usr/config/amiberry/controller"
 
   # Copy binary, scripts & link libcapsimg
@@ -52,6 +51,6 @@ makeinstall_target() {
   ln -sf /usr/lib/libcapsimage.so.5.1 ${INSTALL}/usr/config/amiberry/capsimg.so
   
   UAE="${INSTALL}/usr/config/amiberry/conf/*.uae"
-  for i in $UAE; do echo -e "gfx_center_vertical=smart\ngfx_center_horizontal=smart" >> $i; done
+  for i in ${UAE}; do echo -e "gfx_center_vertical=smart\ngfx_center_horizontal=smart" >> $i; done
 
 }
