@@ -29,10 +29,10 @@ PKG_EMUS="common-shaders glsl-shaders libretro-database retroarch hatarisa openb
 LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce beetle-pcfx      \
                 beetle-supafaust beetle-supergrafx beetle-vb beetle-wswan bluemsx cannonball cap32   \
                 crocods daphne dinothawr dosbox-svn dosbox-pure duckstation easyrpg fbalpha2012      \
-                fbalpha2019 fbneo fceumm fmsx flycast flycast_libretro freechaf freeintv  \
+                fbalpha2019 fbneo fceumm fmsx flycast flycast_libretro freechaf freeintv             \
                 freej2me fuse-libretro gambatte gearboy gearcoleco gearsystem genesis-plus-gx        \
                 genesis-plus-gx-wide gme gpsp gw-libretro handy hatari mame2000 mame2003-plus        \
-                mame2010 mame2015 mame meowpc98 mgba mrboom mupen64plus mupen64plus-nx               \
+                mame2010 mame2015 mame melonds meowpc98 mgba mrboom mupen64plus mupen64plus-nx      \
                 neocd_libretro nestopia np2kai nxengine o2em opera parallel-n64_rice                 \
                 parallel-n64_gln64 parallel-n64_glide64 pcsx_rearmed picodrive pokemini potator      \
                 ppsspp prboom prosystem puae px68k quasi88 quicknes race reminiscence sameboy        \
@@ -115,6 +115,7 @@ post_install() {
   cat <<EOF >> ${INSTALL}/etc/issue
 ==> Build Date: ${BUILD_DATE}
 ==> Version: ${OS_VERSION}
+
 EOF
 
   cp ${PKG_DIR}/sources/shutdown.sh ${INSTALL}/usr/bin
@@ -132,5 +133,12 @@ EOF
     sed -i "s#.integerscale=1#.integerscale=0#g" ${INSTALL}/usr/config/system/configs/system.cfg
     sed -i "s#.rgascale=0#.rgascale=1#g" ${INSTALL}/usr/config/system/configs/system.cfg
     sed -i "s#audio.volume=.*\$#audio.volume=100#g" ${INSTALL}/usr/config/system/configs/system.cfg
+  fi
+
+  ### Defaults for non-main builds.
+  BUILD_BRANCH="$(git branch --show-current)"
+  if [[ ! "${BUILD_BRANCH}" =~ main ]]
+  then
+    sed -i "s#ssh.enabled=0#ssh.enabled=1#g" ${INSTALL}/usr/config/system/configs/system.cfg
   fi
 }

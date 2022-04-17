@@ -9,7 +9,7 @@ PKG_REV="1"
 PKG_LICENSE="GPL2"
 PKG_SITE="https://github.com/scummvm/scummvm"
 PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain SDL2 SDL2_net freetype fluidsynth-git"
+PKG_DEPENDS_TARGET="toolchain SDL2 SDL2_net freetype fluidsynth"
 PKG_SHORTDESC="Script Creation Utility for Maniac Mansion Virtual Machine"
 PKG_LONGDESC="ScummVM is a program which allows you to run certain classic graphical point-and-click adventure games, provided you already have their data files."
 
@@ -31,7 +31,7 @@ post_makeinstall_target() {
   chmod 755 ${INSTALL}/usr/bin/*
 	
   for i in appdata applications doc icons man; do
-    rm -rf "${INSTALL}/usr/local/share/$i"
+    rm -rf "${INSTALL}/usr/local/share/${i}"
   done
 }
 
