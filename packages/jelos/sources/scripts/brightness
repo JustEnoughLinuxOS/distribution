@@ -2,11 +2,18 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2020-present Fewtarius
 
+
 MIN=1
-MAX=100
-STEP=1
-if [[ -n "$2" ]]; then                               
-  STEP=$2                                               
+MAX=$(cat /sys/class/backlight/backlight/max_brightness)
+if [ "${MAX}" = 255 ]
+then
+  STEP=17
+else
+  STEP=6
+fi
+
+if [[ -n "$2" ]]; then
+  STEP=$2
 fi
 
 # Ensure set_setting exists in all contexts
