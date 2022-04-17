@@ -25,7 +25,6 @@ Passphrase=${PSK}
 EOF
 
       connmanctl enable wifi 2>/dev/null
-      iw wlan0 set power_save off 2>/dev/null
       connmanctl scan wifi 2>/dev/null
     ;;
     "disable")
