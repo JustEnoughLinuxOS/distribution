@@ -23,9 +23,16 @@ then
 fi
 
 find_gamepad() {
-  GAMEPAD=$(grep -b4 $(readlink ${DEVICE_CONTROLLER_DEV} | sed "s#^.*/##") /proc/bus/input/devices | awk 'BEGIN {FS="\""}; /Name/ {printf $2}')
-  sed -i "s|joyport1_friendlyname=.*|joyport1_friendlyname=${GAMEPAD}|" "$AMIBERRY_TMP_CONFIG"
-  echo "Gamepad used $GAMEPAD" >> "$AMIBERRY_LOG"
+# Search for connected gamepads based s0 and extract the name to $GAMEPAD
+for file in /tmp/joypads/*.cfg; do
+	EE_GAMEPAD=$(cat "$file" | grep input_device|  cut -d'"' -f 2)
+	ES_EE_GAMEPAD=$(printf %q "$EE_GAMEPAD")
+if cat /proc/bus/input/devices | grep -Ew -A 4 -B 1 "Name=\"${ES_EE_GAMEPAD}" | grep "js0" > /dev/null; then
+	sed -i "s|joyport1_friendlyname=.*|joyport1_friendlyname=${EE_GAMEPAD}|" "$AMIBERRY_TMP_CONFIG"
+	echo "Gamepad used $EE_GAMEPAD" >> "$AMIBERRY_LOG"
+	break;
+fi
+done
 }
 
 # Set SDL audio driver to alsa
