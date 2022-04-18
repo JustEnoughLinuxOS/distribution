@@ -5,7 +5,6 @@
 . /etc/os-release
 
 export PATH="$PATH:/usr/local/bin:/usr/bin:/storage/bin"
-
 export SDL_GAMECONTROLLERCONFIG_FILE="/storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt"
 
 J_DIR="/storage/.config/system"
