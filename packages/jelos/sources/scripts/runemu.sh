@@ -263,13 +263,6 @@ then
 				RUNTHIS='${TBASH} /usr/bin/m64p.sh "${CORE}" "${ROMNAME}"'
 			fi
 		;;
-		"daphne")
-			jslisten set "hypseus"
-			if [ "$EMU" = "HYPSEUS" ]
-			then
-				RUNTHIS='${TBASH} /usr/bin/hypseus.start.sh "${ROMNAME}"'
-			fi
-		;;
 		"pc")
 			jslisten set "dosbox dosbox-x"
 			if [ "$EMU" = "DOSBOXSDL2" ]

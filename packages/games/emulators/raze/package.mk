@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="raze"
-PKG_VERSION="a071479339bea27aa886956ac40d608953201c2b"
+PKG_VERSION="f5579caa8fe1a2731202f27ce96723e421f88869"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/coelckers/Raze"
 PKG_URL="${PKG_SITE}.git"
