@@ -20,7 +20,7 @@
 ################################################################################
 
 PKG_NAME="glsl-shaders"
-PKG_VERSION="8f6b2649489760caea8f36ec6099998854059569"
+PKG_VERSION="ab3eeabd097211998934d87d991c3253f2d32335"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
