@@ -85,17 +85,6 @@ case ${PROFILE} in
     DRAM="933000000"
     cooling_profile aggressive
   ;;
-  probably-fire)
-    # Can only enable this one over ssh..
-    # DO NOT USE!
-    # You are responsible if you break it.
-    # If your device catches on fire, well you were warned.
-    LITTLE_CORES="1704000"
-    BIG_CORES="2208000"
-    GPU="1100000000"
-    DRAM="1056000000"
-    cooling_profile aggressive
-  ;;
 esac
 
 freqset
