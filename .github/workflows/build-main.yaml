@@ -19,7 +19,6 @@ on:
 
 concurrency:
   group: main
-  cancel-in-progress: true
 
 jobs:
   build:
