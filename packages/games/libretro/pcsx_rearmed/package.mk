@@ -2,8 +2,7 @@
 # Copyright (C) 2020 Trond Haugland (trondah@gmail.com)
 
 PKG_NAME="pcsx_rearmed"
-PKG_VERSION="e24732050e902bd5402b2b7da7c391d2ca8fa799"
-PKG_SHA256="96b933eb2877ff224b3b00af0e9f4f3560d3d0b1c0bb18f67060e7e5598c1757"
+PKG_VERSION="46a38bdab1a4d9f578a368705a9e3e144fd81189"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
@@ -14,31 +13,17 @@ PKG_SHORTDESC="ARM optimized PCSX fork"
 PKG_TOOLCHAIN="manual"
 PKG_PATCH_DIRS+="${DEVICE}"
 
-if [ "${ARCH}" = "arm" ]
-then
-  make_target() {
-    cd ${PKG_BUILD}
-    if [[ "${DEVICE}" =~ RG351 ]]
-    then
-      make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=RG351x
-    else
-      make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=${DEVICE}
-    fi
-  }
-else
-  make_target() {
-    :
-  }
-fi
+make_target() {
+  cd ${PKG_BUILD}
+  if [[ "${DEVICE}" =~ RG351 ]]
+  then
+    make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=RG351x
+  else
+    make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=${DEVICE}
+  fi
+}
 
 makeinstall_target() {
-  INSTALLTO="/usr/lib/libretro/"
-
-  mkdir -p ${INSTALL}${INSTALLTO}
-  cd ${PKG_BUILD}
-  if [ "${ARCH}" = "aarch64" ]; then
-    cp -vP ${PKG_BUILD}/../../build.${DISTRO}-${DEVICE}.arm/pcsx_rearmed-*/.install_pkg/usr/lib/libretro/pcsx_rearmed_libretro.so ${INSTALL}${INSTALLTO}
-  else
-    cp pcsx_rearmed_libretro.so ${INSTALL}${INSTALLTO}
-  fi
+  mkdir -p $INSTALL/usr/lib/libretro
+  cp pcsx_rearmed_libretro.so $INSTALL/usr/lib/libretro/
 }
