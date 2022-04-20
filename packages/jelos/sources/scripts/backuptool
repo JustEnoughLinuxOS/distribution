@@ -21,7 +21,6 @@ case "${1}" in
     /storage/.cache/connman* \
     /storage/.config/system/configs/system.cfg \
     /storage/.emulationstation/es_*.cfg \
-    /tmp/joypads/* \
     /storage/.config/ppsspp/* \
     /storage/.config/retroarch/* \
     /storage/.emulationstation/scripts/*

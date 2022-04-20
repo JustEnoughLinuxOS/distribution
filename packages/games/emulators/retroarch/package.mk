@@ -108,12 +108,4 @@ post_install() {
   for i in automatic dot-art flatui neoactive pixel retroactive retrosystem systematic convert.sh NPMApng2PMApng.py; do
     rm -rf "${INSTALL}/usr/share/retroarch-assets/xmb/$i"
   done
-
-  enable_service retroarch.service
-  enable_service tmp-cores.mount
-  enable_service tmp-joypads.mount
-  enable_service tmp-database.mount
-  enable_service tmp-assets.mount
-  enable_service tmp-shaders.mount
-  enable_service tmp-overlays.mount
 }

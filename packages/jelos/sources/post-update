@@ -28,5 +28,13 @@ cp -f /usr/config/modules/gamelist.xml /storage/.config/modules
 rsync --ignore-existing /usr/config/rsync-rules.conf /storage/.config/
 rsync --ignore-existing /usr/config/rsync.conf /storage/.config/
 
+### Shift away from using overlayfs so we don't have to constantly sync the directories.
+sed -i "s#/tmp/overlays#/usr/share/retroarch-overlays#g" /storage/.config/retroarch/retroarch.cfg
+sed -i "s#/tmp/shaders#/usr/share/common-shaders#g" /storage/.config/retroarch/retroarch.cfg
+sed -i "s#/tmp/joypads#/etc/retroarch-joypad-autoconfig#g" /storage/.config/retroarch/retroarch.cfg
+sed -i "s#/tmp/database#/usr/share/libretro-database#g" /storage/.config/retroarch/retroarch.cfg
+sed -i "s#/tmp/assets#/usr/share/retroarch-assets#g" /storage/.config/retroarch/retroarch.cfg
+sed -i "s#/tmp/cores#/usr/lib/libretro#g" /storage/.config/retroarch/retroarch.cfg
+
 ### Start the time service by default
 set_setting wts.enabled 1

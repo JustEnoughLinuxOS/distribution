@@ -277,7 +277,7 @@ then
 			jslisten set "retroarch"
 			if [ "$EMU" = "fbneo" ]
 			then
-				RUNTHIS='/usr/bin/retroarch -L /tmp/cores/fbneo_libretro.so --subsystem neocd --config ${RATMPCONF} --appendconfig ${RAAPPENDCONF} "${ROMNAME}"'
+				RUNTHIS='/usr/bin/retroarch -L /usr/lib/libretro/fbneo_libretro.so --subsystem neocd --config ${RATMPCONF} --appendconfig ${RAAPPENDCONF} "${ROMNAME}"'
 			fi
 		;;
 		"mplayer")
@@ -300,7 +300,7 @@ else
 
 	### Check if we need retroarch 32 bits or 64 bits
 	RABIN="retroarch"
-	if [[ "${CORE}" =~ "pcsx_rearmed" ]] || [[ "${CORE}" =~ "parallel_n64" ]] || [[ "${CORE}" =~ "gpsp" ]]
+	if [[ "${CORE}" =~ "parallel_n64" ]] || [[ "${CORE}" =~ "gpsp" ]]
 	then
 		export LD_LIBRARY_PATH="/usr/lib32"
 		RABIN="retroarch32"
@@ -324,7 +324,7 @@ else
                 ;;
         esac
 
-	RUNTHIS='${EMUPERF} /usr/bin/${RABIN} -L /tmp/cores/${EMU}.so --config ${RATMPCONF} --appendconfig ${RAAPPENDCONF} "${ROMNAME}"'
+	RUNTHIS='${EMUPERF} /usr/bin/${RABIN} -L /usr/lib/libretro/${EMU}.so --config ${RATMPCONF} --appendconfig ${RAAPPENDCONF} "${ROMNAME}"'
 	CONTROLLERCONFIG="${arguments#*--controllers=*}"
 
 	if [[ "$arguments" == *"-state_slot"* ]]; then

@@ -43,7 +43,7 @@ makeinstall_target() {
   ln -s /storage/roms/bios            ${INSTALL}/usr/config/amiberry/kickstarts
 
   # Create links to Retroarch controller files
-  ln -s "/tmp/joypads" "${INSTALL}/usr/config/amiberry/controller"
+  ln -s "/etc/retroarch-joypad-autoconfig" "${INSTALL}/usr/config/amiberry/controller"
 
   # Copy binary, scripts & link libcapsimg
   cp -a amiberry* ${INSTALL}/usr/bin/amiberry
