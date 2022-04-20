@@ -17,7 +17,7 @@ GAMEPADINFO="$(sdljoytest -skip_loop)"
 JOYNAME=$(echo "${GAMEPADINFO}" | grep "Joystick 0 name " | sed "s|Joystick 0 name ||" | sed "s|'||g")
 #
 
-for file in /tmp/joypads/*.cfg; do
+for file in /etc/retroarch-joypad-autoconfig/*.cfg; do
 	GAMEPAD=$(cat "$file" | grep input_device|  cut -d'"' -f 2)
     if [ "${JOYNAME}" == "${GAMEPAD}" ]; then
         GPFILE="${file}"
