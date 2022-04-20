@@ -1,24 +1,19 @@
 diff -rupN pcsx_rearmed.orig/Makefile.libretro pcsx_rearmed/Makefile.libretro
---- pcsx_rearmed.orig/Makefile.libretro        2022-03-22 22:45:18.406511156 +0000
-+++ pcsx_rearmed/Makefile.libretro     2022-03-23 00:58:28.073644000 +0000
-@@ -362,6 +362,19 @@ else ifeq ($(platform), rpi4_64)
-       DYNAREC = ari64
-         fpic := -fPIC
-         CFLAGS += -march=armv8-a+crc+simd -mtune=cortex-a72 -ftree-vectorize
-+
-+#######################################
-+# Anbernic RG351x
+--- pcsx_rearmed.orig/Makefile.libretro	2022-04-20 07:57:13.327886544 -0400
++++ pcsx_rearmed/Makefile.libretro	2022-04-20 08:01:22.194100092 -0400
+@@ -70,6 +70,15 @@ else ifneq (,$(findstring CortexA73_G12B
+ 	CFLAGS += -fomit-frame-pointer -ffast-math -DARM
+ 	CPUFLAGS += -march=armv8-a+crc -mfpu=neon-fp-armv8 -mcpu=cortex-a73 -mtune=cortex-a73.cortex-a53
+ 
 +else ifeq ($(platform), RG351x)
-+   TARGET := $(TARGET_NAME)_libretro.so
-+   CFLAGS += -marm -mtune=cortex-a35 -mfpu=neon-fp-armv8 -mfloat-abi=hard
-+   ASFLAGS += -mtune=cortex-a35 -mfpu=neon-fp-armv8 -mfloat-abi=hard
-+   fpic := -fPIC
-+   HAVE_NEON = 1
-+   ARCH = arm
-+   BUILTIN_GPU = neon
-+   DYNAREC = ari64
++	TARGET := $(TARGET_NAME)_libretro.so
++	fpic := -fPIC
++	SHARED := -shared -Wl,-version-script=link.T
++	ARCH = arm64
++	DYNAREC = ari64
++	CFLAGS += -fomit-frame-pointer -ffast-math -Ofast -DARM
++	CPUFLAGS += -march=armv8-a+crc -mcpu=cortex-a35 -mtune=cortex-a35
 +
-
- # Classic Platforms ####################
- # Platform affix = classic_<ISA>_<µARCH>
-
+ # ALLWINNER H5
+ else ifneq (,$(findstring h5,$(platform)))
+ 	TARGET := $(TARGET_NAME)_libretro.so
