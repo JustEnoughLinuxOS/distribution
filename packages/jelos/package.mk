@@ -24,7 +24,8 @@ PKG_EMUS="common-shaders glsl-shaders libretro-database retroarch hatarisa openb
           scummvmsa PPSSPPSDL yabasanshiroSA vicesa mupen64plussa-audio-sdl         \
           mupen64plussa-input-sdl mupen64plussa-ui-console mupen64plussa-video-rice \
           mupen64plussa-core mupen64plussa-rsp-hle mupen64plussa-video-glide64mk2   \
-          lzdoom gzdoom ecwolf amiberry raze pico-8 drastic flycastsa hypseus-singe"
+          lzdoom gzdoom ecwolf amiberry raze pico-8 drastic flycastsa hypseus-singe \
+          core-info"
 
 LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce beetle-pcfx      \
                 beetle-supafaust beetle-supergrafx beetle-vb beetle-wswan bluemsx cannonball cap32   \
