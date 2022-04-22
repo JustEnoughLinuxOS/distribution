@@ -2,11 +2,11 @@
 # Copyright (C) 2021-present 351ELEC (https://github.com/351ELEC)
 
 PKG_NAME="retroarch"
-PKG_VERSION="9b282aa742b6c3d2f2925ae5a12e2cd7c6b6ad38"
+PKG_VERSION="da5d135a9ffb242618e60718345babe94a13ceb9"
 PKG_SITE="https://github.com/libretro/RetroArch"
 PKG_URL="${PKG_SITE}.git"
 PKG_LICENSE="GPLv3"
-PKG_DEPENDS_TARGET="toolchain SDL2 alsa-lib openssl freetype zlib retroarch-assets core-info ffmpeg libass joyutils empty ${OPENGLES} nss-mdns openal-soft libogg libvorbisidec libvpx libpng libdrm librga pulseaudio miniupnpc flac"
+PKG_DEPENDS_TARGET="toolchain SDL2 alsa-lib openssl freetype zlib retroarch-assets core-info ffmpeg libass joyutils empty ${OPENGLES} nss-mdns openal-soft libogg libvorbisidec libvorbis libvpx libpng libdrm librga pulseaudio miniupnpc flac"
 PKG_LONGDESC="Reference frontend for the libretro API."
 GET_HANDLER_SUPPORT="git"
 
@@ -108,12 +108,4 @@ post_install() {
   for i in automatic dot-art flatui neoactive pixel retroactive retrosystem systematic convert.sh NPMApng2PMApng.py; do
     rm -rf "${INSTALL}/usr/share/retroarch-assets/xmb/$i"
   done
-
-  enable_service retroarch.service
-  enable_service tmp-cores.mount
-  enable_service tmp-joypads.mount
-  enable_service tmp-database.mount
-  enable_service tmp-assets.mount
-  enable_service tmp-shaders.mount
-  enable_service tmp-overlays.mount
 }

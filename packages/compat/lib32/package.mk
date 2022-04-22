@@ -47,6 +47,7 @@ makeinstall_target() {
 		libdbus-1 \
 		libdav1d \
 		libFLAC \
+		libvorbis \
 		libspeex \
 		libssl \
 		libcrypt \

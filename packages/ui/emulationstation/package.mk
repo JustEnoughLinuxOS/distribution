@@ -3,7 +3,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="emulationstation"
-PKG_VERSION="d2b9d15"
+PKG_VERSION="b7578a3"
 PKG_GIT_CLONE_BRANCH="main"
 PKG_REV="1"
 PKG_ARCH="any"
@@ -39,6 +39,8 @@ makeinstall_target() {
 	mkdir -p ${INSTALL}/usr/config/emulationstation/resources
 	cp -rf ${PKG_BUILD}/resources/* ${INSTALL}/usr/config/emulationstation/resources/
 	rm -rf ${INSTALL}/usr/config/emulationstation/resources/logo.png
+	cp ${PKG_BUILD}/es_profile ${INSTALL}/usr/config/emulationstation
+	chmod 0755 ${INSTALL}/usr/config/emulationstation/es_profile
 
 	mkdir -p ${INSTALL}/usr/lib/${PKG_PYTHON_VERSION}
 	cp -rf ${PKG_DIR}/bluez/* ${INSTALL}/usr/lib/${PKG_PYTHON_VERSION}

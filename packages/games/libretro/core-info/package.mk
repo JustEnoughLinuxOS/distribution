@@ -1,6 +1,7 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2022-present Fewtarius
 #
 #  This Program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,17 +20,19 @@
 ################################################################################
 
 PKG_NAME="core-info"
-PKG_VERSION="a8e41bb1bca5de2f3dc9492b9421e3c173082ed8"
-PKG_SHA256="aed25931b9d455951dbc4fede4763774348ede5ccdb05486fadcde17fd52ec63"
+PKG_VERSION="fdaa9195bb8c0d45db943dff1ed7d0b6763a6701"
+PKG_SHA256="cf1f61d8686be60fe8dba08376bfb29af09a9624e7aa6fc5b2a6f73043e0dfcd"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/libretro/libretro-core-info"
-PKG_URL="https://github.com/libretro/libretro-core-info/archive/$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/libretro/libretro-core-info/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="Mirror of libretro's core info files"
 PKG_TOOLCHAIN="manual"
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  rename.ul -v mednafen beetle $PKG_BUILD/*.info
-  cp $PKG_BUILD/*.info $INSTALL/usr/lib/libretro/
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  rename.ul -v mednafen beetle ${PKG_BUILD}/*.info
+  cp ${PKG_BUILD}/*.info ${INSTALL}/usr/lib/libretro/
+  cp ${PKG_BUILD}/pcsx_rearmed_libretro.info ${INSTALL}/usr/lib/libretro/pcsx_rearmed32_libretro.info
+  cp ${PKG_BUILD}/flycast_libretro.info ${INSTALL}/usr/lib/libretro/flycast_libretro_libretro.info
 }
