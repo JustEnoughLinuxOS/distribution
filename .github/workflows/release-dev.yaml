@@ -6,8 +6,6 @@
 
 name: release-dev
 on:
-  schedule:
-    - cron:  '0 0 * * *'
   push:
     paths-ignore:
       - '.github/**'
