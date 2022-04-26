@@ -24,6 +24,7 @@ cp -f /usr/config/emulationstation/es_input.cfg /storage/.config/emulationstatio
 cp -f /usr/config/emulationstation/es_features.cfg /storage/.config/emulationstation
 cp -f /usr/config/emulationstation/es_systems.cfg /storage/.config/emulationstation
 cp -f /usr/config/modules/gamelist.xml /storage/.config/modules
+cp -f /usr/config/retroarch/retroarch-core-options.cfg /storage/.config/retroarch/retroarch-core-options.cfg
 
 rsync --ignore-existing /usr/config/rsync-rules.conf /storage/.config/
 rsync --ignore-existing /usr/config/rsync.conf /storage/.config/
