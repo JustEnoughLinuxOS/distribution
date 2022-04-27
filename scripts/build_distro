@@ -37,10 +37,7 @@ rm -f ./release/${DISTRO}-${DEVICE}.${ARCH}-*
 # Remove the image root as it should be regenerated for every build.
 rm -rf ./build.${DISTRO}-${DEVICE}.${ARCH}/image
 
-if [ "${ARCH}" == "aarch64" ]
-then
-  make image
-elif [ "${ARCH}" == "arm" ]
+if [ "${ARCH}" == "arm" ]
 then
   if [ "${BASE_ONLY}" == true ]
   then
@@ -49,6 +46,8 @@ then
   fi
   scripts/build_compat
   scripts/install arm32
+else
+  make image
 fi
 
 if [ ! $? == 0 ]
