@@ -18,7 +18,7 @@ get_setting() {
   if [ ! -z "${3}" ]
   then
     ### Test to see if we have a game setting.
-    VAR="$2\[\"$(echo ${3} | sed 's/[^a-zA-Z 0-9]/\\&/g')\"\]\.$1"
+    VAR="$2\[\"$(echo ${3} | sed 's/[\(\)]/\\&/g')\"\]\.$1"
     OUTPUT=$(awk 'BEGIN {FS="="} /'"^${VAR}"'/ {print $NF}' ${J_CONF})
     if [ ! -z "${OUTPUT}" ]
     then
