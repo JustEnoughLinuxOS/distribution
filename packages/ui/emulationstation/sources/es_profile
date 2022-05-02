@@ -1,4 +1,0 @@
-#!/bin/sh
-. /etc/profile
-set_audio alsa
-export SDL_AUDIODRIVER=alsa

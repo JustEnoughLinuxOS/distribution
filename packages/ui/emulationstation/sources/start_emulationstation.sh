@@ -7,6 +7,9 @@
 # Source predefined functions and variables
 . /etc/profile
 
+set_audio alsa
+export SDL_AUDIODRIVER=alsa
+
 TZ=$(get_setting system.timezone)
 echo -n "TIMEZONE=${TZ}" > /storage/.cache/timezone
 echo -n "${TZ}" >/storage/.cache/system_timezone
@@ -42,4 +45,4 @@ if [[ ! -f "/storage/.newcfg" ]]; then
   touch /storage/.newcfg
 fi
 
-exit 0
+/usr/bin/emulationstation --log-path /var/log
