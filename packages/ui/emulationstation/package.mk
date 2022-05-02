@@ -39,6 +39,8 @@ makeinstall_target() {
 	mkdir -p ${INSTALL}/usr/config/emulationstation/resources
 	cp -rf ${PKG_BUILD}/resources/* ${INSTALL}/usr/config/emulationstation/resources/
 	rm -rf ${INSTALL}/usr/config/emulationstation/resources/logo.png
+
+        mkdir -p ${INSTALL}/usr/bin
 	cp ${PKG_BUILD}/start_emulationstation.sh ${INSTALL}/usr/bin
 	chmod 0755 ${INSTALL}/usr/bin/start_emulationstation.sh
 
