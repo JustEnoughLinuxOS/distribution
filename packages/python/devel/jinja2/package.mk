@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2021-present Team LibreELEC (https://libreelec.tv)
-
-PKG_NAME="Jinja2"
-PKG_VERSION="3.0.3"
-PKG_SHA256="611bb273cd68f3b993fabdc4064fc858c5b47a973cb5aa7999ec1ba405c87cd7"
+# Copyright (C) 2022-present Fewtarius
+#
+PKG_NAME="jinja2"
+PKG_VERSION="3.1.2"
 PKG_LICENSE="BSD"
 PKG_SITE="https://pypi.org/project/Jinja2/"
 PKG_URL="https://files.pythonhosted.org/packages/source/${PKG_NAME:0:1}/${PKG_NAME}/${PKG_NAME}-${PKG_VERSION}.tar.gz"
