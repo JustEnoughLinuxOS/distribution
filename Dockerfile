@@ -1,4 +1,4 @@
-FROM debian:bullseye
+FROM ubuntu:20.04
 
 RUN apt-get update  \
     && DEBIAN_FRONTEND=noninteractive \
