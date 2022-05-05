@@ -41,8 +41,8 @@ makeinstall_target() {
 	rm -rf ${INSTALL}/usr/config/emulationstation/resources/logo.png
 
         mkdir -p ${INSTALL}/usr/bin
-	cp ${PKG_BUILD}/start_emulationstation.sh ${INSTALL}/usr/bin
-	chmod 0755 ${INSTALL}/usr/bin/start_emulationstation.sh
+	cp ${PKG_BUILD}/es_settings ${INSTALL}/usr/bin
+	chmod 0755 ${INSTALL}/usr/bin/es_settings
 
 	mkdir -p ${INSTALL}/usr/lib/${PKG_PYTHON_VERSION}
 	cp -rf ${PKG_DIR}/bluez/* ${INSTALL}/usr/lib/${PKG_PYTHON_VERSION}
