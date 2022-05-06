@@ -1,3 +1,0 @@
-#!/bin/sh
-. /etc/profile
-export SDL_AUDIODRIVER=alsa

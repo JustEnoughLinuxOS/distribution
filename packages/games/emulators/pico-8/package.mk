@@ -3,6 +3,7 @@
 
 PKG_NAME="pico-8"
 PKG_VERSION="$(date +%Y%m%d)"
+PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE=""
