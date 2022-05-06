@@ -44,5 +44,3 @@ fi
 if [[ ! -f "/storage/.newcfg" ]]; then
   touch /storage/.newcfg
 fi
-
-/usr/bin/emulationstation --log-path /var/log
