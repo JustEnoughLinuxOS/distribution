@@ -7,7 +7,7 @@
 . /etc/profile
 
 # Switch to headphones if we have them already connected at boot
-GPIO=$(cat ${DEVICE_JACK})
+GPIO=$(cat /sys/class/gpio/gpio${DEVICE_JACK}/value)
 [[ "$GPIO" == "0" ]] && set_setting "audio.device" "headphone" || set_setting "audio.device" "speakers"
 
 if [ -e "/storage/.config/system/configs/system.cfg" ]; then
@@ -16,7 +16,7 @@ if [ -e "/storage/.config/system/configs/system.cfg" ]; then
 fi
 
 # Headphone sensing 
-DEVICE="${DEVICE_VOLUME_DEV}"
+DEVICE="${DEVICE_HEADPHONE_DEV}"
 
 HP_ON='*(SW_HEADPHONE_INSERT), value 0*'
 HP_OFF='*(SW_HEADPHONE_INSERT), value 1*'
