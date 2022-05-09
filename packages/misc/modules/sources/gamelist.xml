@@ -71,6 +71,8 @@
                 <rating>1.0</rating>
                 <releasedate>2021</releasedate>
                 <genre>Script</genre>
+		<thumbnail>./downloaded_images/jelos-thumb.png</thumbnail>
+                <image>./downloaded_images/jelos-image.png</image>
         </game>
 
         <game>
@@ -82,6 +84,8 @@
                 <rating>1.0</rating>
                 <releasedate>2021</releasedate>
                 <genre>Script</genre>
+		<thumbnail>./downloaded_images/port-thumb.png</thumbnail>
+                <image>./downloaded_images/ports-image.png</image>
         </game>
 
 	<game>
@@ -158,6 +162,8 @@
                 <rating>1.0</rating>
                 <releasedate>2022</releasedate>
                 <genre>Script</genre>
+		<thumbnail>./downloaded_images/theme-thumb.png</thumbnail>
+                <image>./downloaded_images/theme-image.png</image>
         </game>
 
 </gameList>
