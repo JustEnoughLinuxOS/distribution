@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+# Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="expat"
-PKG_VERSION="2.4.1"
-PKG_SHA256="2f9b6a580b94577b150a7d5617ad4643a4301a6616ff459307df3e225bcfbf40"
+PKG_VERSION="2.4.8"
 PKG_LICENSE="OSS"
 PKG_SITE="http://expat.sourceforge.net/"
 PKG_URL="https://github.com/libexpat/libexpat/releases/download/R_${PKG_VERSION//./_}/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
