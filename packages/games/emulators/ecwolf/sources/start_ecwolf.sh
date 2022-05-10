@@ -25,7 +25,6 @@ fi
 mkdir -p ${SAVE_DIR}
 
 params=" --config ${CONFIG_FILE} --savedir ${SAVE_DIR}"
-params+=" --res 1152 1920"
 
 # data can be SD2 SD3 SOD WL6 or N3D and it's passed as the ROM
 DATA=${1#*.}
