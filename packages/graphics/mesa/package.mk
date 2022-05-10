@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="mesa"
-PKG_VERSION="b48236ea3efebf942ba7c225c023a52d71558c16"
+PKG_VERSION="58ad6e5"
 PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/mesa3d/mesa"
 PKG_URL="${PKG_SITE}.git"
