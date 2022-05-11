@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="flycastsa"
-PKG_VERSION="91033713622574151762d56be02edac901d3f235"
+PKG_VERSION="6c6b447ea1d2d251e5f7b96d57b0e243cdbd236d"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/flyinghead/flycast"
 PKG_URL="${PKG_SITE}.git"
