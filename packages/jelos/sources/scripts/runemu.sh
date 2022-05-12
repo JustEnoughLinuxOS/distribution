@@ -323,7 +323,11 @@ else
 			fi
                 ;;
         esac
-
+	
+	if [[ "${CORE}" =~ "custom" ]] 
+	then
+	RUNTHIS='${EMUPERF} /usr/bin/${RABIN} -L /storage/.config/retroarch/cores/${EMU}.so --config ${RATMPCONF} --appendconfig ${RAAPPENDCONF} "${ROMNAME}"'
+	else
 	RUNTHIS='${EMUPERF} /usr/bin/${RABIN} -L /usr/lib/libretro/${EMU}.so --config ${RATMPCONF} --appendconfig ${RAAPPENDCONF} "${ROMNAME}"'
 	CONTROLLERCONFIG="${arguments#*--controllers=*}"
 
