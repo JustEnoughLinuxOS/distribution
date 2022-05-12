@@ -1,92 +1,92 @@
 <?xml version="1.0"?>
 <gameList>
 
-        <game>
-                <path>./351Files.sh</path>
-                <name>351Files</name>
-                <desc>Single panel file manager</desc>
-                <developer>Tardigrade</developer>
-                <publisher>JELOS</publisher>
-                <rating>1.0</rating>
-                <releasedate>2021</releasedate>
-                <genre>Script</genre>
-                <thumbnail>./downloaded_images/filemanager-thumb.png</thumbnail>
-                <image>./downloaded_images/filemanager.png</image>
-        </game>
+	<game>
+		<path>./351Files.sh</path>
+		<name>351Files</name>
+		<desc>Single panel file manager</desc>
+		<developer>Tardigrade</developer>
+		<publisher>JELOS</publisher>
+		<rating>1.0</rating>
+		<releasedate>2021</releasedate>
+		<genre>Script</genre>
+		<thumbnail>./downloaded_images/filemanager-thumb.png</thumbnail>
+		<image>./downloaded_images/filemanager.png</image>
+	</game>
 
-        <game>
-                <path>./cloud_backup.sh</path>
-                <name>Cloud Backup</name>
-                <desc>Backup your saves to a cloud drive.</desc>
-                <developer>JELOS</developer>
-                <publisher>JELOS</publisher>
-                <rating>1.0</rating>
-                <releasedate>2022</releasedate>
-                <genre>Script</genre>
-                <thumbnail>./downloaded_images/rclone-thumb.png</thumbnail>
-                <image>./downloaded_images/rclone-back.png</image>
-        </game>
+	<game>
+		<path>./cloud_backup.sh</path>
+		<name>Cloud Backup</name>
+		<desc>Backup your saves to a cloud drive.</desc>
+		<developer>JELOS</developer>
+		<publisher>JELOS</publisher>
+		<rating>1.0</rating>
+		<releasedate>2022</releasedate>
+		<genre>Script</genre>
+		<thumbnail>./downloaded_images/rclone-thumb.png</thumbnail>
+		<image>./downloaded_images/rclone-back.png</image>
+	</game>
 
-        <game>
-                <path>./cloud_restore.sh</path>
-                <name>Cloud Restore</name>
-                <desc>Restores your saves from a cloud drive.</desc>
-                <developer>JELOS</developer>
-                <publisher>JELOS</publisher>
-                <rating>1.0</rating>
-                <releasedate>2022</releasedate>
-                <genre>Script</genre>
-                <thumbnail>./downloaded_images/rclone-thumb.png</thumbnail>
-                <image>./downloaded_images/rclone-back.png</image>
-        </game>
+	<game>
+		<path>./cloud_restore.sh</path>
+		<name>Cloud Restore</name>
+		<desc>Restores your saves from a cloud drive.</desc>
+		<developer>JELOS</developer>
+		<publisher>JELOS</publisher>
+		<rating>1.0</rating>
+		<releasedate>2022</releasedate>
+		<genre>Script</genre>
+		<thumbnail>./downloaded_images/rclone-thumb.png</thumbnail>
+		<image>./downloaded_images/rclone-back.png</image>
+	</game>
 	
 	<game>
-                <path>./DraStic\ Install.sh</path>
-                <name>DraStic Install</name>
-                <desc>Install optional Nintendo DS emulator DraStic.</desc>
-                <developer>JELOS</developer>
-                <publisher>JELOS</publisher>
-                <rating>1.0</rating>
-                <releasedate>2022</releasedate>
-                <genre>Script</genre>
-        </game>
+		<path>./DraStic\ Install.sh</path>
+		<name>DraStic Install</name>
+		<desc>Install optional Nintendo DS emulator DraStic.</desc>
+		<developer>JELOS</developer>
+		<publisher>JELOS</publisher>
+		<rating>1.0</rating>
+		<releasedate>2022</releasedate>
+		<genre>Script</genre>
+	</game>
 	
 	<game>
-                <path>./DraStic\ Uninstall.sh</path>
-                <name>Drastic Uninstall</name>
-                <desc>Install optional Nintendo DS emulator DraStic.</desc>
-                <developer>JELOS</developer>
-                <publisher>JELOS</publisher>
-                <rating>1.0</rating>
-                <releasedate>2022</releasedate>
-                <genre>Script</genre>
-        </game>
+		<path>./DraStic\ Uninstall.sh</path>
+		<name>Drastic Uninstall</name>
+		<desc>Install optional Nintendo DS emulator DraStic.</desc>
+		<developer>JELOS</developer>
+		<publisher>JELOS</publisher>
+ 		<rating>1.0</rating>
+		<releasedate>2022</releasedate>
+		<genre>Script</genre>
+	</game>
 
-        <game>
-                <path>/storage/roms/ports/JelosAddOns.sh</path>
-                <name>JelosAddOns</name>
-                <desc>Game port installer</desc>
-                <developer>brooksytech</developer>
-                <publisher>Jelos</publisher>
-                <rating>1.0</rating>
-                <releasedate>2021</releasedate>
-                <genre>Script</genre>
+	<game>
+		<path>./JelosAddOns.sh</path>
+		<name>JelosAddOns</name>
+		<desc>Game port installer</desc>
+		<developer>brooksytech</developer>
+		<publisher>Jelos</publisher>
+		<rating>1.0</rating>
+		<releasedate>2021</releasedate>
+		<genre>Script</genre>
 		<thumbnail>./downloaded_images/jelos-thumb.png</thumbnail>
-                <image>./downloaded_images/jelos-image.png</image>
-        </game>
+		<image>./downloaded_images/jelos-image.png</image>
+	</game>
 
-        <game>
-                <path>/storage/roms/ports/PortMaster.sh</path>
-                <name>PortMaster</name>
-                <desc>Game port installer</desc>
-                <developer>christianhaitian</developer>
-                <publisher>Jelos</publisher>
-                <rating>1.0</rating>
-                <releasedate>2021</releasedate>
-                <genre>Script</genre>
+	<game>
+		<path>./PortMaster.sh</path>
+		<name>PortMaster</name>
+		<desc>Game port installer</desc>
+		<developer>christianhaitian</developer>
+		<publisher>Jelos</publisher>
+		<rating>1.0</rating>
+		<releasedate>2021</releasedate>
+		<genre>Script</genre>
 		<thumbnail>./downloaded_images/port-thumb.png</thumbnail>
-                <image>./downloaded_images/ports-image.png</image>
-        </game>
+		<image>./downloaded_images/ports-image.png</image>
+	</game>
 
 	<game>
 		<path>./Start PPSSPP.sh</path>
@@ -153,17 +153,17 @@
 		<image>./downloaded_images/clean.png</image>
 	</game>
 
-        <game>
-                <path>/storage/roms/ports/ThemeMaster.sh</path>
-                <name>ThemeMaster</name>
-                <desc>Theme installer</desc>
-                <developer>JohnIrvine1433</developer>
-                <publisher>Jelos</publisher>
-                <rating>1.0</rating>
-                <releasedate>2022</releasedate>
-                <genre>Script</genre>
+	<game>
+		<path>./ThemeMaster.sh</path>
+		<name>ThemeMaster</name>
+		<desc>Theme installer</desc>
+		<developer>JohnIrvine1433</developer>
+		<publisher>Jelos</publisher>
+		<rating>1.0</rating>
+		<releasedate>2022</releasedate>
+		<genre>Script</genre>
 		<thumbnail>./downloaded_images/theme-thumb.png</thumbnail>
-                <image>./downloaded_images/theme-image.png</image>
-        </game>
+		<image>./downloaded_images/theme-image.png</image>
+	</game>
 
 </gameList>
