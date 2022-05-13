@@ -41,28 +41,6 @@
 	</game>
 	
 	<game>
-		<path>./DraStic\ Install.sh</path>
-		<name>DraStic Install</name>
-		<desc>Install optional Nintendo DS emulator DraStic.</desc>
-		<developer>JELOS</developer>
-		<publisher>JELOS</publisher>
-		<rating>1.0</rating>
-		<releasedate>2022</releasedate>
-		<genre>Script</genre>
-	</game>
-	
-	<game>
-		<path>./DraStic\ Uninstall.sh</path>
-		<name>Drastic Uninstall</name>
-		<desc>Install optional Nintendo DS emulator DraStic.</desc>
-		<developer>JELOS</developer>
-		<publisher>JELOS</publisher>
- 		<rating>1.0</rating>
-		<releasedate>2022</releasedate>
-		<genre>Script</genre>
-	</game>
-
-	<game>
 		<path>./JelosAddOns.sh</path>
 		<name>JelosAddOns</name>
 		<desc>Game port installer</desc>

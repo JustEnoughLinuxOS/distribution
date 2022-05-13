@@ -2,16 +2,17 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="jelosaddons"
-PKG_VERSION=""
+PKG_VERSION="c60dad578362bb3836f9049e47a3d9666aba6e18"
 PKG_ARCH="any"
-PKG_URL="https://github.com/brooksytech/JelosAddOns/raw/main/JelosAddOns.zip"
+PKG_SITE="https://github.com/brooksytech/JelosAddOns"
+PKG_URL="${PKG_SITE}/raw/${PKG_VERSION}/JelosAddOns.zip"
 PKG_PRIORITY="optional"
 PKG_SECTION="tools"
-PKG_SHORTDESC="Additonal game ports and add ons not included with PortMaster"
+PKG_SHORTDESC="Additonal game ports and add ons not included with default install"
 PKG_TOOLCHAIN="manual"
 
 pre_unpack() {
-  unzip sources/jelosaddons/jelosaddons-.zip -d ${PKG_BUILD}
+  unzip sources/jelosaddons/jelosaddons-${PKG_VERSION}.zip -d ${PKG_BUILD}
 }
 
 makeinstall_target() {
