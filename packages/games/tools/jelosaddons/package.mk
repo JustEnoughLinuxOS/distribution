@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="jelosaddons"
-PKG_VERSION=""
+PKG_VERSION="acbdf198399e227642e186f24e3217367535ac0a"
 PKG_ARCH="any"
 PKG_URL="https://github.com/brooksytech/JelosAddOns/raw/main/JelosAddOns.zip"
 PKG_PRIORITY="optional"
