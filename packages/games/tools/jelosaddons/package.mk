@@ -12,7 +12,7 @@ PKG_SHORTDESC="Additonal game ports and add ons not included with default instal
 PKG_TOOLCHAIN="manual"
 
 pre_unpack() {
-  unzip sources/jelosaddons/jelosaddons-.zip -d ${PKG_BUILD}
+  unzip sources/jelosaddons/jelosaddons-${PKG_VERSION}.zip -d ${PKG_BUILD}
 }
 
 makeinstall_target() {
