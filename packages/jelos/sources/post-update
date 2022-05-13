@@ -28,7 +28,7 @@ cp -f /usr/config/retroarch/retroarch-core-options.cfg /storage/.config/retroarc
 rm -rf /storage/roms/ports/JelosAddOns*
 cp -r /usr/share/JelosAddOns /storage/roms/ports/
 mv /storage/roms/ports/JelosAddOns/JelosAddOns.sh /storage/roms/ports/JelosAddOns.sh
-rm -rf cp -f /usr/config/modules/Drastic*
+rm -rf /storage/.config/modules/Drastic*
 
 rsync --ignore-existing /usr/config/rsync-rules.conf /storage/.config/
 rsync --ignore-existing /usr/config/rsync.conf /storage/.config/
