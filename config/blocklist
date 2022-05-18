@@ -1,2 +1,3 @@
 np2kai # Last major commit before hiatus is broken
 vicesa # Doesn't support updating with the script.
+PPSSPPSDL # non-buffered rendering is still broken.
