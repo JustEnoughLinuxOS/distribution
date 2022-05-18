@@ -18,18 +18,10 @@ rsync -a /usr/config/modules /storage/.config/ &
 
 wait < <(jobs -p)
 
-### Always update these after an upgrade incase there are necessary changes
-cp -f /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt
-cp -f /usr/config/emulationstation/es_input.cfg /storage/.config/emulationstation
-cp -f /usr/config/emulationstation/es_features.cfg /storage/.config/emulationstation
-cp -f /usr/config/emulationstation/es_systems.cfg /storage/.config/emulationstation
-cp -f /usr/config/modules/gamelist.xml /storage/.config/modules
-cp -f /usr/config/retroarch/retroarch-core-options.cfg /storage/.config/retroarch/retroarch-core-options.cfg
-
 rsync --ignore-existing /usr/config/rsync-rules.conf /storage/.config/
 rsync --ignore-existing /usr/config/rsync.conf /storage/.config/
 
-### Shift away from using overlayfs so we don't have to constantly sync the directories.
+### Shift away from using overlayfs for now until it's implemented better.
 sed -i "s#/tmp/overlays#/usr/share/retroarch-overlays#g" /storage/.config/retroarch/retroarch.cfg
 sed -i "s#/tmp/shaders#/usr/share/common-shaders#g" /storage/.config/retroarch/retroarch.cfg
 sed -i "s#/tmp/joypads#/etc/retroarch-joypad-autoconfig#g" /storage/.config/retroarch/retroarch.cfg
@@ -39,3 +31,14 @@ sed -i "s#/tmp/cores#/usr/lib/libretro#g" /storage/.config/retroarch/retroarch.c
 
 ### Start the time service by default
 set_setting wts.enabled 1
+
+### Link the game controller database so it is managed with OS updates.
+rm -f /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt
+ln -s /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt
+
+### Remove and link es configs so they are managed with OS updates.
+for es_cfg in es_features.cfg es_systems.cfg es_input.cfg
+do
+  rm -f /storage/.config/emulationstation/${es_cfg}
+  ln -s /usr/config/emulationstation/${es_cfg} /storage/.config/emulationstation/${es_cfg}
+done
