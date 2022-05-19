@@ -2,6 +2,7 @@
 
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2022-present Fewtarius
 
 . /etc/profile
 
@@ -18,6 +19,17 @@ then
   rsync -a --ignore-existing --exclude=es_systems.cfg /usr/config/* /storage/.config/
   mkdir -p /storage/.config/emulationstation/themes
   ln -s /usr/share/themes/es-theme-art-book-next /storage/.config/emulationstation/themes/system-theme
+
+  ### Link the game controller database so it is managed with OS updates.
+  rm -f /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt
+  ln -s /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt
+
+  ### Remove and link es configs so they are managed with OS updates.
+  for es_cfg in es_features.cfg es_systems.cfg es_input.cfg
+  do
+    rm -f /storage/.config/emulationstation/${es_cfg}
+    ln -s /usr/config/emulationstation/${es_cfg} /storage/.config/emulationstation/${es_cfg}
+  done
 
   hres="$(fbset 2>/dev/null | awk '/geometry/ { print $2 }')"
   cp -f /usr/config/splash/splash-${hres}.png /storage/.config/emulationstation/resources/logo.png

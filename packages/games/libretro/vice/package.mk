@@ -1,7 +1,8 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
-#      Copyright (C) 2020      351ELEC team (https://github.com/fewtarius/351ELEC)
+#      Copyright (C) 2020 351ELEC team (https://github.com/fewtarius/351ELEC)
+#      Copyright (C) 2022-present Fewtarius
 #
 #  This Program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -26,7 +27,7 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/vice-libretro"
-PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
+PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
@@ -39,8 +40,8 @@ PKG_AUTORECONF="no"
 PKG_BUILD_FLAGS="-lto"
 
 make_target() {
-  if [ "$ARCH" == "arm" ]; then
-    CFLAGS="$CFLAGS -DARM -DALIGN_DWORD -mstructure-size-boundary=32 -mthumb-interwork -falign-functions=16 -marm"
+  if [ "${ARCH}" == "arm" ]; then
+    CFLAGS="${CFLAGS} -DARM -DALIGN_DWORD -mstructure-size-boundary=32 -mthumb-interwork -falign-functions=16 -marm"
   fi
   if [ ! -d "built" ]
   then
@@ -55,9 +56,10 @@ make_target() {
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp built/vice_x128_libretro.so $INSTALL/usr/lib/libretro/
-  cp built/vice_x64_libretro.so $INSTALL/usr/lib/libretro/
-  cp built/vice_xplus4_libretro.so $INSTALL/usr/lib/libretro/
-  cp built/vice_xvic_libretro.so $INSTALL/usr/lib/libretro/
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  cp built/vice_x128_libretro.so ${INSTALL}/usr/lib/libretro/
+  cp built/vice_x64_libretro.so ${INSTALL}/usr/lib/libretro/
+  cp built/vice_xplus4_libretro.so ${INSTALL}/usr/lib/libretro/
+  cp built/vice_xvic_libretro.so ${INSTALL}/usr/lib/libretro/
+  cp built/vice_xpet_libretro.so ${INSTALL}/usr/lib/libretro/
 }

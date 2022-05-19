@@ -3,8 +3,8 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="freej2me"
-PKG_VERSION="a32e5b2c6d6947079ed4cc3acbf8cca9ea89468f"
-PKG_SHA256="968b8ee9e1fc3b412764d7d4fa3add672bb21b4af9e602670e46d20fc517edc6"
+PKG_VERSION="e99627ffcb4a02c9ab19d2e9d568b5196c886dce"
+PKG_SHA256="589f2f92c0805c89b42a9691554506b7452b78cf4ea3574022716cf6b13c19d0"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/hex007/freej2me"
