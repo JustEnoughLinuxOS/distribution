@@ -23,6 +23,48 @@ PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} es-theme-art-book-next"
 
 PKG_CMAKE_OPTS_TARGET=" -DENABLE_EMUELEC=1 -DGLES2=1 -DDISABLE_KODI=1 -DENABLE_FILEMANAGER=0 -DCEC=0"
 
+##########################################################################################################
+# The following allows building Emulation station from local copy by using EMULATIONSTATION_SRC.
+# The built makes symlinks to a local repository.
+#
+# One time setup:
+# ---------------
+# cd ~
+# git clone https://github.com/JustEnoughLinuxOS/emulationstation.git
+# cd emulationstation
+# git submodule update --init
+#
+# Cleanup old files:
+# ------------------
+# DEVICE=RG351V ARCH=aarch64 ./scripts/clean emulationstation
+#
+# Build from local copy:
+# ----------------------
+# EMULATIONSTATION_SRC=~/emulationstation DEVICE=RG351V ARCH=aarch64 ./scripts/build emulationstation
+#
+# Run from the device:
+# --------------------
+# Copy ./emulationstation binary found in build.JELOS-<device>.aarch64/emulationstation-*/.install_pkg/usr/bin/ 
+# Via ssh, run emulationstation with
+# systemctl stop emustation
+# chmod +x ./emulationstation
+# ./emulationstation
+##########################################################################################################
+if [ -n "$EMULATIONSTATION_SRC" ]; then
+unpack() {
+	echo cp -PRf ${EMULATIONSTATION_SRC} ${PKG_BUILD}
+  cp -PRf ${EMULATIONSTATION_SRC} ${PKG_BUILD}
+}
+# add some symbolic links to point to a code in local source folder
+post_unpack() {
+	rm -rf "${PKG_BUILD}/es-app"
+	ln -sf "${EMULATIONSTATION_SRC}/es-app" "${PKG_BUILD}"
+
+	rm -rf "${PKG_BUILD}/es-core"
+	ln -sf "${EMULATIONSTATION_SRC}/es-core" "${PKG_BUILD}"
+}
+fi
+
 pre_configure_target() {
   if [ -f ~/developer_settings.conf ]; then
     . ~/developer_settings.conf
