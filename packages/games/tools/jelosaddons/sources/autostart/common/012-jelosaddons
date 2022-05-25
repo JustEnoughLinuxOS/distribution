@@ -39,3 +39,5 @@ sed -i 's|<gameList>|&   \
 fi
 
 mv /storage/roms/ports/JelosAddOns/JelosAddOns.sh /storage/roms/ports/JelosAddOns/JelosAddOns
+chmod +x /storage/roms/ports/JelosAddOns/JelosAddOns.sh
+chmod +x /storage/roms/ports/JelosAddOns -R
