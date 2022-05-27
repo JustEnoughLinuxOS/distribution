@@ -16,7 +16,7 @@ PKG_TOOLCHAIN="make"
 
 PKG_BASEOS="plymouth-lite grep wget libjpeg-turbo util-linux xmlstarlet bluetool gnupg gzip patchelf     \
             imagemagick terminus-font vim bash pyudev dialog six git dbus-python coreutils miniupnpc \
-            nss-mdns avahi MC fbgrab modules"
+            nss-mdns avahi alsa-ucm-conf MC fbgrab modules"
 
 PKG_UI="emulationstation"
 
@@ -43,6 +43,8 @@ LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-
 
 PKG_COMPAT="lib32"
 
+PKG_TOOLS="i2c-tools"
+
 PKG_MULTIMEDIA="ffmpeg mpv vlc"
 
 PKG_GAMESUPPORT="sixaxis jslisten evtest rg351p-js2xbox gptokeyb textviewer 351files jstest-sdl \
@@ -59,9 +61,9 @@ fi
 
 if [ ! -z "${BASE_ONLY}" ]
 then
-  PKG_DEPENDS_TARGET+=" ${PKG_BASEOS} ${PKG_UI} ${PKG_GAMESUPPORT}"
+  PKG_DEPENDS_TARGET+=" ${PKG_BASEOS} ${PKG_TOOLS} ${PKG_UI} ${PKG_GAMESUPPORT}"
 else
-  PKG_DEPENDS_TARGET+=" ${PKG_BASEOS} ${PKG_UI} ${PKG_EMUS} ${LIBRETRO_CORES} ${PKG_COMPAT} ${PKG_MULTIMEDIA} ${PKG_GAMESUPPORT} ${PKG_EXPERIMENTAL}"
+  PKG_DEPENDS_TARGET+=" ${PKG_BASEOS} ${PKG_TOOLS} ${PKG_UI} ${PKG_EMUS} ${LIBRETRO_CORES} ${PKG_COMPAT} ${PKG_MULTIMEDIA} ${PKG_GAMESUPPORT} ${PKG_EXPERIMENTAL}"
 fi
 
 make_target() {
@@ -119,7 +121,6 @@ post_install() {
 
 EOF
 
-  cp ${PKG_DIR}/sources/shutdown.sh ${INSTALL}/usr/bin
   cp ${PKG_DIR}/sources/scripts/* ${INSTALL}/usr/bin
 
   if [ -d "${PKG_DIR}/sources/asound/${DEVICE}" ]

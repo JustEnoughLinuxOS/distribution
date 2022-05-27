@@ -1,7 +1,8 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
-#      Copyright (C) 2020      351ELEC team (https://github.com/fewtarius/351ELEC)
+#      Copyright (C) 2020 351ELEC team (https://github.com/fewtarius/351ELEC)
+#      Copyright (C) 2022 Fewtarius
 #
 #  This Program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -42,9 +43,9 @@ then
   make_target() {
     if [[ "${DEVICE}" =~ RG351 ]]
     then
-      make CC=$CC platform=RG351x
+      make CC=${CC} platform=RG351x
     else
-      make CC=$CC platform=${DEVICE}
+      make CC=${CC} platform=${DEVICE}
     fi
   }
 else

@@ -1,0 +1,27 @@
+diff -rupN parallel-n64.orig/Makefile parallel-n64/Makefile
+--- parallel-n64.orig/Makefile	2022-03-18 18:45:20.583802218 -0400
++++ parallel-n64/Makefile	2022-03-18 19:17:21.695069121 -0400
+@@ -273,6 +273,23 @@ ifneq (,$(findstring unix,$(platform)))
+       PLATFORM_EXT := unix
+    endif
+ 
++#######################################
++# Anbernic RG503
++else ifneq (,$(findstring RG503,$(platform)))
++   TARGET := $(TARGET_NAME)_libretro.so
++   CPUFLAGS += -marm -mtune=cortex-a55 -mfpu=neon-fp-armv8 -mfloat-abi=hard
++   ASFLAGS += -D__ARM_NEON__ -marm -mtune=cortex-a55 -mfpu=neon-fp-armv8 -mfloat-abi=hard
++   LDFLAGS += -shared -Wl,--version-script=$(LIBRETRO_DIR)/link.T
++   fpic = -fPIC
++   GLES = 1
++   GL_LIB := -lGLESv2
++   HAVE_NEON = 1
++   WITH_DYNAREC=arm
++   ifneq (,$(findstring neon,$(platform)))
++      CPUFLAGS += -D__NEON_OPT -mfpu=neon
++      HAVE_NEON = 1
++   endif
++
+ # i.MX6
+ else ifneq (,$(findstring imx6,$(platform)))
+    TARGET := $(TARGET_NAME)_libretro.so

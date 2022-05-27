@@ -10,8 +10,19 @@ then
   cp /usr/config/asound.conf /storage/.config
 fi
 
+if [ ! -e "/storage/.config/asound.state" ] && [ -e /usr/config/asound.state ]
+then
+  cp /usr/config/asound.state /storage/.config
+fi
+
 # Set the mixer in ES
 sed -i 's#<string name="AudioDevice" value="'.*'" />#<string name="AudioDevice" value="'${DEVICE_AUDIO_MIXER}'" />#' /storage/.emulationstation/es_settings.cfg
+
+# Initialize sound using the state if available.
+if [ -e "/storage/.config/asound.state" ]
+then
+  alsactl restore -f /storage/.config/asound.state
+fi
 
 VOL=$(get_setting "audio.volume" 2>/dev/null)
 amixer set "${DEVICE_AUDIO_MIXER}" ${VOL}%

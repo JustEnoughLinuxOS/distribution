@@ -31,8 +31,8 @@ clean_package() {
       fi
     fi
   done
-  rm -f "${STAMPS}/${1}/build_"*
-  rm -rf "${BUILD}/image/.stamps/${1}/*"
+  rm -f "${STAMPS}/${1}"/*
+  rm -f "${BUILD}/image/.stamps/${1}"/*
 }
 
 if [ "${1}" = "--all" -a -n "${2}" ]; then

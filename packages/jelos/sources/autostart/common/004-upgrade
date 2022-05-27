@@ -9,7 +9,7 @@ then
   if [ -e "/usr/share/post-update" ]
   then
     show_splash intro
-    echo -ne "\033[100H\033[2K==> Preparing system.." >/dev/console
+    echo -ne "\033[1000H\033[2K==> Preparing system.." >/dev/console
     /usr/share/post-update
   fi
   rm /storage/.config/boot.hint
