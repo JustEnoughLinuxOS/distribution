@@ -2,7 +2,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="moonlight"
-PKG_VERSION="5b6639c8a76c4bbb5e0b4bcfe41b8df136608885"
+PKG_VERSION="5fe7b36b4004c93d916e38183d58a2e9f6d5b9d6"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/moonlight-stream/moonlight-embedded"
@@ -12,3 +12,10 @@ PKG_SHORTDESC="Moonlight Embedded is an open source implementation of NVIDIA's G
 PKG_TOOLCHAIN="cmake"
 GET_HANDLER_SUPPORT="git"
 
+post_makeinstall_target() {
+	mkdir -p $INSTALL/storage/.config
+	cp $PKG_BUILD/moonlight.conf $INSTALL/storage/.config/
+
+	rm ${INSTALL}/usr/etc/moonlight.conf 
+	rm ${INSTALL}/usr/share/moonlight/gamecontrollerdb.txt 
+}
