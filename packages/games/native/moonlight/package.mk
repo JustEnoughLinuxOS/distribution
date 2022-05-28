@@ -11,6 +11,7 @@ PKG_DEPENDS_TARGET="toolchain opus libevdev alsa enet"
 PKG_SHORTDESC="Moonlight Embedded is an open source implementation of NVIDIA's GameStream, as used by the NVIDIA Shield, but built for Linux."
 PKG_TOOLCHAIN="cmake"
 GET_HANDLER_SUPPORT="git"
+PKG_PATCH_DIRS+="${DEVICE}"
 
 post_makeinstall_target() {
   mkdir -p $INSTALL/usr/config/moonlight
