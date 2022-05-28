@@ -13,8 +13,8 @@ PKG_TOOLCHAIN="cmake"
 GET_HANDLER_SUPPORT="git"
 
 post_makeinstall_target() {
-	mkdir -p $INSTALL/storage/.config
-	cp $PKG_BUILD/moonlight.conf $INSTALL/storage/.config/
+  mkdir -p $INSTALL/usr/config/moonlight
+    cp -R $PKG_BUILD/moonlight.conf $INSTALL/usr/config/moonlight
 
 	rm ${INSTALL}/usr/etc/moonlight.conf 
 	rm ${INSTALL}/usr/share/moonlight/gamecontrollerdb.txt 
