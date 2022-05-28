@@ -28,7 +28,7 @@ then
   PKG_VERSION="0c4ffa0fe"
 elif [[ "${DEVICE}" =~ RG503 ]]
 then
-  PKG_URL="https://JustEnoughLinuxOS/rk356x-kernel.git"
+  PKG_URL="https://github.com/JustEnoughLinuxOS/rk356x-kernel.git"
   PKG_VERSION="555ef2e5b5edbcdd44a50bb3020cb28433067da2"
 fi
 
