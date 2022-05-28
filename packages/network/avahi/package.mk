@@ -16,6 +16,7 @@ PKG_CONFIGURE_OPTS_TARGET="py_cv_mod_gtk_=yes \
                            py_cv_mod_dbus_=yes \
                            ac_cv_func_chroot=no \
                            --with-distro=none \
+                           --enable-static \
                            --disable-glib \
                            --disable-gobject \
                            --disable-qt3 \
@@ -49,6 +50,7 @@ PKG_CONFIGURE_OPTS_TARGET="py_cv_mod_gtk_=yes \
                            --disable-libevent \
                            --enable-compat-libdns_sd \
                            --disable-compat-howl \
+                           --disable-rpath \
                            --with-xml=expat \
                            --with-avahi-user=avahi \
                            --with-avahi-group=avahi \
@@ -56,6 +58,10 @@ PKG_CONFIGURE_OPTS_TARGET="py_cv_mod_gtk_=yes \
 
 pre_configure_target() {
   NOCONFIGURE=1 ./autogen.sh
+}
+
+post_configure_target() {
+  libtool_remove_rpath libtool
 }
 
 post_makeinstall_target() {
@@ -71,8 +77,8 @@ post_makeinstall_target() {
   sed -e "s,<port>22</port>,<port>22</port>\n    <txt-record>path=/storage</txt-record>\n    <txt-record>u=root</txt-record>,g" -i ${INSTALL}/etc/avahi/services/sftp-ssh.service
 
   rm -rf ${INSTALL}/etc/avahi/avahi-dnsconfd.action
-  rm -rf ${INSTALL}/etc/avahi/services/ssh.service
   if [ ! ${SFTP_SERVER} = "yes" ]; then
+    rm -rf ${INSTALL}/etc/avahi/services/ssh.service
     rm -rf ${INSTALL}/etc/avahi/services/sftp-ssh.service
   fi
   rm -rf ${INSTALL}/usr/lib/systemd

@@ -36,7 +36,7 @@ pre_configure_target() {
                              --enable-opengles3_1 \
                              --enable-kms \
                              --disable-mali_fbdev \
-                             --enable-odroidgo2"
+                             --disable-odroidgo2"
 
   if [ ${ARCH} == "arm" ]; then
     PKG_CONFIGURE_OPTS_TARGET+=" --enable-neon"
@@ -97,7 +97,7 @@ makeinstall_target() {
 
 post_install() {
   mkdir -p ${INSTALL}/etc/retroarch-joypad-autoconfig
-  cp -r ${PKG_DIR}/gamepads/* ${INSTALL}/etc/retroarch-joypad-autoconfig
+  cp -r ${PKG_DIR}/gamepads/device/${DEVICE}/* ${INSTALL}/etc/retroarch-joypad-autoconfig
 
   # Remove unnecesary Retroarch Assets and overlays
   for i in FlatUX Automatic Systematic branding nuklear nxrgui pkg switch wallpapers zarch

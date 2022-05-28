@@ -29,6 +29,7 @@
     DEVICE_NAME="RG552"
     KERNEL_TARGET="Image"
     BOOTLOADER="u-boot"
+    PARTITION_TABLE="msdos"
     DEVICE_DTB="rk3399-rg552-linux"
     UBOOT_DTB="${DEVICE_DTB}"
     UBOOT_CONFIG="evb-rk3399_defconfig"

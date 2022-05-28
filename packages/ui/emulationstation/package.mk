@@ -97,7 +97,8 @@ makeinstall_target() {
 	ln -sf /storage/.config/emulationstation/themes ${INSTALL}/etc/emulationstation/
 	ln -sf /usr/config/emulationstation/es_systems.cfg ${INSTALL}/etc/emulationstation/es_systems.cfg
 
-        cp -rf ${PKG_DIR}/config/*.cfg ${INSTALL}/usr/config/emulationstation
+        cp -rf ${PKG_DIR}/config/common/*.cfg ${INSTALL}/usr/config/emulationstation
+	cp -rf ${PKG_DIR}/config/device/${DEVICE}/*.cfg ${INSTALL}/usr/config/emulationstation
 
 	if [ "${DEVICE}" == "RG552" ]
 	then
