@@ -21,9 +21,8 @@ then
   if [[ "${DEVICE}" =~ RG351 ]]
   then
     PKG_MAKE_OPTS_TARGET=" platform=RG351x"
-  elif [[ "${DEVICE}" =~ RG552 ]]
-  then
-    PKG_MAKE_OPTS_TARGET=" platform=RG552"
+  else
+    PKG_MAKE_OPTS_TARGET=" platform=${DEVICE}"
   fi
 else
   make_target() {
