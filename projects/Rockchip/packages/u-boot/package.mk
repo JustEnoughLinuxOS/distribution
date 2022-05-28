@@ -22,7 +22,7 @@ fi
 
 if [[ "${DEVICE}" =~ RG503 ]]
 then
-  PKG_URL="git@github.com:JustEnoughLinuxOS/rk356x-uboot.git"
+  PKG_URL="https://JustEnoughLinuxOS/rk356x-uboot.git"
   PKG_VERSION="dfd1bcb"
 fi
 
