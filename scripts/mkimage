@@ -74,12 +74,13 @@ then
 fi
 
 # create part1
-echo "image: creating boot partition..."
+echo "image: creating part1..."
 SYSTEM_PART_END=$(( ${SYSTEM_PART_START} + (${SYSTEM_SIZE} * 1024 * 1024 / 512) - 1 ))
-parted -s "${DISK}" -a min unit s mkpart boot fat32 ${SYSTEM_PART_START} ${SYSTEM_PART_END}
-
-if [ "${PARTITION_TABLE}" = "mbr" ] && [ "${BOOTLOADER}" = "syslinux" ]
-then
+if [ "${PARTITION_TABLE}" = "gpt" ]; then
+  parted -s "${DISK}" -a min unit s mkpart system fat32 ${SYSTEM_PART_START} ${SYSTEM_PART_END}
+  #parted -s "${DISK}" set 1 legacy_boot on
+else
+  parted -s "${DISK}" -a min unit s mkpart primary fat32 ${SYSTEM_PART_START} ${SYSTEM_PART_END}
   parted -s "${DISK}" set 1 boot on
 fi
 sync
