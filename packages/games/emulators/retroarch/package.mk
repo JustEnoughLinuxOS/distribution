@@ -36,7 +36,7 @@ pre_configure_target() {
                              --enable-opengles3_1 \
                              --enable-kms \
                              --disable-mali_fbdev \
-                             --disable-odroidgo2"
+                             --enable-odroidgo2"
 
   if [ ${ARCH} == "arm" ]; then
     PKG_CONFIGURE_OPTS_TARGET+=" --enable-neon"
