@@ -56,7 +56,7 @@ if [ "${BOOT_INI}" == true ]
 then
   echo "boot: create boot.ini..."
   cat >${INSTALL}/usr/share/bootloader/boot.ini <<EOF
-jelos-uboot-config
+odroidgoa-uboot-config
 
 setenv fdt_addr_r "0x01f00000"
 setenv dtb_name "${DEVICE_DTB}.dtb"
