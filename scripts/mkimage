@@ -63,26 +63,19 @@ parted -s "${DISK}" mklabel ${PARTITION_TABLE}
 if [ "${PARTITION_TABLE}" = "gpt" ] && [ "${BOOTLOADER}" = "u-boot" ]
 then
   echo "image: creating SPL partition(s)."
-  /usr/sbin/parted -s "${DISK}" unit s mkpart uboot 16384 24575 >/dev/null 2>&1
-  if [ -e "${RELEASE_DIR}/3rdparty/bootloader/trust.img" ]
-  then
-    /usr/sbin/parted -s "${DISK}" unit s mkpart trust 24576 32767 >/dev/null 2>&1
-  elif [ -e "${RELEASE_DIR}/3rdparty/bootloader/resource.img" ]
-  then
-    /usr/sbin/parted -s "${DISK}" unit s mkpart resource 24576 32767 >/dev/null 2>&1
-  fi
+  parted -s "${DISK}" unit s mkpart uboot 16384 24575 >/dev/null 2>&1
+  parted -s "${DISK}" unit s mkpart resource 24576 32767 >/dev/null 2>&1
 fi
 
 # create part1
 echo "image: creating part1..."
 SYSTEM_PART_END=$(( ${SYSTEM_PART_START} + (${SYSTEM_SIZE} * 1024 * 1024 / 512) - 1 ))
 if [ "${PARTITION_TABLE}" = "gpt" ]; then
-  parted -s "${DISK}" -a min unit s mkpart system fat32 ${SYSTEM_PART_START} ${SYSTEM_PART_END}
-  #parted -s "${DISK}" set 1 legacy_boot on
+  parted -s "${DISK}" -a min unit s mkpart boot fat32 ${SYSTEM_PART_START} ${SYSTEM_PART_END}
 else
   parted -s "${DISK}" -a min unit s mkpart primary fat32 ${SYSTEM_PART_START} ${SYSTEM_PART_END}
-  parted -s "${DISK}" set 1 boot on
 fi
+parted -s "${DISK}" set 1 boot on
 sync
 
 # create part2
