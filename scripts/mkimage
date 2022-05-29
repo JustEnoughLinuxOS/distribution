@@ -64,8 +64,13 @@ if [ "${PARTITION_TABLE}" = "gpt" ] && [ "${BOOTLOADER}" = "u-boot" ]
 then
   echo "image: creating SPL partition(s)."
   /usr/sbin/parted -s "${DISK}" unit s mkpart uboot 16384 24575 >/dev/null 2>&1
-  /usr/sbin/parted -s "${DISK}" unit s mkpart resource 24576 32767 >/dev/null 2>&1
-  parted -s "${DISK}" set 1 boot on
+  if [ -e "${RELEASE_DIR}/3rdparty/bootloader/trust.img" ]
+  then
+    /usr/sbin/parted -s "${DISK}" unit s mkpart trust 24576 32767 >/dev/null 2>&1
+  elif [ -e "${RELEASE_DIR}/3rdparty/bootloader/resource.img" ]
+  then
+    /usr/sbin/parted -s "${DISK}" unit s mkpart resource 24576 32767 >/dev/null 2>&1
+  fi
 fi
 
 # create part1

@@ -23,7 +23,7 @@ fi
 
 if [ "${PKG_SOC}" = "rk356x" ]
 then
-  echo "uboot: copy fit/uboot.itb to uboot.img"
+  echo "uboot: copy fit uboot image to ${INSTALL}/usr/share/bootloader..."
   cp -av uboot.img ${INSTALL}/usr/share/bootloader
 else
   echo "uboot: build loader image uboot.img at ${PKG_LOAD_ADDR}..."
