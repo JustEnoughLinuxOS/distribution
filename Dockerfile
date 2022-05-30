@@ -1,8 +1,8 @@
 FROM ubuntu:20.04
 
-RUN apt-get update  \
+RUN apt update  \
     && DEBIAN_FRONTEND=noninteractive \
-      apt-get install -y \
+      apt install -y \
       gcc make git unzip wget \
       xz-utils libsdl2-dev libsdl2-mixer-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev \
       rapidjson-dev libasound2-dev libgl1-mesa-dev build-essential libboost-all-dev cmake fonts-droid-fallback \
@@ -11,8 +11,8 @@ RUN apt-get update  \
       lzop libncurses5-dev device-tree-compiler u-boot-tools rsync p7zip unrar libparse-yapp-perl \
       zip binutils-aarch64-linux-gnu dos2unix p7zip-full libvpx-dev bsdmainutils bc meson p7zip-full \
       qemu-user-binfmt zstd \
-      && apt-get autoremove --purge -y \
-      && apt-get clean -y \
+      && apt autoremove --purge -y \
+      && apt clean -y \
       && rm -rf /var/lib/apt/lists/*
 
 RUN adduser --disabled-password --gecos '' docker
