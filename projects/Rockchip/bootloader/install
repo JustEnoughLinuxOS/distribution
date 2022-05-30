@@ -7,6 +7,19 @@ source ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
 
 if [ -n "${PKG_DATAFILE}" -a -n "${PKG_LOADER}" ]; then
   echo "loader: Make idbloader.img from ${PKG_DATAFILE}:${PKG_LOADER}..."
+  if [ "${PKG_SOC}" = "rk356x" ]
+  then
+    tools/mkimage -n ${PKG_SOC} -T rksd -d ${PKG_DATAFILE}:${PKG_LOADER} -C bzip2 idbloader.img
+  else
+    tools/mkimage -n ${PKG_SOC} -T rksd -d "${PKG_DATAFILE}" -C bzip2 idbloader.img
+    cat "${PKG_LOADER}" >> idbloader.img
+  fi
+fi
+
+cp -av idbloader.img ${INSTALL}/usr/share/bootloader
+
+if [ -n "${PKG_DATAFILE}" -a -n "${PKG_LOADER}" ]; then
+  echo "loader: Make idbloader.img from ${PKG_DATAFILE}:${PKG_LOADER}..."
   if [[ "${DEVICE}" =~ RG351 ]]
   then
     tools/mkimage -n ${PKG_SOC} -T rksd -d "${PKG_DATAFILE}" -C bzip2 idbloader.img
