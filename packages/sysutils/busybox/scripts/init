@@ -496,7 +496,7 @@ load_splash() {
       fi
 
       if [ -n "$SPLASHIMAGE" -a -f "$SPLASHIMAGE" ]; then
-	if [ -z "${SPLASH_LOADER}" ] || [ ! "${SPLASH_LOADER}" = "imagemagik" ]
+	if [ -z "${SPLASH_LOADER}" ] || [ ! "${SPLASH_LOADER}" = "imagemagick" ]
 	then
           ply-image ${SPLASHIMAGE} > /dev/null 2>&1
 	else
