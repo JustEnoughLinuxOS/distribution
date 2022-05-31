@@ -137,6 +137,11 @@ EOF
     sed -i "s#audio.volume=.*\$#audio.volume=100#g" ${INSTALL}/usr/config/system/configs/system.cfg
   fi
 
+  if [[ "${DEVICE}" =~ RG503 ]]
+  then
+    sed -i "s#.integerscale=1#.integerscale=0#g" ${INSTALL}/usr/config/system/configs/system.cfg
+  fi
+
   ### Defaults for non-main builds.
   BUILD_BRANCH="$(git branch --show-current)"
   if [[ ! "${BUILD_BRANCH}" =~ main ]]
