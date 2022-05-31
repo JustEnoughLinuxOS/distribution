@@ -18,18 +18,6 @@ fi
 
 cp -av idbloader.img ${INSTALL}/usr/share/bootloader
 
-if [ -n "${PKG_DATAFILE}" -a -n "${PKG_LOADER}" ]; then
-  echo "loader: Make idbloader.img from ${PKG_DATAFILE}:${PKG_LOADER}..."
-  if [[ "${DEVICE}" =~ RG351 ]]
-  then
-    tools/mkimage -n ${PKG_SOC} -T rksd -d "${PKG_DATAFILE}" -C bzip2 idbloader.img
-    cat "${PKG_LOADER}" >> idbloader.img
-  else
-    tools/mkimage -n ${PKG_SOC} -T rksd -d ${PKG_DATAFILE}:${PKG_LOADER} -C bzip2 idbloader.img
-    cp -av idbloader.img ${INSTALL}/usr/share/bootloader
-  fi
-fi
-
 if [ ! -n "${PKG_LOAD_ADDR}" ]; then
   PKG_LOAD_ADDR="0x00200000"
 fi
