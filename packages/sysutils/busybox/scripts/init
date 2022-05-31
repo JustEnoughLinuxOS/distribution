@@ -496,12 +496,7 @@ load_splash() {
       fi
 
       if [ -n "$SPLASHIMAGE" -a -f "$SPLASHIMAGE" ]; then
-	if [ "${SPLASH_LOADER}" = "imagemagick" ]
-	then
-	  convert "${SPLASHIMAGE}" -background black -gravity center bgra:/dev/fb0
-	else
-          ply-image ${SPLASHIMAGE} > /dev/null 2>&1
-	fi
+        ply-image ${SPLASHIMAGE} > /dev/null 2>&1
       fi
 
       debug_msg "Framebuffer vertical res: $vres"
