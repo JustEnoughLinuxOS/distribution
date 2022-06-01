@@ -1,0 +1,74 @@
+#!/bin/sh
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2022-present kkoshelev
+
+echo "wg-genconfig script generates WireGuard VPN config files for both device and server."
+echo 
+
+SRV_PUBLIC_IP=$(curl -4 -s ifconfig.co)
+PORT=51820
+WG_NET=10.111.10
+# Make sure that interface name matches main interface
+HOST_IFC=eth0 
+
+PVT_KEY=$(wg genkey)
+PUB_KEY=$(wg pubkey <<< "$PVT_KEY")
+
+SRV_PVT_KEY=$(wg genkey)
+SRV_PUB_KEY=$(wg pubkey <<< "$SRV_PVT_KEY")
+
+# Server config file
+read -r -d '' SRV_CONF << EOF
+[Interface]
+PrivateKey = $SRV_PVT_KEY
+# PublicKey = $SRV_PUB_KEY
+Address = $WG_NET.1/24
+ListenPort = $PORT
+
+# If you want to access other devices on the same network,
+# you need to enable SNAT, the lines below.
+# Make sure that $HOST_IFC matches your main network interface.
+#PostUp = echo 1 > /proc/sys/net/ipv4/ip_forward
+#PostUp = iptables -A FORWARD -i %i -j ACCEPT
+#PostUp = iptables -A FORWARD -o %i -j ACCEPT
+#PostUp = iptables -t nat -A POSTROUTING -s $WG_NET.0/24 -o $HOST_IFC -j MASQUERADE
+#PostDown = iptables -D FORWARD -i %i -j ACCEPT
+#PostDown = iptables -D FORWARD -o %i -j ACCEPT
+#PostDown = iptables -t nat -D POSTROUTING -s $WG_NET.0/24 -o $HOST_IFC -j MASQUERADE
+
+[Peer]
+PublicKey = $PUB_KEY
+AllowedIPs = $WG_NET.2/32
+EOF
+
+# Device config file
+read -r -d '' CONF << EOF
+[Interface]
+PrivateKey = $PVT_KEY
+Address = $WG_NET.2/24
+
+[Peer]
+PublicKey = $SRV_PUB_KEY
+AllowedIPs = 0.0.0.0/0
+Endpoint = $SRV_PUBLIC_IP:$PORT
+PersistentKeepalive = 25
+EOF
+
+echo "Generating /storage/.config/wireguard/wg0.conf file"
+cat > /storage/.config/wireguard/wg0.conf << EOF
+$CONF
+EOF
+
+echo "Generating /storage/.config/wireguard/wg0.conf.server file"
+cat > /storage/.config/wireguard/wg0.conf.server << EOF
+$SRV_CONF
+EOF
+
+echo 
+
+cat << EOF
+Use the following config on the server:
+ --- server config ---
+$SRV_CONF
+ ---
+EOF
