@@ -95,9 +95,10 @@ fi
 ### Set the performance mode
 if [ $(get_setting "maxperf" "${PLATFORM}" "${ROMNAME##*/}") == "0" ]
 then
-  normperf &
+  DEVICE_CPU_GOVERNOR=$(get_setting system.cpugovernor)
+  ${DEVICE_CPU_GOVERNOR} &
 else
-  maxperf &
+  performance &
 fi
 
 ### Set the cores to use
@@ -188,7 +189,8 @@ function quit() {
 	bluetooth enable
 	jslisten stop
 	clear_screen
-	normperf
+	DEVICE_CPU_GOVERNOR=$(get_setting system.cpugovernor)
+	${DEVICE_CPU_GOVERNOR}
 	set_audio default
 	exit $1
 }
