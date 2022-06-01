@@ -1,4 +1,5 @@
 #!/bin/sh
+# SPDX-License-Identifier: Apache-2.0
 # Copyright (C) 2022-present kkoshelev
 
 echo "wg-genconfig script generates WireGuard VPN config files for both device and server."
