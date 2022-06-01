@@ -49,3 +49,11 @@ do
   rm -f /storage/.config/emulationstation/${es_cfg}
   ln -s /usr/config/emulationstation/${es_cfg} /storage/.config/emulationstation/${es_cfg}
 done
+
+### Link themes
+cd /storage/.config/emulationstation/themes
+for theme in /usr/share/themes/*
+do
+  ln -sf ${theme} .
+done
+cd -

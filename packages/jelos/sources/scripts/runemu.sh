@@ -95,6 +95,7 @@ fi
 ### Set the performance mode
 if [ $(get_setting "maxperf" "${PLATFORM}" "${ROMNAME##*/}") == "0" ]
 then
+  DEVICE_CPU_GOVERNOR=$(get_setting system.cpugovernor)
   ${DEVICE_CPU_GOVERNOR} &
 else
   performance &
@@ -188,6 +189,7 @@ function quit() {
 	bluetooth enable
 	jslisten stop
 	clear_screen
+	DEVICE_CPU_GOVERNOR=$(get_setting system.cpugovernor)
 	${DEVICE_CPU_GOVERNOR}
 	set_audio default
 	exit $1

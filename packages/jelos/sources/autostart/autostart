@@ -43,5 +43,6 @@ fi
 
 clear >/dev/console 2>&1 >>${BOOTLOG}
 
+DEVICE_CPU_GOVERNOR=$(get_setting system.cpugovernor)
 ${DEVICE_CPU_GOVERNOR} 2>&1 >>${BOOTLOG}
 date 2>&1 >>${BOOTLOG}
