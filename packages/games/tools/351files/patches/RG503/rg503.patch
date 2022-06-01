@@ -27,7 +27,7 @@ index 92d1a01..db4fec4 100644
 +   #define FONT_NAME_MONO           "NotoSansMono-Regular.ttf"
 +   #define FONT_SIZE                24
 +   #define LINE_HEIGHT              36
-+   #define ICON_SIZE                29
++   #define ICON_SIZE                32
 +   #define MARGIN_X                 12
 +   #define KEYBOARD_MARGIN          10
 +   #define KEYBOARD_KEY_SPACING     5
