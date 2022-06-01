@@ -1,3 +1,4 @@
 np2kai # Last major commit before hiatus is broken
 vicesa # Doesn't support updating with the script.
 PPSSPPSDL # non-buffered rendering is still broken.
+pcsx_rearmed # Blocked by https://github.com/libretro/pcsx_rearmed/commit/b012a437739802ba3f35827b17469ea7a8b7953c
