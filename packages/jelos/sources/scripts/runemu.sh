@@ -188,7 +188,7 @@ function quit() {
 	bluetooth enable
 	jslisten stop
 	clear_screen
-	normperf
+	${DEVICE_CPU_GOVERNOR}
 	set_audio default
 	exit $1
 }
