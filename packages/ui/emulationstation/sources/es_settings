@@ -29,7 +29,7 @@ then
     export I18NPATH=$i18npath
     performance 
     /usr/bin/localedef -f $charmap -i $locale $localepath
-    ${CPU_GOVERNOR}
+    ${DEVICE_CPU_GOVERNOR}
   fi
 
   export LOCPATH=$locpath
