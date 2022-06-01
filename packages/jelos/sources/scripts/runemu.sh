@@ -95,9 +95,9 @@ fi
 ### Set the performance mode
 if [ $(get_setting "maxperf" "${PLATFORM}" "${ROMNAME##*/}") == "0" ]
 then
-  normperf &
+  ${CPU_GOVERNOR} &
 else
-  maxperf &
+  performance &
 fi
 
 ### Set the cores to use

@@ -16,12 +16,16 @@ set_gov() {
   done
 }
 
-maxperf() {
+performance() {
   set_gov performance
 }
 
-normperf() {
+ondemand() {
   set_gov ondemand
+}
+
+interactive() {
+  set_gov interactive
 }
 
 powersave() {
