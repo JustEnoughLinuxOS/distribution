@@ -6,11 +6,10 @@ Just Enough Linux Operating System (JELOS) is a simple Linux distribution for AR
 * A 64bit Linux Operating System.
 * An easy to use interface using EmulationStation
 * Provides RetroArch, a variety of cores, Stand Alone Emulators, PortMaster, and ThemeMaster.
-* Offers overclock and cooling profile support configurable globally, per system, or per game.
 * Supports FAT32, ExFAT, and EXT4 file systems on devices with a second card slot.
 * 2.4GHz and 5GHz 802.11 A/B/G/N/AC WIFI support.
 * Online updates for easy access to stable or development builds.
-* Available for the Anbernic RG552, RG351P/M, RG351MP, and the RG351V.
+* Supports Anbernic's RG552, RG503, RG351P/M, RG351MP, and RG351V.
 * Developed by a small, friendly community.
 
 ## Licenses
@@ -48,6 +47,8 @@ limitations under the License.
 * Decompress the image.
 * Write the image to an SDCARD using an imaging tool.  Common imaging tools include [Balena Etcher](https://www.balena.io/etcher/), [Raspberry Pi Imager](https://www.raspberrypi.com/software/), and [Win32 Disk Imager](https://sourceforge.net/projects/win32diskimager/).  If you're skilled with the command line, dd works fine too.
 
+> This repository hosts stable versions of JELOS.  If you would like to install the unstable development version, please visit the [development build repository](https://github.com/JustEnoughLinuxOS/distribution-dev).
+
 ## Upgrading
 * Download and install the update online via the System Settings menu.
 * Download the latest [version of JELOS](https://github.com/JustEnoughLinuxOS/distribution/releases) (.tar) for your device.
@@ -69,10 +70,13 @@ limitations under the License.
 
 ## Documentation
 * [Home](https://github.com/JustEnoughLinuxOS/distribution/wiki)
+* [Donating to JELOS](https://github.com/JustEnoughLinuxOS/distribution/wiki/Donating-to-JELOS)
 * [Frequently asked Questions](https://github.com/JustEnoughLinuxOS/distribution/wiki/Frequently-Asked-Questions)
 * [HotKeys](https://github.com/JustEnoughLinuxOS/distribution/wiki/Hotkeys)
 * [Emulators and Game Engines](https://github.com/JustEnoughLinuxOS/distribution/wiki/JELOS-emulators-and-game-engines)
+* [Moonlight Game Streaming](https://github.com/JustEnoughLinuxOS/distribution/wiki/Moonlight-Game-Streaming)
 * [Using Cloud Drives](https://github.com/JustEnoughLinuxOS/distribution/wiki/Using-Cloud-Drives)
+* [Wireguard VPN](https://github.com/JustEnoughLinuxOS/distribution/wiki/WireGuard-VPN)
 
 ## Credits
 Like any Linux distribution, this project is not the work of one person.  It is the work of many persons all over the world who have developed the open source bits without which this project could not exist.  Special thanks to CoreELEC, LibreELEC, Anbernic, and to developers and contributors across the ARM handheld community.

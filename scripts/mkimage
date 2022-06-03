@@ -4,6 +4,7 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2016-2018 Team LibreELEC (https://libreelec.tv)
 # Copyright (C) 2018-present Team CoreELEC (https://coreelec.org)
+# Copyright (C) 2022-present Fewtarius
 
 ################################################################################
 # variables such as ${ROOT} ${PATH} etc... that are required for this
@@ -18,12 +19,6 @@ SAVE_ERROR="${LE_TMP}/save_error"
 if [ -z "${SYSTEM_SIZE}" -o -z "${SYSTEM_PART_START}" ]; then
   echo "mkimage: SYSTEM_SIZE and SYSTEM_PART_START must be configured!"
   exit 1
-fi
-
-if [ "${BOOTLOADER}" = "syslinux" ]; then
-  DISK_LABEL=gpt
-else
-  DISK_LABEL=msdos
 fi
 
 STORAGE_SIZE=32 # STORAGE_SIZE must be >= 32 !
@@ -62,21 +57,27 @@ trap cleanup SIGINT
 echo -e "\nimage: creating file $(basename ${DISK})..."
 dd if=/dev/zero of="${DISK}" bs=1M count="${DISK_SIZE}" conv=fsync >"${SAVE_ERROR}" 2>&1 || show_error
 
-# write a disklabel
-echo "image: creating ${DISK_LABEL} partition table..."
-parted -s "${DISK}" mklabel ${DISK_LABEL}
-sync
+echo "image: creating partition table (${PARTITION_TABLE})..."
+parted -s "${DISK}" mklabel ${PARTITION_TABLE}
+
+if [ "${PARTITION_TABLE}" = "gpt" ] && [ "${BOOTLOADER}" = "u-boot" ]
+then
+  echo "image: creating SPL partition(s)."
+  parted -s "${DISK}" unit s mkpart uboot 16384 24575 >/dev/null 2>&1
+  parted -s "${DISK}" unit s mkpart resource 24576 32767 >/dev/null 2>&1
+fi
 
 # create part1
 echo "image: creating part1..."
 SYSTEM_PART_END=$(( ${SYSTEM_PART_START} + (${SYSTEM_SIZE} * 1024 * 1024 / 512) - 1 ))
-if [ "${DISK_LABEL}" = "gpt" ]; then
-  parted -s "${DISK}" -a min unit s mkpart system fat32 ${SYSTEM_PART_START} ${SYSTEM_PART_END}
-  parted -s "${DISK}" set 1 legacy_boot on
+if [ "${PARTITION_TABLE}" = "gpt" ]; then
+  echo "image: Create boot partition."
+  parted -s "${DISK}" -a min unit s mkpart boot fat32 ${SYSTEM_PART_START} ${SYSTEM_PART_END}
 else
+  echo "image: Create primary partition."
   parted -s "${DISK}" -a min unit s mkpart primary fat32 ${SYSTEM_PART_START} ${SYSTEM_PART_END}
-  parted -s "${DISK}" set 1 boot on
 fi
+parted -s "${DISK}" set 1 boot on
 sync
 
 # create part2
@@ -84,20 +85,13 @@ echo "image: creating part2..."
 STORAGE_PART_START=$(( ${SYSTEM_PART_END} + 1 ))
 STORAGE_PART_END=$(( ${STORAGE_PART_START} + (${STORAGE_SIZE} * 1024 * 1024 / 512) - 1 ))
 if [ "${DISK_LABEL}" = "gpt" ]; then
-  parted -s "${DISK}" -a min unit s mkpart storage ext4 ${STORAGE_PART_START} ${STORAGE_PART_END}
-else
-  parted -s "${DISK}" -a min unit s mkpart primary ext4 ${STORAGE_PART_START} ${STORAGE_PART_END}
+    echo "image: Create storage partition."
+    parted -s "${DISK}" -a min unit s mkpart storage ext4 ${STORAGE_PART_START} ${STORAGE_PART_END}
+  else
+    echo "image: Create primary partition."
+    parted -s "${DISK}" -a min unit s mkpart primary ext4 ${STORAGE_PART_START} ${STORAGE_PART_END}
 fi
 sync
-
-if [ "${BOOTLOADER}" = "syslinux" ]; then
-  # write mbr
-  echo "image: writing mbr..."
-  MBR="${TOOLCHAIN}/share/syslinux/gptmbr.bin"
-  if [ -n "${MBR}" ]; then
-    dd bs=440 count=1 conv=fsync,notrunc if="${MBR}" of="${DISK}" >"${SAVE_ERROR}" 2>&1 || show_error
-  fi
-fi
 
 # create filesystem on part1
 echo "image: creating filesystem on part1..."

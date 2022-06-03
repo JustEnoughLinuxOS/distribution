@@ -24,3 +24,10 @@ ln -sf /tmp/cache /storage/cache/.cores
 ### We do not want to mount the cloud drive on startup
 ### so we'll reset the mount option to 0.
 set_setting clouddrive.mounted 0
+
+### If we don't have a default governor set, set it
+### to interactive.
+if [ -z "$(get_setting system.cpugovernor)" ]
+then
+  set_setting system.cpugovernor interactive
+fi

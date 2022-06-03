@@ -1,7 +1,8 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
-#      Copyright (C) 2020      351ELEC team (https://github.com/fewtarius/351ELEC)
+#      Copyright (C) 2020 351ELEC team (https://github.com/fewtarius/351ELEC)
+#      Copyright (C) 2022 Fewtarius
 #
 #  This Program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,8 +21,8 @@
 ################################################################################
 
 PKG_NAME="gpsp"
-PKG_VERSION="f0f0b31f9ab95946965b75fed8d31e19290f3d43"
-PKG_SHA256="724d293719887657bbba1fd73960d9fd9d399fb7ba61ffb14151929983e272fd"
+PKG_VERSION="03fc2b7dbf1d4cae6d87947c78fcc4dd231d72d9"
+PKG_SHA256="af2ad16764ad5e8fdc175ea03021aa26ab1abb1f87055898ab98f7a690bb0c52"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
@@ -42,9 +43,9 @@ then
   make_target() {
     if [[ "${DEVICE}" =~ RG351 ]]
     then
-      make CC=$CC platform=RG351x
+      make CC=${CC} platform=RG351x
     else
-      make CC=$CC platform=${DEVICE}
+      make CC=${CC} platform=${DEVICE}
     fi
   }
 else

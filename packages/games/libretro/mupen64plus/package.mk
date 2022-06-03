@@ -1,6 +1,7 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2022-present Fewtarius
 #
 #  This Program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -25,8 +26,8 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/mupen64plus-libretro"
-PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain nasm:host $OPENGLES"
+PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
+PKG_DEPENDS_TARGET="toolchain nasm:host ${OPENGLES}"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="mupen64plus + RSP-HLE + GLideN64 + libretro"
@@ -40,7 +41,7 @@ pre_make_target() {
 }
 
 pre_configure_target() {
-  CFLAGS="$CFLAGS -DLINUX -DEGL_API_FB"
+  CFLAGS="${CFLAGS} -DLINUX -DEGL_API_FB"
   CPPFLAGS="$CPPFLAGS -DLINUX -DEGL_API_FB"
   if [[ "${DEVICE}" =~ RG351 ]]
   then
@@ -48,10 +49,13 @@ pre_configure_target() {
   elif [[ "${DEVICE}" =~ RG552 ]]
   then
     PKG_MAKE_OPTS_TARGET=" platform=RK3399"
+  elif [[ "${DEVICE}" =~ RG503 ]]
+  then
+    PKG_MAKE_OPTS_TARGET=" platform=RK3566"
   fi
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp mupen64plus_libretro.so $INSTALL/usr/lib/libretro/
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  cp mupen64plus_libretro.so ${INSTALL}/usr/lib/libretro/
 }

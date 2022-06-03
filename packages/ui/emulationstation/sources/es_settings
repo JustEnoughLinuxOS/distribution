@@ -27,9 +27,9 @@ then
 
   if [ ! -d $localepath ]; then
     export I18NPATH=$i18npath
-    maxperf
+    performance 
     /usr/bin/localedef -f $charmap -i $locale $localepath
-    normperf
+    ${DEVICE_CPU_GOVERNOR}
   fi
 
   export LOCPATH=$locpath

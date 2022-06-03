@@ -93,12 +93,8 @@ if [[ "$arguments" == *"--connect"* ]]; then
 fi
 
 ### Set the performance mode
-if [ $(get_setting "maxperf" "${PLATFORM}" "${ROMNAME##*/}") == "0" ]
-then
-  normperf &
-else
-  maxperf &
-fi
+PERFORMANCE_MODE=$(get_setting "cpugovernor" "${PLATFORM}" "${ROMNAME##*/}")
+${PERFORMANCE_MODE}
 
 ### Set the cores to use
 CORES=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
@@ -188,7 +184,8 @@ function quit() {
 	bluetooth enable
 	jslisten stop
 	clear_screen
-	normperf
+	DEVICE_CPU_GOVERNOR=$(get_setting system.cpugovernor)
+	${DEVICE_CPU_GOVERNOR}
 	set_audio default
 	exit $1
 }

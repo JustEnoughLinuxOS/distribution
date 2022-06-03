@@ -3,23 +3,20 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="emulationstation"
-PKG_VERSION="6d3fd4b"
+PKG_VERSION="8421829"
 PKG_GIT_CLONE_BRANCH="main"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/JustEnoughLinuxOS/emulationstation"
 PKG_URL="${PKG_SITE}.git"
-PKG_DEPENDS_TARGET="boost toolchain SDL2 freetype curl freeimage bash rapidjson ${OPENGLES} SDL2_mixer fping p7zip vlc"
+PKG_DEPENDS_TARGET="boost toolchain SDL2 freetype curl freeimage bash rapidjson ${OPENGLES} SDL2_mixer fping p7zip vlc es-themes"
 PKG_NEED_UNPACK="busybox"
 PKG_SHORTDESC="Emulationstation emulator frontend"
 PKG_BUILD_FLAGS="-gold"
 GET_HANDLER_SUPPORT="git"
 
 PKG_PATCH_DIRS+="${DEVICE}"
-
-# themes for Emulationstation
-PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} es-theme-art-book-next"
 
 PKG_CMAKE_OPTS_TARGET=" -DENABLE_EMUELEC=1 -DGLES2=1 -DDISABLE_KODI=1 -DENABLE_FILEMANAGER=0 -DCEC=0"
 
@@ -50,18 +47,18 @@ PKG_CMAKE_OPTS_TARGET=" -DENABLE_EMUELEC=1 -DGLES2=1 -DDISABLE_KODI=1 -DENABLE_F
 # chmod +x ./emulationstation
 # ./emulationstation
 ##########################################################################################################
-if [ -n "$EMULATIONSTATION_SRC" ]; then
+if [ -n "${EMULATIONSTATION_SRC}" ]; then
 unpack() {
-	echo cp -PRf ${EMULATIONSTATION_SRC} ${PKG_BUILD}
+  echo cp -PRf ${EMULATIONSTATION_SRC} ${PKG_BUILD}
   cp -PRf ${EMULATIONSTATION_SRC} ${PKG_BUILD}
 }
 # add some symbolic links to point to a code in local source folder
 post_unpack() {
-	rm -rf "${PKG_BUILD}/es-app"
-	ln -sf "${EMULATIONSTATION_SRC}/es-app" "${PKG_BUILD}"
+  rm -rf "${PKG_BUILD}/es-app"
+  ln -sf "${EMULATIONSTATION_SRC}/es-app" "${PKG_BUILD}"
 
-	rm -rf "${PKG_BUILD}/es-core"
-	ln -sf "${EMULATIONSTATION_SRC}/es-core" "${PKG_BUILD}"
+  rm -rf "${PKG_BUILD}/es-core"
+  ln -sf "${EMULATIONSTATION_SRC}/es-core" "${PKG_BUILD}"
 }
 fi
 
@@ -97,7 +94,8 @@ makeinstall_target() {
 	ln -sf /storage/.config/emulationstation/themes ${INSTALL}/etc/emulationstation/
 	ln -sf /usr/config/emulationstation/es_systems.cfg ${INSTALL}/etc/emulationstation/es_systems.cfg
 
-        cp -rf ${PKG_DIR}/config/*.cfg ${INSTALL}/usr/config/emulationstation
+        cp -rf ${PKG_DIR}/config/common/*.cfg ${INSTALL}/usr/config/emulationstation
+	cp -rf ${PKG_DIR}/config/device/${DEVICE}/*.cfg ${INSTALL}/usr/config/emulationstation
 
 	if [ "${DEVICE}" == "RG552" ]
 	then
