@@ -3,7 +3,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="emulationstation"
-PKG_VERSION="d1097a0"
+PKG_VERSION="8421829"
 PKG_GIT_CLONE_BRANCH="main"
 PKG_REV="1"
 PKG_ARCH="any"
@@ -47,18 +47,18 @@ PKG_CMAKE_OPTS_TARGET=" -DENABLE_EMUELEC=1 -DGLES2=1 -DDISABLE_KODI=1 -DENABLE_F
 # chmod +x ./emulationstation
 # ./emulationstation
 ##########################################################################################################
-if [ -n "$EMULATIONSTATION_SRC" ]; then
+if [ -n "${EMULATIONSTATION_SRC}" ]; then
 unpack() {
-	echo cp -PRf ${EMULATIONSTATION_SRC} ${PKG_BUILD}
+  echo cp -PRf ${EMULATIONSTATION_SRC} ${PKG_BUILD}
   cp -PRf ${EMULATIONSTATION_SRC} ${PKG_BUILD}
 }
 # add some symbolic links to point to a code in local source folder
 post_unpack() {
-	rm -rf "${PKG_BUILD}/es-app"
-	ln -sf "${EMULATIONSTATION_SRC}/es-app" "${PKG_BUILD}"
+  rm -rf "${PKG_BUILD}/es-app"
+  ln -sf "${EMULATIONSTATION_SRC}/es-app" "${PKG_BUILD}"
 
-	rm -rf "${PKG_BUILD}/es-core"
-	ln -sf "${EMULATIONSTATION_SRC}/es-core" "${PKG_BUILD}"
+  rm -rf "${PKG_BUILD}/es-core"
+  ln -sf "${EMULATIONSTATION_SRC}/es-core" "${PKG_BUILD}"
 }
 fi
 
