@@ -47,6 +47,8 @@ limitations under the License.
 * Decompress the image.
 * Write the image to an SDCARD using an imaging tool.  Common imaging tools include [Balena Etcher](https://www.balena.io/etcher/), [Raspberry Pi Imager](https://www.raspberrypi.com/software/), and [Win32 Disk Imager](https://sourceforge.net/projects/win32diskimager/).  If you're skilled with the command line, dd works fine too.
 
+> This repository hosts stable versions of JELOS.  If you would like to install the unstable development version, please visit the [development build repository](https://github.com/JustEnoughLinuxOS/distribution-dev).
+
 ## Upgrading
 * Download and install the update online via the System Settings menu.
 * Download the latest [version of JELOS](https://github.com/JustEnoughLinuxOS/distribution/releases) (.tar) for your device.
@@ -68,10 +70,13 @@ limitations under the License.
 
 ## Documentation
 * [Home](https://github.com/JustEnoughLinuxOS/distribution/wiki)
+* [Donating to JELOS](https://github.com/JustEnoughLinuxOS/distribution/wiki/Donating-to-JELOS)
 * [Frequently asked Questions](https://github.com/JustEnoughLinuxOS/distribution/wiki/Frequently-Asked-Questions)
 * [HotKeys](https://github.com/JustEnoughLinuxOS/distribution/wiki/Hotkeys)
 * [Emulators and Game Engines](https://github.com/JustEnoughLinuxOS/distribution/wiki/JELOS-emulators-and-game-engines)
+* [Moonlight Game Streaming](https://github.com/JustEnoughLinuxOS/distribution/wiki/Moonlight-Game-Streaming)
 * [Using Cloud Drives](https://github.com/JustEnoughLinuxOS/distribution/wiki/Using-Cloud-Drives)
+* [Wireguard VPN](https://github.com/JustEnoughLinuxOS/distribution/wiki/WireGuard-VPN)
 
 ## Credits
 Like any Linux distribution, this project is not the work of one person.  It is the work of many persons all over the world who have developed the open source bits without which this project could not exist.  Special thanks to CoreELEC, LibreELEC, Anbernic, and to developers and contributors across the ARM handheld community.

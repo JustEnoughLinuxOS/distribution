@@ -17,6 +17,7 @@ on:
       - 'tools/**'
     branches:
       - dev 
+    types: [closed]
   workflow_dispatch:
 
 env:
@@ -25,6 +26,7 @@ env:
 jobs:
   launch-dev-release:
       runs-on: ubuntu-20.04
+      if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.merged == 'true' && github.event.label.name == 'build')
       steps:
         - uses: actions/checkout@v2
           name: checkout
@@ -45,7 +47,8 @@ jobs:
         - name: changes
           id: changes
           run: |
-               release_notes="$(git log --after="$(date --date="yesterday" +"%Y-%m-%d %H:%m")" --before="$(date +"%Y-%m-%d %H:%m")" --pretty=format:"* %h: %s")"
+               stable_commit="$(curl "https://api.github.com/repos/JustEnoughLinuxOS/distribution/git/refs/heads/main" 2>&1 | awk '/url/ {last=$2;n=NR} END{print last; }' | awk 'BEGIN {FS="/"}; {print substr($9, 1, length($9)-1)}')
+               release_notes="$(git log ${stable_commit}..HEAD --pretty=format:"* %h: %s")"
                release_notes="${release_notes//'%'/'%25'}"
                release_notes="${release_notes//$'\n'/'%0A'}"
                release_notes="${release_notes//$'\r'/'%0D'}"
