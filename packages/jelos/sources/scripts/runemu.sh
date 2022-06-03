@@ -93,13 +93,8 @@ if [[ "$arguments" == *"--connect"* ]]; then
 fi
 
 ### Set the performance mode
-if [ $(get_setting "maxperf" "${PLATFORM}" "${ROMNAME##*/}") == "0" ]
-then
-  DEVICE_CPU_GOVERNOR=$(get_setting system.cpugovernor)
-  ${DEVICE_CPU_GOVERNOR} &
-else
-  performance &
-fi
+PERFORMANCE_MODE=$(get_setting "cpugovernor" "${PLATFORM}" "${ROMNAME##*/}")
+${PERFORMANCE_MODE}
 
 ### Set the cores to use
 CORES=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")

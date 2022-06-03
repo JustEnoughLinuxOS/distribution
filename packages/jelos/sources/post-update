@@ -57,3 +57,6 @@ do
   ln -sf ${theme} .
 done
 cd -
+
+### Swap maxperf to cpugovernor=performance
+sed -i "s#maxperf=1#cpugovernor=performance#g" /storage/.config/system/configs/system.cfg
