@@ -83,6 +83,19 @@ makeinstall_target() {
   ln -s /storage/roms ${INSTALL}/roms
   ln -sf /storage/roms/opt ${INSTALL}/opt
 
+  ### Add some quality of life customizations for hardworking devs.
+  if [ -n "${JELOS_SSH_KEYS_FILE}" ]; then
+    mkdir -p ${INSTALL}/storage/.ssh
+    cp ${JELOS_SSH_KEYS_FILE} ${INSTALL}/storage/.ssh/authorized_keys
+  fi
+
+  if [ -n "${JELOS_WIFI_SSID}" ]; then
+    sed -i "s#wifi.enabled=0#wifi.enabled=1#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    cat <<EOF >> ${INSTALL}/usr/config/system/configs/system.cfg
+wifi.ssid=${JELOS_WIFI_SSID}
+wifi.key=${JELOS_WIFI_KEY}
+EOF
+  fi
 }
 
 post_install() {
