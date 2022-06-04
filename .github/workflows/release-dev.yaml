@@ -6,7 +6,7 @@
 
 name: release-dev
 on:
-  pull_request:
+  push:
     paths-ignore:
       - '.github/**'
       - '*.md'
@@ -17,7 +17,6 @@ on:
       - 'tools/**'
     branches:
       - dev 
-    types: [opened, closed, synchronize, ready_for_review, labeled]
   workflow_dispatch:
 
 env:
@@ -26,7 +25,6 @@ env:
 jobs:
   launch-dev-release:
       runs-on: ubuntu-20.04
-      if: github.event_name == 'workflow_dispatch' || (github.event.pull_request.merged == 'true' && github.event.label.name == 'build')
       steps:
         - uses: actions/checkout@v2
           name: checkout
