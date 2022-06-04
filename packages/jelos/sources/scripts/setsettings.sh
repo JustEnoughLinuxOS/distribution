@@ -500,8 +500,7 @@ fi
 get_setting "tatemode"
 MAME2003DIR="/storage/.config/retroarch/config/MAME 2003-Plus"
 MAME2003REMAPDIR="/storage/remappings/MAME 2003-Plus"
-if [ "${EES}" == "1" ]
-then
+if [ "${EES}" == "1" ]; then
 	if [ ! -d "${MAME2003DIR}" ]
 	then
 		mkdir -p "${MAME2003DIR}"
