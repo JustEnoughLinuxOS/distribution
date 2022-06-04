@@ -116,7 +116,7 @@ COOLINGPROFILE=$(get_setting cooling.profile)
 OVERCLOCK=$(get_setting "overclock" "${PLATFORM}" "${ROMNAME##*/}")
 if [ ! "${OVERCLOCK}" = "system" ]
 then
-  if [ ! -z "${OVERCLOCK}" ]
+  if [ ! -z "${OVERCLOCK}" ] && [ -e "/usr/bin/overclock" ]
   then
     /usr/bin/overclock ${OVERCLOCK}
   fi
