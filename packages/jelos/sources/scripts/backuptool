@@ -17,9 +17,6 @@ BACKUPFOLDER="/storage/roms/backup"
 BACKUPFILE="$BACKUPFOLDER/JELOS_BACKUP.zip"
 mkdir -p $BACKUPFOLDER
 
-echo $BACKUPFOLDER
-echo $BACKUPFILE
-
 DEFAULT=(
     /storage/.config/fancontrol.conf
     /storage/.config/backuptool.conf
@@ -36,10 +33,8 @@ DEFAULT=(
 
 if [ -f $BACKUPFILE ]
 then
-    echo "found backup file"
     TODAY=`date +%y-%m-%d_%H_%M_%S`
     ARCHIVEFILENAME="ARCHIVED_JELOS_BACKUP-$TODAY.zip"
-    echo $ARCHIVEFILENAME
     mv $BACKUPFILE "$BACKUPFOLDER/$ARCHIVEFILENAME"
 fi
 
