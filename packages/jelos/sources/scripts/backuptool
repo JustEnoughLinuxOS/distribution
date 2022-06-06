@@ -4,26 +4,72 @@
 # Copyright (C) 2020-present Shanti Gilbert (https://github.com/shantigilbert)
 # Copyright (C) 2020 Fewtarius (https://github.com/fewtarius)
 
-BACKUPFILE="/storage/roms/backup/BACKUP.zip"
-mkdir -p "/storage/roms/backup"
+# NOTE: to customize your backups, create a backuptool.conf file in
+# /storage/.config like this:
+
+# LOCATIONS=(
+#   /storage/.config/retroarch/*
+#   /storage/roms/savestates/*
+#   /some/other/folder/file.name*
+# )
+
+BACKUPFOLDER="/storage/roms/backup"
+BACKUPFILE="$BACKUPFOLDER/JELOS_BACKUP.zip"
+mkdir -p $BACKUPFOLDER
+
+echo $BACKUPFOLDER
+echo $BACKUPFILE
+
+DEFAULT=(
+    /storage/.config/fancontrol.conf
+    /storage/.config/backuptool.conf
+    /storage/.cache/bluetooth/*
+    /storage/.cache/connman*
+    /storage/.config/system/configs/system.cfg
+    /storage/.config/ppsspp/*
+    /storage/.config/retroarch/*
+    /storage/.config/moonlight/*
+    /storage/.config/game/*
+    /storage/.emulationstation/es_*.cfg
+    /storage/.emulationstation/scripts/*
+)
+
+if [ -f $BACKUPFILE ]
+then
+    echo "found backup file"
+    TODAY=`date +%y-%m-%d_%H_%M_%S`
+    ARCHIVEFILENAME="ARCHIVED_JELOS_BACKUP-$TODAY.zip"
+    echo $ARCHIVEFILENAME
+    mv $BACKUPFILE "$BACKUPFOLDER/$ARCHIVEFILENAME"
+fi
+
+if [ -e "/storage/.config/backuptool.conf" ]
+then
+    source /storage/.config/backuptool.conf
+    if [ ! $? = 0 ]
+    then
+        WARN="Error loading custom backuptool configs. Using defaults."
+        $DEBUG && echo "${WARN}"
+        logger -t backuptool "${WARN}"
+        COMPRESSLOCATIONS=(${DEFAULT[@]})
+    else
+        COMPRESSLOCATIONS=(${LOCATIONS[@]})
+    fi
+else
+    COMPRESSLOCATIONS=(${DEFAULT[@]})
+fi
 
 case "${1}" in
-  "restore")
-    systemctl stop emustation
-    unzip -o ${BACKUPFILE} -d /
-    systemctl start emustation
-  ;;
-  "backup")
-    [ -f "${BACKUPFILE}" ] && rm "${BACKUPFILE}"
-    [ -z "$2" ] && systemctl stop emustation
-    zip -9 -r ${BACKUPFILE} \
-    /storage/.cache/bluetooth/* \
-    /storage/.cache/connman* \
-    /storage/.config/system/configs/system.cfg \
-    /storage/.emulationstation/es_*.cfg \
-    /storage/.config/ppsspp/* \
-    /storage/.config/retroarch/* \
-    /storage/.emulationstation/scripts/*
-    [ -z "${2}" ] && systemctl start emustation
-  ;;
+    "restore")
+        systemctl stop emustation
+        unzip -o ${BACKUPFILE} -d /
+        systemctl start emustation
+    ;;
+    "backup")
+        [ -f "${BACKUPFILE}" ] && rm "${BACKUPFILE}"
+        [ -z "$2" ] && systemctl stop emustation
+        zip -9 -r ${BACKUPFILE} \
+        ${COMPRESSLOCATIONS[@]}
+        [ -z "${2}" ] && systemctl start emustation
+    ;;
 esac
