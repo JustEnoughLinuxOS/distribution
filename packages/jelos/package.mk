@@ -1,6 +1,18 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (C) 2020-present Fewtarius
 
+# This is the root package where all dependencies are combined together.
+
+# For developers:
+# When making a custom build, you can have several customizations using env variables.
+# 
+# - Pre-register WiFi hotspot on the device
+#   JELOS_WIFI_SSID / JELOS_WIFI_KEY should define SSID and password for your network.
+#
+# - Pre-load SSH keys to your device
+#   JELOS_SSH_KEYS_FILE should point to authorized_keys ssh key file.
+#
+
 PKG_NAME="jelos"
 PKG_VERSION="$(date +%Y%m%d)"
 PKG_ARCH="any"
@@ -85,8 +97,8 @@ makeinstall_target() {
 
   ### Add some quality of life customizations for hardworking devs.
   if [ -n "${JELOS_SSH_KEYS_FILE}" ]; then
-    mkdir -p ${INSTALL}/storage/.ssh
-    cp ${JELOS_SSH_KEYS_FILE} ${INSTALL}/storage/.ssh/authorized_keys
+    mkdir -p ${INSTALL}/usr/config/ssh
+    cp ${JELOS_SSH_KEYS_FILE} ${INSTALL}/usr/config/ssh/authorized_keys
   fi
 
   if [ -n "${JELOS_WIFI_SSID}" ]; then
