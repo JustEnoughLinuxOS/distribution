@@ -85,8 +85,8 @@ makeinstall_target() {
 
   ### Add some quality of life customizations for hardworking devs.
   if [ -n "${JELOS_SSH_KEYS_FILE}" ]; then
-    mkdir -p ${INSTALL}/storage/.ssh
-    cp ${JELOS_SSH_KEYS_FILE} ${INSTALL}/storage/.ssh/authorized_keys
+    mkdir -p ${INSTALL}/usr/config/ssh
+    cp ${JELOS_SSH_KEYS_FILE} ${INSTALL}/usr/config/ssh/authorized_keys
   fi
 
   if [ -n "${JELOS_WIFI_SSID}" ]; then

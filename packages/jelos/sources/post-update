@@ -25,6 +25,10 @@ cp -r /usr/share/JelosAddOns /storage/roms/ports/
 mv /storage/roms/ports/JelosAddOns/JelosAddOns.sh /storage/roms/ports/JelosAddOns.sh
 rm -rf /storage/.config/modules/Drastic*
 
+if [ -e /usr/config/ssh/authorized_keys ]; then
+  cp /usr/config/ssh/authorized_keys /storage/.ssh
+fi
+
 rsync --ignore-existing /usr/config/rsync-rules.conf /storage/.config/
 rsync --ignore-existing /usr/config/rsync.conf /storage/.config/
 
