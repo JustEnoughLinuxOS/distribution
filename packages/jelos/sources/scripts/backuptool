@@ -14,8 +14,8 @@
 # )
 
 BACKUPFOLDER="/storage/roms/backup"
-BACKUPFILE="$BACKUPFOLDER/JELOS_BACKUP.zip"
-mkdir -p $BACKUPFOLDER
+BACKUPFILE="${BACKUPFOLDER}/JELOS_BACKUP.zip"
+mkdir -p ${BACKUPFOLDER}
 
 DEFAULT=(
     /storage/.config/fancontrol.conf
@@ -31,20 +31,13 @@ DEFAULT=(
     /storage/.emulationstation/scripts/*
 )
 
-if [ -f $BACKUPFILE ]
-then
-    TODAY=`date +%y-%m-%d_%H_%M_%S`
-    ARCHIVEFILENAME="ARCHIVED_JELOS_BACKUP-$TODAY.zip"
-    mv $BACKUPFILE "$BACKUPFOLDER/$ARCHIVEFILENAME"
-fi
-
 if [ -e "/storage/.config/backuptool.conf" ]
 then
     source /storage/.config/backuptool.conf
     if [ ! $? = 0 ]
     then
         WARN="Error loading custom backuptool configs. Using defaults."
-        $DEBUG && echo "${WARN}"
+        ${DEBUG} && echo "${WARN}"
         logger -t backuptool "${WARN}"
         COMPRESSLOCATIONS=(${DEFAULT[@]})
     else
@@ -61,6 +54,12 @@ case "${1}" in
         systemctl start emustation
     ;;
     "backup")
+        if [ -f ${BACKUPFILE} ]
+        then
+            TODAY=`date +%y-%m-%d_%H_%M_%S`
+            ARCHIVEFILENAME="ARCHIVED_JELOS_BACKUP-${TODAY}.zip"
+            mv ${BACKUPFILE} "${BACKUPFOLDER}/${ARCHIVEFILENAME}"
+        fi
         [ -f "${BACKUPFILE}" ] && rm "${BACKUPFILE}"
         [ -z "$2" ] && systemctl stop emustation
         zip -9 -r ${BACKUPFILE} \
