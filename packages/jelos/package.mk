@@ -1,18 +1,6 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (C) 2020-present Fewtarius
 
-# This is the root package where all dependencies are combined together.
-
-# For developers:
-# When making a custom build, you can have several customizations using env variables.
-# 
-# - Pre-register WiFi hotspot on the device
-#   JELOS_WIFI_SSID / JELOS_WIFI_KEY should define SSID and password for your network.
-#
-# - Pre-load SSH keys to your device
-#   JELOS_SSH_KEYS_FILE should point to authorized_keys ssh key file.
-#
-
 PKG_NAME="jelos"
 PKG_VERSION="$(date +%Y%m%d)"
 PKG_ARCH="any"
