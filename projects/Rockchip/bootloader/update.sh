@@ -1,3 +1,4 @@
+#!/bin/sh
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2017-2021 Team LibreELEC (https://libreelec.tv)
 # Copyright (C) 2021-present Fewtarius
@@ -79,7 +80,7 @@ fi
 
 # update bootloader
 
-if [[ "${HW_CPU}" =~ RK356 ]]
+if [ "$(awk '/^Hardware/ {print $4}' /proc/cpuinfo)" = "RG503" ]
 then
   IDBSEEK="bs=512 seek=64"
 else
