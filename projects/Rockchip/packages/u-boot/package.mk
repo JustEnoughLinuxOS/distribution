@@ -56,6 +56,7 @@ make_target() {
     if [ "${PKG_SOC}" = "rk356x" ]
     then
       cd ${PKG_BUILD}
+      git checkout make.sh
       echo "Making for GPT (${UBOOT_DTB})..."
       sed -i "s|TOOLCHAIN_ARM64=.*|TOOLCHAIN_ARM64=${TOOLCHAIN}/bin|" make.sh
       sed -i "s|aarch64-linux-gnu|${TARGET_NAME}|g" make.sh
