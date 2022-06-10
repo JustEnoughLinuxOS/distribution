@@ -64,3 +64,6 @@ cd -
 
 ### Swap maxperf to cpugovernor=performance
 sed -i "s#maxperf=1#cpugovernor=performance#g" /storage/.config/system/configs/system.cfg
+
+### Disable WIFI power saving by default
+set_setting wifi.powersave 0
