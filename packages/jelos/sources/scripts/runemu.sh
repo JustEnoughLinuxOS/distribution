@@ -116,7 +116,7 @@ COOLINGPROFILE=$(get_setting cooling.profile)
 OVERCLOCK=$(get_setting "overclock" "${PLATFORM}" "${ROMNAME##*/}")
 if [ ! "${OVERCLOCK}" = "system" ]
 then
-  if [ ! -z "${OVERCLOCK}" ]
+  if [ ! -z "${OVERCLOCK}" ] && [ -e "/usr/bin/overclock" ]
   then
     /usr/bin/overclock ${OVERCLOCK}
   fi
@@ -297,7 +297,10 @@ else
 
 	### Check if we need retroarch 32 bits or 64 bits
 	RABIN="retroarch"
-	if [[ "${CORE}" =~ "pcsx_rearmed32" ]] || [[ "${CORE}" =~ "parallel_n64" ]] || [[ "${CORE}" =~ "gpsp" ]]
+	if [[ "${CORE}" =~ pcsx_rearmed32 ]] || \
+           [[ "${CORE}" =~ parallel_n64 ]] || \
+           [[ "${CORE}" =~ gpsp ]] || \
+           [[ "${CORE}" =~ flycast32 ]]
 	then
 		export LD_LIBRARY_PATH="/usr/lib32"
 		RABIN="retroarch32"

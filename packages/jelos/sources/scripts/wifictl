@@ -27,6 +27,16 @@ fi
 
 WIFICFG="/storage/.cache/connman/wifi.config"
 
+set_powersave() {
+  ENABLED=$(get_setting wifi.powersave)
+  if [ "${ENABLED}" = "1" ]
+  then
+    iw wlan0 set power_save on
+  else
+    iw wlan0 set power_save off
+  fi
+}
+
 set_wifi() {
   case "${1}" in
     "enable")
@@ -43,6 +53,7 @@ Passphrase=${PSK}
 EOF
 
       connmanctl enable wifi 2>/dev/null
+      set_powersave 2>/dev/null
       connmanctl scan wifi 2>/dev/null
     ;;
     "disable")
@@ -59,6 +70,9 @@ EOF
     "scanlist")
       set_wifi scan 2>/dev/null
       set_wifi list 2>/dev/null
+    ;;
+    "setpowersave")
+      set_powersave 2>/dev/null
     ;;
   esac
 }

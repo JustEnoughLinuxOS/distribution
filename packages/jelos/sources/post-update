@@ -25,6 +25,10 @@ cp -r /usr/share/JelosAddOns /storage/roms/ports/
 mv /storage/roms/ports/JelosAddOns/JelosAddOns.sh /storage/roms/ports/JelosAddOns.sh
 rm -rf /storage/.config/modules/Drastic*
 
+if [ -e /usr/config/ssh/authorized_keys ]; then
+  cp /usr/config/ssh/authorized_keys /storage/.ssh
+fi
+
 rsync --ignore-existing /usr/config/rsync-rules.conf /storage/.config/
 rsync --ignore-existing /usr/config/rsync.conf /storage/.config/
 
@@ -60,3 +64,6 @@ cd -
 
 ### Swap maxperf to cpugovernor=performance
 sed -i "s#maxperf=1#cpugovernor=performance#g" /storage/.config/system/configs/system.cfg
+
+### Disable WIFI power saving by default
+set_setting wifi.powersave 0

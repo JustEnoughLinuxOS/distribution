@@ -67,6 +67,7 @@ makeinstall_target() {
 		libGLES \
 		libgnutls \
 		libgbm \
+		libgomp \
 		libidn2 \
 		libnettle \
 		libhogweed \

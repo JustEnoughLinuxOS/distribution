@@ -483,7 +483,6 @@ if [ $RA == 1 ]; then
 	[ "${EES}" == "1" ] && echo 'run_ahead_secondary_instance = "true"' >> ${RAAPPENDCONF} || echo 'run_ahead_secondary_instance = "false"' >> ${RAAPPENDCONF}
 fi
 
-
 ## D-Pad to Analogue support, option in ES is missing atm but is managed as global.analogue=1 in system.cfg (that is made by postupdate.sh)
 # Get configuration from system.cfg and set to retroarch.cfg
 get_setting "analogue"
@@ -492,6 +491,44 @@ if [ $RA == 1 ] || [ "${EES}" == "false" ] || [ "${EES}" == "0" ]; then
         echo 'input_player1_analog_dpad_mode = "0"' >> ${RAAPPENDCONF}
 else
         echo 'input_player1_analog_dpad_mode = "1"' >> ${RAAPPENDCONF}
+fi
+
+##
+## Tate Mode
+##
+
+get_setting "tatemode"
+MAME2003DIR="/storage/.config/retroarch/config/MAME 2003-Plus"
+MAME2003REMAPDIR="/storage/remappings/MAME 2003-Plus"
+if [ "${EES}" == "1" ]
+then
+	if [ ! -d "${MAME2003DIR}" ]
+	then
+		mkdir -p "${MAME2003DIR}"
+	fi
+
+        if [ ! -d "${MAME2003REMAPDIR}" ]
+        then
+                mkdir -p "${MAME2003REMAPDIR}"
+	fi
+
+	cp "/usr/config/retroarch/TATE-MAME 2003-Plus.rmp" "${MAME2003REMAPDIR}/MAME 2003-Plus.rmp"
+
+	if [ "$(grep mame2003-plus_tate_mode "${MAME2003DIR}/MAME 2003-Plus.opt" > /dev/null 2>&1)" ]
+	then
+		sed -i 's#mame2003-plus_tate_mode.*$#mame2003-plus_tate_mode = "enabled"#' "${MAME2003DIR}/MAME 2003-Plus.opt" 2>/dev/null
+	else
+		echo 'mame2003-plus_tate_mode = "enabled"' > "${MAME2003DIR}/MAME 2003-Plus.opt"
+	fi
+else
+	if [ -e "${MAME2003DIR}/MAME 2003-Plus.opt" ]
+	then
+		sed -i 's#mame2003-plus_tate_mode.*$#mame2003-plus_tate_mode = "disabled"#' "${MAME2003DIR}/MAME 2003-Plus.opt" 2>/dev/null
+	fi
+	if [ -e "${MAME2003REMAPDIR}/MAME 2003-Plus.rmp" ]
+	then
+		rm -f "${MAME2003REMAPDIR}/MAME 2003-Plus.rmp"
+	fi
 fi
 
 ##
