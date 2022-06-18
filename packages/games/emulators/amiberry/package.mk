@@ -21,7 +21,7 @@ pre_configure_target() {
     AMIBERRY_PLATFORM="PLATFORM=RG351x"
   elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
   then
-    AMIBERRY_PLATFORM="PLATFORM=RG503"
+    AMIBERRY_PLATFORM="PLATFORM=RK3566"
   else
     AMIBERRY_PLATFORM="PLATFORM=${DEVICE}"
   fi
