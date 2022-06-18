@@ -5,7 +5,7 @@ index 7b9afa5..bd964f1 100644
 @@ -1,5 +1,6 @@
  TARGET = 351Files
 
-+# DEVICE ?= RG353P
++# DEVICE ?= RG503
  # DEVICE ?= RG351P
  # DEVICE ?= RG351V
  # DEVICE ?= RGB10
@@ -17,8 +17,8 @@ index 92d1a01..db4fec4 100644
     #define KEYBOARD_MARGIN          8
     #define KEYBOARD_KEY_SPACING     4
 
-+// Parameters for RG353P
-+#elif defined(DEVICE_RG353P)
++// Parameters for RG503
++#elif defined(DEVICE_RG503)
 +   #define SCREEN_WIDTH             960
 +   #define SCREEN_HEIGHT            544
 +   #define HARDWARE_ACCELERATION    0

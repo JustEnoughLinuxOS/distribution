@@ -5,7 +5,7 @@ diff -rupN flycast.orig/Makefile flycast/Makefile
    WITH_DYNAREC=arm
    HAVE_GENERIC_JIT = 0
  
-+else ifeq ($(platform), RG353P)
++else ifeq ($(platform), RK3566)
 +        EXT ?= so
 +        TARGET := $(TARGET_NAME)_libretro.$(EXT)
 +        SHARED += -shared -Wl,--version-script=link.T

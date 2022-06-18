@@ -44,6 +44,9 @@ then
     if [[ "${DEVICE}" =~ RG351 ]]
     then
       make CC=${CC} platform=RG351x
+    elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
+    then
+      PKG_MAKE_OPTS_TARGET+=" platform=RK356x"
     else
       make CC=${CC} platform=${DEVICE}
     fi
