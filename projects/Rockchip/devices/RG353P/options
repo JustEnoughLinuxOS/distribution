@@ -26,11 +26,11 @@
     esac
 
   # Kernel target
-    DEVICE_NAME="RG503"
+    DEVICE_NAME="RG353P"
     KERNEL_TARGET="Image"
     BOOTLOADER="u-boot"
     PARTITION_TABLE="gpt"
-    DEVICE_DTB="rk3566-rg503-linux"
+    DEVICE_DTB="rk3566-rg353p-linux"
     UBOOT_DTB="rk3566"
     UBOOT_CONFIG="rk3568_defconfig"
     PKG_SOC="rk356x"

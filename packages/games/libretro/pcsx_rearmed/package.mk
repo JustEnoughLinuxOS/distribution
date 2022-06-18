@@ -20,6 +20,9 @@ make_target() {
   if [[ "${DEVICE}" =~ RG351 ]]
   then
     make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=RG351x
+  elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
+  then
+    make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=RK3566
   else
     make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=${DEVICE}
   fi

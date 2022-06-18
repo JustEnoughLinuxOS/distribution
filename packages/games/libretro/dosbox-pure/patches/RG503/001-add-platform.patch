@@ -5,7 +5,7 @@ diff -rupN dosbox-pure.orig/Makefile dosbox-pure/Makefile
  LDFLAGS += $(CPUFLAGS) -shared
  #LDFLAGS += -static-libstdc++ -static-libgcc #adds 1MB to output and still dynamically links against libc and libm
  
-+ifneq (,$(findstring RG503,$(platform)))
++ifneq (,$(findstring RK3566,$(platform)))
 +OUTNAME := dosbox_pure_libretro.so
 +BUILD    := RELEASE
 +BUILDDIR := release

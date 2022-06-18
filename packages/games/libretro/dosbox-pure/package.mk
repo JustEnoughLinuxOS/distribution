@@ -40,6 +40,9 @@ make_target() {
   if [[ "${DEVICE}" =~ RG351 ]]
   then
     PKG_MAKE_OPTS_TARGET+=" platform=RG351x"
+  elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
+  then
+    PKG_MAKE_OPTS_TARGET+=" platform=RK3566"
   else
     PKG_MAKE_OPTS_TARGET+=" platform=${DEVICE}"
   fi
