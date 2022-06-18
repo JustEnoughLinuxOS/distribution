@@ -41,7 +41,7 @@ index 92d1a01..db4fec4 100644
 
  // Button events
 -#if defined(DEVICE_RG351P)
-+#if defined(DEVICE_RG353P)
++#if defined(DEVICE_RG503)
 +   #define BUTTON_PRESSED_UP              event.type == SDL_JOYBUTTONDOWN && event.jbutton.button == 13
 +   #define BUTTON_PRESSED_DOWN            event.type == SDL_JOYBUTTONDOWN && event.jbutton.button == 14
 +   #define BUTTON_PRESSED_LEFT            event.type == SDL_JOYBUTTONDOWN && event.jbutton.button == 15
