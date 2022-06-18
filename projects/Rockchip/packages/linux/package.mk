@@ -29,7 +29,7 @@ then
 elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
 then
   PKG_URL="https://github.com/JustEnoughLinuxOS/rk356x-kernel.git"
-  PKG_VERSION="412e82df1"
+  PKG_VERSION="61bd16d2a"
 fi
 
 PKG_KERNEL_CFG_FILE=$(kernel_config_path) || die
