@@ -20,7 +20,7 @@ then
   PKG_VERSION="9f8c2e3936"
 fi
 
-if [[ "${DEVICE}" =~ RG503 ]]
+if [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
 then
   PKG_URL="https://github.com/JustEnoughLinuxOS/rk356x-uboot.git"
   PKG_VERSION="dfd1bcb"

@@ -26,10 +26,10 @@ elif [[ "${DEVICE}" =~ RG351 ]]
 then
   PKG_URL="https://github.com/JustEnoughLinuxOS/rg351x-kernel.git"
   PKG_VERSION="0c4ffa0fe"
-elif [[ "${DEVICE}" =~ RG503 ]]
+elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
 then
   PKG_URL="https://github.com/JustEnoughLinuxOS/rk356x-kernel.git"
-  PKG_VERSION="7a64c50e6"
+  PKG_VERSION="412e82df1"
 fi
 
 PKG_KERNEL_CFG_FILE=$(kernel_config_path) || die

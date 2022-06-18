@@ -1,0 +1,153 @@
+diff --git a/drivers/video/drm/rockchip_panel.c b/drivers/video/drm/rockchip_panel.c
+index 0428fc3..6e27364 100644
+--- a/drivers/video/drm/rockchip_panel.c
++++ b/drivers/video/drm/rockchip_panel.c
+@@ -129,7 +129,7 @@ static int rockchip_panel_parse_cmds(const u8 *data, int length,
+ 
+ 	return 0;
+ }
+-/*
++
+ static void rockchip_panel_write_spi_cmds(struct rockchip_panel_priv *priv,
+ 					  u8 type, int value)
+ {
+@@ -156,92 +156,6 @@ static void rockchip_panel_write_spi_cmds(struct rockchip_panel_priv *priv,
+ 	}
+ 
+ 	dm_gpio_set_value(&priv->spi_cs_gpio, 1);
+-}
+-*/
+-int cmd_init_code[30][32]={
+-	{0x0A1,0x100,0x100,0x100,0x100,0x100,0x100},
+-	{0x2C8},
+-	{0x0F0,0x15A,0x15A},
+-	{0x0F1,0x15A,0x15A},
+-	{0x0B0,0x102},
+-	{0x0F3,0x13B},	
+-	{0x0F4,0x133,0x142,0x100,0x108},
+-	{0x0F5,0x100,0x106,0x126,0x135,0x103},
+-	{0x0F6,0x102},
+-	{0x0C6,0x10B,0x100,0x100,0x13C,0x100,0x122,0x100,0x100,0x100,0x100},
+-	{0x0F7,0x120},
+-	{0x0F5,0x100,0x106,0x127,0x135,0x103},
+-	{0x0B2,0x106,0x106,0x106,0x106},
+-	{0x0B1,0x107,0x100,0x110},
+-	{0x4F8,0x17F,0x17A,0x189,0x167,0x126,0x138,0x100,0x100,0x109,0x167,0x170,0x188,0x17A,0x176,0x105,0x109,0x123,0x123,0x123},
+-	{0x011},
+-	{0x2C8},
+-	{0x029},
+-	{0x2C8},
+-	{0x4B5,0x1FF,0x1EF,0x135,0x142,0x10D,0x1D7,0x1FF,0x107,0x1FF,0x1FF,0x1FD,0x100,0x101,0x1FF,0x105,0x112,0x10F,0x1FF,0x1FF,0x1FF,0x1FF},
+-	{0x0B4,0x115},
+-	{0x0B3,0x100},
+-	{0x4F9,0x101,0x19F,0x19F,0x1BE,0x1CF,0x1D7,0x1C9,0x1C2,0x1CB,0x1BB,0x1E1,0x1E3,0x1DE,0x1D6,0x1D0,0x1D3,0x1FA,0x1ED,0x1E6,0x12F,0x100,0x12F},
+-	{0x0F9,0x100},	
+-	{0x026,0x100},
+-	{0x0B2,0x112},
+-	{0x011},
+-	{0x2C8},
+-	{0x029},
+-	{0x2C8},	
+-};
+-
+-
+-
+-static void rockchip_panel_write_spi_cmds_buffer(struct rockchip_panel_priv *priv)
+-{
+-	int i,m,n;
+-	int value,value_hl;
+-	
+-	mdelay(150);
+-	
+-	for (m = 0; m < 30; m++) {	
+-		dm_gpio_set_value(&priv->spi_cs_gpio, 0);
+-
+-			if(cmd_init_code[m][0]& 0x400){
+-				
+-				value_hl=32;
+-			}else{
+-				value_hl=16;
+-				
+-			}
+-		
+-			for (n = 0; n < value_hl; n++) {
+-				value = cmd_init_code[m][n];
+-				if (value & 0x200)
+-				{
+-					mdelay(value & 0xFF);
+-					break;
+-				};
+-				
+-				for (i = 0; i < 9; i++) {
+-				
+-					if (value & 0x100)
+-						dm_gpio_set_value(&priv->spi_sdi_gpio, 1);
+-					else
+-						dm_gpio_set_value(&priv->spi_sdi_gpio, 0);
+-
+-					dm_gpio_set_value(&priv->spi_scl_gpio, 0);
+-					udelay(10);
+-					dm_gpio_set_value(&priv->spi_scl_gpio, 1);
+-					value <<= 1;
+-					udelay(10);
+-				}
+-				
+-			}
+-			
+-		dm_gpio_set_value(&priv->spi_cs_gpio, 1);
+-		mdelay(1);
+-	}
+-	mdelay(150);
+-	
+-	
+-	
+ }
+ 
+ static int rockchip_panel_send_mcu_cmds(struct display_state *state,
+@@ -273,12 +187,25 @@ static int rockchip_panel_send_spi_cmds(struct display_state *state,
+ {
+ 	struct rockchip_panel *panel = state_get_panel(state);
+ 	struct rockchip_panel_priv *priv = dev_get_priv(panel->dev);
+-	
++	int i;
+ 
+ 	if (!cmds)
+ 		return -EINVAL;
+ 
+-	rockchip_panel_write_spi_cmds_buffer(priv);
++	for (i = 0; i < cmds->cmd_cnt; i++) {
++		struct rockchip_cmd_desc *desc = &cmds->cmds[i];
++		int value = 0;
++
++		if (desc->header.payload_length == 2)
++			value = (desc->payload[0] << 8) | desc->payload[1];
++		else
++			value = desc->payload[0];
++		rockchip_panel_write_spi_cmds(priv,
++					      desc->header.data_type, value);
++
++		if (desc->header.delay_ms)
++			mdelay(desc->header.delay_ms);
++	}
+ 
+ 	return 0;
+ }
+@@ -341,17 +268,7 @@ static void panel_simple_prepare(struct rockchip_panel *panel)
+ 		regulator_set_enable(priv->power_supply, !plat->power_invert);
+ 
+ 	if (dm_gpio_is_valid(&priv->enable_gpio))
+-	{
+-		if (priv->cmd_type == CMD_TYPE_SPI){
+-		//	dm_gpio_set_value(&priv->enable_gpio, 1);
+-		}else{
+-		//	dm_gpio_set_value(&priv->enable_gpio, 0);
+-		}
+-		
+-	}
+-	
+-	dm_gpio_set_value(&priv->enable_gpio, 1);
+-	mdelay	(50);
++		dm_gpio_set_value(&priv->enable_gpio, 1);
+ 
+ 	if (plat->delay.prepare)
+ 		mdelay(plat->delay.prepare);

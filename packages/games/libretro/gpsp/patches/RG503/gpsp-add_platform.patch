@@ -5,8 +5,8 @@ diff -rupN gpsp.orig/Makefile gpsp/Makefile
         MMAP_JIT_CACHE = 1
         HAVE_DYNAREC = 1
 
-+# Anbernic RG503
-+else ifeq ($(platform), RG503)
++# Anbernic RG353P
++else ifeq ($(platform), RG353P)
 +     CPUFLAGS := -marm -march=armv8-a+crc+simd -mtune=cortex-a55 -mfpu=neon-fp-armv8 -mfloat-abi=hard -flto
 +     CFLAGS  := $(CPUFLAGS) -fpic -ffast-math -fno-rtti -fno-exceptions
 +     TARGET := $(TARGET_NAME)_libretro.so

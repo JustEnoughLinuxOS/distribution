@@ -49,7 +49,7 @@ pre_configure_target() {
   elif [[ "${DEVICE}" =~ RG552 ]]
   then
     PKG_MAKE_OPTS_TARGET=" platform=RK3399"
-  elif [[ "${DEVICE}" =~ RG503 ]]
+  elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
   then
     PKG_MAKE_OPTS_TARGET=" platform=RK3566"
   fi
