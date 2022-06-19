@@ -27,17 +27,6 @@ fi
 
 WIFICFG="/storage/.cache/connman/wifi.config"
 
-# lists all wifi services in service=ssid format
-list_wifi() {
-  connmanctl services | cut -b 5- | awk '/\S+.+\s+wifi/ {a=$0; sub(/\s+wifi_.*$/,"", a); b=$0; sub(a, "", b); sub(/\s+/, "", b); print b "=" a}' | sort | uniq
-}
-
-# Looksup connman service name based on ssid
-# $1 - SSID to lookup
-get_wifi_service() {
-  list_wifi | awk -v ssid="${1}" '{ split($0, a, "="); if (a[2]==ssid) print a[1] }'
-}
-
 set_powersave() {
   ENABLED=$(get_setting wifi.powersave)
   if [ "${ENABLED}" = "1" ]
@@ -66,7 +55,6 @@ EOF
       connmanctl enable wifi 2>/dev/null
       set_powersave 2>/dev/null
       connmanctl scan wifi 2>/dev/null
-      connmanctl connect $(get_wifi_service ${SSID})>/dev/null
     ;;
     "disable")
       connmanctl disable wifi 2>/dev/null
@@ -74,7 +62,7 @@ EOF
       set_setting wifi.enabled 0
     ;;
     "list")
-      list_wifi | awk '{sub(/\S+=/,"",$0);print}'
+      connmanctl services | cut -b 5- | awk '/wifi/ {sub(/\s+wifi_.*$/,"",$0);print}' | sort | uniq
     ;;
     "scan")
       connmanctl scan 2>/dev/null
