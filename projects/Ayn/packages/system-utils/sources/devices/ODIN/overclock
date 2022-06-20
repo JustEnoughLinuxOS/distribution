@@ -1,0 +1,49 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+# Copyright (C) 2022-present Brooksytech
+
+. /etc/profile
+
+if [ $# -eq 0 ] || [ "$1" == "boot" ]
+then
+  PROFILE=$(get_setting system.overclock)
+else
+  PROFILE=$1
+fi
+
+if [ ! "$1" == "boot" ]
+then
+  SET_COOLING_PROFILE=true
+fi
+
+### Default clocks when not using OC.
+LITTLE_CORES=""
+BIG_CORES=""
+GPU=""
+DRAM=""
+
+freqset() {
+  echo "${LITTLE_CORES}" >${CPU_FREQ[0]}/scaling_max_freq
+  echo "${BIG_CORES}" >${CPU_FREQ[1]}/scaling_max_freq
+  echo ${GPU} >${GPU_FREQ}/max_freq
+  echo ${DRAM} >${DMC_FREQ}/max_freq
+}
+
+cooling_profile() {
+  if [ "${SET_COOLING_PROFILE}" == true ]
+  then
+    set_setting cooling.profile $1
+    systemctl restart fancontrol
+  fi
+}
+
+case ${PROFILE} in
+  mem)
+    DRAM="933000000"
+    cooling_profile quiet
+  ;;
+ 
+esac
+
+freqset
