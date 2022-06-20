@@ -1,0 +1,44 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+if [ $# -eq 0 ] || [ "$1" == "boot" ]
+then
+  PROFILE=$(get_setting system.overclock)
+else
+  PROFILE=$1
+fi
+
+### Default clocks when not using OC.
+CORES="1296000"
+GPU="480000000"
+DRAM="786000000"
+
+freqset() {
+  echo "${CORES}" >${CPU_FREQ[0]}/scaling_max_freq
+  echo ${GPU} >${GPU_FREQ}/max_freq
+  echo ${DRAM} >${DMC_FREQ}/max_freq
+}
+
+case ${PROFILE} in
+  mem)
+    DRAM="850000000"
+  ;;
+  gpu)
+    GPU="560000000"
+    DRAM="850000000"
+  ;;
+  cpu-stable)
+    CORES="1368000"
+    DRAM="850000000"
+  ;;
+  max-stable)
+    CORES="1368000"
+    GPU="560000000"
+    DRAM="850000000"
+  ;;
+esac
+
+freqset

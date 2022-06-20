@@ -1,0 +1,80 @@
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2017-2021 Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2021-present Fewtarius
+
+PKG_RKBIN="$(get_build_dir rkbin)"
+source ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
+
+if [ -n "${PKG_DATAFILE}" -a -n "${PKG_LOADER}" ]; then
+  echo "loader: Make idbloader.img from ${PKG_DATAFILE}:${PKG_LOADER}..."
+  if [ "${PKG_SOC}" = "rk356x" ]
+  then
+    tools/mkimage -n ${PKG_SOC} -T rksd -d ${PKG_DATAFILE}:${PKG_LOADER} -C bzip2 idbloader.img
+  else
+    tools/mkimage -n ${PKG_SOC} -T rksd -d "${PKG_DATAFILE}" -C bzip2 idbloader.img
+    cat "${PKG_LOADER}" >> idbloader.img
+  fi
+fi
+
+cp -av idbloader.img ${INSTALL}/usr/share/bootloader
+
+if [ ! -n "${PKG_LOAD_ADDR}" ]; then
+  PKG_LOAD_ADDR="0x00200000"
+fi
+
+if [ "${PKG_SOC}" = "rk356x" ]
+then
+  echo "uboot: copy fit uboot image to ${INSTALL}/usr/share/bootloader..."
+  cp -av uboot.img ${INSTALL}/usr/share/bootloader
+else
+  echo "uboot: build loader image uboot.img at ${PKG_LOAD_ADDR}..."
+  ${PKG_RKBIN}/tools/loaderimage --pack --uboot u-boot-dtb.bin uboot.img ${PKG_LOAD_ADDR} ||:
+  cp -av uboot.img ${INSTALL}/usr/share/bootloader
+fi
+
+if [ -n "${PKG_BL31}" ]; then
+  echo "trust: create trust.ini..."
+  cat >trust.ini <<EOF
+[BL30_OPTION]
+SEC=0
+[BL31_OPTION]
+SEC=1
+PATH=${PKG_BL31}
+ADDR=0x00010000
+[BL32_OPTION]
+SEC=0
+[BL33_OPTION]
+SEC=0
+[OUTPUT]
+PATH=trust.img
+EOF
+  TROPTS="--verbose"
+  ${PKG_RKBIN}/tools/trust_merger ${TROPTS} trust.ini
+  cp -av trust.img ${INSTALL}/usr/share/bootloader
+fi
+
+if [ "${BOOT_INI}" == true ]
+then
+  echo "boot: create boot.ini..."
+  cat >${INSTALL}/usr/share/bootloader/boot.ini <<EOF
+odroidgoa-uboot-config
+
+setenv fdt_addr_r "0x01f00000"
+setenv dtb_name "${DEVICE_DTB}.dtb"
+setenv loadaddr "${PKG_LOAD_ADDR}"
+setenv scriptaddr "0x00500000"
+setenv kernel_addr_r "0x02008000"
+
+sysboot mmc ${BOOT_PART} any \${scriptaddr} /extlinux/extlinux.conf
+
+EOF
+fi
+
+echo "boot: create extlinux.conf..."
+mkdir -p "${INSTALL}/usr/share/bootloader/extlinux"
+cat << EOF > "${INSTALL}/usr/share/bootloader/extlinux/extlinux.conf"
+LABEL ${DISTRO}
+  LINUX /${KERNEL_NAME}
+  FDT /${DEVICE_DTB}.dtb
+  APPEND boot=UUID=@BOOT_UUID@ disk=UUID=@DISK_UUID@ ${EXTRA_CMDLINE}
+EOF

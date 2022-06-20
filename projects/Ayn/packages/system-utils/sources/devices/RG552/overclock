@@ -1,0 +1,90 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+if [ $# -eq 0 ] || [ "$1" == "boot" ]
+then
+  PROFILE=$(get_setting system.overclock)
+else
+  PROFILE=$1
+fi
+
+if [ ! "$1" == "boot" ]
+then
+  SET_COOLING_PROFILE=true
+fi
+
+### Default clocks when not using OC.
+LITTLE_CORES="1416000"
+BIG_CORES="1800000"
+GPU="800000000"
+DRAM="856000000"
+
+freqset() {
+  echo "${LITTLE_CORES}" >${CPU_FREQ[0]}/scaling_max_freq
+  echo "${BIG_CORES}" >${CPU_FREQ[1]}/scaling_max_freq
+  echo ${GPU} >${GPU_FREQ}/max_freq
+  echo ${DRAM} >${DMC_FREQ}/max_freq
+}
+
+cooling_profile() {
+  if [ "${SET_COOLING_PROFILE}" == true ]
+  then
+    set_setting cooling.profile $1
+    systemctl restart fancontrol
+  fi
+}
+
+case ${PROFILE} in
+  mem)
+    DRAM="933000000"
+    cooling_profile quiet
+  ;;
+  gpu)
+    GPU="900000000"
+    DRAM="933000000"
+    cooling_profile moderate
+  ;;
+  cpu-nominal)
+    BIG_CORES="1992000"
+    LITTLE_CORES="1512000"
+    DRAM="933000000"
+    cooling_profile moderate
+  ;;
+  cpu-stable)
+    BIG_CORES="2088000"
+    LITTLE_CORES="1608000"
+    DRAM="933000000"
+    cooling_profile aggressive
+  ;;
+  cpu-aggressive)
+    BIG_CORES="2184000"
+    LITTLE_CORES="1704000"
+    DRAM="933000000"
+    cooling_profile aggressive
+  ;;
+  max-nominal)
+    BIG_CORES="1992000"
+    LITTLE_CORES="1512000"
+    GPU="900000000"
+    DRAM="933000000"
+  ;;
+  max-stable)
+    BIG_CORES="2088000"
+    LITTLE_CORES="1608000"
+    GPU="900000000"
+    DRAM="933000000"
+    cooling_profile aggressive
+  ;;
+  max-unstable)
+    BIG_CORES="2184000"
+    LITTLE_CORES="1704000"
+    GPU="900000000"
+    DRAM="933000000"
+    cooling_profile aggressive
+  ;;
+esac
+
+freqset

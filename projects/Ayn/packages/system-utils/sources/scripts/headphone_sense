@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2020-present Shanti Gilbert (https://github.com/shantigilbert)
+
+# Source predefined functions and variables
+. /etc/profile
+
+# Switch to headphones if we have them already connected at boot
+GPIO=$(cat /sys/class/gpio/gpio${DEVICE_JACK}/value)
+[[ "$GPIO" == "0" ]] && set_setting "audio.device" "headphone" || set_setting "audio.device" "speakers"
+
+if [ -e "/storage/.config/system/configs/system.cfg" ]; then
+/usr/bin/system_utils setaudio $(get_setting "audio.device")
+/usr/bin/system_utils vol $(get_setting "audio.volume")
+fi
+
+# Headphone sensing 
+DEVICE="${DEVICE_HEADPHONE_DEV}"
+
+HP_ON='*(SW_HEADPHONE_INSERT), value 0*'
+HP_OFF='*(SW_HEADPHONE_INSERT), value 1*'
+
+evtest "${DEVICE}" | while read line; do
+    case $line in
+	(${HP_ON})
+	amixer cset name='Playback Path' HP
+	set_setting "audio.device" "headphone"
+	;;
+	(${HP_OFF})
+	amixer cset name='Playback Path' SPK
+	set_setting "audio.device" "speakers"
+	;;
+    esac
+done

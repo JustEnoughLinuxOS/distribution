@@ -1,0 +1,53 @@
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2017-2020 Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2021-present Fewtarius
+
+source ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
+
+if [ "${PKG_SOC}" = "rk356x" ]
+then
+  IDBSEEK="bs=512 seek=64"
+else
+  # Fix me.
+  IDBSEEK="bs=32k seek=1"
+fi
+
+if [ -f "${RELEASE_DIR}/3rdparty/bootloader/idbloader.img" ]; then
+  echo "image: burn idbloader.img to image... (${PKG_SOC},${IDBSEEK},${DISK})"
+  dd if="${RELEASE_DIR}/3rdparty/bootloader/idbloader.img" of="$DISK" ${IDBSEEK} conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
+fi
+if [ -f "${RELEASE_DIR}/3rdparty/bootloader/uboot.img" ]; then
+  echo "image: burn uboot.img to image..."
+  dd if="${RELEASE_DIR}/3rdparty/bootloader/uboot.img" of="$DISK" bs=512 seek=16384 conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
+fi
+if [ -f "${RELEASE_DIR}/3rdparty/bootloader/trust.img" ]; then
+  echo "image: burn trust.img to image..."
+  dd if="${RELEASE_DIR}/3rdparty/bootloader/trust.img" of="$DISK" bs=512 seek=24576 conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
+elif [ -f "${RELEASE_DIR}/3rdparty/bootloader/resource.img" ]; then
+  echo "image: burn resource.img to image..."
+  dd if="${RELEASE_DIR}/3rdparty/bootloader/resource.img" of="$DISK" bs=512 seek=24576 conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
+fi
+
+if [ -f "${RELEASE_DIR}/3rdparty/bootloader/boot.ini" ]; then
+  cp "${RELEASE_DIR}/3rdparty/bootloader/boot.ini" "${LE_TMP}/boot.ini"
+  mcopy -so "${LE_TMP}/boot.ini" ::
+fi
+
+mkdir -p "${LE_TMP}/extlinux"
+
+# copy device trees to part1
+if [ -e "${DEVICE_DTB}.dtb" ]
+then
+  mcopy -o "${DEVICE_DTB}.dtb" ::
+fi
+
+mkdir -p "${LE_TMP}/extlinux"
+
+cat << EOF > "${LE_TMP}/extlinux/extlinux.conf"
+LABEL ${DISTRO}
+  LINUX /${KERNEL_NAME}
+  FDT /${DEVICE_DTB}.dtb
+  APPEND boot=UUID=${UUID_SYSTEM} disk=UUID=${UUID_STORAGE} ${EXTRA_CMDLINE}
+EOF
+
+mcopy -so "${LE_TMP}/extlinux" ::
