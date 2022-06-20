@@ -10,6 +10,7 @@ PKG_TOOLCHAIN="cmake-make"
 GET_HANDLER_SUPPORT="git"
 PKG_GIT_CLONE_BRANCH="pi4"
 PKG_BUILD_FLAGS="+speed"
+PKG_PATCH_DIRS+="${DEVICE}"
 
 post_unpack() {
   # use host versions
