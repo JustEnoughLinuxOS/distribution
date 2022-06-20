@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="dosbox-pure"
-PKG_VERSION="bcf8e4698e4cb651f3683c8889c593a3dbd953d3"
+PKG_VERSION="6335ea9df9568fd69ea1715bcebea6a53b34d0d7"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
@@ -40,6 +40,9 @@ make_target() {
   if [[ "${DEVICE}" =~ RG351 ]]
   then
     PKG_MAKE_OPTS_TARGET+=" platform=RG351x"
+  elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
+  then
+    PKG_MAKE_OPTS_TARGET+=" platform=RK3566"
   else
     PKG_MAKE_OPTS_TARGET+=" platform=${DEVICE}"
   fi

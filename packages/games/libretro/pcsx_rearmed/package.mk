@@ -3,8 +3,8 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="pcsx_rearmed"
-PKG_VERSION="9723f27f9d28d90c8f54a9cd9e7203a87cc41b29"
-PKG_SHA256="cba3f7fb43b0770f177ce4258486ec056f5180ec647e68b1937c7ec4f7a1d8ae"
+PKG_VERSION="ca177c0f86742d9efa4a9ee762ad326385c1f093"
+PKG_SHA256="a2028755f70f76b43de5b28fab7e7e1b5ed49599bd7b2c36ab730ae25362bee1"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
@@ -20,6 +20,9 @@ make_target() {
   if [[ "${DEVICE}" =~ RG351 ]]
   then
     make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=RG351x
+  elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
+  then
+    make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=RK3566
   else
     make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=${DEVICE}
   fi

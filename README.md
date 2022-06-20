@@ -9,7 +9,7 @@ Just Enough Linux Operating System (JELOS) is a simple Linux distribution for AR
 * Supports FAT32, ExFAT, and EXT4 file systems on devices with a second card slot.
 * 2.4GHz and 5GHz 802.11 A/B/G/N/AC WIFI support.
 * Online updates for easy access to stable or development builds.
-* Supports Anbernic's RG552, RG503, RG351P/M, RG351MP, and RG351V.
+* Supports Anbernic's RG552, RG503, RG353P, RG351P/M, RG351MP, and RG351V.
 * Developed by a small, friendly community.
 
 ## Licenses

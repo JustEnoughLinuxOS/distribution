@@ -2,7 +2,7 @@
 # Copyright (C) 2018-present Frank Hartung (supervisedthinking (@) gmail.com)
 
 PKG_NAME="amiberry"
-PKG_VERSION="8d78c6f8c9ffae254dbe086418f74d7c8cc77c8e"
+PKG_VERSION="fc0645c51ce095f3f46c4faa70f9afab71d49526"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/midwan/amiberry"
 PKG_URL="${PKG_SITE}.git"
@@ -19,6 +19,9 @@ pre_configure_target() {
   if [[ "${DEVICE}" =~ RG351 ]]
   then
     AMIBERRY_PLATFORM="PLATFORM=RG351x"
+  elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
+  then
+    AMIBERRY_PLATFORM="PLATFORM=RK3566"
   else
     AMIBERRY_PLATFORM="PLATFORM=${DEVICE}"
   fi

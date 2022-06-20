@@ -14,8 +14,8 @@ diff -rupN amiberry.orig/Makefile amiberry/Makefile
 -# RK3326 e.g. Odroid Go Advance - 32-bit userspace
 -else ifneq (,$(findstring RK,$(PLATFORM)))
 -	CPPFLAGS += $(CPPFLAGS32) $(NEON_FLAGS)
-+# Anbernic RG503
-+else ifeq ($(PLATFORM),RG503)
++# Anbernic RG353P and RG503
++else ifeq ($(PLATFORM),RK3566)
 +	CPUFLAGS = -mcpu=cortex-a55
 +	CPPFLAGS += $(CPPFLAGS64) -mcpu=cortex-a55 -mtune=cortex-a55 -Ofast -ffast-math -DUSE_RENDER_THREAD
 +	AARCH64 = 1

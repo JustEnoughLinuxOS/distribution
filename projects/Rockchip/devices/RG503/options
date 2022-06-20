@@ -30,7 +30,7 @@
     KERNEL_TARGET="Image"
     BOOTLOADER="u-boot"
     PARTITION_TABLE="gpt"
-    DEVICE_DTB="rk3566"
+    DEVICE_DTB="rk3566-rg503-linux"
     UBOOT_DTB="rk3566"
     UBOOT_CONFIG="rk3568_defconfig"
     PKG_SOC="rk356x"
