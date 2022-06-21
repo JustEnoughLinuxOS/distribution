@@ -44,6 +44,8 @@ pre_configure_target() {
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin
   cp -a ${PKG_BUILD}/src/retro_arena/yabasanshiro ${INSTALL}/usr/bin/yabasanshiroSA
-  cp -a ${PKG_DIR}/sources/* ${INSTALL}/usr/bin
+  cp -a ${PKG_DIR}/sources/start_yabasanshiroSA.sh ${INSTALL}/usr/bin
   chmod 0755 ${INSTALL}/usr/bin/start_yabasanshiroSA.sh
+  mkdir -p ${INSTALL}/usr/config/game/yabasanshiro
+  cp ${PKG_DIR}/sources/config ${INSTALL}/usr/config/game/yabasanshiro/.config
 } 
