@@ -8,8 +8,8 @@
 . /etc/profile
 
 ROM_DIR="/storage/roms/saturn/yabasanshiro"
-CONFIG_DIR="/storage/.config/game/configs/yabasanshiro"
-SOURCE_DIR="/usr/config/game/configs/yabasanshiro"
+CONFIG_DIR="/storage/.config/game/yabasanshiro"
+SOURCE_DIR="/usr/config/game/yabasanshiro"
 BIOS_BACKUP="/storage/roms/bios/yabasanshiro"
 
 if [ ! -d "${ROM_DIR}" ]
@@ -48,5 +48,11 @@ do
     break
   fi
 done
+
+GAME=$(echo "${1}"| sed "s#^/.*/##")
+if [ ! -e "${CONFIG_DIR}/${GAME}.config" ]
+then
+  cp -f ${SOURCE_DIR}/.config "${CONFIG_DIR}/${GAME}.config"
+fi
 
 yabasanshiroSA -r 2 -i "${1}" ${BIOS} >/var/log/exec.log 2>&1 ||:
