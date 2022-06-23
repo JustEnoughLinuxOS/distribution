@@ -1,0 +1,56 @@
+diff --git a/deps/libgo2/src/display.c b/deps/libgo2/src/display.c
+index b91cf0624b..e1d10593ba 100644
+--- a/deps/libgo2/src/display.c
++++ b/deps/libgo2/src/display.c
+@@ -151,6 +151,7 @@ go2_display_t* go2_display_create()
+ 
+     // Find prefered mode
+     drmModeModeInfo* mode;
++    mode = &connector->modes[0];
+     for (i = 0; i < connector->count_modes; i++)
+     {
+         drmModeModeInfo *current_mode = &connector->modes[i];
+@@ -159,14 +160,6 @@ go2_display_t* go2_display_create()
+             mode = current_mode;
+             break;
+         }
+-
+-        mode = NULL;
+-    }
+-
+-    if (!mode)
+-    {
+-        printf("DRM_MODE_TYPE_PREFERRED not found.\n");
+-        goto err_03;
+     }
+ 
+     result->mode = *mode;
+diff --git a/gfx/drivers/oga_gfx.c b/gfx/drivers/oga_gfx.c
+index 1be05693fe..28de219f1e 100644
+--- a/gfx/drivers/oga_gfx.c
++++ b/gfx/drivers/oga_gfx.c
+@@ -144,7 +144,8 @@ static bool oga_create_display(oga_video_t* vid)
+ 
+    vid->connector_id = connector->connector_id;
+ 
+-   /* Find prefered mode */
++   /* Find preferred mode */
++   mode = &connector->modes[0];
+    for (i = 0; i < connector->count_modes; i++)
+    {
+       drmModeModeInfo *current_mode = &connector->modes[i];
+@@ -153,14 +154,6 @@ static bool oga_create_display(oga_video_t* vid)
+          mode = current_mode;
+          break;
+       }
+-
+-      mode = NULL;
+-   }
+-
+-   if (!mode)
+-   {
+-      RARCH_ERR("DRM_MODE_TYPE_PREFERRED not found.\n");
+-      goto err_03;
+    }
+ 
+    vid->mode   = *mode;
