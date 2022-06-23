@@ -6,17 +6,8 @@
 
 name: release-dev
 on:
-  push:
-    paths-ignore:
-      - '.github/**'
-      - '*.md'
-      - 'Dockerfile'
-      - '.dockerignore'
-      - '.gitignore'
-      - 'licenses/**'
-      - 'tools/**'
-    branches:
-      - dev
+  schedule:
+    - cron:  '0 21 * * *'
   workflow_dispatch:
 env:
   BRANCH: dev
