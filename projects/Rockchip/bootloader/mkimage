@@ -13,7 +13,7 @@ else
 fi
 
 if [ -f "${RELEASE_DIR}/3rdparty/bootloader/idbloader.img" ]; then
-  echo "image: burn idbloader.img to image... (${PKG_SOC},${IDBSEEK},${DISK})"
+  echo "image: burn idbloader.img to image... (${PKG_SOC},${IDBSEEK})"
   dd if="${RELEASE_DIR}/3rdparty/bootloader/idbloader.img" of="$DISK" ${IDBSEEK} conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
 fi
 if [ -f "${RELEASE_DIR}/3rdparty/bootloader/uboot.img" ]; then
