@@ -714,7 +714,7 @@ mount_games() {
       NULL=$(grep ${DEV} /proc/mounts >/dev/null 2>&1)
       if [ ! "$?" = "0" ] && [ -e "${DEV}" ] && [ ! -e "/storage/.please_resize_me" ]
       then
-          mount ${DEV} /storage/roms
+          mount ${DEV} /storage/roms >/dev/null 2>&1
           break
       fi
     done
