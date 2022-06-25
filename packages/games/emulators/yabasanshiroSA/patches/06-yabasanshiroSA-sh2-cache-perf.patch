@@ -1,8 +1,11 @@
 --- a/yabause/src/retro_arena/main.cpp
 +++ b/yabause/src/retro_arena/main.cpp
-@@ -265,7 +265,7 @@ int yabauseinit()
+@@ -263,9 +263,9 @@ int yabauseinit()
+   yinit.rbg_use_compute_shader = pre.getBool( "Use compute shader" , false);
+ #endif
 
-   yinit.use_cpu_affinity = 1;
+-  yinit.use_cpu_affinity = 1;
++  yinit.use_cpu_affinity = 0;
 
 -  yinit.use_sh2_cache = 1;
 +  yinit.use_sh2_cache = 0;
