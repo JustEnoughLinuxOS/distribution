@@ -1,5 +1,5 @@
 PKG_NAME="yabasanshiroSA"
-PKG_VERSION="f6f41dd6485c638ab661f3acd2951c9522f34450"
+PKG_VERSION="c7618d2ecbf77b1e8188fa8af4fa1cfb34833a72"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/devmiyax/yabause"
@@ -8,7 +8,7 @@ PKG_DEPENDS_TARGET="toolchain SDL2 boost openal-soft ${OPENGLES} zlib"
 PKG_LONGDESC="Yabause is a Sega Saturn emulator and took over as Yaba Sanshiro"
 PKG_TOOLCHAIN="cmake-make"
 GET_HANDLER_SUPPORT="git"
-PKG_GIT_CLONE_BRANCH="pi4"
+PKG_GIT_CLONE_BRANCH="pi4-1-9-0"
 PKG_BUILD_FLAGS="+speed"
 PKG_PATCH_DIRS+="${DEVICE}"
 
@@ -44,6 +44,8 @@ pre_configure_target() {
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin
   cp -a ${PKG_BUILD}/src/retro_arena/yabasanshiro ${INSTALL}/usr/bin/yabasanshiroSA
-  cp -a ${PKG_DIR}/sources/* ${INSTALL}/usr/bin
+  cp -a ${PKG_DIR}/sources/start_yabasanshiroSA.sh ${INSTALL}/usr/bin
   chmod 0755 ${INSTALL}/usr/bin/start_yabasanshiroSA.sh
+  mkdir -p ${INSTALL}/usr/config/game/yabasanshiro
+  cp ${PKG_DIR}/sources/config ${INSTALL}/usr/config/game/yabasanshiro/.config
 } 
