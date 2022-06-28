@@ -705,6 +705,12 @@ mount_games() {
 
     for DEV in $(blkid | awk 'BEGIN {FS=":"}; /ext4/ || /fat/ {print $1}' | sort -r)
     do
+      ROOTDEV=$(echo ${DEV} | sed -e "s#^/.*/##g" -e "s#p[0-9].*\$##g")
+      if [ -L "/sys/class/block/${ROOTDEV}boot0" ]
+      then
+	# Assume this is an android boot device and ignore it.
+        continue
+      fi
       NULL=$(grep ${DEV} /proc/mounts >/dev/null 2>&1)
       if [ ! "$?" = "0" ] && [ -e "${DEV}" ] && [ ! -e "/storage/.please_resize_me" ]
       then

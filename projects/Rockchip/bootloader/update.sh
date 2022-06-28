@@ -80,7 +80,7 @@ fi
 
 # update bootloader
 
-if [ "$(awk '/^Hardware/ {print $4}' /proc/cpuinfo)" = "RG503" ]
+if [ "$(awk '/^Hardware/ {print $4}' /proc/cpuinfo)" = "RG503" ] || [ "$(awk '/^Hardware/ {print $4}' /proc/cpuinfo)" = "RG353P" ]
 then
   IDBSEEK="bs=512 seek=64"
 else
