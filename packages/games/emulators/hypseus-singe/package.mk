@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="hypseus-singe"
-PKG_VERSION="3b803be1aac1595c60bc14b23a58fd45419459f8"
+PKG_VERSION="89cfe865bd9008d395d1de71e5ee0efbced63c3a"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL3"
