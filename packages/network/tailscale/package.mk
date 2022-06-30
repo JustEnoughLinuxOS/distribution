@@ -16,9 +16,9 @@ pre_unpack() {
 }
 
 makeinstall_target() {
-  mkdir -p ${INSTALL}/usr/bin/
-  cp ${PKG_BUILD}/tailscale ${INSTALL}/usr/bin/
-  cp ${PKG_BUILD}/tailscaled ${INSTALL}/usr/bin/
+  mkdir -p ${INSTALL}/usr/sbin/
+    cp ${PKG_BUILD}/tailscale ${INSTALL}/usr/sbin/
+    cp ${PKG_BUILD}/tailscaled ${INSTALL}/usr/sbin/
 
   mkdir -p ${INSTALL}/usr/config
     cp -R ${PKG_DIR}/config/tailscaled.defaults ${INSTALL}/usr/config
