@@ -8,21 +8,25 @@ PKG_SHA256="c56aba1d7b5b0e7e999e4a7698c70b63a3394ff9704b5f6e1c57e0c16f04dd06"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.libsdl.org/"
 PKG_URL="https://www.libsdl.org/release/SDL2-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain alsa-lib systemd dbus ${OPENGLES} pulseaudio libdrm librga"
+PKG_DEPENDS_TARGET="toolchain alsa-lib systemd dbus ${OPENGLES} pulseaudio libdrm"
 PKG_LONGDESC="Simple DirectMedia Layer is a cross-platform development library designed to provide low level access to audio, keyboard, mouse, joystick, and graphics hardware."
 PKG_DEPENDS_HOST="toolchain:host distutilscross:host"
 PKG_PATCH_DIRS+="${DEVICE}"
 
 
-pre_make_host() {
-  sed -i "s| -lrga||g" ${PKG_BUILD}/CMakeLists.txt
-}
+if [ "${TARGET_ARCH}" = "arm" ] || [ "${TARGET_ARCH}" = "aarch64" ]
+then
+  PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} librga"
+  pre_make_host() {
+    sed -i "s| -lrga||g" ${PKG_BUILD}/CMakeLists.txt
+  }
 
-pre_make_target() {
-  if ! `grep -rnw "${PKG_BUILD}/CMakeLists.txt" -e '-lrga'`; then
-    sed -i "s|--no-undefined|--no-undefined -lrga|" ${PKG_BUILD}/CMakeLists.txt
-  fi
-}
+  pre_make_target() {
+    if ! `grep -rnw "${PKG_BUILD}/CMakeLists.txt" -e '-lrga'`; then
+      sed -i "s|--no-undefined|--no-undefined -lrga|" ${PKG_BUILD}/CMakeLists.txt
+    fi
+  }
+fi
 
 pre_configure_target(){
   PKG_CMAKE_OPTS_TARGET="-DSDL_STATIC=OFF \
