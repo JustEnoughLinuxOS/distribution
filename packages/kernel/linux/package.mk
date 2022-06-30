@@ -15,21 +15,9 @@ PKG_STAMP="${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD}"
 PKG_PATCH_DIRS="${LINUX}"
 
 case "${LINUX}" in
-  amlogic)
-    PKG_VERSION="df0cc57e057f18e44dac8e6c18aba47ab53202f9" # 5.16.0
-    PKG_SHA256="17f180ef85871ca76e1867f9f90bcdb7f98c45ddd9d15d55cc7a13a51fc83167"
-    PKG_URL="https://github.com/torvalds/linux/archive/${PKG_VERSION}.tar.gz"
-    PKG_SOURCE_NAME="linux-${LINUX}-${PKG_VERSION}.tar.gz"
-    ;;
-  raspberrypi)
-    PKG_VERSION="de68bc48c867d703344f3a1b2362b889e20e03f3" # 5.15.18
-    PKG_SHA256="4d4be0374eab0f3e7bdbba363f183ec82cf7439d5c8f9f035ff486f7182cb371"
-    PKG_URL="https://github.com/raspberrypi/linux/archive/${PKG_VERSION}.tar.gz"
-    PKG_SOURCE_NAME="linux-${LINUX}-${PKG_VERSION}.tar.gz"
-    ;;
   *)
-    PKG_VERSION="5.16.5"
-    PKG_SHA256="ecaeedd9d289934f97c572aa965b6959d4d47f9789220e4fc3fbb525d8f1c7ab"
+    PKG_VERSION="5.18.5"
+    PKG_SHA256="9c3731d405994f9cd3a1bb72e83140735831b19c7cec18e0d7a8f3046fa034e7"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v5.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
     PKG_PATCH_DIRS="default"
     ;;
@@ -38,8 +26,8 @@ esac
 PKG_KERNEL_CFG_FILE=$(kernel_config_path) || die
 
 if [ -n "${KERNEL_TOOLCHAIN}" ]; then
-  PKG_DEPENDS_HOST+=" gcc-arm-${KERNEL_TOOLCHAIN}:host"
-  PKG_DEPENDS_TARGET+=" gcc-arm-${KERNEL_TOOLCHAIN}:host"
+  PKG_DEPENDS_HOST+=" gcc-${KERNEL_TOOLCHAIN}:host"
+  PKG_DEPENDS_TARGET+=" gcc-${KERNEL_TOOLCHAIN}:host"
   HEADERS_ARCH=${TARGET_ARCH}
 fi
 
@@ -77,6 +65,31 @@ post_patch() {
   fi
 }
 
+make_init() {
+ : # reuse make_target()
+}
+
+makeinstall_init() {
+  if [ -n "${INITRAMFS_MODULES}" ]; then
+    mkdir -p ${INSTALL}/etc
+    mkdir -p ${INSTALL}/usr/lib/modules
+
+    for i in ${INITRAMFS_MODULES}; do
+      module=`find .install_pkg/$(get_full_module_dir)/kernel -name ${i}.ko`
+      if [ -n "${module}" ]; then
+        echo ${i} >> ${INSTALL}/etc/modules
+        cp ${module} ${INSTALL}/usr/lib/modules/`basename ${module}`
+      fi
+    done
+  fi
+
+  if [ "${UVESAFB_SUPPORT}" = yes ]; then
+    mkdir -p ${INSTALL}/usr/lib/modules
+      uvesafb=`find .install_pkg/$(get_full_module_dir)/kernel -name uvesafb.ko`
+      cp ${uvesafb} ${INSTALL}/usr/lib/modules/`basename ${uvesafb}`
+  fi
+}
+
 make_host() {
   :
 }
@@ -108,8 +121,8 @@ pre_make_target() {
   # set initramfs source
   ${PKG_BUILD}/scripts/config --set-str CONFIG_INITRAMFS_SOURCE "$(kernel_initramfs_confs) ${BUILD}/initramfs"
 
-  # set default hostname based on ${DEVICE}
-  ${PKG_BUILD}/scripts/config --set-str CONFIG_DEFAULT_HOSTNAME "${DEVICE}"
+  # set default hostname based on ${DISTRONAME}
+  ${PKG_BUILD}/scripts/config --set-str CONFIG_DEFAULT_HOSTNAME "${DISTRONAME}"
 
   # disable swap support if not enabled
   if [ ! "${SWAP_SUPPORT}" = yes ]; then
@@ -179,7 +192,7 @@ pre_make_target() {
         continue
       fi
 
-      if [ "$(${PKG_BUILD}/scripts/config --state ${OPTION%%=*})" != "${OPTION##*=}" ]; then
+      if [ "$(${PKG_BUILD}/scripts/config --state ${OPTION%%=*})" != "$(echo ${OPTION##*=} | tr -d '"')" ]; then
         MISSING_KERNEL_OPTIONS+="\t${OPTION}\n"
       fi
     done < ${DISTRO_DIR}/${DISTRO}/kernel_options
@@ -281,6 +294,12 @@ makeinstall_target() {
       [ "${DEVICE}" = "Amlogic-ng" ] && cp arch/${TARGET_KERNEL_ARCH}/boot/dts/amlogic/*.dtb ${INSTALL}/usr/share/bootloader/device_trees 2>/dev/null || :
     fi
   elif [ "${BOOTLOADER}" = "bcm2835-bootloader" ]; then
+    # RPi firmware will decompress gzipped kernels prior to booting
+    if [ "${TARGET_KERNEL_ARCH}" = "arm64" ]; then
+      pigz --best --force ${INSTALL}/.image/${KERNEL_TARGET}
+      mv ${INSTALL}/.image/${KERNEL_TARGET}.gz ${INSTALL}/.image/${KERNEL_TARGET}
+    fi
+
     mkdir -p ${INSTALL}/usr/share/bootloader/overlays
 
     # install platform dtbs, but remove upstream kernel dtbs (i.e. without downstream

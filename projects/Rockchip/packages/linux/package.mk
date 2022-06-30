@@ -15,13 +15,16 @@ PKG_LONGDESC="This package builds the kernel for Rockchip devices"
 PKG_IS_KERNEL_PKG="yes"
 PKG_STAMP="${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD}"
 PKG_PATCH_DIRS+="${DEVICE}"
-  PKG_GIT_CLONE_BRANCH="main"
+PKG_GIT_CLONE_BRANCH="main"
 GET_HANDLER_SUPPORT="git"
 
 if [[ "${DEVICE}" =~ RG552 ]]
 then
-  PKG_URL="https://github.com/JustEnoughLinuxOS/rockchip-kernel.git"
-  PKG_VERSION="1a8d74081"
+  #PKG_URL="https://github.com/JustEnoughLinuxOS/rockchip-kernel.git"
+  #PKG_VERSION="1a8d74081"
+  PKG_URL="https://github.com/R-ARM/kernel.git"
+  PKG_VERSION="7163094"
+  PKG_GIT_CLONE_BRANCH="master"
 elif [[ "${DEVICE}" =~ RG351 ]]
 then
   PKG_URL="https://github.com/JustEnoughLinuxOS/rg351x-kernel.git"
@@ -127,7 +130,7 @@ pre_make_target() {
     sed -i "s|CONFIG_EXTRA_FIRMWARE=.*|CONFIG_EXTRA_FIRMWARE=\"${FW_LIST}\"|" ${PKG_BUILD}/.config
   fi
 
-  kernel_make oldconfig
+  yes "" | kernel_make oldconfig
 
   # regdb (backward compatability with pre-4.15 kernels)
   if grep -q ^CONFIG_CFG80211_INTERNAL_REGDB= ${PKG_BUILD}/.config ; then

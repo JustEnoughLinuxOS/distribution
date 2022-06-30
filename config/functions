@@ -373,7 +373,7 @@ cpp = '$CXX'
 ar = '$AR'
 strip = '$STRIP'
 pkgconfig = '$PKG_CONFIG'
-llvm-config = '$SYSROOT_PREFIX/usr/bin/llvm-config-host'
+llvm-config = '$TOOLCHAIN/bin/llvm-config'
 
 [host_machine]
 system = 'linux'
@@ -387,6 +387,45 @@ $(python -c "import os; print('c_args = {}'.format([x for x in os.getenv('CFLAGS
 $(python -c "import os; print('c_link_args = {}'.format([x for x in os.getenv('LDFLAGS').split()]))")
 $(python -c "import os; print('cpp_args = {}'.format([x for x in os.getenv('CXXFLAGS').split()]))")
 $(python -c "import os; print('cpp_link_args = {}'.format([x for x in os.getenv('LDFLAGS').split()]))")
+${!properties}
+EOF
+}
+
+create_meson_conf_target() {
+  local properties
+  properties="PKG_MESON_PROPERTIES_${1^^}"
+
+  cat > $2 <<EOF
+[binaries]
+c = '$TARGET_CC'
+cpp = '$TARGET_CXX'
+ar = '$TARGET_AR'
+strip = '$TARGET_STRIP'
+pkgconfig = '$PKG_CONFIG'
+llvm-config = '$SYSROOT_PREFIX/usr/bin/llvm-config'
+libgcrypt-config = '$SYSROOT_PREFIX/usr/bin/libgcrypt-config'
+
+[build_machine]
+system = 'linux'
+cpu_family = '${MACHINE_HARDWARE_NAME}'
+cpu = '${MACHINE_HARDWARE_CPU}'
+endian = 'little'
+
+[host_machine]
+system = 'linux'
+cpu_family = '$TARGET_ARCH'
+cpu = '$TARGET_SUBARCH'
+endian = 'little'
+
+[built-in options]
+$(python3 -c "import os; print('c_args = {}'.format([x for x in os.getenv('TARGET_CFLAGS').split()]))")
+$(python3 -c "import os; print('c_link_args = {}'.format([x for x in os.getenv('TARGET_LDFLAGS').split()]))")
+$(python3 -c "import os; print('cpp_args = {}'.format([x for x in os.getenv('TARGET_CXXFLAGS').split()]))")
+$(python3 -c "import os; print('cpp_link_args = {}'.format([x for x in os.getenv('TARGET_LDFLAGS').split()]))")
+
+[properties]
+needs_exe_wrapper = true
+root = '$SYSROOT_PREFIX/usr'
 ${!properties}
 EOF
 }
@@ -1049,6 +1088,23 @@ kernel_config_path() {
 
   die "ERROR: Unable to locate kernel config for ${LINUX} - looking for ${config_name}"
 }
+
+kernel_initramfs_confs() {
+  local config_name cfg confs
+
+  config_name="initramfs.${TARGET_KERNEL_PATCH_ARCH:-$TARGET_ARCH}.conf"
+  confs="$(get_pkg_directory initramfs)/config/initramfs.conf"
+
+  for cfg in $PROJECT_DIR/$PROJECT/packages/initramfs/config/$config_name \
+             $PROJECT_DIR/$PROJECT/devices/$DEVICE/packages/initramfs/config/$config_name \
+             ; do
+    [[ $cfg =~ /devices//packages/ ]] && continue
+    [ -f "$cfg" ] && confs+=" $cfg"
+  done
+
+  echo "$confs"
+}
+
 
 kernel_make() {
   (

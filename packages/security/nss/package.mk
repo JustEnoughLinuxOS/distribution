@@ -3,8 +3,7 @@
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="nss"
-PKG_VERSION="3.76.1"
-PKG_SHA256="9d40942e6a58b2055e19c1d2c3fe53d0410af1c230420013b90b3dc9c1c5dde9"
+PKG_VERSION="3.79"
 PKG_LICENSE="Mozilla Public License"
 PKG_SITE="http://ftp.mozilla.org/"
 PKG_URL="https://ftp.mozilla.org/pub/security/nss/releases/NSS_${PKG_VERSION//./_}_RTM/src/nss-${PKG_VERSION}-with-nspr-$(get_pkg_version nspr).tar.gz"
@@ -19,7 +18,6 @@ make_host() {
 
   make clean || true
   rm -rf ${PKG_BUILD}/dist
-
   INCLUDES="-I${TOOLCHAIN}/include" \
   make BUILD_OPT=1 USE_64=1 \
      PREFIX=${TOOLCHAIN} \
@@ -49,7 +47,6 @@ make_target() {
 
   make clean || true
   rm -rf ${PKG_BUILD}/dist
-
   make BUILD_OPT=1 ${TARGET_USE_64} \
      NSS_USE_SYSTEM_SQLITE=1 \
      NSPR_INCLUDE_DIR=${SYSROOT_PREFIX}/usr/include/nspr \
@@ -73,6 +70,6 @@ makeinstall_target() {
   cp -RL dist/{public,private}/nss/* ${SYSROOT_PREFIX}/usr/include/nss
   cp -L dist/Linux*/lib/pkgconfig/nss.pc ${SYSROOT_PREFIX}/usr/lib/pkgconfig
 
-  mkdir -p ${PKG_INSTALL}/usr/lib
-    cp -PL dist/Linux*/lib/*.so ${PKG_INSTALL}/usr/lib
+  mkdir -p ${INSTALL}/usr/lib
+  cp -PL dist/Linux*/lib/*.so ${INSTALL}/usr/lib
 }
