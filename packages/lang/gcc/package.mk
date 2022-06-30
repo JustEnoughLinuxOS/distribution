@@ -45,7 +45,7 @@ GCC_COMMON_CONFIGURE_OPTS="--target=${TARGET_NAME} \
                            --disable-libmudflap \
                            --disable-libitm \
                            --disable-libquadmath \
-                           --disable-libgomp \
+                           --enable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
                            --enable-__cxa_atexit"
