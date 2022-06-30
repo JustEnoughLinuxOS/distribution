@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="es-theme-minimal"
-PKG_VERSION="b478b0e"
+PKG_VERSION="b478b0e3986e557b40fcd25a9e48d9956fa11a96"
 PKG_ARCH="any"
 PKG_LICENSE="creative commons CC-BY-NC-SA"
 PKG_SITE="https://github.com/fabricecaruso/es-theme-minimal"
