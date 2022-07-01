@@ -59,6 +59,11 @@ then
   PKG_EMUS+=" retropie-shaders"
 fi
 
+if [ "${PROJECT}" == "PC" ]
+then
+  PKG_BASEOS+=" installer"
+fi
+
 if [ ! -z "${BASE_ONLY}" ]
 then
   PKG_DEPENDS_TARGET+=" ${PKG_BASEOS} ${PKG_TOOLS} ${PKG_UI} ${PKG_GAMESUPPORT}"
