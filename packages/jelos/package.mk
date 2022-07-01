@@ -50,7 +50,7 @@ PKG_MULTIMEDIA="ffmpeg mpv vlc"
 PKG_GAMESUPPORT="sixaxis jslisten evtest rg351p-js2xbox gptokeyb textviewer 351files jstest-sdl \
                  gamecontrollerdb jelosaddons libgo2 rclone sdljoytest"
 
-#PKG_EXPERIMENTAL="tailscale"
+PKG_EXPERIMENTAL="tailscale"
 
 ### Project/Device specific items
 if [ "${PROJECT}" == "Rockchip" ]

@@ -1,13 +1,17 @@
+# kernel command line
+  EXTRA_CMDLINE="quiet console=tty0 fbcon=rotate:3 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
+
+# Partition label
   PARTITION_TABLE="msdos"
 
 # OpenGL(X) implementation to use (mesa / no)
-  OPENGL="no"
+  OPENGL="mesa"
 
 # OpenGL-ES implementation to use (mesa / no)
   OPENGLES="mesa"
 
 # Vulkan implementation to use (vulkan-loader / no)
-  VULKAN="no"
+  VULKAN="vulkan-loader"
 
 # Displayserver to use (weston / x11 / no)
   DISPLAYSERVER="no"
