@@ -14,8 +14,8 @@ PKG_LONGDESC="Low-Level Virtual Machine (LLVM) is a compiler infrastructure."
 PKG_TOOLCHAIN="cmake"
 
 PKG_CMAKE_OPTS_COMMON="-DLLVM_INCLUDE_TOOLS=ON \
-                       -DLLVM_BUILD_TOOLS=ON \
-                       -DLLVM_BUILD_UTILS=ON \
+                       -DLLVM_BUILD_TOOLS=OFF \
+                       -DLLVM_BUILD_UTILS=OFF \
                        -DLLVM_BUILD_EXAMPLES=OFF \
                        -DLLVM_INCLUDE_EXAMPLES=OFF \
                        -DLLVM_BUILD_TESTS=OFF \

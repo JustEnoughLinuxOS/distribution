@@ -17,6 +17,7 @@ PKG_CONFIGURE_OPTS_HOST="--target=aarch64-none-elf \
                          --with-mpfr=${TOOLCHAIN} \
                          --with-mpc=${TOOLCHAIN} \
                          --with-zstd=${TOOLCHAIN} \
+                         --with-float=${TARGET_FLOAT} \
                          --with-gnu-as \
                          --with-gnu-ld \
                          --with-newlib \

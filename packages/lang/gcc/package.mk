@@ -49,6 +49,11 @@ GCC_COMMON_CONFIGURE_OPTS="--target=${TARGET_NAME} \
                            --disable-libssp \
                            --enable-__cxa_atexit"
 
+if [ "${TARGET_ARCH}" = arm ] || [ "${TARGET_ARCH}" = aarch64 ]
+then
+  GCC_COMMON_CONFIGURE_OPTS+=" --with-float=${TARGET_FLOAT}"
+fi
+
 PKG_CONFIGURE_OPTS_BOOTSTRAP="${GCC_COMMON_CONFIGURE_OPTS} \
                               --enable-cloog-backend=isl \
                               --disable-decimal-float \
