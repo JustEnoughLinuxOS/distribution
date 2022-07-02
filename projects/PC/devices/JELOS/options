@@ -13,11 +13,14 @@
 # Vulkan implementation to use (vulkan-loader / no)
   VULKAN="vulkan-loader"
 
+# VULKAN_SUPPORT
+  VULKAN_SUPPORT="yes"
+
 # Displayserver to use (weston / x11 / no)
   DISPLAYSERVER="no"
 
 # Windowmanager to use (fluxbox / weston / no)
-  WINDOWMANAGER="no"
+  WINDOWMANAGER="none"
 
 # KODI Player implementation to use (mesa / default)
   KODIPLAYER_DRIVER="mesa"
