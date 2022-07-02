@@ -3,15 +3,24 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="glibc"
-PKG_VERSION="2.34"
-PKG_SHA256="44d26a1fe20b8853a48f470ead01e4279e869ac149b195dda4e44a195d981ab2"
+PKG_VERSION="2.35"
+PKG_SHA256="5123732f6b67ccd319305efd399971d58592122bcc2a6518a1bd2510dd0cf52e"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.gnu.org/software/libc/"
-PKG_URL="http://ftp.gnu.org/pub/gnu/glibc/${PKG_NAME}-${PKG_VERSION}.tar.xz"
+PKG_SITE="https://www.gnu.org/software/libc/"
+PKG_URL="https://ftp.gnu.org/pub/gnu/glibc/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host linux:host gcc:bootstrap pigz:host Python3:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_LONGDESC="The Glibc package contains the main C library."
 PKG_BUILD_FLAGS="-gold"
+
+case "${TARGET_ARCH}" in
+  arm|aarch64)
+    OPT_ENABLE_KERNEL=4.4.0
+    ;;
+  *)
+    OPT_ENABLE_KERNEL=5.10.0
+    ;;
+esac
 
 PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            ac_cv_path_PERL=no \
@@ -27,12 +36,11 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=${BUILD}/toolchain/bin \
                            --with-headers=${SYSROOT_PREFIX}/usr/include \
-                           --enable-kernel=4.4.0 \
+                           --enable-kernel=${OPT_ENABLE_KERNEL} \
                            --without-cvs \
                            --without-gd \
                            --disable-build-nscd \
                            --disable-nscd \
-                           --enable-lock-elision \
                            --disable-timezone-tools"
 
 if build_with_debug; then
@@ -45,18 +53,14 @@ post_unpack() {
   find "${PKG_BUILD}" -type f -name '*.py' -exec sed -e '1s,^#![[:space:]]*/usr/bin/python.*,#!/usr/bin/env python3,' -i {} \;
 }
 
-pre_build_target() {
-  cd ${PKG_BUILD}
-    aclocal --force --verbose
-    autoconf --force --verbose
-  cd -
-}
-
 pre_configure_target() {
 # Filter out some problematic *FLAGS
   export CFLAGS=$(echo ${CFLAGS} | sed -e "s|-ffast-math||g")
   export CFLAGS=$(echo ${CFLAGS} | sed -e "s|-Ofast|-O2|g")
   export CFLAGS=$(echo ${CFLAGS} | sed -e "s|-O.|-O2|g")
+
+  export CFLAGS=$(echo ${CFLAGS} | sed -e "s|-Wunused-but-set-variable||g")
+  export CFLAGS="${CFLAGS} -Wno-unused-variable"
 
   if [ -n "${PROJECT_CFLAGS}" ]; then
     export CFLAGS=$(echo ${CFLAGS} | sed -e "s|${PROJECT_CFLAGS}||g")
@@ -97,9 +101,10 @@ EOF
 }
 
 post_makeinstall_target() {
-
-# we are linking against ld.so, so symlink
-  ln -sf $(basename ${INSTALL}/usr/lib/ld-*.so) ${INSTALL}/usr/lib/ld.so
+  mkdir -p ${INSTALL}/.noinstall
+    cp -p ${INSTALL}/usr/bin/localedef ${INSTALL}/.noinstall
+    cp -a ${INSTALL}/usr/share/i18n/locales ${INSTALL}/.noinstall
+    mv ${INSTALL}/usr/share/i18n/charmaps ${INSTALL}/.noinstall
 
 # cleanup
 # remove any programs we don't want/need, keeping only those we want
@@ -114,12 +119,9 @@ post_makeinstall_target() {
   safe_remove ${INSTALL}/usr/lib/*.map
   safe_remove ${INSTALL}/var
 
-# add UTF-8 charmap for Generic (charmap is needed for installer)
-  if [ "${PROJECT}" = "Generic" ]; then
-    mkdir -p ${INSTALL}/usr/share/i18n/charmaps
-    cp -PR ${PKG_BUILD}/localedata/charmaps/UTF-8 ${INSTALL}/usr/share/i18n/charmaps
-    pigz --best --force ${INSTALL}/usr/share/i18n/charmaps/UTF-8
-  fi
+# add UTF-8 charmap
+  mkdir -p ${INSTALL}/usr/share/i18n/charmaps
+    cp -PR ${INSTALL}/.noinstall/charmaps/UTF-8.gz ${INSTALL}/usr/share/i18n/charmaps
 
   if [ ! "${GLIBC_LOCALES}" = yes ]; then
     safe_remove ${INSTALL}/usr/share/i18n/locales
@@ -133,10 +135,6 @@ post_makeinstall_target() {
     cp ${PKG_DIR}/config/nsswitch-target.conf ${INSTALL}/etc/nsswitch.conf
     cp ${PKG_DIR}/config/host.conf ${INSTALL}/etc
     cp ${PKG_DIR}/config/gai.conf ${INSTALL}/etc
-
-  if [ "${TARGET_ARCH}" = "arm" -a "${TARGET_FLOAT}" = "hard" ]; then
-    ln -sf ld.so ${INSTALL}/usr/lib/ld-linux.so.3
-  fi
 }
 
 configure_init() {
@@ -157,10 +155,6 @@ makeinstall_init() {
     cp -PR ${PKG_BUILD}/.${TARGET_NAME}/rt/librt.so* ${INSTALL}/usr/lib
     cp -PR ${PKG_BUILD}/.${TARGET_NAME}/resolv/libnss_dns.so* ${INSTALL}/usr/lib
     cp -PR ${PKG_BUILD}/.${TARGET_NAME}/resolv/libresolv.so* ${INSTALL}/usr/lib
-
-    if [ "${TARGET_ARCH}" = "arm" -a "${TARGET_FLOAT}" = "hard" ]; then
-      ln -sf ld.so ${INSTALL}/usr/lib/ld-linux.so.3
-    fi
 }
 
 post_makeinstall_init() {

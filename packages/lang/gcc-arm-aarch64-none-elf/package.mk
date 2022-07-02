@@ -5,14 +5,14 @@ PKG_NAME="gcc-arm-aarch64-none-elf"
 PKG_VERSION="11.2-2022.02"
 PKG_LICENSE="GPL"
 PKG_SITE="https://developer.arm.com/tools-and-software/open-source-software/developer-tools/gnu-toolchain/gnu-a"
-PKG_URL="https://developer.arm.com/-/media/Files/downloads/gnu-a/${PKG_VERSION}/binrel/gcc-arm-${PKG_VERSION}-aarch64-aarch64-none-elf.tar.xz"
+PKG_URL="https://developer.arm.com/-/media/Files/downloads/gnu/${PKG_VERSION}/binrel/gcc-arm-${PKG_VERSION}-aarch64-aarch64-none-elf.tar.xz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_LONGDESC="ARM Aarch64 GNU Linux Binary Toolchain"
 PKG_TOOLCHAIN="manual"
 
 makeinstall_host() {
   mkdir -p ${TOOLCHAIN}/lib/gcc-arm-aarch64-none-elf/
-    cp -a * ${TOOLCHAIN}/lib/gcc-arm-aarch64-none-elf
+  cp -a * ${TOOLCHAIN}/lib/gcc-arm-aarch64-none-elf
 
   # wrap gcc and g++ with ccache like in gcc package.mk
   PKG_GCC_PREFIX="${TOOLCHAIN}/lib/gcc-arm-aarch64-none-elf/bin/aarch64-none-elf-"

@@ -1,6 +1,3 @@
-# Inform init that this is a rotated display
-DISPLAY_ROTATED=true
-
 # Rotate the display on the 552.
 fbset -g 1152 1920 1152 1920 32 2>/dev/null
 
