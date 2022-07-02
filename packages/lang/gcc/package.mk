@@ -3,7 +3,8 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="gcc"
-PKG_VERSION="11.2.0"
+PKG_VERSION="11.3.0"
+PKG_SHA256="b47cf2818691f5b1e21df2bb38c795fac2cfbd640ede2d0a5e1c89e338a3ac39"
 PKG_LICENSE="GPL-2.0-or-later"
 PKG_SITE="http://gcc.gnu.org/"
 PKG_URL="http://ftpmirror.gnu.org/gcc/${PKG_NAME}-${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.xz"
@@ -44,15 +45,10 @@ GCC_COMMON_CONFIGURE_OPTS="--target=${TARGET_NAME} \
                            --disable-libmudflap \
                            --disable-libitm \
                            --disable-libquadmath \
-                           --enable-libgomp \
+                           --disable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
                            --enable-__cxa_atexit"
-
-if [ "${TARGET_ARCH}" = arm ] || [ "${TARGET_ARCH}" = aarch64 ]
-then
-  GCC_COMMON_CONFIGURE_OPTS+=" --with-float=${TARGET_FLOAT}"
-fi
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="${GCC_COMMON_CONFIGURE_OPTS} \
                               --enable-cloog-backend=isl \
@@ -66,7 +62,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="${GCC_COMMON_CONFIGURE_OPTS} \
                               --disable-threads \
                               --without-headers \
                               --with-newlib \
-                              ${TARGET_ARCH_GCC_OPTS}"
+                              ${GCC_OPTS}"
 
 PKG_CONFIGURE_OPTS_HOST="${GCC_COMMON_CONFIGURE_OPTS} \
                          --enable-languages=c,c++ \
@@ -80,7 +76,7 @@ PKG_CONFIGURE_OPTS_HOST="${GCC_COMMON_CONFIGURE_OPTS} \
                          --disable-libstdcxx-pch \
                          --enable-libstdcxx-time \
                          --enable-clocale=gnu \
-                         ${TARGET_ARCH_GCC_OPTS}"
+                         ${GCC_OPTS}"
 
 pre_configure_host() {
   unset CPP

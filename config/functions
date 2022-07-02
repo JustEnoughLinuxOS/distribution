@@ -276,6 +276,13 @@ setup_toolchain() {
       export CXXFLAGS="$TARGET_CXXFLAGS"
       export LDFLAGS="$TARGET_LDFLAGS"
       setup_pkg_config_target
+      export TARGET_CC="${TARGET_PREFIX}gcc"
+      export TARGET_CXX="${TARGET_PREFIX}g++"
+      export TARGET_AR="${TARGET_PREFIX}ar"
+      export TARGET_STRIP="${TARGET_PREFIX}strip"
+      export TARGET_CFLAGS="$TARGET_CFLAGS"
+      export TARGET_CXXFLAGS="$TARGET_CXXFLAGS"
+      export TARGET_LDFLAGS="$TARGET_LDFLAGS"
       export CMAKE_CONF=$TOOLCHAIN/etc/cmake-$TARGET_NAME.conf
       export CMAKE="cmake -DCMAKE_TOOLCHAIN_FILE=$CMAKE_CONF -DCMAKE_INSTALL_PREFIX=/usr"
       if [ ! -f $CMAKE_CONF ] ; then
