@@ -41,7 +41,7 @@ LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-
                 stella-2014 swanstation TIC-80 tgbdual tyrquake xrick uae4arm uzem vba-next vbam     \
                 vecx vice yabasanshiro xmil mesen virtualjaguar"
 
-PKG_COMPAT="lib32"
+PKG_COMPAT=""
 
 PKG_TOOLS="i2c-tools"
 
@@ -57,6 +57,7 @@ if [ "${PROJECT}" == "Rockchip" ]
 then
   PKG_BASEOS+=" system-utils"
   PKG_EMUS+=" retropie-shaders"
+  PKG_COMPAT+=" lib32"
 fi
 
 if [ "${PROJECT}" == "PC" ]
