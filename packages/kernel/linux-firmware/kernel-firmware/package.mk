@@ -7,10 +7,14 @@ PKG_SHA256="376e0b3d7b4f8aaa2abf7f5ab74803dcf14b06b94e3d841b1467cd9a2848255e"
 PKG_LICENSE="other"
 PKG_SITE="https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/"
 PKG_URL="https://cdn.kernel.org/pub/linux/kernel/firmware/linux-firmware-${PKG_VERSION}.tar.xz"
-PKG_DEPENDS="linux"
 PKG_NEED_UNPACK="${PROJECT_DIR}/${PROJECT}/packages/${PKG_NAME} ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/packages/${PKG_NAME}"
 PKG_LONGDESC="kernel-firmware: kernel related firmware"
 PKG_TOOLCHAIN="manual"
+
+if [ "${ARCH}" = "arm" ] || [ "${ARCH}" = "aarch64" ]
+then
+  PKG_DEPENDS_TARGET="linux"
+fi
 
 configure_package() {
   PKG_FW_SOURCE=${PKG_BUILD}/.copied-firmware
