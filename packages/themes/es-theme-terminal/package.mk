@@ -4,7 +4,7 @@
 # Copyright (C) 2021 Fewtarius
 
 PKG_NAME="es-theme-terminal"
-PKG_VERSION="65c8e2df07f26750190c6d081bace8ba6c10f1be"
+PKG_VERSION="04c10a982fe966b6dd4b3a428898e99f72533109"
 PKG_ARCH="any"
 PKG_LICENSE="CUSTOM"
 PKG_SITE="https://github.com/anthonycaccese/es-theme-terminal"

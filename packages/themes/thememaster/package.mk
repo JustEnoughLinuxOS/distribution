@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="thememaster"
-PKG_VERSION="1aa9f915bb6876a25f908995d349ad487116422d"
+PKG_VERSION="09bee95fea09760355777af824a7ad41dc1ae577"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/JohnIrvine1433/ThemeMaster"
 PKG_URL="${PKG_SITE}.git"
