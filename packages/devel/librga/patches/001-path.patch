@@ -1,0 +1,14 @@
+diff -rupN librga.orig/include/RgaApi.h librga/include/RgaApi.h
+--- librga.orig/include/RgaApi.h	2022-07-03 11:02:32.877956155 -0400
++++ librga/include/RgaApi.h	2022-07-03 11:02:55.601611579 -0400
+@@ -30,8 +30,8 @@
+ #include <sys/mman.h>
+ #include <linux/stddef.h>
+ 
+-#include "drmrga.h"
+-#include "rga.h"
++#include "rga/drmrga.h"
++#include "rga/rga.h"
+ 
+ #ifdef __cplusplus
+ extern "C"{

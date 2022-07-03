@@ -14,19 +14,19 @@ PKG_DEPENDS_HOST="toolchain:host distutilscross:host"
 PKG_PATCH_DIRS+="${DEVICE}"
 
 
-if [ "${TARGET_ARCH}" = "arm" ] || [ "${TARGET_ARCH}" = "aarch64" ]
-then
-  PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} librga"
-  pre_make_host() {
-    sed -i "s| -lrga||g" ${PKG_BUILD}/CMakeLists.txt
-  }
+#if [ "${ARCH}" = "arm" ] || [ "${ARCH}" = "aarch64" ]
+#then
+  PKG_DEPENDS_TARGET+=" librga"
+pre_make_host() {
+  sed -i "s| -lrga||g" ${PKG_BUILD}/CMakeLists.txt
+}
 
-  pre_make_target() {
-    if ! `grep -rnw "${PKG_BUILD}/CMakeLists.txt" -e '-lrga'`; then
-      sed -i "s|--no-undefined|--no-undefined -lrga|" ${PKG_BUILD}/CMakeLists.txt
-    fi
-  }
-fi
+pre_make_target() {
+  if ! `grep -rnw "${PKG_BUILD}/CMakeLists.txt" -e '-lrga'`; then
+    sed -i "s|--no-undefined|--no-undefined -lrga|" ${PKG_BUILD}/CMakeLists.txt
+  fi
+}
+#fi
 
 pre_configure_target(){
   PKG_CMAKE_OPTS_TARGET="-DSDL_STATIC=OFF \
