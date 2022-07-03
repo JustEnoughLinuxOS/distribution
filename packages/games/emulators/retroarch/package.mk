@@ -6,7 +6,7 @@ PKG_VERSION="e954a69708101979e0ce474d63b4697987842dbd"
 PKG_SITE="https://github.com/libretro/RetroArch"
 PKG_URL="${PKG_SITE}.git"
 PKG_LICENSE="GPLv3"
-PKG_DEPENDS_TARGET="toolchain SDL2 alsa-lib openssl freetype zlib retroarch-assets core-info ffmpeg libass joyutils empty ${OPENGLES} nss-mdns openal-soft libogg libvorbisidec libvorbis libvpx libpng libdrm librga pulseaudio miniupnpc flac"
+PKG_DEPENDS_TARGET="toolchain SDL2 alsa-lib openssl freetype zlib retroarch-assets core-info ffmpeg libass joyutils empty ${OPENGLES} nss-mdns openal-soft libogg libvorbisidec libvorbis libvpx libpng libdrm pulseaudio miniupnpc flac"
 PKG_LONGDESC="Reference frontend for the libretro API."
 GET_HANDLER_SUPPORT="git"
 
@@ -35,8 +35,15 @@ pre_configure_target() {
                              --enable-opengles3 \
                              --enable-opengles3_1 \
                              --enable-kms \
-                             --disable-mali_fbdev \
-                             --enable-odroidgo2"
+                             --disable-mali_fbdev"
+
+  if [ "${ARCH}" == "arm" ] || [ "${ARCH}" == "aarch64" ]
+  then
+    PKG_DEPENDS_TARGET+=" librga"
+    PKG_CONFIGURE_OPTS_TARGET+=" --enable-odroidgo2"
+  else
+    PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengl --enable-vulkan --enable-vulkan_display"
+  fi
 
   if [ "${ARCH}" == "arm" ]; then
     PKG_CONFIGURE_OPTS_TARGET+=" --enable-neon"
