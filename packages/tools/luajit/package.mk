@@ -2,7 +2,7 @@
 # Copyright (C) 2019 Trond Haugland (github.com/escalade)
 
 PKG_NAME="luajit"
-PKG_VERSION="99168476b9f6e1910057181428f2225b09458747"
+PKG_VERSION="486dc709c9f26379867c899d3e680ae2482f249e"
 PKG_ARCH="any"
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/moonjit/moonjit"
