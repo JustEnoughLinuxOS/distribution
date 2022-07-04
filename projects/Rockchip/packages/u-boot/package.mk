@@ -23,7 +23,7 @@ fi
 if [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
 then
   PKG_URL="https://github.com/JustEnoughLinuxOS/rk356x-uboot.git"
-  PKG_VERSION="dfd1bcb"
+  PKG_VERSION="afcb506"
 fi
 
 PKG_IS_KERNEL_PKG="yes"
