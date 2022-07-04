@@ -4,10 +4,9 @@
 
 PKG_NAME="binutils"
 PKG_VERSION="2.38"
-PKG_SHA256="e316477a914f567eccc34d5d29785b8b0f5a10208d36bbacedcc39048ecfe024"
 PKG_LICENSE="GPL"
-PKG_SITE="https://www.gnu.org/software/binutils/"
-PKG_URL="https://ftp.gnu.org/gnu/binutils/${PKG_NAME}-${PKG_VERSION}.tar.xz"
+PKG_SITE="http://www.gnu.org/software/binutils/"
+PKG_URL="http://ftp.gnu.org/gnu/binutils/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_HOST="ccache:host bison:host flex:host linux:host"
 PKG_DEPENDS_TARGET="toolchain zlib binutils:host"
 PKG_LONGDESC="A GNU collection of binary utilities."
@@ -16,7 +15,6 @@ PKG_CONFIGURE_OPTS_HOST="--target=${TARGET_NAME} \
                          --with-sysroot=${SYSROOT_PREFIX} \
                          --with-lib-path=${SYSROOT_PREFIX}/lib:${SYSROOT_PREFIX}/usr/lib \
                          --without-ppl \
-                         --enable-static \
                          --without-cloog \
                          --disable-werror \
                          --disable-multilib \
@@ -35,8 +33,8 @@ PKG_CONFIGURE_OPTS_TARGET="--target=${TARGET_NAME} \
                          --with-system-zlib \
                          --without-ppl \
                          --without-cloog \
-                         --enable-static \
-                         --disable-shared \
+                         --disable-static \
+                         --enable-shared \
                          --disable-werror \
                          --disable-multilib \
                          --disable-libada \
@@ -56,13 +54,12 @@ pre_configure_host() {
 
 make_host() {
   make configure-host
-  make MAKEINFO=true
+  make
 }
 
 makeinstall_host() {
   cp -v ../include/libiberty.h ${SYSROOT_PREFIX}/usr/include
-  make -C bfd install # fix parallel build with libctf requiring bfd
-  make MAKEINFO=true install
+  make install
 }
 
 make_target() {
