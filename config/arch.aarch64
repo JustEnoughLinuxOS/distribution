@@ -18,7 +18,7 @@
       ;;
   esac
 
-  TARGET_GCC_ARCH=${TARGET_SUBARCH/-}
+  GCC_ARCH=${TARGET_SUBARCH/-}
   TARGET_KERNEL_ARCH=arm64
 
 # setup ARCH specific *FLAGS
