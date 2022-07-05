@@ -15,6 +15,7 @@ PKG_LONGDESC="GRUB is a Multiboot boot loader."
 PKG_TOOLCHAIN="configure"
 
 pre_configure_host() {
+  PKG_CONFIGURE_OPTS_HOST+=" --disable-werror"
   unset CFLAGS
   unset CPPFLAGS
   unset CXXFLAGS
@@ -32,6 +33,7 @@ pre_configure_host() {
 pre_configure_target() {
   PKG_CONFIGURE_OPTS_TARGET="--target=i386-pc-linux \
                              --disable-nls \
+			     --disable-werror \
                              --with-platform=efi"
 
   unset CFLAGS
