@@ -21,7 +21,7 @@ GET_HANDLER_SUPPORT="git"
 if [[ "${DEVICE}" =~ RG552 ]]
 then
   PKG_URL="https://github.com/JustEnoughLinuxOS/rockchip-kernel.git"
-  PKG_VERSION="1a8d74081"
+  PKG_VERSION="cb0d79995"
 elif [[ "${DEVICE}" =~ RG351 ]]
 then
   PKG_URL="https://github.com/JustEnoughLinuxOS/rg351x-kernel.git"
