@@ -11,6 +11,7 @@ else
   MOUNTPATH="/storage/cloud"
   SYNCPATH="GAMES"
   BACKUPPATH="/storage/roms"
+  RSYNCOPTSBACKUP="-raiv --prune-empty-dirs"
 fi
 
 echo -e "=> ${OS_NAME} CLOUD BACKUP UTILITY\n" >/dev/console
@@ -19,7 +20,7 @@ echo "Mounting ${MOUNTPATH}" >/dev/console 2>&1
 rclonectl mount ${MOUNTPATH} >/dev/console 2>&1
 
 echo "Backing up data from ${BACKUPPATH} to ${MOUNTPATH}/${SYNCPATH}" >/dev/console 2>&1
-rsync -raiv --include-from="${CONFIGPATH}/rsync-rules.conf" --prune-empty-dirs ${BACKUPPATH}/ ${MOUNTPATH}/${SYNCPATH}/ >/dev/console 2>&1
+rsync ${RSYNCOPTSBACKUP} --include-from="${CONFIGPATH}/rsync-rules.conf" ${BACKUPPATH}/ ${MOUNTPATH}/${SYNCPATH}/ >/dev/console 2>&1
 
 echo "Unmounting ${MOUNTPATH}" >/dev/console 2>&1
 rclonectl unmount ${MOUNTPATH} >/dev/console 2>&1
