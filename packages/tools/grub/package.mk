@@ -2,7 +2,8 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="grub"
-PKG_VERSION="351c9c2fd0bcd94c7fda5b697d3283f7f0ff7930"
+PKG_VERSION="635ef55ed1252f92fe3bf70caefd185dcc507c43" # 2020-12-18
+PKG_SHA256="e099d18bdeef5312765f20c6de3384ca9ff03f776f1c7632b1e4bc4d1715a961"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://www.gnu.org/software/grub/index.html"
@@ -31,7 +32,6 @@ pre_configure_host() {
 pre_configure_target() {
   PKG_CONFIGURE_OPTS_TARGET="--target=i386-pc-linux \
                              --disable-nls \
-			     --disable-werror \
                              --with-platform=efi"
 
   unset CFLAGS
