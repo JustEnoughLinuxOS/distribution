@@ -80,13 +80,15 @@ fi
 
 # update bootloader
 
-if [ "$(awk '/^Hardware/ {print $4}' /proc/cpuinfo)" = "RG503" ] || [ "$(awk '/^Hardware/ {print $4}' /proc/cpuinfo)" = "RG353P" ]
-then
-  IDBSEEK="bs=512 seek=64"
-else
-  # Fix me.
-  IDBSEEK="bs=32k seek=1"
-fi
+MYDEV=$(awk '/^Hardware/ {print $4}' /proc/cpuinfo)
+case ${MYDEV} in
+  RG503|RG353P|RG552)
+    IDBSEEK="bs=512 seek=64"
+  ;;
+  *)
+    IDBSEEK="bs=32k seek=1"
+  ;;
+esac
 
   if [ -f $SYSTEM_ROOT/usr/share/bootloader/idbloader.img ]; then
     echo -n "Updating idbloader.img... "
