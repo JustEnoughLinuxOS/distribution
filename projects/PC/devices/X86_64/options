@@ -1,5 +1,5 @@
 # kernel command line
-  EXTRA_CMDLINE="quiet console=tty0 fbcon=rotate:1 ssh consoleblank=0" # systemd.show_status=0 loglevel=0 panic=20
+  EXTRA_CMDLINE="quiet console=tty0 fbcon=rotate:3 ssh consoleblank=0" # systemd.show_status=0 loglevel=0 panic=20
 
 # Partition label
   PARTITION_TABLE="msdos"
@@ -32,3 +32,5 @@
 # Space separated list is supported,
 # e.g. GRAPHIC_DRIVERS="crocus i915 iris r300 r600 radeonsi vmware virtio"
   GRAPHIC_DRIVERS="crocus i915 iris r300 r600 radeonsi vmware virtio"
+
+VAAPI_SUPPORT="yes"

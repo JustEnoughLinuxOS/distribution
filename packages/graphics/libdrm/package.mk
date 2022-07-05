@@ -4,8 +4,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libdrm"
-PKG_VERSION="2.4.108"
-PKG_SHA256="a1d7948cbc536763fde14b4beb5e4da7867607966d4cf46301087e8b8fe3d6a0"
+PKG_VERSION="2.4.111"
 PKG_LICENSE="GPL"
 PKG_SITE="http://dri.freedesktop.org"
 PKG_URL="http://dri.freedesktop.org/libdrm/libdrm-${PKG_VERSION}.tar.xz"
@@ -15,8 +14,7 @@ PKG_TOOLCHAIN="meson"
 
 get_graphicdrivers
 
-PKG_MESON_OPTS_TARGET="-Dlibkms=false \
-                       -Dnouveau=false \
+PKG_MESON_OPTS_TARGET="-Dnouveau=false \
                        -Domap=false \
                        -Dexynos=false \
                        -Dtegra=false \

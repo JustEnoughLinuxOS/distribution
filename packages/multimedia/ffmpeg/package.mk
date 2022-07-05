@@ -4,7 +4,8 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="ffmpeg"
-PKG_VERSION="4.4.1-Nexus-Alpha1"
+PKG_VERSION="7e3a070d9aac3ccdd1a5ee9ba08508811ad5202f"
+PKG_SHA256="d289bb7c6c1624b6010ad084e18b158c17b5425baa883d8ea01b399f826c46c0"
 PKG_LICENSE="LGPLv2.1+"
 PKG_SITE="https://ffmpeg.org"
 PKG_URL="https://github.com/xbmc/FFmpeg/archive/${PKG_VERSION}.tar.gz"
@@ -86,13 +87,13 @@ if [ "${TARGET_ARCH}" = "x86_64" ]; then
   PKG_DEPENDS_TARGET+=" nasm:host"
 fi
 
-if target_has_feature "(neon|sse)"; then
-  PKG_DEPENDS_TARGET+=" dav1d"
-  PKG_NEED_UNPACK+=" $(get_pkg_directory dav1d)"
-  PKG_FFMPEG_AV1="--enable-libdav1d"
-else
-  PKG_FFMPEG_AV1="--disable-libdav1d"
-fi
+#if target_has_feature "(neon|sse)"; then
+#  PKG_DEPENDS_TARGET+=" dav1d"
+#  PKG_NEED_UNPACK+=" $(get_pkg_directory dav1d)"
+#  PKG_FFMPEG_AV1="--enable-libdav1d"
+#else
+#  PKG_FFMPEG_AV1="--disable-libdav1d"
+#fi
 
 pre_configure_target() {
   cd ${PKG_BUILD}

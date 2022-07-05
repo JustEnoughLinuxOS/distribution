@@ -11,11 +11,6 @@ PKG_NEED_UNPACK="${PROJECT_DIR}/${PROJECT}/packages/${PKG_NAME} ${PROJECT_DIR}/$
 PKG_LONGDESC="kernel-firmware: kernel related firmware"
 PKG_TOOLCHAIN="manual"
 
-if [ "${ARCH}" = "arm" ] || [ "${ARCH}" = "aarch64" ]
-then
-  PKG_DEPENDS_TARGET="linux"
-fi
-
 configure_package() {
   PKG_FW_SOURCE=${PKG_BUILD}/.copied-firmware
 }
