@@ -6,7 +6,6 @@
 PKG_NAME="iptables"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.netfilter.org/"
-PKG_URL="http://www.netfilter.org/projects/iptables/files/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain linux libmnl libnftnl"
 PKG_LONGDESC="IP packet filter administration."
 PKG_TOOLCHAIN="autotools"
@@ -23,6 +22,7 @@ else
                            CPPFLAGS=-I${SYSROOT_PREFIX}/usr/include"
 fi
 
+PKG_URL="https://www.netfilter.org/projects/iptables/files/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
 
 post_makeinstall_target() {
   mkdir -p ${INSTALL}/usr/config/iptables/
