@@ -21,7 +21,7 @@ echo "Mounting ${MOUNTPATH}" >/dev/console 2>&1
 rclonectl mount ${MOUNTPATH} >/dev/console 2>&1
 
 echo "Restoring data from ${MOUNTPATH}/${SYNCPATH} to ${BACKUPPATH}" >/dev/console 2>&1
-rsync -raiv --include-from="${CONFIGPATH}/rsync-rules.conf" ${MOUNTPATH}/${SYNCPATH}/ ${BACKUPPATH}/ >/dev/console 2>&1
+rsync ${RSYNCOPTSRESTORE} --include-from="${CONFIGPATH}/rsync-rules.conf" ${MOUNTPATH}/${SYNCPATH}/ ${BACKUPPATH}/ >/dev/console 2>&1
 
 echo "Unmounting ${MOUNTPATH}" >/dev/console 2>&1
 rclonectl unmount ${MOUNTPATH} >/dev/console 2>&1
