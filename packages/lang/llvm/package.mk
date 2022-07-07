@@ -50,13 +50,13 @@ pre_configure() {
 pre_configure_host() {
   case "${TARGET_ARCH}" in
     "arm")
-      LLVM_BUILD_TARGETS="X86\;ARM"
+      LLVM_BUILD_TARGETS="X86;ARM"
       ;;
     "aarch64")
-      LLVM_BUILD_TARGETS="X86\;AArch64"
+      LLVM_BUILD_TARGETS="X86;AArch64"
       ;;
     "x86_64")
-      LLVM_BUILD_TARGETS="X86\;AMDGPU"
+      LLVM_BUILD_TARGETS="AMDGPU;X86"
       ;;
   esac
 
@@ -81,6 +81,18 @@ post_makeinstall_host() {
 }
 
 pre_configure_target() {
+  case "${TARGET_ARCH}" in
+    "arm")
+      LLVM_BUILD_TARGETS="X86;ARM"
+      ;;
+    "aarch64")
+      LLVM_BUILD_TARGETS="X86;AArch64"
+      ;;
+    "x86_64")
+      LLVM_BUILD_TARGETS="AMDGPU;X86"
+      ;;
+  esac
+
   mkdir -p ${PKG_BUILD}/.${TARGET_NAME}
   cd ${PKG_BUILD}/.${TARGET_NAME}
   PKG_CMAKE_OPTS_TARGET="${PKG_CMAKE_OPTS_COMMON} \
@@ -90,7 +102,8 @@ pre_configure_target() {
                          -DLLVM_ENABLE_PROJECTS='' \
                          -DLLVM_TARGETS_TO_BUILD=AMDGPU \
                          -DLLVM_TARGET_ARCH="${TARGET_ARCH}" \
-                         -DLLVM_TABLEGEN=${TOOLCHAIN}/bin/llvm-tblgen"
+                         -DLLVM_TABLEGEN=${TOOLCHAIN}/bin/llvm-tblgen \
+			 -DLLVM_TARGETS_TO_BUILD=${LLVM_BUILD_TARGETS}"
 }
 
 post_makeinstall_target() {
