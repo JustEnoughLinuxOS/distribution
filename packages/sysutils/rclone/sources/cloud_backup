@@ -13,7 +13,7 @@ fi
 MOUNTPATH="${MOUNTPATH:=/storage/cloud}"
 SYNCPATH="${SYNCPATH:=GAMES}"
 BACKUPPATH="${BACKUPPATH:=/storage/roms}"
-RSYNCOPTSBACKUP="${RSYNCOPTSBACKUP:=--raiv --prune-empty-dirs}"
+RSYNCOPTSBACKUP="${RSYNCOPTSBACKUP:=-raiv --prune-empty-dirs}"
 
 echo -e "=> ${OS_NAME} CLOUD BACKUP UTILITY\n" >/dev/console
 
