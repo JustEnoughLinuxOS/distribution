@@ -6,8 +6,6 @@
 
 name: release-dev
 on:
-  schedule:
-    - cron:  '0 21 * * *'
   workflow_dispatch:
 env:
   BRANCH: dev
@@ -38,13 +36,12 @@ jobs:
         - name: changes
           id: changes
           run: |
-               stable_commit="$(curl "https://api.github.com/repos/JustEnoughLinuxOS/distribution/git/refs/heads/main" 2>&1 | awk '/url/ {last=$2;n=NR} END{print last; }' | awk 'BEGIN {FS="/"}; {print substr($9, 1, length($9)-1)}')"
-               release_notes="$(git log ${stable_commit}..HEAD --pretty=format:"* %h: %s")"
+               release_notes="$(git log --after "$(date -d "yesterday" +%Y-%m-%d)" --pretty=format:"* %h: %s")"
                release_notes="${release_notes//'%'/'%25'}"
                release_notes="${release_notes//$'\n'/'%0A'}"
                release_notes="${release_notes//$'\r'/'%0D'}"
-               echo "::set-output name=changes::$(echo ${release_notes} | wc -l)"
-               echo "::set-output name=release_notes::${release_notes}"
+               echo ::set-output name=changes::$(echo ${release_notes} | wc -l)
+               echo ::set-output name=release_notes::${release_notes}
         - name: Get date for artifacts
           id: date
           run: echo "::set-output name=date::$(date +'%Y%m%d%H%M')"
