@@ -1,1 +1,2 @@
-echo 1 >/sys/class/graphics/fbcon/rotate
+fbset -g 720 1280 720 1280 32 2>/dev/null
+echo 1 >/sys/devices/virtual/graphics/fbcon/rotate
