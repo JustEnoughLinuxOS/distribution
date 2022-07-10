@@ -18,7 +18,16 @@ GET_HANDLER_SUPPORT="git"
 
 PKG_PATCH_DIRS+="${DEVICE}"
 
-PKG_CMAKE_OPTS_TARGET=" -DENABLE_EMUELEC=1 -DGLES2=1 -DDISABLE_KODI=1 -DENABLE_FILEMANAGER=0 -DCEC=0"
+PKG_CMAKE_OPTS_TARGET=" -DENABLE_EMUELEC=1 -DDISABLE_KODI=1 -DENABLE_FILEMANAGER=0 -DCEC=0"
+
+case ${ARCH} in
+  arm|aarch64)
+    PKG_CMAKE_OPTS_TARGET+=" -DGLES2=1"
+  ;;
+  *)
+    PKG_CMAKE_OPTS_TARGET+=" -DUSE_OPENGL_21=1"
+  ;;
+esac
 
 ##########################################################################################################
 # The following allows building Emulation station from local copy by using EMULATIONSTATION_SRC.

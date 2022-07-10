@@ -14,9 +14,7 @@ PKG_LONGDESC="This package contains a precompiled kernel image and the modules."
 PKG_IS_KERNEL_PKG="yes"
 PKG_STAMP="${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD}"
 
-PKG_PATCH_DIRS+="${LINUX}"
-PKG_PATCH_DIRS+="${DEVICE}"
-PKG_PATCH_DIRS+="default"
+PKG_PATCH_DIRS+="${LINUX} ${DEVICE} default"
 
 PKG_KERNEL_CFG_FILE=$(kernel_config_path) || die
 
