@@ -47,6 +47,8 @@ GCC_COMMON_CONFIGURE_OPTS="--target=${TARGET_NAME} \
                            --enable-libgomp \
                            --disable-libmpx \
                            --disable-libssp \
+			   --disable-static \
+			   --enable-shared \
                            --enable-__cxa_atexit"
 
 PKG_CONFIGURE_OPTS_BOOTSTRAP="${GCC_COMMON_CONFIGURE_OPTS} \
