@@ -16,8 +16,7 @@ PKG_PATCH_DIRS="${LINUX}"
 
 case "${LINUX}" in
   *)
-    PKG_VERSION="5.18.5"
-    PKG_SHA256="9c3731d405994f9cd3a1bb72e83140735831b19c7cec18e0d7a8f3046fa034e7"
+    PKG_VERSION="5.18.10"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v5.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
     PKG_PATCH_DIRS="default"
     ;;
@@ -121,8 +120,8 @@ pre_make_target() {
   # set initramfs source
   ${PKG_BUILD}/scripts/config --set-str CONFIG_INITRAMFS_SOURCE "$(kernel_initramfs_confs) ${BUILD}/initramfs"
 
-  # set default hostname based on ${DISTRONAME}
-  ${PKG_BUILD}/scripts/config --set-str CONFIG_DEFAULT_HOSTNAME "${DISTRONAME}"
+  # set default hostname based on ${DEVICE}
+  ${PKG_BUILD}/scripts/config --set-str CONFIG_DEFAULT_HOSTNAME "${DEVICE}"
 
   # disable swap support if not enabled
   if [ ! "${SWAP_SUPPORT}" = yes ]; then

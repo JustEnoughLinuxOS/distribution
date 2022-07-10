@@ -22,7 +22,10 @@ PKG_CONFIGURE_OPTS_TARGET="MOUNT_FUSE_PATH=/usr/sbin \
                            --disable-rpath \
                            --with-gnu-ld"
 
-post_makeinstall_target() {
-  rm -rf ${INSTALL}/etc/init.d
-  rm -rf ${INSTALL}/etc/udev
+makeinstall_target() {
+  mkdir -p ${INSTALL}/usr/{lib,bin}
+  cp lib/* ${INSTALL}/usr/lib 2>/dev/null ||:
+  cp util/* ${INSTALL}/usr/bin 2>/dev/null ||:
+#  ln -s fusermount3 ${INSTALL}/usr/bin/fusermount
+#  ln -s mount.fuse3 ${INSTALL}/usr/bin/mount.fuse
 }
