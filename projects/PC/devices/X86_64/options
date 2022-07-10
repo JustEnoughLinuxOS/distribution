@@ -1,5 +1,5 @@
 # kernel command line
-  EXTRA_CMDLINE="quiet console=tty0 fbcon=rotate:1 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
+  EXTRA_CMDLINE="quiet console=tty0 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
 
 # Partition label
   PARTITION_TABLE="msdos"
@@ -17,20 +17,14 @@
   VULKAN_SUPPORT="yes"
 
 # Displayserver to use (weston / x11 / no)
-  DISPLAYSERVER="no"
+#  DISPLAYSERVER="no"
 
 # Windowmanager to use (fluxbox / weston / no)
-  WINDOWMANAGER="none"
-
-# KODI Player implementation to use (mesa / default)
-  KODIPLAYER_DRIVER="mesa"
-
-# set the addon project
-  ADDON_PROJECT="Generic"
+#  WINDOWMANAGER="none"
 
 # Mesa 3D Graphic drivers to use (all / crocus,i915,iris,r300,r600,radeonsi,vmware,virtio)
 # Space separated list is supported,
 # e.g. GRAPHIC_DRIVERS="crocus i915 iris r300 r600 radeonsi vmware virtio"
   GRAPHIC_DRIVERS="crocus i915 iris r300 r600 radeonsi vmware virtio"
 
-VAAPI_SUPPORT="yes"
+#VAAPI_SUPPORT="yes"
