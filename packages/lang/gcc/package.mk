@@ -79,6 +79,8 @@ PKG_CONFIGURE_OPTS_HOST="${GCC_COMMON_CONFIGURE_OPTS} \
                          --enable-clocale=gnu \
                          ${GCC_OPTS}"
 
+PKG_CONFIGURE_OPTS_TARGET="${PKG_CONFIGURE_OPTS_HOST}"
+
 pre_configure_host() {
   unset CPP
 }
