@@ -17,7 +17,7 @@ PKG_BUILD_FLAGS="-gold"
 GET_HANDLER_SUPPORT="git"
 
 if [ ! "${OPENGL}" = "no" ]; then
-  PKG_DEPENDS_TARGET+=" ${OPENGL} glu"
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
 fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then

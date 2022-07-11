@@ -7,12 +7,19 @@ PKG_VERSION="2.0.20"
 PKG_SHA256="c56aba1d7b5b0e7e999e4a7698c70b63a3394ff9704b5f6e1c57e0c16f04dd06"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.libsdl.org/"
-PKG_URL="https://www.libsdl.org/release/SDL2-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain alsa-lib systemd dbus ${OPENGLES} pulseaudio libdrm"
+PKG_URL="https://www.libsdl.org/release/SDL2-${PKG_VERSION}.tar.gz"
+PKG_DEPENDS_TARGET="toolchain alsa-lib systemd dbus pulseaudio libdrm"
 PKG_LONGDESC="Simple DirectMedia Layer is a cross-platform development library designed to provide low level access to audio, keyboard, mouse, joystick, and graphics hardware."
 PKG_DEPENDS_HOST="toolchain:host distutilscross:host"
 PKG_PATCH_DIRS+="${DEVICE}"
 
+if [ ! "${OPENGL}" = "no" ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+fi
+
+if [ "${OPENGLES_SUPPORT}" = yes ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+fi
 
 if [ "${ARCH}" = "arm" ] || [ "${ARCH}" = "aarch64" ]
 then

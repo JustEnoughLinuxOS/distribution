@@ -7,12 +7,20 @@ PKG_ARCH="any"
 PKG_LICENSE="apache2"
 PKG_SITE=""
 PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain ${OPENGLES}"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_SHORTDESC="JELOS Meta Package"
 PKG_LONGDESC="JELOS Meta Package"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_TOOLCHAIN="make"
+
+if [ ! "${OPENGL}" = "no" ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+fi
+
+if [ "${OPENGLES_SUPPORT}" = yes ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+fi
 
 PKG_BASEOS="plymouth-lite grep wget libjpeg-turbo util-linux xmlstarlet bluetool gnupg gzip patchelf \
             imagemagick terminus-font vim bash pyudev dialog six git dbus-python coreutils miniupnpc \
