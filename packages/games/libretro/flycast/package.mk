@@ -6,17 +6,32 @@ PKG_NAME="flycast"
 PKG_VERSION="c77c3ab015ae0b7bf6e411aa15c52bd3a71e99ef"
 PKG_SITE="https://github.com/flyinghead/flycast"
 PKG_URL="${PKG_SITE}.git"
-PKG_DEPENDS_TARGET="toolchain ${OPENGLES} libzip"
+PKG_DEPENDS_TARGET="toolchain libzip"
 PKG_LONGDESC="Flycast is a multi-platform Sega Dreamcast, Naomi and Atomiswave emulator"
 PKG_TOOLCHAIN="cmake"
 
+if [ ! "${OPENGL}" = "no" ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+fi
+
+if [ "${OPENGLES_SUPPORT}" = yes ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+  PKG_CMAKE_OPTS_TARGET+="-DUSE_VULKAN=OFF \
+			  -DUSE_GLES=ON"
+fi
+
+if [ "${ARCH}" = "x86_64" ]
+then
+  PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
+  PKG_CMAKE_OPTS_TARGET+=" -DUSE_VULKAN=ON"
+fi
+
 pre_configure_target() {
   sed -i 's/"reicast"/"flycast"/g' ${PKG_BUILD}/shell/libretro/libretro_core_option_defines.h 
-  PKG_CMAKE_OPTS_TARGET="-Wno-dev -DLIBRETRO=ON \
+  PKG_CMAKE_OPTS_TARGET="${PKG_CMAKE_OPTS_TARGET} \
+			 -Wno-dev -DLIBRETRO=ON \
                          -DWITH_SYSTEM_ZLIB=ON \
-                         -DUSE_OPENMP=ON \
-                         -DUSE_VULKAN=OFF
-                         -DUSE_GLES=ON"
+                         -DUSE_OPENMP=ON"
 }
 
 makeinstall_target() {

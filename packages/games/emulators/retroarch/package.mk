@@ -34,7 +34,7 @@ pre_configure_target() {
     PKG_DEPENDS_TARGET+=" librga ${OPENGLES}"
     PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengles --enable-opengles3 --enable-opengles3_2 --enable-kms --disable-mali_fbdev --enable-odroidgo2"
   else
-    PKG_DEPENDS_TARGET+=" ${OPENGL}"
+    PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd vulkan-loader vulkan-headers"
     PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengl --enable-vulkan --enable-vulkan_display"
   fi
 
