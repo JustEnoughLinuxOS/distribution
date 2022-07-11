@@ -104,6 +104,6 @@ post_makeinstall_target() {
     fi
 }
 
-post_install() {
-  enable_service xorg.service
-}
+#post_install() {
+#  enable_service xorg.service
+#}

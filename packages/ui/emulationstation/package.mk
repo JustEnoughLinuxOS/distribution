@@ -117,8 +117,4 @@ makeinstall_target() {
 post_install() {
 	mkdir -p ${INSTALL}/usr/share
 	ln -sf /storage/.config/emulationstation/locale ${INSTALL}/usr/share/locale
-        if [ "${ARCH}" = "x86_64" ]
-	then
-		enable_service windowmanager.service
-        fi
 }
