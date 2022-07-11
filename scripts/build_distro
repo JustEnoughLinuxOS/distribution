@@ -20,6 +20,28 @@ export BUILD_DATE=$(date)
 
 echo "Building ${DISTRO} for ${DEVICE}"
 
+# If ROOT is defined make sure that the build folder is a link to root rather than
+# a folder and take additional clean steps to ensure everything is built properly.
+
+if [ ! -z "${ROOT}" ]
+then
+  # Ensure there isn't a left over build directory.
+  if [ -d "build.${DISTRO}-${DEVICE}.${ARCH}" ]
+  then
+    echo "Removing stale build root."
+    rm -rf build.${DISTRO}-${DEVICE}.${ARCH}
+  fi
+
+  # Link back to the ROOT so we can re-use the build directory to save space.
+  if [ ! -L "build.${DISTRO}-${DEVICE}.${ARCH}" ]
+  then
+    ln -sf build.${DISTRO}-${ROOT}.${ARCH} build.${DISTRO}-${DEVICE}.${ARCH}
+  fi
+
+  # Clean additional packages to ensure the OS is properly built for this device
+  PKG_CLEAN="${PKG_CLEAN} plymouth-lite initramfs busybox kernel grub u-boot SDL2"
+fi
+
 # If this variable exists in the environment, expand it and clean those packages too.
 PKG_CLEAN="${PKG_CLEAN} modules emulationstation retroarch lib32 jelos"
 
