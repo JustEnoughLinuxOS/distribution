@@ -2,11 +2,11 @@
 # Copyright (C) 2021-present 351ELEC (https://github.com/351ELEC)
 
 PKG_NAME="retroarch"
-PKG_VERSION="e9d67f2bbe01f3fe66de5eda6430bccfba95b663"
+PKG_VERSION="e275e9d64e5286a26c1c6c7648d67003388bfdfc"
 PKG_SITE="https://github.com/libretro/RetroArch"
 PKG_URL="${PKG_SITE}.git"
 PKG_LICENSE="GPLv3"
-PKG_DEPENDS_TARGET="toolchain SDL2 alsa-lib openssl freetype zlib retroarch-assets core-info ffmpeg libass joyutils empty ${OPENGLES} nss-mdns openal-soft libogg libvorbisidec libvorbis libvpx libpng libdrm pulseaudio miniupnpc flac"
+PKG_DEPENDS_TARGET="toolchain SDL2 alsa-lib openssl freetype zlib retroarch-assets core-info ffmpeg libass joyutils empty nss-mdns openal-soft libogg libvorbisidec libvorbis libvpx libpng libdrm pulseaudio miniupnpc flac"
 PKG_LONGDESC="Reference frontend for the libretro API."
 GET_HANDLER_SUPPORT="git"
 
@@ -14,34 +14,27 @@ PKG_PATCH_DIRS+="${DEVICE}"
 
 pre_configure_target() {
   TARGET_CONFIGURE_OPTS=""
-  PKG_CONFIGURE_OPTS_TARGET="--disable-qt \
-                             --enable-alsa \
-                             --enable-udev \
-                             --disable-opengl1 \
-                             --disable-opengl \
-                             --disable-vulkan \
-                             --disable-vulkan_display \
-                             --enable-egl \
-                             --enable-opengles \
-                             --disable-wayland \
-                             --disable-x11 \
-                             --enable-zlib \
-                             --enable-freetype \
-                             --disable-discord \
-                             --disable-vg \
-                             --disable-sdl \
-                             --enable-sdl2 \
-                             --disable-ffmpeg \
-                             --enable-opengles3 \
-                             --enable-opengles3_1 \
-                             --enable-kms \
-                             --disable-mali_fbdev"
+  PKG_CONFIGURE_OPTS_TARGET="	--disable-qt \
+				--enable-alsa \
+				--enable-udev \
+				--disable-opengl1 \
+				--disable-opengl \
+				--disable-wayland \
+				--disable-x11 \
+				--enable-zlib \
+				--enable-freetype \
+				--disable-discord \
+				--disable-vg \
+				--disable-sdl \
+				--enable-sdl2 \
+				--enable-ffmpeg"
 
   if [ "${ARCH}" == "arm" ] || [ "${ARCH}" == "aarch64" ]
   then
-    PKG_DEPENDS_TARGET+=" librga"
-    PKG_CONFIGURE_OPTS_TARGET+=" --enable-odroidgo2"
+    PKG_DEPENDS_TARGET+=" librga ${OPENGLES}"
+    PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengles --enable-opengles3 --enable-opengles3_2 --enable-kms --disable-mali_fbdev --enable-odroidgo2"
   else
+    PKG_DEPENDS_TARGET+=" ${OPENGL}"
     PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengl --enable-vulkan --enable-vulkan_display"
   fi
 

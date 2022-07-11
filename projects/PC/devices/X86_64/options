@@ -17,10 +17,10 @@
   VULKAN_SUPPORT="yes"
 
 # Displayserver to use (weston / x11 / no)
-#  DISPLAYSERVER="no"
+  DISPLAYSERVER="weston"
 
 # Windowmanager to use (fluxbox / weston / no)
-#  WINDOWMANAGER="none"
+  WINDOWMANAGER="weston"
 
 # Mesa 3D Graphic drivers to use (all / crocus,i915,iris,r300,r600,radeonsi,vmware,virtio)
 # Space separated list is supported,

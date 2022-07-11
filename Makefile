@@ -23,7 +23,7 @@ distclean:
 src-pkg:
 	tar cvJf sources.tar.xz sources .stamps
 
-world: X86_64 RG552 RG503 RG353P RG351P RG351V RG351MP
+world: RG552 RG503 RG353P RG351P RG351V RG351MP X86_64
 
 X86_64:
 	PROJECT=PC DEVICE=X86_64 ARCH=x86_64 ./scripts/build_distro
