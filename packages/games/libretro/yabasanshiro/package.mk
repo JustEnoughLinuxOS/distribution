@@ -25,8 +25,8 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/yabause"
-PKG_URL="$PKG_SITE.git"
-PKG_DEPENDS_TARGET="toolchain $OPENGLES"
+PKG_URL="${PKG_SITE}.git"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="Port of YabaSanshiro to libretro."
@@ -34,11 +34,19 @@ PKG_LONGDESC="Port of YabaSanshiro to libretro."
 PKG_TOOLCHAIN="make"
 GET_HANDLER_SUPPORT="git"
 
+if [ ! "${OPENGL}" = "no" ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+fi
+
+if [ "${OPENGLES_SUPPORT}" = yes ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+fi
+
 pre_configure_target() {
   PKG_MAKE_OPTS_TARGET+=" -C yabause/src/libretro platform=rockpro64 HAVE_NEON=0"
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp yabause/src/libretro/yabasanshiro_libretro.so $INSTALL/usr/lib/libretro/
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  cp yabause/src/libretro/yabasanshiro_libretro.so ${INSTALL}/usr/lib/libretro/
 }

@@ -19,6 +19,16 @@ fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+  PKG_CMAKE_OPTS_TARGET+="-DVIDEO_OPENGLES=ON \
+                          -DVIDEO_VULKAN=OFF \
+			  -DVIDEO_X11=OFF"
+fi
+
+if [ "${ARCH}" = "x86_64" ]
+then
+  PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
+  PKG_CMAKE_OPTS_TARGET+=" -DVIDEO_VULKAN=ON \
+                           -DVIDEO_X11=ON"
 fi
 
 if [ "${ARCH}" = "arm" ] || [ "${ARCH}" = "aarch64" ]
@@ -76,9 +86,6 @@ pre_configure_target(){
                          -DCLOCK_GETTIME=OFF \
                          -DRPATH=OFF \
                          -DRENDER_D3D=OFF \
-                         -DVIDEO_X11=OFF \
-                         -DVIDEO_OPENGLES=ON \
-                         -DVIDEO_VULKAN=OFF \
                          -DVIDEO_KMSDRM=ON \
                          -DPULSEAUDIO=ON"
 }
