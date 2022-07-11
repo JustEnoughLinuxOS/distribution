@@ -1,0 +1,79 @@
+#!/bin/bash
+
+# rom_system_split: split your roms across your local and external storage
+
+# prerequesites:
+# - store local roms must be stored in "/storage/roms_local"
+# - store external roms must be stored in "/storage/roms"
+# - you cannot spread the same system files across multiple locations.
+#   if duplicate systems are found, local folders will take preference
+
+LOCAL_FOLDER_NAME="roms_local"
+EXT_FOLDER_NAME="roms"
+
+LOCAL_ROM_FOLDERS=$(
+    ls -d ${LOCAL_FOLDER_NAME}/*/ |
+    sed -e "s/${LOCAL_FOLDER_NAME}//g"
+)
+EXT_ROM_FOLDERS=$(
+    ls -d ${EXT_FOLDER_NAME}/*/ |
+    sed -e "s/${EXT_FOLDER_NAME}//g"
+)
+
+ES_SYSTEMS="/storage/.emulationstation/es_systems.cfg"
+
+ES_LIST=$(
+    cat ${ES_SYSTEMS} |
+    grep "<path>" |
+    sed -e "s/<path>//g" -e "s/<\/path>//g" -e "s/\/storage\///g"
+)
+
+
+echo "LOCAL_FOLDER_NAME: ${LOCAL_FOLDER_NAME}"
+echo "EXT_FOLDER_NAME: ${EXT_FOLDER_NAME}"
+echo "EXT_STORAGE: ${EXT_STORAGE}"
+echo "EXTERNAL: ${EXTERNAL}"
+echo "LOCAL_ROM_FOLDERS: $LOCAL_ROM_FOLDERS{}"
+echo "EXT_ROM_FOLDERS: ${EXT_ROM_FOLDERS}"
+echo "ES_SYSTEMS: ${ES_SYSTEMS}"
+echo "ES_LIST: ${ES_LIST}"
+
+
+# required paramaters: local/external, rom folder list, es folder list
+update_es_folders() {
+    folder_name=${LOCAL_FOLDER_NAME}
+    orig_folder_name=${EXT_FOLDER_NAME}
+    if [[ $1 == "external" ]]
+    then
+        folder_name=${EXT_FOLDER_NAME}
+        orig_folder_name=${LOCAL_FOLDER_NAME}
+    fi
+    folder_array=( $2 )
+    for folder in ${folder_array[@]}
+    do
+        system=${folder%?}
+        # check that the system exists in ES
+        if [[ $3 == *"${system}"* ]]
+        then
+            # skip if there are no files in the folder
+            if [ -z "$(ls -A /storage/${folder_name}${system})" ]
+            then
+                continue
+            fi
+            # if the folder doesn't exist in ES, update the original
+            if [[ $3 != *"${folder_name}${system}"* ]]
+            then
+                sed -i -e "s|<path>/storage/${orig_folder_name}${system}</path>|<path>/storage/${folder_name}${system}</path>|g" ${ES_SYSTEMS}
+            fi
+        fi
+    done
+}
+systemctl stop emustation
+
+# check the external folders first
+update_es_folders "external" "${EXT_ROM_FOLDERS}" "${ES_LIST}"
+# next check the local folders
+# if there are duplicate folders in EXTERNAL, LOCAL ones will take preference
+update_es_folders "local" "${LOCAL_ROM_FOLDERS}" "${ES_LIST}"
+
+systemctl start emustation
