@@ -41,7 +41,7 @@ LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-
                 fbalpha2019 fbneo fceumm fmsx flycast flycast_libretro freechaf freeintv             \
                 freej2me fuse-libretro gambatte gearboy gearcoleco gearsystem genesis-plus-gx        \
                 genesis-plus-gx-wide gme gpsp gw-libretro handy hatari mame2000 mame2003-plus        \
-                mame2010 mame2015 mame melonds meowpc98 mgba mrboom mupen64plus mupen64plus-nx       \
+                mame2010 mame2015 melonds meowpc98 mgba mrboom mupen64plus mupen64plus-nx       \
                 neocd_libretro nestopia np2kai nxengine o2em opera parallel-n64_rice                 \
                 parallel-n64_gln64 parallel-n64_glide64 pcsx_rearmed picodrive pokemini potator      \
                 ppsspp prboom prosystem puae px68k quasi88 quicknes race reminiscence sameboy        \
