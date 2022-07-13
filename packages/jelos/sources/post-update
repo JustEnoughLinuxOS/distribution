@@ -25,9 +25,17 @@ cp -r /usr/share/JelosAddOns /storage/roms/ports/
 mv /storage/roms/ports/JelosAddOns/JelosAddOns.sh /storage/roms/ports/JelosAddOns.sh
 rm -rf /storage/.config/modules/Drastic*
 
-if [ -e /usr/config/ssh/authorized_keys ]; then
+if [ -e /usr/config/ssh/authorized_keys ]
+then
   cp /usr/config/ssh/authorized_keys /storage/.ssh
 fi
 
 rsync --ignore-existing /usr/config/rsync-rules.conf /storage/.config/
 rsync --ignore-existing /usr/config/rsync.conf /storage/.config/
+
+# Swap es_input back to a writeable file so external controller configuration works properly.
+if [ -L "/storage/.config/emulationstation/es_input.cfg" ]
+then
+  rm -f /storage/.config/emulationstation/es_input.cfg
+  cp -f /usr/config/emulationstation/es_input.cfg /storage/.config/emulationstation/es_input.cfg
+fi

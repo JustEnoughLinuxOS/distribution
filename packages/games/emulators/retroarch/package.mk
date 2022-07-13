@@ -58,10 +58,10 @@ makeinstall_target() {
   if [ "${ARCH}" == "aarch64" ]; then
     mkdir -p ${INSTALL}/usr/bin
     cp ${PKG_BUILD}/retroarch ${INSTALL}/usr/bin
-    cp -vP ${DISTRO_DIR}/build.${DISTRO}-${DEVICE}.arm/retroarch-*/.install_pkg/usr/bin/retroarch ${INSTALL}/usr/bin/retroarch32
+    cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/retroarch-*/.install_pkg/usr/bin/retroarch ${INSTALL}/usr/bin/retroarch32
 
     mkdir -p ${INSTALL}/usr/share/retroarch/filters
-    cp -rvP ${DISTRO_DIR}/build.${DISTRO}-${DEVICE}.arm/retroarch-*/.install_pkg/usr/share/retroarch/filters/* ${INSTALL}/usr/share/retroarch/filters
+    cp -rvP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/retroarch-*/.install_pkg/usr/share/retroarch/filters/* ${INSTALL}/usr/share/retroarch/filters
 
     mkdir -p ${INSTALL}/etc
     cp ${PKG_BUILD}/retroarch.cfg ${INSTALL}/etc

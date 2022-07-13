@@ -12,7 +12,7 @@ PKG_TOOLCHAIN="manual"
 
 makeinstall_target() {
   cd ${PKG_BUILD}
-  LIBROOT="${DISTRO_DIR}/build.${DISTRO}-${DEVICE}.arm/image/system/"
+  LIBROOT="${ROOT}/build.${DISTRO}-${DEVICE}.arm/image/system/"
   if [ "${ARCH}" = "aarch64" ]; then
       mkdir -p ${INSTALL}/usr/lib32
       LIBS="ld-2 \
@@ -80,7 +80,7 @@ makeinstall_target() {
     do
       find ${LIBROOT}/usr/lib -name ${lib}* -exec cp -vP \{} ${INSTALL}/usr/lib32 \;
     done
-    cp ${DISTRO_DIR}/build.${DISTRONAME}-${DEVICE}.arm/libmali*/.install_pkg/usr/lib/* ${INSTALL}/usr/lib32
+    cp ${ROOT}/build.${DISTRONAME}-${DEVICE}.arm/libmali*/.install_pkg/usr/lib/* ${INSTALL}/usr/lib32
 
     chmod -f +x ${INSTALL}/usr/lib32/* || :
   fi

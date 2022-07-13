@@ -177,7 +177,7 @@ pre_make_target() {
 
   kernel_make oldconfig
 
-  if [ -f "${DISTRO_DIR}/${DISTRO}/kernel_options" ]; then
+  if [ -f "${ROOT}/${DISTRO}/kernel_options" ]; then
     while read OPTION; do
       [ -z "${OPTION}" -o -n "$(echo "${OPTION}" | grep '^#')" ] && continue
 
@@ -188,7 +188,7 @@ pre_make_target() {
       if [ "$(${PKG_BUILD}/scripts/config --state ${OPTION%%=*})" != "$(echo ${OPTION##*=} | tr -d '"')" ]; then
         MISSING_KERNEL_OPTIONS+="\t${OPTION}\n"
       fi
-    done < ${DISTRO_DIR}/${DISTRO}/kernel_options
+    done < ${ROOT}/${DISTRO}/kernel_options
 
     if [ -n "${MISSING_KERNEL_OPTIONS}" ]; then
       print_color CLR_WARNING "LINUX: kernel options not correct: \n${MISSING_KERNEL_OPTIONS%%}\nPlease run ./tools/check_kernel_config\n"

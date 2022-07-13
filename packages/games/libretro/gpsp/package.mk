@@ -61,7 +61,7 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
   if [ "${ARCH}" = "aarch64" ]
   then
-    cp -vP ${DISTRO_DIR}/build.${DISTRO}-${DEVICE}.arm/gpsp-*/.install_pkg/usr/lib/libretro/gpsp_libretro.so ${INSTALL}/usr/lib/libretro/
+    cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/gpsp-*/.install_pkg/usr/lib/libretro/gpsp_libretro.so ${INSTALL}/usr/lib/libretro/
   else
     cp ${PKG_BUILD}/gpsp_libretro.so ${INSTALL}/usr/lib/libretro/
   fi
