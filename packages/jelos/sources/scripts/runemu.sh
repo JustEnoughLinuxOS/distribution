@@ -277,6 +277,12 @@ then
 				RUNTHIS='/usr/bin/retroarch -L /usr/lib/libretro/fbneo_libretro.so --subsystem neocd --config ${RATMPCONF} --appendconfig ${RAAPPENDCONF} "${ROMNAME}"'
 			fi
 		;;
+		"psx")
+		if [ "$EMU" = "duckstationsa" ]; then
+            		set_kill_keys "duckstation-nogui"
+            		RUNTHIS='${TBASH} duckstation.sh "${ROMNAME}"'
+        		fi
+		;;
 		"mplayer")
 			jslisten set "mpv"
 			RUNTHIS='${TBASH} /usr/bin/mpv_video.sh "${ROMNAME}"'
