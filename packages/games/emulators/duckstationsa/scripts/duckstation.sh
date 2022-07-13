@@ -1,31 +1,25 @@
 #!/bin/bash
 
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2021-present Shanti Gilbert (https://github.com/shantigilbert)
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 . /etc/profile
 
-LOCAL_CONFIG="/storage/.local/share"
-CONFIG_DIR="/storage/.config/duckstation"
-
-mkdir -p "/storage/.local/share/duckstation"
-
-if [ ! -d "${CONFIG_DIR}" ]; then
-    mkdir -p "${CONFIG_DIR}"
+if [ ! -d "/storage/.config/duckstation" ]; then
+    mkdir -p "/storage/.config/duckstation"
         cp -r "/usr/config/duckstation" "/storage/.config/"
 fi
 
-if [ -d "/storage/.local/share/duckstation" ]; then
-        rm -rf "/storage/.local/share/duckstation"
+if [ ! -d "/storage/roms/savestates/psx" ]; then
+    mkdir -p "/storage/roms/savestates/psx"
 fi
 
-if [ ! -L "/storage/.local/share/duckstation" ]; then
-    ln -sf "/storage/.config/duckstation" "/storage/.local/share/duckstation"
+if [ -d "/storage/.config/duckstation/savestates" ]; then
+    rm -rf "/storage/.config/duckstation/savestates"
 fi
 
-if [[ "${1}" == *"duckstation_gui.pbp"* ]]; then
-    duckstation-nogui -fullscreen
-else
-    duckstation-nogui -fullscreen -settings "/storage/.config/duckstation/settings.ini" -- "${1}" > /dev/null 2>&1
-fi
+ln -sfv "/storage/roms/savestates/psx" "/storage/.config/duckstation/savestates"
+
+cp -rf /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/.config/duckstation/database/gamecontrollerdb.txt
+
+duckstation-nogui -fullscreen -settings "/storage/.config/duckstation/settings.ini" -- "${1}" > /dev/null 2>&1

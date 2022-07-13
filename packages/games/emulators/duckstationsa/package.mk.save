@@ -12,7 +12,9 @@ PKG_DEPENDS_TARGET="toolchain SDL2 nasm:host ${OPENGLES} libevdev"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="Fast PlayStation 1 emulator for x86-64/AArch32/AArch64 "
 PKG_TOOLCHAIN="cmake"
-PKG_PATCH_DIRS+="${DEVICE}"
+
+EXTRA_OPTS+=" -DUSE_DRMKMS=ON -DUSE_FBDEV=OFF -DUSE_MALI=OFF"
+#EXTRA_OPTS+=" -DUSE_DRMKMS=OFF -DUSE_FBDEV=ON -DUSE_MALI=ON"
 
 pre_configure_target() {
 	PKG_CMAKE_OPTS_TARGET+=" -DANDROID=OFF \
@@ -27,9 +29,7 @@ pre_configure_target() {
 	                         -DUSE_SDL2=ON \
 	                         -DENABLE_CHEEVOS=ON \
 	                         -DHAVE_EGL=ON \
-	                         -DUSE_DRMKMS=ON \
-                                 -DUSE_FBDEV=OFF \
-                                 -DUSE_MALI=OFF"
+	                         ${EXTRA_OPTS}"
 
 
 }
@@ -43,13 +43,9 @@ makeinstall_target() {
   cp -rf ${PKG_BUILD}/.${TARGET_NAME}/bin/* ${INSTALL}/usr/config/duckstation
   cp -rf ${PKG_DIR}/config/* ${INSTALL}/usr/config/duckstation
 
-  rm -rf ${INSTALL}/usr/config/duckstation/duckstation-nogui
+  rm -rf ${INSTALL}/usr/config/duckstation-nogui
   rm -rf ${INSTALL}/usr/config/duckstation/common-tests
 
  chmod +x ${INSTALL}/usr/bin/duckstation.sh
-
- if [[ "${DEVICE}" != RG351P ]] | [[ "${DEVICE}" != RG552 ]]
-  then
-    sed -i '/Rotate = 1/d' ${INSTALL}/usr/config/duckstation/settings.ini
- fi
+ 
 }
