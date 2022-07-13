@@ -35,6 +35,6 @@ makeinstall_target() {
   if [ "${TARGET_ARCH}" = "aarch64" ]
   then
     ## Install the 32bit core.
-    cp -vP ${PKG_BUILD}/../../build.${DISTRO}-${DEVICE}.arm/pcsx_rearmed-*/.install_pkg/usr/lib/libretro/pcsx_rearmed_libretro.so ${INSTALL}/usr/lib/libretro/pcsx_rearmed32_libretro.so
+    cp -vP ${DISTRO_DIR}/build.${DISTRO}-${DEVICE}.arm/pcsx_rearmed-*/.install_pkg/usr/lib/libretro/pcsx_rearmed_libretro.so ${INSTALL}/usr/lib/libretro/pcsx_rearmed32_libretro.so
   fi
 }

@@ -50,7 +50,7 @@ make_target() {
   else
     if [ -e "projects/${PROJECT}/devices/${DEVICE}/u-boot/${UBOOT_CONFIG}" ]
     then
-      cp ${PKG_BUILD}/../../projects/${PROJECT}/devices/${DEVICE}/u-boot/${UBOOT_CONFIG} configs
+      cp ${PROJECT_DIR}/projects/${PROJECT}/devices/${DEVICE}/u-boot/${UBOOT_CONFIG} configs
     fi
     [ "${BUILD_WITH_DEBUG}" = "yes" ] && PKG_DEBUG=1 || PKG_DEBUG=0
     if [ "${PKG_SOC}" = "rk356x" ]
