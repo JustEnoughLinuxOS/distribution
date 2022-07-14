@@ -19,6 +19,11 @@ post_patch() {
   mkdir -p ${PKG_BUILD}/.${HOST_NAME} && cp -r ${PKG_BUILD}/* $PKG_BUILD/.${HOST_NAME}
 }
 
+
+pre_make_host() {
+  unset TARGET_CFLAGS
+}
+
 makeinstall_host() {
   cd .${HOST_NAME}
   make amalg

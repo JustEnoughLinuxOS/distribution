@@ -23,7 +23,7 @@ echo "Building ${DISTRO} for ${DEVICE}"
 # If ROOT is defined make sure that the build folder is a link to root rather than
 # a folder and take additional clean steps to ensure everything is built properly.
 
-if [ -z "${ROOT-set}" ]
+if [ -n "${ROOT}" ]
 then
   # Ensure there isn't a left over build directory.
   if [ -d "build.${DISTRO}-${DEVICE}.${ARCH}" ]
