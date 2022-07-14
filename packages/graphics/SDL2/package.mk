@@ -32,7 +32,7 @@ then
 fi
 
 
-case ${ARCH} in
+case ${DEVICE} in
   RG351P|RG552)
     PKG_DEPENDS_TARGET+=" librga"
     pre_make_host() {
