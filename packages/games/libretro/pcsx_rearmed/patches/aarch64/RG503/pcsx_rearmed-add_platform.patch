@@ -13,7 +13,7 @@ diff -rupN pcsx_rearmed.orig/Makefile.libretro pcsx_rearmed/Makefile.libretro
 +	DYNAREC = ari64
 +       BUILTIN_GPU = peops
 +	CFLAGS += -fomit-frame-pointer -ffast-math -Ofast -DARM
-+	CPUFLAGS += -march=armv8-a+crc -mcpu=cortex-a55 -mtune=cortex-a55
++	CPUFLAGS += -march=armv8-a+crc+simd -mtune=cortex-a55
 +
  # ALLWINNER H5
  else ifneq (,$(findstring h5,$(platform)))

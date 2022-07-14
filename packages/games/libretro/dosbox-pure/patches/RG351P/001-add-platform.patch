@@ -14,7 +14,7 @@ diff -rupN dosbox-pure.orig/Makefile dosbox-pure/Makefile
 +
 +CPUFLAGS := -mtune=cortex-a35 -mcpu=cortex-a35 -march=armv8-a+crc+fp+simd
 +   
-+CFLAGS  += $(CPUFLAGS) -fpic -fomit-frame-pointer -fno-exceptions -fno-non-call-exceptions -Wno-psabi -Wno-format
++CFLAGS  += $(CPUFLAGS) -fpic -fomit-frame-pointer -fno-non-call-exceptions -Wno-psabi -Wno-format
 +LDFLAGS += $(CPUFLAGS) -lpthread -Wl,--gc-sections -shared
 +CXX = $(CC)
 +endif
@@ -247,7 +247,7 @@ diff -rupN dosbox-pure.orig/Makefile.orig dosbox-pure/Makefile.orig
 +  LDFLAGS  += -O2
 +endif
 +
-+CFLAGS  += $(CPUFLAGS) -std=gnu++11 -fomit-frame-pointer -fno-exceptions -fno-non-call-exceptions -Wno-address-of-packed-member -Wno-format -Wno-switch -Wno-psabi
++CFLAGS  += $(CPUFLAGS) -std=gnu++11 -fomit-frame-pointer -fno-non-call-exceptions -Wno-address-of-packed-member -Wno-format -Wno-switch -Wno-psabi
 +ifneq ($(STATIC_LINKING), 1)
 +  CFLAGS  += -fpic
 +else

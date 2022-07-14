@@ -4,7 +4,7 @@
 
 source ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
 
-if [ "${PKG_SOC}" = "rk356x" ]
+if [ "${PKG_SOC}" = "rk356x" ] || [ "${PKG_SOC}" = "rk3399" ]
 then
   IDBSEEK="bs=512 seek=64"
 else

@@ -2,7 +2,7 @@
 Description=Fluxbox Window Manager
 Requires=xorg.service
 After=xorg.service
-Before=kodi.service
+Before=emustation.service
 
 [Service]
 Environment=DISPLAY=:0

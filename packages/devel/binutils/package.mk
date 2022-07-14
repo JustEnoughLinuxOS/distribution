@@ -3,8 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="binutils"
-PKG_VERSION="2.35.1"
-PKG_SHA256="3ced91db9bf01182b7e420eab68039f2083aed0a214c0424e257eae3ddee8607"
+PKG_VERSION="2.38"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/binutils/"
 PKG_URL="http://ftp.gnu.org/gnu/binutils/${PKG_NAME}-${PKG_VERSION}.tar.xz"
@@ -34,8 +33,8 @@ PKG_CONFIGURE_OPTS_TARGET="--target=${TARGET_NAME} \
                          --with-system-zlib \
                          --without-ppl \
                          --without-cloog \
-                         --enable-static \
-                         --disable-shared \
+                         --disable-static \
+                         --enable-shared \
                          --disable-werror \
                          --disable-multilib \
                          --disable-libada \

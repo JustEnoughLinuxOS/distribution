@@ -14,7 +14,7 @@ vres="$(fbset 2>/dev/null | awk '/geometry/ { print $3 }')"
 
 if [ "${SPLASH_TYPE}" == "intro" ] || [ "${SPLASH_TYPE}" == "exit" ]
 then
-  if [ "${DISPLAY_ROTATED}" == true ]
+  if [ ${vres} -gt ${hres} ]
   then
     SPLASH="/usr/config/splash/splash-${hres}l.png"
   else

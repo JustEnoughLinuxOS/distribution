@@ -46,7 +46,7 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
   if [[ "${ARCH}" == "aarch64" ]]
   then
-    cp -vP ${PKG_BUILD}/../../build.${DISTRO}-${DEVICE}.arm/parallel-n64_gln64-*/.install_pkg/usr/lib/libretro/parallel_n64_gln64_libretro.so ${INSTALL}/usr/lib/libretro/parallel_n64_gln64_libretro.so
+    cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/parallel-n64_gln64-*/.install_pkg/usr/lib/libretro/parallel_n64_gln64_libretro.so ${INSTALL}/usr/lib/libretro/parallel_n64_gln64_libretro.so
     cp -vP ${PKG_BUILD}/../core-info-*/parallel_n64_libretro.info ${INSTALL}/usr/lib/libretro/parallel_n64_gln64_libretro.info
     sed -i 's/ParaLLEl N64/ParaLLEl N64 GLN64/g' ${INSTALL}/usr/lib/libretro/parallel_n64_gln64_libretro.info
   else

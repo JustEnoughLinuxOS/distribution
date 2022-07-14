@@ -3,7 +3,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="vlc"
-PKG_VERSION="3.0.16"
+PKG_VERSION="3.0.17.3"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.videolan.org"
@@ -34,6 +34,7 @@ ENABLED_FEATURES="--enable-silent-rules \
             --enable-alsa \
             --enable-udev \
             --enable-vlc \
+            --enable-gles2 \
             --enable-neon"
 
 DISABLED_FEATURES="--disable-dependency-tracking \
@@ -59,7 +60,7 @@ DISABLED_FEATURES="--disable-dependency-tracking \
             --disable-vcd \
             --disable-libcddb \
             --disable-dvbpsi \
-            --disable-screen \
+              --disable-screen \
             --disable-ogg \
             --disable-shout\
             --disable-mod \
@@ -109,10 +110,11 @@ DISABLED_FEATURES="--disable-dependency-tracking \
             --disable-ncurses \
             --disable-goom \
             --disable-projectm \
+            --disable-vsxu \
             --disable-mtp \
             --disable-lirc \
             --disable-libgcrypt \
-            -disable-update-check \
+            --disable-update-check \
             --disable-kva \
             --disable-bluray \
             --disable-samplerate \

@@ -26,45 +26,17 @@ mv /storage/roms/ports/JelosAddOns/JelosAddOns.sh /storage/roms/ports/JelosAddOn
 chmod +x /storage/roms/ports/JelosAddOns.sh
 rm -rf /storage/.config/modules/Drastic*
 
-if [ -e /usr/config/ssh/authorized_keys ]; then
+if [ -e /usr/config/ssh/authorized_keys ]
+then
   cp /usr/config/ssh/authorized_keys /storage/.ssh
 fi
 
 rsync --ignore-existing /usr/config/rsync-rules.conf /storage/.config/
 rsync --ignore-existing /usr/config/rsync.conf /storage/.config/
 
-### Shift away from using overlayfs for now until it's implemented better.
-sed -i "s#/tmp/overlays#/usr/share/retroarch-overlays#g" /storage/.config/retroarch/retroarch.cfg
-sed -i "s#/tmp/shaders#/usr/share/common-shaders#g" /storage/.config/retroarch/retroarch.cfg
-sed -i "s#/tmp/joypads#/etc/retroarch-joypad-autoconfig#g" /storage/.config/retroarch/retroarch.cfg
-sed -i "s#/tmp/database#/usr/share/libretro-database#g" /storage/.config/retroarch/retroarch.cfg
-sed -i "s#/tmp/assets#/usr/share/retroarch-assets#g" /storage/.config/retroarch/retroarch.cfg
-sed -i "s#/tmp/cores#/usr/lib/libretro#g" /storage/.config/retroarch/retroarch.cfg
-
-### Start the time service by default
-set_setting wts.enabled 1
-
-### Link the game controller database so it is managed with OS updates.
-rm -f /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt
-ln -s /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt
-
-### Remove and link es configs so they are managed with OS updates.
-for es_cfg in es_features.cfg es_systems.cfg es_input.cfg
-do
-  rm -f /storage/.config/emulationstation/${es_cfg}
-  ln -s /usr/config/emulationstation/${es_cfg} /storage/.config/emulationstation/${es_cfg}
-done
-
-### Link themes
-cd /storage/.config/emulationstation/themes
-for theme in /usr/share/themes/*
-do
-  ln -sf ${theme} .
-done
-cd -
-
-### Swap maxperf to cpugovernor=performance
-sed -i "s#maxperf=1#cpugovernor=performance#g" /storage/.config/system/configs/system.cfg
-
-### Disable WIFI power saving by default
-set_setting wifi.powersave 0
+# Swap es_input back to a writeable file so external controller configuration works properly.
+if [ -L "/storage/.config/emulationstation/es_input.cfg" ]
+then
+  rm -f /storage/.config/emulationstation/es_input.cfg
+  cp -f /usr/config/emulationstation/es_input.cfg /storage/.config/emulationstation/es_input.cfg
+fi

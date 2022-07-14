@@ -2,10 +2,9 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
-# Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="libdrm"
-PKG_VERSION="2.4.110"
+PKG_VERSION="2.4.111"
 PKG_LICENSE="GPL"
 PKG_SITE="http://dri.freedesktop.org"
 PKG_URL="http://dri.freedesktop.org/libdrm/libdrm-${PKG_VERSION}.tar.xz"
@@ -15,8 +14,7 @@ PKG_TOOLCHAIN="meson"
 
 get_graphicdrivers
 
-PKG_MESON_OPTS_TARGET="-Dlibkms=false \
-                       -Dnouveau=false \
+PKG_MESON_OPTS_TARGET="-Dnouveau=false \
                        -Domap=false \
                        -Dexynos=false \
                        -Dtegra=false \

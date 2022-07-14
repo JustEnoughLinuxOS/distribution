@@ -301,15 +301,19 @@ else
 	jslisten set "retroarch retroarch32"
 	setaudio alsa
 
-	### Check if we need retroarch 32 bits or 64 bits
-	RABIN="retroarch"
-	if [[ "${CORE}" =~ pcsx_rearmed32 ]] || \
-           [[ "${CORE}" =~ parallel_n64 ]] || \
-           [[ "${CORE}" =~ gpsp ]] || \
-           [[ "${CORE}" =~ flycast32 ]]
+
+	if [[ "${HW_ARCH}" =~ aarch64 ]]
 	then
-		export LD_LIBRARY_PATH="/usr/lib32"
-		RABIN="retroarch32"
+		### Check if we need retroarch 32 bits or 64 bits
+		RABIN="retroarch"
+		if [[ "${CORE}" =~ pcsx_rearmed32 ]] || \
+	           [[ "${CORE}" =~ parallel_n64 ]] || \
+	           [[ "${CORE}" =~ gpsp ]] || \
+	           [[ "${CORE}" =~ flycast32 ]]
+		then
+			export LD_LIBRARY_PATH="/usr/lib32"
+			RABIN="retroarch32"
+		fi
 	fi
 
 	# Platform specific configurations
