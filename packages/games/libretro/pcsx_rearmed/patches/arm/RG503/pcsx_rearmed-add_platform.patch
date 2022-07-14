@@ -12,7 +12,7 @@ diff -rupN pcsx_rearmed.orig/Makefile.libretro pcsx_rearmed/Makefile.libretro
 +	ARCH = arm
 +	DYNAREC = ari64
 +       BUILTIN_GPU = neon
-+	CFLAGS += -march=armv8-a+crc -mcpu=cortex-a55 -mtune=cortex-a55 -Ofast
++	CFLAGS += -march=armv8-a+crc+simd -mtune=cortex-a55 -Ofast
 +	CPUFLAGS += -mtune=cortex-a55 -mfpu=neon-fp-armv8 -mfloat-abi=hard
 +
  # ALLWINNER H5

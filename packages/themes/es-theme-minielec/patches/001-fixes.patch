@@ -1,0 +1,43 @@
+Binary files es-theme-minielec.orig/backgrounds/amberelec_dark.png and es-theme-minielec/backgrounds/amberelec_dark.png differ
+Binary files es-theme-minielec.orig/backgrounds/amberelec_light.png and es-theme-minielec/backgrounds/amberelec_light.png differ
+diff -rupN es-theme-minielec.orig/theme.xml es-theme-minielec/theme.xml
+--- es-theme-minielec.orig/theme.xml	2022-07-14 17:38:41.518144012 -0400
++++ es-theme-minielec/theme.xml	2022-07-14 17:48:53.713622441 -0400
+@@ -23,15 +23,16 @@
+   <include>./fontsizes.xml</include>
+ 
+   <!-- theme settings -->
+-  <subset name="aspect-ratio" displayName="aspect ratio">
+-     <include ifArch="rg552,amberelec-rg552" name="5-3" displayName="5:3" />
+-     <include ifArch="rg351p,amberelec-rg351p" name="3-2" displayName="3:2" />
+-     <include ifArch="rg351mp,rg351v,amberelec-rg351mp,amberelec-rg351v" name="4-3" displayName="4:3" />
+-     <include ifNotArch="rg351p,rg351mp,rg351v,amberelec-rg351p,amberelec-rg351mp,amberelec-rg351v" name="16-9" displayName="16:9" />
+-     <include ifNotArch="rg552,rg351p,rg351mp,rg351v,amberelec-rg552,amberelec-rg351p,amberelec-rg351mp,amberelec-rg351v" name="4-3" displayName="4:3" />
+-     <include ifNotArch="rg552,rg351p,rg351mp,rg351v,amberelec-rg552,amberelec-rg351p,amberelec-rg351mp,amberelec-rg351v" name="3-2" displayName="3:2" />
+-     <include ifNotArch="rg552,rg351p,rg351mp,rg351v,amberelec-rg552,amberelec-rg351p,amberelec-rg351mp,amberelec-rg351v" name="5-3" displayName="5:3" />
+-  </subset>
++   <subset name="aspect-ratio" displayName="Aspect Ratio">
++      <include ifArch="rg503,amberelec-rg503" name="16-9" displayName="16:9" />
++      <include ifArch="rg552,amberelec-rg552" name="5-3" displayName="5:3" />
++      <include ifArch="rg351p,amberelec-rg351p" name="3-2" displayName="3:2" />
++      <include ifArch="rg353p,rg351mp,rg351v,amberelec-rg351mp,amberelec-rg351v" name="4-3" displayName="4:3" />
++      <include ifNotArch="rg351p,rg351mp,rg351v,amberelec-rg351p,amberelec-rg351mp,amberelec-rg351v" name="16-9" displayName="16:9" />
++      <include ifNotArch="rg503,rg552,rg351p,rg351mp,rg351v,amberelec-rg552,amberelec-rg351p,amberelec-rg351mp,amberelec-rg351v" name="4-3" displayName="4:3" />
++      <include ifNotArch="rg503,rg552,rg351p,rg351mp,rg351v,amberelec-rg552,amberelec-rg351p,amberelec-rg351mp,amberelec-rg351v" name="3-2" displayName="3:2" />
++      <include ifNotArch="rg552,rg351p,rg351mp,rg351v,amberelec-rg552,amberelec-rg351p,amberelec-rg351mp,amberelec-rg351v" name="5-3" displayName="5:3" />
++   </subset>
+ 
+   <subset name="display-top-bar" displayName="display top bar?">
+     <include name="yes"/>
+@@ -105,11 +106,6 @@
+   <subset name="bg-overlay" displayName="background overlay">
+       <include name="none"></include>
+       <include name="custom" displayName="custom (uses customoverlay.png in the theme folder)"></include>
+-      <include name="amberelec_center" displayName="amberelec logo (center)">./overlays/amberelec_center.xml</include>
+-      <include name="amberelec_tl" displayName="amberelec logo (top left)">./overlays/amberelec_topleft.xml</include>
+-      <include name="amberelec_tr" displayName="amberelec logo (top right)">./overlays/amberelec_topright.xml</include>
+-      <include name="amberelec_bl" displayName="amberelec logo (bottom left)">./overlays/amberelec_bottomleft.xml</include>
+-      <include name="amberelec_br" displayName="amberelec logo (bottom right)">./overlays/amberelec_bottomright.xml</include>
+       <include name="clearglass" displayName="frosted glass (blur effect)">./overlays/clearglass.xml</include>
+       <include name="sparkles" displayName="sparkles (1)">./overlays/sparkles.xml</include>
+       <include name="sparkles2" displayName="sparkles (2)">./overlays/sparkles2.xml</include>

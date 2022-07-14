@@ -480,19 +480,25 @@ load_splash() {
         hres="$(fbset 2>/dev/null | awk '/geometry/ { print $2 }')"
         RES="${hres}"
 
-        if [ "${DISPLAY_ROTATED}" == true ]
+        
+        # Test to determine if the display is rotated
+        # and set the splash to suit.
+        if [ ${vres} -gt ${hres} ]
         then
           RES="${RES}l"
+          if [ ! -f "/splash/splash-${RES}.png" ]
+          then
+            RES="1080l"
+          fi
+        else
+          if [ ! -f "/splash/splash-${RES}.png" ]
+          then
+            RES="1080"
+          fi
         fi
 
-        for s in /splash/splash-${RES}.png \
-                 /splash/splash-1080.png \
-                 ; do
-          if [ -f "${s}" ]; then
-            SPLASHIMAGE="${s}"
-            break
-          fi
-        done
+        SPLASHIMAGE="/splash/splash-${RES}.png"
+
       fi
 
       if [ -n "$SPLASHIMAGE" -a -f "$SPLASHIMAGE" ]; then

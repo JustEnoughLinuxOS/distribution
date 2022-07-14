@@ -3,11 +3,11 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libnftnl"
-PKG_VERSION="1.1.3"
-PKG_SHA256="22dd97d3b06ae8c67499506e2bfd6803ce116479076ec3700e7a4c7cd9fcba0f"
+PKG_VERSION="1.2.2"
+PKG_SHA256="9efc004f9d15918d68f9e98e194d55e030168f33bb67c3e7a545b740c9ed6d0a"
 PKG_LICENSE="GPL"
-PKG_SITE="http://netfilter.org/projects/libnftnl"
-PKG_URL="http://netfilter.org/projects/libnftnl/files/$PKG_NAME-$PKG_VERSION.tar.bz2"
+PKG_SITE="https://netfilter.org/projects/libnftnl"
+PKG_URL="https://netfilter.org/projects/libnftnl/files/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
 PKG_DEPENDS_TARGET="toolchain libmnl"
 PKG_LONGDESC="A userspace library providing a low-level netlink programming interface (API) to the in-kernel nf_tables subsystem."
 

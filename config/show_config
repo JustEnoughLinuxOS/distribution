@@ -24,27 +24,34 @@ show_config() {
   # config_message="$config_message\n - CFLAGS:\t $TARGET_CFLAGS"
   # config_message="$config_message\n - LDFLAGS:\t $TARGET_LDFLAGS"
 
+
   # Graphic configuration
 
-  config_message="$config_message\n\n Graphic configuration:"
-  config_message="$config_message\n $dashes$dashes"
-
-  if [ "$DISPLAYSERVER" = "x11" ] ; then
-    config_message="$config_message\n - Xorg Graphic Drivers:\t\t $GRAPHIC_DRIVERS"
-    config_message="$config_message\n - XORG Composite support:\t\t $COMPOSITE_SUPPORT"
-    config_message="$config_message\n - WindowManager:\t\t\t $WINDOWMANAGER"
+  config_message+="\n\n Graphic configuration:"
+  config_message+="\n ${dashes}${dashes}"
+  config_message+="\n - Graphic Drivers:\t\t\t ${GRAPHIC_DRIVERS}"
+  config_message+="\n - Display Server:\t\t\t ${DISPLAYSERVER}"
+  if [ "${DISPLAYSERVER}" = "x11" ] ; then
+    for drv in ${XORG_DRIVERS}; do
+      XORG_DRIVERS_CONFIG+="xf86-video-${drv} "
+    done
+    config_message+="\n - X.Org Graphic Drivers:\t\t ${XORG_DRIVERS_CONFIG}"
+    config_message+="\n - X.Org Composite support:\t\t ${COMPOSITE_SUPPORT}"
   fi
-  config_message="$config_message\n - OpenGL (GLX) support (provider):\t $OPENGL_SUPPORT ($OPENGL)"
-  config_message="$config_message\n - OpenGLES support (provider):\t\t $OPENGLES_SUPPORT ($OPENGLES)"
-  config_message="$config_message\n - uvesafb support:\t\t\t $UVESAFB_SUPPORT"
+  config_message+="\n - Window Manager / Compositor:\t\t ${WINDOWMANAGER}"
+  config_message+="\n - OpenGL (GLX) support (provider):\t ${OPENGL_SUPPORT} (${OPENGL})"
+  config_message+="\n - OpenGL ES support (provider):\t ${OPENGLES_SUPPORT} (${OPENGLES})"
+  config_message+="\n - Vulkan API support (provider):\t ${VULKAN_SUPPORT} (${VULKAN})"
+  if [ "${VULKAN_SUPPORT}" = "yes" ]; then
+    config_message+="\n - Vulkan Graphic Drivers:\t\t ${VULKAN_DRIVERS_CONFIG}"
+  fi
 
-  # Hardware decoder support
+  # Video Acceleration configuration
 
-  config_message="$config_message\n\n Hardware decoder configuration:"
-  config_message="$config_message\n $dashes$dashes"
-
-  config_message="$config_message\n - VAAPI Support:\t\t\t $VAAPI_SUPPORT"
-  config_message="$config_message\n - VDPAU Support:\t\t\t $VDPAU_SUPPORT"
+  config_message+="\n\n Video Acceleration configuration:"
+  config_message+="\n ${dashes}${dashes}"
+  config_message+="\n - VA-API Support:\t\t\t ${VAAPI_SUPPORT}"
+  config_message+="\n - VDPAU Support:\t\t\t ${VDPAU_SUPPORT}"
 
   # Input device configuration
 

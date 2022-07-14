@@ -8,20 +8,27 @@ PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/mupen64plus/mupen64plus-ui-console"
 PKG_URL="https://github.com/mupen64plus/mupen64plus-ui-console/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain ${OPENGLES} libpng SDL2 SDL2_net zlib freetype nasm:host mupen64plussa-core"
+PKG_DEPENDS_TARGET="toolchain libpng SDL2 SDL2_net zlib freetype nasm:host mupen64plussa-core"
 PKG_SHORTDESC="mupen64plus-ui-console"
 PKG_LONGDESC="Mupen64Plus Standalone Console"
 PKG_TOOLCHAIN="manual"
 
-PKG_MAKE_OPTS_TARGET+="USE_GLES=1"
+if [ ! "${OPENGL}" = "no" ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+fi
+
+if [ "${OPENGLES_SUPPORT}" = yes ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+  PKG_MAKE_OPTS_TARGET+="USE_GLES=1"
+fi
 
 make_target() {
   export HOST_CPU=aarch64
   export APIDIR=$(get_build_dir mupen64plussa-core)/.install_pkg/usr/local/include/mupen64plus
   export USE_GLES=1
-  export SDL_CFLAGS="-I$SYSROOT_PREFIX/usr/include/SDL2 -D_REENTRANT"
+  export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -D_REENTRANT"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
-  export CROSS_COMPILE="$TARGET_PREFIX"
+  export CROSS_COMPILE="${TARGET_PREFIX}"
   export V=1
   export VC=0
   BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"

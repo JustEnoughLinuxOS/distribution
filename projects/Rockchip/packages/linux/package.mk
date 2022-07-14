@@ -21,15 +21,15 @@ GET_HANDLER_SUPPORT="git"
 if [[ "${DEVICE}" =~ RG552 ]]
 then
   PKG_URL="https://github.com/JustEnoughLinuxOS/rockchip-kernel.git"
-  PKG_VERSION="1a8d74081"
+  PKG_VERSION="cb0d79995"
 elif [[ "${DEVICE}" =~ RG351 ]]
 then
   PKG_URL="https://github.com/JustEnoughLinuxOS/rg351x-kernel.git"
-  PKG_VERSION="0c4ffa0fe"
+  PKG_VERSION="effc106f9"
 elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
 then
   PKG_URL="https://github.com/JustEnoughLinuxOS/rk356x-kernel.git"
-  PKG_VERSION="042850fbc"
+  PKG_VERSION="e75a81b17"
 fi
 
 PKG_KERNEL_CFG_FILE=$(kernel_config_path) || die

@@ -4,20 +4,33 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="flycastsa"
-PKG_VERSION="6a5db32d5d2f1973804ab200d1644aaeb697abac"
+PKG_VERSION="c77c3ab015ae0b7bf6e411aa15c52bd3a71e99ef"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/flyinghead/flycast"
 PKG_URL="${PKG_SITE}.git"
-PKG_DEPENDS_TARGET="toolchain ${OPENGLES} alsa SDL2 libzip zip"
+PKG_DEPENDS_TARGET="toolchain alsa SDL2 libzip zip"
 PKG_LONGDESC="Flycast is a multiplatform Sega Dreamcast, Naomi and Atomiswave emulator"
 PKG_TOOLCHAIN="cmake"
 PKG_PATCH_DIRS+="${DEVICE}"
 
+if [ ! "${OPENGL}" = "no" ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+fi
+
+if [ "${OPENGLES_SUPPORT}" = yes ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+  PKG_CMAKE_OPTS_TARGET+=" -DUSE_GLES=ON"
+fi
+
+if [ "${ARCH}" = "x86_64" ]
+then
+  PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
+  PKG_CMAKE_OPTS_TARGET+=" -DUSE_VULKAN=ON"
+fi
+
 pre_configure_target() {
 export CXXFLAGS="${CXXFLAGS} -Wno-error=array-bounds"
-PKG_CMAKE_OPTS_TARGET+="-DUSE_GLES=ON \
-			-DUSE_VULKAN=OFF \
-			-DUSE_OPENMP=ON"
+PKG_CMAKE_OPTS_TARGET+=" -DUSE_OPENMP=ON"
 }
 
 makeinstall_target() {

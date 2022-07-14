@@ -8,10 +8,18 @@ PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE=""
 PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain SDL2 ${OPENGLES}"
+PKG_DEPENDS_TARGET="toolchain SDL2"
 PKG_SECTION="emulators"
 PKG_SHORTDESC="PICO-8 Fantasy Console"
 PKG_TOOLCHAIN="manual"
+
+if [ ! "${OPENGL}" = "no" ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+fi
+
+if [ "${OPENGLES_SUPPORT}" = yes ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+fi
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin

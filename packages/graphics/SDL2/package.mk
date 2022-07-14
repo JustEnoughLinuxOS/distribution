@@ -7,22 +7,44 @@ PKG_VERSION="2.0.20"
 PKG_SHA256="c56aba1d7b5b0e7e999e4a7698c70b63a3394ff9704b5f6e1c57e0c16f04dd06"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.libsdl.org/"
-PKG_URL="https://www.libsdl.org/release/SDL2-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain alsa-lib systemd dbus ${OPENGLES} pulseaudio libdrm librga"
+PKG_URL="https://www.libsdl.org/release/SDL2-${PKG_VERSION}.tar.gz"
+PKG_DEPENDS_TARGET="toolchain alsa-lib systemd dbus pulseaudio libdrm"
 PKG_LONGDESC="Simple DirectMedia Layer is a cross-platform development library designed to provide low level access to audio, keyboard, mouse, joystick, and graphics hardware."
 PKG_DEPENDS_HOST="toolchain:host distutilscross:host"
 PKG_PATCH_DIRS+="${DEVICE}"
 
+if [ ! "${OPENGL}" = "no" ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+fi
 
-pre_make_host() {
-  sed -i "s| -lrga||g" ${PKG_BUILD}/CMakeLists.txt
-}
+if [ "${OPENGLES_SUPPORT}" = yes ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+  PKG_CMAKE_OPTS_TARGET+="-DVIDEO_OPENGLES=ON \
+                          -DVIDEO_VULKAN=OFF \
+			  -DVIDEO_X11=OFF"
+fi
 
-pre_make_target() {
-  if ! `grep -rnw "${PKG_BUILD}/CMakeLists.txt" -e '-lrga'`; then
-    sed -i "s|--no-undefined|--no-undefined -lrga|" ${PKG_BUILD}/CMakeLists.txt
-  fi
-}
+if [ "${ARCH}" = "x86_64" ]
+then
+  PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
+  PKG_CMAKE_OPTS_TARGET+=" -DVIDEO_VULKAN=ON \
+                           -DVIDEO_X11=ON"
+fi
+
+
+case ${DEVICE} in
+  RG351P|RG552)
+    PKG_DEPENDS_TARGET+=" librga"
+    pre_make_host() {
+      sed -i "s| -lrga||g" ${PKG_BUILD}/CMakeLists.txt
+    }
+    pre_make_target() {
+      if ! `grep -rnw "${PKG_BUILD}/CMakeLists.txt" -e '-lrga'`; then
+        sed -i "s|--no-undefined|--no-undefined -lrga|" ${PKG_BUILD}/CMakeLists.txt
+      fi
+    }
+  ;;
+esac
 
 pre_configure_target(){
   PKG_CMAKE_OPTS_TARGET="-DSDL_STATIC=OFF \
@@ -65,9 +87,6 @@ pre_configure_target(){
                          -DCLOCK_GETTIME=OFF \
                          -DRPATH=OFF \
                          -DRENDER_D3D=OFF \
-                         -DVIDEO_X11=OFF \
-                         -DVIDEO_OPENGLES=ON \
-                         -DVIDEO_VULKAN=OFF \
                          -DVIDEO_KMSDRM=ON \
                          -DPULSEAUDIO=ON"
 }

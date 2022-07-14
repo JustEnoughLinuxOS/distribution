@@ -1,7 +1,7 @@
 diff -rupN PPSSPPSDL.orig/Core/Config.cpp PPSSPPSDL/Core/Config.cpp
---- PPSSPPSDL.orig/Core/Config.cpp	2022-06-06 07:03:21.542185306 -0400
-+++ PPSSPPSDL/Core/Config.cpp	2022-06-06 07:03:50.357652510 -0400
-@@ -866,6 +866,7 @@ static ConfigSetting graphicsSettings[]
+--- PPSSPPSDL.orig/Core/Config.cpp	2022-07-11 09:42:33.527206786 -0400
++++ PPSSPPSDL/Core/Config.cpp	2022-07-11 09:44:08.327266817 -0400
+@@ -873,6 +873,7 @@ static ConfigSetting graphicsSettings[]
  #if defined(USING_WIN_UI)
  	ConfigSetting("RestartRequired", &g_Config.bRestartRequired, false, false),
  #endif
@@ -10,20 +10,21 @@ diff -rupN PPSSPPSDL.orig/Core/Config.cpp PPSSPPSDL/Core/Config.cpp
  	// Most low-performance (and many high performance) mobile GPUs do not support aniso anyway so defaulting to 4 is fine.
  	ConfigSetting("AnisotropyLevel", &g_Config.iAnisotropyLevel, 4, true, true),
 diff -rupN PPSSPPSDL.orig/Core/Config.h PPSSPPSDL/Core/Config.h
---- PPSSPPSDL.orig/Core/Config.h	2022-06-06 07:03:21.542185306 -0400
-+++ PPSSPPSDL/Core/Config.h	2022-06-06 07:03:50.357652510 -0400
-@@ -211,6 +211,7 @@ public:
+--- PPSSPPSDL.orig/Core/Config.h	2022-07-11 09:42:33.527206786 -0400
++++ PPSSPPSDL/Core/Config.h	2022-07-11 09:44:57.431275968 -0400
+@@ -214,6 +214,7 @@ public:
  	bool bTexHardwareScaling;
  	int iFpsLimit1;
  	int iFpsLimit2;
 +	int iForceMaxEmulatedFPS;
+ 	int iAnalogFpsLimit;
+ 	int iAnalogFpsMode; // 0 = auto, 1 = single direction, 2 = mapped to opposite
  	int iMaxRecent;
- 	int iCurrentStateSlot;
- 	int iRewindFlipFrequency;
+Binary files PPSSPPSDL.orig/Core/.Config.h.rej.swp and PPSSPPSDL/Core/.Config.h.rej.swp differ
 diff -rupN PPSSPPSDL.orig/Core/HLE/sceDisplay.cpp PPSSPPSDL/Core/HLE/sceDisplay.cpp
---- PPSSPPSDL.orig/Core/HLE/sceDisplay.cpp	2022-06-06 07:03:21.546185231 -0400
-+++ PPSSPPSDL/Core/HLE/sceDisplay.cpp	2022-06-06 07:03:50.361652437 -0400
-@@ -814,8 +814,13 @@ u32 sceDisplaySetFramebuf(u32 topaddr, i
+--- PPSSPPSDL.orig/Core/HLE/sceDisplay.cpp	2022-07-11 09:42:33.531206790 -0400
++++ PPSSPPSDL/Core/HLE/sceDisplay.cpp	2022-07-11 09:44:08.327266817 -0400
+@@ -820,8 +820,13 @@ u32 sceDisplaySetFramebuf(u32 topaddr, i
  	hleEatCycles(290);
  
  	s64 delayCycles = 0;
@@ -38,7 +39,7 @@ diff -rupN PPSSPPSDL.orig/Core/HLE/sceDisplay.cpp PPSSPPSDL/Core/HLE/sceDisplay.
  		// sceDisplaySetFramebuf() isn't supposed to delay threads at all.  This is a hack.
  		// So let's only delay when it's more than 1ms.
  		const s64 FLIP_DELAY_CYCLES_MIN = usToCycles(1000);
-@@ -839,7 +844,7 @@ u32 sceDisplaySetFramebuf(u32 topaddr, i
+@@ -845,7 +850,7 @@ u32 sceDisplaySetFramebuf(u32 topaddr, i
  		}
  
  		// 1001 to account for NTSC timing (59.94 fps.)
@@ -47,25 +48,9 @@ diff -rupN PPSSPPSDL.orig/Core/HLE/sceDisplay.cpp PPSSPPSDL/Core/HLE/sceDisplay.
  		lastFlipCycles = now;
  		nextFlipCycles = std::max(lastFlipCycles, nextFlipCycles) + expected;
  	}
-Binary files PPSSPPSDL.orig/.git/index and PPSSPPSDL/.git/index differ
-Binary files PPSSPPSDL.orig/.git/modules/dx9sdk/index and PPSSPPSDL/.git/modules/dx9sdk/index differ
-Binary files PPSSPPSDL.orig/.git/modules/ext/armips/index and PPSSPPSDL/.git/modules/ext/armips/index differ
-Binary files PPSSPPSDL.orig/.git/modules/ext/discord-rpc/index and PPSSPPSDL/.git/modules/ext/discord-rpc/index differ
-Binary files PPSSPPSDL.orig/.git/modules/ext/glslang/index and PPSSPPSDL/.git/modules/ext/glslang/index differ
-Binary files PPSSPPSDL.orig/.git/modules/ext/miniupnp/index and PPSSPPSDL/.git/modules/ext/miniupnp/index differ
-Binary files PPSSPPSDL.orig/.git/modules/ext/native/tools/prebuilt/index and PPSSPPSDL/.git/modules/ext/native/tools/prebuilt/index differ
-Binary files PPSSPPSDL.orig/.git/modules/ext/rapidjson/index and PPSSPPSDL/.git/modules/ext/rapidjson/index differ
-Binary files PPSSPPSDL.orig/.git/modules/ext/rapidjson/modules/thirdparty/gtest/index and PPSSPPSDL/.git/modules/ext/rapidjson/modules/thirdparty/gtest/index differ
-Binary files PPSSPPSDL.orig/.git/modules/ext/SPIRV-Cross/index and PPSSPPSDL/.git/modules/ext/SPIRV-Cross/index differ
-Binary files PPSSPPSDL.orig/.git/modules/ffmpeg/index and PPSSPPSDL/.git/modules/ffmpeg/index differ
-Binary files PPSSPPSDL.orig/.git/modules/ffmpeg/modules/gas-preprocessor/index and PPSSPPSDL/.git/modules/ffmpeg/modules/gas-preprocessor/index differ
-Binary files PPSSPPSDL.orig/.git/modules/ppsspp-debugger/index and PPSSPPSDL/.git/modules/ppsspp-debugger/index differ
-Binary files PPSSPPSDL.orig/.git/modules/pspautotests/index and PPSSPPSDL/.git/modules/pspautotests/index differ
-Binary files PPSSPPSDL.orig/.git/modules/SDL/macOS/index and PPSSPPSDL/.git/modules/SDL/macOS/index differ
-Binary files PPSSPPSDL.orig/.git/modules/zstd/index and PPSSPPSDL/.git/modules/zstd/index differ
 diff -rupN PPSSPPSDL.orig/libretro/libretro.cpp PPSSPPSDL/libretro/libretro.cpp
---- PPSSPPSDL.orig/libretro/libretro.cpp	2022-06-06 07:03:24.122136976 -0400
-+++ PPSSPPSDL/libretro/libretro.cpp	2022-06-06 07:04:49.432605651 -0400
+--- PPSSPPSDL.orig/libretro/libretro.cpp	2022-07-11 09:42:36.443209544 -0400
++++ PPSSPPSDL/libretro/libretro.cpp	2022-07-11 09:44:08.331266818 -0400
 @@ -538,6 +538,7 @@ static RetroOption<int> ppsspp_rendering
  static RetroOption<bool> ppsspp_auto_frameskip("ppsspp_auto_frameskip", "Auto Frameskip", false);
  static RetroOption<int> ppsspp_frameskip("ppsspp_frameskip", "Frameskip", { "Off", "1", "2", "3", "4", "5", "6", "7", "8" });
@@ -74,7 +59,7 @@ diff -rupN PPSSPPSDL.orig/libretro/libretro.cpp PPSSPPSDL/libretro/libretro.cpp
  static RetroOption<int> ppsspp_internal_resolution("ppsspp_internal_resolution", "Internal Resolution (Restart)", 1, { "480x272", "960x544", "1440x816", "1920x1088", "2400x1360", "2880x1632", "3360x1904", "3840x2176", "4320x2448", "4800x2720" });
  static RetroOption<int> ppsspp_button_preference("ppsspp_button_preference", "Confirmation Button", { { "Cross", PSP_SYSTEMPARAM_BUTTON_CROSS }, { "Circle", PSP_SYSTEMPARAM_BUTTON_CIRCLE } });
  static RetroOption<bool> ppsspp_fast_memory("ppsspp_fast_memory", "Fast Memory (Speedhack)", true);
-@@ -689,6 +690,7 @@ void retro_set_environment(retro_environ
+@@ -690,6 +691,7 @@ void retro_set_environment(retro_environ
     vars.push_back(ppsspp_frameskip.GetOptions());
     vars.push_back(ppsspp_frameskiptype.GetOptions());
     vars.push_back(ppsspp_frame_duplication.GetOptions());
@@ -82,7 +67,7 @@ diff -rupN PPSSPPSDL.orig/libretro/libretro.cpp PPSSPPSDL/libretro/libretro.cpp
     vars.push_back(ppsspp_detect_vsync_swap_interval.GetOptions());
     vars.push_back(ppsspp_vertex_cache.GetOptions());
     vars.push_back(ppsspp_fast_memory.GetOptions());
-@@ -819,6 +821,7 @@ static void check_variables(CoreParamete
+@@ -820,6 +822,7 @@ static void check_variables(CoreParamete
     ppsspp_cheats.Update(&g_Config.bEnableCheats);
     ppsspp_locked_cpu_speed.Update(&g_Config.iLockedCPUSpeed);
     ppsspp_rendering_mode.Update(&g_Config.iRenderingMode);
@@ -90,11 +75,10 @@ diff -rupN PPSSPPSDL.orig/libretro/libretro.cpp PPSSPPSDL/libretro/libretro.cpp
     ppsspp_cpu_core.Update((CPUCore *)&g_Config.iCpuCore);
     ppsspp_io_timing_method.Update((IOTimingMethods *)&g_Config.iIOTimingMethod);
     ppsspp_lower_resolution_for_effects.Update(&g_Config.iBloomHack);
-Binary files PPSSPPSDL.orig/libretro/.libretro.cpp.rej.swp and PPSSPPSDL/libretro/.libretro.cpp.rej.swp differ
 diff -rupN PPSSPPSDL.orig/UI/GameSettingsScreen.cpp PPSSPPSDL/UI/GameSettingsScreen.cpp
---- PPSSPPSDL.orig/UI/GameSettingsScreen.cpp	2022-06-06 07:03:21.562184931 -0400
-+++ PPSSPPSDL/UI/GameSettingsScreen.cpp	2022-06-06 07:03:50.361652437 -0400
-@@ -199,6 +199,8 @@ void GameSettingsScreen::CreateViews() {
+--- PPSSPPSDL.orig/UI/GameSettingsScreen.cpp	2022-07-11 09:42:33.551206809 -0400
++++ PPSSPPSDL/UI/GameSettingsScreen.cpp	2022-07-11 09:44:08.331266818 -0400
+@@ -200,6 +200,8 @@ void GameSettingsScreen::CreateViews() {
  		g_Config.loadGameConfig(gameID_, info->GetTitle());
  	}
  
@@ -102,8 +86,8 @@ diff -rupN PPSSPPSDL.orig/UI/GameSettingsScreen.cpp PPSSPPSDL/UI/GameSettingsScr
 +
  	iAlternateSpeedPercent1_ = g_Config.iFpsLimit1 < 0 ? -1 : (g_Config.iFpsLimit1 * 100) / 60;
  	iAlternateSpeedPercent2_ = g_Config.iFpsLimit2 < 0 ? -1 : (g_Config.iFpsLimit2 * 100) / 60;
- 
-@@ -324,7 +326,10 @@ void GameSettingsScreen::CreateViews() {
+ 	iAlternateSpeedPercentAnalog_ = (g_Config.iAnalogFpsLimit * 100) / 60;
+@@ -326,7 +328,10 @@ void GameSettingsScreen::CreateViews() {
  	graphicsSettings->Add(new PopupMultiChoice(&g_Config.iFrameSkipType, gr->T("Frame Skipping Type"), frameSkipType, 0, ARRAY_SIZE(frameSkipType), gr->GetName(), screenManager()));
  	frameSkipAuto_ = graphicsSettings->Add(new CheckBox(&g_Config.bAutoFrameSkip, gr->T("Auto FrameSkip")));
  	frameSkipAuto_->OnClick.Handle(this, &GameSettingsScreen::OnAutoFrameskip);
@@ -115,7 +99,7 @@ diff -rupN PPSSPPSDL.orig/UI/GameSettingsScreen.cpp PPSSPPSDL/UI/GameSettingsScr
  	PopupSliderChoice *altSpeed1 = graphicsSettings->Add(new PopupSliderChoice(&iAlternateSpeedPercent1_, 0, 1000, gr->T("Alternative Speed", "Alternative speed"), 5, screenManager(), gr->T("%, 0:unlimited")));
  	altSpeed1->SetFormat("%i%%");
  	altSpeed1->SetZeroLabel(gr->T("Unlimited"));
-@@ -1274,6 +1279,16 @@ UI::EventReturn GameSettingsScreen::OnDi
+@@ -1295,6 +1300,16 @@ UI::EventReturn GameSettingsScreen::OnDi
  	return UI::EVENT_DONE;
  };
  
@@ -133,8 +117,8 @@ diff -rupN PPSSPPSDL.orig/UI/GameSettingsScreen.cpp PPSSPPSDL/UI/GameSettingsScr
  	if (g_Config.iAndroidHwScale == 1) {
  		RecreateActivity();
 diff -rupN PPSSPPSDL.orig/UI/GameSettingsScreen.h PPSSPPSDL/UI/GameSettingsScreen.h
---- PPSSPPSDL.orig/UI/GameSettingsScreen.h	2022-06-06 07:03:21.562184931 -0400
-+++ PPSSPPSDL/UI/GameSettingsScreen.h	2022-06-06 07:03:50.361652437 -0400
+--- PPSSPPSDL.orig/UI/GameSettingsScreen.h	2022-07-11 09:42:33.551206809 -0400
++++ PPSSPPSDL/UI/GameSettingsScreen.h	2022-07-11 09:44:08.331266818 -0400
 @@ -59,6 +59,7 @@ private:
  	UI::Choice *displayEditor_;
  	UI::Choice *backgroundChoice_ = nullptr;
@@ -158,4 +142,4 @@ diff -rupN PPSSPPSDL.orig/UI/GameSettingsScreen.h PPSSPPSDL/UI/GameSettingsScree
 +	int maxFpsChoice;
  	int iAlternateSpeedPercent1_;
  	int iAlternateSpeedPercent2_;
- 	int prevInflightFrames_;
+ 	int iAlternateSpeedPercentAnalog_;

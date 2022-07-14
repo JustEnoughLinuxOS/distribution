@@ -29,7 +29,7 @@ then
   ln -s /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt
 
   ### Remove and link es configs so they are managed with OS updates.
-  for es_cfg in es_features.cfg es_systems.cfg es_input.cfg
+  for es_cfg in es_features.cfg es_systems.cfg
   do
     rm -f /storage/.config/emulationstation/${es_cfg}
     ln -s /usr/config/emulationstation/${es_cfg} /storage/.config/emulationstation/${es_cfg}

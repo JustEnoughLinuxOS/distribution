@@ -2,13 +2,13 @@
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 # Copyright (C) 2022-present Fewtarius
 PKG_NAME="PPSSPPSDL"
-PKG_VERSION="4196928320aec0e4f2bd11be3c6b95bd3b7547b0"
+PKG_VERSION="d2002eab3924b55127fe9379113d2ed9b2bf32cc"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/hrydgard/ppsspp"
 PKG_URL="https://github.com/hrydgard/ppsspp.git"
-PKG_DEPENDS_TARGET="toolchain ${OPENGLES} ffmpeg libzip SDL2 zlib zip"
+PKG_DEPENDS_TARGET="toolchain ffmpeg libzip SDL2 zlib zip"
 PKG_SHORTDESC="PPSSPPDL"
 PKG_LONGDESC="PPSSPP Standalone"
 GET_HANDLER_SUPPORT="git"
@@ -16,17 +16,36 @@ PKG_BUILD_FLAGS="+lto"
 
 PKG_PATCH_DIRS+="${DEVICE}"
 
-PKG_CMAKE_OPTS_TARGET+="-DUSE_SYSTEM_FFMPEG=OFF \
+if [ ! "${OPENGL}" = "no" ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+  PKG_CMAKE_OPTS_TARGET+=" -DUSING_FBDEV=OFF \
+			   -DUSING_EGL=ON \
+			   -DUSING_GLES2=OFF"
+fi
+
+if [ "${OPENGLES_SUPPORT}" = yes ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+  PKG_CMAKE_OPTS_TARGET+=" -DUSING_FBDEV=ON \
+                           -DUSING_EGL=OFF \
+                           -DUSING_GLES2=ON \
+			   -DVULKAN=OFF \
+			   -DUSE_VULKAN_DISPLAY_KHR=OFF\
+			   -DUSING_X11_VULKAN=OFF"
+fi
+
+if [ "${ARCH}" = "x86_64" ]
+then
+  PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
+  PKG_CMAKE_OPTS_TARGET+=" -DUSE_VULKAN_DISPLAY_KHR=ON \
+                           -DVULKAN=ON \
+                           -DUSING_X11_VULKAN=ON"
+fi
+
+PKG_CMAKE_OPTS_TARGET+="${PKG_CMAKE_OPTS_TARGET} \
+			-DUSE_SYSTEM_FFMPEG=OFF \
 			-DUSE_WAYLAND_WSI=OFF \
-			-DUSE_VULKAN_DISPLAY_KHR=OFF \
-			-DUSING_FBDEV=ON \
 			-DCMAKE_BUILD_TYPE=Release \
 			-DCMAKE_SYSTEM_NAME=Linux \
-			-DUSING_EGL=OFF \
-			-DUSING_GLES2=ON \
-			-DVULKAN=OFF \
-			-DARM_NO_VULKAN=ON \
-			-DUSING_X11_VULKAN=OFF \
 			-DBUILD_SHARED_LIBS=OFF \
 			-DANDROID=OFF \
 			-DWIN32=OFF \
