@@ -29,18 +29,28 @@ pre_configure_target() {
 				--enable-sdl2 \
 				--enable-ffmpeg"
 
-  if [ "${ARCH}" == "arm" ] || [ "${ARCH}" == "aarch64" ]
-  then
-    PKG_DEPENDS_TARGET+=" librga ${OPENGLES}"
-    PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengles --enable-opengles3 --enable-opengles3_2 --enable-kms --disable-mali_fbdev --enable-odroidgo2"
-  else
-    PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd vulkan-loader vulkan-headers"
-    PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengl --enable-vulkan --enable-vulkan_display"
-  fi
+  case ${ARCH} in
+    arm)
+      PKG_CONFIGURE_OPTS_TARGET+=" --enable-neon"
+      PKG_DEPENDS_TARGET+=" librga ${OPENGLES}"
+      PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengles --enable-opengles3 --enable-opengles3_2 --enable-kms --disable-mali_fbdev"
+    ;;
+    aarch64)
+      PKG_CONFIGURE_OPTS_TARGET+=" --enable-neon"
+      PKG_DEPENDS_TARGET+=" librga ${OPENGLES}"
+      PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengles --enable-opengles3 --enable-opengles3_2 --enable-kms --disable-mali_fbdev"
+    ;;
+    *)
+      PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd vulkan-loader vulkan-headers"
+      PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengl --enable-vulkan --enable-vulkan_display"
+  esac
 
-  if [ "${ARCH}" == "arm" ]; then
-    PKG_CONFIGURE_OPTS_TARGET+=" --enable-neon"
-  fi
+  case ${DEVICE} in
+    RG351P)
+      PKG_DEPENDS_TARGET+=" libgo2"
+      PKG_CONFIGURE_OPTS_TARGET+=" --enable-odroidgo2"
+    ;;
+  esac
 
   cd ${PKG_BUILD}
 }
