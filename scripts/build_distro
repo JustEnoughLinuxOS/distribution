@@ -45,7 +45,7 @@ then
              gamecontrollerdb"
 
   # Clean additional packages to ensure the OS is properly built for this device
-  PKG_CLEAN="${PKG_CLEAN} plymouth-lite initramfs busybox kernel grub u-boot SDL2"
+  PKG_CLEAN="${PKG_CLEAN} system-utils plymouth-lite initramfs busybox kernel grub u-boot SDL2"
 fi
 
 # If this variable exists in the environment, expand it and clean those packages too.
