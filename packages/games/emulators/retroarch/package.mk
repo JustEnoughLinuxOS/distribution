@@ -31,9 +31,8 @@ pre_configure_target() {
 
   case ${ARCH} in
     arm)
-      PKG_CONFIGURE_OPTS_TARGET+=" --enable-neon"
       PKG_DEPENDS_TARGET+=" librga ${OPENGLES}"
-      PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengles --enable-opengles3 --enable-opengles3_2 --enable-kms --disable-mali_fbdev"
+      PKG_CONFIGURE_OPTS_TARGET+=" --enable-neon --enable-opengles --enable-opengles3 --enable-opengles3_2 --enable-kms --disable-mali_fbdev"
     ;;
     aarch64)
       PKG_CONFIGURE_OPTS_TARGET+=" --enable-neon"
