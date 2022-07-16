@@ -33,6 +33,7 @@
     DEVICE_DTB="rk3399-rg552"
     UBOOT_DTB="${DEVICE_DTB}"
     UBOOT_CONFIG="evb-rk3399_defconfig"
+    #UBOOT_CONFIG="ragnarok_rk3399_defconfig"
     PKG_SOC="rk3399"
     PKG_DATAFILE="$PKG_RKBIN/bin/rk33/rk3399_ddr_933MHz_v1.25.bin"
     PKG_LOADER="$PKG_RKBIN/bin/rk33/rk3399_miniloader_v1.26.bin"
