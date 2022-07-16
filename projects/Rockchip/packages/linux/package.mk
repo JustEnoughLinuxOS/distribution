@@ -20,8 +20,9 @@ GET_HANDLER_SUPPORT="git"
 
 if [[ "${DEVICE}" =~ RG552 ]]
 then
-  PKG_URL="https://github.com/brooksytech/rg552-kernel.git"
-  PKG_VERSION="27e319d313e3ba2a66725e372ae79694b1dd96b1"
+  PKG_URL="https://github.com/R-ARM/kernel.git"
+  PKG_VERSION="7163094e74fae1b001a1975d1c95bb32b44c8ee3"
+  PKG_GIT_CLONE_BRANCH="master"
 
 elif [[ "${DEVICE}" =~ RG351 ]]
 then
