@@ -14,6 +14,12 @@ PKG_VERSION="23f4a5d"
 GET_HANDLER_SUPPORT="git"
 PKG_PATCH_DIRS+="${DEVICE}"
 
+if [[ "${DEVICE}" =~ RG552 ]]
+then
+  PKG_URL="https://github.com/R-ARM/u-boot.git"
+  PKG_VERSION="b9bb224329a5ca77c8f2708c85bea19d971b610e"
+fi
+
 if [[ "${DEVICE}" =~ RG351 ]]
 then
   PKG_URL="https://github.com/JustEnoughLinuxOS/rg351x-uboot.git"
