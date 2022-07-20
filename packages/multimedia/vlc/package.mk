@@ -33,9 +33,7 @@ ENABLED_FEATURES="--enable-silent-rules \
             --enable-libxml2 \
             --enable-alsa \
             --enable-udev \
-            --enable-vlc \
-            --enable-gles2 \
-            --enable-neon"
+            --enable-vlc"
 
 DISABLED_FEATURES="--disable-dependency-tracking \
             --without-contrib \
@@ -124,11 +122,18 @@ DISABLED_FEATURES="--disable-dependency-tracking \
             --disable-dav1d \
             --disable-qt"
 
-	if [ "${PROJECT}" == "Amlogic" ]; then 
-		ENABLED_FEATURES+=" --enable-pulse"
-	else
-		DISABLED_FEATURES+=" --disable-pulse"
-	fi 
+  case ${ARCH} in
+    arm)
+      PKG_DEPENDS_TARGET+=" librga ${OPENGLES}"
+      ENABLED_FEATURES+=" --enable-gles2 --enable-neon"
+    ;;
+    aarch64)
+      PKG_DEPENDS_TARGET+=" librga ${OPENGLES}"
+      ENABLED_FEATURES+=" --enable-gles2"
+    ;;
+    *)
+      ENABLED_FEATURES+=" ${OPENGL} glu libglvnd"
+  esac
 
 PKG_CONFIGURE_OPTS_TARGET="${ENABLED_FEATURES} ${DISABLED_FEATURES}"
 
