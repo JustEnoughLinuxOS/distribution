@@ -1,0 +1,47 @@
+diff --git a/Makefile b/Makefile
+old mode 100644
+new mode 100755
+index fd69183..5f0a709
+--- a/Makefile
++++ b/Makefile
+@@ -155,8 +155,8 @@ endif
+    CXX = c++ -arch arm64 -isysroot $(IOSSDK) 
+    FLAGS += -DHAVE_POSIX_MEMALIGN
+ 
+-# Raspberry Pi 4 in 64bit mode
+-else ifeq ($(platform), rpi4_64)
++# Anbernic RG552
++else ifeq ($(platform), RG552)
+    TARGET := $(TARGET_NAME)_libretro.so
+    fpic := -fPIC
+    SHARED := -shared -Wl,--no-undefined -Wl,--version-script=target-libretro/link.T
+@@ -164,6 +164,29 @@ else ifeq ($(platform), rpi4_64)
+    ASFLAGS += -march=armv8-a+crc+simd -mtune=cortex-a72
+    LDFLAGS += -ldl
+    IS_X86 = 0
++   HAVE_NEON = 1
++
++# Anbernic RG503, RG353P
++else ifeq ($(platform), RK3566)
++   TARGET := $(TARGET_NAME)_libretro.so
++   fpic := -fPIC
++   SHARED := -shared -Wl,--no-undefined -Wl,--version-script=target-libretro/link.T
++   FLAGS += -march=armv8-a+crc+simd -mtune=cortex-a55
++   ASFLAGS += -march=armv8-a+crc+simd -mtune=cortex-a55
++   LDFLAGS += -ldl
++   IS_X86 = 0
++   HAVE_NEON = 1
++
++# Anbernic RG351P/M, RG351MP, RG351V
++else ifeq ($(platform), RK3326)
++   TARGET := $(TARGET_NAME)_libretro.so
++   fpic := -fPIC
++   SHARED := -shared -Wl,--no-undefined -Wl,--version-script=target-libretro/link.T
++   FLAGS += -march=armv8-a+crc+simd -mtune=cortex-a35
++   ASFLAGS += -march=armv8-a+crc+simd -mtune=cortex-a35
++   LDFLAGS += -ldl
++   IS_X86 = 0
++   HAVE_NEON = 1
+ 
+ # tvOS
+ else ifeq ($(platform), tvos-arm64)
