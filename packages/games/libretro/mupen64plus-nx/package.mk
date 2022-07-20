@@ -8,7 +8,7 @@ PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/mupen64plus-libretro-nx"
 PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain nasm:host ${OPENGLES}"
+PKG_DEPENDS_TARGET="toolchain nasm:host"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="mupen64plus NX"
 PKG_LONGDESC="mupen64plus NX"
@@ -16,6 +16,14 @@ PKG_TOOLCHAIN="make"
 PKG_BUILD_FLAGS="-lto"
 
 PKG_PATCH_DIRS+="${DEVICE}"
+
+if [ ! "${OPENGL}" = "no" ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+fi
+
+if [ "${OPENGLES_SUPPORT}" = yes ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+fi
 
 pre_configure_target() {
   sed -e "s|^GIT_VERSION ?.*$|GIT_VERSION := \" ${PKG_VERSION:0:7}\"|" -i Makefile

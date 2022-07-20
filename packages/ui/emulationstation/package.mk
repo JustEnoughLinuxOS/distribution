@@ -15,18 +15,20 @@ PKG_NEED_UNPACK="busybox"
 PKG_SHORTDESC="Emulationstation emulator frontend"
 PKG_BUILD_FLAGS="-gold"
 GET_HANDLER_SUPPORT="git"
+PKG_PATCH_DIRS+="${DEVICE}"
 
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+  PKG_CMAKE_OPTS_TARGET+=" -DGLES2=0"
 fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+  PKG_CMAKE_OPTS_TARGET+=" -DGLES2=1"
 fi
 
-PKG_PATCH_DIRS+="${DEVICE}"
 
-PKG_CMAKE_OPTS_TARGET=" -DENABLE_EMUELEC=1 -DGLES2=1 -DDISABLE_KODI=1 -DENABLE_FILEMANAGER=0 -DCEC=0"
+PKG_CMAKE_OPTS_TARGET+=" -DENABLE_EMUELEC=1 -DDISABLE_KODI=1 -DENABLE_FILEMANAGER=0 -DCEC=0"
 
 ##########################################################################################################
 # The following allows building Emulation station from local copy by using EMULATIONSTATION_SRC.

@@ -44,7 +44,7 @@ pre_configure_target() {
   esac
 
   case ${DEVICE} in
-    RG351P|RG552)
+    RG351P|RG552|X86_64L)
       PKG_DEPENDS_TARGET+=" libgo2"
       PKG_CONFIGURE_OPTS_TARGET+=" --enable-odroidgo2"
     ;;

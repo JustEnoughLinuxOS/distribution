@@ -20,7 +20,7 @@
   DISPLAYSERVER="x11"
 
 # Windowmanager to use (fluxbox / weston / no)
-  WINDOWMANAGER="fluxbox"
+#  WINDOWMANAGER="fluxbox"
 
 # Mesa 3D Graphic drivers to use (all / crocus,i915,iris,r300,r600,radeonsi,vmware,virtio)
 # Space separated list is supported,
