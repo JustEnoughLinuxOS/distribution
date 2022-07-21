@@ -20,10 +20,10 @@ export BUILD_DATE=$(date)
 
 echo "Building ${DISTRO} for ${DEVICE}"
 
-# If ROOT is defined make sure that the build folder is a link to root rather than
+# If DEVICE_ROOT is defined make sure that the build folder is a link to root rather than
 # a folder and take additional clean steps to ensure everything is built properly.
 
-if [ -n "${ROOT}" ]
+if [ -n "${DEVICE_ROOT}" ]
 then
   # Ensure there isn't a left over build directory.
   if [ -d "build.${DISTRO}-${DEVICE}.${ARCH}" ]
@@ -32,24 +32,23 @@ then
     rm -rf build.${DISTRO}-${DEVICE}.${ARCH}
   fi
 
-  # Link back to the ROOT so we can re-use the build directory to save space.
+  # Link back to the DEVICE_ROOT so we can re-use the build directory to save space.
   if [ ! -L "build.${DISTRO}-${DEVICE}.${ARCH}" ]
   then
-    ln -sf build.${DISTRO}-${ROOT}.${ARCH} build.${DISTRO}-${DEVICE}.${ARCH}
+    ln -sf build.${DISTRO}-${DEVICE_ROOT}.${ARCH} build.${DISTRO}-${DEVICE}.${ARCH}
   fi
-
-  # Clean packages that have device specific configurations.
-  PKG_CLEAN="${PKG_CLEAN} mupen64plus-nx mupen64plus flycast_libretro dosbox-pure parallel-n64_glide64 \
-             parallel-n64_gln64 parallel-n64_rice pcsx_rearmed pcsx_rearmed gpsp raze amiberry lzdoom  \
-             PPSSPPSDL gzdoom mupen64plussa-core mupen64plussa-input-sdl 351files libgo2 \
-             gamecontrollerdb duckstationsa"
-
-  # Clean additional packages to ensure the OS is properly built for this device
-  PKG_CLEAN="${PKG_CLEAN} system-utils plymouth-lite initramfs busybox kernel grub u-boot SDL2"
 fi
 
-# If this variable exists in the environment, expand it and clean those packages too.
-PKG_CLEAN="${PKG_CLEAN} modules emulationstation retroarch lib32 jelos"
+# We need to always assume some packages are build and clean them so the linked build functionality
+# works as expected.  Start with the emulators and cores.
+PKG_CLEAN="${PKG_CLEAN} mupen64plus-nx mupen64plus flycast_libretro dosbox-pure parallel-n64_glide64 \
+           parallel-n64_gln64 parallel-n64_rice pcsx_rearmed pcsx_rearmed gpsp raze amiberry lzdoom  \
+           PPSSPPSDL gzdoom mupen64plussa-core mupen64plussa-input-sdl 351files libgo2 \
+           gamecontrollerdb duckstationsa"
+
+# Clean OS specific packages.
+PKG_CLEAN="${PKG_CLEAN} system-utils plymouth-lite initramfs busybox kernel grub u-boot SDL2 modules \
+           emulationstation retroarch lib32 jelos"
 
 # Clean a few packages to ensure the build date and version are updated
 for package in ${PKG_CLEAN}
