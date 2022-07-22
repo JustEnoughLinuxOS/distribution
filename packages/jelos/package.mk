@@ -33,7 +33,7 @@ PKG_EMUS="common-shaders glsl-shaders libretro-database retroarch hatarisa openb
           mupen64plussa-input-sdl mupen64plussa-ui-console mupen64plussa-video-rice \
           mupen64plussa-core mupen64plussa-rsp-hle mupen64plussa-video-glide64mk2   \
           lzdoom gzdoom ecwolf amiberry raze pico-8 flycastsa hypseus-singe \
-          core-info moonlight duckstationsa"
+          core-info moonlight"
 
 LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce beetle-pcfx      \
                 beetle-supafaust beetle-supergrafx beetle-vb beetle-wswan bluemsx cannonball cap32   \
@@ -47,7 +47,7 @@ LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-
                 ppsspp prboom prosystem puae px68k quasi88 quicknes race reminiscence sameboy        \
                 sameduck scummvm smsplus-gx snes9x snes9x2002 snes9x2005_plus snes9x2010 stella      \
                 stella-2014 swanstation TIC-80 tgbdual tyrquake xrick uae4arm uzem vba-next vbam     \
-                vecx vice yabasanshiro xmil mesen virtualjaguar ecwolf_libretro vitaquake2           \
+                vecx vice yabasanshiro xmil mesen virtualjaguar ecwolf_libretro                      \
                 bsnes-mercury-performance"
 
 PKG_COMPAT=""
