@@ -19,7 +19,6 @@ PKG_PATCH_DIRS+="${DEVICE}"
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
   PKG_CMAKE_OPTS_TARGET+=" -DUSING_FBDEV=OFF \
-			   -DUSING_EGL=ON \
 			   -DUSING_GLES2=OFF"
 fi
 
