@@ -51,10 +51,7 @@ jobs:
       - name: Build World
         run: |
             set -e
-            export CUSTOM_VERSION="${{ steps.version.outputs.version }}"
-            export DOCKER_WORK_DIR="/work"
-            export PYTHON_EGG_CACHE="${DOCKER_WORK_DIR}/.egg_cache"
-            make docker-world
+            CUSTOM_VERSION="${{ steps.version.outputs.version }}" DOCKER_WORK_DIR="/work" DOCKER_EXTRA_OPTS="-v /buildroot:/buildroot" PYTHON_EGG_CACHE="${DOCKER_WORK_DIR}/.egg_cache" make docker-world
       - name: Create dev release as draft at first to hide during uploads
         if: github.event.action == 'release-dev'
         uses: ncipollo/release-action@v1
