@@ -3,8 +3,8 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="scummvmsa"
-PKG_VERSION="5573445468b3b646fce73ac8cf9f830c0b8cce1c"
-PKG_SHA256="20cc44fb0d975b65ab1ca15d2bb88269067b94abe655eaa8fa48e9d287a18475"
+PKG_VERSION="ad47d02f4e18e6158d4e984f12dd10d3ed06e106"
+PKG_SHA256="1c923e7e8edcfc44e4ae45a6aba25304551759d0c027f98de5cddf8cb57bb435"
 PKG_REV="1"
 PKG_LICENSE="GPL2"
 PKG_SITE="https://github.com/scummvm/scummvm"
