@@ -28,6 +28,9 @@ world: RG552 RG503 RG353P RG351P RG351V RG351MP
 X86_64:
 	PROJECT=PC DEVICE=X86_64 ARCH=x86_64 ./scripts/build_distro
 
+X86_64L:
+	PROJECT=PC DEVICE=X86_64L ARCH=x86_64 ./scripts/build_distro
+
 RG552:
 	PROJECT=Rockchip DEVICE=RG552 ARCH=arm ./scripts/build_distro
 	PROJECT=Rockchip DEVICE=RG552 ARCH=aarch64 ./scripts/build_distro

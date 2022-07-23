@@ -6,7 +6,7 @@
 
 PKG_NAME="linux"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.kernel.org"
+PKG_SITE="https://github.com/JustEnoughLinuxOS"
 PKG_DEPENDS_HOST="ccache:host openssl:host"
 PKG_DEPENDS_TARGET="toolchain linux:host cpio:host kmod:host xz:host wireless-regdb keyutils ${KERNEL_EXTRA_DEPENDS_TARGET}"
 PKG_DEPENDS_INIT="toolchain"
@@ -15,22 +15,23 @@ PKG_LONGDESC="This package builds the kernel for Rockchip devices"
 PKG_IS_KERNEL_PKG="yes"
 PKG_STAMP="${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD}"
 PKG_PATCH_DIRS+="${DEVICE}"
-  PKG_GIT_CLONE_BRANCH="main"
+PKG_GIT_CLONE_BRANCH="main"
 GET_HANDLER_SUPPORT="git"
 
-if [[ "${DEVICE}" =~ RG552 ]]
-then
-  PKG_URL="https://github.com/JustEnoughLinuxOS/rockchip-kernel.git"
-  PKG_VERSION="cb0d79995"
-elif [[ "${DEVICE}" =~ RG351 ]]
-then
-  PKG_URL="https://github.com/JustEnoughLinuxOS/rg351x-kernel.git"
-  PKG_VERSION="effc106f9"
-elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
-then
-  PKG_URL="https://github.com/JustEnoughLinuxOS/rk356x-kernel.git"
-  PKG_VERSION="e75a81b17"
-fi
+case ${DEVICE} in
+  RG351P|RG351V|RG351MP)
+    PKG_URL="${PKG_SITE}/rk3326-kernel.git"
+    PKG_VERSION="effc106f9"
+  ;;
+  RG552)
+    PKG_URL="${PKG_SITE}/rk3399-kernel.git"
+    PKG_VERSION="cb0d79995"
+  ;;
+  RG353P|RG503)
+    PKG_URL="${PKG_SITE}/rk356x-kernel.git"
+    PKG_VERSION="e75a81b17"
+  ;;
+esac
 
 PKG_KERNEL_CFG_FILE=$(kernel_config_path) || die
 
