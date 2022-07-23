@@ -1,3 +1,4 @@
+#!/bin/sh
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2017-2021 Team LibreELEC (https://libreelec.tv)
 # Copyright (C) 2021-present Fewtarius
@@ -78,19 +79,32 @@ fi
   done
 
 # update bootloader
+
+if [ "$(awk '/^Hardware/ {print $4}' /proc/cpuinfo)" = "RG503" ] || [ "$(awk '/^Hardware/ {print $4}' /proc/cpuinfo)" = "RG353P" ]
+then
+  IDBSEEK="bs=512 seek=64"
+else
+  # Fix me.
+  IDBSEEK="bs=32k seek=1"
+fi
+
   if [ -f $SYSTEM_ROOT/usr/share/bootloader/idbloader.img ]; then
     echo -n "Updating idbloader.img... "
-    dd if=$SYSTEM_ROOT/usr/share/bootloader/idbloader.img of=$BOOT_DISK bs=32k seek=1 conv=fsync &>/dev/null
+    dd if=$SYSTEM_ROOT/usr/share/bootloader/idbloader.img of=$BOOT_DISK ${IDBSEEK} conv=fsync &>/dev/null
     echo "done"
   fi
   if [ -f $SYSTEM_ROOT/usr/share/bootloader/uboot.img ]; then
     echo -n "Updating uboot.img... "
-    dd if=$SYSTEM_ROOT/usr/share/bootloader/uboot.img of=$BOOT_DISK bs=64k seek=128 conv=fsync &>/dev/null
+    dd if=$SYSTEM_ROOT/usr/share/bootloader/uboot.img of=$BOOT_DISK bs=512 seek=16384 conv=fsync &>/dev/null
     echo "done"
   fi
   if [ -f $SYSTEM_ROOT/usr/share/bootloader/trust.img ]; then
     echo -n "Updating trust.img... "
-    dd if=$SYSTEM_ROOT/usr/share/bootloader/trust.img of=$BOOT_DISK bs=64k seek=192 conv=fsync &>/dev/null
+    dd if=$SYSTEM_ROOT/usr/share/bootloader/trust.img of=$BOOT_DISK bs=512 seek=24576 conv=fsync &>/dev/null
+    echo "done"
+  elif [ -f $SYSTEM_ROOT/usr/share/bootloader/resource.img ]; then
+    echo -n "Updating resource.img... "
+    dd if=$SYSTEM_ROOT/usr/share/bootloader/resource.img of=$BOOT_DISK bs=512 seek=24576 conv=fsync &>/dev/null
     echo "done"
   fi
 

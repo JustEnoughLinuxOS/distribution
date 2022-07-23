@@ -5,25 +5,31 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="linux"
-PKG_URL="https://github.com/JustEnoughLinuxOS/rockchip-kernel.git"
-PKG_VERSION="1a8d74081"
-PKG_GIT_CLONE_BRANCH="main"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.kernel.org"
 PKG_DEPENDS_HOST="ccache:host openssl:host"
 PKG_DEPENDS_TARGET="toolchain linux:host cpio:host kmod:host xz:host wireless-regdb keyutils ${KERNEL_EXTRA_DEPENDS_TARGET}"
 PKG_DEPENDS_INIT="toolchain"
 PKG_NEED_UNPACK="${LINUX_DEPENDS} $(get_pkg_directory busybox)"
-PKG_LONGDESC="This package builds the kernel for the RG552"
+PKG_LONGDESC="This package builds the kernel for Rockchip devices"
 PKG_IS_KERNEL_PKG="yes"
 PKG_STAMP="${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD}"
 PKG_PATCH_DIRS+="${DEVICE}"
+  PKG_GIT_CLONE_BRANCH="main"
 GET_HANDLER_SUPPORT="git"
 
-if [[ "${DEVICE}" =~ RG351 ]]
+if [[ "${DEVICE}" =~ RG552 ]]
+then
+  PKG_URL="https://github.com/JustEnoughLinuxOS/rockchip-kernel.git"
+  PKG_VERSION="1a8d74081"
+elif [[ "${DEVICE}" =~ RG351 ]]
 then
   PKG_URL="https://github.com/JustEnoughLinuxOS/rg351x-kernel.git"
   PKG_VERSION="0c4ffa0fe"
+elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
+then
+  PKG_URL="https://github.com/JustEnoughLinuxOS/rk356x-kernel.git"
+  PKG_VERSION="042850fbc"
 fi
 
 PKG_KERNEL_CFG_FILE=$(kernel_config_path) || die
@@ -92,14 +98,7 @@ post_patch() {
 }
 
 make_host() {
-  make \
-    ARCH=${HEADERS_ARCH:-${TARGET_KERNEL_ARCH}} \
-    HOSTCC="${TOOLCHAIN}/bin/host-gcc" \
-    HOSTCXX="${TOOLCHAIN}/bin/host-g++" \
-    HOSTCFLAGS="${HOST_CFLAGS}" \
-    HOSTCXXFLAGS="${HOST_CXXFLAGS}" \
-    HOSTLDFLAGS="${HOST_LDFLAGS}" \
-    headers_check
+  :
 }
 
 makeinstall_host() {
@@ -229,9 +228,13 @@ make_target() {
 
     KERNEL_TARGET="${KERNEL_UIMAGE_TARGET}"
   fi
+  if [ "${PKG_SOC}" = "rk356x" ]; then
+    kernel_make ${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD} ARCH=arm64 ${DEVICE_DTB}.img
+  fi
 }
 
 makeinstall_target() {
+  . ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
   if [ "${BOOTLOADER}" = "u-boot" ]; then
     mkdir -p ${INSTALL}/usr/share/bootloader
     for dtb in arch/${TARGET_KERNEL_ARCH}/boot/dts/*.dtb arch/${TARGET_KERNEL_ARCH}/boot/dts/*/*.dtb; do
@@ -239,6 +242,11 @@ makeinstall_target() {
         cp -v ${dtb} ${INSTALL}/usr/share/bootloader
       fi
     done
+    if [ "${PKG_SOC}" = "rk356x" ]; then
+      ARCH=arm64 scripts/mkimg --dtb ${DEVICE_DTB}.dtb
+      cp -v resource.img ${INSTALL}/usr/share/bootloader
+      ARCH=${TARGET_ARCH}
+    fi
   elif [ "${BOOTLOADER}" = "bcm2835-bootloader" ]; then
     mkdir -p ${INSTALL}/usr/share/bootloader/overlays
 

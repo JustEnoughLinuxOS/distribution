@@ -36,6 +36,7 @@ case $1 in
     if [[ "${HW_DEVICE}" =~ RG351 ]]
     then
       modprobe -i dwc2
+      systemctl restart volume
     fi
 
   ;;

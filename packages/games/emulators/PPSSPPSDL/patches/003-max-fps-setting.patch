@@ -1,0 +1,161 @@
+diff -rupN PPSSPPSDL.orig/Core/Config.cpp PPSSPPSDL/Core/Config.cpp
+--- PPSSPPSDL.orig/Core/Config.cpp	2022-06-06 07:03:21.542185306 -0400
++++ PPSSPPSDL/Core/Config.cpp	2022-06-06 07:03:50.357652510 -0400
+@@ -866,6 +866,7 @@ static ConfigSetting graphicsSettings[]
+ #if defined(USING_WIN_UI)
+ 	ConfigSetting("RestartRequired", &g_Config.bRestartRequired, false, false),
+ #endif
++	ReportedConfigSetting("ForceMaxEmulatedFPS", &g_Config.iForceMaxEmulatedFPS, 0, true, true),
+ 
+ 	// Most low-performance (and many high performance) mobile GPUs do not support aniso anyway so defaulting to 4 is fine.
+ 	ConfigSetting("AnisotropyLevel", &g_Config.iAnisotropyLevel, 4, true, true),
+diff -rupN PPSSPPSDL.orig/Core/Config.h PPSSPPSDL/Core/Config.h
+--- PPSSPPSDL.orig/Core/Config.h	2022-06-06 07:03:21.542185306 -0400
++++ PPSSPPSDL/Core/Config.h	2022-06-06 07:03:50.357652510 -0400
+@@ -211,6 +211,7 @@ public:
+ 	bool bTexHardwareScaling;
+ 	int iFpsLimit1;
+ 	int iFpsLimit2;
++	int iForceMaxEmulatedFPS;
+ 	int iMaxRecent;
+ 	int iCurrentStateSlot;
+ 	int iRewindFlipFrequency;
+diff -rupN PPSSPPSDL.orig/Core/HLE/sceDisplay.cpp PPSSPPSDL/Core/HLE/sceDisplay.cpp
+--- PPSSPPSDL.orig/Core/HLE/sceDisplay.cpp	2022-06-06 07:03:21.546185231 -0400
++++ PPSSPPSDL/Core/HLE/sceDisplay.cpp	2022-06-06 07:03:50.361652437 -0400
+@@ -814,8 +814,13 @@ u32 sceDisplaySetFramebuf(u32 topaddr, i
+ 	hleEatCycles(290);
+ 
+ 	s64 delayCycles = 0;
++
++	int MaxFPS = g_Config.iForceMaxEmulatedFPS;
++	if (MaxFPS == 0 && PSP_CoreParameter().compat.flags().ForceMax60FPS) {
++		MaxFPS = 60;
++	}
+ 	// Don't count transitions between display off and display on.
+-	if (topaddr != 0 && topaddr != framebuf.topaddr && framebuf.topaddr != 0 && PSP_CoreParameter().compat.flags().ForceMax60FPS) {
++	if (topaddr != 0 && topaddr != framebuf.topaddr && framebuf.topaddr != 0 && MaxFPS > 0) {
+ 		// sceDisplaySetFramebuf() isn't supposed to delay threads at all.  This is a hack.
+ 		// So let's only delay when it's more than 1ms.
+ 		const s64 FLIP_DELAY_CYCLES_MIN = usToCycles(1000);
+@@ -839,7 +844,7 @@ u32 sceDisplaySetFramebuf(u32 topaddr, i
+ 		}
+ 
+ 		// 1001 to account for NTSC timing (59.94 fps.)
+-		u64 expected = msToCycles(1001) / 60 - LEEWAY_CYCLES_PER_FLIP;
++		u64 expected = msToCycles(1001) / MaxFPS - LEEWAY_CYCLES_PER_FLIP;
+ 		lastFlipCycles = now;
+ 		nextFlipCycles = std::max(lastFlipCycles, nextFlipCycles) + expected;
+ 	}
+Binary files PPSSPPSDL.orig/.git/index and PPSSPPSDL/.git/index differ
+Binary files PPSSPPSDL.orig/.git/modules/dx9sdk/index and PPSSPPSDL/.git/modules/dx9sdk/index differ
+Binary files PPSSPPSDL.orig/.git/modules/ext/armips/index and PPSSPPSDL/.git/modules/ext/armips/index differ
+Binary files PPSSPPSDL.orig/.git/modules/ext/discord-rpc/index and PPSSPPSDL/.git/modules/ext/discord-rpc/index differ
+Binary files PPSSPPSDL.orig/.git/modules/ext/glslang/index and PPSSPPSDL/.git/modules/ext/glslang/index differ
+Binary files PPSSPPSDL.orig/.git/modules/ext/miniupnp/index and PPSSPPSDL/.git/modules/ext/miniupnp/index differ
+Binary files PPSSPPSDL.orig/.git/modules/ext/native/tools/prebuilt/index and PPSSPPSDL/.git/modules/ext/native/tools/prebuilt/index differ
+Binary files PPSSPPSDL.orig/.git/modules/ext/rapidjson/index and PPSSPPSDL/.git/modules/ext/rapidjson/index differ
+Binary files PPSSPPSDL.orig/.git/modules/ext/rapidjson/modules/thirdparty/gtest/index and PPSSPPSDL/.git/modules/ext/rapidjson/modules/thirdparty/gtest/index differ
+Binary files PPSSPPSDL.orig/.git/modules/ext/SPIRV-Cross/index and PPSSPPSDL/.git/modules/ext/SPIRV-Cross/index differ
+Binary files PPSSPPSDL.orig/.git/modules/ffmpeg/index and PPSSPPSDL/.git/modules/ffmpeg/index differ
+Binary files PPSSPPSDL.orig/.git/modules/ffmpeg/modules/gas-preprocessor/index and PPSSPPSDL/.git/modules/ffmpeg/modules/gas-preprocessor/index differ
+Binary files PPSSPPSDL.orig/.git/modules/ppsspp-debugger/index and PPSSPPSDL/.git/modules/ppsspp-debugger/index differ
+Binary files PPSSPPSDL.orig/.git/modules/pspautotests/index and PPSSPPSDL/.git/modules/pspautotests/index differ
+Binary files PPSSPPSDL.orig/.git/modules/SDL/macOS/index and PPSSPPSDL/.git/modules/SDL/macOS/index differ
+Binary files PPSSPPSDL.orig/.git/modules/zstd/index and PPSSPPSDL/.git/modules/zstd/index differ
+diff -rupN PPSSPPSDL.orig/libretro/libretro.cpp PPSSPPSDL/libretro/libretro.cpp
+--- PPSSPPSDL.orig/libretro/libretro.cpp	2022-06-06 07:03:24.122136976 -0400
++++ PPSSPPSDL/libretro/libretro.cpp	2022-06-06 07:04:49.432605651 -0400
+@@ -538,6 +538,7 @@ static RetroOption<int> ppsspp_rendering
+ static RetroOption<bool> ppsspp_auto_frameskip("ppsspp_auto_frameskip", "Auto Frameskip", false);
+ static RetroOption<int> ppsspp_frameskip("ppsspp_frameskip", "Frameskip", { "Off", "1", "2", "3", "4", "5", "6", "7", "8" });
+ static RetroOption<int> ppsspp_frameskiptype("ppsspp_frameskiptype", "Frameskip Type", { {"Number of frames", 0}, {"Percent of FPS", 1} });
++static RetroOption<int> ppsspp_force_max_fps("ppsspp_force_max_fps", "Force Max FPS", { {"Auto", 0}, {"10", 10}, {"20", 20}, {"30", 30}, {"40", 40}, {"50", 50}, {"60", 60}, {"70", 70}, {"80", 80} });
+ static RetroOption<int> ppsspp_internal_resolution("ppsspp_internal_resolution", "Internal Resolution (Restart)", 1, { "480x272", "960x544", "1440x816", "1920x1088", "2400x1360", "2880x1632", "3360x1904", "3840x2176", "4320x2448", "4800x2720" });
+ static RetroOption<int> ppsspp_button_preference("ppsspp_button_preference", "Confirmation Button", { { "Cross", PSP_SYSTEMPARAM_BUTTON_CROSS }, { "Circle", PSP_SYSTEMPARAM_BUTTON_CIRCLE } });
+ static RetroOption<bool> ppsspp_fast_memory("ppsspp_fast_memory", "Fast Memory (Speedhack)", true);
+@@ -689,6 +690,7 @@ void retro_set_environment(retro_environ
+    vars.push_back(ppsspp_frameskip.GetOptions());
+    vars.push_back(ppsspp_frameskiptype.GetOptions());
+    vars.push_back(ppsspp_frame_duplication.GetOptions());
++   vars.push_back(ppsspp_force_max_fps.GetOptions());
+    vars.push_back(ppsspp_detect_vsync_swap_interval.GetOptions());
+    vars.push_back(ppsspp_vertex_cache.GetOptions());
+    vars.push_back(ppsspp_fast_memory.GetOptions());
+@@ -819,6 +821,7 @@ static void check_variables(CoreParamete
+    ppsspp_cheats.Update(&g_Config.bEnableCheats);
+    ppsspp_locked_cpu_speed.Update(&g_Config.iLockedCPUSpeed);
+    ppsspp_rendering_mode.Update(&g_Config.iRenderingMode);
++   ppsspp_force_max_fps.Update(&g_Config.iForceMaxEmulatedFPS);
+    ppsspp_cpu_core.Update((CPUCore *)&g_Config.iCpuCore);
+    ppsspp_io_timing_method.Update((IOTimingMethods *)&g_Config.iIOTimingMethod);
+    ppsspp_lower_resolution_for_effects.Update(&g_Config.iBloomHack);
+Binary files PPSSPPSDL.orig/libretro/.libretro.cpp.rej.swp and PPSSPPSDL/libretro/.libretro.cpp.rej.swp differ
+diff -rupN PPSSPPSDL.orig/UI/GameSettingsScreen.cpp PPSSPPSDL/UI/GameSettingsScreen.cpp
+--- PPSSPPSDL.orig/UI/GameSettingsScreen.cpp	2022-06-06 07:03:21.562184931 -0400
++++ PPSSPPSDL/UI/GameSettingsScreen.cpp	2022-06-06 07:03:50.361652437 -0400
+@@ -199,6 +199,8 @@ void GameSettingsScreen::CreateViews() {
+ 		g_Config.loadGameConfig(gameID_, info->GetTitle());
+ 	}
+ 
++	maxFpsChoice = (g_Config.iForceMaxEmulatedFPS / 10);
++
+ 	iAlternateSpeedPercent1_ = g_Config.iFpsLimit1 < 0 ? -1 : (g_Config.iFpsLimit1 * 100) / 60;
+ 	iAlternateSpeedPercent2_ = g_Config.iFpsLimit2 < 0 ? -1 : (g_Config.iFpsLimit2 * 100) / 60;
+ 
+@@ -324,7 +326,10 @@ void GameSettingsScreen::CreateViews() {
+ 	graphicsSettings->Add(new PopupMultiChoice(&g_Config.iFrameSkipType, gr->T("Frame Skipping Type"), frameSkipType, 0, ARRAY_SIZE(frameSkipType), gr->GetName(), screenManager()));
+ 	frameSkipAuto_ = graphicsSettings->Add(new CheckBox(&g_Config.bAutoFrameSkip, gr->T("Auto FrameSkip")));
+ 	frameSkipAuto_->OnClick.Handle(this, &GameSettingsScreen::OnAutoFrameskip);
+-
++	static const char *maxFps[] = {"Auto", "10", "20", "30", "40", "50", "60", "70", "80"};
++	maxFps_ = graphicsSettings->Add(new PopupMultiChoice(&maxFpsChoice, gr->T("Force Max FPS (lower helps GoW)"), maxFps, 0, ARRAY_SIZE(maxFps), gr->GetName(), screenManager()));
++	maxFps_->OnChoice.Handle(this, &GameSettingsScreen::OnForceMaxEmulatedFPS);
++	
+ 	PopupSliderChoice *altSpeed1 = graphicsSettings->Add(new PopupSliderChoice(&iAlternateSpeedPercent1_, 0, 1000, gr->T("Alternative Speed", "Alternative speed"), 5, screenManager(), gr->T("%, 0:unlimited")));
+ 	altSpeed1->SetFormat("%i%%");
+ 	altSpeed1->SetZeroLabel(gr->T("Unlimited"));
+@@ -1274,6 +1279,16 @@ UI::EventReturn GameSettingsScreen::OnDi
+ 	return UI::EVENT_DONE;
+ };
+ 
++UI::EventReturn GameSettingsScreen::OnForceMaxEmulatedFPS(UI::EventParams &e) {
++	if (maxFpsChoice > 0) {
++		g_Config.iForceMaxEmulatedFPS = (maxFpsChoice * 10);
++	} else {
++		g_Config.iForceMaxEmulatedFPS = 0;
++	}
++	Reporting::UpdateConfig();
++	return UI::EVENT_DONE;
++}
++
+ UI::EventReturn GameSettingsScreen::OnResolutionChange(UI::EventParams &e) {
+ 	if (g_Config.iAndroidHwScale == 1) {
+ 		RecreateActivity();
+diff -rupN PPSSPPSDL.orig/UI/GameSettingsScreen.h PPSSPPSDL/UI/GameSettingsScreen.h
+--- PPSSPPSDL.orig/UI/GameSettingsScreen.h	2022-06-06 07:03:21.562184931 -0400
++++ PPSSPPSDL/UI/GameSettingsScreen.h	2022-06-06 07:03:50.361652437 -0400
+@@ -59,6 +59,7 @@ private:
+ 	UI::Choice *displayEditor_;
+ 	UI::Choice *backgroundChoice_ = nullptr;
+ 	UI::PopupMultiChoice *resolutionChoice_;
++	UI::PopupMultiChoice *maxFps_;
+ 	UI::CheckBox *frameSkipAuto_;
+ 	SettingInfoMessage *settingInfo_;
+ 	UI::Choice *clearSearchChoice_;
+@@ -107,6 +108,7 @@ private:
+ 	UI::EventReturn OnFullscreenMultiChange(UI::EventParams &e);
+ 	UI::EventReturn OnDisplayLayoutEditor(UI::EventParams &e);
+ 	UI::EventReturn OnResolutionChange(UI::EventParams &e);
++	UI::EventReturn OnForceMaxEmulatedFPS(UI::EventParams &e);
+ 	UI::EventReturn OnHwScaleChange(UI::EventParams &e);
+ 	UI::EventReturn OnRestoreDefaultSettings(UI::EventParams &e);
+ 	UI::EventReturn OnRenderingMode(UI::EventParams &e);
+@@ -135,6 +137,7 @@ private:
+ 	UI::EventReturn OnClearSearchFilter(UI::EventParams &e);
+ 
+ 	// Temporaries to convert setting types, cache enabled, etc.
++	int maxFpsChoice;
+ 	int iAlternateSpeedPercent1_;
+ 	int iAlternateSpeedPercent2_;
+ 	int prevInflightFrames_;

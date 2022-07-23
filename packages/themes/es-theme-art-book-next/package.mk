@@ -4,7 +4,7 @@
 # Copyright (C) 2021 Fewtarius
 
 PKG_NAME="es-theme-art-book-next"
-PKG_VERSION="2b6d721366b3dac0381e949c876202f231fd5563"
+PKG_VERSION="a4fdfbb4501fe7f7fbbd7367553eec78936f2218"
 PKG_ARCH="any"
 PKG_LICENSE="CUSTOM"
 PKG_SITE="https://github.com/anthonycaccese/es-theme-art-book-next"

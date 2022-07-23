@@ -1,0 +1,10 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present kkoshelev (https://github.com/kkoshelev)
+
+. /etc/profile
+
+if [ "$(get_setting wireguard.up)" == "1" ]
+then
+  nohup wg-quick up /storage/.config/wireguard/wg0.conf &
+fi

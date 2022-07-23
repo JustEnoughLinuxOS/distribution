@@ -19,7 +19,7 @@ fi
 
 for CONFIG in rsync.conf rsync-rules.conf 
 do
-  if [ ! -d "${CONFIGPATH}/${CONFIG}" ]
+  if [ ! -e "${CONFIGPATH}/${CONFIG}" ]
   then
     cp -rf /usr/config/${CONFIG} ${CONFIGPATH}/${CONFIG}
   fi

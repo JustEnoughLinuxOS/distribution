@@ -5,9 +5,37 @@
 . /etc/profile
 
 COMMAND="$1"
-SSID="$(get_setting wifi.ssid)" 2>/dev/null
-PSK="$(get_setting wifi.key)" 2>/dev/null
+
+### ES won't save the configuration in time
+### for it to be useable by the script, so
+### we have to accept the ssid and key on the
+### command line too.
+
+if [ ! -z "${2}" ]
+then
+  SSID="${2}"
+else
+  SSID="$(get_setting wifi.ssid)" 2>/dev/null
+fi
+
+if [ ! -z "${3}" ]
+then
+  PSK="${3}"
+else
+  PSK="$(get_setting wifi.key)" 2>/dev/null
+fi
+
 WIFICFG="/storage/.cache/connman/wifi.config"
+
+set_powersave() {
+  ENABLED=$(get_setting wifi.powersave)
+  if [ "${ENABLED}" = "1" ]
+  then
+    iw wlan0 set power_save on
+  else
+    iw wlan0 set power_save off
+  fi
+}
 
 set_wifi() {
   case "${1}" in
@@ -25,6 +53,7 @@ Passphrase=${PSK}
 EOF
 
       connmanctl enable wifi 2>/dev/null
+      set_powersave 2>/dev/null
       connmanctl scan wifi 2>/dev/null
     ;;
     "disable")
@@ -41,6 +70,9 @@ EOF
     "scanlist")
       set_wifi scan 2>/dev/null
       set_wifi list 2>/dev/null
+    ;;
+    "setpowersave")
+      set_powersave 2>/dev/null
     ;;
   esac
 }

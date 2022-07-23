@@ -2,13 +2,13 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="pico-8"
-PKG_VERSION="$(date +%Y%m%d)"
+PKG_VERSION="1b1bb06fd65fb3d468a71209d81078c726061159"
+PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE=""
 PKG_URL=""
 PKG_DEPENDS_TARGET="toolchain SDL2 ${OPENGLES}"
-PKG_PRIORITY="optional"
 PKG_SECTION="emulators"
 PKG_SHORTDESC="PICO-8 Fantasy Console"
 PKG_TOOLCHAIN="manual"

@@ -496,7 +496,7 @@ load_splash() {
       fi
 
       if [ -n "$SPLASHIMAGE" -a -f "$SPLASHIMAGE" ]; then
-        ply-image $SPLASHIMAGE > /dev/null 2>&1
+        ply-image ${SPLASHIMAGE} > /dev/null 2>&1
       fi
 
       debug_msg "Framebuffer vertical res: $vres"
@@ -705,6 +705,12 @@ mount_games() {
 
     for DEV in $(blkid | awk 'BEGIN {FS=":"}; /ext4/ || /fat/ {print $1}' | sort -r)
     do
+      ROOTDEV=$(echo ${DEV} | sed -e "s#^/.*/##g" -e "s#p[0-9].*\$##g")
+      if [ -L "/sys/class/block/${ROOTDEV}boot0" ]
+      then
+	# Assume this is an android boot device and ignore it.
+        continue
+      fi
       NULL=$(grep ${DEV} /proc/mounts >/dev/null 2>&1)
       if [ ! "$?" = "0" ] && [ -e "${DEV}" ] && [ ! -e "/storage/.please_resize_me" ]
       then
@@ -1103,9 +1109,9 @@ prepare_sysroot() {
 
   if [ ! -f "/sysroot/storage/.configured" ]
   then
-    echo -ne "\033[100H\033[2K==> Initializing system, please wait.." >/dev/console
+    echo -ne "\033[1000H\033[2K==> Initializing system, please wait.." >/dev/console
   else
-    echo -ne "\033[100H\033[2K==> Loading, please wait.." >/dev/console
+    echo -ne "\033[1000H\033[2K==> Loading, please wait.." >/dev/console
   fi
 }
 
@@ -1168,15 +1174,6 @@ delete_descriptors() {
 }
 
 # Do init tasks to bring up system
-
-# set ondemand up_threshold
-if [ -e /sys/devices/system/cpu/cpufreq/ondemand/up_threshold ]; then
-  echo 50 > /sys/devices/system/cpu/cpufreq/ondemand/up_threshold
-else
-  for f in $(ls /sys/devices/system/cpu/cpufreq/policy*/ondemand/up_threshold 2>/dev/null) ; do
-    echo 50 > $f
-  done
-fi
 
 # run platform_init script if exists
 if [ -f "./platform_init" ]; then

@@ -2,7 +2,7 @@
 # Copyright (C) 2021-present 351ELEC (https://github.com/351ELEC)
 
 PKG_NAME="retroarch"
-PKG_VERSION="c2db12c72737447a10c399156a00ed973bc65f24"
+PKG_VERSION="e9d67f2bbe01f3fe66de5eda6430bccfba95b663"
 PKG_SITE="https://github.com/libretro/RetroArch"
 PKG_URL="${PKG_SITE}.git"
 PKG_LICENSE="GPLv3"
@@ -38,7 +38,7 @@ pre_configure_target() {
                              --disable-mali_fbdev \
                              --enable-odroidgo2"
 
-  if [ ${ARCH} == "arm" ]; then
+  if [ "${ARCH}" == "arm" ]; then
     PKG_CONFIGURE_OPTS_TARGET+=" --enable-neon"
   fi
 
@@ -97,7 +97,7 @@ makeinstall_target() {
 
 post_install() {
   mkdir -p ${INSTALL}/etc/retroarch-joypad-autoconfig
-  cp -r ${PKG_DIR}/gamepads/* ${INSTALL}/etc/retroarch-joypad-autoconfig
+  cp -r ${PKG_DIR}/gamepads/device/${DEVICE}/* ${INSTALL}/etc/retroarch-joypad-autoconfig
 
   # Remove unnecesary Retroarch Assets and overlays
   for i in FlatUX Automatic Systematic branding nuklear nxrgui pkg switch wallpapers zarch

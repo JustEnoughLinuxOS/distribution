@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="dosbox-pure"
-PKG_VERSION="dd42711759bb928ec52c7d944da6316ff41e1b15"
+PKG_VERSION="6335ea9df9568fd69ea1715bcebea6a53b34d0d7"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
@@ -34,12 +34,23 @@ GET_HANDLER_SUPPORT="git"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_TOOLCHAIN="make"
+PKG_PATCH_DIRS+="${DEVICE}"
 
 make_target() {
-  make platform=emuelec-hh
+  if [[ "${DEVICE}" =~ RG351 ]]
+  then
+    PKG_MAKE_OPTS_TARGET+=" platform=RG351x"
+  elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
+  then
+    PKG_MAKE_OPTS_TARGET+=" platform=RK3566"
+  else
+    PKG_MAKE_OPTS_TARGET+=" platform=${DEVICE}"
+  fi
+  make ${PKG_MAKE_OPTS_TARGET}
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp dosbox_pure_libretro.so $INSTALL/usr/lib/libretro/
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  ${STRIP} --strip-debug dosbox_pure_libretro.so
+  cp dosbox_pure_libretro.so ${INSTALL}/usr/lib/libretro/
 }

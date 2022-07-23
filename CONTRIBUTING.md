@@ -17,7 +17,7 @@ We use Github to host code, to track issues and feature requests, as well as acc
 ## We Use [Github Flow](https://guides.github.com/introduction/flow/index.html), So All Code Changes Happen Through Pull Requests
 Pull requests are the best way to propose changes to the codebase (we use [Github Flow](https://guides.github.com/introduction/flow/index.html)). We actively welcome your pull requests:
 
-1. Join our discord and chat with us, we'll be happy to help you success with your change.
+1. Join our discord and chat with us, we'll be happy to help you successfully implement your change.
 2. Fork the repo and create your branch from `dev`.
 3. Ensure your code is built locally and tested.
 4. Any changes should be reflected in the documentation.

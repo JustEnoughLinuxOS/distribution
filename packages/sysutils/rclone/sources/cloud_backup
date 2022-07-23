@@ -7,11 +7,13 @@ CONFIGPATH="/storage/.config"
 if [ -e "${CONFIGPATH}/rsync.conf" ]
 then
   source ${CONFIGPATH}/rsync.conf
-else
-  MOUNTPATH="/storage/cloud"
-  SYNCPATH="GAMES"
-  BACKUPPATH="/storage/roms"
 fi
+
+# If rsync.conf is missing variables set defaults
+MOUNTPATH="${MOUNTPATH:=/storage/cloud}"
+SYNCPATH="${SYNCPATH:=GAMES}"
+BACKUPPATH="${BACKUPPATH:=/storage/roms}"
+RSYNCOPTSBACKUP="${RSYNCOPTSBACKUP:=-raiv --prune-empty-dirs}"
 
 echo -e "=> ${OS_NAME} CLOUD BACKUP UTILITY\n" >/dev/console
 
@@ -19,7 +21,7 @@ echo "Mounting ${MOUNTPATH}" >/dev/console 2>&1
 rclonectl mount ${MOUNTPATH} >/dev/console 2>&1
 
 echo "Backing up data from ${BACKUPPATH} to ${MOUNTPATH}/${SYNCPATH}" >/dev/console 2>&1
-rsync -raiv --include-from="${CONFIGPATH}/rsync-rules.conf" --prune-empty-dirs ${BACKUPPATH}/ ${MOUNTPATH}/${SYNCPATH}/ >/dev/console 2>&1
+rsync ${RSYNCOPTSBACKUP} --include-from="${CONFIGPATH}/rsync-rules.conf" ${BACKUPPATH}/ ${MOUNTPATH}/${SYNCPATH}/ >/dev/console 2>&1
 
 echo "Unmounting ${MOUNTPATH}" >/dev/console 2>&1
 rclonectl unmount ${MOUNTPATH} >/dev/console 2>&1

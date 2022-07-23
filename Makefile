@@ -23,11 +23,19 @@ distclean:
 src-pkg:
 	tar cvJf sources.tar.xz sources .stamps
 
-world: RG552 RG351P RG351V RG351MP
+world: RG552 RG503 RG353P RG351P RG351V RG351MP
 
 RG552:
 	DEVICE=RG552 ARCH=arm ./scripts/build_distro
 	DEVICE=RG552 ARCH=aarch64 ./scripts/build_distro
+
+RG503:
+	DEVICE=RG503 ARCH=arm ./scripts/build_distro
+	DEVICE=RG503 ARCH=aarch64 ./scripts/build_distro
+
+RG353P:
+	DEVICE=RG353P ARCH=arm ./scripts/build_distro
+	DEVICE=RG353P ARCH=aarch64 ./scripts/build_distro
 
 RG351P:
 	DEVICE=RG351P ARCH=arm ./scripts/build_distro
@@ -57,9 +65,9 @@ package-clean:
 
 docker-%: DOCKER_IMAGE := "justenoughlinuxos/jelos-build:latest"
 
-# DOCKER_WORK_DIR is the directory in the Docker image - it used to be /work
+# DOCKER_WORK_DIR is the directory in the Docker image - it is set to /work by default
 #   Anytime this directory changes, you must run `make clean` similarly to moving the distribution directory
-docker-%: DOCKER_WORK_DIR := $(shell if [ -n "${DOCKER_WORK_DIR}" ]; then echo ${DOCKER_WORK_DIR}; else echo $$(pwd); fi)
+docker-%: DOCKER_WORK_DIR := $(shell if [ -n "${DOCKER_WORK_DIR}" ]; then echo ${DOCKER_WORK_DIR}; else echo "$$(pwd)" ; fi)
 
 # DEVELOPER_SETTINGS is a file containing developer speicific settings.  This will be mounted into the container if it exists
 docker-%: DEVELOPER_SETTINGS := $(shell if [ -f "${HOME}/developer_settings.conf" ]; then echo "-v \"${HOME}/developer_settings.conf:${HOME}/developer_settings.conf\""; else echo ""; fi)
@@ -111,5 +119,5 @@ docker-image-push:
 
 # Wire up docker to call equivalent make files using % to match and $* to pass the value matched by %
 docker-%:
-	$(SUDO) $(DOCKER_CMD) run $(PODMAN_ARGS) $(INTERACTIVE) --init --env-file .env --rm --user $(UID):$(GID) $(DEVELOPER_SETTINGS) -v $(PWD):$(DOCKER_WORK_DIR) -w $(DOCKER_WORK_DIR) $(DOCKER_IMAGE) $(COMMAND)
+	$(SUDO) BUILD_DIR=$(DOCKER_WORK_DIR) $(DOCKER_CMD) run $(PODMAN_ARGS) $(INTERACTIVE) --init --env-file .env --rm --user $(UID):$(GID) $(DEVELOPER_SETTINGS) -v $(PWD):$(DOCKER_WORK_DIR) -w $(DOCKER_WORK_DIR) $(DOCKER_EXTRA_OPTS) $(DOCKER_IMAGE) $(COMMAND)
 

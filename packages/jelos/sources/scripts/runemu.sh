@@ -93,12 +93,8 @@ if [[ "$arguments" == *"--connect"* ]]; then
 fi
 
 ### Set the performance mode
-if [ $(get_setting "maxperf" "${PLATFORM}" "${ROMNAME##*/}") == "0" ]
-then
-  normperf &
-else
-  maxperf &
-fi
+PERFORMANCE_MODE=$(get_setting "cpugovernor" "${PLATFORM}" "${ROMNAME##*/}")
+${PERFORMANCE_MODE}
 
 ### Set the cores to use
 CORES=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
@@ -120,7 +116,7 @@ COOLINGPROFILE=$(get_setting cooling.profile)
 OVERCLOCK=$(get_setting "overclock" "${PLATFORM}" "${ROMNAME##*/}")
 if [ ! "${OVERCLOCK}" = "system" ]
 then
-  if [ ! -z "${OVERCLOCK}" ]
+  if [ ! -z "${OVERCLOCK}" ] && [ -e "/usr/bin/overclock" ]
   then
     /usr/bin/overclock ${OVERCLOCK}
   fi
@@ -188,7 +184,8 @@ function quit() {
 	bluetooth enable
 	jslisten stop
 	clear_screen
-	normperf
+	DEVICE_CPU_GOVERNOR=$(get_setting system.cpugovernor)
+	${DEVICE_CPU_GOVERNOR}
 	set_audio default
 	exit $1
 }
@@ -300,7 +297,10 @@ else
 
 	### Check if we need retroarch 32 bits or 64 bits
 	RABIN="retroarch"
-	if [[ "${CORE}" =~ "pcsx_rearmed32" ]] || [[ "${CORE}" =~ "parallel_n64" ]] || [[ "${CORE}" =~ "gpsp" ]]
+	if [[ "${CORE}" =~ pcsx_rearmed32 ]] || \
+           [[ "${CORE}" =~ parallel_n64 ]] || \
+           [[ "${CORE}" =~ gpsp ]] || \
+           [[ "${CORE}" =~ flycast32 ]]
 	then
 		export LD_LIBRARY_PATH="/usr/lib32"
 		RABIN="retroarch32"
@@ -323,8 +323,13 @@ else
 			fi
                 ;;
         esac
-
+	
+	if [[ "${CORE}" =~ "custom" ]] 
+	then
+	RUNTHIS='${EMUPERF} /usr/bin/${RABIN} -L /storage/.config/retroarch/cores/${EMU}.so --config ${RATMPCONF} --appendconfig ${RAAPPENDCONF} "${ROMNAME}"'
+	else
 	RUNTHIS='${EMUPERF} /usr/bin/${RABIN} -L /usr/lib/libretro/${EMU}.so --config ${RATMPCONF} --appendconfig ${RAAPPENDCONF} "${ROMNAME}"'
+	fi
 	CONTROLLERCONFIG="${arguments#*--controllers=*}"
 
 	if [[ "$arguments" == *"-state_slot"* ]]; then

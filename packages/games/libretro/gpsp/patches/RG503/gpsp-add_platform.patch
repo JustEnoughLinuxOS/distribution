@@ -1,0 +1,21 @@
+diff -rupN gpsp.orig/Makefile gpsp/Makefile
+--- gpsp.orig/Makefile  2022-04-07 22:37:30.432792500 +0200
++++ gpsp/Makefile       2022-04-07 22:47:00.892790400 +0200
+@@ -287,6 +287,17 @@ else ifeq ($(platform), rpi1)
+        MMAP_JIT_CACHE = 1
+        HAVE_DYNAREC = 1
+
++# Anbernic RG353P
++else ifeq ($(platform), RK3566)
++     CPUFLAGS := -marm -march=armv8-a+crc+simd -mtune=cortex-a55 -mfpu=neon-fp-armv8 -mfloat-abi=hard -flto
++     CFLAGS  := $(CPUFLAGS) -fpic -ffast-math -fno-rtti -fno-exceptions
++     TARGET := $(TARGET_NAME)_libretro.so
++     fpic := -fPIC
++     SHARED := -shared -Wl,--version-script=link.T -Wl,--no-undefined
++     CPU_ARCH := arm
++     MMAP_JIT_CACHE = 1
++     HAVE_DYNAREC = 1
++
+ # Classic Platforms ####################
+ # Platform affix = classic_<ISA>_<µARCH>
+ # Help at https://modmyclassic.com/comp

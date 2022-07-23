@@ -116,10 +116,13 @@ jobs:
 
             ## Documentation
             * [Home](https://github.com/JustEnoughLinuxOS/distribution/wiki)
+            * [Donating to JELOS](https://github.com/JustEnoughLinuxOS/distribution/wiki/Donating-to-JELOS)
             * [Frequently asked Questions](https://github.com/JustEnoughLinuxOS/distribution/wiki/Frequently-Asked-Questions)
             * [HotKeys](https://github.com/JustEnoughLinuxOS/distribution/wiki/Hotkeys)
             * [Emulators and Game Engines](https://github.com/JustEnoughLinuxOS/distribution/wiki/JELOS-emulators-and-game-engines)
+            * [Moonlight Game Streaming](https://github.com/JustEnoughLinuxOS/distribution/wiki/Moonlight-Game-Streaming)
             * [Using Cloud Drives](https://github.com/JustEnoughLinuxOS/distribution/wiki/Using-Cloud-Drives)
+            * [Wireguard VPN](https://github.com/JustEnoughLinuxOS/distribution/wiki/WireGuard-VPN)
 
             ## Change Log
             ${{ github.event.client_payload.release_notes }}
