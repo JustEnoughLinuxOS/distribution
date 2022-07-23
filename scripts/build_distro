@@ -47,7 +47,7 @@ PKG_CLEAN="${PKG_CLEAN} mupen64plus-nx mupen64plus flycast_libretro dosbox-pure 
            gamecontrollerdb duckstationsa"
 
 # Clean OS specific packages.
-PKG_CLEAN="${PKG_CLEAN} system-utils plymouth-lite initramfs busybox kernel grub u-boot SDL2 modules \
+PKG_CLEAN="${PKG_CLEAN} system-utils plymouth-lite initramfs busybox linux grub u-boot SDL2 modules \
            emulationstation retroarch lib32 jelos"
 
 # Clean a few packages to ensure the build date and version are updated
