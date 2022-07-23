@@ -23,7 +23,7 @@ fi
 if [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
 then
   PKG_URL="https://github.com/JustEnoughLinuxOS/rk356x-uboot.git"
-  PKG_VERSION="afcb506"
+  PKG_VERSION="2988a90"
 fi
 
 PKG_IS_KERNEL_PKG="yes"
@@ -48,7 +48,7 @@ make_target() {
   if [ -z "${UBOOT_CONFIG}" ]; then
     echo "UBOOT_CONFIG must be set to build an image"
   else
-    if [ -e "projects/${PROJECT}/devices/${DEVICE}/u-boot/${UBOOT_CONFIG}" ]
+    if [ -e "${PROJECT_DIR}/projects/${PROJECT}/devices/${DEVICE}/u-boot/${UBOOT_CONFIG}" ]
     then
       cp ${PROJECT_DIR}/projects/${PROJECT}/devices/${DEVICE}/u-boot/${UBOOT_CONFIG} configs
     fi
