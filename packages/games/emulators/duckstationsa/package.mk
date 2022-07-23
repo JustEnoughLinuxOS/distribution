@@ -19,6 +19,7 @@ fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+  PKG_CMAKE_OPTS_TARGET+=" -DHAVE_EGL=ON -DUSE_DRMKMS=ON -DUSE_MALI=ON"
 fi
 
 
@@ -34,10 +35,7 @@ pre_configure_target() {
 	                         -DBUILD_SHARED_LIBS=OFF \
 	                         -DUSE_SDL2=ON \
 	                         -DENABLE_CHEEVOS=ON \
-	                         -DHAVE_EGL=ON \
-	                         -DUSE_DRMKMS=ON \
                                  -DUSE_FBDEV=OFF \
-                                 -DUSE_MALI=OFF \
                                  -DUSE_EVDEV=OFF"
 }
 
