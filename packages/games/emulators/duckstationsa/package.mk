@@ -7,7 +7,7 @@ PKG_VERSION="5ab5070d73f1acc51e064bd96be4ba6ce3c06f5c"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/stenzek/duckstation"
 PKG_URL="${PKG_SITE}.git"
-PKG_DEPENDS_TARGET="toolchain SDL2 nasm:host libevdev"
+PKG_DEPENDS_TARGET="toolchain SDL2 nasm:host"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="Fast PlayStation 1 emulator for x86-64/AArch32/AArch64 "
 PKG_TOOLCHAIN="cmake"
@@ -37,9 +37,8 @@ pre_configure_target() {
 	                         -DHAVE_EGL=ON \
 	                         -DUSE_DRMKMS=ON \
                                  -DUSE_FBDEV=OFF \
-                                 -DUSE_MALI=OFF"
-
-
+                                 -DUSE_MALI=OFF \
+                                 -DUSE_EVDEV=OFF"
 }
 
 makeinstall_target() {
