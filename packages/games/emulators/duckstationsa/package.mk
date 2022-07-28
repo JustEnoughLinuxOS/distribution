@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="duckstationsa"
-PKG_VERSION="5ab5070d73f1acc51e064bd96be4ba6ce3c06f5c"
+PKG_VERSION="f6ff7e48c1dbd7e798a5fe8f770ae16a1f2085e0"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/stenzek/duckstation"
 PKG_URL="${PKG_SITE}.git"
