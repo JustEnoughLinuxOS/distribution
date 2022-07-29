@@ -23,7 +23,7 @@ case ${DEVICE} in
   ;;
   RG353P|RG503)
     PKG_URL="${PKG_SITE}/rk356x-uboot.git"
-    PKG_VERSION="2988a90"
+    PKG_VERSION="ab7b555"
   ;;
 esac
 
