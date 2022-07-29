@@ -37,14 +37,15 @@ then
   then
     ln -sf build.${DISTRO}-${DEVICE_ROOT}.${ARCH} build.${DISTRO}-${DEVICE}.${ARCH}
   fi
-fi
 
-# We need to always assume some packages are build and clean them so the linked build functionality
-# works as expected.  Start with the emulators and cores.
-PKG_CLEAN="${PKG_CLEAN} mupen64plus-nx mupen64plus flycast_libretro dosbox-pure parallel-n64_glide64 \
-           parallel-n64_gln64 parallel-n64_rice pcsx_rearmed pcsx_rearmed gpsp raze amiberry lzdoom  \
-           PPSSPPSDL gzdoom mupen64plussa-core mupen64plussa-input-sdl 351files libgo2 \
-           gamecontrollerdb duckstationsa"
+  # We need to always assume some packages are build and clean them so the linked build functionality
+  # works as expected.  Start with the emulators and cores.
+  PKG_CLEAN="${PKG_CLEAN} mupen64plus-nx mupen64plus flycast_libretro dosbox-pure parallel-n64_glide64 \
+             parallel-n64_gln64 parallel-n64_rice pcsx_rearmed pcsx_rearmed gpsp raze amiberry lzdoom  \
+             PPSSPPSDL gzdoom mupen64plussa-core mupen64plussa-input-sdl 351files libgo2 \
+             gamecontrollerdb duckstationsa"
+
+fi
 
 # Clean OS specific packages.
 PKG_CLEAN="${PKG_CLEAN} system-utils plymouth-lite initramfs busybox linux grub u-boot SDL2 modules \
