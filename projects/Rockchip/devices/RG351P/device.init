@@ -1,4 +1,0 @@
-# Apply the default clocks early.
-echo 1296000 >/sys/devices/system/cpu/cpufreq/policy0
-echo 480000000 >/sys/devices/platform/ff400000.gpu/devfreq/ff400000.gpu
-echo 786000000 >/sys/devices/platform/dmc/devfreq/dmc
