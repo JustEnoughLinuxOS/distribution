@@ -21,7 +21,7 @@ GET_HANDLER_SUPPORT="git"
 case ${DEVICE} in
   RG351P|RG351V|RG351MP)
     PKG_URL="${PKG_SITE}/rk3326-kernel.git"
-    PKG_VERSION="effc106f9"
+    PKG_VERSION="a19b4df7c"
   ;;
   RG552)
     PKG_URL="${PKG_SITE}/rk3399-kernel.git"
