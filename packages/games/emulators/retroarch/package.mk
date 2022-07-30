@@ -54,7 +54,7 @@ pre_configure_target() {
 }
 
 make_target() {
-  make HAVE_UPDATE_ASSETS=1 HAVE_LIBRETRODB=1 HAVE_BLUETOOTH=1 HAVE_NETWORKING=1 HAVE_ZARCH=1 HAVE_QT=0 HAVE_LANGEXTRA=1
+  make HAVE_UPDATE_ASSETS=0 HAVE_LIBRETRODB=1 HAVE_BLUETOOTH=0 HAVE_NETWORKING=1 HAVE_ZARCH=1 HAVE_QT=0 HAVE_LANGEXTRA=1
   [ $? -eq 0 ] && echo "(retroarch ok)" || { echo "(retroarch failed)" ; exit 1 ; }
   make -C gfx/video_filters compiler=$CC extra_flags="$CFLAGS"
   [ $? -eq 0 ] && echo "(video filters ok)" || { echo "(video filters failed)" ; exit 1 ; }
@@ -107,13 +107,10 @@ post_install() {
   mkdir -p ${INSTALL}/etc/retroarch-joypad-autoconfig
   cp -r ${PKG_DIR}/gamepads/device/${DEVICE}/* ${INSTALL}/etc/retroarch-joypad-autoconfig
 
-  # Remove unnecesary Retroarch Assets and overlays
-  for i in FlatUX Automatic Systematic branding nuklear nxrgui pkg switch wallpapers zarch
-  do
-    rm -rf "${INSTALL}/usr/share/retroarch-assets/$i"
-  done
-
-  for i in automatic dot-art flatui neoactive pixel retroactive retrosystem systematic convert.sh NPMApng2PMApng.py; do
-    rm -rf "${INSTALL}/usr/share/retroarch-assets/xmb/$i"
-  done
+  enable_service tmp-cores.mount
+  enable_service tmp-joypads.mount
+  enable_service tmp-database.mount
+  enable_service tmp-assets.mount
+  enable_service tmp-shaders.mount
+  enable_service tmp-overlays.mount
 }

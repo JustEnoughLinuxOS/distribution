@@ -311,7 +311,6 @@ else
 	           [[ "${CORE}" =~ gpsp ]] || \
 	           [[ "${CORE}" =~ flycast32 ]]
 		then
-			export LD_LIBRARY_PATH="/usr/lib32"
 			RABIN="retroarch32"
 		fi
 	fi

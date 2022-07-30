@@ -19,20 +19,32 @@
 ################################################################################
 
 PKG_NAME="retroarch-assets"
-PKG_VERSION="e2113a040c013f10cd41aa423444d7c2cb00a94f"
-PKG_SHA256="7ca654218a1f6fd6ff90eea6cb51359a5b57c5fa512250844d3d947628029198"
+PKG_VERSION="d1cbfdb85124f5b1ccd710626026156dc0a96ddf"
+PKG_SHA256="d423ca4f52b638b57bedf4186a50303895badb28a3f023b584fb2802f846cfb4"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/libretro/retroarch-assets"
-PKG_URL="https://github.com/libretro/retroarch-assets/archive/$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/libretro/retroarch-assets/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="RetroArch assets. Background and icon themes for the menu drivers."
 PKG_TOOLCHAIN="manual"
 
 pre_configure_target() {
   cd ../
-  rm -rf .$TARGET_NAME
+  rm -rf .${TARGET_NAME}
 }
 
 makeinstall_target() {
-  make install INSTALLDIR="$INSTALL/usr/share/retroarch-assets"
+  make install INSTALLDIR="${INSTALL}/usr/share/retroarch-assets"
+}
+
+post_makeinstall_target() {
+  # Remove unnecesary Retroarch Assets and overlays
+  for i in FlatUX Automatic Systematic branding nuklear nxrgui pkg switch wallpapers zarch
+  do
+    rm -rf "${INSTALL}/usr/share/retroarch-assets/$i"
+  done
+
+  for i in automatic dot-art flatui neoactive pixel retroactive retrosystem systematic convert.sh NPMApng2PMApng.py; do
+    rm -rf "${INSTALL}/usr/share/retroarch-assets/xmb/$i"
+  done
 }

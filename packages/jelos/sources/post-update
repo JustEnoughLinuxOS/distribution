@@ -40,3 +40,13 @@ then
   rm -f /storage/.config/emulationstation/es_input.cfg
   cp -f /usr/config/emulationstation/es_input.cfg /storage/.config/emulationstation/es_input.cfg
 fi
+
+# Re-introduce overlayfs for retroarch.
+sed -i 's#^overlay_directory.*$#overlay_directory = "/tmp/overlays"#g' /storage/.config/retroarch/retroarch.cfg
+sed -i 's#^video_shader_dir.*$#video_shader_dir = "/tmp/shaders"#g' /storage/.config/retroarch/retroarch.cfg
+sed -i 's#^joypad_autoconfig_dir.*$#joypad_autoconfig_dir = "/tmp/joypads"#g' /storage/.config/retroarch/retroarch.cfg
+sed -i 's#^cheat_database_path.*$#cheat_database_path = "/tmp/database/cht"#g' /storage/.config/retroarch/retroarch.cfg
+sed -i 's#^content_database_path.*$#content_database_path = "/tmp/database/rdb"#g' /storage/.config/retroarch/retroarch.cfg
+sed -i 's#^assets_directory.*$#assets_directory = "/tmp/assets"#g' /storage/.config/retroarch/retroarch.cfg
+sed -i 's#^libretro_directory.*$#libretro_directory = "/tmp/cores"#g' /storage/.config/retroarch/retroarch.cfg
+sed -i 's#^libretro_info_path.*$#libretro_info_path = "/tmp/cores"#g' /storage/.config/retroarch/retroarch.cfg

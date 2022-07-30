@@ -22,8 +22,6 @@ then
 elif [ -e "/storage/roms/pico-8/pico8_dyn" ] && [ ! -e "/storage/roms/pico-8/pico8_64" ]
 then
   jslisten set "pico8_dyn"
-  patchelf --set-interpreter /usr/lib32/ld-linux-armhf.so.3 /storage/roms/pico-8/pico8_dyn
-  export LD_LIBRARY_PATH=/usr/lib32
   /storage/roms/pico-8/pico8_dyn -home -root_path /storage/roms/pico-8 -joystick 0 ${OPTIONS} "${CART}"
 else
   text_viewer -e -w -t "Missing Pico-8 binaries!" -m "Extract your purchased pico8_64 and pico8.dat and place them in the pico-8 directory on your games partition."
