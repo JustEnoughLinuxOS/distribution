@@ -86,4 +86,7 @@ makeinstall_target() {
   fi
   mkdir -p ${INSTALL}/usr/lib
   ln -s /usr/lib32/ld-linux-armhf.so.3 ${INSTALL}/usr/lib/ld-linux-armhf.so.3
+
+  mkdir -p "${INSTALL}/etc/ld.so.conf.d"
+  echo "/usr/lib32" > "${INSTALL}/etc/ld.so.conf.d/lib32-glibc.conf"
 }
