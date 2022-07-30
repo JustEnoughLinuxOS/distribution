@@ -1,5 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2022-present kkoshelev (https://github.com/kkoshelev)
+# Copyright (C) 2022-present fewtarius (https://github.com/fewtarius)
 
 PKG_NAME="tailscale"
 PKG_VERSION="1.26.1"
@@ -15,8 +16,8 @@ if [ ! "${TARGET_ARCH}" = "x86_64" ]; then
 fi
 
 pre_unpack() {
-  mkdir -p $PKG_BUILD
-  tar --strip-components=1 -xf $SOURCES/$PKG_NAME/$PKG_NAME-$PKG_VERSION.tgz -C $PKG_BUILD tailscale_${PKG_VERSION}_arm64
+  mkdir -p ${PKG_BUILD}
+  tar --strip-components=1 -xf $SOURCES/${PKG_NAME}/${PKG_NAME}-${PKG_VERSION}.tgz -C ${PKG_BUILD} tailscale_${PKG_VERSION}_arm64
 }
 
 makeinstall_target() {
@@ -28,6 +29,3 @@ makeinstall_target() {
     cp -R ${PKG_DIR}/config/tailscaled.defaults ${INSTALL}/usr/config
 }
 
-post_install() {
-  enable_service tailscaled.service
-}
