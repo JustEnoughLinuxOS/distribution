@@ -36,16 +36,16 @@ RG552:
 	PROJECT=Rockchip DEVICE=RG552 ARCH=aarch64 ./scripts/build_distro
 
 RG503:
-	PROJECT=Rockchip DEVICE=RG503 ARCH=arm ./scripts/build_distro
-	PROJECT=Rockchip DEVICE=RG503 ARCH=aarch64 ./scripts/build_distro
+	DEVICE_ROOT=RG503 PROJECT=Rockchip DEVICE=RG503 ARCH=arm ./scripts/build_distro
+	DEVICE_ROOT=RG503 PROJECT=Rockchip DEVICE=RG503 ARCH=aarch64 ./scripts/build_distro
 
 RG353P:
 	DEVICE_ROOT=RG503 PROJECT=Rockchip DEVICE=RG353P ARCH=arm ./scripts/build_distro
 	DEVICE_ROOT=RG503 PROJECT=Rockchip DEVICE=RG353P ARCH=aarch64 ./scripts/build_distro
 
 RG351P:
-	PROJECT=Rockchip DEVICE=RG351P ARCH=arm ./scripts/build_distro
-	PROJECT=Rockchip DEVICE=RG351P ARCH=aarch64 ./scripts/build_distro
+	DEVICE_ROOT=RG351P PROJECT=Rockchip DEVICE=RG351P ARCH=arm ./scripts/build_distro
+	DEVICE_ROOT=RG351P PROJECT=Rockchip DEVICE=RG351P ARCH=aarch64 ./scripts/build_distro
 
 RG351V:
 	DEVICE_ROOT=RG351P PROJECT=Rockchip DEVICE=RG351V ARCH=arm ./scripts/build_distro
