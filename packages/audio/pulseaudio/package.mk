@@ -95,6 +95,8 @@ post_makeinstall_target() {
     cp -PR ${PKG_DIR}/config/pulse-daemon.conf.d ${INSTALL}/usr/config
 
   ln -sf /storage/.config/pulse-daemon.conf.d ${INSTALL}/etc/pulse/daemon.conf.d
+  mkdir -p ${INSTALL}/etc/ld.so.conf.d
+  echo "/usr/lib/pulseaudio" >${INSTALL}/etc/ld.so.conf.d/${ARCH}-lib-pulseaudio.conf
 }
 
 post_install() {
