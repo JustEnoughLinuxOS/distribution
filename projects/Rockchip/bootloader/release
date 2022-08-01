@@ -14,6 +14,9 @@ if [ -n "${UBOOT_CONFIG}" ]; then
   if [ -f ${BOOTLOADER_DIR}/trust.img ]; then
     cp -a ${BOOTLOADER_DIR}/trust.img ${RELEASE_DIR}/3rdparty/bootloader
   fi
+  if [ -f ${BOOTLOADER_DIR}/resource.img ]; then
+    cp -a ${BOOTLOADER_DIR}/resource.img ${RELEASE_DIR}/3rdparty/bootloader
+  fi
 fi
 
 if [ -f ${INSTALL}/usr/share/bootloader/logo.bmp ]; then
