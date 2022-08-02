@@ -28,14 +28,14 @@ PKG_BASEOS="plymouth-lite grep wget libjpeg-turbo util-linux xmlstarlet bluetool
 
 PKG_UI="emulationstation"
 
-PKG_EMUS="common-shaders glsl-shaders libretro-database hatarisa openbor  \
+PKG_EMUS="hatarisa openbor hypseus-singe moonlight duckstationsa pico-8 \
           scummvmsa PPSSPPSDL yabasanshiroSA vicesa mupen64plussa-audio-sdl         \
           mupen64plussa-input-sdl mupen64plussa-ui-console mupen64plussa-video-rice \
           mupen64plussa-core mupen64plussa-rsp-hle mupen64plussa-video-glide64mk2   \
-          lzdoom gzdoom ecwolf amiberry raze pico-8 flycastsa hypseus-singe \
-          core-info moonlight duckstationsa"
+          lzdoom gzdoom ecwolf amiberry raze flycastsa hypseus-singe"
 
-PKG_RETROARCH="retroarch retroarch-overlays retroarch-assets"
+PKG_RETROARCH="retroarch retroarch-overlays retroarch-assets common-shaders glsl-shaders \
+               libretro-database core-info"
 
 LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce beetle-pcfx      \
                 beetle-supafaust beetle-supergrafx beetle-vb beetle-wswan bluemsx cannonball cap32   \
@@ -51,6 +51,10 @@ LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-
                 stella-2014 swanstation TIC-80 tgbdual tyrquake xrick uae4arm uzem vba-next vbam     \
                 vecx vice yabasanshiro xmil mesen virtualjaguar ecwolf_libretro                      \
                 bsnes-mercury-performance"
+###
+PKG_EMUS="PPSSPPSDL"
+LIBRETRO_CORES="picodrive snes9x snes9x2002 snes9x2005_plus snes9x2010 gearcoleco gambatte"
+###
 
 PKG_COMPAT=""
 

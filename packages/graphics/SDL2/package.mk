@@ -33,7 +33,7 @@ fi
 
 
 case ${DEVICE} in
-  RG351P|RG552|X86_64L)
+  RG351P|RG552)
     PKG_DEPENDS_TARGET+=" librga"
     pre_make_host() {
       sed -i "s| -lrga||g" ${PKG_BUILD}/CMakeLists.txt
