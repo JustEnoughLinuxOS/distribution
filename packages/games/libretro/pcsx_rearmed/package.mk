@@ -3,8 +3,8 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="pcsx_rearmed"
-PKG_VERSION="ca177c0f86742d9efa4a9ee762ad326385c1f093"
-PKG_SHA256="a2028755f70f76b43de5b28fab7e7e1b5ed49599bd7b2c36ab730ae25362bee1"
+PKG_VERSION="89d141837c31ce3fbb22494165004fd6f84397c8"
+PKG_SHA256="858ec27f99f57da30a6cb90f8b84b5e9e52fb64ffcb68caba756416976b1f92e"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
@@ -32,6 +32,9 @@ makeinstall_target() {
   ## Install the 64bit core.
   mkdir -p ${INSTALL}/usr/lib/libretro
   cp pcsx_rearmed_libretro.so ${INSTALL}/usr/lib/libretro/
-  ## Install the 32bit core.
-  cp -vP ${PKG_BUILD}/../../build.${DISTRO}-${DEVICE}.arm/pcsx_rearmed-*/.install_pkg/usr/lib/libretro/pcsx_rearmed_libretro.so ${INSTALL}/usr/lib/libretro/pcsx_rearmed32_libretro.so
+  if [ "${TARGET_ARCH}" = "aarch64" ]
+  then
+    ## Install the 32bit core.
+    cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/pcsx_rearmed-*/.install_pkg/usr/lib/libretro/pcsx_rearmed_libretro.so ${INSTALL}/usr/lib/libretro/pcsx_rearmed32_libretro.so
+  fi
 }

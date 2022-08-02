@@ -1,0 +1,69 @@
+################################################################################
+# setup system defaults
+################################################################################
+
+  # The TARGET_CPU variable controls which processor should be targeted for
+  # generated code.
+    case $TARGET_ARCH in
+      x86_64)
+        # (AMD CPUs)    k8 k8-sse3 opteron opteron-sse3 athlon64 athlon64-sse3
+        #               athlon-fx amdfam10 barcelona
+        # (Intel CPUs)  atom core2 nocona
+        #
+        TARGET_CPU="x86-64"
+        ;;
+    esac
+
+  # Bootloader to use (syslinux / u-boot)
+    BOOTLOADER="syslinux"
+
+  # Kernel target
+    KERNEL_TARGET="bzImage"
+
+  # Additional kernel make parameters (for example to specify the u-boot loadaddress)
+    KERNEL_MAKE_EXTRACMD=""
+
+  # Additional kernel dependencies
+    KERNEL_EXTRA_DEPENDS_TARGET=""
+
+  # Kernel to use. values can be:
+  # default:  default mainline kernel
+    LINUX="default"
+
+
+################################################################################
+# setup build defaults
+################################################################################
+
+  # Project CFLAGS
+    PROJECT_CFLAGS=""
+
+  # SquashFS compression method (gzip / lzo / xz / zstd)
+    SQUASHFS_COMPRESSION="zstd"
+
+
+################################################################################
+# setup project defaults
+################################################################################
+
+  # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
+  # Space separated list is supported,
+  # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
+    FIRMWARE="misc-firmware wlan-firmware dvb-firmware iwlwifi-firmware"
+
+  # additional drivers to install:
+  # for a list of additional drivers see packages/linux-drivers
+  # Space separated list is supported,
+  # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
+    ADDITIONAL_DRIVERS=""
+
+  # build and install driver addons (yes / no)
+    DRIVER_ADDONS_SUPPORT="no"
+
+  # driver addons to install:
+  # for a list of additional drivers see packages/linux-driver-addons
+  # Space separated list is supported,
+    DRIVER_ADDONS="crazycat digital_devices dvb-latest"
+
+  # Default size of the ova image, in MB, eg. 4096
+    OVA_SIZE="4096"

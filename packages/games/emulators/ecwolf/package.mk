@@ -3,7 +3,7 @@
 # Copyright (C) 2021-present Fewtarius
 
 PKG_NAME="ecwolf"
-PKG_VERSION="777265eccd1b6436ed4381b4b25e22f6c4365136"
+PKG_VERSION="e66f5564b9b382bd8a796b4b21384ac6c1356833"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://bitbucket.org/ecwolf/ecwolf"
 PKG_URL="${PKG_SITE}.git"

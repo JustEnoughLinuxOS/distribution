@@ -17,6 +17,11 @@ i=0
 
 echo "Amiberry Log" > "$AMIBERRY_LOG"
 
+if [ ! -d "${AMIBERRY_TMP_DIR}" ]
+then
+  mkdir -p "${AMIBERRY_TMP_DIR}"
+fi
+
 if [ ! -d "${AMIBERRY_DIR}" ]
 then
   cp -rf /usr/config/amiberry ${AMIBERRY_DIR}

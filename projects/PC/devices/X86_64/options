@@ -1,0 +1,30 @@
+# kernel command line
+  EXTRA_CMDLINE="quiet console=tty0 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
+
+# Partition label
+  PARTITION_TABLE="msdos"
+
+# OpenGL(X) implementation to use (mesa / no)
+  OPENGL="mesa"
+
+# OpenGL-ES implementation to use (mesa / no)
+  OPENGLES="no"
+
+# Vulkan implementation to use (vulkan-loader / no)
+  VULKAN="vulkan-loader"
+
+# VULKAN_SUPPORT
+  VULKAN_SUPPORT="yes"
+
+# Displayserver to use (weston / x11 / no)
+  DISPLAYSERVER="x11"
+
+# Windowmanager to use (fluxbox / weston / no)
+#  WINDOWMANAGER="fluxbox"
+
+# Mesa 3D Graphic drivers to use (all / crocus,i915,iris,r300,r600,radeonsi,vmware,virtio)
+# Space separated list is supported,
+# e.g. GRAPHIC_DRIVERS="crocus i915 iris r300 r600 radeonsi vmware virtio"
+  GRAPHIC_DRIVERS="crocus i915 iris r300 r600 radeonsi vmware virtio"
+
+#VAAPI_SUPPORT="yes"

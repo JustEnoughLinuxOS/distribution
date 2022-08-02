@@ -2,16 +2,24 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="pico-8"
-PKG_VERSION="1b1bb06fd65fb3d468a71209d81078c726061159"
+PKG_VERSION="e8108405ad510ed5517c09a5ad05234623e14d70"
 PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE=""
 PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain SDL2 ${OPENGLES}"
+PKG_DEPENDS_TARGET="toolchain SDL2"
 PKG_SECTION="emulators"
 PKG_SHORTDESC="PICO-8 Fantasy Console"
 PKG_TOOLCHAIN="manual"
+
+if [ ! "${OPENGL}" = "no" ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+fi
+
+if [ "${OPENGLES_SUPPORT}" = yes ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+fi
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin

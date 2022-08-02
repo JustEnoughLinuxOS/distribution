@@ -17,14 +17,6 @@ then
 fi
 ###
 
-TEST=$(ldd /usr/bin/emulationstation | grep 64)
-if [ $? == 0 ]
-then
-  V_OSARCH="aarch64"
-else
-  V_OSARCH="arm"
-fi
-
 V_CPUNB=$(grep -E $'^processor\t:' /proc/cpuinfo | wc -l)
 V_CPUMODEL1=$(grep -E $'^model name\t:' /proc/cpuinfo | head -1 | sed -e s+'^model name\t: '++)
 V_SYSTEM=$(uname -rs)
@@ -73,15 +65,14 @@ echo "SYSTEM INFORMATION:"
 echo "OPERATING SYSTEM: ${OS_NAME}"
 echo "VERSION: ${OS_VERSION}"
 echo "BUILD ID: ${BUILD_ID:0:7} (${BUILD_BRANCH})"
-echo "ARCHITECTURE: ${V_OSARCH}"
-echo "KERNEL: ${V_SYSTEM} (${V_ARCH})"
+echo "KERNEL: ${V_SYSTEM} ($(uname -m))"
 echo "DISK SPACE:"
 echo "/storage: $(df -h /storage | awk '/dev/ {print $3"/"$2" ("$5")"}')"
 echo "/storage/roms: $(df -h /storage/roms | awk '/dev/ {print $3"/"$2" ("$5")"}')"
 
-echo "BATTERY INFORMATION:"
 if test -n "${BATT}"
 then
+    echo "BATTERY INFORMATION:"
     echo "BATTERY REMAINING: ${BATT}%"
     if [ -e "/sys/class/power_supply/bat/health" ]
     then

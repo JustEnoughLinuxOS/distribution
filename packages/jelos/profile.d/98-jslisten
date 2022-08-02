@@ -11,6 +11,7 @@ jslisten() {
         if [ "$1" == "set" ]
         then
                 systemctl stop jslisten
+		rm /storage/.config/system/configs/jslisten.cfg
 
                 if [ "$2" == "mpv" ]
                 then
@@ -42,6 +43,7 @@ program="/usr/bin/manage_mpv.sh back60s"
 button1=${DEVICE_BTN_TL2}
 
 EOF
+		fi
 
                 cat <<EOF >>${JSLISTENCONF}
 [KillAll]
@@ -61,7 +63,6 @@ button1=${DEVICE_BTN_TL}
 button2=${DEVICE_BTN_DPAD_DOWN}
 
 EOF
-                fi
                 systemctl start jslisten
         elif [ "$1" == "stop" ]
         then

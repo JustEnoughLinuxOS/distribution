@@ -6,28 +6,28 @@
 
 if [ "${DEVICE_HAS_FAN}" == "true" ]
 then
-  systemctl start fancontrol
+  nohup systemctl start fancontrol &
 else
-  systemctl stop fancontrol
+  nohup systemctl stop fancontrol &
 fi
 
 if [ "${DEVICE_POWER_LED}" == "true" ]
 then
-  systemctl start battery
+  nohup systemctl start battery &
 else
-  systemctl stop battery
+  nohup systemctl stop battery &
 fi
 
 if [ "${DEVICE_FAKE_JACKSENSE}" == "true" ]
 then
-  systemctl start headphones
+  nohup systemctl start headphones &
 else
-  systemctl stop headphones
+  nohup systemctl stop headphones &
 fi
 
 if [ "${DEVICE_VOLUMECTL}" == "true" ]
 then
-  systemctl start volume
+  nohup systemctl start volume &
 else
-  systemctl stop volume
+  nohup systemctl stop volume &
 fi

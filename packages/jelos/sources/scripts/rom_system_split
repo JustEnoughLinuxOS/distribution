@@ -3,10 +3,10 @@
 # rom_system_split: split your roms across your local and external storage
 
 # prerequesites:
-# - store local roms must be stored in "/storage/roms_local"
-# - store external roms must be stored in "/storage/roms"
-# - you cannot spread the same system files across multiple locations.
-#   if duplicate systems are found, local folders will take preference
+# - local roms must be stored in "/storage/roms_local"
+# - external roms must be stored in "/storage/roms"
+# - you cannot spread the same system files across multiple locations
+# NOTE: if duplicate systems are found, local folders will take preference
 
 LOCAL_FOLDER_NAME="roms_local"
 EXT_FOLDER_NAME="roms"

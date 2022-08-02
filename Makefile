@@ -25,32 +25,35 @@ src-pkg:
 
 world: RG552 RG503 RG353P RG351P RG351V RG351MP
 
+X86_64:
+	PROJECT=PC DEVICE=X86_64 ARCH=x86_64 ./scripts/build_distro
+
 RG552:
-	DEVICE=RG552 ARCH=arm ./scripts/build_distro
-	DEVICE=RG552 ARCH=aarch64 ./scripts/build_distro
+	PROJECT=Rockchip DEVICE=RG552 ARCH=arm ./scripts/build_distro
+	PROJECT=Rockchip DEVICE=RG552 ARCH=aarch64 ./scripts/build_distro
 
 RG503:
-	DEVICE=RG503 ARCH=arm ./scripts/build_distro
-	DEVICE=RG503 ARCH=aarch64 ./scripts/build_distro
+	DEVICE_ROOT=RG503 PROJECT=Rockchip DEVICE=RG503 ARCH=arm ./scripts/build_distro
+	DEVICE_ROOT=RG503 PROJECT=Rockchip DEVICE=RG503 ARCH=aarch64 ./scripts/build_distro
 
 RG353P:
-	DEVICE=RG353P ARCH=arm ./scripts/build_distro
-	DEVICE=RG353P ARCH=aarch64 ./scripts/build_distro
+	DEVICE_ROOT=RG503 PROJECT=Rockchip DEVICE=RG353P ARCH=arm ./scripts/build_distro
+	DEVICE_ROOT=RG503 PROJECT=Rockchip DEVICE=RG353P ARCH=aarch64 ./scripts/build_distro
 
 RG351P:
-	DEVICE=RG351P ARCH=arm ./scripts/build_distro
-	DEVICE=RG351P ARCH=aarch64 ./scripts/build_distro
+	DEVICE_ROOT=RG351P PROJECT=Rockchip DEVICE=RG351P ARCH=arm ./scripts/build_distro
+	DEVICE_ROOT=RG351P PROJECT=Rockchip DEVICE=RG351P ARCH=aarch64 ./scripts/build_distro
 
 RG351V:
-	DEVICE=RG351V ARCH=arm ./scripts/build_distro
-	DEVICE=RG351V ARCH=aarch64 ./scripts/build_distro
+	DEVICE_ROOT=RG351P PROJECT=Rockchip DEVICE=RG351V ARCH=arm ./scripts/build_distro
+	DEVICE_ROOT=RG351P PROJECT=Rockchip DEVICE=RG351V ARCH=aarch64 ./scripts/build_distro
 
 RG351MP:
-	DEVICE=RG351MP ARCH=arm ./scripts/build_distro
-	DEVICE=RG351MP ARCH=aarch64 ./scripts/build_distro
+	DEVICE_ROOT=RG351P PROJECT=Rockchip DEVICE=RG351MP ARCH=arm ./scripts/build_distro
+	DEVICE_ROOT=RG351P PROJECT=Rockchip DEVICE=RG351MP ARCH=aarch64 ./scripts/build_distro
 
 update:
-	DEVICE=RG552 ARCH=aarch64 ./scripts/update_packages
+	PROJECT=Rockchip DEVICE=RG552 ARCH=aarch64 ./scripts/update_packages
 
 package:
 	./scripts/build ${PACKAGE}

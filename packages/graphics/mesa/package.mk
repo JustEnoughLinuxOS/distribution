@@ -1,104 +1,85 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
-# Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="mesa"
-PKG_VERSION="58ad6e5"
+PKG_VERSION="22.1.2"
+PKG_SHA256="0971226b4a6a3d10cfc255736b33e4017e18c14c9db1e53863ac1f8ae0deb9ea"
 PKG_LICENSE="OSS"
-PKG_SITE="https://github.com/mesa3d/mesa"
-PKG_URL="${PKG_SITE}.git"
+PKG_SITE="http://www.mesa3d.org/"
+PKG_URL="https://mesa.freedesktop.org/archive/mesa-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain expat libdrm Mako:host"
 PKG_LONGDESC="Mesa is a 3-D graphics library with an API."
-PKG_TOOLCHAIN="manual"
-PKG_BUILD_FLAGS="+lto"
+PKG_TOOLCHAIN="meson"
 
 get_graphicdrivers
 
-PKG_MESON_OPTS_TARGET="-Ddri-drivers=${DRI_DRIVERS// /,} \
+PKG_MESON_OPTS_TARGET="-Ddri-drivers= \
                        -Dgallium-drivers=${GALLIUM_DRIVERS// /,} \
                        -Dgallium-extra-hud=false \
-                       -Dgallium-xvmc=false \
+                       -Dgallium-xvmc=disabled \
                        -Dgallium-omx=disabled \
                        -Dgallium-nine=false \
                        -Dgallium-opencl=disabled \
-                       -Dshader-cache=true \
-                       -Dshared-glapi=true \
+                       -Dshader-cache=enabled \
+                       -Dshared-glapi=enabled \
                        -Dopengl=true \
-                       -Dgbm=true \
-                       -Degl=true \
-                       -Dglvnd=false \
-                       -Dasm=true \
-                       -Dvalgrind=false \
-                       -Dlibunwind=false \
-                       -Dlmsensors=false \
+                       -Dgbm=enabled \
+                       -Degl=enabled \
+                       -Dvalgrind=disabled \
+                       -Dlibunwind=disabled \
+                       -Dlmsensors=disabled \
                        -Dbuild-tests=false \
                        -Dselinux=false \
-                       -Dosmesa=none"
+                       -Dosmesa=false"
 
-if [ "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET xorgproto libXext libXdamage libXfixes libXxf86vm libxcb libX11 libxshmfence libXrandr"
+if [ "${DISPLAYSERVER}" = "x11" ]; then
+  PKG_DEPENDS_TARGET+=" xorgproto libXext libXdamage libXfixes libXxf86vm libxcb libX11 libxshmfence libXrandr libglvnd"
   export X11_INCLUDES=
-  PKG_MESON_OPTS_TARGET+=" -Dplatforms=x11,drm -Ddri3=true -Dglx=dri"
-elif [ "$DISPLAYSERVER" = "weston" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET wayland wayland-protocols"
-  PKG_MESON_OPTS_TARGET+=" -Dplatforms=wayland,drm -Ddri3=false -Dglx=disabled"
+  PKG_MESON_OPTS_TARGET+=" -Dplatforms=x11 -Ddri3=enabled -Dglx=dri -Dglvnd=true"
+elif [ "${DISPLAYSERVER}" = "wl" ]; then
+  PKG_DEPENDS_TARGET+=" wayland wayland-protocols libglvnd"
+  PKG_MESON_OPTS_TARGET+=" -Dplatforms=wayland -Ddri3=disabled -Dglx=disabled -Dglvnd=true"
 else
-  PKG_MESON_OPTS_TARGET+=" -Dplatforms=drm -Ddri3=false -Dglx=disabled"
+  PKG_MESON_OPTS_TARGET+=" -Dplatforms="" -Ddri3=disabled -Dglx=disabled -Dglvnd=false"
 fi
 
-if [ "$LLVM_SUPPORT" = "yes" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET elfutils llvm"
-  export LLVM_CONFIG="$SYSROOT_PREFIX/usr/bin/llvm-config-host"
-  PKG_MESON_OPTS_TARGET+=" -Dllvm=true"
+if [ "${LLVM_SUPPORT}" = "yes" ]; then
+  PKG_DEPENDS_TARGET+=" elfutils llvm"
+  PKG_MESON_OPTS_TARGET+=" -Dllvm=enabled"
 else
-  PKG_MESON_OPTS_TARGET+=" -Dllvm=false"
+  PKG_MESON_OPTS_TARGET+=" -Dllvm=disabled"
 fi
 
-if [ "$VDPAU_SUPPORT" = "yes" -a "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libvdpau"
-  PKG_MESON_OPTS_TARGET+=" -Dgallium-vdpau=true"
+if [ "${VDPAU_SUPPORT}" = "yes" -a "${DISPLAYSERVER}" = "x11" ]; then
+  PKG_DEPENDS_TARGET+=" libvdpau"
+  PKG_MESON_OPTS_TARGET+=" -Dgallium-vdpau=enabled"
 else
-  PKG_MESON_OPTS_TARGET+=" -Dgallium-vdpau=false"
+  PKG_MESON_OPTS_TARGET+=" -Dgallium-vdpau=disabled"
 fi
 
-if [ "$VAAPI_SUPPORT" = "yes" ] && listcontains "$GRAPHIC_DRIVERS" "(r600|radeonsi)"; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libva"
-  PKG_MESON_OPTS_TARGET+=" -Dgallium-va=true"
+if [ "${VAAPI_SUPPORT}" = "yes" ] && listcontains "${GRAPHIC_DRIVERS}" "(r600|radeonsi)"; then
+  PKG_DEPENDS_TARGET+=" libva"
+  PKG_MESON_OPTS_TARGET+=" -Dgallium-va=enabled"
 else
-  PKG_MESON_OPTS_TARGET+=" -Dgallium-va=false"
+  PKG_MESON_OPTS_TARGET+=" -Dgallium-va=disabled"
 fi
 
-if listcontains "$GRAPHIC_DRIVERS" "vmware"; then
-  PKG_MESON_OPTS_TARGET+=" -Dgallium-xa=true"
+if listcontains "${GRAPHIC_DRIVERS}" "vmware"; then
+  PKG_MESON_OPTS_TARGET+=" -Dgallium-xa=enabled"
 else
-  PKG_MESON_OPTS_TARGET+=" -Dgallium-xa=false"
+  PKG_MESON_OPTS_TARGET+=" -Dgallium-xa=disabled"
 fi
 
-if [ "$OPENGLES_SUPPORT" = "yes" ]; then
-  PKG_MESON_OPTS_TARGET+=" -Dgles1=false -Dgles2=true"
+if [ "${OPENGLES_SUPPORT}" = "yes" ]; then
+  PKG_MESON_OPTS_TARGET+=" -Dgles1=disabled -Dgles2=enabled"
 else
-  PKG_MESON_OPTS_TARGET+=" -Dgles1=false -Dgles2=false"
+  PKG_MESON_OPTS_TARGET+=" -Dgles1=disabled -Dgles2=disabled"
 fi
 
-# Temporary workaround:
-# Listed libraries are static, while mesa expects shared ones. This breaks the
-# dependency tracking. The following has some ideas on how to address that.
-# https://github.com/LibreELEC/LibreELEC.tv/pull/2163
-pre_configure_target() {
-  if [ "$DISPLAYSERVER" = "x11" ]; then
-    export LIBS="-lxcb-dri3 -lxcb-dri2 -lxcb-xfixes -lxcb-present -lxcb-sync -lxshmfence -lz"
-  fi
-}
-
-post_makeinstall_target() {
-  # Similar hack is needed on EGL, GLES* front. Might as well drop it and test the GLVND?
-  if [ "$DISPLAYSERVER" = "x11" ]; then
-    # rename and relink for cooperate with nvidia drivers
-    rm -rf $INSTALL/usr/lib/libGL.so
-    rm -rf $INSTALL/usr/lib/libGL.so.1
-    ln -sf libGL.so.1 $INSTALL/usr/lib/libGL.so
-    ln -sf /var/lib/libGL.so $INSTALL/usr/lib/libGL.so.1
-    mv $INSTALL/usr/lib/libGL.so.1.2.0 $INSTALL/usr/lib/libGL_mesa.so.1
-  fi
-}
+if [ "${VULKAN_SUPPORT}" = "yes" ]; then
+  PKG_DEPENDS_TARGET+=" ${VULKAN} vulkan-tools"
+  PKG_MESON_OPTS_TARGET+=" -Dvulkan-drivers=${VULKAN_DRIVERS_MESA// /,}"
+else
+  PKG_MESON_OPTS_TARGET+=" -Dvulkan-drivers="
+fi

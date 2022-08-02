@@ -2,13 +2,13 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="mupen64plus-nx"
-PKG_VERSION="9beacb26c543cc88c57ed96ca0a72c1925827870"
-PKG_SHA256="a4c39df3c0350d93471e00e9b82bc7284d956e302a94bde64c5e0a1aba653314"
+PKG_VERSION="4684cfa56ae7752be284eaaa165c1dc34ec63eb7"
+PKG_SHA256="01d63e3f3ecebcb207a5176117f5ad8623c5b3be8c99161695e843e9dea7ee42"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/mupen64plus-libretro-nx"
 PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain nasm:host ${OPENGLES}"
+PKG_DEPENDS_TARGET="toolchain nasm:host"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="mupen64plus NX"
 PKG_LONGDESC="mupen64plus NX"
@@ -16,6 +16,14 @@ PKG_TOOLCHAIN="make"
 PKG_BUILD_FLAGS="-lto"
 
 PKG_PATCH_DIRS+="${DEVICE}"
+
+if [ ! "${OPENGL}" = "no" ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+fi
+
+if [ "${OPENGLES_SUPPORT}" = yes ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+fi
 
 pre_configure_target() {
   sed -e "s|^GIT_VERSION ?.*$|GIT_VERSION := \" ${PKG_VERSION:0:7}\"|" -i Makefile

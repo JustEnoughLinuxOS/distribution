@@ -47,4 +47,3 @@ index e60a8b2..03ba777 100644
 +      const char         *name = udev_list_entry_get_name(sorted[i].item);
        struct udev_device  *dev = udev_device_new_from_syspath(udev_joypad_fd, name);
        const char      *devnode = udev_device_get_devnode(dev);
- 

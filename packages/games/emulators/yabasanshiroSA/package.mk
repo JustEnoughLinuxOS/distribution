@@ -1,16 +1,24 @@
 PKG_NAME="yabasanshiroSA"
 PKG_VERSION="c7618d2ecbf77b1e8188fa8af4fa1cfb34833a72"
-PKG_ARCH="any"
+PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/devmiyax/yabause"
 PKG_URL="${PKG_SITE}.git"
-PKG_DEPENDS_TARGET="toolchain SDL2 boost openal-soft ${OPENGLES} zlib"
+PKG_DEPENDS_TARGET="toolchain SDL2 boost openal-soft zlib"
 PKG_LONGDESC="Yabause is a Sega Saturn emulator and took over as Yaba Sanshiro"
 PKG_TOOLCHAIN="cmake-make"
 GET_HANDLER_SUPPORT="git"
 PKG_GIT_CLONE_BRANCH="pi4-1-9-0"
 PKG_BUILD_FLAGS="+speed"
 PKG_PATCH_DIRS+="${DEVICE}"
+
+if [ ! "${OPENGL}" = "no" ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+fi
+
+if [ "${OPENGLES_SUPPORT}" = yes ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+fi
 
 post_unpack() {
   # use host versions

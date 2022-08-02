@@ -39,6 +39,9 @@ then
     echo "Extracting ${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img"
     gunzip ${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img.gz 2>/dev/null
 
+    echo "Wiping ${SDDEVICE} partition data"
+    sudo wipefs -a ${SDDEVICE} 2>/dev/null
+
     echo "Writing ${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img to ${SDDEVICE}"
     sudo dd if=${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img of=/dev/${SDDEVICE} bs=1M
     sync

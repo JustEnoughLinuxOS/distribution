@@ -277,6 +277,12 @@ then
 				RUNTHIS='/usr/bin/retroarch -L /usr/lib/libretro/fbneo_libretro.so --subsystem neocd --config ${RATMPCONF} --appendconfig ${RAAPPENDCONF} "${ROMNAME}"'
 			fi
 		;;
+		"psx")
+		if [ "$EMU" = "duckstationsa" ]; then
+            		set_kill_keys "duckstation-nogui"
+            		RUNTHIS='${TBASH} duckstation.sh "${ROMNAME}"'
+        		fi
+		;;
 		"mplayer")
 			jslisten set "mpv"
 			RUNTHIS='${TBASH} /usr/bin/mpv_video.sh "${ROMNAME}"'
@@ -295,15 +301,18 @@ else
 	jslisten set "retroarch retroarch32"
 	setaudio alsa
 
-	### Check if we need retroarch 32 bits or 64 bits
-	RABIN="retroarch"
-	if [[ "${CORE}" =~ pcsx_rearmed32 ]] || \
-           [[ "${CORE}" =~ parallel_n64 ]] || \
-           [[ "${CORE}" =~ gpsp ]] || \
-           [[ "${CORE}" =~ flycast32 ]]
+
+	if [[ "${HW_ARCH}" =~ aarch64 ]]
 	then
-		export LD_LIBRARY_PATH="/usr/lib32"
-		RABIN="retroarch32"
+		### Check if we need retroarch 32 bits or 64 bits
+		RABIN="retroarch"
+		if [[ "${CORE}" =~ pcsx_rearmed32 ]] || \
+	           [[ "${CORE}" =~ parallel_n64 ]] || \
+	           [[ "${CORE}" =~ gpsp ]] || \
+	           [[ "${CORE}" =~ flycast32 ]]
+		then
+			RABIN="retroarch32"
+		fi
 	fi
 
 	# Platform specific configurations

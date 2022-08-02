@@ -2,28 +2,40 @@
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="mupen64plussa-core"
-PKG_VERSION="6efa95f5dd7c7513b64673c67f778f8d1eb716df"
-PKG_SHA256="e6787a17a6f380d3b42ed3ca68fa825da04773c1ff09767aff1b45501ce6a686"
+PKG_VERSION="eeff548a5beec970ac97a869a5c0dfa2a6defb85"
+PKG_SHA256="d553ded484b06001960bb927cd713577e8efb9fd6bfb23eb7d0336ccd361d21f"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/mupen64plus/mupen64plus-core"
 PKG_URL="https://github.com/mupen64plus/mupen64plus-core/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain ${OPENGLES} boost libpng SDL2 SDL2_net zlib freetype nasm:host"
+PKG_DEPENDS_TARGET="toolchain boost libpng SDL2 SDL2_net zlib freetype nasm:host"
 PKG_SHORTDESC="mupen64plus"
 PKG_LONGDESC="Mupen64Plus Standalone"
 PKG_TOOLCHAIN="manual"
 
-PKG_MAKE_OPTS_TARGET+="USE_GLES=1"
+if [ ! "${OPENGL}" = "no" ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+fi
+
+if [ "${OPENGLES_SUPPORT}" = yes ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+  PKG_MAKE_OPTS_TARGET+="USE_GLES=1"
+fi
 
 make_target() {
-  export HOST_CPU=aarch64
-  export USE_GLES=1
-  export SDL_CFLAGS="-I$SYSROOT_PREFIX/usr/include/SDL2 -D_REENTRANT"
+  case ${ARCH} in
+    arm|aarch64)
+      export HOST_CPU=aarch64
+      export USE_GLES=1
+      BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
+    ;;
+  esac
+
+  export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -D_REENTRANT"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
-  export CROSS_COMPILE="$TARGET_PREFIX"
+  export CROSS_COMPILE="${TARGET_PREFIX}"
   export V=1
   export VC=0
-  BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
   make -C projects/unix clean
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
 }

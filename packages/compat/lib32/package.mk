@@ -12,78 +12,17 @@ PKG_TOOLCHAIN="manual"
 
 makeinstall_target() {
   cd ${PKG_BUILD}
-  LIBROOT="${PKG_BUILD}/../../build.${DISTRO}-${DEVICE}.arm/image/system/"
+  LIBROOT="${ROOT}/build.${DISTRO}-${DEVICE}.arm/image/system/"
   if [ "${ARCH}" = "aarch64" ]; then
-      mkdir -p ${INSTALL}/usr/lib32
-      LIBS="ld-2 \
-		ld-linux-armhf \
-		libarmmem-v7l \
-		librt \
-		libass \
-		libasound \
-		libopenal \
-		libpulse \
-		libfreetype \
-		libpthread \
-		libudev.so \
-		libusb-1.0 \
-		libSDL2 \
-		libmodplug \
-		libsndfile \
-		libavcodec \
-		libavformat \
-		libavutil \
-		libswscale \
-		libswresample \
-		libstdc++ \
-		libm \
-		libgcc_s \
-		libc \
-		libfontconfig \
-		libexpat \
-		libbz2 \
-		libz \
-		libpulsecommon-12 \
-		libdbus-1 \
-		libdav1d \
-		libFLAC \
-		libvorbis \
-		libspeex \
-		libssl \
-		libcrypt \
-		libsystemd \
-		libncurses \
-		libdl \
-		libdrm \
-		librga \
-		libpng \
-		libgo2 \
-		libevdev \
-		librockchip_mpp \
-		libxkbcommon \
-		libresolv \
-		libnss_dns \
-		libpthread \
-		libGLES \
-		libgnutls \
-		libgbm \
-		libgomp \
-		libidn2 \
-		libnettle \
-		libhogweed \
-		libgmp \
-		libuuid.so \
-		libMaliOpenCL \
-		libEG"
-
-    for lib in ${LIBS}
-    do
-      find ${LIBROOT}/usr/lib -name ${lib}* -exec cp -vP \{} ${INSTALL}/usr/lib32 \;
-    done
-    cp ${PKG_BUILD}/../../build.${DISTRONAME}-${DEVICE}.arm/libmali*/.install_pkg/usr/lib/* ${INSTALL}/usr/lib32
-
+    mkdir -p ${INSTALL}/usr/lib32/pulseaudio
+    rsync -l ${LIBROOT}/usr/lib/* ${INSTALL}/usr/lib32 >/dev/null 2>&1
+    rsync -l ${LIBROOT}/usr/lib/pulseaudio/* ${INSTALL}/usr/lib32/pulseaudio >/dev/null 2>&1
     chmod -f +x ${INSTALL}/usr/lib32/* || :
   fi
   mkdir -p ${INSTALL}/usr/lib
   ln -s /usr/lib32/ld-linux-armhf.so.3 ${INSTALL}/usr/lib/ld-linux-armhf.so.3
+
+  mkdir -p "${INSTALL}/etc/ld.so.conf.d"
+  echo "/usr/lib32" > "${INSTALL}/etc/ld.so.conf.d/arm-lib32.conf"
+  echo "/usr/lib32/pulseaudio" >"${INSTALL}/etc/ld.so.conf.d/arm-lib32-pulseaudio.conf"
 }

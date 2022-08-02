@@ -4,13 +4,14 @@
 
 source ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
 
-if [ "${PKG_SOC}" = "rk356x" ]
-then
-  IDBSEEK="bs=512 seek=64"
-else
-  # Fix me.
-  IDBSEEK="bs=32k seek=1"
-fi
+case "${PKG_SOC}" in
+  rk356x|rk3399)
+    IDBSEEK="bs=512 seek=64"
+  ;;
+  *)
+    IDBSEEK="bs=32k seek=1"
+  ;;
+esac
 
 if [ -f "${RELEASE_DIR}/3rdparty/bootloader/idbloader.img" ]; then
   echo "image: burn idbloader.img to image... (${PKG_SOC},${IDBSEEK})"

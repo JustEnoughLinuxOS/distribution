@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="dosbox-pure"
-PKG_VERSION="6335ea9df9568fd69ea1715bcebea6a53b34d0d7"
+PKG_VERSION="ce5c1dccf1e1b93cfd94984a9f9577fb09cd3d1f"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"

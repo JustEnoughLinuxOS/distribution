@@ -59,12 +59,13 @@ dd if=/dev/zero of="${DISK}" bs=1M count="${DISK_SIZE}" conv=fsync >"${SAVE_ERRO
 
 echo "image: creating partition table (${PARTITION_TABLE})..."
 parted -s "${DISK}" mklabel ${PARTITION_TABLE}
+sync
 
 if [ "${PARTITION_TABLE}" = "gpt" ] && [ "${BOOTLOADER}" = "u-boot" ]
 then
   echo "image: creating SPL partition(s)."
-  parted -s "${DISK}" unit s mkpart uboot 16384 24575 >/dev/null 2>&1
-  parted -s "${DISK}" unit s mkpart resource 24576 32767 >/dev/null 2>&1
+  parted -s "${DISK}" unit s mkpart ${UBOOT_LABEL} 16384 24575 >/dev/null 2>&1
+  parted -s "${DISK}" unit s mkpart ${TRUST_LABEL} 24576 32767 >/dev/null 2>&1
 fi
 
 # create part1
@@ -76,8 +77,8 @@ if [ "${PARTITION_TABLE}" = "gpt" ]; then
 else
   echo "image: Create primary partition."
   parted -s "${DISK}" -a min unit s mkpart primary fat32 ${SYSTEM_PART_START} ${SYSTEM_PART_END}
+  parted -s "${DISK}" set 1 boot on
 fi
-parted -s "${DISK}" set 1 boot on
 sync
 
 # create part2
@@ -128,15 +129,15 @@ PROMPT 1
 
 LABEL installer
   KERNEL /${KERNEL_NAME}
-  APPEND boot=UUID=${UUID_SYSTEM} installer quiet systemd.debug_shell vga=current
+  APPEND boot=UUID=${UUID_SYSTEM} installer systemd.debug_shell vga=current ${EXTRA_CMDLINE}
 
 LABEL live
   KERNEL /${KERNEL_NAME}
-  APPEND boot=UUID=${UUID_SYSTEM} live quiet vga=current
+  APPEND boot=UUID=${UUID_SYSTEM} live vga=current ${EXTRA_CMDLINE}
 
 LABEL run
   KERNEL /${KERNEL_NAME}
-  APPEND boot=UUID=${UUID_SYSTEM} disk=UUID=${UUID_STORAGE} portable quiet
+  APPEND boot=UUID=${UUID_SYSTEM} disk=UUID=${UUID_STORAGE} portable ${EXTRA_CMDLINE}
 EOF
 
   cat << EOF > "${LE_TMP}/grub.cfg"

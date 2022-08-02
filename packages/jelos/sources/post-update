@@ -7,6 +7,10 @@
 ### This script contains items that we only want to execute after a JELOS upgrade,
 ### or after a fresh installation.
 
+### Rebuild the library cache
+rm -f /storage/.cache/ld.so.cache
+ldconfig -X
+
 if [ -d "/storage/.config/system/configs" ]
 then
   EXCLUDE="--exclude=configs"
@@ -26,45 +30,27 @@ mv /storage/roms/ports/JelosAddOns/JelosAddOns.sh /storage/roms/ports/JelosAddOn
 chmod +x /storage/roms/ports/JelosAddOns.sh
 rm -rf /storage/.config/modules/Drastic*
 
-if [ -e /usr/config/ssh/authorized_keys ]; then
+if [ -e /usr/config/ssh/authorized_keys ]
+then
   cp /usr/config/ssh/authorized_keys /storage/.ssh
 fi
 
 rsync --ignore-existing /usr/config/rsync-rules.conf /storage/.config/
 rsync --ignore-existing /usr/config/rsync.conf /storage/.config/
 
-### Shift away from using overlayfs for now until it's implemented better.
-sed -i "s#/tmp/overlays#/usr/share/retroarch-overlays#g" /storage/.config/retroarch/retroarch.cfg
-sed -i "s#/tmp/shaders#/usr/share/common-shaders#g" /storage/.config/retroarch/retroarch.cfg
-sed -i "s#/tmp/joypads#/etc/retroarch-joypad-autoconfig#g" /storage/.config/retroarch/retroarch.cfg
-sed -i "s#/tmp/database#/usr/share/libretro-database#g" /storage/.config/retroarch/retroarch.cfg
-sed -i "s#/tmp/assets#/usr/share/retroarch-assets#g" /storage/.config/retroarch/retroarch.cfg
-sed -i "s#/tmp/cores#/usr/lib/libretro#g" /storage/.config/retroarch/retroarch.cfg
+# Swap es_input back to a writeable file so external controller configuration works properly.
+if [ -L "/storage/.config/emulationstation/es_input.cfg" ]
+then
+  rm -f /storage/.config/emulationstation/es_input.cfg
+  cp -f /usr/config/emulationstation/es_input.cfg /storage/.config/emulationstation/es_input.cfg
+fi
 
-### Start the time service by default
-set_setting wts.enabled 1
-
-### Link the game controller database so it is managed with OS updates.
-rm -f /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt
-ln -s /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt
-
-### Remove and link es configs so they are managed with OS updates.
-for es_cfg in es_features.cfg es_systems.cfg es_input.cfg
-do
-  rm -f /storage/.config/emulationstation/${es_cfg}
-  ln -s /usr/config/emulationstation/${es_cfg} /storage/.config/emulationstation/${es_cfg}
-done
-
-### Link themes
-cd /storage/.config/emulationstation/themes
-for theme in /usr/share/themes/*
-do
-  ln -sf ${theme} .
-done
-cd -
-
-### Swap maxperf to cpugovernor=performance
-sed -i "s#maxperf=1#cpugovernor=performance#g" /storage/.config/system/configs/system.cfg
-
-### Disable WIFI power saving by default
-set_setting wifi.powersave 0
+# Re-introduce overlayfs for retroarch.
+sed -i 's#^overlay_directory.*$#overlay_directory = "/tmp/overlays"#g' /storage/.config/retroarch/retroarch.cfg
+sed -i 's#^video_shader_dir.*$#video_shader_dir = "/tmp/shaders"#g' /storage/.config/retroarch/retroarch.cfg
+sed -i 's#^joypad_autoconfig_dir.*$#joypad_autoconfig_dir = "/tmp/joypads"#g' /storage/.config/retroarch/retroarch.cfg
+sed -i 's#^cheat_database_path.*$#cheat_database_path = "/tmp/database/cht"#g' /storage/.config/retroarch/retroarch.cfg
+sed -i 's#^content_database_path.*$#content_database_path = "/tmp/database/rdb"#g' /storage/.config/retroarch/retroarch.cfg
+sed -i 's#^assets_directory.*$#assets_directory = "/tmp/assets"#g' /storage/.config/retroarch/retroarch.cfg
+sed -i 's#^libretro_directory.*$#libretro_directory = "/tmp/cores"#g' /storage/.config/retroarch/retroarch.cfg
+sed -i 's#^libretro_info_path.*$#libretro_info_path = "/tmp/cores"#g' /storage/.config/retroarch/retroarch.cfg

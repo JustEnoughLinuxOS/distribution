@@ -7,12 +7,20 @@ PKG_ARCH="any"
 PKG_LICENSE="apache2"
 PKG_SITE=""
 PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain ${OPENGLES}"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_SHORTDESC="JELOS Meta Package"
 PKG_LONGDESC="JELOS Meta Package"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_TOOLCHAIN="make"
+
+if [ ! "${OPENGL}" = "no" ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+fi
+
+if [ "${OPENGLES_SUPPORT}" = yes ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+fi
 
 PKG_BASEOS="plymouth-lite grep wget libjpeg-turbo util-linux xmlstarlet bluetool gnupg gzip patchelf \
             imagemagick terminus-font vim bash pyudev dialog six git dbus-python coreutils miniupnpc \
@@ -20,16 +28,18 @@ PKG_BASEOS="plymouth-lite grep wget libjpeg-turbo util-linux xmlstarlet bluetool
 
 PKG_UI="emulationstation"
 
-PKG_EMUS="common-shaders glsl-shaders libretro-database retroarch hatarisa openbor  \
+PKG_EMUS="hatarisa openbor hypseus-singe moonlight duckstationsa pico-8 \
           scummvmsa PPSSPPSDL yabasanshiroSA vicesa mupen64plussa-audio-sdl         \
           mupen64plussa-input-sdl mupen64plussa-ui-console mupen64plussa-video-rice \
           mupen64plussa-core mupen64plussa-rsp-hle mupen64plussa-video-glide64mk2   \
-          lzdoom gzdoom ecwolf amiberry raze pico-8 flycastsa hypseus-singe \
-          core-info moonlight"
+          lzdoom gzdoom ecwolf amiberry raze flycastsa hypseus-singe"
+
+PKG_RETROARCH="retroarch retroarch-overlays retroarch-assets common-shaders glsl-shaders \
+               libretro-database core-info"
 
 LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce beetle-pcfx      \
                 beetle-supafaust beetle-supergrafx beetle-vb beetle-wswan bluemsx cannonball cap32   \
-                crocods daphne dinothawr dosbox-svn dosbox-pure duckstation easyrpg fbalpha2012      \
+                crocods daphne dinothawr dosbox-svn dosbox-pure easyrpg fbalpha2012                  \
                 fbalpha2019 fbneo fceumm fmsx flycast flycast_libretro freechaf freeintv             \
                 freej2me fuse-libretro gambatte gearboy gearcoleco gearsystem genesis-plus-gx        \
                 genesis-plus-gx-wide gme gpsp gw-libretro handy hatari mame2000 mame2003-plus        \
@@ -39,9 +49,10 @@ LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-
                 ppsspp prboom prosystem puae px68k quasi88 quicknes race reminiscence sameboy        \
                 sameduck scummvm smsplus-gx snes9x snes9x2002 snes9x2005_plus snes9x2010 stella      \
                 stella-2014 swanstation TIC-80 tgbdual tyrquake xrick uae4arm uzem vba-next vbam     \
-                vecx vice yabasanshiro xmil mesen virtualjaguar"
+                vecx vice yabasanshiro xmil mesen virtualjaguar ecwolf_libretro                      \
+                bsnes-mercury-performance"
 
-PKG_COMPAT="lib32"
+PKG_COMPAT=""
 
 PKG_TOOLS="i2c-tools"
 
@@ -57,13 +68,19 @@ if [ "${PROJECT}" == "Rockchip" ]
 then
   PKG_BASEOS+=" system-utils"
   PKG_EMUS+=" retropie-shaders"
+  PKG_COMPAT+=" lib32"
+fi
+
+if [ "${PROJECT}" == "PC" ]
+then
+  PKG_BASEOS+=" installer"
 fi
 
 if [ ! -z "${BASE_ONLY}" ]
 then
   PKG_DEPENDS_TARGET+=" ${PKG_BASEOS} ${PKG_TOOLS} ${PKG_UI} ${PKG_GAMESUPPORT}"
 else
-  PKG_DEPENDS_TARGET+=" ${PKG_BASEOS} ${PKG_TOOLS} ${PKG_UI} ${PKG_EMUS} ${LIBRETRO_CORES} ${PKG_COMPAT} ${PKG_MULTIMEDIA} ${PKG_GAMESUPPORT} ${PKG_EXPERIMENTAL}"
+  PKG_DEPENDS_TARGET+=" ${PKG_BASEOS} ${PKG_TOOLS} ${PKG_UI} ${PKG_EMUS} ${PKG_RETROARCH} ${LIBRETRO_CORES} ${PKG_COMPAT} ${PKG_MULTIMEDIA} ${PKG_GAMESUPPORT} ${PKG_EXPERIMENTAL}"
 fi
 
 make_target() {
