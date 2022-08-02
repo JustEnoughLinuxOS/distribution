@@ -35,6 +35,12 @@ then
       rm -rf build.${DISTRO}-${DEVICE}.${ARCH}
     fi
 
+    if [ ! -d "build.${DISTRO}-${DEVICE_ROOT}.${ARCH}" ]
+    then
+      echo "Building the device root (${DEVICE_ROOT})."
+      make ${DEVICE_ROOT}
+    fi
+
     # Link back to the DEVICE_ROOT so we can re-use the build directory to save space.
     if [ ! -L "build.${DISTRO}-${DEVICE}.${ARCH}" ]
     then
