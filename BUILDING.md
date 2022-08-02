@@ -95,10 +95,9 @@ sudo apt install gcc make git unzip wget \
                 qemu-user-binfmt zstd parted
 ```
 
-Next, build the version of JELOS for your device.  See the table above for dependencies.  If you're building for the RG351V, build RG351P first to provide the build root dependency.  To execute a build, run `make {device}`
+Next, build the version of JELOS for your device.  See the table above for dependencies.  If you're building for the RG351V, RG351P will be built first to provide the build root dependency.  To execute a build, run `make {device}`
 
 ```
-make RG351P
 make RG351V
 ```
 
