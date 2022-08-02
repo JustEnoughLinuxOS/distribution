@@ -19,16 +19,14 @@ fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-  PKG_CMAKE_OPTS_TARGET+=" -DUSE_EGL=ON -DUSE_DRMKMS=ON -DUSE_MALI=ON"
+  PKG_CMAKE_OPTS_TARGET+=" -DUSE_EGL=ON -DUSE_DRMKMS=ON -DUSE_MALI=OFF"
 fi
 
 
 pre_configure_target() {
 	PKG_CMAKE_OPTS_TARGET+=" -DANDROID=OFF \
-	                         -DBUILD_LIBRETRO_CORE=OFF \
 	                         -DENABLE_DISCORD_PRESENCE=OFF \
 	                         -DUSE_X11=OFF \
-	                         -DBUILD_GO2_FRONTEND=OFF \
 	                         -DBUILD_QT_FRONTEND=OFF \
 	                         -DBUILD_NOGUI_FRONTEND=ON \
 	                         -DCMAKE_BUILD_TYPE=Release \
@@ -36,7 +34,7 @@ pre_configure_target() {
 	                         -DUSE_SDL2=ON \
 	                         -DENABLE_CHEEVOS=ON \
                                  -DUSE_FBDEV=OFF \
-                                 -DUSE_EVDEV=OFF"
+                                 -DUSE_EVDEV=ON"
 }
 
 makeinstall_target() {
