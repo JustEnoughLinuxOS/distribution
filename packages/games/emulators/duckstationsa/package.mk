@@ -49,9 +49,9 @@ makeinstall_target() {
   rm -rf ${INSTALL}/usr/config/duckstation/duckstation-nogui
   rm -rf ${INSTALL}/usr/config/duckstation/common-tests
 
- chmod +x ${INSTALL}/usr/bin/duckstation.sh
+  chmod +x ${INSTALL}/usr/bin/duckstation.sh
 
- if [[ "${DEVICE}" != RG351P ]] | [[ "${DEVICE}" != RG552 ]]
+ if [[ "${DEVICE}" != RG552 ]]
   then
     sed -i '/Rotate = 1/d' ${INSTALL}/usr/config/duckstation/settings.ini
  fi
