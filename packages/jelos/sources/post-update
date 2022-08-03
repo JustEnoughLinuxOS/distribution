@@ -11,6 +11,7 @@
 rm -f /storage/.cache/ld.so.cache
 ldconfig -X
 
+### Sync configurations
 if [ -d "/storage/.config/system/configs" ]
 then
   EXCLUDE="--exclude=configs"
@@ -20,6 +21,7 @@ rsync -a --delete ${EXCLUDE} /usr/config/system/ /storage/.config/system/ &
 rsync -a --ignore-existing /usr/config/game /storage/.config/ &
 rsync -a /usr/config/modules /storage/.config/ &
 
+### Update add-ons and themes
 wait < <(jobs -p)
 
 cp -f /usr/config/modules/gamelist.xml /storage/.config/modules
@@ -28,8 +30,19 @@ rm -rf /storage/roms/ports/JelosAddOns*
 cp -r /usr/share/JelosAddOns /storage/roms/ports/
 mv /storage/roms/ports/JelosAddOns/JelosAddOns.sh /storage/roms/ports/JelosAddOns.sh
 chmod +x /storage/roms/ports/JelosAddOns.sh
-rm -rf /storage/.config/modules/Drastic*
 
+cd /usr/share/themes
+for theme in *
+do
+  if [ ! -L /storage/.config/emulationstation/themes/${theme} ] && \
+     [ ! -e /storage/.config/emulationstation/themes/${theme} ]
+  then
+    ln -s /usr/share/themes/${theme} /storage/.config/emulationstation/themes
+  fi
+done
+cd -
+
+### Apply developer ssh keys if they exist
 if [ -e /usr/config/ssh/authorized_keys ]
 then
   cp /usr/config/ssh/authorized_keys /storage/.ssh
@@ -37,6 +50,8 @@ fi
 
 rsync --ignore-existing /usr/config/rsync-rules.conf /storage/.config/
 rsync --ignore-existing /usr/config/rsync.conf /storage/.config/
+
+### Safe to make changes below this line.
 
 # Swap es_input back to a writeable file so external controller configuration works properly.
 if [ -L "/storage/.config/emulationstation/es_input.cfg" ]

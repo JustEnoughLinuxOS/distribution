@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="es-theme-minielec"
-PKG_VERSION="b200af4"
+PKG_VERSION="364173dab15a77190b11a5e36966890468cad67c"
 PKG_ARCH="any"
 PKG_LICENSE="CC BY-NC-SA 4.0"
 PKG_SITE="https://github.com/Rose22/es-theme-minielec"
