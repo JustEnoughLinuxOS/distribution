@@ -244,7 +244,7 @@ then
 		;;
 		"nds")
 			jslisten set "drastic"
-			RUNTHIS='${TBASH} /storage/.config/drastic/drastic.sh "${ROMNAME}"'
+			RUNTHIS='${TBASH} /usr/bin/drastic.sh "${ROMNAME}"'
 		;;
 		"solarus")
 			if [ "$EMU" = "solarus" ]
@@ -278,9 +278,9 @@ then
 			fi
 		;;
 		"psx")
-		if [ "$EMU" = "duckstationsa" ]; then
-            		set_kill_keys "duckstation-nogui"
-            		RUNTHIS='${TBASH} duckstation.sh "${ROMNAME}"'
+                        jslisten set "duckstationsa"
+		        if [ "$EMU" = "duckstationsa" ]; then
+            		RUNTHIS='${TBASH} /usr/bin/duckstation.sh "${ROMNAME}"'
         		fi
 		;;
 		"mplayer")
