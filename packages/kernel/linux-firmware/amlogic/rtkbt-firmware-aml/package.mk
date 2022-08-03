@@ -7,7 +7,7 @@ PKG_SHA256="2996dd867990a14b8d431c789285363ff35f4f2304ce8c92db401122ec43db9a"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/CoreELEC/rtkbt-firmware-aml"
 PKG_URL="https://github.com/CoreELEC/rtkbt-firmware-aml/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain rtk_hciattach"
+PKG_DEPENDS_TARGET="toolchain rtk_hciattach kernel-firmware"
 PKG_LONGDESC="Realtek BT Linux firmware"
 PKG_TOOLCHAIN="manual"
 

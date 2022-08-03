@@ -9,7 +9,7 @@ PKG_SHA256="8831e5e9c88e343742083f62bd28ad56b8cbd21bb9fe730ed1c292f6689fe2c3"
 PKG_LICENSE="Free-to-use"
 PKG_SITE="https://github.com/CoreELEC/dvb-firmware"
 PKG_URL="https://github.com/CoreELEC/dvb-firmware/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain"
+PKG_DEPENDS_TARGET="toolchain kernel-firmware"
 PKG_LONGDESC="dvb-firmware: firmwares for various DVB drivers"
 PKG_TOOLCHAIN="manual"
 
