@@ -26,69 +26,43 @@ PKG_BASEOS="plymouth-lite grep wget libjpeg-turbo util-linux xmlstarlet bluetool
             imagemagick terminus-font vim bash pyudev dialog six git dbus-python coreutils miniupnpc \
             nss-mdns avahi alsa-ucm-conf MC fbgrab modules"
 
-PKG_UI="emulationstation"
+PKG_UI="emulationstation es-themes"
 
-PKG_EMUS="hatarisa openbor hypseus-singe moonlight hypseus-singe pico-8 flycastsa   \
-          scummvmsa PPSSPPSDL yabasanshiroSA vicesa mupen64plussa-audio-sdl         \
-          mupen64plussa-input-sdl mupen64plussa-ui-console mupen64plussa-video-rice \
-          mupen64plussa-core mupen64plussa-rsp-hle mupen64plussa-video-glide64mk2   \
-          lzdoom gzdoom ecwolf amiberry raze drastic"
-
-PKG_RETROARCH="retroarch retroarch-overlays retroarch-assets common-shaders glsl-shaders \
-               libretro-database core-info"
-
-LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce beetle-pcfx      \
-                beetle-supafaust beetle-supergrafx beetle-vb beetle-wswan bluemsx cannonball cap32   \
-                crocods daphne dinothawr dosbox-svn dosbox-pure easyrpg fbalpha2012                  \
-                fbalpha2019 fbneo fceumm fmsx flycast flycast_libretro freechaf freeintv             \
-                freej2me fuse-libretro gambatte gearboy gearcoleco gearsystem genesis-plus-gx        \
-                genesis-plus-gx-wide gme gpsp gw-libretro handy hatari mame2000 mame2003-plus        \
-                mame2010 mame2015 mame melonds meowpc98 mgba mrboom mupen64plus mupen64plus-nx       \
-                neocd_libretro nestopia np2kai nxengine o2em opera parallel-n64_rice                 \
-                parallel-n64_gln64 parallel-n64_glide64 pcsx_rearmed picodrive pokemini potator      \
-                ppsspp prboom prosystem puae px68k quasi88 quicknes race reminiscence sameboy        \
-                sameduck scummvm smsplus-gx snes9x snes9x2002 snes9x2005_plus snes9x2010 stella      \
-                stella-2014 swanstation TIC-80 tgbdual tyrquake xrick uae4arm uzem vba-next vbam     \
-                vecx vice yabasanshiro xmil mesen virtualjaguar ecwolf_libretro vitaquake2           \
-                bsnes-mercury-performance"
+PKG_SOFTWARE=""
 
 PKG_COMPAT=""
 
-PKG_TOOLS="i2c-tools"
+PKG_TOOLS="i2c-tools rclone jslisten evtest textviewer tailscale"
 
 PKG_MULTIMEDIA="ffmpeg mpv vlc"
 
-PKG_GAMESUPPORT="sixaxis jslisten evtest rg351p-js2xbox gptokeyb textviewer 351files jstest-sdl \
-                 gamecontrollerdb jelosaddons libgo2 rclone sdljoytest"
+PKG_EXPERIMENTAL=""
 
-PKG_EXPERIMENTAL="tailscale"
-
-### Project/Device specific items
-if [ "${PROJECT}" == "Rockchip" ]
-then
-  PKG_BASEOS+=" system-utils"
-  PKG_EMUS+=" retropie-shaders"
-  PKG_COMPAT+=" lib32"
-fi
-
-### Emulators or cores for specific devices
-case "${DEVICE}" in
-  RG552|RG503|RG353P)
-    PKG_EMUS+=" duckstationsa"
+### Project specific variables
+case "${PROJECT}" in
+  Rockchip)
+    PKG_BASEOS+=" system-utils"
+    PKG_EMUS+=" retropie-shaders"
+    PKG_COMPAT+=" lib32"
+  ;;
+  PC)
+    PKG_BASEOS+=" installer"
   ;;
 esac
 
-### Software specific to PC builds
-if [ "${PROJECT}" == "PC" ]
-then
-  PKG_BASEOS+=" installer"
-fi
+### Device specific variables
+case "${DEVICE}" in
+  RG552|RG503|RG353P|RG351P|RG351V|RG351MP)
+    PKG_SOFTWARE+=" emulators gamesupport"
+    PKG_TOOLS+=" 351files"
+  ;;
+esac
 
 if [ ! -z "${BASE_ONLY}" ]
 then
-  PKG_DEPENDS_TARGET+=" ${PKG_BASEOS} ${PKG_TOOLS} ${PKG_UI} ${PKG_GAMESUPPORT}"
+  PKG_DEPENDS_TARGET+=" ${PKG_BASEOS} ${PKG_TOOLS} ${PKG_UI}"
 else
-  PKG_DEPENDS_TARGET+=" ${PKG_BASEOS} ${PKG_TOOLS} ${PKG_UI} ${PKG_EMUS} ${PKG_RETROARCH} ${LIBRETRO_CORES} ${PKG_COMPAT} ${PKG_MULTIMEDIA} ${PKG_GAMESUPPORT} ${PKG_EXPERIMENTAL}"
+  PKG_DEPENDS_TARGET+=" ${PKG_BASEOS} ${PKG_TOOLS} ${PKG_UI} ${PKG_COMPAT} ${PKG_MULTIMEDIA} ${PKG_SOFTWARE} ${PKG_EXPERIMENTAL}"
 fi
 
 make_target() {
