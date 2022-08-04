@@ -21,4 +21,6 @@ make_target() {
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin
   cp bin/jslisten ${INSTALL}/usr/bin
+  mkdir -p ${INSTALL}/usr/config
+  cp ${PKG_DIR}/config/jslisten_hotkeys ${INSTALL}/usr/config
 }
