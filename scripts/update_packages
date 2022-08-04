@@ -63,9 +63,11 @@ update_packages() {
   done
 }
 
+
+source "${OPTIONS}"
+
 if [ ! "${1}" ]
 then
-  source "${OPTIONS}"
   for package in "${PACKAGES[@]}"
   do
     source "${package}"
