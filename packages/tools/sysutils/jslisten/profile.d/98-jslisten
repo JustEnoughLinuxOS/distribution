@@ -6,9 +6,9 @@
 
 export PATH="$PATH:/usr/local/bin:/usr/bin:/storage/bin"
 
-if [ -e "/storage/roms/jslisten_hotkeys" ]
+if [ -e "/storage/.config/jslisten_hotkeys" ]
 then
-  source /storage/roms/jslisten_hotkeys
+  source /storage/.config/jslisten_hotkeys
 else
   source /usr/config/jslisten_hotkeys
 fi
