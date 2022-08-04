@@ -46,8 +46,8 @@ check_space() {
   if [ "${MYSIZE}" -lt "${REQUIRED}" ]
   then
     NEEDED=$(( (${REQUIRED} - ${MYSIZE} ) / 1024 ))
-    echo -e "There is not enough free space available ${VOLNAME} to install this update.  Free up an additional ${NEEDED}MB, or reflash the newer version."
-    echo "Exiting in 5 seconds..." && sleep 5
+    echo -e "There is not enough free space available ${VOLNAME} to install this update.  Free up an additional ${NEEDED}MB, or reflash the newer version." >/dev/console
+    echo "Exiting in 5 seconds..." >/dev/console && sleep 5
     systemctl start emustation &
     exit 1
   fi
@@ -60,7 +60,7 @@ ONLINE_STATUS=$(check_network)
 if [ ! "${ONLINE_STATUS}" == true ]
 then
   echo "System not online, cannot continue..." >/dev/console
-  echo "Exiting in 5 seconds..." && sleep 5
+  echo "Exiting in 5 seconds..."  >/dev/console && sleep 5
   systemctl start emustation &
   exit 0
 fi
@@ -77,7 +77,7 @@ LATEST_RELEASE_TAG=$(curl -H 'Cache-Control: no-cache' -Ls "${GIT_API}/releases"
 if [ "${OS_VERSION}" -ge "${LATEST_RELEASE_TAG}" ] && [ ! "${FORCE}" = "1" ]
 then
   echo "No new updates are available..." >/dev/console
-  echo "Exiting in 5 seconds..." && sleep 5
+  echo "Exiting in 5 seconds..." >/dev/console && sleep 5
   systemctl start emustation &
   exit 0
 fi
