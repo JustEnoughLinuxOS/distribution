@@ -11,7 +11,7 @@ PKG_EMUS="hatarisa openbor hypseus-singe moonlight hypseus-singe pico-8 flycasts
           scummvmsa PPSSPPSDL yabasanshiroSA vicesa mupen64plussa-audio-sdl         \
           mupen64plussa-input-sdl mupen64plussa-ui-console mupen64plussa-video-rice \
           mupen64plussa-core mupen64plussa-rsp-hle mupen64plussa-video-glide64mk2   \
-          lzdoom gzdoom ecwolf amiberry raze drastic"
+          lzdoom gzdoom ecwolf amiberry raze drastic dolphinsa"
 
 PKG_RETROARCH="retroarch retroarch-overlays retroarch-assets common-shaders glsl-shaders \
                libretro-database core-info"
