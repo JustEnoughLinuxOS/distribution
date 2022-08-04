@@ -4,7 +4,7 @@
 
 ###
 ### This configuration file provides key values to jslisten,
-### copy to /storage/roms/.config and modify as desired.
+### copy to /storage/.config and modify as desired.
 ###
 ### For a list of available buttons, cat /etc/profile.d/01-deviceconfig
 ###
