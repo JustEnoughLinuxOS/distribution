@@ -5,67 +5,74 @@
 # Based on work by ToKe79 and Shanti Gilbert
 
 OPTIONS="distributions/JELOS/options"
-DISTPACKAGE="packages/jelos/package.mk"
+PACKAGES=("packages/virtual/emulators/package.mk" \
+          "packages/virtual/es-themes/package.mk")
 BLOCKLIST="config/blocklist"
 
-source "${OPTIONS}"
-source "${DISTPACKAGE}"
+update_packages() {
+  for p in $PACKAGES_ALL
+  do
+    PKG_PATH="./packages"
+    echo "Operating on ${p}"
+    f=$(find ${PKG_PATH} -type d -name "${p}")
+    if [ "$(grep ${p} ${BLOCKLIST})" ]
+    then
+      echo "Skipping ${p}"
+      continue
+    fi
+    f="${f}/package.mk"
+    echo "${p}: ${f}"
+    if [ ! "${p}" ] && [ ! "${f}" ]
+    then
+      echo "Package not found, skipping."
+      continue
+    fi
+    source config/options "${p}"
+    source "${f}"
+    PKG_SITE=$(echo ${PKG_URL} | sed 's/\/archive.*//g')
+    [ -n "${PKG_GIT_BRANCH}" ] && PKG_GIT_CLONE_BRANCH="${PKG_GIT_BRANCH}"
+    [ -n "${PKG_GIT_CLONE_BRANCH}" ] && GIT_HEAD="heads/${PKG_GIT_CLONE_BRANCH}" || GIT_HEAD="HEAD"
+     UPS_VERSION=`git ls-remote ${PKG_SITE} | grep ${GIT_HEAD}$ | awk '{ print substr($1,1,40) }'`
+    if [ "${UPS_VERSION}" == "${PKG_VERSION}" ]; then
+      echo "${PKG_NAME} is up to date (${UPS_VERSION})"
+    else
+      echo "${PKG_NAME} updated from ${PKG_VERSION} to ${UPS_VERSION}"
+      sed -i "s/PKG_VERSION=\"${PKG_VERSION}/PKG_VERSION=\"${UPS_VERSION}/" $f
+    fi
+
+    if [[ ! "${PKG_URL}" =~ git$ ]]
+    then
+     if grep -q PKG_SHA256 "${f}"; then
+       echo "PKG_SHA256 exists on ${f}, clearing"
+       sed -i "s/PKG_SHA256=.*\$/PKG_SHA256=\"\"/" ${f}
+     else
+       echo "PKG_SHA256 does not exists on ${f}, creating"
+       sed -i -e "s/PKG_VERSION=\"${UPS_VERSION}\(.*\)\"/PKG_VERSION=\"${UPS_VERSION}\1\"\nPKG_SHA256=\"\"/g" ${f}
+     fi
+     source "${f}"
+     ./scripts/get "${PKG_NAME}" >/dev/null
+     if [ "${p}" != "linux" ]; then
+       SHA=$(cat ./sources/${PKG_NAME}/${PKG_NAME}-${UPS_VERSION}.*.sha256 ||:)
+     else
+       SHA=$(cat ./sources/${PKG_NAME}/linux-$LINUX-${UPS_VERSION}.tar.gz.sha256 ||:)
+     fi
+     sed -e "/PKG_VERSION=\"${UPS_VERSION}\"/{ N; s/PKG_VERSION=\"${UPS_VERSION}\".*PKG_SHA256=\"\"/PKG_VERSION=\"${UPS_VERSION}\"\nPKG_SHA256=\"${SHA}\"/;}" -i ${f}
+   else
+     sed "/^PKG_SHA256=/d" -i ${f}
+   fi
+  done
+}
 
 if [ ! "${1}" ]
 then
-  PACKAGES_ALL=" ${PKG_EMUS} ${LIBRETRO_CORES}"
+  source "${OPTIONS}"
+  for package in "${PACKAGES[@]}"
+  do
+    source "${package}"
+    PACKAGES_ALL=" ${PKG_DEPENDS_TARGET}"
+    update_packages
+  done
 else
   PACKAGES_ALL="$*"
+  update_packages
 fi
-
-for p in $PACKAGES_ALL
-do
-  PKG_PATH="./packages"
-  echo "Operating on ${p}"
-  f=$(find ${PKG_PATH} -type d -name "${p}")
-  if [ "$(grep ${p} ${BLOCKLIST})" ]
-  then
-    echo "Skipping ${p}"
-    continue
-  fi
-  f="${f}/package.mk"
-  echo "${p}: ${f}"
-  if [ ! "${p}" ] && [ ! "${f}" ]
-  then
-    echo "Package not found, skipping."
-    continue
-  fi
-  source config/options "${p}"
-  source "${f}"
-  PKG_SITE=$(echo ${PKG_URL} | sed 's/\/archive.*//g')
-  [ -n "${PKG_GIT_BRANCH}" ] && PKG_GIT_CLONE_BRANCH="${PKG_GIT_BRANCH}"
-  [ -n "${PKG_GIT_CLONE_BRANCH}" ] && GIT_HEAD="heads/${PKG_GIT_CLONE_BRANCH}" || GIT_HEAD="HEAD"
-  UPS_VERSION=`git ls-remote ${PKG_SITE} | grep ${GIT_HEAD}$ | awk '{ print substr($1,1,40) }'`
-  if [ "${UPS_VERSION}" == "${PKG_VERSION}" ]; then
-    echo "${PKG_NAME} is up to date (${UPS_VERSION})"
-  else
-    echo "${PKG_NAME} updated from ${PKG_VERSION} to ${UPS_VERSION}"
-    sed -i "s/PKG_VERSION=\"${PKG_VERSION}/PKG_VERSION=\"${UPS_VERSION}/" $f
-  fi
-
-  if [[ ! "${PKG_URL}" =~ git$ ]]
-  then
-   if grep -q PKG_SHA256 "${f}"; then
-    echo "PKG_SHA256 exists on ${f}, clearing"
-    sed -i "s/PKG_SHA256=.*\$/PKG_SHA256=\"\"/" ${f}
-   else
-    echo "PKG_SHA256 does not exists on ${f}, creating"
-    sed -i -e "s/PKG_VERSION=\"${UPS_VERSION}\(.*\)\"/PKG_VERSION=\"${UPS_VERSION}\1\"\nPKG_SHA256=\"\"/g" ${f}
-   fi
-   source "${f}"
-   ./scripts/get "${PKG_NAME}" >/dev/null
-   if [ "${p}" != "linux" ]; then
-     SHA=$(cat ./sources/${PKG_NAME}/${PKG_NAME}-${UPS_VERSION}.*.sha256 ||:)
-   else
-     SHA=$(cat ./sources/${PKG_NAME}/linux-$LINUX-${UPS_VERSION}.tar.gz.sha256 ||:)
-   fi
-   sed -e "/PKG_VERSION=\"${UPS_VERSION}\"/{ N; s/PKG_VERSION=\"${UPS_VERSION}\".*PKG_SHA256=\"\"/PKG_VERSION=\"${UPS_VERSION}\"\nPKG_SHA256=\"${SHA}\"/;}" -i ${f}
- else
-   sed "/^PKG_SHA256=/d" -i ${f}
- fi
-done
