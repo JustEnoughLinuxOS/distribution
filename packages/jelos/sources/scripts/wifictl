@@ -1,6 +1,7 @@
 #!/bin/bash
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (C) 2020 Fewtarius (https://github.com/fewtarius)
+# Copyright (C) 2022 kkoshelev (https://github.com/kkoshelev)
 
 . /etc/profile
 
@@ -26,6 +27,17 @@ else
 fi
 
 WIFICFG="/storage/.cache/connman/wifi.config"
+
+# lists all wifi services in service=ssid format
+list_wifi() {
+  connmanctl services | cut -b 5- | awk '/\S+.+\s+wifi/ {a=$0; sub(/\s+wifi_.*$/,"", a); b=$0; sub(a, "", b); sub(/\s+/, "", b); print b "=" a}' | sort | uniq
+}
+
+# Looksup connman service name based on ssid
+# $1 - SSID to lookup
+get_wifi_service() {
+  list_wifi | awk -v ssid="${1}" '{ split($0, a, "="); if (a[2]==ssid) print a[1] }'
+}
 
 set_powersave() {
   ENABLED=$(get_setting wifi.powersave)
@@ -55,6 +67,7 @@ EOF
       connmanctl enable wifi 2>/dev/null
       set_powersave 2>/dev/null
       connmanctl scan wifi 2>/dev/null
+      connmanctl connect $(get_wifi_service "${SSID}") 2>/dev/null
     ;;
     "disable")
       connmanctl disable wifi 2>/dev/null
@@ -62,14 +75,18 @@ EOF
       set_setting wifi.enabled 0
     ;;
     "list")
-      connmanctl services | cut -b 5- | awk '/wifi/ {sub(/\s+wifi_.*$/,"",$0);print}' | sort | uniq
+      #connmanctl services | cut -b 5- | awk '/wifi/ {sub(/\s+wifi_.*$/,"",$0);print}' | sort | uniq
+      list_wifi | awk '{sub(/\S+=/,"",$0);print}'
     ;;
     "scan")
       connmanctl scan 2>/dev/null
     ;;
     "scanlist")
       set_wifi scan 2>/dev/null
-      set_wifi list 2>/dev/null
+      list_wifi | awk '{sub(/\S+=/,"",$0);print}'
+    ;;
+    "service")
+       get_wifi_service "${SSID}"
     ;;
     "setpowersave")
       set_powersave 2>/dev/null

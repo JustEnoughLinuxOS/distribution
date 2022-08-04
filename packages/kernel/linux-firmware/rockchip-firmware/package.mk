@@ -7,7 +7,7 @@ PKG_ARCH="arm aarch64"
 PKG_LICENSE="nonfree"
 PKG_SITE="https://github.com/rockchip-linux"
 PKG_URL=""
-PKG_DEPENDS_TARGET="rkbin rfkill"
+PKG_DEPENDS_TARGET="rkbin rfkill kernel-firmware"
 PKG_LONGDESC="rockchip firmware"
 PKG_TOOLCHAIN="manual"
 

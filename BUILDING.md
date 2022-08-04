@@ -156,9 +156,39 @@ mv wireguard-linux-compat-v1.0.20211208 wireguard-linux-compat
 cp -rf wireguard-linux-compat wireguard-linux-compat.orig
 
 # Make your changes to wireguard-linux-compat
-mkdir ../../packages/network/wireguard-linux-compat/patches/RG503
+mkdir -p ../../packages/network/wireguard-linux-compat/patches/RG503
 # run from the sources dir
-diff -rupN wireguard-linux-compat wireguard-linux-compat.orig ../../packages/network/wireguard-linux-compat/patches/RG503/mychanges.patch
+diff -rupN wireguard-linux-compat wireguard-linux-compat.orig >../../packages/network/wireguard-linux-compat/patches/RG503/mychanges.patch
+```
+
+### Creating a patch for a package using git
+If you are working with a git repository, building a patch for the distribution is simple.  Rather than using `diff`, use `git diff`.
+```
+cd sources/emulationstation/emulationstation-098226b/
+# Make your changes to EmulationStation
+vim/emacs/vscode/notepad.exe
+# Make the patch directory
+mkdir -p ../../packages/ui/emulationstation/patches
+# Run from the sources dir
+git diff >../../packages/ui/emulationstation/patches/005-mypatch.patch
 ```
 
 After patch is generated, one can rebuild an individual package, see section above. The build system will automatically pick up patch files from `patches` directory. For testing, one can either copy the built binary to the console or burn the whole image on SD card.
+
+### Building an image with your patch
+If you already have a build for your device made using the above process, it's simple to shortcut the build process and create an image to test your changes quickly using the process below.
+```
+# Update the package version for a new package, or apply your patch as above.
+vim/emacs/vscode/notepad.exe
+# Export the variables needed to complete your build, we'll assume you are building for the RG503, update the device to match your configuration.
+export OS_VERSION=$(date +%Y%m%d) BUILD_DATE=$(date)
+export PROJECT=Rockchip DEVICE=RG503 ARCH=aarch64
+# Clean the package you are building.
+./scripts/clean emulationstation
+# Build the package.
+./scripts/build emulationstation
+# Install the package into the build root.
+./scripts/install emulationstation
+# Generate an image with your new package.
+./scripts/image mkimage
+```
