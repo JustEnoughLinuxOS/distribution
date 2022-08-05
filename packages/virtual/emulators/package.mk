@@ -35,7 +35,10 @@ PKG_DEPENDS_TARGET="${PKG_EMUS} ${PKG_RETROARCH} ${LIBRETRO_CORES}"
 
 ### Emulators or cores for specific devices
 case "${DEVICE}" in
-  RG552|RG503|RG353P)
+  RG552)
     PKG_DEPENDS_TARGET+=" duckstationsa"
+  ;;
+  RG503|RG353P)
+    PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa"
   ;;
 esac
