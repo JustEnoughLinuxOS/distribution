@@ -282,7 +282,14 @@ then
 		        if [ "$EMU" = "duckstationsa" ]; then
             		RUNTHIS='${TBASH} /usr/bin/duckstation.sh "${ROMNAME}"'
         		fi
-		;;
+                ;;
+                "gamecube")
+                        jslisten set "dolphinsa"
+                        if [ "$EMU" = "dolphinsa" ]; then
+                        RUNTHIS='${TBASH} /usr/bin/dolphin.sh "${ROMNAME}"'
+                        fi
+
+;;
 		"mplayer")
 			jslisten set "mpv"
 			RUNTHIS='${TBASH} /usr/bin/mpv_video.sh "${ROMNAME}"'
