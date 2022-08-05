@@ -6,13 +6,12 @@
 PKG_NAME="u-boot"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/JustEnoughLinuxOS/rockchip-uboot"
+PKG_SITE="https://github.com/JustEnoughLinuxOS"
 PKG_DEPENDS_TARGET="toolchain swig:host rkbin"
 PKG_LONGDESC="Rockchip U-Boot is a bootloader for embedded systems."
-PKG_URL="${PKG_SITE}.git"
-PKG_VERSION="23f4a5d"
 GET_HANDLER_SUPPORT="git"
 PKG_PATCH_DIRS+="${DEVICE}"
+
 
 #if [[ "${DEVICE}" =~ RG552 ]]
 #then
@@ -54,7 +53,7 @@ make_target() {
   if [ -z "${UBOOT_CONFIG}" ]; then
     echo "UBOOT_CONFIG must be set to build an image"
   else
-    if [ -e "projects/${PROJECT}/devices/${DEVICE}/u-boot/${UBOOT_CONFIG}" ]
+    if [ -e "${PROJECT_DIR}/projects/${PROJECT}/devices/${DEVICE}/u-boot/${UBOOT_CONFIG}" ]
     then
       cp ${PROJECT_DIR}/projects/${PROJECT}/devices/${DEVICE}/u-boot/${UBOOT_CONFIG} configs
     fi

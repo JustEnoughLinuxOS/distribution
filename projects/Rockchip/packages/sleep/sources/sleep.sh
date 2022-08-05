@@ -1,13 +1,21 @@
 #!/bin/bash
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
 . /etc/profile
 
 case $1 in
   pre)
-    # Store system brightness
-    cat /sys/class/backlight/backlight/brightness > /storage/.brightness
-    # Store sound state. Try to avoid having max volume after resume
-    alsactl store -f /tmp/asound.state
-    systemctl stop headphones
+
+    if [ "${DEVICE_FAKE_JACKSENSE}" == "true" ]
+    then
+      nohup systemctl stop headphones &
+    fi
+
+    if [ "${DEVICE_VOLUMECTL}" == "true" ]
+    then
+      nohup systemctl stop volume &
+    fi
 
     # RG351x devices are notorious for losing USB when they sleep.
     if [[ "${HW_DEVICE}" =~ RG351 ]]
@@ -15,23 +23,22 @@ case $1 in
       modprobe -r dwc2
     fi
 
-    # stop hotkey service
-    systemctl stop odroidgoa-headphones.service
- 
-    # This file is used by ES to determine if we just woke up from sleep
+    alsactl store -f /storage/.config/asound.state
+
     touch /run/.last_sleep_time
 
   ;;
   post)
-    # Restore pre-sleep sound state
-    alsactl restore -f /tmp/asound.state
-    VOL=$(get_setting "audio.volume" 2>/dev/null)
-    MIXER="Master"
-    amixer set "${MIXER}" ${VOL}% 2>&1 >/dev/null
-    # Restore system brightness
-    cat /storage/.brightness > /sys/class/backlight/backlight/brightness
-    # re-detect and reapply sound, brightness and hp state
-    systemctl start headphones
+
+    if [ "${DEVICE_FAKE_JACKSENSE}" == "true" ]
+    then
+      nohup systemctl start headphones &
+    fi
+
+    if [ "${DEVICE_VOLUMECTL}" == "true" ]
+    then
+      nohup systemctl start volume &
+    fi
 
     if [[ "${HW_DEVICE}" =~ RG351 ]]
     then
@@ -39,5 +46,12 @@ case $1 in
       systemctl restart volume
     fi
 
+    alsactl restore -f /storage/.config/asound.state
+
+    DEVICE_VOLUME=$(get_setting "audio.volume" 2>/dev/null)
+    amixer set "${DEVICE_AUDIO_MIXER}" ${DEVICE_VOLUME}% 2>&1 >/dev/null
+
+    ### Call the brightness script to set to the last saved value.
+    /usr/lib/autostart/common/006-brightness
   ;;
 esac

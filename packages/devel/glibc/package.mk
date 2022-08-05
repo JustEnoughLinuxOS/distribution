@@ -106,12 +106,6 @@ post_makeinstall_target() {
     cp -a ${INSTALL}/usr/share/i18n/locales ${INSTALL}/.noinstall
     mv ${INSTALL}/usr/share/i18n/charmaps ${INSTALL}/.noinstall
 
-# cleanup
-# remove any programs we don't want/need, keeping only those we want
-  for f in $(find ${INSTALL}/usr/bin -type f); do
-    listcontains "${GLIBC_INCLUDE_BIN}" "$(basename "${f}")" || safe_remove "${f}"
-  done
-
   safe_remove ${INSTALL}/usr/lib/audit
   safe_remove ${INSTALL}/usr/lib/glibc
   safe_remove ${INSTALL}/usr/lib/libc_pic
@@ -135,6 +129,7 @@ post_makeinstall_target() {
     cp ${PKG_DIR}/config/nsswitch-target.conf ${INSTALL}/etc/nsswitch.conf
     cp ${PKG_DIR}/config/host.conf ${INSTALL}/etc
     cp ${PKG_DIR}/config/gai.conf ${INSTALL}/etc
+    cp ${PKG_DIR}/config/ld.so.conf ${INSTALL}/etc
 }
 
 configure_init() {

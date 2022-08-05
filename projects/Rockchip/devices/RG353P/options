@@ -30,6 +30,8 @@
     KERNEL_TARGET="Image"
     BOOTLOADER="u-boot"
     PARTITION_TABLE="gpt"
+    UBOOT_LABEL="uboot"
+    TRUST_LABEL="resource"
     DEVICE_DTB="rk3566-rg353p-linux"
     UBOOT_DTB="rk3566"
     UBOOT_CONFIG="rk3568_defconfig"

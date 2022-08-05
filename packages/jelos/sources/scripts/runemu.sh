@@ -244,7 +244,7 @@ then
 		;;
 		"nds")
 			jslisten set "drastic"
-			RUNTHIS='${TBASH} /storage/.config/drastic/drastic.sh "${ROMNAME}"'
+			RUNTHIS='${TBASH} /usr/bin/drastic.sh "${ROMNAME}"'
 		;;
 		"solarus")
 			if [ "$EMU" = "solarus" ]
@@ -278,11 +278,18 @@ then
 			fi
 		;;
 		"psx")
-		if [ "$EMU" = "duckstationsa" ]; then
-            		set_kill_keys "duckstation-nogui"
-            		RUNTHIS='${TBASH} duckstation.sh "${ROMNAME}"'
+                        jslisten set "duckstationsa"
+		        if [ "$EMU" = "duckstationsa" ]; then
+            		RUNTHIS='${TBASH} /usr/bin/duckstation.sh "${ROMNAME}"'
         		fi
-		;;
+                ;;
+                "gamecube")
+                        jslisten set "dolphinsa"
+                        if [ "$EMU" = "dolphinsa" ]; then
+                        RUNTHIS='${TBASH} /usr/bin/dolphin.sh "${ROMNAME}"'
+                        fi
+
+;;
 		"mplayer")
 			jslisten set "mpv"
 			RUNTHIS='${TBASH} /usr/bin/mpv_video.sh "${ROMNAME}"'
@@ -311,7 +318,6 @@ else
 	           [[ "${CORE}" =~ gpsp ]] || \
 	           [[ "${CORE}" =~ flycast32 ]]
 		then
-			export LD_LIBRARY_PATH="/usr/lib32"
 			RABIN="retroarch32"
 		fi
 	fi

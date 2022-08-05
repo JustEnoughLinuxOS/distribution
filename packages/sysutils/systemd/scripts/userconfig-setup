@@ -39,6 +39,12 @@ then
   cp -f /usr/config/splash/splash-${hres}.png /storage/.config/emulationstation/resources/logo.png
 fi
 
+if [ ! -e "/storage/.cache/ld.so.cache" ]
+then
+  ### Create library cache
+  ldconfig -X 
+fi
+
 if [ ! -d "/storage/.config/emulationstation/locale/" ]
 then
   rsync -a --delete /usr/config/locale/ /storage/.config/emulationstation/locale/

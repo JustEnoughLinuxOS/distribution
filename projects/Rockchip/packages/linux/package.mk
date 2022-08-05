@@ -6,7 +6,7 @@
 
 PKG_NAME="linux"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.kernel.org"
+PKG_SITE="https://github.com/JustEnoughLinuxOS"
 PKG_DEPENDS_HOST="ccache:host openssl:host"
 PKG_DEPENDS_TARGET="toolchain linux:host cpio:host kmod:host xz:host wireless-regdb keyutils ${KERNEL_EXTRA_DEPENDS_TARGET}"
 PKG_DEPENDS_INIT="toolchain"
@@ -15,8 +15,9 @@ PKG_LONGDESC="This package builds the kernel for Rockchip devices"
 PKG_IS_KERNEL_PKG="yes"
 PKG_STAMP="${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD}"
 PKG_PATCH_DIRS+="${DEVICE}"
-  PKG_GIT_CLONE_BRANCH="main"
+PKG_GIT_CLONE_BRANCH="main"
 GET_HANDLER_SUPPORT="git"
+
 
 if [[ "${DEVICE}" =~ RG552 ]]
 then

@@ -2,8 +2,8 @@
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="mupen64plussa-rsp-hle"
-PKG_VERSION="27580a8c33f0d66fa2f02582d45975f23fe2b1aa"
-PKG_SHA256="a266608f38c81ca1f4b39dbecd85daca02611e3a7dec52115fa475de8e55963a"
+PKG_VERSION="aa0ea78030d3c2b80184a35bbb36909fd7a28e70"
+PKG_SHA256="94acfd45c9b6974bde6ee38e9df60979cb906cec89efd37642be6f20f3737841"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/mupen64plus/mupen64plus-rsp-hle"
@@ -23,15 +23,19 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
 fi
 
 make_target() {
-  export HOST_CPU=aarch64
+  case ${ARCH} in
+    arm|aarch64)
+      export HOST_CPU=aarch64
+      export USE_GLES=1
+      BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
+    ;;
+  esac
   export APIDIR=$(get_build_dir mupen64plussa-core)/.install_pkg/usr/local/include/mupen64plus
-  export USE_GLES=1
   export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -D_REENTRANT"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
   export CROSS_COMPILE="${TARGET_PREFIX}"
   export V=1
   export VC=0
-  BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
   make -C projects/unix clean
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
 }

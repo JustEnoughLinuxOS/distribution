@@ -7,6 +7,11 @@
 ### This script contains items that we only want to execute after a JELOS upgrade,
 ### or after a fresh installation.
 
+### Rebuild the library cache
+rm -f /storage/.cache/ld.so.cache
+ldconfig -X
+
+### Sync configurations
 if [ -d "/storage/.config/system/configs" ]
 then
   EXCLUDE="--exclude=configs"
@@ -16,6 +21,7 @@ rsync -a --delete ${EXCLUDE} /usr/config/system/ /storage/.config/system/ &
 rsync -a --ignore-existing /usr/config/game /storage/.config/ &
 rsync -a /usr/config/modules /storage/.config/ &
 
+### Update add-ons and themes
 wait < <(jobs -p)
 
 cp -f /usr/config/modules/gamelist.xml /storage/.config/modules
@@ -24,8 +30,19 @@ rm -rf /storage/roms/ports/JelosAddOns*
 cp -r /usr/share/JelosAddOns /storage/roms/ports/
 mv /storage/roms/ports/JelosAddOns/JelosAddOns.sh /storage/roms/ports/JelosAddOns.sh
 chmod +x /storage/roms/ports/JelosAddOns.sh
-rm -rf /storage/.config/modules/Drastic*
 
+cd /usr/share/themes
+for theme in *
+do
+  if [ ! -L /storage/.config/emulationstation/themes/${theme} ] && \
+     [ ! -e /storage/.config/emulationstation/themes/${theme} ]
+  then
+    ln -s /usr/share/themes/${theme} /storage/.config/emulationstation/themes
+  fi
+done
+cd -
+
+### Apply developer ssh keys if they exist
 if [ -e /usr/config/ssh/authorized_keys ]
 then
   cp /usr/config/ssh/authorized_keys /storage/.ssh
@@ -34,9 +51,21 @@ fi
 rsync --ignore-existing /usr/config/rsync-rules.conf /storage/.config/
 rsync --ignore-existing /usr/config/rsync.conf /storage/.config/
 
+### Safe to make changes below this line.
+
 # Swap es_input back to a writeable file so external controller configuration works properly.
 if [ -L "/storage/.config/emulationstation/es_input.cfg" ]
 then
   rm -f /storage/.config/emulationstation/es_input.cfg
   cp -f /usr/config/emulationstation/es_input.cfg /storage/.config/emulationstation/es_input.cfg
 fi
+
+# Re-introduce overlayfs for retroarch.
+sed -i 's#^overlay_directory.*$#overlay_directory = "/tmp/overlays"#g' /storage/.config/retroarch/retroarch.cfg
+sed -i 's#^video_shader_dir.*$#video_shader_dir = "/tmp/shaders"#g' /storage/.config/retroarch/retroarch.cfg
+sed -i 's#^joypad_autoconfig_dir.*$#joypad_autoconfig_dir = "/tmp/joypads"#g' /storage/.config/retroarch/retroarch.cfg
+sed -i 's#^cheat_database_path.*$#cheat_database_path = "/tmp/database/cht"#g' /storage/.config/retroarch/retroarch.cfg
+sed -i 's#^content_database_path.*$#content_database_path = "/tmp/database/rdb"#g' /storage/.config/retroarch/retroarch.cfg
+sed -i 's#^assets_directory.*$#assets_directory = "/tmp/assets"#g' /storage/.config/retroarch/retroarch.cfg
+sed -i 's#^libretro_directory.*$#libretro_directory = "/tmp/cores"#g' /storage/.config/retroarch/retroarch.cfg
+sed -i 's#^libretro_info_path.*$#libretro_info_path = "/tmp/cores"#g' /storage/.config/retroarch/retroarch.cfg

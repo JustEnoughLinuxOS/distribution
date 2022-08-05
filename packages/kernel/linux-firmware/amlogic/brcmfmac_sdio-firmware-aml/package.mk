@@ -8,7 +8,7 @@ PKG_SHA256="552d686fafbf616dbdcd75c7687ff984197c19604813bab264c8d78b11f17818"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/CoreELEC/brcmfmac_sdio-firmware-aml"
 PKG_URL="https://github.com/CoreELEC/brcmfmac_sdio-firmware-aml/archive/$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain"
+PKG_DEPENDS_TARGET="toolchain kernel-firmware"
 PKG_LONGDESC="Firmware for brcm bluetooth chips used in some Amlogic based devices."
 
 makeinstall_target() {
