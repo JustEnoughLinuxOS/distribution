@@ -12,20 +12,24 @@ PKG_LONGDESC="Rockchip U-Boot is a bootloader for embedded systems."
 GET_HANDLER_SUPPORT="git"
 PKG_PATCH_DIRS+="${DEVICE}"
 
-case ${DEVICE} in
-  RG351P|RG351V|RG351MP)
-    PKG_URL="${PKG_SITE}/rk3326-uboot.git"
-    PKG_VERSION="9f8c2e3936"
-  ;;
-  RG552)
-    PKG_URL="${PKG_SITE}/rk3399-uboot.git"
-    PKG_VERSION="23f4a5d"
-  ;;
-  RG353P|RG503)
-    PKG_URL="${PKG_SITE}/rk356x-uboot.git"
-    PKG_VERSION="ab7b555"
-  ;;
-esac
+
+#if [[ "${DEVICE}" =~ RG552 ]]
+#then
+#  PKG_URL="https://github.com/R-ARM/u-boot.git"
+#  PKG_VERSION="b9bb224329a5ca77c8f2708c85bea19d971b610e"
+#fi
+
+if [[ "${DEVICE}" =~ RG351 ]]
+then
+  PKG_URL="https://github.com/JustEnoughLinuxOS/rg351x-uboot.git"
+  PKG_VERSION="9f8c2e3936"
+fi
+
+if [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
+then
+  PKG_URL="https://github.com/JustEnoughLinuxOS/rk356x-uboot.git"
+  PKG_VERSION="afcb506"
+fi
 
 PKG_IS_KERNEL_PKG="yes"
 PKG_STAMP="${UBOOT_CONFIG}"
