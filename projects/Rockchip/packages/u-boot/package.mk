@@ -13,11 +13,15 @@ GET_HANDLER_SUPPORT="git"
 PKG_PATCH_DIRS+="${DEVICE}"
 
 
-#if [[ "${DEVICE}" =~ RG552 ]]
-#then
+if [[ "${DEVICE}" =~ RG552 ]]
+then
 #  PKG_URL="https://github.com/R-ARM/u-boot.git"
 #  PKG_VERSION="b9bb224329a5ca77c8f2708c85bea19d971b610e"
-#fi
+  PKG_URL="https://github.com/JustEnoughLinuxOS/rk3399-uboot.git"
+  PKG_VERSION="6575d2fe092c6b2aa3d9d8c6f5ae7eb57b07daec"
+#  PKG_URL="https://github.com/ayufan-rock64/linux-mainline-u-boot.git"
+ # PKG_VERSION="ff2cdd38c0312b615affa5a59ad9863a437b863c"
+fi
 
 if [[ "${DEVICE}" =~ RG351 ]]
 then
