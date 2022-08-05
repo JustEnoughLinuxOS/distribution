@@ -8,7 +8,7 @@ PKG_ARCH="aarch64"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/rtissera/dolphin"
 PKG_URL="$PKG_SITE.git"
-PKG_DEPENDS_TARGET="toolchain libevdev libdrm"
+PKG_DEPENDS_TARGET="toolchain libevdev libdrm ffmpeg zlib libpng lzo libusb"
 PKG_LONGDESC="Dolphin is a GameCube / Wii emulator, allowing you to play games for these two platforms on PC with improvements. "
 
 PKG_CMAKE_OPTS_TARGET=" -DENABLE_HEADLESS=ON \
