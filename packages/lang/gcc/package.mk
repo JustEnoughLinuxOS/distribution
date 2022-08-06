@@ -12,15 +12,6 @@ PKG_DEPENDS_HOST="ccache:host autoconf:host binutils:host gmp:host mpfr:host mpc
 PKG_DEPENDS_INIT="toolchain"
 PKG_LONGDESC="This package contains the GNU Compiler Collection."
 
-case ${TARGET_ARCH} in
-  arm|riscv64)
-    OPTS_LIBATOMIC="--enable-libatomic"
-    ;;
-  *)
-    OPTS_LIBATOMIC="--disable-libatomic"
-    ;;
-esac
-
 GCC_COMMON_CONFIGURE_OPTS="--target=${TARGET_NAME} \
                            --with-sysroot=${SYSROOT_PREFIX} \
                            --with-gmp=${TOOLCHAIN} \
@@ -66,7 +57,7 @@ PKG_CONFIGURE_OPTS_BOOTSTRAP="${GCC_COMMON_CONFIGURE_OPTS} \
 
 PKG_CONFIGURE_OPTS_HOST="${GCC_COMMON_CONFIGURE_OPTS} \
                          --enable-languages=c,c++ \
-                         ${OPTS_LIBATOMIC} \
+                         --enable-libatomic \
                          --enable-decimal-float \
                          --enable-tls \
                          --enable-shared \
@@ -145,9 +136,7 @@ makeinstall_target() {
     cp -P ${PKG_BUILD}/.${HOST_NAME}/${TARGET_NAME}/libgcc/*.so* ${INSTALL}/usr/lib
     cp -P ${PKG_BUILD}/.${HOST_NAME}/${TARGET_NAME}/libstdc++-v3/src/.libs/*.so* ${INSTALL}/usr/lib
     cp -P ${PKG_BUILD}/.${HOST_NAME}/${TARGET_NAME}/libgomp/.libs/*.so* ${INSTALL}/usr/lib
-    if [ "${OPTS_LIBATOMIC}" = "--enable-libatomic" ]; then
-      cp -P ${PKG_BUILD}/.${HOST_NAME}/${TARGET_NAME}/libatomic/.libs/libatomic.so* ${INSTALL}/usr/lib
-    fi
+    cp -P ${PKG_BUILD}/.${HOST_NAME}/${TARGET_NAME}/libatomic/.libs/libatomic.so* ${INSTALL}/usr/lib
 }
 
 configure_init() {
