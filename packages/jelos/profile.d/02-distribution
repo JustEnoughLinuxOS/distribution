@@ -41,12 +41,9 @@ get_setting() {
 }
 
 set_setting() {
-  if [ "$2" == "disable" ]
+  if [[ "${1}" =~ ^[[:alnum:]] ]]
   then
-    sed -i "/^#$1=/d" "${J_CONF}"
-    echo "#${1}=" >> "${J_CONF}"
-  else
-    sed -i "/^$1=/d" "${J_CONF}"
+    sed -i "/^${1}=/d" "${J_CONF}"
     echo "${1}=${2}" >> "${J_CONF}"
   fi
 }
