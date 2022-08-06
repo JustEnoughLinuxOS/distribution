@@ -48,10 +48,16 @@
     HW_CPU="Rockchip RK3399"
  
   # Mali GPU family
-    MALI_FAMILY="midgard-t86x"
-    MALI_VERSION="r18p0"
-    OPENGLES="libmali"
-    GRAPHIC_DRIVERS=""
+#    MALI_FAMILY="midgard-t86x"
+#   MALI_VERSION="r18p0"
+#    OPENGLES="libmali"
+#    GRAPHIC_DRIVERS=""
+
+  # OpenGL(X) implementation to use (mesa / no)
+  OPENGL="mesa"
+
+  # OpenGL-ES implementation to use (mesa / no)
+#  OPENGLES="no"
 
   # kernel serial console
     EXTRA_CMDLINE="quiet video=DSI-1:1152x1920p60 fbcon=rotate:3 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
