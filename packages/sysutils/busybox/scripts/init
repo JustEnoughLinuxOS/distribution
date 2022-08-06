@@ -283,7 +283,6 @@ mount_sysroot() {
   if [ -f /flash/post-sysroot.sh ]; then
     . /flash/post-sysroot.sh
   fi
-
 }
 
 # mount the specified SYSTEM file and output arch from /etc/os-release
@@ -640,8 +639,12 @@ mount_flash() {
 
   wakeonlan
 
-  mount_part "$boot" "/flash" "ro,noatime"
-
+  if [ ! "$FAT32_BOOT" = "yes" ]; then
+    mount_part "$boot" "/flash" "ro,noatime"
+  else
+    mount_part "$boot" "/flash" "rw,noatime"
+  fi
+  
   if [ -f /flash/post-flash.sh ]; then
     . /flash/post-flash.sh
   fi
