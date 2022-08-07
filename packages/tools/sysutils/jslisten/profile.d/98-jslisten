@@ -6,6 +6,13 @@
 
 export PATH="$PATH:/usr/local/bin:/usr/bin:/storage/bin"
 
+if [ -e "/storage/.config/jslisten_hotkeys" ]
+then
+  source /storage/.config/jslisten_hotkeys
+else
+  source /usr/config/jslisten_hotkeys
+fi
+
 jslisten() {
         JSLISTENCONF="/storage/.config/system/configs/jslisten.cfg"
         if [ "$1" == "set" ]
@@ -19,28 +26,28 @@ jslisten() {
                         cat <<EOF >${JSLISTENCONF}
 [Pause]
 program="/usr/bin/manage_mpv.sh pause"
-button1=${DEVICE_BTN_START}
+button1=${BTN_PAUSE}
 
 [Exit]
 program="/usr/bin/manage_mpv.sh quit"
-button1=${DEVICE_BTN_SELECT}
-button2=${DEVICE_BTN_START}
+button1=${BTN_QUIT_HOTKEY}
+button2=${BTN_QUIT_SELECT}
 
 [Skip5s]
 program="/usr/bin/manage_mpv.sh skip5s"
-button1=${DEVICE_BTN_TR}
+button1=${BTN_SKIP5S}
 
 [Back5s]
 program="/usr/bin/manage_mpv.sh back5s"
-button1=${DEVICE_BTN_TL}
+button1=${BTN_BACK5S}
 
 [Skip60s]
 program="/usr/bin/manage_mpv.sh skip60s"
-button1=${DEVICE_BTN_TR2}
+button1=${BTN_SKIP60S}
 
 [Back60s]
 program="/usr/bin/manage_mpv.sh back60s"
-button1=${DEVICE_BTN_TL2}
+button1=${BTN_BACK60S}
 
 EOF
 		fi
@@ -48,19 +55,19 @@ EOF
                 cat <<EOF >>${JSLISTENCONF}
 [KillAll]
 program="/usr/bin/killall ${2}"
-button1=${DEVICE_BTN_TL}
-button2=${DEVICE_BTN_SELECT}
-button3=${DEVICE_BTN_START}
+button1=${BTN_KILL_HOTKEY}
+button2=${BTN_KILL_SELECTA}
+button3=${BTN_KILL_SELECTB}
 
 [BrightnessUp]
 program="/usr/bin/brightness up"
-button1=${DEVICE_BTN_TL}
-button2=${DEVICE_BTN_DPAD_UP}
+button1=${BTN_BRIGHTNESS_UP_HOTKEY}
+button2=${BTN_BRIGHTNESS_UP_SELECT}
 
 [BrightnessDown]
 program="/usr/bin/brightness down"
-button1=${DEVICE_BTN_TL}
-button2=${DEVICE_BTN_DPAD_DOWN}
+button1=${BTN_BRIGHTNESS_DOWN_HOTKEY}
+button2=${BTN_BRIGHTNESS_DOWN_SELECT}
 
 EOF
                 systemctl start jslisten
