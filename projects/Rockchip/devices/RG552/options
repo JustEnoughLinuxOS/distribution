@@ -46,14 +46,29 @@
   # Define the CPU
     HW_CPU="Rockchip RK3399"
  
+
   # Mali GPU family
-    MALI_FAMILY="midgard-t86x"
-    MALI_VERSION="r18p0"
-    OPENGLES="libmali"
-    GRAPHIC_DRIVERS=""
+   MALI_FAMILY="t860"
+   GRAPHIC_DRIVERS="panfrost"
+
+  # Mali GPU family
+   #MALI_FAMILY="midgard-t86x" 
+   #MALI_VERSION="r18p0"
+   #OPENGLES="libmali"
+   #GRAPHIC_DRIVERS=""
+
+  # OpenGL(X) implementation to use (mesa / no)
+   OPENGL="mesa"
+
+  # OpenGL-ES implementation to use (mesa / no)
+   OPENGLES="mesa"
+
+  # Displayserver to use (weston / x11 / no)
+  #DISPLAYSERVER="weston"
 
   # kernel serial console
-    EXTRA_CMDLINE="quiet video=DSI-1:1152x1920p60 fbcon=rotate:3 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
+    EXTRA_CMDLINE="video=DSI-1:1152x1920p60 fbcon=rotate:3"
+    #EXTRA_CMDLINE="quiet video=DSI-1:1152x1920p60 fbcon=rotate:3 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
 
   # additional packages to install
     #ADDITIONAL_PACKAGES=""
@@ -67,7 +82,7 @@
   # for a list of additional drivers see packages/linux-drivers
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-    ADDITIONAL_DRIVERS="RTL8812AU RTL8814AU RTL8821AU RTL8821CU RTL88x2BU"
+  #  ADDITIONAL_DRIVERS="RTL8812AU RTL8814AU RTL8821AU RTL8821CU RTL88x2BU"
 
   # build and install driver addons (yes / no)
     DRIVER_ADDONS_SUPPORT="no"
@@ -96,7 +111,7 @@
     SAMBA_SUPPORT="no"
 
   # build and install Samba Server (yes / no)
-    SAMBA_SERVER="yes"
+    SAMBA_SERVER="no"
 
   # build and install SFTP Server (yes / no)
     SFTP_SERVER="yes"
