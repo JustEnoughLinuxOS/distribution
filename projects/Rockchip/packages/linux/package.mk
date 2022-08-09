@@ -24,8 +24,9 @@ case ${DEVICE} in
     PKG_VERSION="a19b4df7c"
   ;;
   RG552)
-    PKG_URL="${PKG_SITE}/rk3399-kernel.git"
-    PKG_VERSION="cb0d79995"
+    PKG_URL="https://github.com/R-ARM/kernel.git"
+    PKG_VERSION="81ca1abcdfb9c7681408ff282ff65bb645c495e6"
+    PKG_GIT_CLONE_BRANCH="master"
   ;;
   RG353P|RG503)
     PKG_URL="${PKG_SITE}/rk356x-kernel.git"

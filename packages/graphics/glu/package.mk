@@ -12,4 +12,9 @@ PKG_DEPENDS_TARGET="toolchain libglvnd mesa"
 PKG_NEED_UNPACK="$(get_pkg_directory mesa)"
 PKG_LONGDESC="libglu is the The OpenGL utility library"
 
-PKG_MESON_OPTS_TARGET="-Dgl_provider=gl"
+if [[ "${DEVICE}" = RG552 ]]; then
+    PKG_MESON_OPTS_TARGET="-Dgl_provider=glvnd"
+else
+    PKG_MESON_OPTS_TARGET="-Dgl_provider=gl"
+fi
+
