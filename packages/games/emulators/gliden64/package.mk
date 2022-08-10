@@ -19,7 +19,6 @@ fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-  PKG_MAKE_OPTS_TARGET+="USE_GLES=1"
 fi
 
 make_target() {
@@ -28,6 +27,7 @@ make_target() {
       export HOST_CPU=aarch64
       export USE_GLES=1
       BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
+      PKG_MAKE_OPTS_TARGET+="-DNOHQ=On -DCRC_ARMV8=On -DEGL=0n -DNEON_OPT=On"
     ;;
   esac
   export APIDIR=$(get_build_dir mupen64plussa-core)/.install_pkg/usr/local/include/mupen64plus
@@ -37,7 +37,7 @@ make_target() {
   export V=1
   export VC=0
   ./src/getRevision.sh
-  cmake -DNOHQ=On -DCRC_ARMV8=On -DEGL=On -DMUPENPLUSAPI=On -DNEON_OPT=On -S src -B projects/cmake
+  cmake ${PKG_MAKE_OPTS_TARGET} -DMUPENPLUSAPI=On -S src -B projects/cmake
   make clean -C projects/cmake
   make -Wno-unused-variable -C projects/cmake
 }
