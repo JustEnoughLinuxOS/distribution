@@ -37,7 +37,7 @@ make_target() {
   export V=1
   export VC=0
   ./src/getRevision.sh
-  cmake -DCRC_ARMV8=On -DEGL=On -DMUPENPLUSAPI=On -DNEON_OPT=On -S src -B projects/cmake
+  cmake -DNOHQ=On -DCRC_ARMV8=On -DEGL=On -DMUPENPLUSAPI=On -DNEON_OPT=On -S src -B projects/cmake
   make clean -C projects/cmake
   make -Wno-unused-variable -C projects/cmake
 }
@@ -48,11 +48,11 @@ makeinstall_target() {
   USHAREDIR=${UPREFIX}/share/mupen64plus
   UPLUGINDIR=${ULIBDIR}/mupen64plus
   mkdir -p ${UPLUGINDIR}
-  cp ${PKG_BUILD}/projects/unix/mupen64plus-video-gliden.so ${UPLUGINDIR}
-  #$STRIP ${UPLUGINDIR}/mupen64plus-video-gliden.so
-  chmod 0644 ${UPLUGINDIR}/mupen64plus-video-gliden.so
+  cp ${PKG_BUILD}/projects/cmake/plugin/Release/mupen64plus-video-GLideN64.so ${UPLUGINDIR} 
+  #$STRIP ${UPLUGINDIR}/mupen64plus-video-GLideN64.so
+  chmod 0644 ${UPLUGINDIR}/mupen64plus-video-GLideN64.so
   mkdir -p ${USHAREDIR}
-  cp ${PKG_BUILD}/ini/GlideN64.ini ${USHAREDIR}
-  chmod 0644 ${USHAREDIR}/GlideN64.ini
+  cp ${PKG_BUILD}/ini/GLideN64.ini ${USHAREDIR}
+  chmod 0644 ${USHAREDIR}/GLideN64.ini
 }
 
