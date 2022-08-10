@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 
-PKG_NAME="gliden64"
+PKG_NAME="mupen64-plussa-video-gliden64"
 PKG_VERSION="Public_Release_4_0"
 PKG_SHA256="6b379cf109433527155b479d67a32c903bf074003907bea26de224a573501af6"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
-PKG_SITE="https://github.com/mupen64plus/mupen64plus-video-glide64mk2"
+PKG_SITE="https://github.com/gonetz/GLideN64"
 PKG_URL="https://github.com/gonetz/GLideN64/archive/refs/tags/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain boost libpng SDL2 SDL2_net zlib freetype nasm:host mupen64plussa-core"
 PKG_SHORTDESC="mupen64plus-video-gliden64"

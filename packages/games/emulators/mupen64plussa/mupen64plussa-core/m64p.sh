@@ -102,6 +102,9 @@ fi
 echo ${SET_PARAMS}
 
 case $1 in
+	"m64p_gliden64")
+		/usr/local/bin/mupen64plus --configdir $TMP --gfx mupen64plus-video-GLideN64 $SET_PARAMS "$2"
+	;;
 	"m64p_gl64mk2")
 		/usr/local/bin/mupen64plus --configdir $TMP --gfx mupen64plus-video-glide64mk2 $SET_PARAMS "$2"
 	;;
