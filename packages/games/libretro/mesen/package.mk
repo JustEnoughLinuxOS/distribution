@@ -2,8 +2,8 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="mesen"
-PKG_VERSION="b7278942e0a20f2856c594226f146115d02fab20"
-PKG_SHA256="249e731488dbe7823f707c256fe60eb6b75f45cff54adeead193263520ce0d0a"
+PKG_VERSION="a03ff76e33d77e695a70c42c8c47dc84d7a161ac"
+PKG_SHA256="a6af9093bd0713d2eaa9cf92be51861eca9a29bc98c27925f4aa442a1199a8b7"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/libretro/Mesen"

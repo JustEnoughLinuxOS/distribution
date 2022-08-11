@@ -112,13 +112,16 @@ fi
 ### We need the original system cooling profile later so get it now!
 COOLINGPROFILE=$(get_setting cooling.profile)
 
-### Set the overclock mode
-OVERCLOCK=$(get_setting "overclock" "${PLATFORM}" "${ROMNAME##*/}")
-if [ ! "${OVERCLOCK}" = "system" ]
+if [ -e "/usr/bin/overclock" ]
 then
-  if [ ! -z "${OVERCLOCK}" ] && [ -e "/usr/bin/overclock" ]
+  ### Set the overclock mode
+  OVERCLOCK=$(get_setting "overclock" "${PLATFORM}" "${ROMNAME##*/}")
+  if [ ! "${OVERCLOCK}" = "system" ]
   then
-    /usr/bin/overclock ${OVERCLOCK}
+    if [ ! -z "${OVERCLOCK}" ] && [ -e "/usr/bin/overclock" ]
+    then
+      /usr/bin/overclock ${OVERCLOCK}
+    fi
   fi
 fi
 
