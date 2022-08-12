@@ -17,5 +17,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
                            --disable-valgrind"
 
 makeinstall_target() {
-  :
+  mkdir -p $INSTALL/usr/bin
+  cp jq $INSTALL/usr/bin/
 }
+
