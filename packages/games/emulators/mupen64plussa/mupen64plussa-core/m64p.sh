@@ -68,11 +68,15 @@ get_setting "game_aspect_ratio"
 echo ${EES}
 if [ "${EES}" == "fullscreen" ]; then
 	# TODO: Set aspect ratio to fullscreen
-	SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$SCREENWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT --set Video-Glide64mk2[aspect]=2"
+	SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$SCREENWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT --set Video-Glide64mk2[aspect]=2 --set Video-GLideN64[AspectRatio]=3"
 else
 	# TODO: Set aspect ratio to 4:3
-	GAMEWIDTH=$(((SCREENHEIGHT * 4) / 3))
-	SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$GAMEWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT"
+	if [ $1 = "m64p_rice" ]; then
+		GAMEWIDTH=$(((SCREENHEIGHT * 4) / 3))
+		SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$GAMEWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT"
+	else
+	SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$SCREENWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT --set Video-Glide64mk2[aspect]=0 --set Video-GLideN64[AspectRatio]=1"
+	fi
 fi
 
 # Game Aspect Ratio
@@ -94,9 +98,9 @@ fi
 get_setting "show_fps"
 echo ${EES}
 if [ "${EES}" == "auto" ] || [ "${EES}" == "disabled" ] || [ "${EES}" == "false" ] || [ "${EES}" == "none" ] || [ "${EES}" == "0" ]; then
-	SET_PARAMS="$SET_PARAMS --set Video-Glide64mk2[show_fps]=0 --set Video-Rice[ShowFPS]=\"False\""
+	SET_PARAMS="$SET_PARAMS --set Video-Glide64mk2[show_fps]=0 --set Video-Rice[ShowFPS]=\"False\" --set Video-GLideN64[ShowFPS]=0"
 else
-	SET_PARAMS="$SET_PARAMS --set Video-Glide64mk2[show_fps]=1 --set Video-Rice[ShowFPS]=\"True\""
+	SET_PARAMS="$SET_PARAMS --set Video-Glide64mk2[show_fps]=1 --set Video-Rice[ShowFPS]=\"True\" --set Video-GLideN64[ShowFPS]=1"
 fi
 
 echo ${SET_PARAMS}
