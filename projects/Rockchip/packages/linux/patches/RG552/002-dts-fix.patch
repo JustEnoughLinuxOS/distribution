@@ -1,0 +1,277 @@
+diff --git a/arch/arm64/boot/dts/rockchip/rk3399-rg552.dts b/arch/arm64/boot/dts/rockchip/rk3399-rg552.dts
+index 7de684ed1edc..ecd98a95054e 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3399-rg552.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3399-rg552.dts
+@@ -93,7 +93,7 @@ adcmux: adc-mux {
+ 		channels = "0", "1", "2", "3";
+ 	};
+ 
+-	analog {
++	adc-analog {
+ 		compatible = "adc-joystick";
+ 		io-channels = <&adcmux 0>, <&adcmux 1>, <&adcmux 2>, <&adcmux 3>;
+ 		#address-cells = <1>;
+@@ -119,7 +119,7 @@ axis@2 {
+ 			reg = <2>;
+ 			abs-flat = <32>;
+ 			abs-fuzz = <16>;
+-			abs-range = <1024 0>;
++			abs-range = <0 1024>;
+ 			linux,code = <ABS_Y>;
+ 		};
+ 
+@@ -127,12 +127,12 @@ axis@3 {
+ 			reg = <3>;
+ 			abs-flat = <32>;
+ 			abs-fuzz = <16>;
+-			abs-range = <0 1024>;
++			abs-range = <1024 0>;
+ 			linux,code = <ABS_RY>;
+ 		};
+ 	};
+ 
+-	gamepad {
++	gpio-gamepad {
+ 		compatible = "gpio-keys";
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&btn_pins>;
+@@ -158,7 +158,7 @@ sw4 {
+ 		};
+ 		sw5 {
+ 		        gpios = <&gpio3 RK_PA6 GPIO_ACTIVE_LOW>;
+-		        label = "GPIO KEY BTN-A";
++		        label = "GPIO BTN-A";
+ 		        linux,code = <BTN_EAST>;
+ 		};
+ 		sw6 {
+@@ -178,47 +178,47 @@ sw8 {
+ 		};
+ 		sw9 {
+ 		        gpios = <&gpio3 RK_PB1 GPIO_ACTIVE_LOW>;
+-		        label = "GPIO BTN_SELECT";
++		        label = "GPIO BTN-SELECT";
+ 		        linux,code = <BTN_SELECT>;
+ 		};
+ 		sw10 {
+ 		        gpios = <&gpio3 RK_PB0 GPIO_ACTIVE_LOW>;
+-		        label = "GPIO BTN_START";
++		        label = "GPIO BTN-START";
+ 		        linux,code = <BTN_START>;
+ 		};
+ 		sw11 {
+ 		        gpios = <&gpio3 RK_PC0 GPIO_ACTIVE_LOW>;
+-		        label = "GPIO BTN_F";
++		        label = "GPIO BTN-F";
+ 		        linux,code = <BTN_MODE>;
+ 		};
+ 		sw12 {
+ 		        gpios = <&gpio3 RK_PD0 GPIO_ACTIVE_LOW>;
+-		        label = "GPIO BTN_TL";
++		        label = "GPIO BTN-TL";
+ 		        linux,code = <BTN_TL>;
+ 		};
+ 		sw13 {
+ 		        gpios = <&gpio3 RK_PD2 GPIO_ACTIVE_LOW>;
+-		        label = "GPIO BTN_TR";
++		        label = "GPIO BTN-TR";
+ 		        linux,code = <BTN_TR>;
+ 		};
+ 		sw14 {
+ 		        gpios = <&gpio3 RK_PD1 GPIO_ACTIVE_LOW>;
+-		        label = "GPIO BTN_TL2";
++		        label = "GPIO BTN-TL2";
+ 		        linux,code = <BTN_TL2>;
+ 		};
+ 		sw15 {
+ 		        gpios = <&gpio3 RK_PD3 GPIO_ACTIVE_LOW>;
+-		        label = "GPIO BTN_TR2";
++		        label = "GPIO BTN-TR2";
+ 		        linux,code = <BTN_TR2>;
+ 		};
+ 		sw16 {
+ 		        gpios = <&gpio3 RK_PB3 GPIO_ACTIVE_LOW>;
+-		        label = "GPIO BTN_THUMBL";
++		        label = "GPIO BTN-THUMBL";
+ 		        linux,code = <BTN_THUMBL>;
+ 		};
+ 		sw17 {
+ 		        gpios = <&gpio3 RK_PB4 GPIO_ACTIVE_LOW>;
+-		        label = "GPIO BTN_THUMBR";
++		        label = "GPIO BTN-THUMBR";
+ 		        linux,code = <BTN_THUMBR>;
+ 		};
+ 	};
+@@ -276,7 +276,7 @@ fan: pwm-fan {
+ 		compatible = "pwm-fan";
+ 		pwms = <&pwm1 0 10000 1>;
+ 		#cooling-cells = <2>;
+-		cooling-levels = <0 80 170 255>;
++		cooling-levels = <80 140 200 255>;
+ 		fan-supply = <&vcc5v0_sys>;
+ 	};
+ 
+@@ -446,34 +446,90 @@ vcc_wifi: vcc-wifi-regulator {
+ 		regulator-always-on;
+ 		regulator-boot-on;
+ 	};
++
++	dmc_opp_table: dmc_opp_table {
++		compatible = "operating-points-v2";
++
++		opp-300000000 {
++			opp-hz = /bits/ 64 <300000000>;
++			opp-microvolt = <900000>;
++		};
++		opp-666000000 {
++			opp-hz = /bits/ 64 <666000000>;
++			opp-microvolt = <900000>;
++		};
++		opp-800000000 {
++			opp-hz = /bits/ 64 <800000000>;
++			opp-microvolt = <900000>;
++		};
++		opp-856000000 {
++			opp-hz = /bits/ 64 <856000000>;
++			opp-microvolt = <900000>;
++		};
++		opp-928000000 {
++			opp-hz = /bits/ 64 <928000000>;
++			opp-microvolt = <900000>;
++		};
++		opp-933000000 {
++			opp-hz = /bits/ 64 <933000000>;
++			opp-microvolt = <900000>;
++		};
++	};
++};
++
++&cluster0_opp
++{
++	opp-1608000000 {
++		opp-hz = /bits/ 64 <1608000000>;
++		opp-microvolt = <1200000 1200000 1250000>;
++	};
++};
++
++&cluster1_opp
++{
++	opp-2088000000 {
++		opp-hz = /bits/ 64 <2088000000>;
++		opp-microvolt = <1250000 1250000 1250000>;
++	};
+ };
+ 
+ &cpu_thermal {
+-        trips {
+-                cpu_warm: cpu_warm {
+-                        temperature = <55000>;
+-                        hysteresis = <2000>;
+-                        type = "active";
+-                };
++	trips {
++		cpu_warm: cpu_warm {
++			temperature = <50000>;
++			hysteresis = <2000>;
++			type = "active";
++		};
+ 
+-                cpu_hot: cpu_hot {
+-                        temperature = <65000>;
+-                        hysteresis = <2000>;
+-                        type = "active";
+-                };
+-        };
++		cpu_hot: cpu_hot {
++			temperature = <55000>;
++			hysteresis = <2000>;
++			type = "active";
++		};
+ 
+-        cooling-maps {
+-                map2 {
+-                        trip = <&cpu_warm>;
+-                        cooling-device = <&fan THERMAL_NO_LIMIT 1>;
+-                };
++		cpu_scalding: cpu_scalding {
++			temperature = <65000>;
++			hysteresis = <5000>;
++			type = "active";
++		};
++	};
+ 
+-                map3 {
+-                        trip = <&cpu_hot>;
+-                        cooling-device = <&fan 2 THERMAL_NO_LIMIT>;
+-                };
+-        };
++	cooling-maps {
++		map1 {
++			trip = <&cpu_warm>;
++			cooling-device = <&fan THERMAL_NO_LIMIT 1>;
++		};
++
++		map2 {
++			trip = <&cpu_hot>;
++			cooling-device = <&fan THERMAL_NO_LIMIT 1>;
++		};
++
++		map3 {
++			trip = <&cpu_scalding>;
++			cooling-device = <&fan 2 THERMAL_NO_LIMIT>;
++		};
++	};
+ };
+ 
+ &cpu_l0 {
+@@ -851,6 +907,7 @@ vdd_gpu: regulator@41 {
+ 		compatible = "silergy,syr828";
+ 		reg = <0x41>;
+ 		fcs,suspend-voltage-selector = <1>;
++		vsel-gpios = <&gpio1 RK_PB6 GPIO_ACTIVE_HIGH>;
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&vsel2_pin>;
+ 		regulator-name = "vdd_gpu";
+@@ -990,15 +1047,15 @@ &pmu_io_domains {
+ };
+ 
+ &pinctrl {
+-	es8316 {
+-		hp_det_pin: hp-det-pin {
+-				rockchip,pins = <0 RK_PB0 RK_FUNC_GPIO &pcfg_pull_up>;
+-		};
++        es8316 {
++			hp_det_pin: hp-det-pin {
++					rockchip,pins = <0 RK_PB0 RK_FUNC_GPIO &pcfg_pull_up>;
++			};
+ 
+-		spk_en_pin: spk-en-pin {
+-			rockchip,pins = <1 RK_PC5 RK_FUNC_GPIO &pcfg_pull_down>;
+-		};
+-	};
++			spk_en_pin: spk-en-pin {
++				rockchip,pins = <1 RK_PC5 RK_FUNC_GPIO &pcfg_pull_down>;
++			};
++        };
+ 
+         i2s1 {
+                 i2s_8ch_mclk_pin: i2s-8ch-mclk-pin {
+@@ -1186,12 +1243,18 @@ &usb_host1_ohci {
+ &usbdrd3_0 {
+ 	status = "okay";
+ };
+-
++/*
+ &usbdrd_dwc3_0 {
+ 	status = "okay";
+ 	usb-role-switch;
+ 	dr_mode = "otg";
+ };
++*/
++
++&usbdrd_dwc3_0 {
++	status = "okay";
++	dr_mode = "host";
++};
+ 
+ &usbdrd3_1 {
+ 	status = "okay";
