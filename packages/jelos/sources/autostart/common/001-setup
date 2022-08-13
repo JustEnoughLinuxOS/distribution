@@ -31,3 +31,7 @@ if [ -z "$(get_setting system.cpugovernor)" ]
 then
   set_setting system.cpugovernor interactive
 fi
+
+### Make sure there are no invalid characters in system.cfg
+### or ES will not start.
+sed -i 's/[\d128-\d255]//g' /storage/.config/system/configs/system.cfg
