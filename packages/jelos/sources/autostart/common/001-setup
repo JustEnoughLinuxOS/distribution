@@ -35,4 +35,4 @@ fi
 ### Make sure there are no invalid characters in system.cfg
 ### or ES will not start.
 cp /storage/.config/system/configs/system.cfg /storage/.config/system/configs/last_system.cfg
-grep -i "^[A-Z|a-z]" /storage/.config/system/configs/last_system.cfg >/storage/.config/system/configs/system.cfg
+grep -ai "^[A-Z|a-z]" /storage/.config/system/configs/last_system.cfg >/storage/.config/system/configs/system.cfg
