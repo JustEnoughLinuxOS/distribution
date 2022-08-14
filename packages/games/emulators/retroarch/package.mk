@@ -31,11 +31,11 @@ pre_configure_target() {
 
   case ${ARCH} in
     arm)
-      PKG_DEPENDS_TARGET+=" librga ${OPENGLES}"
+      PKG_DEPENDS_TARGET+=" ${OPENGLES}"
       PKG_CONFIGURE_OPTS_TARGET+=" --enable-neon --enable-opengles --enable-opengles3 --enable-opengles3_2 --enable-kms --disable-mali_fbdev"
     ;;
     aarch64)
-      PKG_DEPENDS_TARGET+=" librga ${OPENGLES}"
+      PKG_DEPENDS_TARGET+=" ${OPENGLES}"
       PKG_CONFIGURE_OPTS_TARGET+=" --disable-neon --enable-opengles --enable-opengles3 --enable-opengles3_2 --enable-kms --disable-mali_fbdev"
     ;;
     *)
@@ -45,7 +45,7 @@ pre_configure_target() {
 
   case ${DEVICE} in
     RG351P|RG552)
-      PKG_DEPENDS_TARGET+=" libgo2"
+      PKG_DEPENDS_TARGET+=" librga libgo2"
       PKG_CONFIGURE_OPTS_TARGET+=" --enable-odroidgo2"
     ;;
   esac
