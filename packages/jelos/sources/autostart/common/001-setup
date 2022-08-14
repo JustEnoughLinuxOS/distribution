@@ -32,3 +32,6 @@ then
   set_setting system.cpugovernor interactive
 fi
 
+### Test for binary data in system.cfg and clean it
+### if it exists.
+/usr/bin/clean_sysconfig
