@@ -32,7 +32,6 @@ then
   set_setting system.cpugovernor interactive
 fi
 
-### Make sure there are no invalid characters in system.cfg
-### or ES will not start.
-cp /storage/.config/system/configs/system.cfg /storage/.config/system/configs/last_system.cfg
-grep -ai "^[A-Z|a-z]" /storage/.config/system/configs/last_system.cfg >/storage/.config/system/configs/system.cfg
+### Test for binary data in system.cfg and clean it
+### if it exists.
+/usr/bin/clean_sysconfig

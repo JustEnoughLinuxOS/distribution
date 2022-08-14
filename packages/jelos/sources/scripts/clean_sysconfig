@@ -1,0 +1,56 @@
+#!/bin/bash
+
+###
+### Attempt to safely clean any binary data out of the system config.
+###
+. /etc/profile
+
+J_DIR="/storage/.config/system"
+L_CONF="${J_DIR}/configs/last_system.cfg"
+
+get_setting() {
+  if [ ! -z "${3}" ]
+  then
+    ### Test to see if we have a game setting.
+    VAR="$2\[\"$(echo ${3} | sed 's/[\(\)]/\\&/g')\"\]\.$1"
+    OUTPUT=$(awk 'BEGIN {FS="="} /^'"${VAR}"'/ {print $NF}' ${L_CONF})
+    if [ ! -z "${OUTPUT}" ]
+    then
+      echo ${OUTPUT}
+      return
+    else
+      ### If not, check to see if we have a system setting.
+      awk -F: '/^'"${2}.${1}"'=/ { st = index($0,"=");print substr($0,st+1);exit}' ${L_CONF}
+      return
+    fi
+  elif [ -z "${3}" ] && [ ! -z "${2}" ]
+  then
+      ### Check to see if we have a system setting.
+      awk -F: '/^'"${2}.${1}"'=/ {  st = index($0,"=");print substr($0,st+1);exit}' ${L_CONF}
+      return
+  else
+    ### Check to see if we have a global setting
+    awk -F: '/^'"${1}"='/ { st = index($0,"=");print substr($0,st+1);exit}' ${L_CONF}
+    return
+  fi
+}
+
+cd /storage/.config/system/configs
+cp system.cfg last_system.cfg
+TYPE=$(grep a system.cfg 2>&1)
+if [[ "${TYPE}" =~ binary ]]
+then
+  cp /usr/config/system/configs/system.cfg .
+  awk 'BEGIN {FS="="} /^[A-z]/ {print $1}' last_system.cfg >/tmp/keys
+  while read line;
+  do
+    if [[ "${line}" =~ \[ ]]
+    then
+      continue
+    fi
+    if [ -n "${line}" ]
+    then
+      set_setting ${line} "$(get_setting ${line})"
+    fi
+  done < /tmp/keys
+fi
