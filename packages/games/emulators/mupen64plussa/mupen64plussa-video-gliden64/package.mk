@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 
-PKG_NAME="mupen64-plussa-video-gliden64"
+PKG_NAME="mupen64plussa-video-gliden64"
 PKG_VERSION="Public_Release_4_0"
+#PKG_VERSION="github-actions"
 PKG_SHA256="6b379cf109433527155b479d67a32c903bf074003907bea26de224a573501af6"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
