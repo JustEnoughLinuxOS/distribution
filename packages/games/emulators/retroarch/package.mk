@@ -2,7 +2,7 @@
 # Copyright (C) 2021-present 351ELEC (https://github.com/351ELEC)
 
 PKG_NAME="retroarch"
-PKG_VERSION="4c4bec11f7a469ed560b729d56df2d7bdcb4a032"
+PKG_VERSION="4b7be8de3fca295c2dc18b3f8ea6d473dbd7ffaa"
 PKG_SITE="https://github.com/libretro/RetroArch"
 PKG_URL="${PKG_SITE}.git"
 PKG_LICENSE="GPLv3"
@@ -43,8 +43,8 @@ pre_configure_target() {
       PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengl --enable-vulkan --enable-vulkan_display"
   esac
 
-  case ${PROJECT} in
-    Rockchip)
+  case ${DEVICE} in
+    RG351P|RG552)
       PKG_DEPENDS_TARGET+=" librga libgo2"
       PKG_CONFIGURE_OPTS_TARGET+=" --enable-odroidgo2"
     ;;
