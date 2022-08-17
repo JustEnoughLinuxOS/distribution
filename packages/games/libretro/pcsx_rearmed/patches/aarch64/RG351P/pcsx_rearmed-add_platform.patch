@@ -11,8 +11,7 @@ diff -rupN pcsx_rearmed.orig/Makefile.libretro pcsx_rearmed/Makefile.libretro
 +	SHARED := -shared -Wl,-version-script=link.T
 +	ARCH = arm64
 +	DYNAREC = ari64
-+       BUILTIN_GPU = neon
-        HAVE_NEON = 1
++       BUILTIN_GPU = peops
 +	CFLAGS += -fomit-frame-pointer -ffast-math -Ofast -DARM
 +	CPUFLAGS += -march=armv8-a+crc -mcpu=cortex-a35 -mtune=cortex-a35
 +
