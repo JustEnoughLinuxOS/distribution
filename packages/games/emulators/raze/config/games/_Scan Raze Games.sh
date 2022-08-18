@@ -13,6 +13,7 @@ grp_files=$(find "${RAZEPATH}" -type f -iname "*.grp")
 echo "Adding games..." >/dev/console
 while read -r grp_file; do
 	path=$(dirname "${grp_file}")
+	path=${path#"$RAZEPATH/"}
 	if [[ "$path" =~ \ |\' ]]; then
 		path="\"${path}\""
 	fi
@@ -22,7 +23,7 @@ while read -r grp_file; do
 	fi
 	file="${RAZEPATH}/${grp%.*}.build"
 	cat >"${file}" <<-EOM
-		PATH=${path#"$RAZEPATH/"}
+		PATH=${path}
 		GRP=${grp}
 		-- end --
 	EOM
