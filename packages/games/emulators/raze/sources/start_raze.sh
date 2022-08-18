@@ -40,7 +40,7 @@ if [ ${EXT} == "build" ]; then
     done < "${1}"
 fi
 
-if [[ ! "RUN_DIR" == "/storage/roms/build" ]]; then
+if [[ ! "$RUN_DIR" == "/storage/roms/build" ]]; then
   cd "${RUN_DIR}"
   /usr/bin/raze ${params} >/var/log/raze.log 2>&1
 fi
