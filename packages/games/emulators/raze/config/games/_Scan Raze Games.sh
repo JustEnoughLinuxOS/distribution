@@ -12,8 +12,9 @@ echo "Scanning for games..." >/dev/console
 grp_files=$(find "${RAZEPATH}" -type f -iname "*.grp")
 echo "Adding games..." >/dev/console
 while read -r grp_file; do
-	path=$(dirname "${grp_file}")
-	path=${path#"$RAZEPATH/"}
+	abs_path=$(dirname "${grp_file}")
+	cp -f /storage/.config/game/raze/raze.pk3 "${abs_path}/raze.pk3"
+	path=${abs_path#"$RAZEPATH/"}
 	if [[ "$path" =~ \ |\' ]]; then
 		path="\"${path}\""
 	fi
