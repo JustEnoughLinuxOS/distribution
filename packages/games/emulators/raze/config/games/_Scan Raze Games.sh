@@ -9,11 +9,10 @@ RAZEPATH="/storage/roms/build"
 
 clear >/dev/console
 echo "Scanning for games..." >/dev/console
-grp_files=$(find "${RAZEPATH}" -type f -iname "*.grp")
+grp_files=$(find "${RAZEPATH}" -type f \( -iname "*.grp" -o -iname "*.rff" \))
 echo "Adding games..." >/dev/console
 while read -r grp_file; do
 	abs_path=$(dirname "${grp_file}")
-	cp -f /storage/.config/game/raze/raze.pk3 "${abs_path}/raze.pk3"
 	path=${abs_path#"$RAZEPATH/"}
 	if [[ "$path" =~ \ |\' ]]; then
 		path="\"${path}\""
