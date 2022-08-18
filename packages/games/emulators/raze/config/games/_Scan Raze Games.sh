@@ -16,8 +16,8 @@ while read -r grp_file; do
 	grp=$(basename "${grp_file}")
 	file="${RAZEPATH}/${grp%.*}.build"
 	cat >"${file}" <<-EOM
-		PATH=${path#"$RAZEPATH/"}
-		GRP=${grp}
+		PATH="${path#"$RAZEPATH/"}"
+		GRP="${grp}"
 		-- end --
 	EOM
 done <<<"${grp_files}"
