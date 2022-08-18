@@ -52,7 +52,7 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/config/game/raze
   if [ -d "${PKG_DIR}/config/${DEVICE}" ]
   then
-    cp -r ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/config/game/raze
+    cp -rf ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/config/game/raze
     chmod 0755 ${INSTALL}/usr/config/game/raze/games/*sh
   fi
   cp ${PKG_BUILD}/.${TARGET_NAME}/*.pk3 ${INSTALL}/usr/config/game/raze
