@@ -30,7 +30,11 @@ if [ ${EXT} == "build" ]; then
   dos2unix "${1}"
   while IFS== read -r key value; do
     if [ "$key" == "PATH" ]; then
-      RUN_DIR+="/$value"
+      # Unquote path value
+      temp="${value}"
+      temp="${temp%\"}"
+      temp="${temp#\"}"
+      RUN_DIR+="/$temp"
     fi
     if [ "$key" == "GRP" ]; then
       params+=" -gamegrp $value"
@@ -38,8 +42,5 @@ if [ ${EXT} == "build" ]; then
   done <"${1}"
 fi
 
-if [[ ! "$RUN_DIR" == "/storage/roms/build" ]]; then
-  cd "${RUN_DIR}"
-fi
-
+cd "${RUN_DIR}"
 /usr/bin/raze ${params} >/var/log/raze.log 2>&1
