@@ -19,8 +19,14 @@ while read -r grp_file; do
 	fi
 	grp=$(basename "${grp_file}")
 	if [[ "$grp" =~ \ |\' ]]; then
-		path="\"${grp}\""
+		grp="\"${grp}\""
 	fi
+
+	# Skip known non-game matches
+	if [[ ${grp^^} = "GUI.RFF" || ${grp^^} = "SOUNDS.RFF" ]]; then
+		continue
+	fi
+
 	file="${RAZEPATH}/${grp%.*}.build"
 	cat >"${file}" <<-EOM
 		PATH=${path}

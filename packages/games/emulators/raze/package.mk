@@ -50,10 +50,11 @@ makeinstall_target() {
   chmod 0755 ${INSTALL}/usr/bin/*
 
   mkdir -p ${INSTALL}/usr/config/game/raze
+  cp -rf ${PKG_DIR}/config/games ${INSTALL}/usr/config/game/raze
+  chmod 0755 ${INSTALL}/usr/config/game/raze/games/*sh
   if [ -d "${PKG_DIR}/config/${DEVICE}" ]
   then
     cp -rf ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/config/game/raze
-    chmod 0755 ${INSTALL}/usr/config/game/raze/games/*sh
   fi
   cp ${PKG_BUILD}/.${TARGET_NAME}/*.pk3 ${INSTALL}/usr/config/game/raze
   cp -r ${PKG_BUILD}/.${TARGET_NAME}/soundfonts ${INSTALL}/usr/config/game/raze
