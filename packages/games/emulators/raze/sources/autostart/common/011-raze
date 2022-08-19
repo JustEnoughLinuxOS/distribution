@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (C) 2022-present travis134
+
+#If ThemeMaster does not exist copy ThemeMaster folder to roms/ports
+if [ ! -e "/storage/roms/build/_Scan Raze Games.sh" ]; then
+    cp "/storage/.config/raze/games/_Scan Raze Games.sh" "/storage/roms/build/_Scan Raze Games.sh"
+    chmod +x "/storage/roms/build/_Scan Raze Games.sh"
+fi
