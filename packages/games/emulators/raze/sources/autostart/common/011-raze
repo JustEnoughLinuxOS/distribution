@@ -5,6 +5,6 @@
 
 #If ThemeMaster does not exist copy ThemeMaster folder to roms/ports
 if [ ! -e "/storage/roms/build/_Scan Build Engine Games.sh" ]; then
-    cp "/storage/.config/raze/games/_Scan Build Engine Games.sh" "/storage/roms/build/_Scan Build Engine Games.sh"
+    cp "/usr/config/game/raze/games/_Scan Build Engine Games.sh" "/storage/roms/build/_Scan Build Engine Games.sh"
     chmod +x "/storage/roms/build/_Scan Build Engine Games.sh"
 fi
