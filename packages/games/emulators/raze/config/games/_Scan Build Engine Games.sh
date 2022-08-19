@@ -8,7 +8,22 @@
 BUILDENGINEPATH="/storage/roms/build"
 
 # From https://zdoom.org/wiki/Raze#Supported_games
-SUPPORTED_GRP=("BLOOD.RFF" "DUKE3D.GRP" "DUKEDC.GRP" "VACATION.GRP" "NWINTER.GRP" "STUFF.DAT" "NAM.GRP" "REDNECK.GRP" "SW.GRP" "TD.GRP" "TWINDRAG.GRP" "WT.GRP" "WW2GI.GRP" "PLATOONL.DAT")
+SUPPORTED_GRP=(
+	"BLOOD.RFF"
+	"DUKE3D.GRP"
+	"DUKEDC.GRP"
+	"VACATION.GRP"
+	"NWINTER.GRP"
+	"STUFF.DAT"
+	"NAM.GRP"
+	"REDNECK.GRP"
+	"SW.GRP"
+	"TD.GRP"
+	"TWINDRAG.GRP"
+	"WT.GRP"
+	"WW2GI.GRP"
+	"PLATOONL.DAT"
+)
 
 clear >/dev/console
 echo "Scanning for games..." >/dev/console
