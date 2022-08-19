@@ -5,7 +5,7 @@
 
 . /etc/profile
 
-RAZEPATH="/storage/roms/build"
+BUILDENGINEPATH="/storage/roms/build"
 
 # From https://zdoom.org/wiki/Raze#Supported_games
 SUPPORTED_GRP=("BLOOD.RFF" "DUKE3D.GRP" "DUKEDC.GRP" "VACATION.GRP" "NWINTER.GRP" "STUFF.DAT" "NAM.GRP" "REDNECK.GRP" "SW.GRP" "TD.GRP" "TWINDRAG.GRP" "WT.GRP" "WW2GI.GRP" "PLATOONL.DAT")
@@ -20,11 +20,11 @@ for i in "${!SUPPORTED_GRP[@]}"; do
 	find_names+=("-name")
 	find_names+=("${SUPPORTED_GRP[$i]}")
 done
-grp_files=$(find "${RAZEPATH}" -mindepth 1 -type f \( "${find_names[@]}" \))
+grp_files=$(find "${BUILDENGINEPATH}" -mindepth 1 -type f \( "${find_names[@]}" \))
 echo "Adding games..." >/dev/console
 while read -r grp_file; do
 	abs_path=$(dirname "${grp_file}")
-	path=${abs_path#"$RAZEPATH/"}
+	path=${abs_path#"$BUILDENGINEPATH/"}
 	filename="${path##*/}"
 	if [[ "$path" =~ \ |\' ]]; then
 		path="\"${path}\""
@@ -34,7 +34,7 @@ while read -r grp_file; do
 		grp="\"${grp}\""
 	fi
 
-	file="${RAZEPATH}/${filename}.build"
+	file="${BUILDENGINEPATH}/${filename}.build"
 	cat >"${file}" <<-EOM
 		PATH=${path}
 		GRP=${grp}
