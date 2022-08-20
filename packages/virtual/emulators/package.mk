@@ -16,7 +16,7 @@ PKG_EMUS="hatarisa openbor hypseus-singe moonlight hypseus-singe pico-8 flycasts
 PKG_RETROARCH="retroarch retroarch-overlays retroarch-assets common-shaders glsl-shaders \
                libretro-database core-info"
 
-LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce beetle-pcfx      \
+LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce beetle-pce-fast beetle-pcfx      \
                 beetle-supafaust beetle-supergrafx beetle-vb beetle-wswan bluemsx cannonball cap32   \
                 crocods daphne dinothawr dosbox-svn dosbox-pure duckstation easyrpg fbalpha2012      \
                 fbalpha2019 fbneo fceumm fmsx flycast flycast_libretro freechaf freeintv             \
