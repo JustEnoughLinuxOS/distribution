@@ -56,7 +56,7 @@ makeinstall_target() {
   then
     cp -rf ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/config/game/raze
     cat ${INSTALL}/usr/config/game/raze/defaults.ini >> ${INSTALL}/usr/config/game/raze/raze.ini
-    rm cat ${INSTALL}/usr/config/game/raze/defaults.ini
+    rm ${INSTALL}/usr/config/game/raze/defaults.ini
   fi
   cp ${PKG_BUILD}/.${TARGET_NAME}/*.pk3 ${INSTALL}/usr/config/game/raze
   cp -r ${PKG_BUILD}/.${TARGET_NAME}/soundfonts ${INSTALL}/usr/config/game/raze
