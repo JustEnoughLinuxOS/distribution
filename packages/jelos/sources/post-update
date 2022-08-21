@@ -54,7 +54,7 @@ rsync --ignore-existing /usr/config/rsync.conf /storage/.config/
 ### Replace es_systems and es_features with links to manage them
 for es_cfg in es_features.cfg es_systems.cfg
 do
-  if [ -d "/storage/.config/emulationstation/${es_cfg}" ]
+  if [ -e "/storage/.config/emulationstation/${es_cfg}" ]
   then
     mv /storage/.config/emulationstation/${es_cfg} /storage/.config/emulationstation/last_${es_cfg}
   fi
