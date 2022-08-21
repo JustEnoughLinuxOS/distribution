@@ -50,10 +50,17 @@ makeinstall_target() {
   chmod 0755 ${INSTALL}/usr/bin/*
 
   mkdir -p ${INSTALL}/usr/config/game/raze
+  cp -rf ${PKG_DIR}/config/common/* ${INSTALL}/usr/config/game/raze
+  chmod 0755 ${INSTALL}/usr/config/game/raze/games/*sh
   if [ -d "${PKG_DIR}/config/${DEVICE}" ]
   then
-    cp ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/config/game/raze
+    cp -rf ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/config/game/raze
+    cat ${INSTALL}/usr/config/game/raze/defaults.ini >> ${INSTALL}/usr/config/game/raze/raze.ini
+    rm ${INSTALL}/usr/config/game/raze/defaults.ini
   fi
   cp ${PKG_BUILD}/.${TARGET_NAME}/*.pk3 ${INSTALL}/usr/config/game/raze
   cp -r ${PKG_BUILD}/.${TARGET_NAME}/soundfonts ${INSTALL}/usr/config/game/raze
+
+  mkdir -p ${INSTALL}/usr/lib/autostart/common
+  cp ${PKG_DIR}/sources/autostart/common/* ${INSTALL}/usr/lib/autostart/common
 }
