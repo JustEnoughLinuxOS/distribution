@@ -36,14 +36,14 @@ if [ ${EXT} == "doom" ]; then
       temp="${value}"
       temp="${temp%\"}"
       temp="${temp#\"}"
-      params+=" -iwad $value"
+      params+=" -iwad $temp"
     fi
     if [ "$key" == "MOD" ]; then
       # Unquote
       temp="${value}"
       temp="${temp%\"}"
       temp="${temp#\"}"
-      params+=" -file $value"
+      params+=" -file $temp"
     fi
   done <"${1}"
 else
