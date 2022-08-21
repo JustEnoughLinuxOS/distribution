@@ -11,13 +11,11 @@ RUN_DIR="/storage/roms/doom"
 CONFIG="/storage/.config/game/gzdoom/gzdoom.ini"
 SAVE_DIR="/storage/roms/gamedata/gzdoom"
 
-if [ ! -L "/storage/.config/gzdoom" ]
-then
+if [ ! -L "/storage/.config/gzdoom" ]; then
   ln -sf "/storage/.config/game/gzdoom" "/storage/.config/gzdoom"
 fi
 
-if [ ! -f "/storage/.config/game/gzdoom/gzdoom.ini" ]
-then
+if [ ! -f "/storage/.config/game/gzdoom/gzdoom.ini" ]; then
   cp -rf /usr/config/game/gzdoom/gzdoom.ini /storage/.config/game/gzdoom/
 fi
 
@@ -34,12 +32,20 @@ if [ ${EXT} == "doom" ]; then
   dos2unix "${1}"
   while IFS== read -r key value; do
     if [ "$key" == "IWAD" ]; then
+      # Unquote
+      temp="${value}"
+      temp="${temp%\"}"
+      temp="${temp#\"}"
       params+=" -iwad $value"
     fi
     if [ "$key" == "MOD" ]; then
+      # Unquote
+      temp="${value}"
+      temp="${temp%\"}"
+      temp="${temp#\"}"
       params+=" -file $value"
     fi
-    done < "${1}"
+  done <"${1}"
 else
   params+=" -iwad ${1}"
 fi
