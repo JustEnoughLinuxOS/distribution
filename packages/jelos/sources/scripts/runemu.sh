@@ -34,7 +34,7 @@ if [ "$(get_es_setting string LogLevel)" == "minimal" ]; then
     LOG=false
 else
     LOG=true
-	VERBOSE=true
+  VERBOSE=true
 fi
 
 arguments="$@"
@@ -51,12 +51,12 @@ GAMEFOLDER="${ROMNAME//${BASEROMNAME}}"
 
 ### Determine if we're running a Libretro core and append the libretro suffix
 if [[ $EMULATOR = "retroarch" ]]; then
-	EMU="${CORE}_libretro"
-	RETROARCH="yes"
+  EMU="${CORE}_libretro"
+  RETROARCH="yes"
 elif [[ $EMULATOR = "mupen64plussa" ]]; then
-	EMU="M64P"
+  EMU="M64P"
 else
-	EMU="${CORE}"
+  EMU="${CORE}"
 fi
 
 # freej2me needs the JDK to be downloaded on the first run
@@ -80,16 +80,16 @@ fi
 
 # check if we started as host for a game
 if [[ "$arguments" == *"--host"* ]]; then
-	NETPLAY="${arguments##*--host}"  # read from --host onwards
-	NETPLAY="${NETPLAY%%--nick*}"  # until --nick is found
-	NETPLAY="--host $NETPLAY --nick"
+  NETPLAY="${arguments##*--host}"  # read from --host onwards
+  NETPLAY="${NETPLAY%%--nick*}"  # until --nick is found
+  NETPLAY="--host $NETPLAY --nick"
 fi
 
 # check if we are trying to connect to a client on netplay
 if [[ "$arguments" == *"--connect"* ]]; then
-	NETPLAY="${arguments##*--connect}"  # read from --connect onwards
-	NETPLAY="${NETPLAY%%--nick*}"  # until --nick is found
-	NETPLAY="--connect $NETPLAY --nick"
+  NETPLAY="${arguments##*--connect}"  # read from --connect onwards
+  NETPLAY="${NETPLAY%%--nick*}"  # until --nick is found
+  NETPLAY="--connect $NETPLAY --nick"
 fi
 
 ### Set the performance mode
@@ -143,26 +143,26 @@ set_setting "netplay.client.port" "disable"
 ### Function Library
 
 function log() {
-	if [ ${LOG} == true ]
-	then
-		if [[ ! -d "$LOGSDIR" ]]
-		then
-			mkdir -p "$LOGSDIR"
-		fi
-		echo "${MYNAME}: $1" 2>&1 | tee -a ${LOGSDIR}/${LOGFILE}
-	else
-		echo "${MYNAME}: $1"
-	fi
+  if [ ${LOG} == true ]
+  then
+    if [[ ! -d "$LOGSDIR" ]]
+    then
+      mkdir -p "$LOGSDIR"
+    fi
+    echo "${MYNAME}: $1" 2>&1 | tee -a ${LOGSDIR}/${LOGFILE}
+  else
+    echo "${MYNAME}: $1"
+  fi
 }
 
 function loginit() {
-	if [ ${LOG} == true ]
-	then
-		if [ -e ${LOGSDIR}/${LOGFILE} ]
-		then
-			rm -f ${LOGSDIR}/${LOGFILE}
-		fi
-		cat <<EOF >${LOGSDIR}/${LOGFILE}
+  if [ ${LOG} == true ]
+  then
+    if [ -e ${LOGSDIR}/${LOGFILE} ]
+    then
+      rm -f ${LOGSDIR}/${LOGFILE}
+    fi
+    cat <<EOF >${LOGSDIR}/${LOGFILE}
 Emulation Run Log - Started at $(date)
 
 ARG1: $1
@@ -177,57 +177,57 @@ USING CONFIG: ${RATMPCONF}
 USING APPENDCONFIG : ${RAAPPENDCONF}
 
 EOF
-	else
-		log "Emulation Run Log - Started at $(date)"
-	fi
+  else
+    log "Emulation Run Log - Started at $(date)"
+  fi
 }
 
 function quit() {
-	$VERBOSE && log "Cleaning up and exiting"
-	bluetooth enable
-	jslisten stop
-	clear_screen
-	DEVICE_CPU_GOVERNOR=$(get_setting system.cpugovernor)
-	${DEVICE_CPU_GOVERNOR}
-	set_audio default
-	exit $1
+  $VERBOSE && log "Cleaning up and exiting"
+  bluetooth enable
+  jslisten stop
+  clear_screen
+  DEVICE_CPU_GOVERNOR=$(get_setting system.cpugovernor)
+  ${DEVICE_CPU_GOVERNOR}
+  set_audio default
+  exit $1
 }
 
 function clear_screen() {
-	$VERBOSE && log "Clearing screen"
-	clear >/dev/console
+  $VERBOSE && log "Clearing screen"
+  clear >/dev/console
 }
 
 function bluetooth() {
-	if [ "$1" == "disable" ]
-	then
-		$VERBOSE && log "Disabling BT"
-		if [[ "$BTENABLED" == "1" ]]
-		then
-			NPID=$(pgrep -f batocera-bluetooth-agent)
-			if [[ ! -z "$NPID" ]]; then
-				kill "$NPID"
-			fi
-		fi
-	elif [ "$1" == "enable" ]
-	then
-		$VERBOSE && log "Enabling BT"
-		if [[ "$BTENABLED" == "1" ]]
-		then
-			systemd-run batocera-bluetooth-agent
-		fi
-	fi
+  if [ "$1" == "disable" ]
+  then
+    $VERBOSE && log "Disabling BT"
+    if [[ "$BTENABLED" == "1" ]]
+    then
+      NPID=$(pgrep -f batocera-bluetooth-agent)
+      if [[ ! -z "$NPID" ]]; then
+        kill "$NPID"
+      fi
+    fi
+  elif [ "$1" == "enable" ]
+  then
+    $VERBOSE && log "Enabling BT"
+    if [[ "$BTENABLED" == "1" ]]
+    then
+      systemd-run batocera-bluetooth-agent
+    fi
+  fi
 }
 
 function setaudio() {
-	$VERBOSE && log "Setting up audio"
-	AUDIO_DEVICE="hw:$(get_setting audio_device)"
-	if [ $AUDIO_DEVICE = "hw:" ]
-	then
-		AUDIO_DEVICE="hw:0,0"
-	fi
-	sed -i "s|pcm \"hw:.*|pcm \"${AUDIO_DEVICE}\"|" /storage/.config/asound.conf
-	set_audio alsa
+  $VERBOSE && log "Setting up audio"
+  AUDIO_DEVICE="hw:$(get_setting audio_device)"
+  if [ $AUDIO_DEVICE = "hw:" ]
+  then
+    AUDIO_DEVICE="hw:0,0"
+  fi
+  sed -i "s|pcm \"hw:.*|pcm \"${AUDIO_DEVICE}\"|" /storage/.config/asound.conf
+  set_audio alsa
 }
 
 ### Main Screen Turn On
@@ -240,51 +240,51 @@ jslisten stop
 ### Per emulator/core configurations
 if [ -z ${RETROARCH} ]
 then
-	$VERBOSE && log "Configuring for a non-libretro emulator"
-	case ${PLATFORM} in
-		"setup")
-				RUNTHIS='${TBASH} "${ROMNAME}"'
-		;;
-		"nds")
-			jslisten set "drastic"
-			RUNTHIS='${TBASH} /usr/bin/drastic.sh "${ROMNAME}"'
-		;;
-		"solarus")
-			if [ "$EMU" = "solarus" ]
-			then
-				jslisten set "solarus-run"
-				RUNTHIS='${TBASH} /usr/bin/solarus.sh "${ROMNAME}"'
-			fi
-		;;
-		"n64")
-			jslisten set "mupen64plus"
-			if [ "$EMU" = "M64P" ]
-			then
-				RUNTHIS='${TBASH} /usr/bin/m64p.sh "${CORE}" "${ROMNAME}"'
-			fi
-		;;
-		"pc")
-			jslisten set "dosbox dosbox-x"
-			if [ "$EMU" = "DOSBOXSDL2" ]
-			then
-				RUNTHIS='${TBASH} /usr/bin/dosbox.start -conf "${GAMEFOLDER}dosbox-SDL2.conf"'
-			elif [ "$EMU" = "DOSBOX-X" ]
-			then
-				RUNTHIS='${TBASH} /usr/bin/dosbox-x.start -conf "${GAMEFOLDER}dosbox-SDL2.conf"'
-			fi
-		;;
-		"neocd")
-			jslisten set "retroarch"
-			if [ "$EMU" = "fbneo" ]
-			then
-				RUNTHIS='/usr/bin/retroarch -L /usr/lib/libretro/fbneo_libretro.so --subsystem neocd --config ${RATMPCONF} --appendconfig ${RAAPPENDCONF} "${ROMNAME}"'
-			fi
-		;;
-		"psx")
+  $VERBOSE && log "Configuring for a non-libretro emulator"
+  case ${PLATFORM} in
+    "setup")
+        RUNTHIS='${TBASH} "${ROMNAME}"'
+    ;;
+    "nds")
+      jslisten set "drastic"
+      RUNTHIS='${TBASH} /usr/bin/drastic.sh "${ROMNAME}"'
+    ;;
+    "solarus")
+      if [ "$EMU" = "solarus" ]
+      then
+        jslisten set "solarus-run"
+        RUNTHIS='${TBASH} /usr/bin/solarus.sh "${ROMNAME}"'
+      fi
+    ;;
+    "n64")
+      jslisten set "mupen64plus"
+      if [ "$EMU" = "M64P" ]
+      then
+        RUNTHIS='${TBASH} /usr/bin/m64p.sh "${CORE}" "${ROMNAME}"'
+      fi
+    ;;
+    "pc")
+      jslisten set "dosbox dosbox-x"
+      if [ "$EMU" = "DOSBOXSDL2" ]
+      then
+        RUNTHIS='${TBASH} /usr/bin/dosbox.start -conf "${GAMEFOLDER}dosbox-SDL2.conf"'
+      elif [ "$EMU" = "DOSBOX-X" ]
+      then
+        RUNTHIS='${TBASH} /usr/bin/dosbox-x.start -conf "${GAMEFOLDER}dosbox-SDL2.conf"'
+      fi
+    ;;
+    "neocd")
+      jslisten set "retroarch"
+      if [ "$EMU" = "fbneo" ]
+      then
+        RUNTHIS='/usr/bin/retroarch -L /usr/lib/libretro/fbneo_libretro.so --subsystem neocd --config ${RATMPCONF} --appendconfig ${RAAPPENDCONF} "${ROMNAME}"'
+      fi
+    ;;
+    "psx")
                         jslisten set "duckstationsa"
-		        if [ "$EMU" = "duckstationsa" ]; then
-            		RUNTHIS='${TBASH} /usr/bin/duckstation.sh "${ROMNAME}"'
-        		fi
+            if [ "$EMU" = "duckstationsa" ]; then
+                RUNTHIS='${TBASH} /usr/bin/duckstation.sh "${ROMNAME}"'
+            fi
                 ;;
                 "gamecube")
                         jslisten set "dolphinsa"
@@ -293,104 +293,104 @@ then
                         fi
 
 ;;
-		"mplayer")
-			jslisten set "mpv"
-			RUNTHIS='${TBASH} /usr/bin/mpv_video.sh "${ROMNAME}"'
-		;;
-		"shell")
-			RUNTHIS='${TBASH} "${ROMNAME}"'
-		;;
-		*)
-			jslisten set "${CORE}"
-			RUNTHIS='${TBASH} "start_${CORE}.sh" "${ROMNAME}"'
-		esac
+    "mplayer")
+      jslisten set "mpv"
+      RUNTHIS='${TBASH} /usr/bin/mpv_video.sh "${ROMNAME}"'
+    ;;
+    "shell")
+      RUNTHIS='${TBASH} "${ROMNAME}"'
+    ;;
+    *)
+      jslisten set "${CORE}"
+      RUNTHIS='${TBASH} "start_${CORE}.sh" "${ROMNAME}"'
+    esac
 else
-	$VERBOSE && log "Configuring for a libretro core"
+  $VERBOSE && log "Configuring for a libretro core"
 
-	### Set jslisten to kill the appropriate retroarch
-	jslisten set "retroarch retroarch32"
-	setaudio alsa
+  ### Set jslisten to kill the appropriate retroarch
+  jslisten set "retroarch retroarch32"
+  setaudio alsa
 
 
-	if [[ "${HW_ARCH}" =~ aarch64 ]]
-	then
-		### Check if we need retroarch 32 bits or 64 bits
-		RABIN="retroarch"
-		if [[ "${CORE}" =~ pcsx_rearmed32 ]] || \
-	           [[ "${CORE}" =~ parallel_n64 ]] || \
-	           [[ "${CORE}" =~ gpsp ]] || \
-	           [[ "${CORE}" =~ flycast32 ]]
-		then
-			RABIN="retroarch32"
-		fi
-	fi
+  if [[ "${HW_ARCH}" =~ aarch64 ]]
+  then
+    ### Check if we need retroarch 32 bits or 64 bits
+    RABIN="retroarch"
+    if [[ "${CORE}" =~ pcsx_rearmed32 ]] || \
+             [[ "${CORE}" =~ parallel_n64 ]] || \
+             [[ "${CORE}" =~ gpsp ]] || \
+             [[ "${CORE}" =~ flycast32 ]]
+    then
+      RABIN="retroarch32"
+    fi
+  fi
 
-	# Platform specific configurations
+  # Platform specific configurations
         case ${PLATFORM} in
                 "doom")
-			# EXT can be wad, WAD, iwad, IWAD, pwad, PWAD or doom
-			EXT=${ROMNAME##*.}
+      # EXT can be wad, WAD, iwad, IWAD, pwad, PWAD or doom
+      EXT=${ROMNAME##*.}
 
-			# If its not a simple wad (extension .doom) read the file and parse the data
-			if [ ${EXT} == "doom" ]; then
-			  dos2unix "${1}"
-			  while IFS== read -r key value; do
-			    if [ "$key" == "IWAD" ]; then
-			      ROMNAME="$value"
-			    fi
-			    done < "${1}"
-			fi
+      # If its not a simple wad (extension .doom) read the file and parse the data
+      if [ ${EXT} == "doom" ]; then
+        dos2unix "${1}"
+        while IFS== read -r key value; do
+          if [ "$key" == "IWAD" ]; then
+            ROMNAME="$value"
+          fi
+          done < "${1}"
+      fi
                 ;;
         esac
-	
-	if [[ "${CORE}" =~ "custom" ]] 
-	then
-	RUNTHIS='${EMUPERF} /usr/bin/${RABIN} -L /storage/.config/retroarch/cores/${EMU}.so --config ${RATMPCONF} --appendconfig ${RAAPPENDCONF} "${ROMNAME}"'
-	else
-	RUNTHIS='${EMUPERF} /usr/bin/${RABIN} -L /usr/lib/libretro/${EMU}.so --config ${RATMPCONF} --appendconfig ${RAAPPENDCONF} "${ROMNAME}"'
-	fi
-	CONTROLLERCONFIG="${arguments#*--controllers=*}"
+  
+  if [[ "${CORE}" =~ "custom" ]] 
+  then
+  RUNTHIS='${EMUPERF} /usr/bin/${RABIN} -L /storage/.config/retroarch/cores/${EMU}.so --config ${RATMPCONF} --appendconfig ${RAAPPENDCONF} "${ROMNAME}"'
+  else
+  RUNTHIS='${EMUPERF} /usr/bin/${RABIN} -L /usr/lib/libretro/${EMU}.so --config ${RATMPCONF} --appendconfig ${RAAPPENDCONF} "${ROMNAME}"'
+  fi
+  CONTROLLERCONFIG="${arguments#*--controllers=*}"
 
-	if [[ "$arguments" == *"-state_slot"* ]]; then
-		CONTROLLERCONFIG="${CONTROLLERCONFIG%% -state_slot*}"  # until -state is found
-		SNAPSHOT="${arguments#*-state_slot *}" # -state_slot x
-		SNAPSHOT="${SNAPSHOT%% -*}"
-		if [[ "$arguments" == *"-autosave"* ]]; then
-			CONTROLLERCONFIG="${CONTROLLERCONFIG%% -autosave*}"  # until -autosave is found
-			AUTOSAVE="${arguments#*-autosave *}" # -autosave x
-			AUTOSAVE="${AUTOSAVE%% -*}"
-		else
-			AUTOSAVE=""
-		fi
-	else
-		CONTROLLERCONFIG="${CONTROLLERCONFIG%% --*}"  # until a -- is found
-		SNAPSHOT=""
-		AUTOSAVE=""
-	fi
+  if [[ "$arguments" == *"-state_slot"* ]]; then
+    CONTROLLERCONFIG="${CONTROLLERCONFIG%% -state_slot*}"  # until -state is found
+    SNAPSHOT="${arguments#*-state_slot *}" # -state_slot x
+    SNAPSHOT="${SNAPSHOT%% -*}"
+    if [[ "$arguments" == *"-autosave"* ]]; then
+      CONTROLLERCONFIG="${CONTROLLERCONFIG%% -autosave*}"  # until -autosave is found
+      AUTOSAVE="${arguments#*-autosave *}" # -autosave x
+      AUTOSAVE="${AUTOSAVE%% -*}"
+    else
+      AUTOSAVE=""
+    fi
+  else
+    CONTROLLERCONFIG="${CONTROLLERCONFIG%% --*}"  # until a -- is found
+    SNAPSHOT=""
+    AUTOSAVE=""
+  fi
 
 #	CORE=${EMU%%_*}
 
-	### Configure netplay
-	if [[ ${NETPLAY} != "No" ]]; then
-		NETPLAY_NICK=$(get_setting netplay.nickname)
-		[[ -z "$NETPLAY_NICK" ]] && NETPLAY_NICK="${uuidgen | awk 'BEGIN {FS="-"} {print toupper($1)}'}"
-		set_setting netplay.nickname ${NETPLAY_NICK}
+  ### Configure netplay
+  if [[ ${NETPLAY} != "No" ]]; then
+    NETPLAY_NICK=$(get_setting netplay.nickname)
+    [[ -z "$NETPLAY_NICK" ]] && NETPLAY_NICK="${uuidgen | awk 'BEGIN {FS="-"} {print toupper($1)}'}"
+    set_setting netplay.nickname ${NETPLAY_NICK}
 
-		if [[ "${NETPLAY}" == *"connect"* ]]; then
-			NETPLAY_PORT="${arguments##*--port }"  # read from -netplayport  onwards
-			NETPLAY_PORT="${NETPLAY_PORT%% *}"  # until a space is found
-			NETPLAY_IP="${arguments##*--connect }"  # read from -netplayip  onwards
-			NETPLAY_IP="${NETPLAY_IP%% *}"  # until a space is found
-			set_setting "netplay.client.ip" "${NETPLAY_IP}"
-			set_setting "netplay.client.port" "${NETPLAY_PORT}"
-			RUNTHIS=$(echo ${RUNTHIS} | sed "s|--config|--connect ${NETPLAY_IP}\|${NETPLAY_PORT} --nick ${NETPLAY_NICK} --config|")
-		else
-			RUNTHIS=$(echo ${RUNTHIS} | sed "s|--config|${NETPLAY} --nick ${NETPLAY_NICK} --config|")
-		fi
+    if [[ "${NETPLAY}" == *"connect"* ]]; then
+      NETPLAY_PORT="${arguments##*--port }"  # read from -netplayport  onwards
+      NETPLAY_PORT="${NETPLAY_PORT%% *}"  # until a space is found
+      NETPLAY_IP="${arguments##*--connect }"  # read from -netplayip  onwards
+      NETPLAY_IP="${NETPLAY_IP%% *}"  # until a space is found
+      set_setting "netplay.client.ip" "${NETPLAY_IP}"
+      set_setting "netplay.client.port" "${NETPLAY_PORT}"
+      RUNTHIS=$(echo ${RUNTHIS} | sed "s|--config|--connect ${NETPLAY_IP}\|${NETPLAY_PORT} --nick ${NETPLAY_NICK} --config|")
+    else
+      RUNTHIS=$(echo ${RUNTHIS} | sed "s|--config|${NETPLAY} --nick ${NETPLAY_NICK} --config|")
+    fi
 
-	fi
+  fi
 
-	# Platform specific configurations
+  # Platform specific configurations
         case ${PLATFORM} in
                 "atomiswave")
                         rm ${ROMNAME}.nvmem*
@@ -401,22 +401,22 @@ else
                         PORTSCRIPT="${arguments##*-SC}"  # read from -SC onwards
                 ;;
                 "scummvm")
-			GAMEDIR=$(cat "${ROMNAME}" | awk 'BEGIN {FS="\""}; {print $2}')
-			cd "${GAMEDIR}"
-			RUNTHIS='${TBASH} /usr/bin/scummvm.start libretro .'
+      GAMEDIR=$(cat "${ROMNAME}" | awk 'BEGIN {FS="\""}; {print $2}')
+      cd "${GAMEDIR}"
+      RUNTHIS='${TBASH} /usr/bin/scummvm.start libretro .'
                 ;;
         esac
 fi
 
 if [ -e "${SHADERTMP}" ]
 then
-	rm -f "${SHADERTMP}"
+  rm -f "${SHADERTMP}"
 fi
 
 if [[ ${PLATFORM} == "ports" ]]; then
-	(/usr/bin/setsettings.sh "${PLATFORM}" "${PORTSCRIPT}" "${CORE}" --controllers="${CONTROLLERCONFIG}" --autosave="${AUTOSAVE}" --snapshot="${SNAPSHOT}" >${SHADERTMP}) &
+  (/usr/bin/setsettings.sh "${PLATFORM}" "${PORTSCRIPT}" "${CORE}" --controllers="${CONTROLLERCONFIG}" --autosave="${AUTOSAVE}" --snapshot="${SNAPSHOT}" >${SHADERTMP}) &
 else
-	(/usr/bin/setsettings.sh "${PLATFORM}" "${ROMNAME}" "${CORE}" --controllers="${CONTROLLERCONFIG}" --autosave="${AUTOSAVE}" --snapshot="${SNAPSHOT}" >${SHADERTMP}) &
+  (/usr/bin/setsettings.sh "${PLATFORM}" "${ROMNAME}" "${CORE}" --controllers="${CONTROLLERCONFIG}" --autosave="${AUTOSAVE}" --snapshot="${SNAPSHOT}" >${SHADERTMP}) &
 fi
 SETSETTINGS_PID=$!
 
@@ -428,13 +428,13 @@ wait ${SETSETTINGS_PID}  #Don't wait for show splash
 ### If setsettings wrote data in the background, grab it and assign it to SHADERSET
 if [ -e "${SHADERTMP}" ]
 then
-	SHADERSET=$(cat ${SHADERTMP})
-	rm -f ${SHADERTMP}
-	$VERBOSE && log "Shader set to ${SHADERSET}"
+  SHADERSET=$(cat ${SHADERTMP})
+  rm -f ${SHADERTMP}
+  $VERBOSE && log "Shader set to ${SHADERSET}"
 fi
 
 if [[ ${SHADERSET} != 0 ]]; then
-	RUNTHIS=$(echo ${RUNTHIS} | sed "s|--config|${SHADERSET} --config|")
+  RUNTHIS=$(echo ${RUNTHIS} | sed "s|--config|${SHADERSET} --config|")
 fi
 
 clear_screen
@@ -442,47 +442,50 @@ $VERBOSE && log "executing game: ${ROMNAME}"
 $VERBOSE && log "script to execute: ${RUNTHIS}"
 # If the rom is a shell script just execute it, useful for DOSBOX and ScummVM scan scripts
 if [[ "${ROMNAME}" == *".sh" ]]; then
-	$VERBOSE && log "Executing shell script ${ROMNAME}"
-	"${ROMNAME}" &>>${OUTPUT_LOG}
+  $VERBOSE && log "Executing shell script ${ROMNAME}"
+  "${ROMNAME}" &>>${OUTPUT_LOG}
         ret_error=$?
 else
-	$VERBOSE && log "Executing $(eval echo ${RUNTHIS})"
-	eval ${RUNTHIS} &>>${OUTPUT_LOG}
-	ret_error=$?
+  $VERBOSE && log "Executing $(eval echo ${RUNTHIS})"
+  eval ${RUNTHIS} &>>${OUTPUT_LOG}
+  ret_error=$?
 fi
 
 clear_screen
 
 ### Restore the overclock mode
-OVERCLOCK=$(get_setting "system.overclock")
-if [ ! -z "${OVERCLOCK}" ]
+if [ -e "/usr/bin/overclock" ]
 then
-  /usr/bin/overclock ${OVERCLOCK}
-  if [ "${DEVICE_HAS_FAN}" = "true" ]
+  OVERCLOCK=$(get_setting "system.overclock")
+  if [ ! -z "${OVERCLOCK}" ]
   then
-    set_setting cooling.profile ${COOLINGPROFILE}
-    systemctl restart fancontrol
+    /usr/bin/overclock ${OVERCLOCK}
+    if [ "${DEVICE_HAS_FAN}" = "true" ]
+    then
+      set_setting cooling.profile ${COOLINGPROFILE}
+      systemctl restart fancontrol
+    fi
   fi
 fi
 
 $VERBOSE && log "Checking errors: ${ret_error} "
 if [ "${ret_error}" == "0" ]
 then
-	quit 0
+  quit 0
 else
-	log "exiting with $ret_error"
+  log "exiting with $ret_error"
 
-	# Check for missing bios if needed
-	REQUIRESBIOS=(atari5200 atari800 atari7800 atarilynx colecovision amiga amigacd32 o2em intellivision pcengine pcenginecd pcfx fds segacd saturn dreamcast naomi atomiswave x68000 neogeo neogeocd msx msx2 sc-3000)
+  # Check for missing bios if needed
+  REQUIRESBIOS=(atari5200 atari800 atari7800 atarilynx colecovision amiga amigacd32 o2em intellivision pcengine pcenginecd pcfx fds segacd saturn dreamcast naomi atomiswave x68000 neogeo neogeocd msx msx2 sc-3000)
 
-	(for e in "${REQUIRESBIOS[@]}"; do [[ "${e}" == "${PLATFORM}" ]] && exit 0; done) && RB=0 || RB=1
-	if [ $RB == 0 ]; then
-		CBPLATFORM="${PLATFORM}"
-		[[ "${CBPLATFORM}" == "msx2" ]] && CBPLATFORM="msx"
-		[[ "${CBPLATFORM}" == "pcenginecd" ]] && CBPLATFORM="pcengine"
-		[[ "${CBPLATFORM}" == "amigacd32" ]] && CBPLATFORM="amiga"
-		check_bios "${CBPLATFORM}" "${CORE}" "${EMULATOR}" "${ROMNAME}" "${LOGSDIR}/${LOGFILE}"
-	fi
-	quit 1
+  (for e in "${REQUIRESBIOS[@]}"; do [[ "${e}" == "${PLATFORM}" ]] && exit 0; done) && RB=0 || RB=1
+  if [ $RB == 0 ]; then
+    CBPLATFORM="${PLATFORM}"
+    [[ "${CBPLATFORM}" == "msx2" ]] && CBPLATFORM="msx"
+    [[ "${CBPLATFORM}" == "pcenginecd" ]] && CBPLATFORM="pcengine"
+    [[ "${CBPLATFORM}" == "amigacd32" ]] && CBPLATFORM="amiga"
+    check_bios "${CBPLATFORM}" "${CORE}" "${EMULATOR}" "${ROMNAME}" "${LOGSDIR}/${LOGFILE}"
+  fi
+  quit 1
 fi
 
