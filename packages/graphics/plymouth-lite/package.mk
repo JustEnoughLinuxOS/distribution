@@ -10,35 +10,22 @@ PKG_DEPENDS_INIT="toolchain ccache:init libpng"
 PKG_DEPENDS_TARGET="toolchain libpng"
 PKG_LONGDESC="Boot splash screen based on Fedora's Plymouth code"
 
-if [ "$UVESAFB_SUPPORT" = yes ]; then
-  PKG_DEPENDS_INIT="$PKG_DEPENDS_INIT v86d:init"
+if [ "${UVESAFB_SUPPORT}" = yes ]; then
+  PKG_DEPENDS_INIT="${PKG_DEPENDS_INIT} v86d:init"
 fi
 
 pre_configure_init() {
-  # plymouth-lite dont support to build in subdirs
   cd ${PKG_BUILD}
-    rm -rf .${TARGET_NAME}-init
+  rm -rf .${TARGET_NAME}-init
 }
 
 makeinstall_init() {
   mkdir -p ${INSTALL}/usr/bin
-    cp ply-image ${INSTALL}/usr/bin
-
-  mkdir -p ${INSTALL}/splash
-  find_file_path splash/splash.conf && cp ${FOUND_PATH} ${INSTALL}/splash
-  find_file_path "splash/splash-*.png" && cp ${FOUND_PATH} ${INSTALL}/splash
+  cp ply-image ${INSTALL}/usr/bin
 }
 
 pre_configure_target() {
-  # plymouth-lite dont support to build in subdirs
   cd ${PKG_BUILD}
-    rm -rf .${TARGET_NAME}-init
+  rm -rf .${TARGET_NAME}-init
 }
 
-post_makeinstall_target() {
-
-  mkdir -p ${INSTALL}/usr/config/splash
-
-  find_file_path "splash/splash-*.png" && cp ${FOUND_PATH} ${INSTALL}/usr/config/splash
-
-}
