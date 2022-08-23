@@ -329,7 +329,7 @@ else
         case ${PLATFORM} in
                 "doom")
 			# EXT can be wad, WAD, iwad, IWAD, pwad, PWAD or doom
-			EXT=${ROMNAME#*.}
+			EXT=${ROMNAME##*.}
 
 			# If its not a simple wad (extension .doom) read the file and parse the data
 			if [ ${EXT} == "doom" ]; then
@@ -454,15 +454,18 @@ fi
 clear_screen
 
 ### Restore the overclock mode
-OVERCLOCK=$(get_setting "system.overclock")
-if [ ! -z "${OVERCLOCK}" ]
+if [ -e "/usr/bin/overclock" ]
 then
-  /usr/bin/overclock ${OVERCLOCK}
-  if [ "${DEVICE_HAS_FAN}" = "true" ]
-  then
-    set_setting cooling.profile ${COOLINGPROFILE}
-    systemctl restart fancontrol
-  fi
+	OVERCLOCK=$(get_setting "system.overclock")
+	if [ ! -z "${OVERCLOCK}" ]
+	then
+		/usr/bin/overclock ${OVERCLOCK}
+		if [ "${DEVICE_HAS_FAN}" = "true" ]
+		then
+			set_setting cooling.profile ${COOLINGPROFILE}
+			systemctl restart fancontrol
+		fi
+	fi
 fi
 
 $VERBOSE && log "Checking errors: ${ret_error} "
