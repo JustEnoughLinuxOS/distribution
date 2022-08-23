@@ -36,6 +36,13 @@ for i in "${!SUPPORTED_GRP[@]}"; do
 	find_names+=("${SUPPORTED_GRP[$i]}")
 done
 grp_files=$(find "${BUILDENGINEPATH}" -mindepth 1 -type f \( "${find_names[@]}" \))
+# This is a hack that ensures any expansion GRP file gets written out as a
+# build file last. For example, VACATION.GRP is an expansion for DUKE3D.GRP.
+# For the expansion to work, both GRP files must be present, but the expansion
+# GRP must be passed to the Raze engine. It just so happens that all of the
+# expansion GRP files are named alphabetically later than base game GRP files,
+# meaning we can get by with a simple lexical sort before processing.
+grp_files=$(echo "${grp_files}" | sort)
 echo "Adding games..." >/dev/console
 while read -r grp_file; do
 	abs_path=$(dirname "${grp_file}")
