@@ -25,7 +25,7 @@ params=" -config ${CONFIG} -savedir ${SAVE_DIR}"
 params+=" +gl_es 1 +vid_preferbackend 3 +cl_capfps 0 +vid_fps 1"
 
 # EXT can be wad, WAD, iwad, IWAD, pwad, PWAD or doom
-EXT=${1#*.}
+EXT=${1##*.}
 
 # If its not a simple wad (extension .doom) read the file and parse the data
 if [ ${EXT} == "doom" ]; then
