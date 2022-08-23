@@ -20,7 +20,7 @@ make_target() {
 }
 
 mksplash() {
-  SPLASH="${ROOT}/distributions/JELOS/splash/splash.png"
+  SPLASH="${ROOT}/distributions/${DISTRO}/splash/splash.png"
   if [ -n "${DISPLAY_RESOLUTION}" ]
   then
     convert ${SPLASH} -background none -resize ${DISPLAY_RESOLUTION} -gravity center -extent ${DISPLAY_RESOLUTION} ${1}/splash.png
