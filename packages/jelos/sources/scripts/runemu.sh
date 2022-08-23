@@ -329,7 +329,7 @@ else
         case ${PLATFORM} in
                 "doom")
 			# EXT can be wad, WAD, iwad, IWAD, pwad, PWAD or doom
-			EXT=${ROMNAME#*.}
+			EXT=${ROMNAME##*.}
 
 			# If its not a simple wad (extension .doom) read the file and parse the data
 			if [ ${EXT} == "doom" ]; then
