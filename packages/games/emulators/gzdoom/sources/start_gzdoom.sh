@@ -43,4 +43,4 @@ else
 fi
 
 cd "${RUN_DIR}"
-echo ${params} | xargs /usr/bin/lzdoom >/var/log/gzdoom.log 2>&1
+echo ${params} | xargs /usr/bin/gzdoom >/var/log/gzdoom.log 2>&1
