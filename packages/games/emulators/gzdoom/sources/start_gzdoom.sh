@@ -32,18 +32,10 @@ if [ ${EXT} == "doom" ]; then
   dos2unix "${1}"
   while IFS== read -r key value; do
     if [ "$key" == "IWAD" ]; then
-      # Unquote
-      temp="${value}"
-      temp="${temp%\"}"
-      temp="${temp#\"}"
-      params+=" -iwad $temp"
+      params+=" -iwad $value"
     fi
     if [ "$key" == "MOD" ]; then
-      # Unquote
-      temp="${value}"
-      temp="${temp%\"}"
-      temp="${temp#\"}"
-      params+=" -file $temp"
+      params+=" -file $value"
     fi
   done <"${1}"
 else
@@ -51,4 +43,4 @@ else
 fi
 
 cd "${RUN_DIR}"
-/usr/bin/gzdoom ${params} >/var/log/gzdoom.log 2>&1
+echo ${params} | xargs /usr/bin/lzdoom >/var/log/gzdoom.log 2>&1
