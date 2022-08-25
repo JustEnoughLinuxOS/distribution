@@ -49,9 +49,27 @@ set_powersave() {
   fi
 }
 
+get_wifi_state() {
+  STATE=$(connmanctl state | awk '/State/ {print $3}' 2>/dev/null)
+  echo ${STATE}
+}
+
+check_wifi() {
+  SSID_CHK=$(grep "${SSID}" ${WIFICFG} 2>/dev/null)
+  KEY_CHK=$(grep "${PSK}" ${WIFICFG} 2>/dev/null)
+  STATE=$(get_wifi_state)
+  if [ -n "${SSID_CHK}" ] && \
+     [ -n "${KEY_CHK}" ] && \
+     [ "${STATE}" = "online" ]
+  then
+    exit 0
+  fi
+}
+
 set_wifi() {
   case "${1}" in
     "enable")
+      check_wifi
       set_setting wifi.enabled 1
       # Create the WIFI config.
       cat > "${WIFICFG}" <<EOF
@@ -64,10 +82,13 @@ Name=${SSID}
 Passphrase=${PSK}
 EOF
 
-      connmanctl enable wifi 2>/dev/null
+      STATE=$(get_wifi_state)
+      if [ ! "${STATE}" = "online" ]
+      then
+        connmanctl enable wifi 2>/dev/null
+      fi
       set_powersave 2>/dev/null
-      connmanctl scan wifi 2>/dev/null
-      connmanctl connect $(get_wifi_service "${SSID}") 2>/dev/null
+      nohup connmanctl connect $(get_wifi_service "${SSID}") 2>/dev/null &
     ;;
     "disable")
       connmanctl disable wifi 2>/dev/null
