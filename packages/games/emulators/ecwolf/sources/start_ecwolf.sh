@@ -81,6 +81,13 @@ else
   params+=" --data ${EXT}"
 fi
 
+do_cleanup() {
+  if mountpoint -q "$DST_PK3_FILE"; then
+    umount "$DST_PK3_FILE" &>/dev/null
+    rm "${DST_PK3_FILE}"
+  fi
+}
+
 if $LEGACY; then
   cd "${CONFIG_DIR}"
 else
@@ -90,12 +97,7 @@ else
   # ships with the distribution into the provided game path, if one isn't
   # already present.
   DST_PK3_FILE="${RUN_DIR}/ecwolf.pk3"
-  do_cleanup() {
-    if mountpoint -q "$DST_PK3_FILE"; then
-      umount "$DST_PK3_FILE" &>/dev/null
-      rm "${DST_PK3_FILE}"
-    fi
-  }
+
   if [ ! -e "$DST_PK3_FILE" ]; then
     touch "$DST_PK3_FILE"
     mount -o ro,bind "$PK3_FILE" "$DST_PK3_FILE" >/dev/null 2>&1
