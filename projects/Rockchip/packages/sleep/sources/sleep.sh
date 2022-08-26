@@ -20,7 +20,7 @@ case $1 in
     # RG351x devices are notorious for losing USB when they sleep.
     if [[ "${HW_DEVICE}" =~ RG351 ]]
     then
-      modprobe -r dwc2
+      nohup modprobe -r dwc2 &
     fi
 
     alsactl store -f /storage/.config/asound.state
@@ -29,6 +29,12 @@ case $1 in
 
   ;;
   post)
+    alsactl restore -f /storage/.config/asound.state
+
+    if [[ "${HW_DEVICE}" =~ RG351 ]]
+    then
+      nohup modprobe -i dwc2 &
+    fi
 
     if [ "${DEVICE_FAKE_JACKSENSE}" == "true" ]
     then
@@ -39,14 +45,6 @@ case $1 in
     then
       nohup systemctl start volume &
     fi
-
-    if [[ "${HW_DEVICE}" =~ RG351 ]]
-    then
-      modprobe -i dwc2
-      systemctl restart volume
-    fi
-
-    alsactl restore -f /storage/.config/asound.state
 
     DEVICE_VOLUME=$(get_setting "audio.volume" 2>/dev/null)
     amixer set "${DEVICE_AUDIO_MIXER}" ${DEVICE_VOLUME}% 2>&1 >/dev/null

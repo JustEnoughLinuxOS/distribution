@@ -23,11 +23,11 @@ mksplash() {
   SPLASH="${ROOT}/distributions/${DISTRO}/splash/splash.png"
   if [ -n "${DISPLAY_RESOLUTION}" ]
   then
-    convert ${SPLASH} -background none -resize ${DISPLAY_RESOLUTION} -gravity center -extent ${DISPLAY_RESOLUTION} ${1}/splash.png
-    convert ${SPLASH} -rotate 270 -background none -resize ${DISPLAY_RESOLUTION} -gravity center -extent ${DISPLAY_RESOLUTION} ${1}/splashl.png
+    convert ${SPLASH} -quality 100 -background black -resize ${DISPLAY_RESOLUTION} -gravity center -extent ${DISPLAY_RESOLUTION} ${1}/splash.png
+    convert ${SPLASH} -quality 100 -rotate 270 -background black -resize ${DISPLAY_RESOLUTION} -gravity center -extent ${DISPLAY_RESOLUTION} ${1}/splashl.png
   else
     cp ${SPLASH} ${INSTALL}/splash
-    convert ${SPLASH} -rotate 270 -background none ${INSTALL}/splash/splashl.png
+    convert ${SPLASH} -quality 100 -rotate 270 -background black ${INSTALL}/splash/splashl.png
   fi
 }
 
