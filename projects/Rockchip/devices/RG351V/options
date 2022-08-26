@@ -45,7 +45,7 @@
     KERNEL_MAKE_EXTRACMD+=" rockchip/${DEVICE_DTB}.dtb"
    
   # Display Resolution
-    DISPLAY_RESOLUTION="640x480"
+    SPLASH_RESOLUTION="640x480"
  
   # Mali GPU family
     MALI_FAMILY="bifrost-g31"

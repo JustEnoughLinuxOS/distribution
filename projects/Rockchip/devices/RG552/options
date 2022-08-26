@@ -47,7 +47,7 @@
     HW_CPU="Rockchip RK3399"
 
   # Display Resolution
-    DISPLAY_RESOLUTION="1152x1920"
+    SPLASH_RESOLUTION="1152x1920"
  
   # Mali GPU family
     MALI_FAMILY="midgard-t86x"
