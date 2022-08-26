@@ -20,7 +20,7 @@ case $1 in
     # RG351x devices are notorious for losing USB when they sleep.
     if [[ "${HW_DEVICE}" =~ RG351 ]]
     then
-      nohup modprobe -r dwc2 &
+      modprobe -r dwc2
     fi
 
     alsactl store -f /storage/.config/asound.state
@@ -33,7 +33,7 @@ case $1 in
 
     if [[ "${HW_DEVICE}" =~ RG351 ]]
     then
-      nohup modprobe -i dwc2 &
+      modprobe -i dwc2
     fi
 
     if [ "${DEVICE_FAKE_JACKSENSE}" == "true" ]
