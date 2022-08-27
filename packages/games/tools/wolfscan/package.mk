@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present travis134
 
 PKG_NAME="wolfscan"
-PKG_VERSION="a1348e1a48a9865e9a6b2e63ec515bbe3ab82167"
+PKG_VERSION="e605830490adb6738774541e2117312d02153b1d"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/travis134/wolfscan"
 PKG_URL="${PKG_SITE}.git"
