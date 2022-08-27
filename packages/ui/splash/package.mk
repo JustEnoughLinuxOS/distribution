@@ -21,10 +21,19 @@ make_target() {
 
 mksplash() {
   SPLASH="${ROOT}/distributions/${DISTRO}/splash/splash.png"
-  if [ -n "${DISPLAY_RESOLUTION}" ]
+  if [ -n "${SPLASH_RESOLUTION}" ]
   then
-    convert ${SPLASH} -quality 100 -background black -resize ${DISPLAY_RESOLUTION} -gravity center -extent ${DISPLAY_RESOLUTION} ${1}/splash.png
-    convert ${SPLASH} -quality 100 -rotate 270 -background black -resize ${DISPLAY_RESOLUTION} -gravity center -extent ${DISPLAY_RESOLUTION} ${1}/splashl.png
+
+    # Switch the resolution so the rotated image will scale correctly.
+    HRES=$(echo "${SPLASH_RESOLUTION}" | awk 'BEGIN {FS="x"} {print $1}')
+    VRES=$(echo "${SPLASH_RESOLUTION}" | awk 'BEGIN {FS="x"} {print $2}')
+    if [ "${VRES}" -gt "${HRES}" ]
+    then
+      convert ${SPLASH} -quality 100 -background black -resize ${VRES}x${HRES} -gravity center -extent ${VRES}x${HRES} ${1}/splash.png
+    else
+      convert ${SPLASH} -quality 100 -background black -resize ${SPLASH_RESOLUTION} -gravity center -extent ${SPLASH_RESOLUTION} ${1}/splash.png
+    fi
+    convert ${SPLASH} -rotate 270 -quality 100 -background black -resize ${SPLASH_RESOLUTION} -gravity center -extent ${SPLASH_RESOLUTION} ${1}/splashl.png
   else
     cp ${SPLASH} ${INSTALL}/splash
     convert ${SPLASH} -quality 100 -rotate 270 -background black ${INSTALL}/splash/splashl.png
