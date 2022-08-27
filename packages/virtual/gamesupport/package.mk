@@ -7,7 +7,7 @@ PKG_SITE="www.jelos.org"
 PKG_SECTION="virtual"
 PKG_LONGDESC="Game support software metapackage."
 
-PKG_GAMESUPPORT="sixaxis rg351p-js2xbox gptokeyb jstest-sdl gamecontrollerdb jelosaddons sdljoytest doomscan"
+PKG_GAMESUPPORT="sixaxis rg351p-js2xbox gptokeyb jstest-sdl gamecontrollerdb jelosaddons sdljoytest doomscan wolfscan"
 
 PKG_DEPENDS_TARGET="${PKG_GAMESUPPORT}"
 
