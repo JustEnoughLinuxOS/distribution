@@ -32,7 +32,7 @@ PKG_SOFTWARE=""
 
 PKG_COMPAT=""
 
-PKG_TOOLS="i2c-tools rclone jslisten evtest textviewer tailscale"
+PKG_TOOLS="i2c-tools rclone jslisten evtest tailscale"
 
 PKG_MULTIMEDIA="ffmpeg mpv vlc"
 

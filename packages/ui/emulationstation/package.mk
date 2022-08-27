@@ -18,8 +18,8 @@ GET_HANDLER_SUPPORT="git"
 PKG_PATCH_DIRS+="${DEVICE}"
 
 if [ ! "${OPENGL}" = "no" ]; then
-  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
-  PKG_CMAKE_OPTS_TARGET+=" -DGLES2=0"
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu"
+  PKG_CMAKE_OPTS_TARGET+=" -DGLES2=0 -DGLES=1"
 fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
