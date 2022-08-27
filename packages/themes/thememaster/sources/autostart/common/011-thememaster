@@ -11,7 +11,7 @@ then
 	mv /storage/roms/ports/ThemeMaster/ThemeMaster.sh /storage/roms/ports/ThemeMaster.sh
 fi
 
-#Check if gamelist.xml exists, if not create gamelist.xml to hide portmaster by default.
+#Check if gamelist.xml exists, if not create gamelist.xml to hide ThemeMaster by default.
 if [[ ! -e /storage/roms/ports/gamelist.xml ]];
 then
 touch /storage/roms/ports/gamelist.xml
@@ -26,7 +26,7 @@ touch /storage/roms/ports/gamelist.xml
 </gameList>
 EOF
 
-#If gamelist.xml exists and no portmaster entry exists then add portmaster entry & set to hidden.
+#If gamelist.xml exists and no ThemeMaster entry exists then add ThemeMaster entry & set to hidden.
 else
 if ! grep -R "ThemeMaster" "/storage/roms/ports/gamelist.xml"
 then

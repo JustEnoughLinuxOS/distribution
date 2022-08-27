@@ -16,9 +16,9 @@ if [ "${SPLASH_TYPE}" == "intro" ] || [ "${SPLASH_TYPE}" == "exit" ]
 then
   if [ ${vres} -gt ${hres} ]
   then
-    SPLASH="/usr/config/splash/splash-${hres}l.png"
+    SPLASH="/usr/config/splash/splashl.png"
   else
-    SPLASH="/usr/config/splash/splash-${hres}.png"
+    SPLASH="/usr/config/splash/splash.png"
   fi
 else
   exit 0
