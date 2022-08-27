@@ -17,7 +17,7 @@
   VULKAN_SUPPORT="yes"
 
 # Displayserver to use (weston / x11 / no)
-  DISPLAYSERVER="x11"
+  DISPLAYSERVER="wl"
 
 # Windowmanager to use (fluxbox / weston / no)
 #  WINDOWMANAGER="fluxbox"
