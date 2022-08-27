@@ -104,5 +104,4 @@ else
     umount "$DST_PK3_FILE" &>/dev/null
     rm "${DST_PK3_FILE}"
   fi
-
 fi
