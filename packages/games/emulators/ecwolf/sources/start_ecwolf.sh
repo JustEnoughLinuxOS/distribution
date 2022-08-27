@@ -81,15 +81,9 @@ else
   params+=" --data ${EXT}"
 fi
 
-do_cleanup() {
-  if mountpoint -q "$DST_PK3_FILE"; then
-    umount "$DST_PK3_FILE" &>/dev/null
-    rm "${DST_PK3_FILE}"
-  fi
-}
-
 if $LEGACY; then
   cd "${CONFIG_DIR}"
+  echo ${params} | xargs /usr/bin/ecwolf >/var/log/ecwolf.log 2>&1
 else
   # There doesn't appear to be a way to tell the engine with command line
   # arguments where the ecwolf.pk3 is located -- it just looks in the current
@@ -101,10 +95,14 @@ else
   if [ ! -e "$DST_PK3_FILE" ]; then
     touch "$DST_PK3_FILE"
     mount -o ro,bind "$PK3_FILE" "$DST_PK3_FILE" >/dev/null 2>&1
-    trap do_cleanup EXIT
   fi
 
   cd "${RUN_DIR}"
-fi
+  echo ${params} | xargs /usr/bin/ecwolf >/var/log/ecwolf.log 2>&1
 
-echo ${params} | xargs /usr/bin/ecwolf >/var/log/ecwolf.log 2>&1
+  if mountpoint -q "$DST_PK3_FILE"; then
+    umount "$DST_PK3_FILE" &>/dev/null
+    rm "${DST_PK3_FILE}"
+  fi
+
+fi
