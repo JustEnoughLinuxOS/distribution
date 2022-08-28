@@ -25,6 +25,8 @@ src-pkg:
 
 world: RG552 RG503 RG353P RG351P RG351V RG351MP
 
+handheld:
+	PROJECT=PC DEVICE=handheld ARCH=x86_64 ./scripts/build_distro
 X86_64:
 	PROJECT=PC DEVICE=X86_64 ARCH=x86_64 ./scripts/build_distro
 
