@@ -36,7 +36,7 @@ mksplash() {
     convert ${SPLASH} -rotate 270 -quality 100 -background black -resize ${SPLASH_RESOLUTION} -gravity center -extent ${SPLASH_RESOLUTION} ${1}/splashl.png
   else
     cp ${SPLASH} ${1}/splash
-    ln -sf /usr/config/splash/splash.png ${1}/splashl.png
+    cp ${SPLASH} ${1}/splash/splashl.png
   fi
 }
 
