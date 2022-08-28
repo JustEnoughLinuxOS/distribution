@@ -94,7 +94,7 @@ makeinstall_target() {
 	chmod 0755 ${INSTALL}/usr/bin/es_settings
 
 	cp ${PKG_BUILD}/start_es.sh ${INSTALL}/usr/bin
-	chmod -755 ${INSTALL}/usr/bin/start_es.sh
+	chmod 0755 ${INSTALL}/usr/bin/start_es.sh
 
 	mkdir -p ${INSTALL}/usr/lib/${PKG_PYTHON_VERSION}
 	cp -rf ${PKG_DIR}/bluez/* ${INSTALL}/usr/lib/${PKG_PYTHON_VERSION}
