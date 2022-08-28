@@ -50,14 +50,6 @@ case "${PROJECT}" in
   ;;
 esac
 
-### Device specific variables
-case "${DEVICE}" in
-  RG552|RG503|RG353P|RG351P|RG351V|RG351MP|X86_64)
-    PKG_SOFTWARE+=" emulators gamesupport"
-    PKG_TOOLS+=" 351files"
-  ;;
-esac
-
 if [ ! -z "${BASE_ONLY}" ]
 then
   PKG_DEPENDS_TARGET+=" ${PKG_BASEOS} ${PKG_TOOLS} ${PKG_UI}"
