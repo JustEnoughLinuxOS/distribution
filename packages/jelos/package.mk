@@ -52,7 +52,7 @@ esac
 
 ### Device specific variables
 case "${DEVICE}" in
-  RG552|RG503|RG353P|RG351P|RG351V|RG351MP)
+  RG552|RG503|RG353P|RG351P|RG351V|RG351MP|X86_64)
     PKG_SOFTWARE+=" emulators gamesupport"
     PKG_TOOLS+=" 351files"
   ;;

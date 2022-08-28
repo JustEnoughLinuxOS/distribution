@@ -16,6 +16,7 @@ PKG_PATCH_DIRS+="${DEVICE}"
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu vulkan-loader vulkan-headers"
   PKG_CMAKE_OPTS_TARGET+=" -DVIDEO_VULKAN=ON \
+                           -DVIDEO_OPENGL=ON \
                            -DVIDEO_X11=OFF"
 fi
 
