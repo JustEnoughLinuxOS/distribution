@@ -29,7 +29,7 @@ PKG_MESON_OPTS_TARGET="-Dbackend-drm=true \
                        -Dshell-fullscreen=false \
                        -Dshell-ivi=false \
                        -Dshell-kiosk=true \
-                       -Ddesktop-shell-client-default="weston-kiosk-shell" \
+                       -Ddesktop-shell-client-default="weston-desktop-shell" \
                        -Ddeprecated-wl-shell=false \
                        -Dcolor-management-lcms=false \
                        -Dcolor-management-colord=false \
