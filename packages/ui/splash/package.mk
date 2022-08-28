@@ -36,7 +36,7 @@ mksplash() {
     convert ${SPLASH} -rotate 270 -quality 100 -background black -resize ${SPLASH_RESOLUTION} -gravity center -extent ${SPLASH_RESOLUTION} ${1}/splashl.png
   else
     cp ${SPLASH} ${1}
-    convert ${SPLASH} -rotate 90 -quality 100 -background black -resize ${SPLASH_RESOLUTION} -gravity center -extent ${SPLASH_RESOLUTION} ${1}/splashl.png
+    convert ${SPLASH} -rotate 90 -quality 100 -background black -gravity center ${1}/splashl.png
   fi
 }
 
