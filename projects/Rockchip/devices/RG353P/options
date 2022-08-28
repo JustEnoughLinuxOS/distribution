@@ -63,6 +63,10 @@
 
   # additional packages to install
     #ADDITIONAL_PACKAGES=""
+    if [ ! -z "${BASE_ONLY}" ]
+    then
+      ADDITIONAL_PACKAGES=" emulators gamesupport 351files"
+    fi
 
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,

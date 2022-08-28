@@ -3,16 +3,14 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="ncurses"
-PKG_VERSION="6.1-20181215"
-PKG_SHA256="08b07c3e792961f300829512c283d5fefc0b1c421a57b76922c3d13303ed677d"
+PKG_VERSION="6.3-20220827"
 PKG_LICENSE="MIT"
 PKG_SITE="http://www.gnu.org/software/ncurses/"
 PKG_URL="http://invisible-mirror.net/archives/ncurses/current/ncurses-${PKG_VERSION}.tgz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="toolchain zlib ncurses:host"
 PKG_LONGDESC="A library is a free software emulation of curses in System V Release 4.0, and more."
-# causes some segmentation fault's (dialog) when compiled with gcc's link time optimization.
-PKG_BUILD_FLAGS="+pic"
+PKG_BUILD_FLAGS="+pic +pic:host"
 PKG_TOOLCHAIN="auto"
 
 pre_configure_target() {
@@ -65,6 +63,13 @@ PKG_CONFIGURE_OPTS_TARGET="
                            --disable-warnings \
                            --disable-home-terminfo \
                            --disable-assertions"
+
+PKG_CONFIGURE_OPTS_HOST="--enable-termcap \
+                         --without-termlib \
+                         --without-shared \
+                         --enable-pc-files \
+                         --without-tests \
+                         --without-manpages"
 
 post_makeinstall_target() {
   #cp -rf ${INSTALL}/usr/lib/* ${TOOLCHAIN}/${TARGET_ARCH}-libreelec-linux-gnu${TARGET_ABI}/lib
