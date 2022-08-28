@@ -46,6 +46,11 @@ case $1 in
       nohup systemctl start volume &
     fi
 
+    if [ "$(get_setting wifi.enabled)" == "1" ]
+    then
+      nohup wifictl reconnect &
+    fi
+
     DEVICE_VOLUME=$(get_setting "audio.volume" 2>/dev/null)
     amixer set "${DEVICE_AUDIO_MIXER}" ${DEVICE_VOLUME}% 2>&1 >/dev/null
 
