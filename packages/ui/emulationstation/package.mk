@@ -3,7 +3,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="emulationstation"
-PKG_VERSION="686b812"
+PKG_VERSION="d3424c6"
 PKG_GIT_CLONE_BRANCH="main"
 PKG_REV="1"
 PKG_ARCH="any"
@@ -18,8 +18,8 @@ GET_HANDLER_SUPPORT="git"
 PKG_PATCH_DIRS+="${DEVICE}"
 
 if [ ! "${OPENGL}" = "no" ]; then
-  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
-  PKG_CMAKE_OPTS_TARGET+=" -DGLES2=0"
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu"
+  PKG_CMAKE_OPTS_TARGET+=" -DGL=1"
 fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
@@ -92,6 +92,9 @@ makeinstall_target() {
         mkdir -p ${INSTALL}/usr/bin
 	cp ${PKG_BUILD}/es_settings ${INSTALL}/usr/bin
 	chmod 0755 ${INSTALL}/usr/bin/es_settings
+
+	cp ${PKG_BUILD}/start_es.sh ${INSTALL}/usr/bin
+	chmod -755 ${INSTALL}/usr/bin/start_es.sh
 
 	mkdir -p ${INSTALL}/usr/lib/${PKG_PYTHON_VERSION}
 	cp -rf ${PKG_DIR}/bluez/* ${INSTALL}/usr/lib/${PKG_PYTHON_VERSION}

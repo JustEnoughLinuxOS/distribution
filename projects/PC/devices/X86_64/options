@@ -8,7 +8,7 @@
   OPENGL="mesa"
 
 # OpenGL-ES implementation to use (mesa / no)
-  OPENGLES="no"
+  OPENGLES="mesa"
 
 # Vulkan implementation to use (vulkan-loader / no)
   VULKAN="vulkan-loader"
@@ -17,10 +17,10 @@
   VULKAN_SUPPORT="yes"
 
 # Displayserver to use (weston / x11 / no)
-  DISPLAYSERVER="x11"
+  DISPLAYSERVER="wl"
 
 # Windowmanager to use (fluxbox / weston / no)
-#  WINDOWMANAGER="fluxbox"
+  WINDOWMANAGER="weston"
 
 # Mesa 3D Graphic drivers to use (all / crocus,i915,iris,r300,r600,radeonsi,vmware,virtio)
 # Space separated list is supported,
