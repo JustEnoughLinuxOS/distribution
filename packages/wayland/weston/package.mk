@@ -7,7 +7,7 @@ PKG_SHA256="8a9e52506a865a7410981b04f8341b89b84106db8531ab1f9fdd37b5dc034115"
 PKG_LICENSE="MIT"
 PKG_SITE="https://wayland.freedesktop.org/"
 PKG_URL="https://gitlab.freedesktop.org/wayland/weston/-/releases/${PKG_VERSION}/downloads/${PKG_NAME}-${PKG_VERSION}.tar.xz"
-PKG_DEPENDS_TARGET="toolchain wayland wayland-protocols libdrm libxkbcommon libinput cairo pango libjpeg-turbo dbus seatd"
+PKG_DEPENDS_TARGET="toolchain wayland wayland-protocols libdrm libxkbcommon libinput cairo pango libjpeg-turbo dbus seatd glu ${OPENGL}"
 PKG_LONGDESC="Reference implementation of a Wayland compositor"
 
 PKG_MESON_OPTS_TARGET="-Dbackend-drm=true \
@@ -28,8 +28,8 @@ PKG_MESON_OPTS_TARGET="-Dbackend-drm=true \
                        -Dshell-desktop=true \
                        -Dshell-fullscreen=false \
                        -Dshell-ivi=false \
-                       -Dshell-kiosk=false \
-                       -Ddesktop-shell-client-default="weston-desktop-shell" \
+                       -Dshell-kiosk=true \
+                       -Ddesktop-shell-client-default="weston-kiosk-shell" \
                        -Ddeprecated-wl-shell=false \
                        -Dcolor-management-lcms=false \
                        -Dcolor-management-colord=false \
@@ -58,7 +58,7 @@ post_makeinstall_target() {
 
   mkdir -p ${INSTALL}/usr/share/weston
     cp ${PKG_DIR}/config/weston.ini ${INSTALL}/usr/share/weston
-    find_file_path "splash/splash-2160.png" && cp ${FOUND_PATH} ${INSTALL}/usr/share/weston/libreelec-wallpaper-2160.png
+    find_file_path "splash/splash.png" && cp ${FOUND_PATH} ${INSTALL}/usr/share/weston/libreelec-wallpaper-2160.png
 
   safe_remove ${INSTALL}/usr/share/wayland-sessions
 }

@@ -31,7 +31,8 @@ if [ "$DISPLAYSERVER" = "x11" ]; then
                     --disable-egl \
                     --with-x"
 
-elif [ "$DISPLAYSERVER" = "weston" ]; then
+elif [ "$DISPLAYSERVER" = "wl" ]; then
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET mesa libglvnd"
   PKG_CAIRO_CONFIG="--disable-xlib \
                     --disable-xlib-xrender \
                     --disable-gl \

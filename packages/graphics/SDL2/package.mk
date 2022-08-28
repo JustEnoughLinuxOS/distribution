@@ -14,7 +14,9 @@ PKG_DEPENDS_HOST="toolchain:host distutilscross:host"
 PKG_PATCH_DIRS+="${DEVICE}"
 
 if [ ! "${OPENGL}" = "no" ]; then
-  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu vulkan-loader vulkan-headers"
+  PKG_CMAKE_OPTS_TARGET+=" -DVIDEO_VULKAN=ON \
+                           -DVIDEO_X11=OFF"
 fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
@@ -24,13 +26,17 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
 			  -DVIDEO_X11=OFF"
 fi
 
-if [ "${ARCH}" = "x86_64" ]
+if [ "${DISPLAYSERVER}" = "wl" ]
 then
-  PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
-  PKG_CMAKE_OPTS_TARGET+=" -DVIDEO_VULKAN=ON \
-                           -DVIDEO_X11=ON"
+  PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers wayland ${WINDOWMANAGER}"
+  PKG_CMAKE_OPTS_TARGET+=" -DVIDEO_WAYLAND=ON \
+                           -DVIDEO_WAYLAND_QT_TOUCH=ON \
+                           -DWAYLAND_SHARED=ON"
+else
+  PKG_CMAKE_OPTS_TARGET+=" -DVIDEO_WAYLAND=OFF \
+                           -DVIDEO_WAYLAND_QT_TOUCH=ON \
+                           -DWAYLAND_SHARED=OFF"
 fi
-
 
 case ${PROJECT} in
   Rockchip)
@@ -67,9 +73,7 @@ pre_configure_target(){
                          -DSNDIO=OFF \
                          -DDISKAUDIO=OFF \
                          -DDUMMYAUDIO=OFF \
-                         -DVIDEO_WAYLAND=OFF \
-                         -DVIDEO_WAYLAND_QT_TOUCH=ON \
-                         -DWAYLAND_SHARED=OFF \
+                         -DVIDEO_X11=OFF \
                          -DVIDEO_MIR=OFF \
                          -DMIR_SHARED=OFF \
                          -DVIDEO_COCOA=OFF \
