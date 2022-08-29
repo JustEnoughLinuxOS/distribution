@@ -18,11 +18,11 @@ while read -r pak_file; do
 	if [[ "${path,,}" == *"id1"* ]]; then
 		filename="Quake"
 	elif [[ "${path,,}" == *"hipnotic"* ]]; then
-		filename="Quake Mission Pack 1: Scourge of Armagon"
+		filename="Quake Mission Pack 1 - Scourge of Armagon"
 	elif [[ "${path,,}h" == *"rogue"* ]]; then
-		filename="Quake Mission Pack No. 2: Dissolution of Eternity"
+		filename="Quake Mission Pack No. 2 - Dissolution of Eternity"
 	elif [[ "${path,,}" == *"dopa"* ]]; then
-		filename="Quake: Dimension of the Past"
+		filename="Quake - Dimension of the Past"
 	fi
 	file="${QUAKEPATH}/${filename}.quake"
 	cat >"${file}" <<-EOM
