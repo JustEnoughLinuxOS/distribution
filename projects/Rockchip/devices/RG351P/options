@@ -60,11 +60,7 @@
     EXTRA_CMDLINE="quiet console=tty0 fbcon=rotate:3 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
     
   # additional packages to install
-  # ADDITIONAL_PACKAGES=""
-    if [ ! -z "${BASE_ONLY}" ]
-    then
-      ADDITIONAL_PACKAGES=" emulators gamesupport 351files"
-    fi
+    ADDITIONAL_PACKAGES=" emulators gamesupport 351files"
 
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
