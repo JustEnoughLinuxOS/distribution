@@ -342,7 +342,7 @@ else
 			fi
                 ;;
 				"quake")
-			# EXT can be wad, WAD, iwad, IWAD, pwad, PWAD or doom
+			# EXT can only by quake
 			EXT=${ROMNAME##*.}
 
 			# If its not a simple pak (extension .pak0) read the file and parse the data
