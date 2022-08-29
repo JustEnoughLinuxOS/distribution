@@ -13,10 +13,6 @@ PKG_LONGDESC="A library is a free software emulation of curses in System V Relea
 PKG_BUILD_FLAGS="+pic +pic:host"
 PKG_TOOLCHAIN="auto"
 
-pre_configure_target() {
-   export CFLAGS="${CFLAGS} -fcommon -fPIC"
-}
-
 PKG_CONFIGURE_OPTS_TARGET="
                            --without-ada \
                            --without-cxx \
@@ -65,16 +61,24 @@ PKG_CONFIGURE_OPTS_TARGET="
                            --disable-assertions"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-termcap \
-                         --without-termlib \
+                         --with-termlib \
                          --without-shared \
                          --enable-pc-files \
                          --without-tests \
                          --without-manpages"
 
 post_makeinstall_target() {
-  #cp -rf ${INSTALL}/usr/lib/* ${TOOLCHAIN}/${TARGET_ARCH}-libreelec-linux-gnu${TARGET_ABI}/lib
+  local f
   cp misc/ncurses-config ${TOOLCHAIN}/bin
   chmod +x ${TOOLCHAIN}/bin/ncurses-config
-  sed -e "s:\(['=\" ]\)/usr:\\1${SYSROOT_PREFIX}/usr:g" -i ${TOOLCHAIN}/bin/ncurses-config
-  #rm -rf ${INSTALL}/usr/bin
+  sed -e "s:\(['=\" ]\)/usr:\\1${PKG_ORIG_SYSROOT_PREFIX}/usr:g" -i ${TOOLCHAIN}/bin/ncurses-config
+  rm -f ${TOOLCHAIN}/bin/ncurses6-config
+  rm -rf ${INSTALL}/usr/bin
+  # create links to be compatible with any ncurses include path and lib names
+  ln -sf . ${SYSROOT_PREFIX}/usr/include/ncursesw
+  ln -sf . ${SYSROOT_PREFIX}/usr/include/ncurses
+  for f in form menu ncurses panel; do
+    ln -sf lib${f}w.a ${SYSROOT_PREFIX}/usr/lib/lib${f}.a
+    ln -sf ${f}w.pc ${SYSROOT_PREFIX}/usr/lib/pkgconfig/${f}.pc
+  done
 }
