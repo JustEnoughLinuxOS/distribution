@@ -54,10 +54,11 @@ PKG_CONFIGURE_OPTS_TARGET="
                            --disable-hashmap \
                            --disable-safe-sprintf \
                            --disable-scroll-hints \
-                           --disable-widec \
+                           --enable-widec \
                            --disable-echo \
                            --disable-warnings \
                            --disable-home-terminfo \
+                           --enable-lib-suffixes \
                            --disable-assertions"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-termcap \
@@ -68,17 +69,7 @@ PKG_CONFIGURE_OPTS_HOST="--enable-termcap \
                          --without-manpages"
 
 post_makeinstall_target() {
-  local f
   cp misc/ncurses-config ${TOOLCHAIN}/bin
   chmod +x ${TOOLCHAIN}/bin/ncurses-config
-  sed -e "s:\(['=\" ]\)/usr:\\1${PKG_ORIG_SYSROOT_PREFIX}/usr:g" -i ${TOOLCHAIN}/bin/ncurses-config
-  rm -f ${TOOLCHAIN}/bin/ncurses6-config
-  rm -rf ${INSTALL}/usr/bin
-  # create links to be compatible with any ncurses include path and lib names
-  ln -sf . ${SYSROOT_PREFIX}/usr/include/ncursesw
-  ln -sf . ${SYSROOT_PREFIX}/usr/include/ncurses
-  for f in form menu ncurses panel; do
-    ln -sf lib${f}w.a ${SYSROOT_PREFIX}/usr/lib/lib${f}.a
-    ln -sf ${f}w.pc ${SYSROOT_PREFIX}/usr/lib/pkgconfig/${f}.pc
-  done
+  sed -e "s:\(['=\" ]\)/usr:\\1${SYSROOT_PREFIX}/usr:g" -i ${TOOLCHAIN}/bin/ncurses-config
 }
