@@ -19,7 +19,7 @@ case ${DEVICE} in
   ;;
   RG552)
     PKG_URL="${PKG_SITE}/rk3399-uboot.git"
-    PKG_VERSION="23f4a5d"
+    PKG_VERSION="b2b3fa8268"
   ;;
   RG353P|RG503)
     PKG_URL="${PKG_SITE}/rk356x-uboot.git"
