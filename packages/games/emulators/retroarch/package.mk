@@ -39,6 +39,11 @@ pre_configure_target() {
     *)
   esac
 
+  if [ "${DISPLAYSERVER}" = "wl" ]; then
+    PKG_DEPENDS_TARGET+=" ${DISPLAYSERVER} ${WINDOWMANAGER}"
+    PKG_CONFIGURE_OPTS_TARGET+=" --enable-wayland"
+  fi
+
   if [ ! "${OPENGL}" = "no" ]; then
       PKG_DEPENDS_TARGET+=" ${OPENGL} glu"
       PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengl"
