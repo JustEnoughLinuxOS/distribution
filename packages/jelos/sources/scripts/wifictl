@@ -98,6 +98,7 @@ EOF
     "reconnect")
       /usr/bin/wifictl disable
       /usr/bin/wifictl enable
+    ;;
     "list")
       #connmanctl services | cut -b 5- | awk '/wifi/ {sub(/\s+wifi_.*$/,"",$0);print}' | sort | uniq
       list_wifi | awk '{sub(/\S+=/,"",$0);print}'

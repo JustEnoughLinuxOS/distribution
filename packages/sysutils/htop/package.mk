@@ -15,6 +15,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-unicode \
                            HTOP_NCURSES_CONFIG_SCRIPT=ncurses6-config"
 
 pre_configure_target() {
-  export LDFLAGS="${LDFLAGS} -lreadline -lncurses -ltinfo"
+  export LDFLAGS="${LDFLAGS} -lreadline -lncursesw -ltinfow"
   export CFLAGS="${CFLAGS} -fcommon"
 }

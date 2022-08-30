@@ -182,7 +182,7 @@ post_install() {
   echo "chmod 4755 ${INSTALL}/usr/bin/busybox" >> $FAKEROOT_SCRIPT
   echo "chmod 000 ${INSTALL}/usr/cache/shadow" >> $FAKEROOT_SCRIPT
 
-  add_user root "${ROOT}_PWD" 0 0 "Root User" "/storage" "/bin/bash"
+  add_user root "${ROOT}_PWD" 0 0 "Root User" "/storage" "/bin/sh"
   add_group root 0
   add_group users 100
 
