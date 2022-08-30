@@ -14,17 +14,22 @@ PKG_DEPENDS_HOST="toolchain:host distutilscross:host"
 PKG_PATCH_DIRS+="${DEVICE}"
 
 if [ ! "${OPENGL}" = "no" ]; then
-  PKG_DEPENDS_TARGET+=" ${OPENGL} glu vulkan-loader vulkan-headers"
-  PKG_CMAKE_OPTS_TARGET+=" -DVIDEO_VULKAN=ON \
-                           -DVIDEO_OPENGL=ON \
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu"
+  PKG_CMAKE_OPTS_TARGET+=" -DVIDEO_OPENGL=ON \
                            -DVIDEO_X11=OFF"
 fi
 
-if [ "${OPENGLES_SUPPORT}" = yes ]; then
+if [ "${OPENGLES_SUPPORT}" = "yes" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
   PKG_CMAKE_OPTS_TARGET+="-DVIDEO_OPENGLES=ON \
                           -DVIDEO_VULKAN=OFF \
 			  -DVIDEO_X11=OFF"
+fi
+
+if [ "${VULKAN_SUPPORT}" = "yes" ]; then
+  PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
+  PKG_CMAKE_OPTS_TARGET+=" -DVIDEO_VULKAN=ON \
+                           -DVIDEO_X11=OFF"
 fi
 
 if [ "${DISPLAYSERVER}" = "wl" ]

@@ -31,17 +31,29 @@ pre_configure_target() {
 
   case ${ARCH} in
     arm)
-      PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-      PKG_CONFIGURE_OPTS_TARGET+=" --enable-neon --enable-opengles --enable-opengles3 --enable-opengles3_2 --enable-kms --disable-mali_fbdev"
+      PKG_CONFIGURE_OPTS_TARGET+=" --enable-neon"
     ;;
     aarch64)
-      PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-      PKG_CONFIGURE_OPTS_TARGET+=" --disable-neon --enable-opengles --enable-opengles3 --enable-opengles3_2 --enable-kms --disable-mali_fbdev"
+      PKG_CONFIGURE_OPTS_TARGET+=" --disable-neon"
     ;;
     *)
-      PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd vulkan-loader vulkan-headers"
-      PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengl --enable-vulkan --enable-vulkan_display"
   esac
+
+  if [ ! "${OPENGL}" = "no" ]; then
+      PKG_DEPENDS_TARGET+=" ${OPENGL} glu"
+      PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengl"
+  fi
+
+  if [ "${OPENGLES_SUPPORT}" = yes ]; then
+      PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+      PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengles --enable-opengles3 --enable-opengles3_2 --enable-kms --disable-mali_fbdev"
+  fi
+
+  if [ "${VULKAN_SUPPORT}" = "yes" ]
+  then
+      PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
+      PKG_CONFIGURE_OPTS_TARGET+=" --enable-vulkan --enable-vulkan_display"
+  fi
 
   case ${DEVICE} in
     RG351P|RG552)
