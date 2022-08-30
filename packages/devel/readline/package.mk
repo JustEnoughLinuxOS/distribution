@@ -18,7 +18,7 @@ PKG_CONFIGURE_OPTS_TARGET="bash_cv_wcwidth_broken=no \
                            --with-curses"
 
 pre_configure_target() {
-   export LDFLAGS="${LDFLAGS} -lncurses -ltinfo"
+   export LDFLAGS="${LDFLAGS} -lncurses"
 }
 
 post_makeinstall_target() {
