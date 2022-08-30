@@ -3,11 +3,11 @@
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="nano"
-PKG_VERSION="4.3"
-PKG_SHA256="00d3ad1a287a85b4bf83e5f06cedd0a9f880413682bebd52b4b1e2af8cfc0d81"
+PKG_VERSION="6.4"
+PKG_SHA256="4199ae8ca78a7796de56de1a41b821dc47912c0307e9816b56cc317df34661c0"
 PKG_LICENSE="GPL"
-PKG_SITE="http://www.nano-editor.org/"
-PKG_URL="http://ftpmirror.gnu.org/nano/${PKG_NAME}-${PKG_VERSION}.tar.xz"
+PKG_SITE="https://www.nano-editor.org/"
+PKG_URL="https://www.nano-editor.org/dist/v6/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain ncurses"
 PKG_LONGDESC="Nano is an enhanced clone of the Pico text editor."
 
@@ -22,7 +22,7 @@ post_makeinstall_target() {
   mkdir -p ${INSTALL}/etc
   cp -a ${PKG_DIR}/config/* ${INSTALL}/etc/
 
-  mkdir -p ${INSTALL}/usr/share/nano 
+  mkdir -p ${INSTALL}/usr/share/nano
   for FILE_TYPES in \
     css \
     html \
