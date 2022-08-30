@@ -78,7 +78,7 @@ post_makeinstall_target() {
   # create links to be compatible with any ncurses include path and lib names
   ln -sf . ${SYSROOT_PREFIX}/usr/include/ncursesw
   ln -sf . ${SYSROOT_PREFIX}/usr/include/ncurses
-  for f in form menu ncurses panel; do
+  for f in form menu ncurses panel tinfo; do
     ln -sf lib${f}w.a ${SYSROOT_PREFIX}/usr/lib/lib${f}.a
     ln -sf ${f}w.pc ${SYSROOT_PREFIX}/usr/lib/pkgconfig/${f}.pc
   done
