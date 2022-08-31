@@ -1,0 +1,64 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+DEBUG=false
+COOLING_PROFILE=$(get_setting "cooling.profile")
+FAN_PWM="${DEVICE_PWM_FAN}"
+
+$DEBUG && echo "Setting profile to ${COOLING_PROFILE}"
+
+if [ -e "/storage/.config/fancontrol.conf" ] && [ "${COOLING_PROFILE}" = "custom" ]
+then
+  $DEBUG && echo "Loading configuration file" 2>/dev/null
+  source /storage/.config/fancontrol.conf
+  if [ ! $? = 0 ]
+  then
+    WARN="Custom fan profile could not be loaded, defaulting to quiet."
+    $DEBUG && echo "${WARN}"
+    logger -t fancontrol "${WARN}"
+    COOLING_PROFILE="quiet"
+    set_setting cooling.profile quiet
+  fi
+fi
+
+
+if [ ! "${COOLING_PROFILE}" = "custom" ]
+then
+  if [ "${COOLING_PROFILE}" = "aggressive" ]
+  then
+    SPEEDS=(255 225 195)
+    TEMPS=(55000 45000 0)
+  elif [ "${COOLING_PROFILE}" = "moderate" ]
+  then
+    SPEEDS=(255 190 125 85)
+    TEMPS=(65000 55000 45000 0)
+  else
+    # Quiet.
+    SPEEDS=(255 127 85 0)
+    TEMPS=(75000 65000 55000 0)
+  fi
+fi
+
+while true
+do
+  INDEX=0
+  CPU_TEMP=$(printf "%.0f" $(cat /sys/devices/virtual/thermal/thermal_zone*/temp | awk '{ total += $1; count++ } END { print total/count }'))
+  $DEBUG && echo "CPU TEMP: ${CPU_TEMP}" 2>/dev/null
+  for TEMP in "${TEMPS[@]}"
+  do
+    $DEBUG && echo "INDEX: ${INDEX}" 2>/dev/null
+    $DEBUG && echo "CHK: ${TEMP}" 2>/dev/null
+    if (( "${CPU_TEMP}" > "${TEMP}" ))
+    then
+      $DEBUG && echo "Setting PWM FAN to ${SPEEDS[${INDEX}]} (${TEMP})" 2>/dev/null
+      echo ${SPEEDS[${INDEX}]} >${FAN_PWM}
+      break
+    fi
+    INDEX=$(( $INDEX + 1 ))
+  done
+  sleep 2
+  $DEBUG && echo "Loop" 2>/dev/null
+done

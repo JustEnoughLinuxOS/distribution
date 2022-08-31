@@ -24,7 +24,7 @@ fi
 
 PKG_BASEOS="plymouth-lite grep wget libjpeg-turbo util-linux xmlstarlet bluetool gnupg gzip patchelf \
             imagemagick terminus-font vim bash pyudev dialog six git dbus-python coreutils miniupnpc \
-            nss-mdns avahi alsa-ucm-conf MC fbgrab modules"
+            nss-mdns avahi alsa-ucm-conf MC fbgrab modules system-utils"
 
 PKG_UI="emulationstation es-themes"
 
@@ -41,7 +41,6 @@ PKG_EXPERIMENTAL=""
 ### Project specific variables
 case "${PROJECT}" in
   Rockchip)
-    PKG_BASEOS+=" system-utils"
     PKG_EMUS+=" retropie-shaders"
     PKG_COMPAT+=" lib32"
   ;;
