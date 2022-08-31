@@ -65,6 +65,9 @@ case ${1} in
         "down")
           stepDown ${BRIGHTNESS}
         ;;
+        "device")
+          echo ${BRIGHTNESS_DEV}
+        ;;
         *)
 	  getBrightness
 	  echo $?
