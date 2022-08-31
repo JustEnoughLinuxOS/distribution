@@ -145,15 +145,15 @@ set timeout="25"
 set default="Installer"
 menuentry "Installer" {
 	search --set -f /KERNEL
-	linux /KERNEL boot=UUID=${UUID_SYSTEM} installer quiet systemd.debug_shell vga=current
+	linux /KERNEL boot=UUID=${UUID_SYSTEM} installer systemd.debug_shell vga=current ${EXTRA_CMDLINE}
 }
 menuentry "Live" {
 	search --set -f /KERNEL
-	linux /KERNEL boot=UUID=${UUID_SYSTEM} grub_live quiet vga=current
+	linux /KERNEL boot=UUID=${UUID_SYSTEM} grub_live vga=current ${EXTRA_CMDLINE}
 }
 menuentry "Run" {
 	search --set -f /KERNEL
-	linux /KERNEL boot=UUID=${UUID_SYSTEM} disk=UUID=${UUID_STORAGE} grub_portable quiet
+	linux /KERNEL boot=UUID=${UUID_SYSTEM} disk=UUID=${UUID_STORAGE} grub_portable ${EXTRA_CMDLINE}
 }
 EOF
 
