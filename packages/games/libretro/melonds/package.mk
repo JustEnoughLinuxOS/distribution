@@ -4,7 +4,7 @@
 PKG_NAME="melonds"
 PKG_VERSION="490a66a5834e23304addc9b16a2f95da6db9f061"
 PKG_REV="1"
-PKG_ARCH="any"
+PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://git.libretro.com/libretro/melonDS"
 PKG_URL="$PKG_SITE.git"
@@ -25,7 +25,10 @@ fi
 pre_make_target() {
 
   cd ${PKG_BUILD}
-  rm CMakeLists.txt
+  if [ -e "CMakeLists.txt" ]
+  then
+    rm CMakeLists.txt
+  fi
 
   case ${DEVICE} in
     RG351P|RG351V|RG351MP)
