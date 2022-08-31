@@ -23,7 +23,7 @@ PKG_NAME="mupen64plus"
 PKG_VERSION="ab8134ac90a567581df6de4fc427dd67bfad1b17"
 PKG_SHA256="98e197cdcac64c0e08eda91a6d63b637c3f151066bede25766e62bc1a59552a0"
 PKG_REV="1"
-PKG_ARCH="any"
+PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/mupen64plus-libretro"
 PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
@@ -37,7 +37,7 @@ PKG_BUILD_FLAGS="-lto"
 PKG_PATCH_DIRS+="${DEVICE}"
 
 if [ ! "${OPENGL}" = "no" ]; then
-  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu"
 fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
@@ -50,17 +50,18 @@ pre_make_target() {
 
 pre_configure_target() {
   CFLAGS="${CFLAGS} -DLINUX -DEGL_API_FB"
-  CPPFLAGS="$CPPFLAGS -DLINUX -DEGL_API_FB"
-  if [[ "${DEVICE}" =~ RG351 ]]
-  then
-    PKG_MAKE_OPTS_TARGET=" platform=RK3326"
-  elif [[ "${DEVICE}" =~ RG552 ]]
-  then
-    PKG_MAKE_OPTS_TARGET=" platform=RK3399"
-  elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
-  then
-    PKG_MAKE_OPTS_TARGET=" platform=RK3566"
-  fi
+  CPPFLAGS="${CPPFLAGS} -DLINUX -DEGL_API_FB"
+  case ${DEVICE} in
+    RG351P|RG351V|RG351MP)
+      PKG_MAKE_OPTS_TARGET=" platform=RK3326"
+    ;;
+    RG552)
+      PKG_MAKE_OPTS_TARGET=" platform=RK3399"
+    ;;
+    RG503|RG353P)
+      PKG_MAKE_OPTS_TARGET=" platform=RK3566"
+    ;;
+  esac
 }
 
 makeinstall_target() {
