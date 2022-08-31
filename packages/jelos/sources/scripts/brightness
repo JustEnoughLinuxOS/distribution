@@ -2,9 +2,10 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2020-present Fewtarius
 
+BRIGHTNESS_DEV="$(ls /sys/class/backlight)"
 
 MIN=1
-MAX=$(cat /sys/class/backlight/backlight/max_brightness)
+MAX=$(cat /sys/class/backlight/${BRIGHTNESS_DEV}/max_brightness)
 if [ "${MAX}" = 255 ]
 then
   STEP=17
@@ -22,7 +23,7 @@ then
   source /etc/profile
 fi
 
-if [ ! -f /sys/class/backlight/backlight/brightness ]
+if [ ! -f /sys/class/backlight/${BRIGHTNESS_DEV}/brightness ]
 then
   echo "ERROR: There is no BRIGHTNESS object to manage."
   exit 1
@@ -36,7 +37,7 @@ stepUp() {
   then
     NEWBRIGHTNESS=${MAX}
   fi
-  echo "${NEWBRIGHTNESS}" > /sys/class/backlight/backlight/brightness
+  echo "${NEWBRIGHTNESS}" > /sys/class/backlight/${BRIGHTNESS_DEV}/brightness
   set_setting system.brightness ${NEWBRIGHTNESS}
 }
 
@@ -48,11 +49,11 @@ stepDown() {
   then
     NEWBRIGHTNESS=${MIN}
   fi
-  echo "${NEWBRIGHTNESS}" > /sys/class/backlight/backlight/brightness
+  echo "${NEWBRIGHTNESS}" > /sys/class/backlight/${BRIGHTNESS_DEV}/brightness
   set_setting system.brightness ${NEWBRIGHTNESS}
 }
 getBrightness() {
-  local BRIGHTNESS=$(cat /sys/class/backlight/backlight/brightness)
+  local BRIGHTNESS=$(cat /sys/class/backlight/${BRIGHTNESS_DEV}/brightness)
   return ${BRIGHTNESS}
 }
 

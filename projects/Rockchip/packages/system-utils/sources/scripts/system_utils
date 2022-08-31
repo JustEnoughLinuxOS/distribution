@@ -66,8 +66,9 @@ MINVOL=0
 
 if [ "${1}" == "bright" ]; then
 STEPS="5"
-CURRENTBRIGHT=$(cat /sys/class/backlight/backlight/brightness)
-MAXBRIGHT="100" #$(cat /sys/class/backlight/backlight/max_brightness)
+BRIGHTNESS_DEV="$(ls /sys/class/backlight)"
+CURRENTBRIGHT=$(cat /sys/class/backlight/${BRIGHTNESS_DEV}/brightness)
+MAXBRIGHT="100" #$(cat /sys/class/backlight/${BRIGHTNESS_DEV}/max_brightness)
 MINBRIGHT="2"
 	if [ "${2}" == "+" ]; then
 		STEPBRIGHT=$(($CURRENTBRIGHT+$STEPS))
@@ -79,8 +80,8 @@ MINBRIGHT="2"
 	[ "$STEPBRIGHT" -ge "$MAXBRIGHT" ] && STEPBRIGHT="$MAXBRIGHT"
 	[ "$STEPBRIGHT" -le "$MINBRIGHT" ] && STEPBRIGHT="$MINBRIGHT"
 	#echo "Setting bright to $STEPBRIGHT"
-	echo "${STEPBRIGHT}" > /sys/class/backlight/backlight/brightness
-	set_setting "system.brightness" $(cat /sys/class/backlight/backlight/brightness)
+	echo "${STEPBRIGHT}" > /sys/class/backlight/${BRIGHTNESS_DEV}/brightness
+	set_setting "system.brightness" $(cat /sys/class/backlight/${BRIGHTNESS_DEV}/brightness)
 fi
 
 
