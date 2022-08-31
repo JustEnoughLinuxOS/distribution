@@ -1,0 +1,9 @@
+# Rotate the display on the 552.
+fbset -g 1152 1920 1152 1920 32 2>/dev/null
+
+# Apply the default clocks early.
+echo 1416000 >/sys/devices/system/cpu/cpufreq/policy0
+echo 1800000 >/sys/devices/system/cpu/cpufreq/policy4
+echo 800000000 >/sys/devices/platform/ff9a0000.gpu/devfreq/ff9a0000.gpu
+echo 856000000 >/sys/devices/platform/dmc/devfreq/dmc
+

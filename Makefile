@@ -34,6 +34,10 @@ RG552:
 	PROJECT=Rockchip DEVICE=RG552 ARCH=arm ./scripts/build_distro
 	PROJECT=Rockchip DEVICE=RG552 ARCH=aarch64 ./scripts/build_distro
 
+RG552ML:
+	PROJECT=Rockchip DEVICE=RG552ML ARCH=arm ./scripts/build_distro
+	PROJECT=Rockchip DEVICE=RG552ML ARCH=aarch64 ./scripts/build_distro
+
 RG503:
 	DEVICE_ROOT=RG503 PROJECT=Rockchip DEVICE=RG503 ARCH=arm ./scripts/build_distro
 	DEVICE_ROOT=RG503 PROJECT=Rockchip DEVICE=RG503 ARCH=aarch64 ./scripts/build_distro

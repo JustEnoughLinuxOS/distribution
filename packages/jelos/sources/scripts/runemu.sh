@@ -341,6 +341,20 @@ else
 			    done < "${1}"
 			fi
                 ;;
+				"quake")
+			# EXT can only by quake
+			EXT=${ROMNAME##*.}
+
+			# If its not a simple pak (extension .pak0) read the file and parse the data
+			if [ ${EXT} == "quake" ]; then
+			  dos2unix "${1}"
+			  while IFS== read -r key value; do
+			    if [ "$key" == "PAK" ]; then
+			      ROMNAME="$value"
+			    fi
+			    done < "${1}"
+			fi
+                ;;
         esac
 	
 	if [[ "${CORE}" =~ "custom" ]] 

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (C) 2022-present travis134
+
+#If wolfscan does not exist copy wolfscan folder to roms/ecwolf
+if [ ! -e "/storage/roms/ecwolf/wolfscan" ]; then
+	cp -r /usr/share/wolfscan /storage/roms/ecwolf
+	chmod +x /storage/roms/ecwolf/wolfscan -R
+	mv "/storage/roms/ecwolf/wolfscan/_Scan Wolfenstein 3D Games.sh" "/storage/roms/ecwolf/_Scan Wolfenstein 3D Games.sh"
+fi
