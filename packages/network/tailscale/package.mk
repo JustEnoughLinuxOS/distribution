@@ -11,7 +11,7 @@ PKG_DEPENDS_TARGET="toolchain wireguard-tools"
 PKG_SHORTDESC="Zero config VPN. Installs on any device in minutes, manages firewall rules for you, and works from anywhere."
 PKG_TOOLCHAIN="manual"
 
-if [ ! "${TARGET_ARCH}" = "x86_64" ]; then
+if [ ! "${TARGET_ARCH}" = "x86_64" ] | [ ! "${DEVICE}" = "RG552ML" ]; then
   PKG_DEPENDS_TARGET+=" wireguard-linux-compat"
 fi
 

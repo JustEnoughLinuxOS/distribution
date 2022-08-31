@@ -3,6 +3,7 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 # Copyright (C) 2021-present 351ELEC (https://github.com/351ELEC)
 # Copyright (C) 2022-present Fewtarius
+# Copyright (C) 2022-present Brooksytech
 
 PKG_NAME="linux"
 PKG_LICENSE="GPL"
@@ -26,6 +27,11 @@ case ${DEVICE} in
   RG552)
     PKG_URL="${PKG_SITE}/rk3399-kernel.git"
     PKG_VERSION="cb0d79995"
+  ;;
+  RG552ML)
+    PKG_URL="https://github.com/R-ARM/kernel.git"
+    PKG_VERSION="81ca1abcdfb9c7681408ff282ff65bb645c495e6"
+    PKG_GIT_CLONE_BRANCH="master"
   ;;
   RG353P|RG503)
     PKG_URL="${PKG_SITE}/rk356x-kernel.git"
