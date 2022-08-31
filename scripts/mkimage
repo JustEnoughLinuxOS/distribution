@@ -323,6 +323,13 @@ fi
   sha256sum $(basename "${DISK}").gz > $(basename "${DISK}").gz.sha256
 )
 
+if [ -n "${JELOS_SSH_KEYS_FILE}" ] || \
+   [ -n "${JELOS_WIFI_SSID}" ] || \
+   [ -n "${JELOS_WIFI_KEY}" ]
+then
+  echo "image: CONTAINS SENSITIVE DATA, DO NOT DISTRIBUTE."
+fi
+
 # cleanup
 cleanup
 exit

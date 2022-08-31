@@ -37,7 +37,7 @@ then
   PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
   PKG_CMAKE_OPTS_TARGET+=" -DUSE_VULKAN_DISPLAY_KHR=ON \
                            -DVULKAN=ON \
-                           -DUSING_X11_VULKAN=ON"
+                           -DUSING_X11_VULKAN=OFF"
 fi
 
 PKG_CMAKE_OPTS_TARGET+="${PKG_CMAKE_OPTS_TARGET} \
