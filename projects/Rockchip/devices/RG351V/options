@@ -61,6 +61,7 @@
     
   # additional packages to install
   # ADDITIONAL_PACKAGES=""
+    ADDITIONAL_PACKAGES=" emulators gamesupport 351files"
 
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,

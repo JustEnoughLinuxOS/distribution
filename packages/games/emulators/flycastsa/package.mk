@@ -22,7 +22,7 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_CMAKE_OPTS_TARGET+=" -DUSE_GLES=ON"
 fi
 
-if [ "${ARCH}" = "x86_64" ]
+if [ "${VULKAN_SUPPORT}" = "yes" ]
 then
   PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
   PKG_CMAKE_OPTS_TARGET+=" -DUSE_VULKAN=ON"

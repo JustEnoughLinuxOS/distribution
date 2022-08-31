@@ -1,0 +1,21 @@
+diff -rupN weston-10.0.1.orig/clients/terminal.c weston-10.0.1/clients/terminal.c
+--- weston-10.0.1.orig/clients/terminal.c	2022-06-23 09:52:38.000000000 -0400
++++ weston-10.0.1/clients/terminal.c	2022-08-30 17:32:23.295568863 -0400
+@@ -3089,7 +3089,7 @@ terminal_run(struct terminal *terminal,
+ 		close(pipes[0]);
+ 		setenv("TERM", option_term, 1);
+ 		setenv("COLORTERM", option_term, 1);
+-		if (execl(path, path, NULL)) {
++		if (execl(path, path, "-l")) {
+ 			printf("exec failed: %s\n", strerror(errno));
+ 			exit(EXIT_FAILURE);
+ 		}
+@@ -3140,7 +3140,7 @@ int main(int argc, char *argv[])
+ 
+ 	option_shell = getenv("SHELL");
+ 	if (!option_shell)
+-		option_shell = "/bin/sh";
++		option_shell = "/bin/bash";
+ 
+ 	config_file = weston_config_get_name_from_env();
+ 	config = weston_config_parse(config_file);

@@ -32,7 +32,7 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
 			   -DUSING_X11_VULKAN=OFF"
 fi
 
-if [ "${ARCH}" = "x86_64" ]
+if [ "${VULKAN_SUPPORT}" = "yes" ]
 then
   PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
   PKG_CMAKE_OPTS_TARGET+=" -DUSE_VULKAN_DISPLAY_KHR=ON \
