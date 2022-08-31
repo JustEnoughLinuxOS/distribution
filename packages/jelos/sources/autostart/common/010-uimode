@@ -1,0 +1,13 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2022-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+UIMODE=$(get_setting desktop.enabled)
+if [ "${UIMODE}" = "1" ]
+then
+  cp -f /usr/share/weston/weston.ini /storage/.config/weston.ini
+else
+  cp -f /usr/share/weston/kiosk.ini /storage/.config/weston.ini
+fi
