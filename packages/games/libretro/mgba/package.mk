@@ -40,11 +40,17 @@ PKG_USE_CMAKE="no"
 
 make_target() {
   cd $PKG_BUILD
-  if [[ "$ARCH" =~ "arm" ]]; then
-    make -f Makefile.libretro platform=unix-armv HAVE_NEON=1
-  else
-    make -f Makefile.libretro platform=goadvance
-  fi
+  case ${ARCH} in
+    arm)
+      make -f Makefile.libretro platform=unix-armv HAVE_NEON=1
+    ;;
+    aarch64)
+      make -f Makefile.libretro platform=goadvance
+    ;;
+    *)
+      make -f Makefile.libretro
+    ;;
+  esac
 }
 
 makeinstall_target() {

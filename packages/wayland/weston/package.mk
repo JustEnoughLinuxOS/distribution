@@ -57,8 +57,7 @@ post_makeinstall_target() {
     cp ${PKG_DIR}/scripts/weston-config ${INSTALL}/usr/lib/weston
 
   mkdir -p ${INSTALL}/usr/share/weston
-    cp ${PKG_DIR}/config/weston.ini ${INSTALL}/usr/share/weston
-    find_file_path "splash/splash.png" && cp ${FOUND_PATH} ${INSTALL}/usr/share/weston/libreelec-wallpaper-2160.png
+    cp ${PKG_DIR}/config/*ini ${INSTALL}/usr/share/weston
 
   safe_remove ${INSTALL}/usr/share/wayland-sessions
 }

@@ -26,14 +26,15 @@ pre_make_target() {
 
   cd ${PKG_BUILD}
   rm CMakeLists.txt
-  
-  if [[ "${DEVICE}" =~ RG351 ]]
-  then
-    PKG_MAKE_OPTS_TARGET=" platform=odroidgoa"
-  elif [[ "${DEVICE}" =~ RG552 ]]
-  then
-    PKG_MAKE_OPTS_TARGET=" platform=RK3399"
-  fi
+
+  case ${DEVICE} in
+    RG351P|RG351V|RG351MP)
+      PKG_MAKE_OPTS_TARGET=" platform=odroidgoa"
+    ;;
+    RG552)
+      PKG_MAKE_OPTS_TARGET=" platform=RK3399"
+    ;;
+  esac
 }
 
 makeinstall_target() {

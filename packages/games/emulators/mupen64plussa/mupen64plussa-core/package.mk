@@ -4,7 +4,7 @@
 PKG_NAME="mupen64plussa-core"
 PKG_VERSION="f29984331b20de47fd1c2de776018fa40f50bac5"
 PKG_SHA256="2f53976ede7982e2e8d36a41721afca79109bda3f23c712953246b8d8d7313b6"
-PKG_ARCH="any"
+PKG_ARCH="aarch64"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/mupen64plus/mupen64plus-core"
 PKG_URL="https://github.com/mupen64plus/mupen64plus-core/archive/${PKG_VERSION}.tar.gz"
@@ -19,14 +19,13 @@ fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-  PKG_MAKE_OPTS_TARGET+="USE_GLES=1"
 fi
 
 make_target() {
   case ${ARCH} in
     arm|aarch64)
       export HOST_CPU=aarch64
-      export USE_GLES=1
+      export VC=0
       export CROSS_COMPILE="${TARGET_PREFIX}"
       BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
     ;;
@@ -34,8 +33,9 @@ make_target() {
 
   export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -D_REENTRANT"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
+  export USE_GLES=1
   export V=1
-  export VC=0
+  export OSD=0
   make -C projects/unix clean
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
 }
