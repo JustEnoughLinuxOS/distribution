@@ -25,7 +25,7 @@ fi
 
 if [ "${WIREGUARD_SUPPORT}" = "yes" ]; then
   PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} wireguard-tools"
-  if [ ! "${TARGET_ARCH}" = "x86_64" ]; then
+  if [ ! "${TARGET_ARCH}" = "x86_64" ] | [ ! "${DEVICE}" = "RG552ML" ]; then
     PKG_DEPENDS_TARGET+=" wireguard-linux-compat"
   fi
 fi
