@@ -119,7 +119,7 @@
   OEM_SUPPORT="no"
 
 # build and install nano text editor (yes / no)
-  NANO_EDITOR="no"
+  NANO_EDITOR="yes"
 
 # cron support (yes / no)
   CRON_SUPPORT="yes"
