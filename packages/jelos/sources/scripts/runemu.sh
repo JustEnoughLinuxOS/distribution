@@ -283,13 +283,13 @@ then
 		"psx")
                         jslisten set "duckstationsa"
 		        if [ "$EMU" = "duckstationsa" ]; then
-            		RUNTHIS='${TBASH} /usr/bin/duckstation.sh "${ROMNAME}"'
+            		RUNTHIS='${TBASH} /usr/bin/start_duckstation.sh "${ROMNAME}"'
         		fi
                 ;;
                 "gamecube")
                         jslisten set "dolphinsa"
                         if [ "$EMU" = "dolphinsa" ]; then
-                        RUNTHIS='${TBASH} /usr/bin/dolphin.sh "${ROMNAME}"'
+                        RUNTHIS='${TBASH} /usr/bin/start_dolphin.sh "${ROMNAME}"'
                         fi
 
 ;;
