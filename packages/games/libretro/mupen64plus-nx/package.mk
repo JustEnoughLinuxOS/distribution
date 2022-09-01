@@ -4,7 +4,6 @@
 PKG_NAME="mupen64plus-nx"
 PKG_VERSION="4684cfa56ae7752be284eaaa165c1dc34ec63eb7"
 PKG_SHA256="01d63e3f3ecebcb207a5176117f5ad8623c5b3be8c99161695e843e9dea7ee42"
-PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/mupen64plus-libretro-nx"
 PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
@@ -26,7 +25,7 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
 fi
 
 pre_configure_target() {
-  sed -e "s|^GIT_VERSION ?.*$|GIT_VERSION := \" ${PKG_VERSION:0:7}\"|" -i Makefilea
+  sed -e "s|^GIT_VERSION ?.*$|GIT_VERSION := \" ${PKG_VERSION:0:7}\"|" -i Makefile
   case ${DEVICE} in
     RG351P|RG351V|RG351MP)
       PKG_MAKE_OPTS_TARGET=" platform=RK3326"
@@ -36,6 +35,9 @@ pre_configure_target() {
     ;;
     RG503|RG353P)
       PKG_MAKE_OPTS_TARGET=" platform=RK3566"
+    ;;
+    *)
+      export FORCE_GLES3=1
     ;;
   esac
 }
