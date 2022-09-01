@@ -11,10 +11,10 @@
     OPENGLES="mesa"
 
   # Vulkan implementation to use (vulkan-loader / no)
-    VULKAN="vulkan-loader"
+  #  VULKAN="vulkan-loader"
 
   # VULKAN_SUPPORT
-    VULKAN_SUPPORT="yes"
+    VULKAN_SUPPORT="no"
 
   # Displayserver to use (weston / x11 / no)
     DISPLAYSERVER="wl"
