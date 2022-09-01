@@ -52,7 +52,7 @@ DEVICE_DISCONNECTED="*error reading: No such device"
 for DEV in /dev/input/ev*
 do
   unset SUPPORTS
-  SUPPORTS=$(udevadm info ${DEV} | awk '/ID_INPUT_KEYBOARD=|ID_INPUT_JOYSTICK=/ {print $2}')
+  SUPPORTS=$(udevadm info ${DEV} | awk '/ID_INPUT_KEY=|ID_INPUT_JOYSTICK=/ {print $2}')
   if [ -n "${SUPPORTS}" ]
   then
     DEVICE=$(udevadm info ${DEV} | awk 'BEGIN {FS="="} /DEVNAME=/ {print $2}')
