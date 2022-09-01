@@ -61,7 +61,3 @@ post_makeinstall_target() {
 
   safe_remove ${INSTALL}/usr/share/wayland-sessions
 }
-
-post_install() {
-  enable_service weston.service
-}
