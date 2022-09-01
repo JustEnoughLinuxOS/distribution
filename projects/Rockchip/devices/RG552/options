@@ -53,6 +53,7 @@
     MALI_FAMILY="midgard-t86x"
     MALI_VERSION="r18p0"
     OPENGLES="libmali"
+    OPENGL="no"
     GRAPHIC_DRIVERS=""
 
   # kernel serial console
