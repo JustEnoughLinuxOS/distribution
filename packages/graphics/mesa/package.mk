@@ -25,7 +25,6 @@ PKG_MESON_OPTS_TARGET="-Ddri-drivers= \
                        -Dopengl=true \
                        -Dgbm=enabled \
                        -Degl=enabled \
-                       -Dvalgrind=disabled \
                        -Dlibunwind=disabled \
                        -Dlmsensors=disabled \
                        -Dbuild-tests=false \
@@ -71,7 +70,7 @@ else
 fi
 
 if [ "${OPENGLES_SUPPORT}" = "yes" ]; then
-  PKG_MESON_OPTS_TARGET+=" -Dgles1=disabled -Dgles2=enabled"
+  PKG_MESON_OPTS_TARGET+=" -Dgles1=enabled -Dgles2=enabled"
 else
   PKG_MESON_OPTS_TARGET+=" -Dgles1=disabled -Dgles2=disabled"
 fi
