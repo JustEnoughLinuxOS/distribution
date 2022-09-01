@@ -312,10 +312,10 @@ else
 	setaudio alsa
 
 
+	RABIN="retroarch"
 	if [[ "${HW_ARCH}" =~ aarch64 ]]
 	then
 		### Check if we need retroarch 32 bits or 64 bits
-		RABIN="retroarch"
 		if [[ "${CORE}" =~ pcsx_rearmed32 ]] || \
 	           [[ "${CORE}" =~ parallel_n64 ]] || \
 	           [[ "${CORE}" =~ gpsp ]] || \
