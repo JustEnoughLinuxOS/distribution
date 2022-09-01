@@ -34,7 +34,7 @@ fi
 
 if [ "${DISPLAYSERVER}" = "wl" ]
 then
-  PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers wayland ${WINDOWMANAGER}"
+  PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER}"
   PKG_CMAKE_OPTS_TARGET+=" -DVIDEO_WAYLAND=ON \
                            -DVIDEO_WAYLAND_QT_TOUCH=ON \
                            -DWAYLAND_SHARED=ON"
