@@ -55,6 +55,7 @@
     MALI_FAMILY="bifrost-g52"
     MALI_VERSION="g2p0"
     OPENGLES="libmali"
+    OPENGL="no"
     GRAPHIC_DRIVERS=""
 
 

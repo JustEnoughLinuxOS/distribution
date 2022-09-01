@@ -25,22 +25,26 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
 fi
 
-if [ "${ARCH}" = "arm" ]
-then
-  if [[ "${DEVICE}" =~ RG351 ]]
-  then
-    PKG_MAKE_OPTS_TARGET=" platform=RG351x"
-  elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
-  then
-    PKG_MAKE_OPTS_TARGET+=" platform=RK3566"
-  else
-    PKG_MAKE_OPTS_TARGET=" platform=${DEVICE}"
-  fi
-else
-  make_target() {
-    :
-  }
-fi
+case ${ARCH} in
+  arm)
+    case ${DEVICE} in
+      RG351P|RG351V|RG351MP)
+        PKG_MAKE_OPTS_TARGET=" platform=RG351x"
+      ;;
+      RG503|RG353P)
+        PKG_MAKE_OPTS_TARGET+=" platform=RK3566"
+      ;;
+      RG552)
+        PKG_MAKE_OPTS_TARGET=" platform=${DEVICE}"
+      ;;
+    esac
+  ;;
+  aarch64)
+    make_target() {
+      :
+    }
+  ;;
+esac
 
 pre_configure_target() {
   sed -i 's/info->library_name = "ParaLLEl N64";/info->library_name = "ParaLLEl N64 GLN64";/g' ${PKG_BUILD}/libretro/libretro.c
@@ -53,12 +57,14 @@ pre_configure_target() {
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
-  if [[ "${ARCH}" == "aarch64" ]]
-  then
-    cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/parallel-n64_gln64-*/.install_pkg/usr/lib/libretro/parallel_n64_gln64_libretro.so ${INSTALL}/usr/lib/libretro/parallel_n64_gln64_libretro.so
-    cp -vP ${PKG_BUILD}/../core-info-*/parallel_n64_libretro.info ${INSTALL}/usr/lib/libretro/parallel_n64_gln64_libretro.info
-    sed -i 's/ParaLLEl N64/ParaLLEl N64 GLN64/g' ${INSTALL}/usr/lib/libretro/parallel_n64_gln64_libretro.info
-  else
-    cp parallel_n64_libretro.so ${INSTALL}/usr/lib/libretro/parallel_n64_gln64_libretro.so
-  fi
+  case ${ARCH} in
+    arm)
+      cp parallel_n64_libretro.so ${INSTALL}/usr/lib/libretro/parallel_n64_gln64_libretro.so
+    ;;
+    *)
+      cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/parallel-n64_gln64-*/.install_pkg/usr/lib/libretro/parallel_n64_gln64_libretro.so ${INSTALL}/usr/lib/libretro/parallel_n64_gln64_libretro.so
+      cp -vP ${PKG_BUILD}/../core-info-*/parallel_n64_libretro.info ${INSTALL}/usr/lib/libretro/parallel_n64_gln64_libretro.info
+      sed -i 's/ParaLLEl N64/ParaLLEl N64 Rice/g' ${INSTALL}/usr/lib/libretro/parallel_n64_gln64_libretro.info
+   ;;
+  esac
 }
