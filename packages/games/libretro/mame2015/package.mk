@@ -38,13 +38,21 @@ pre_make_target() {
 }
 
 pre_configure_target() {
-  PKG_MAKE_OPTS_TARGET=" platform=armv8-neon-hardfloat-cortex-a53"
-  sed -i 's/CCOMFLAGS += -mstructure-size-boundary=32//g' Makefile
-  sed -i 's/LDFLAGS += -Wl,--fix-cortex-a8 -Wl,--no-as-needed//g' Makefile
+  case ${ARCH} in
+    arm|aarch64)
+      PKG_MAKE_OPTS_TARGET=" platform=armv8-neon-hardfloat-cortex-a53"
+      sed -i 's/LDFLAGS += -Wl,--fix-cortex-a8 -Wl,--no-as-needed//g' Makefile
+      sed -i 's/CCOMFLAGS += -mstructure-size-boundary=32//g' Makefile
+    ;;
+  esac
 }
 
 makeinstall_target() {
-  aarch64-linux-gnu-strip -s *.so
+  case ${ARCH} in
+    arm|aarch64)
+      aarch64-linux-gnu-strip -s *.so
+    ;;
+  esac
   mkdir -p $INSTALL/usr/lib/libretro
   cp mame*_libretro.so $INSTALL/usr/lib/libretro/
 }
