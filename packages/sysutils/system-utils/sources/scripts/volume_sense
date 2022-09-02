@@ -136,7 +136,7 @@ done
 
           if [[ "${line}" =~ ${PRESS} ]]; then
             FUNC_PRESSED=yes
-          elif [[ "${line}" == ${RELEASE} ]]; then
+          elif [[ "${line}" =~ ${RELEASE} ]]; then
             FUNC_PRESSED=no
           fi
         ;;
