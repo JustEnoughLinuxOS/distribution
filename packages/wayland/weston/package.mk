@@ -7,7 +7,7 @@ PKG_SHA256="8a9e52506a865a7410981b04f8341b89b84106db8531ab1f9fdd37b5dc034115"
 PKG_LICENSE="MIT"
 PKG_SITE="https://wayland.freedesktop.org/"
 PKG_URL="https://gitlab.freedesktop.org/wayland/weston/-/releases/${PKG_VERSION}/downloads/${PKG_NAME}-${PKG_VERSION}.tar.xz"
-PKG_DEPENDS_TARGET="toolchain wayland wayland-protocols libdrm libxkbcommon libinput cairo pango libjpeg-turbo dbus seatd glu ${OPENGL} xorg-server"
+PKG_DEPENDS_TARGET="toolchain wayland wayland-protocols libdrm libxkbcommon libinput cairo pango libjpeg-turbo dbus seatd glu ${OPENGL} libX11 xorg-server libXcursor cairo"
 PKG_LONGDESC="Reference implementation of a Wayland compositor"
 
 PKG_MESON_OPTS_TARGET="-Dbackend-drm=true \
@@ -21,7 +21,7 @@ PKG_MESON_OPTS_TARGET="-Dbackend-drm=true \
                        -Dbackend-default=drm \
                        -Drenderer-gl=true \
                        -Ddeprecated-weston-launch=false \
-                       -Dxwayland=false \
+                       -Dxwayland=true \
                        -Dsystemd=true \
                        -Dremoting=false \
                        -Dpipewire=false \

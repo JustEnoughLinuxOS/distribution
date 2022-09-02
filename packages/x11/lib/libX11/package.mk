@@ -13,7 +13,7 @@ PKG_LONGDESC="LibX11 is the main X11 library containing all the client-side code
 PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-loadable-i18n \
-                           --disable-loadable-xcursor \
+                           --enable-loadable-xcursor \
                            --enable-xthreads \
                            --disable-xcms \
                            --enable-xlocale \

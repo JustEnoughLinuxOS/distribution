@@ -2,11 +2,10 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="cairo"
-PKG_VERSION="1.14.10"
-PKG_SHA256="7e87878658f2c9951a14fc64114d4958c0e65ac47530b8ac3078b2ce41b66a09"
+PKG_VERSION="1.17.4"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://cairographics.org/"
-PKG_URL="http://cairographics.org/releases/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://www.cairographics.org/snapshots/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain zlib freetype fontconfig glib libpng pixman"
 PKG_LONGDESC="Cairo is a vector graphics library with cross-device output support."
 PKG_TOOLCHAIN="configure" # ToDo
@@ -32,14 +31,19 @@ if [ "$DISPLAYSERVER" = "x11" ]; then
                     --with-x"
 
 elif [ "$DISPLAYSERVER" = "wl" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET mesa libglvnd"
-  PKG_CAIRO_CONFIG="--disable-xlib \
-                    --disable-xlib-xrender \
-                    --disable-gl \
-                    --disable-glx \
-                    --enable-glesv2 \
+  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET mesa libglvnd libXrender libX11"
+  PKG_CAIRO_CONFIG="--x-includes="$SYSROOT_PREFIX/usr/include" \
+                    --x-libraries="$SYSROOT_PREFIX/usr/lib" \
+                    --enable-xlib \
+                    --enable-xlib-xrender \
+                    --enable-gl \
+                    --enable-glx \
+                    --disable-glesv2 \
                     --enable-egl \
-                    --without-x"
+                    --enable-xcb \
+                    --enable-xlib-xcb \
+                    --enable-xcb-shm \
+                    --with-x"
 else
   PKG_CAIRO_CONFIG="--disable-xlib \
                     --disable-xlib-xrender \
@@ -47,6 +51,9 @@ else
                     --disable-glx \
                     --disable-glesv2 \
                     --disable-egl \
+                    --disable-xcb \
+                    --disable-xlib-xcb \
+                    --disable-xcb-shm \
                     --without-x"
 fi
 
@@ -59,9 +66,6 @@ PKG_CONFIGURE_OPTS_TARGET="$PKG_CAIRO_CONFIG \
                            --enable-atomic \
                            --disable-gcov \
                            --disable-valgrind \
-                           --disable-xcb \
-                           --disable-xlib-xcb \
-                           --disable-xcb-shm \
                            --disable-qt \
                            --disable-quartz \
                            --disable-quartz-font \
