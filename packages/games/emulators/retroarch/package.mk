@@ -40,7 +40,7 @@ pre_configure_target() {
   esac
 
   if [ "${DISPLAYSERVER}" = "wl" ]; then
-    PKG_DEPENDS_TARGET+=" ${DISPLAYSERVER} ${WINDOWMANAGER}"
+    PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER}"
     PKG_CONFIGURE_OPTS_TARGET+=" --enable-wayland"
   fi
 
