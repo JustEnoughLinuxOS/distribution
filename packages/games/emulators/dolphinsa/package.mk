@@ -17,6 +17,7 @@ case ${DEVICE} in
     PKG_URL="${PKG_SITE}.git"
     PKG_VERSION="0b160db48796f727311cea16072174d96b784f80"
     PKG_GIT_CLONE_BRANCH="egldrm"
+    PKG_PATCH_DIRS+=" legacy"
   ;;
 esac
 
