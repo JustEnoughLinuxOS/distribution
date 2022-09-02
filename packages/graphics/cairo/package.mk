@@ -36,9 +36,9 @@ elif [ "$DISPLAYSERVER" = "wl" ]; then
                     --x-libraries="$SYSROOT_PREFIX/usr/lib" \
                     --enable-xlib \
                     --enable-xlib-xrender \
-                    --enable-gl \
-                    --enable-glx \
-                    --disable-glesv2 \
+                    --disable-gl \
+                    --disable-glx \
+                    --enable-glesv2 \
                     --enable-egl \
                     --enable-xcb \
                     --enable-xlib-xcb \
