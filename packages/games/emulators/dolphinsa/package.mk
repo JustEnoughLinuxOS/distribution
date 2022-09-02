@@ -10,7 +10,21 @@ PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain libevdev libdrm ffmpeg zlib libpng lzo libusb"
 PKG_LONGDESC="Dolphin is a GameCube / Wii emulator, allowing you to play games for these two platforms on PC with improvements. "
 
-PKG_CMAKE_OPTS_TARGET=" -DENABLE_HEADLESS=ON \
+if [ ! "${OPENGL}" = "no" ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu"
+fi
+
+if [ "${OPENGLES_SUPPORT}" = yes ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+  PKG_CONFIGURE_OPTS_TARGET+=" -DENABLE_X11=OFF"
+fi
+
+if [ "${DISPLAYSERVER}" = "wl" ]; then
+  PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER}"
+  PKG_CONFIGURE_OPTS_TARGET+=" -DENABLE_X11=ON"
+fi
+
+PKG_CMAKE_OPTS_TARGET+=" -DENABLE_HEADLESS=ON \
                         -DENABLE_EGL=ON \
                         -DENABLE_EVDEV=ON \
                         -DLINUX_LOCAL_DEV=ON \
@@ -18,7 +32,6 @@ PKG_CMAKE_OPTS_TARGET=" -DENABLE_HEADLESS=ON \
                         -DENABLE_TESTS=OFF \
                         -DENABLE_LLVM=OFF \
                         -DENABLE_ANALYTICS=OFF \
-                        -DENABLE_X11=OFF \
                         -DENABLE_LTO=ON \
                         -DENABLE_QT=OFF \
                         -DENCODE_FRAMEDUMPS=OFF"

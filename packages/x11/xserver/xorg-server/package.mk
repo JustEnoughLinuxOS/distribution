@@ -14,8 +14,17 @@ PKG_LONGDESC="X.Org Server is the free and open-source implementation of the X W
 
 get_graphicdrivers
 
-PKG_MESON_OPTS_TARGET="-Dxorg=true \
-                       -Dxephyr=false \
+if [ "${DISPLAYSERVER}" = "wl" ]
+then
+PKG_DEPENDS_TARGET+=" wayland"
+PKG_MESON_OPTS_TARGET+=" -Dxorg=false \
+                         -Dxwayland=true"
+else
+PKG_MESON_OPTS_TARGET+=" -Dxorg=true \
+                         -Dxwayland=false"
+fi
+
+PKG_MESON_OPTS_TARGET+=" -Dxephyr=false \
                        -Dxnest=false \
                        -Dxvfb=false \
                        -Dxwin=false \
