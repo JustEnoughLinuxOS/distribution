@@ -61,7 +61,7 @@ pre_configure_target() {
   fi
 
   case ${DEVICE} in
-    RG351P|RG552)
+    RG351P)
       PKG_DEPENDS_TARGET+=" librga libgo2"
       PKG_CONFIGURE_OPTS_TARGET+=" --enable-odroidgo2"
     ;;
