@@ -37,7 +37,7 @@ fi
 if [ "${DISPLAYSERVER}" = "wl" ]; then
   PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER} xorg-server xrandr libXi"
   PKG_CONFIGURE_OPTS_TARGET+=" -DENABLE_X11=ON \
-                               -DENABLE_EGL=OFF"
+                               -DENABLE_EGL=ON"
 fi
 
 if [ "${VULKAN_SUPPORT}" = "yes" ]
