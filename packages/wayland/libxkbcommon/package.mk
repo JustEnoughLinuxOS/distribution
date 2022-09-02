@@ -17,8 +17,9 @@ if [ "${DISPLAYSERVER}" = "x11" ]; then
   PKG_MESON_OPTS_TARGET+=" -Denable-x11=true \
                            -Denable-wayland=false"
 elif [ "${DISPLAYSERVER}" = "wl" ]; then
-  PKG_MESON_OPTS_TARGET+=" -Denable-x11=false \
-                           -Denable-wayland=true"
+  PKG_MESON_OPTS_TARGET+=" -Denable-x11=true \
+                           -Denable-wayland=true \
+                           -Dxkb-config-root=/usr/share/X11/xkb"
 else
   PKG_MESON_OPTS_TARGET+=" -Denable-x11=false \
                            -Denable-wayland=false"

@@ -1,5 +1,5 @@
   # kernel command line
-    EXTRA_CMDLINE="quiet console=tty0 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
+    EXTRA_CMDLINE="quiet ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
 
   # Partition label
     PARTITION_TABLE="msdos"

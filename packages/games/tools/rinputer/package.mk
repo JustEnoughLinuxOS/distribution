@@ -16,7 +16,7 @@ make_target() {
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin
-  cp rinputer3 ${INSTALL}/usr/bin
+  cp target/release/rinputer3 ${INSTALL}/usr/bin
   chmod 0755 ${INSTALL}/usr/bin/*
   mkdir -p ${INSTALL}/etc
   cp rinputer3.ron ${INSTALL}/etc/

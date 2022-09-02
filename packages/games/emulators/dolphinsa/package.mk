@@ -10,7 +10,8 @@ case ${DEVICE} in
   RG552|handheld)
     PKG_SITE="https://github.com/dolphin-emu/dolphin"
     PKG_URL="${PKG_SITE}.git"
-    PKG_VERSION="23902f9"
+    PKG_VERSION="d0ed09ab6fe8e19a64e8f1bb2867f9c439616d4c"
+    PKG_PATCH_DIRS+=" new"
   ;;
   *)
     PKG_SITE="https://github.com/rtissera/dolphin"
@@ -23,21 +24,34 @@ esac
 
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu"
+  PKG_CONFIGURE_OPTS_TARGET+=" -DENABLE_X11=OFF \
+                               -DENABLE_EGL=ON"
 fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-  PKG_CONFIGURE_OPTS_TARGET+=" -DENABLE_X11=OFF"
+  PKG_CONFIGURE_OPTS_TARGET+=" -DENABLE_X11=OFF \
+                               -DENABLE_EGL=ON"
 fi
 
 if [ "${DISPLAYSERVER}" = "wl" ]; then
   PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER} xorg-server xrandr libXi"
-  PKG_CONFIGURE_OPTS_TARGET+=" -DENABLE_X11=ON"
+  PKG_CONFIGURE_OPTS_TARGET+=" -DENABLE_X11=ON \
+                               -DENABLE_EGL=OFF"
+fi
+
+if [ "${VULKAN_SUPPORT}" = "yes" ]
+then
+  PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
+  PKG_CONFIGURE_OPTS_TARGET+=" -DENABLE_VULKAN=ON"
 fi
 
 PKG_CMAKE_OPTS_TARGET+=" -DENABLE_HEADLESS=ON \
-                         -DENABLE_EGL=ON \
                          -DENABLE_EVDEV=ON \
+                         -DTHREADS_PTHREAD_ARG=OFF \
+                         -DUSE_DISCORD_PRESENCE=OFF \
+                         -DBUILD_SHARED_LIBS=OFF \
+                         -DUSE_MGBA=OFF \
                          -DLINUX_LOCAL_DEV=ON \
                          -DOpenGL_GL_PREFERENCE=GLVND \
                          -DENABLE_TESTS=OFF \
