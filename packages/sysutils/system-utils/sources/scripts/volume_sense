@@ -20,10 +20,6 @@ LOG="/var/log/$(basename "$0").log"
 # type 1 (EV_KEY), code 114 (KEY_VOLUMEDOWN), value 1
 # type 1 (EV_KEY), code 115 (KEY_VOLUMEUP), value 1
 
-#DEVICE="${DEVICE_VOLUME_DEV}"  # Device for volume key events
-
-#CONTROLLER_DEVICE="${DEVICE_CONTROLLER_DEV}" # Joystick events (for Fn key)
-
 VOL_EVENT='*(KEY_VOLUME*, value *' # This matches all volume events
 
 VOL_UP='*UP), value *'  # Differentiate 'up' volume event
@@ -32,9 +28,8 @@ VOL_DOWN='*DOWN), value *' #Differentiate 'down' volume event
 V_FUNC_KEY_EVENT='*('${DEVICE_VOL_MODIFIER}'), value *'
 
 # Matches if a button was pressed (1), released (0) or held down (2)
-PRESS='*value 1'
-RELEASE='*value 0'
-REPEAT_PRESS="* value 2"
+PRESS='value [1-9]'
+RELEASE='value 0'
 
 # Volume repeat
 VOLUME_REPEAT_MOD=4
@@ -89,7 +84,7 @@ done
         (${VOL_EVENT})
 
           # We don't care when you 'let go' ('release') the volume button
-          if [[ "$line" == ${RELEASE} ]]; then
+          if [[ "$line" =~ ${RELEASE} ]]; then
              REPEAT_NUM=0
              continue
           fi
@@ -130,16 +125,16 @@ done
 
         (${V_FUNC_KEY_EVENT})
 
-          # We don't care about 'Fn' key repeats - continue
-          if [[ "$line" == ${REPEAT_PRESS} ]]; then
-             continue
-          fi
+          ## We don't care about 'Fn' key repeats - continue
+          #if [[ "$line" == ${REPEAT_PRESS} ]]; then
+          #   continue
+          #fi
 
           #Reset the number of repeats when Fn is pressed/release
           #  as repeat speed is different between volume/brightness
           REPEAT_NUM=0
 
-          if [[ "${line}" == ${PRESS} ]]; then
+          if [[ "${line}" =~ ${PRESS} ]]; then
             FUNC_PRESSED=yes
           elif [[ "${line}" == ${RELEASE} ]]; then
             FUNC_PRESSED=no
