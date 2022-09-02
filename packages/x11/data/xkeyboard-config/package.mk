@@ -13,7 +13,8 @@ PKG_LONGDESC="X keyboard extension data files."
 PKG_TOOLCHAIN="autotools"
 
 configure_package() {
-  if [ "${DISPLAYSERVER}" = "x11" ]; then
+  if [ "${DISPLAYSERVER}" = "x11" ] || \
+     [ "${DISPLAYSERVER}" = "wl" ]; then
     PKG_DEPENDS_TARGET+=" xkbcomp"
   fi
 }
@@ -24,10 +25,11 @@ pre_configure_target() {
                              --disable-runtime-deps \
                              --enable-nls \
                              --disable-rpath \
-                             --datadir=/usr/lib \
+                             --datadir=${XORG_PATH_XKB} \
                              --with-gnu-ld"
 
-  if [ "${DISPLAYSERVER}" = "x11" ]; then
+  if [ "${DISPLAYSERVER}" = "x11" ] || \
+     [ "${DISPLAYSERVER}" = "wl" ]; then
     PKG_CONFIGURE_OPTS_TARGET+=" XKBCOMP=/usr/bin/xkbcomp \
                                --with-xkb-base=${XORG_PATH_XKB} \
                                --with-xkb-rules-symlink=xorg"
