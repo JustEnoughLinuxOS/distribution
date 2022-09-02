@@ -15,33 +15,51 @@ PKG_PATCH_DIRS+="${DEVICE}"
 
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu"
-  PKG_CMAKE_OPTS_TARGET+=" -DVIDEO_OPENGL=ON \
-                           -DVIDEO_X11=OFF"
+  PKG_CMAKE_OPTS_TARGET+=" -DSDL_OPENGL=ON \
+                           -DVIDEO_OPENGL=ON \
+                           -DVIDEO_KMSDRM=OFF"
+else
+  PKG_CMAKE_OPTS_TARGET+=" -DSDL_OPENGL=OFF \
+                           -DVIDEO_OPENGL=OFF \
+                           -DVIDEO_KMSDRM=OFF"
 fi
 
 if [ "${OPENGLES_SUPPORT}" = "yes" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-  PKG_CMAKE_OPTS_TARGET+="-DVIDEO_OPENGLES=ON \
-                          -DVIDEO_VULKAN=OFF \
-			  -DVIDEO_X11=OFF"
+  PKG_CMAKE_OPTS_TARGET+=" -DSDL_OPENGLES=ON \
+                           -DVIDEO_OPENGLES=ON \
+                           -DVIDEO_KMSDRM=ON"
+else
+  PKG_CMAKE_OPTS_TARGET+=" -DSDL_OPENGLES=OFF \
+                           -DVIDEO_OPENGLES=OFF \
+                           -DVIDEO_KMSDRM=OFF"
 fi
 
 if [ "${VULKAN_SUPPORT}" = "yes" ]; then
   PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
-  PKG_CMAKE_OPTS_TARGET+=" -DVIDEO_VULKAN=ON \
-                           -DVIDEO_X11=OFF"
+  PKG_CMAKE_OPTS_TARGET+=" -DSDL_VULKAN=ON \
+                           -DVIDEO_OPENGL=OFF \
+                           -DVIDEO_VULKAN=ON"
+else
+  PKG_CMAKE_OPTS_TARGET+=" -DSDL_VULKAN=OFF \
+                           -DVIDEO_VULKAN=OFF"
 fi
 
 if [ "${DISPLAYSERVER}" = "wl" ]
 then
   PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER}"
-  PKG_CMAKE_OPTS_TARGET+=" -DVIDEO_WAYLAND=ON \
-                           -DVIDEO_WAYLAND_QT_TOUCH=ON \
-                           -DWAYLAND_SHARED=ON"
+  PKG_CMAKE_OPTS_TARGET+=" -DSDL_WAYLAND=ON \
+                           -DVIDEO_WAYLAND=ON \
+                           -DVIDEO_WAYLAND_QT_TOUCH=OFF \
+                           -DWAYLAND_SHARED=ON \
+                           -DVIDEO_X11=OFF \
+                           -DSDL_X11=OFF"
 else
   PKG_CMAKE_OPTS_TARGET+=" -DVIDEO_WAYLAND=OFF \
                            -DVIDEO_WAYLAND_QT_TOUCH=ON \
-                           -DWAYLAND_SHARED=OFF"
+                           -DWAYLAND_SHARED=OFF \
+                           -DVIDEO_X11=OFF \
+                           -DSDL_X11=OFF"
 fi
 
 case ${PROJECT} in
@@ -97,7 +115,6 @@ pre_configure_target(){
                          -DCLOCK_GETTIME=OFF \
                          -DRPATH=OFF \
                          -DRENDER_D3D=OFF \
-                         -DVIDEO_KMSDRM=ON \
                          -DPULSEAUDIO=ON"
 }
 

@@ -16,7 +16,7 @@ PKG_MESON_OPTS_TARGET="-Dbackend-drm=true \
                        -Dbackend-rdp=false \
                        -Dscreenshare=false \
                        -Dbackend-wayland=true \
-                       -Dbackend-x11=true \
+                       -Dbackend-x11=false \
                        -Ddeprecated-backend-fbdev=false \
                        -Dbackend-default=drm \
                        -Drenderer-gl=true \
