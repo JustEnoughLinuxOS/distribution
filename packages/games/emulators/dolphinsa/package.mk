@@ -69,5 +69,5 @@ makeinstall_target() {
 
   mkdir -p ${INSTALL}/usr/config/dolphin-emu
   cp -rf ${PKG_BUILD}/Data/Sys/* ${INSTALL}/usr/config/dolphin-emu
-  cp -rf ${PKG_DIR}/config/* ${INSTALL}/usr/config/dolphin-emu
+  cp -rf ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/config/dolphin-emu
 }
