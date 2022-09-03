@@ -21,7 +21,7 @@ if [ -e /storage/.please_resize_me ] ; then
   fi
 
   # get the disk. /storage on 2nd partition
-  PART=$(blkid | awk  'BEGIN {FS=":"} /STORAGE/ {print $1}')
+  PART=$(blkid | awk 'BEGIN {FS=":"} /'$(cat /proc/cmdline | sed -e 's#^.*disk=UUID=##g' -e 's#\ .*$##g')'/ {print $1}')
   if [ "$(echo ${PART} | awk '/mmcblk/ {print $1}')" ]
   then
     DISK=$(echo ${PART} | sed s/p[0-9]//g)
