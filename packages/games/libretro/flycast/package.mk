@@ -36,11 +36,15 @@ pre_configure_target() {
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
-  if [ "${TARGET_ARCH}" = "aarch64" ]
-  then
-    cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/flycast-*/.install_pkg/usr/lib/libretro/flycast32_libretro.so ${INSTALL}/usr/lib/libretro
-    cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast_libretro.so
-  else
-    cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast32_libretro.so
-  fi
+  case ${TARGET_ARCH} in
+    aarch64)
+      cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/flycast-*/.install_pkg/usr/lib/libretro/flycast32_libretro.so ${INSTALL}/usr/lib/libretro
+      cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast_libretro.so
+    ;;
+    arm)
+      cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast32_libretro.so
+    ;;
+    *)
+      cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast_libretro.so
+    ;;
 }
