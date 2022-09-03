@@ -1,6 +1,5 @@
 PKG_NAME="yabasanshiroSA"
 PKG_VERSION="c7618d2ecbf77b1e8188fa8af4fa1cfb34833a72"
-PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/devmiyax/yabause"
 PKG_URL="${PKG_SITE}.git"
@@ -32,11 +31,16 @@ pre_make_target() {
   ${HOST_CC} ${PKG_BUILD}/yabause/src/musashi/m68kmake.c -o ${PKG_BUILD}/m68kmake_host
 }
 
+case ${ARCH} in
+  aarch64)
+    PKG_CMAKE_OPTS_TARGET+="-DYAB_WANT_ARM7=ON"
+  ;;
+esac
+
 pre_configure_target() {
-  PKG_CMAKE_OPTS_TARGET="${PKG_BUILD}/yabause \
+  PKG_CMAKE_OPTS_TARGET+="${PKG_BUILD}/yabause \
                          -DYAB_PORTS=retro_arena \
                          -DYAB_WANT_DYNAREC_DEVMIYAX=ON \
-                         -DYAB_WANT_ARM7=ON \
                          -DCMAKE_TOOLCHAIN_FILE=${PKG_BUILD}/yabause/src/retro_arena/n2.cmake \
                          -DYAB_WANT_VULKAN=OFF \
                          -DOPENGL_INCLUDE_DIR=${SYSROOT_PREFIX}/usr/include \
