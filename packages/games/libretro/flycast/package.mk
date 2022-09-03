@@ -47,4 +47,5 @@ makeinstall_target() {
     *)
       cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast_libretro.so
     ;;
+  esac
 }
