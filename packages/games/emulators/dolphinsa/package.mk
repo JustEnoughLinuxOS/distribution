@@ -23,7 +23,7 @@ case ${DEVICE} in
 esac
 
 if [ ! "${OPENGL}" = "no" ]; then
-  PKG_DEPENDS_TARGET+=" ${OPENGL} glu"
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
   PKG_CONFIGURE_OPTS_TARGET+=" -DENABLE_X11=OFF \
                                -DENABLE_EGL=ON"
 fi
@@ -53,7 +53,6 @@ PKG_CMAKE_OPTS_TARGET+=" -DENABLE_HEADLESS=ON \
                          -DBUILD_SHARED_LIBS=OFF \
                          -DUSE_MGBA=OFF \
                          -DLINUX_LOCAL_DEV=ON \
-                         -DOpenGL_GL_PREFERENCE=GLVND \
                          -DENABLE_TESTS=OFF \
                          -DENABLE_LLVM=OFF \
                          -DENABLE_ANALYTICS=OFF \

@@ -11,7 +11,7 @@ PKG_URL="http://xorg.freedesktop.org/archive/individual/lib/${PKG_NAME}-${PKG_VE
 PKG_DEPENDS_TARGET="toolchain util-macros libXext"
 PKG_LONGDESC="libXinerama is the Xinerama library."
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --enable-malloc0returnsnull"
+PKG_CONFIGURE_OPTS_TARGET="--disable-static --enable-shared --enable-malloc0returnsnull"
 
 post_configure_target() {
   libtool_remove_rpath libtool

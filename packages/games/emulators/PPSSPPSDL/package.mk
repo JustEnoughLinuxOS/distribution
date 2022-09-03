@@ -32,13 +32,19 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
 			   -DUSING_X11_VULKAN=OFF"
 fi
 
-if [ "${VULKAN_SUPPORT}" = "yes" ]
-then
-  PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
-  PKG_CMAKE_OPTS_TARGET+=" -DUSE_VULKAN_DISPLAY_KHR=ON \
-                           -DVULKAN=ON \
-                           -DUSING_X11_VULKAN=OFF"
-fi
+#if [ "${VULKAN_SUPPORT}" = "yes" ]
+#then
+#  PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
+#  PKG_CMAKE_OPTS_TARGET+=" -DUSE_VULKAN_DISPLAY_KHR=ON \
+#                           -DVULKAN=ON \
+#                           -DUSING_X11_VULKAN=OFF"
+#fi
+
+### Vulkan is currently broken for PPSSPP.
+PKG_CMAKE_OPTS_TARGET+=" -DUSE_VULKAN_DISPLAY_KHR=OFF \
+                         -DVULKAN=OFF \
+                         -DUSING_X11_VULKAN=OFF"
+
 
 if [ "${DISPLAYSERVER}" = "wl" ]; then
   PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER}"
