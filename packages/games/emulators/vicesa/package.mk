@@ -23,6 +23,11 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
 fi
 
+pre_configure_target() {
+  export LDFLAGS="${LDFLAGS} -lreadline -lncursesw -ltinfow"
+  export CFLAGS="${CFLAGS} -fcommon"
+}
+
 post_makeinstall_target() {
   mkdir -p ${INSTALL}/usr/config/vice
   if [ -d "${PKG_DIR}/config/${DEVICE}" ]
