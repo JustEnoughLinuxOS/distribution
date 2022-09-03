@@ -71,3 +71,16 @@ makeinstall_target() {
   cp -rf ${PKG_BUILD}/Data/Sys/* ${INSTALL}/usr/config/dolphin-emu
   cp -rf ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/config/dolphin-emu
 }
+
+post_install() {
+    case ${DEVICE} in
+      RG503|RG353P)
+        DOLPHIN_PLATFORM="drm"
+      ;;
+      *)
+        DOLPHIN_PLATFORM="x11"
+      ;;
+    esac
+    sed -e "s/@DOLPHIN_PLATFORM@/${DOLPHIN_PLATFORM}/g" \
+        -i  ${INSTALL}/usr/bin/start_dolphin.sh
+}
