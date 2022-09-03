@@ -12,12 +12,19 @@ PKG_GIT_CLONE_BRANCH="pi4-1-9-0"
 PKG_BUILD_FLAGS="+speed"
 PKG_PATCH_DIRS+="${DEVICE}"
 
+PKG_CMAKE_OPTS_TARGET="${PKG_BUILD}/yabause "
+
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
 fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+fi
+
+if [ "${VULKAN_SUPPORT}" = "yes" ]
+then
+  PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
 fi
 
 post_unpack() {
@@ -33,19 +40,43 @@ pre_make_target() {
 }
 
 pre_configure_target() {
-  PKG_CMAKE_OPTS_TARGET="${PKG_BUILD}/yabause \
-                         -DYAB_PORTS=retro_arena \
-                         -DYAB_WANT_DYNAREC_DEVMIYAX=ON \
-                         -DYAB_WANT_ARM7=ON \
-                         -DCMAKE_TOOLCHAIN_FILE=${PKG_BUILD}/yabause/src/retro_arena/n2.cmake \
-                         -DYAB_WANT_VULKAN=OFF \
-                         -DOPENGL_INCLUDE_DIR=${SYSROOT_PREFIX}/usr/include \
-                         -DOPENGL_opengl_LIBRARY=${SYSROOT_PREFIX}/usr/lib \
-                         -DOPENGL_glx_LIBRARY=${SYSROOT_PREFIX}/usr/lib \
-                         -DLIBPNG_LIB_DIR=${SYSROOT_PREFIX}/usr/lib \
-                         -DUSE_EGL=ON \
-			 -Dpng_STATIC_LIBRARIES=${SYSROOT_PREFIX}/usr/lib/libpng16.so \
-			 -DCMAKE_BUILD_TYPE=Release"
+
+  PKG_CMAKE_OPTS_TARGET="${PKG_BUILD}/yabause "
+
+  if [ ! "${OPENGL}" = "no" ]; then
+    PKG_CMAKE_OPTS_TARGET+="-DUSE_EGL=ON"
+  fi
+
+  if [ "${OPENGLES_SUPPORT}" = yes ]; then
+    PKG_CMAKE_OPTS_TARGET+="-DUSE_EGL=ON"
+  fi
+
+  if [ "${VULKAN_SUPPORT}" = "yes" ]
+  then
+    PKG_CMAKE_OPTS_TARGET+=" -DYAB_WANT_VULKAN=ON"
+  else
+    PKG_CMAKE_OPTS_TARGET+=" -DYAB_WANT_VULKAN=OFF"
+  fi
+
+  case ${ARCH} in
+    aarch64)
+      PKG_CMAKE_OPTS_TARGET+="-DYAB_WANT_ARM7=ON \
+                              -DYAB_WANT_DYNAREC_DEVMIYAX=ON"
+    ;;
+    *)
+      PKG_CMAKE_OPTS_TARGET+="-DYAB_WANT_ARM7=OFF \
+                              -DYAB_WANT_DYNAREC_DEVMIYAX=ON"
+    ;;
+  esac
+
+  PKG_CMAKE_OPTS_TARGET+="-DYAB_PORTS=retro_arena \
+                          -DCMAKE_TOOLCHAIN_FILE=${PKG_BUILD}/yabause/src/retro_arena/n2.cmake \
+                          -DOPENGL_INCLUDE_DIR=${SYSROOT_PREFIX}/usr/include \
+                          -DOPENGL_opengl_LIBRARY=${SYSROOT_PREFIX}/usr/lib \
+                          -DOPENGL_glx_LIBRARY=${SYSROOT_PREFIX}/usr/lib \
+                          -DLIBPNG_LIB_DIR=${SYSROOT_PREFIX}/usr/lib \
+			  -Dpng_STATIC_LIBRARIES=${SYSROOT_PREFIX}/usr/lib/libpng16.so \
+			  -DCMAKE_BUILD_TYPE=Release"
                          
 }
 
