@@ -287,7 +287,7 @@ then
         		fi
                 ;;
                 "gamecube")
-                        jslisten set "dolphin-emu-nogui"
+                        jslisten set "-9 dolphin-emu-nogui"
                         if [ "$EMU" = "dolphinsa" ]; then
                         RUNTHIS='${TBASH} /usr/bin/start_dolphin.sh "${ROMNAME}"'
                         fi
