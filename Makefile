@@ -26,13 +26,11 @@ src-pkg:
 world: RG552 RG503 RG353P RG351P RG351V RG351MP handheld
 
 handheld:
-	PROJECT=PC DEVICE=handheld ARCH=x86_64 ./scripts/build_distro
-X86_64:
-	BASE_ONLY=true PROJECT=PC DEVICE=X86_64 ARCH=x86_64 ./scripts/build_distro
+	DEVICE_ROOT=handheld PROJECT=PC DEVICE=handheld ARCH=x86_64 ./scripts/build_distro
 
 RG552:
-	PROJECT=Rockchip DEVICE=RG552 ARCH=arm ./scripts/build_distro
-	PROJECT=Rockchip DEVICE=RG552 ARCH=aarch64 ./scripts/build_distro
+	DEVICE_ROOT=RG552 PROJECT=Rockchip DEVICE=RG552 ARCH=arm ./scripts/build_distro
+	DEVICE_ROOT=RG552 PROJECT=Rockchip DEVICE=RG552 ARCH=aarch64 ./scripts/build_distro
 
 RG503:
 	DEVICE_ROOT=RG503 PROJECT=Rockchip DEVICE=RG503 ARCH=arm ./scripts/build_distro
