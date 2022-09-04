@@ -43,17 +43,44 @@ FUNC_PRESSED=no
 CONTROLLER_DISCONNECTED="*error reading: No such device"
 DEVICE_DISCONNECTED="*error reading: No such device"
 
-# Detect input devices automatically
-for DEV in /dev/input/ev*
-do
-  unset SUPPORTS
-  SUPPORTS=$(udevadm info ${DEV} | awk '/ID_INPUT_KEY=|ID_INPUT_JOYSTICK=/ {print $2}')
-  if [ -n "${SUPPORTS}" ]
-  then
-    DEVICE=$(udevadm info ${DEV} | awk 'BEGIN {FS="="} /DEVNAME=/ {print $2}')
-    INPUT_DEVICES+=("${DEVICE}")
-  fi
-done
+get_devices() {
+  KJDEVS=false
+  FOUNDKEYS=false
+  FOUNDJOY=false
+  while [ ${KJDEVS} = false ]
+  do
+    # Detect input devices automatically
+    for DEV in /dev/input/ev*
+    do
+      unset SUPPORTS
+      SUPPORTS=$(udevadm info ${DEV} | awk '/ID_INPUT_KEY=|ID_INPUT_JOYSTICK=/ {print $2}')
+      if [ -n "${SUPPORTS}" ]
+      then
+        DEVICE=$(udevadm info ${DEV} | awk 'BEGIN {FS="="} /DEVNAME=/ {print $2}')
+        INPUT_DEVICES+=("${DEVICE}")
+        if [[ "${SUPPORTS}" =~ ID_INPUT_KEY ]]
+        then
+          echo "Found Keyboard: ${DEVICE}" 2>&1 >${LOG}
+          FOUNDKEYS=true
+        elif [[ "${SUPPORTS}" =~ ID_INPUT_JOYSTICK ]]
+        then
+          echo "Found Joystick: ${DEVICE}" 2>&1 >${LOG}
+          FOUNDJOY=true
+        fi
+      fi
+    done
+    if [ "${FOUNDKEYS}" = "true" ] &&
+       [ "${FOUNDJOY}" = "true" ]
+    then
+      echo "Found all of the needed devices." 2>&1 >${LOG}
+      KJDEVS=true
+      break
+    fi
+    sleep 1
+  done
+}
+
+get_devices
 
 # Logic:
 #  - Listen to both:
@@ -65,7 +92,6 @@ done
 #  - Using 'read' means the loop is idle when no button is pressed
 
 (
-
    for INPUT_DEVICE in ${INPUT_DEVICES[@]}
    do
      evtest "${INPUT_DEVICE}" 2>&1 &
@@ -75,14 +101,13 @@ done
     case $line in
         (${CONTROLLER_DISCONNECTED})
         echo "Reloading due to ${CONTROLLER_DEVICE} reattach..." >${LOG} 2>&1
-        exit 0
+        get_devices
         ;;
         (${DEVICE_DISCONNECTED})
         echo "Reloading due to ${DEVICE} reattach..." >${LOG} 2>&1
-        exit 0
+        get_devices
         ;;
         (${VOL_EVENT})
-
           # We don't care when you 'let go' ('release') the volume button
           if [[ "$line" =~ ${RELEASE} ]]; then
              REPEAT_NUM=0
