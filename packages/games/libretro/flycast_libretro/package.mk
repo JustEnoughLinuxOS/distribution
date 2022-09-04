@@ -52,7 +52,7 @@ pre_make_target() {
     RG351P|RG351V|RG351MP)
       PKG_MAKE_OPTS_TARGET+=" platform=RG351x"
     ;;
-    RG351P|RG503)
+    RG353P|RG503)
       PKG_MAKE_OPTS_TARGET+=" platform=RK3566"
     ;;
     RG552)
