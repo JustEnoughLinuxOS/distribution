@@ -1,0 +1,40 @@
+diff --git a/main.c b/main.c
+index 8efafc6..6ec8d84 100644
+--- a/main.c
++++ b/main.c
+@@ -316,10 +316,10 @@ int main(void)
+ 
+ 	ioctl(outfd, UI_SET_EVBIT, EV_KEY);
+ 
+-	//ioctl(outfd, UI_SET_KEYBIT, BTN_DPAD_UP);	// dpad up
+-	//ioctl(outfd, UI_SET_KEYBIT, BTN_DPAD_DOWN);	// dpad down
+-	//ioctl(outfd, UI_SET_KEYBIT, BTN_DPAD_LEFT);	// dpad left
+-	//ioctl(outfd, UI_SET_KEYBIT, BTN_DPAD_RIGHT);	// dpad right
++	ioctl(outfd, UI_SET_KEYBIT, BTN_DPAD_UP);	// dpad up
++	ioctl(outfd, UI_SET_KEYBIT, BTN_DPAD_DOWN);	// dpad down
++	ioctl(outfd, UI_SET_KEYBIT, BTN_DPAD_LEFT);	// dpad left
++	ioctl(outfd, UI_SET_KEYBIT, BTN_DPAD_RIGHT);	// dpad right
+ 
+ 	ioctl(outfd, UI_SET_KEYBIT, BTN_NORTH);		// x
+ 	ioctl(outfd, UI_SET_KEYBIT, BTN_SOUTH);		// b
+@@ -332,6 +332,9 @@ int main(void)
+ 	ioctl(outfd, UI_SET_KEYBIT, BTN_TR2);		// L2
+ 	ioctl(outfd, UI_SET_KEYBIT, BTN_TL2);		// R2
+ 
++	ioctl(outfd, UI_SET_KEYBIT, BTN_THUMBL);	// L3
++	ioctl(outfd, UI_SET_KEYBIT, BTN_THUMBR);	// R3
++
+ 	ioctl(outfd, UI_SET_KEYBIT, BTN_SELECT);
+ 	ioctl(outfd, UI_SET_KEYBIT, BTN_START);
+ 
+@@ -350,8 +353,8 @@ int main(void)
+ 	setup_abs(outfd, ABS_RZ);
+ 
+ 	// dpad
+-	setup_abs(outfd, ABS_HAT0X);
+-	setup_abs(outfd, ABS_HAT0Y);
++	//setup_abs(outfd, ABS_HAT0X);
++	//setup_abs(outfd, ABS_HAT0Y);
+ 
+ 	// maybe we should pretend to be xbox gamepad?
+ 	memset(&usetup, 0, sizeof(usetup));

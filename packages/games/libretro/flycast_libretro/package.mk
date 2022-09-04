@@ -23,7 +23,6 @@ PKG_NAME="flycast_libretro"
 PKG_VERSION="4c293f306bc16a265c2d768af5d0cea138426054"
 PKG_SHA256="7ce0bd97b095907fd4960c771364c549a54547877b5128af42c73a9257fbec6b"
 PKG_LICENSE="GPLv2"
-PKG_ARCH="aarch64"
 PKG_SITE="https://github.com/libretro/flycast"
 PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
@@ -49,16 +48,17 @@ pre_configure_target() {
 
 pre_make_target() {
   export BUILD_SYSROOT=${SYSROOT_PREFIX}
-
-  if [[ "${DEVICE}" =~ RG351 ]]
-  then
-    PKG_MAKE_OPTS_TARGET+=" platform=RG351x"
-  elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
-  then
-    PKG_MAKE_OPTS_TARGET+=" platform=RK3566"
-  else
-    PKG_MAKE_OPTS_TARGET+=" platform=${DEVICE}"
-  fi
+  case ${DEVICE} in
+    RG351P|RG351V|RG351MP)
+      PKG_MAKE_OPTS_TARGET+=" platform=RG351x"
+    ;;
+    RG351P|RG503)
+      PKG_MAKE_OPTS_TARGET+=" platform=RK3566"
+    ;;
+    RG552)
+      PKG_MAKE_OPTS_TARGET+=" platform=${DEVICE}"
+    ;;
+  esac
 }
 
 makeinstall_target() {

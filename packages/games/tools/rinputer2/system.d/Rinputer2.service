@@ -1,0 +1,9 @@
+[Unit]
+Description=Ragnarok Input Daemon
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/rinputer2
+
+[Install]
+WantedBy=multi-user.target

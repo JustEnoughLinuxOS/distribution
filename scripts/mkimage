@@ -123,7 +123,7 @@ SAY installer: permanently install ${DISTRO} to HDD/SSD
 SAY live: boot ${DISTRO} using RAM for temporary storage
 SAY run: boot ${DISTRO} using this USB memory device for storage
 SAY
-DEFAULT installer
+DEFAULT run
 TIMEOUT 50
 PROMPT 1
 
@@ -142,7 +142,7 @@ EOF
 
   cat << EOF > "${LE_TMP}/grub.cfg"
 set timeout="25"
-set default="Installer"
+set default="Run"
 menuentry "Installer" {
 	search --set -f /KERNEL
 	linux /KERNEL boot=UUID=${UUID_SYSTEM} installer systemd.debug_shell vga=current ${EXTRA_CMDLINE}
