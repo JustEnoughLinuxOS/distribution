@@ -51,6 +51,9 @@
     MALI_FAMILY="bifrost-g31"
     OPENGLES="libmali"
     OPENGL="no"
+    DISPLAYSERVER="no"
+    VULKAN_SUPPORT="no"
+
     MALI_VERSION="r13p0"
     GRAPHIC_DRIVERS=""
 
