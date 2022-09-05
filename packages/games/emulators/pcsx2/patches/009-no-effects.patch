@@ -1,0 +1,13 @@
+diff --git a/pcsx2/PAD/Linux/wx_dialog/dialog.h b/pcsx2/PAD/Linux/wx_dialog/dialog.h
+index 642cecfc2..2a4c5d759 100644
+--- a/pcsx2/PAD/Linux/wx_dialog/dialog.h
++++ b/pcsx2/PAD/Linux/wx_dialog/dialog.h
+@@ -20,7 +20,7 @@
+ #include <wx/frame.h>
+ #include <wx/button.h>
+ #include <wx/panel.h>
+-#include <wx/effects.h>
++//#include <wx/effects.h>
+ #include <wx/rawbmp.h>
+ #include <wx/graphics.h>
+ #include <wx/timer.h>
