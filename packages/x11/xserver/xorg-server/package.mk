@@ -17,7 +17,8 @@ if [ "${DISPLAYSERVER}" = "wl" ]
 then
 PKG_DEPENDS_TARGET+=" wayland libglvnd"
 PKG_MESON_OPTS_TARGET+=" -Dxorg=false \
-                         -Dxwayland=true"
+                         -Dxwayland=true \
+                         -Dglamor=true"
 else
 PKG_MESON_OPTS_TARGET+=" -Dxorg=true \
                          -Dxwayland=false"
