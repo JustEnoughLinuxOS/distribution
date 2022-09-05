@@ -145,6 +145,25 @@ EOF
     sed -i "s#.integerscale=1#.integerscale=0#g" ${INSTALL}/usr/config/system/configs/system.cfg
   fi
 
+  if [[ "${DEVICE}" =~ handheld ]]
+  then
+    sed -i "s#3do.cpugovernor=performance#3do.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#arcade.cpugovernor=performance#arcade.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#atarijaguar.cpugovernor=performance#atarijaguar.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#atomiswave.cpugovernor=performance#atomiswave.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#dreamcast.cpugovernor=performance#dreamcast.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#j2me.cpugovernor=performance#j2me.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#mame.cpugovernor=performance#mame.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#n64.cpugovernor=performance#n64.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#naomi.cpugovernor=performance#naomi.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#nds.cpugovernor=performance#nds.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#pcfx.cpugovernor=performance#pcfx.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#pc.cpugovernor=performance#pc.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#psp.cpugovernor=performance#psp.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#pspminis.cpugovernor=performance#pspminis.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#virtualboy.cpugovernor=performance#virtualboy.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+  fi
+
   ### Defaults for non-main builds.
   BUILD_BRANCH="$(git branch --show-current)"
   if [[ ! "${BUILD_BRANCH}" =~ main ]]
