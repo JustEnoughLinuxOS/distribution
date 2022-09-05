@@ -38,7 +38,10 @@ case "${DEVICE}" in
   RG552)
     PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa rinputer2"
   ;;
-  RG503|RG353P|handheld)
+  RG503|RG353P)
     PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa"
+  ;;
+  handheld)
+    PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa pcsx2"
   ;;
 esac

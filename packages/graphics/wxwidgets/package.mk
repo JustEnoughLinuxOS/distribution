@@ -9,8 +9,8 @@ PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain zlib libpng libjpeg-turbo gdk-pixbuf gtk3"
 PKG_LONGDESC="wxWidgets is a free and open source cross-platform C++ framework for writing advanced GUI applications using native controls."
 PKG_BUILD_FLAGS="+pic"
-PKG_CMAKE_OPTS_TARGET+=" -DwxUSE_X11=off"
-#PKG_GIT_CLONE_BRANCH="3.2"
+
+PKG_CMAKE_OPTS_TARGET+=" -DwxUSE_GUI=no"
 
 pre_configure_target() {
   LDFLAGS="${LDFLAGS} -fPIC"

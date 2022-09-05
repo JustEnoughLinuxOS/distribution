@@ -19,6 +19,3 @@ pre_make_target() {
   export CPPFLAGS="$TARGET_CPPFLAGS"
 }
 
-makeinstall_target() {
-  :
-}
