@@ -1,6 +1,0 @@
-### Restart the volume service whenever a USB device is attached
-### or detached so brightness and volume work across connected
-### devices.
-
-ACTION=="add", SUBSYSTEM=="usb", RUN+="/usr/bin/systemctl restart volume"
-ACTION=="remove", SUBSYSTEM=="usb", RUN+="/usr/bin/systemctl restart volume"
