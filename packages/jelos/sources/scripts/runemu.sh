@@ -286,6 +286,12 @@ then
             		RUNTHIS='${TBASH} /usr/bin/start_duckstation.sh "${ROMNAME}"'
         		fi
                 ;;
+                "ps2")
+                        jslisten set "pcsx2"
+                        if [ "$EMU" = "pxsx2" ]; then
+                        RUNTHIS='${TBASH} /usr/bin/start_pcsx2.sh "${ROMNAME}"'
+                        fi
+                ;;
                 "gamecube")
                         jslisten set "-9 dolphin-emu-nogui"
                         if [ "$EMU" = "dolphinsa" ]; then

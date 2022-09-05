@@ -6,4 +6,4 @@
 
 ARG=${1//[\\]/}
 export SDL_AUDIODRIVER=alsa          
-${FAST_CORES} pcsx2 "$ARG"
+${FAST_CORES} pcsx2 --fullscreen "$ARG"
