@@ -292,13 +292,13 @@ then
                         RUNTHIS='${TBASH} /usr/bin/start_pcsx2.sh "${ROMNAME}"'
                         fi
                 ;;
-                "gamecube")
+                "gamecube"|"wii")
                         jslisten set "-9 dolphin-emu-nogui"
                         if [ "$EMU" = "dolphinsa" ]; then
                         RUNTHIS='${TBASH} /usr/bin/start_dolphin.sh "${ROMNAME}"'
                         fi
 
-;;
+                ;;
 		"mplayer")
 			jslisten set "mpv"
 			RUNTHIS='${TBASH} /usr/bin/mpv_video.sh "${ROMNAME}"'
