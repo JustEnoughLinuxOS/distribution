@@ -1,0 +1,13 @@
+diff --git a/src/common/menu/menu.cpp b/src/common/menu/menu.cpp
+index 4532dae1d..c81ec2e9a 100644
+--- a/src/common/menu/menu.cpp
++++ b/src/common/menu/menu.cpp
+@@ -702,7 +702,7 @@ bool M_Responder (event_t *ev)
+ 				mkey = MKEY_Back;
+ 				break;
+ 
+-			case KEY_JOY4:
++			case KEY_JOY3:
+ 			case KEY_PAD_X:
+ 				mkey = MKEY_Clear;
+ 				break;
