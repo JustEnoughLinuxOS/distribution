@@ -53,7 +53,7 @@ makeinstall_target() {
 
   case ${DEVICE} in
     RG552|handheld)
-      sed -i '/Rotate = 1/d' ${INSTALL}/usr/config/duckstation/settings.ini
+      sed -i -e '/Rotate = 1/d' -e '/^SyncToHostRefreshRate/ s/false/true/' -e '/^UseThread/ s/true/false/' ${INSTALL}/usr/config/duckstation/settings.ini
     ;;
   esac
 }
