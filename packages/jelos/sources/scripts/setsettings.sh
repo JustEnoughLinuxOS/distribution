@@ -366,6 +366,11 @@ fi
 get_setting "smooth"
 [ "${EES}" == "1" ] && echo 'video_smooth = "true"' >> ${RAAPPENDCONF} || echo 'video_smooth = "false"' >> ${RAAPPENDCONF}
 
+## Native refresh rate
+# Get configuration from system.cfg and set to retroarch.cfg
+get_setting "cap"
+[ "${EES}" == "1" ] && echo 'fastforward_ratio = "1.0"' >> ${RAAPPENDCONF} || echo 'fastforward_ratio = "0.0"' >> ${RAAPPENDCONF}
+
 ## Video Integer Scale
 # Get configuration from system.cfg and set to retroarch.cfg
 get_setting "integerscale"
