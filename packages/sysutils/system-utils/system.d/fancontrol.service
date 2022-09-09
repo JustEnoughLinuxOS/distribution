@@ -1,6 +1,6 @@
 [Unit]
 Description=Simple Fan Control Service
-ConditionPathExists=/sys/class/hwmon/hwmon0/pwm1
+ConditionPathExists=/sys/class/hwmon/hwmon1/pwm1
 Before=jelos.target
 
 [Service]
