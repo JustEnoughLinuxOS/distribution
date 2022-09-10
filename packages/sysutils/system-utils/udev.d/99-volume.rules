@@ -1,0 +1,6 @@
+### Restart the volume service whenever a USB device is attached
+### or detached so brightness and volume work across connected
+### devices.
+
+ACTION=="add|change", SUBSYSTEM=="input", KERNEL=="event*", RUN+="/usr/bin/killall volume_sense"
+ACTION=="remove", SUBSYSTEM=="input", KERNEL=="event*", RUN+="/usr/bin/killall volume_sense"
