@@ -51,11 +51,16 @@
     MALI_FAMILY="bifrost-g31"
     OPENGLES="libmali"
     OPENGL="no"
-    DISPLAYSERVER="no"
     VULKAN_SUPPORT="no"
 
     MALI_VERSION="r13p0"
     GRAPHIC_DRIVERS=""
+
+  # Displayserver to use (weston / x11 / no)
+    DISPLAYSERVER="no"
+
+  # Windowmanager to use (fluxbox / weston / no)
+    WINDOWMANAGER="no"
 
   # Define the CPU
     HW_CPU="Rockchip RK3326"
