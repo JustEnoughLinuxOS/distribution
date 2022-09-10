@@ -11,5 +11,5 @@ echo "Scanning for games..." >/dev/console
 bash /usr/bin/start_scummvm.sh add >/dev/console
 echo "Adding games..." >/dev/console
 bash /usr/bin/start_scummvm.sh create >/dev/console
-systemctl restart emustation
+systemctl restart ${UI_SERVICE}
 clear >/dev/console

@@ -68,5 +68,5 @@ do
 done
 message_stream "Restarting EmulationStation...\n" 0
 echo echo "Restarting EmulationStation..." >> /tmp/logs/dosbox_scan.log
-systemctl restart emustation
+systemctl restart ${UI_SERVICE}
 clear >/dev/console

@@ -7,8 +7,8 @@
 . /etc/profile
 source /usr/bin/env.sh
 clear >/dev/console
-systemctl stop emustation
+systemctl stop ${UI_SERVICE}
 message_stream "Cleaning ._ files from /storage/roms"
 find /storage/roms -iname '._*' -exec rm -rf {} \;
 clear >/dev/console
-systemctl start emustation
+systemctl start ${UI_SERVICE}
