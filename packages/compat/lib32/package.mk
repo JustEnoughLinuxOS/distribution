@@ -23,8 +23,9 @@ makeinstall_target() {
 
   mkdir -p "${INSTALL}/etc/ld.so.conf.d"
   echo "/usr/lib32" > "${INSTALL}/etc/ld.so.conf.d/arm-lib32.conf"
-  for LIBPATH in $(find ${LIBROOT} -type d 2>&1 | sed 's#^.*usr/lib/##g')
-  do
-    echo "/usr/lib32/${LIBPATH}" >>"${INSTALL}/etc/ld.so.conf.d/arm-lib32.conf"
-  done
+  echo "/usr/lib32/pulseaudio" >"${INSTALL}/etc/ld.so.conf.d/arm-lib32-pulseaudio.conf"
+  if [ -d "${LIBROOT}/usr/lib/dri" ]
+  then
+    echo "/usr/lib32/dri" >"${INSTALL}/etc/ld.so.conf.d/arm-lib32-dri.conf"
+  fi
 }
