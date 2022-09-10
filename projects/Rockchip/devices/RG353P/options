@@ -56,11 +56,15 @@
     MALI_VERSION="g2p0"
     OPENGLES="libmali"
     OPENGL="no"
-    DISPLAYSERVER="no"
     VULKAN_SUPPORT="no"
 
     GRAPHIC_DRIVERS=""
 
+  # Displayserver to use (weston / x11 / no)
+    DISPLAYSERVER="no"
+
+  # Windowmanager to use (fluxbox / weston / no)
+    WINDOWMANAGER="no"
 
   # kernel serial console
     EXTRA_CMDLINE="quiet console=ttyS2,1500000 console=tty0 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20 video=HDMI-A-1:1280x720@60"
