@@ -30,5 +30,5 @@ while read -r pak_file; do
 		-- end --
 	EOM
 done <<<"${pak_files}"
-systemctl restart emustation
+systemctl restart ${UI_SERVICE}
 clear >/dev/console

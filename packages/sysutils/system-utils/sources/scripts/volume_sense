@@ -15,7 +15,6 @@ LOG="/var/log/$(basename "$0").log"
 #   Fn + Volume up/down will adjust brightness
 ###
 
-
 # Event examples for reference
 # type 1 (EV_KEY), code 114 (KEY_VOLUMEDOWN), value 1
 # type 1 (EV_KEY), code 115 (KEY_VOLUMEUP), value 1
@@ -47,6 +46,7 @@ get_devices() {
   KJDEVS=false
   FOUNDKEYS=false
   FOUNDJOY=false
+  RETRY=5
   while [ ${KJDEVS} = false ]
   do
     # Detect input devices automatically
@@ -75,6 +75,13 @@ get_devices() {
       echo "Found all of the needed devices." 2>&1 >${LOG}
       KJDEVS=true
       break
+    fi
+    if [ "${RETRY}" -ge 5 ]
+    then
+      echo "Did not find all of the needed devices, but that may be OK.  Breaking." 2>&1 >${LOG}
+      break
+    else
+      RETRY=$(( ${RETRY} + 1 ))
     fi
     sleep 1
   done
@@ -149,11 +156,6 @@ get_devices
         ;;
 
         (${V_FUNC_KEY_EVENT})
-
-          ## We don't care about 'Fn' key repeats - continue
-          #if [[ "$line" == ${REPEAT_PRESS} ]]; then
-          #   continue
-          #fi
 
           #Reset the number of repeats when Fn is pressed/release
           #  as repeat speed is different between volume/brightness

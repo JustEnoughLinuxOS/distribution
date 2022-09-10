@@ -63,5 +63,5 @@ while read -r grp_file; do
 		-- end --
 	EOM
 done <<<"${grp_files}"
-systemctl restart emustation
+systemctl restart ${UI_SERVICE}
 clear >/dev/console

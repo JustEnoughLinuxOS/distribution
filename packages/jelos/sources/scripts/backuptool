@@ -49,9 +49,9 @@ fi
 
 case "${1}" in
     "restore")
-        systemctl stop emustation
+        systemctl stop ${UI_SERVICE}
         unzip -o ${BACKUPFILE} -d /
-        systemctl start emustation
+        systemctl start ${UI_SERVICE}
     ;;
     "backup")
         if [ -f ${BACKUPFILE} ]
@@ -61,9 +61,9 @@ case "${1}" in
             mv ${BACKUPFILE} "${BACKUPFOLDER}/${ARCHIVEFILENAME}"
         fi
         [ -f "${BACKUPFILE}" ] && rm "${BACKUPFILE}"
-        [ -z "$2" ] && systemctl stop emustation
+        [ -z "$2" ] && systemctl stop ${UI_SERVICE}
         zip -9 -r ${BACKUPFILE} \
         ${COMPRESSLOCATIONS[@]}
-        [ -z "${2}" ] && systemctl start emustation
+        [ -z "${2}" ] && systemctl start ${UI_SERVICE}
     ;;
 esac

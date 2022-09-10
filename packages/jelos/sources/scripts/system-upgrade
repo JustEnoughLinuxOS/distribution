@@ -48,12 +48,12 @@ check_space() {
     NEEDED=$(( (${REQUIRED} - ${MYSIZE} ) / 1024 ))
     echo -e "There is not enough free space available ${VOLNAME} to install this update.  Free up an additional ${NEEDED}MB, or reflash the newer version." >/dev/console
     echo "Exiting in 5 seconds..." >/dev/console && sleep 5
-    systemctl start emustation &
+    systemctl start ${UI_SERVICE} &
     exit 1
   fi
 }
 
-systemctl stop emustation
+systemctl stop ${UI_SERVICE}
 clear >/dev/console
 
 ONLINE_STATUS=$(check_network)
@@ -61,7 +61,7 @@ if [ ! "${ONLINE_STATUS}" == true ]
 then
   echo "System not online, cannot continue..." >/dev/console
   echo "Exiting in 5 seconds..."  >/dev/console && sleep 5
-  systemctl start emustation &
+  systemctl start ${UI_SERVICE} &
   exit 0
 fi
 
@@ -78,7 +78,7 @@ if [ "${OS_VERSION}" -ge "${LATEST_RELEASE_TAG}" ] && [ ! "${FORCE}" = "1" ]
 then
   echo "No new updates are available..." >/dev/console
   echo "Exiting in 5 seconds..." >/dev/console && sleep 5
-  systemctl start emustation &
+  systemctl start ${UI_SERVICE} &
   exit 0
 fi
 
@@ -98,7 +98,7 @@ then
   rm -f ${UPDATE_PATH}/*
   sleep 5
   clear >/dev/console
-  systemctl start emustation
+  systemctl start ${UI_SERVICE}
   exit 1
 else
   echo "Verification successful..." >/dev/console

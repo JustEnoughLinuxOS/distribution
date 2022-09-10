@@ -2,11 +2,14 @@
 
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2020-present Shanti Gilbert (https://github.com/shantigilbert)
-
-# THESE NEEDS TO BE CLEANED UP, MAYBE WITH CASE OR FUNCTIONS
+# Copyright (C) 2020-present Fewtarius
 
 # Source predefined functions and variables
 . /etc/profile
+
+round() {
+  awk -v val=$1 'BEGIN{print int((val+5/2)/5) * 5}'
+}
 
 if [ "${1}" == "toggleaudio" ];then
 # Toggle audio output
@@ -71,9 +74,9 @@ CURRENTBRIGHT=$(cat /sys/class/backlight/${BRIGHTNESS_DEV}/brightness)
 MAXBRIGHT="100" #$(cat /sys/class/backlight/${BRIGHTNESS_DEV}/max_brightness)
 MINBRIGHT="2"
 	if [ "${2}" == "+" ]; then
-		STEPBRIGHT=$(($CURRENTBRIGHT+$STEPS))
+		STEPBRIGHT=$(($CURRENTBRIGHT+$(round $STEPS)))
 	elif [ "${2}" == "-" ]; then
-		STEPBRIGHT=$(($CURRENTBRIGHT-$STEPS))
+		STEPBRIGHT=$(($CURRENTBRIGHT-$(round $STEPS)))
 	else
 		STEPBRIGHT=${2}
 	fi
