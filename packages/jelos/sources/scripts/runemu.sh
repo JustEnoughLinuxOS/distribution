@@ -327,7 +327,8 @@ else
 	           [[ "${CORE}" =~ gpsp ]] || \
 	           [[ "${CORE}" =~ flycast32 ]]
 		then
-			RABIN="retroarch32"
+                        export LIBGL_DRIVERS_PATH="/usr/lib32/dri"
+			export RABIN="retroarch32"
 		fi
 	fi
 
