@@ -11,6 +11,7 @@ PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="PCSX2 core for RetroArch."
+PKG_BUILD_FLAGS="-lto"
 
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
