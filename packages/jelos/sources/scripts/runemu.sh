@@ -288,7 +288,7 @@ then
                 ;;
                 "ps2")
                         jslisten set "pcsx2"
-                        if [ "$EMU" = "pxsx2" ]; then
+                        if [ "$EMU" = "pxsx2sa" ]; then
                         RUNTHIS='${TBASH} /usr/bin/start_pcsx2.sh "${ROMNAME}"'
                         fi
                 ;;
