@@ -115,13 +115,12 @@ if [ "${BOOTLOADER}" = "syslinux" ]; then
   # create bootloader configuration
   echo "image: creating bootloader configuration..."
   cat << EOF > "${LE_TMP}/syslinux.cfg"
-SAY Wait for installer mode to start automatically in 5 seconds...
+SAY ${DISTRO} - Boot options...
 SAY
-SAY Options
-SAY =======
-SAY installer: permanently install ${DISTRO} to HDD/SSD
-SAY live: boot ${DISTRO} using RAM for temporary storage
-SAY run: boot ${DISTRO} using this USB memory device for storage
+SAY installer: permanently installs ${DISTRO} to HDD/SSD
+SAY run: boots ${DISTRO} from this device (default)
+SAY
+SAY Booting in "run" mode in 5 seconds...
 SAY
 DEFAULT run
 TIMEOUT 50
@@ -130,10 +129,6 @@ PROMPT 1
 LABEL installer
   KERNEL /${KERNEL_NAME}
   APPEND boot=UUID=${UUID_SYSTEM} installer systemd.debug_shell vga=current ${EXTRA_CMDLINE}
-
-LABEL live
-  KERNEL /${KERNEL_NAME}
-  APPEND boot=UUID=${UUID_SYSTEM} live vga=current ${EXTRA_CMDLINE}
 
 LABEL run
   KERNEL /${KERNEL_NAME}
@@ -146,10 +141,6 @@ set default="Run"
 menuentry "Installer" {
 	search --set -f /KERNEL
 	linux /KERNEL boot=UUID=${UUID_SYSTEM} installer systemd.debug_shell vga=current ${EXTRA_CMDLINE}
-}
-menuentry "Live" {
-	search --set -f /KERNEL
-	linux /KERNEL boot=UUID=${UUID_SYSTEM} grub_live vga=current ${EXTRA_CMDLINE}
 }
 menuentry "Run" {
 	search --set -f /KERNEL

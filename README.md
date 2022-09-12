@@ -9,7 +9,7 @@ Just Enough Linux Operating System (JELOS) is a simple Linux distribution for AR
 * Supports FAT32, ExFAT, and EXT4 file systems on devices with a second card slot.
 * 2.4GHz and 5GHz 802.11 A/B/G/N/AC WIFI support.
 * Online updates for easy access to stable or development builds.
-* Supports Anbernic's RG552, RG503, RG353P, RG351P/M, RG351MP, RG351V, and Win600.
+* Support for the Anbernic WIN600, RG552, RG503, RG353P, RG351P/M, RG351MP, RG351V.
 * Developed by a small, friendly community.
 
 ## Licenses
@@ -42,12 +42,15 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-## Installation
+## Flashing
 * Download the latest [version of JELOS](https://github.com/JustEnoughLinuxOS/distribution/releases) (.img.gz) for your device.
 * Decompress the image.
 * Write the image to an SDCARD using an imaging tool.  Common imaging tools include [Balena Etcher](https://www.balena.io/etcher/), [Raspberry Pi Imager](https://www.raspberrypi.com/software/), and [Win32 Disk Imager](https://sourceforge.net/projects/win32diskimager/).  If you're skilled with the command line, dd works fine too.
 
 > This repository hosts stable versions of JELOS.  If you would like to install the unstable development version, please visit the [development build repository](https://github.com/JustEnoughLinuxOS/distribution-dev).
+
+## Installation
+* x86_64 versions of JELOS include an installation tool.  This tool may be run from the boot menu or from within JELOS by switching to desktop mode and running "installer" in a terminal.
 
 ## Upgrading
 * Download and install the update online via the System Settings menu.

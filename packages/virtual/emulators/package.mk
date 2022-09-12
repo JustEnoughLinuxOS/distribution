@@ -42,6 +42,6 @@ case "${DEVICE}" in
     PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa"
   ;;
   handheld)
-    PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa dolphin pcsx2sa"
+    PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa dolphin pcsx2sa pcsx2"
   ;;
 esac
