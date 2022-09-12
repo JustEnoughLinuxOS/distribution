@@ -11,7 +11,6 @@ PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="PCSX2 core for RetroArch."
-PKG_BUILD_FLAGS="-lto"
 
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
@@ -47,7 +46,11 @@ PKG_CMAKE_OPTS_TARGET=" \
                         -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=FALSE \
                         -DCMAKE_BUILD_TYPE=Release"
 
+pre_configure_target() {
+  export LDFLAGS="${LDFLAGS} -laio"
+}
+
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
-  cp ${PKG_BUILD}/.${TARGET_NAME}/pcsx2_libretro.so ${INSTALL}/usr/lib/libretro/
+  cp ${PKG_BUILD}/.${TARGET_NAME}/pcsx2/pcsx2_libretro.so ${INSTALL}/usr/lib/libretro/
 }
