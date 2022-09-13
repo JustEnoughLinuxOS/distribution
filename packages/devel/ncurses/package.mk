@@ -25,7 +25,7 @@ PKG_CONFIGURE_OPTS_TARGET="
                            --with-normal \
                            --without-debug \
                            --without-profile \
-                           --with-termlib \
+                           --without-termlib \
                            --without-ticlib \
                            --without-gpm \
                            --without-dbmalloc \
@@ -47,7 +47,7 @@ PKG_CONFIGURE_OPTS_TARGET="
                            --disable-sigwinch \
                            --enable-pc-files \
                            --with-pkg-config-libdir=/usr/lib/pkgconfig \
-                           --enable-tcap-names \
+                           --disable-tcap-names \
                            --without-develop \
                            --disable-hard-tabs \
                            --disable-xmc-glitch \
@@ -57,9 +57,10 @@ PKG_CONFIGURE_OPTS_TARGET="
                            --enable-widec \
                            --disable-echo \
                            --disable-warnings \
-                           --enable-home-terminfo \
+                           --disable-home-terminfo \
                            --enable-lib-suffixes \
-                           --disable-assertions"
+                           --disable-assertions \
+                           --enable-leaks"
 
 PKG_CONFIGURE_OPTS_HOST="--enable-termcap \
                          --with-termlib \

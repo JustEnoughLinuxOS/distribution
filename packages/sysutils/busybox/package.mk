@@ -4,8 +4,7 @@
 # Copyright (C) 2018-present Team CoreELEC (https://coreelec.org)
 
 PKG_NAME="busybox"
-PKG_VERSION="1.32.1"
-PKG_SHA256="9d57c4bd33974140fd4111260468af22856f12f5b5ef7c70c8d9b75c712a0dee"
+PKG_VERSION="1.35.0"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.busybox.net"
 PKG_URL="http://busybox.net/downloads/${PKG_NAME}-${PKG_VERSION}.tar.bz2"

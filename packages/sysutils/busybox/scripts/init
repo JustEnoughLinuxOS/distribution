@@ -708,6 +708,12 @@ mount_games() {
     for DEV in $(blkid | awk 'BEGIN {FS=":"}; /ext4/ || /fat/ {print $1}' | sort -r)
     do
       ROOTDEV=$(echo ${DEV} | sed -e "s#^/.*/##g" -e "s#p[0-9].*\$##g")
+      SIZE=$(awk '/'${ROOTDEV}'/ {print $3}' /proc/partitions)
+      if [ "${SIZE}" -le "8388608" ]
+      then
+        # We don't want to mount partitions smaller than ~8GB.
+        continue
+      fi
       if [ -L "/sys/class/block/${ROOTDEV}boot0" ]
       then
 	# Assume this is an android boot device and ignore it.
