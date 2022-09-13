@@ -3,7 +3,7 @@
 
 PKG_NAME="glfw"
 PKG_VERSION="6b57e08bb0078c9834889eab871bac2368198c15"
-PKG_ARCH="aarch64,x86_64"
+PKG_ARCH="any"
 PKG_LICENSE="zlib"
 PKG_DEPENDS_TARGET="toolchain expat libdrm Mako:host "
 PKG_SITE="https://github.com/glfw/glfw"
@@ -28,6 +28,12 @@ if [ "${DISPLAYSERVER}" = "wl" ]; then
 	PKG_DEPENDS_TARGET+=" wayland wayland-protocols libglvnd"
 	PKG_CMAKE_OPTS_TARGET+=" -DGLFW_BUILD_WAYLAND=ON"
 fi
+
+case ${ARCH} in
+	arm)
+		PKG_CMAKE_OPTS_TARGET+=" -DGLFW_BUILD_X11=OFF"
+	;;
+esac
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/lib/
