@@ -31,21 +31,23 @@ if [ "${DISPLAYSERVER}" = "wl" ]; then
 fi
 
 PKG_CMAKE_OPTS_TARGET=" -DwxWidgets_CONFIG_EXECUTABLE=${SYSROOT_PREFIX}/usr/bin/wx-config \
-			-DXDG_STD=TRUE \
-			-DSDL2_API=TRUE \
-			-DDISABLE_PCSX2_WRAPPER=1 \
-			-DPACKAGE_MODE=TRUE \
-			-DPCSX2_TARGET_ARCHITECTURES=x86_64 \
-			-DENABLE_TESTS=OFF \
-			-DEXTRA_PLUGINS=TRUE \
-			-DQT_BUILD=FALSE \
-			-DBUILD_SHARED_LIBS=OFF \
-			-DUSE_SYSTEM_LIBS=AUTO \
-			-DDISABLE_ADVANCE_SIMD=ON \
-			-DUSE_VTUNE=OFF \
-			-DUSE_VULKAN=ON \
-			-DGTK3_API=TRUE \
-			-DCMAKE_INTERPROCEDURAL_OPTIMIZATION=FALSE \
-			-DCMAKE_BUILD_TYPE=Release"
+                        -DSDL2_API=TRUE \
+                        -DDISABLE_PCSX2_WRAPPER=1 \
+                        -DPACKAGE_MODE=FALSE \
+                        -DPCSX2_TARGET_ARCHITECTURES=x86_64 \
+                        -DENABLE_TESTS=OFF \
+                        -DEXTRA_PLUGINS=OFF \
+                        -DQT_BUILD=FALSE \
+                        -DBUILD_SHARED_LIBS=OFF \
+                        -DUSE_SYSTEM_LIBS=OFF \
+                        -DDISABLE_ADVANCE_SIMD=ON \
+                        -DUSE_VTUNE=OFF \
+                        -DUSE_VULKAN=ON \
+                        -DGTK3_API=FALSE \
+                        -DCMAKE_INTERPROCEDURAL_OPTIMIZATION=FALSE \
+                        -DCMAKE_BUILD_TYPE=Release"
 
-
+makeinstall_target() {
+  mkdir -p ${INSTALL}/usr/bin
+  cp -rf pcsx2/resources pcsx2/pcsx2 ${INSTALL}/usr/bin
+}

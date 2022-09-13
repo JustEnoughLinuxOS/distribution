@@ -8,7 +8,7 @@
 source /usr/bin/env.sh
 clear >/dev/console
 systemctl stop ${UI_SERVICE}
-message_stream "Cleaning ._ files from /storage/roms"
+echo "Cleaning ._ files from /storage/roms" >/dev/console
 find /storage/roms -iname '._*' -exec rm -rf {} \;
 clear >/dev/console
 systemctl start ${UI_SERVICE}
