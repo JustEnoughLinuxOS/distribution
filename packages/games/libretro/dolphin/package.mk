@@ -13,6 +13,30 @@ PKG_SECTION="libretro"
 PKG_SHORTDESC="Dolphin Libretro, a Gamecube & Wii emulator core for Retroarch"
 PKG_TOOLCHAIN="cmake"
 
+if [ ! "${OPENGL}" = "no" ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+  PKG_CONFIGURE_OPTS_TARGET+=" -DENABLE_X11=OFF \
+                               -DENABLE_EGL=ON"
+fi
+
+if [ "${OPENGLES_SUPPORT}" = yes ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+  PKG_CONFIGURE_OPTS_TARGET+=" -DENABLE_X11=OFF \
+                               -DENABLE_EGL=ON"
+fi
+
+if [ "${DISPLAYSERVER}" = "wl" ]; then
+  PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER} xorg-server xrandr libXi"
+  PKG_CONFIGURE_OPTS_TARGET+=" -DENABLE_X11=ON \
+                               -DENABLE_EGL=ON"
+fi
+
+if [ "${VULKAN_SUPPORT}" = "yes" ]
+then
+  PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
+  PKG_CONFIGURE_OPTS_TARGET+=" -DENABLE_VULKAN=ON"
+fi
+
 pre_configure_target() {
         PKG_CMAKE_OPTS_TARGET+="        -DENABLE_EGL=ON \
                                         -DUSE_SHARED_ENET=OFF \

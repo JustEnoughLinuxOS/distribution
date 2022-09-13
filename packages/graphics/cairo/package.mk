@@ -14,14 +14,14 @@ if [ "$OPENGL" != "no" ]; then
   PKG_DEPENDS_TARGET+=" $OPENGL"
 fi
 
-if [ "$OPENGLES" != "no" ]; then
-  PKG_DEPENDS_TARGET+=" $OPENGLES"
+if [ "${OPENGLES}" != "no" ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
 fi
 
-if [ "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libXrender libX11 mesa"
-  PKG_CAIRO_CONFIG="--x-includes="$SYSROOT_PREFIX/usr/include" \
-                    --x-libraries="$SYSROOT_PREFIX/usr/lib" \
+if [ "${DISPLAYSERVER}" = "x11" ]; then
+  PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} libXrender libX11 mesa"
+  PKG_CAIRO_CONFIG="--x-includes="${SYSROOT_PREFIX}/usr/include" \
+                    --x-libraries="${SYSROOT_PREFIX}/usr/lib" \
                     --enable-xlib \
                     --enable-xlib-xrender \
                     --enable-gl \
@@ -30,10 +30,10 @@ if [ "$DISPLAYSERVER" = "x11" ]; then
                     --disable-egl \
                     --with-x"
 
-elif [ "$DISPLAYSERVER" = "wl" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET mesa libglvnd libXrender libX11"
-  PKG_CAIRO_CONFIG="--x-includes="$SYSROOT_PREFIX/usr/include" \
-                    --x-libraries="$SYSROOT_PREFIX/usr/lib" \
+elif [ "${DISPLAYSERVER}" = "wl" ]; then
+  PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} mesa libglvnd libXrender libX11"
+  PKG_CAIRO_CONFIG="--x-includes="${SYSROOT_PREFIX}/usr/include" \
+                    --x-libraries="${SYSROOT_PREFIX}/usr/lib" \
                     --enable-xlib \
                     --enable-xlib-xrender \
                     --disable-gl \
