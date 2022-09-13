@@ -49,9 +49,12 @@ pre_configure_target() {
       PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengl"
   fi
 
-  if [ "${OPENGLES_SUPPORT}" = yes ]; then
+  if [ "${OPENGLES_SUPPORT}" = yes ] && \
+     [ ! "${ARCH}" = "x86_64" ]; then
       PKG_DEPENDS_TARGET+=" ${OPENGLES}"
       PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengles --enable-opengles3 --enable-opengles3_2 --enable-kms --disable-mali_fbdev"
+  else
+      PKG_CONFIGURE_OPTS_TARGET+=" --disable-opengles --disable-opengles3 --disable-opengles3_2 --disable-kms --disable-mali_fbdev"
   fi
 
   if [ "${VULKAN_SUPPORT}" = "yes" ]
