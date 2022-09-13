@@ -1,24 +1,35 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+# Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="glfw"
-PKG_VERSION="2.7.9"
-PKG_SHA256="b7276dcadc85a07077834d1043f11ffd6a3a379647bb94361b4abc3ffca75e7d"
-PKG_ARCH="x86_64"
-PKG_LICENSE="BSD"
-PKG_SITE="http://glfw.org"
-PKG_URL="$SOURCEFORGE_SRC/glfw/$PKG_NAME-$PKG_VERSION.tar.gz"
-PKG_DEPENDS_TARGET="toolchain mesa glu"
-PKG_LONGDESC="provides a simple API for creating windows, contexts and surfaces, receiving input and events"
+PKG_VERSION="6b57e08bb0078c9834889eab871bac2368198c15"
+PKG_ARCH="aarch64,x86_64"
+PKG_LICENSE="zlib"
+PKG_DEPENDS_TARGET="toolchain expat libdrm Mako:host "
+PKG_SITE="https://github.com/glfw/glfw"
+PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
+PKG_SHORTDESC="GLFW graphics library for wayland & x11"
+PKG_TOOLCHAIN="cmake"
 
-if [ "$OPENGL" = "no" ] ; then
-  exit 0
+pre_configure_target() {
+        PKG_CMAKE_OPTS_TARGET+="        -DBUILD_SHARED_LIBS=ON \
+                                        -DGLFW_BUILD_DOCS=OFF \
+                                        -DGLFW_BUILD_EXAMPLES=OFF \
+                                        -DGLFW_BUILD_TESTS=OFF \
+                                        -DGLFW_INSTALL=OFF"
+                                        }
+
+if [ "${DISPLAYSERVER}" = "x11" ]; then
+	PKG_DEPENDS_TARGET+=" xorgproto libXext libXdamage libXfixes libXxf86vm libxcb libX11 libxshmfence libXrandr libglvnd"
+	PKG_CMAKE_OPTS_TARGET+=" -DGLFW_BUILD_X11=ON"
 fi
 
-make_target() {
-  make x11 PREFIX=$SYSROOT_PREFIX/usr
-}
+if [ "${DISPLAYSERVER}" = "wl" ]; then
+	PKG_DEPENDS_TARGET+=" wayland wayland-protocols libglvnd"
+	PKG_CMAKE_OPTS_TARGET+=" -DGLFW_BUILD_WAYLAND=ON"
+fi
 
 makeinstall_target() {
-  make x11-install PREFIX=$SYSROOT_PREFIX/usr
+  mkdir -p $INSTALL/usr/lib/
+  cp $PKG_BUILD/.$TARGET_NAME/src/libglfw* $INSTALL/usr/lib/
 }
