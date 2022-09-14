@@ -6,11 +6,11 @@
 
 if [ ! -d "/storage/.config/drastic" ]; then
 
-echo "Drastic emulator not installed." >/dev/console 2>&1
-echo "Please install through the Jelos Add Ons tool." >/dev/console 2>&1
+echo "Drastic emulator not installed." 2>&1
+echo "Please install through the Jelos Add Ons tool." 2>&1
 
 sleep 5
-clear >/dev/console
+clear
 
 else
 

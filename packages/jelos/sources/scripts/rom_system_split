@@ -68,12 +68,9 @@ update_es_folders() {
         fi
     done
 }
-systemctl stop ${UI_SERVICE}
 
 # check the external folders first
 update_es_folders "external" "${EXT_ROM_FOLDERS}" "${ES_LIST}"
 # next check the local folders
 # if there are duplicate folders in EXTERNAL, LOCAL ones will take preference
 update_es_folders "local" "${LOCAL_ROM_FOLDERS}" "${ES_LIST}"
-
-systemctl start ${UI_SERVICE}

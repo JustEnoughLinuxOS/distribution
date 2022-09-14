@@ -22,5 +22,10 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/config/modules
   cp -rf ${PKG_DIR}/sources/* ${INSTALL}/usr/config/modules
   chmod 0755 ${INSTALL}/usr/config/modules/*
+  case ${ARCH} in
+    x86_64)
+      rm -f "${INSTALL}/usr/config/Start 32bit Retroarch.sh"
+    ;;
+  esac
 }
 

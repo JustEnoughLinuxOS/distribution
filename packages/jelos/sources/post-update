@@ -69,6 +69,9 @@ done
 
 ### Safe to make changes below this line.
 
+# Default modules need to be updated to use the new stop/start ui function.
+rsync -av /usr/config/modules/* /storage/.config/modules/
+
 # Swap es_input back to a writeable file so external controller configuration works properly.
 if [ -L "/storage/.config/emulationstation/es_input.cfg" ]
 then

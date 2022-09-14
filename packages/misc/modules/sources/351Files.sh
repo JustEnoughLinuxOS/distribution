@@ -6,7 +6,6 @@
 
 . /etc/profile
 jslisten set "killall 351Files"
-source /usr/bin/env.sh
 joy2keyStart
 
 351Files

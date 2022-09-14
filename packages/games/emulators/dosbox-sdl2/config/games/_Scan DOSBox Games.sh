@@ -9,17 +9,16 @@ echo -e $(date -u)" - Script started.\n" >> /tmp/logs/dosbox_scan.log
 
 EE_DEVICE=$(cat /ee_arch)
 
-source /usr/bin/env.sh
 source /etc/profile
 rp_registerAllModules
 
 joy2keyStart
-clear >/dev/console
+clear
 
 #rm "/storage/.config/dosbox/games/*.conf"
 
 function create_launcher() {
-    echo "\nAdding $2..." >/dev/console
+    echo "\nAdding $2..."
     launcher_name="$1 ($2)"
     cp /storage/.config/dosbox/dosbox-SDL2.conf "/storage/.config/dosbox/games/$launcher_name.conf"
     cat <<EOF >> "/storage/.config/dosbox/games/$launcher_name.conf"
@@ -30,17 +29,17 @@ exit
 EOF
 }
 
-echo "Scanning for games...\n" >/dev/console
+echo "Scanning for games...\n"
 
 OIFS="$IFS"
 IFS=$'\n'
 for data_dir in $(find /storage/roms/pc/ -type d -name "*")
 do
-  echo "Testing (dir) $data_dir" >/dev/console
+  echo "Testing (dir) $data_dir"
   if [ -d "$data_dir" ]; then
         for executable in $(find "$data_dir" -iname "*.exe")
         do
-            echo "Testing (exe) $executable" >/dev/console
+            echo "Testing (exe) $executable"
             executable_case="$(basename "$executable" | tr '[:lower:]' '[:upper:]')"
             echo "Case $executable" >> /tmp/logs/dosbox_scan.log
             case "$executable_case" in
@@ -66,7 +65,6 @@ do
         done
     fi
 done
-echo "Restarting EmulationStation...\n" >/dev/console
+echo "Restarting EmulationStation...\n"
 echo "Restarting EmulationStation..." >> /tmp/logs/dosbox_scan.log
-systemctl restart ${UI_SERVICE}
-clear >/dev/console
+clear
