@@ -7,6 +7,7 @@
 
 QUAKEPATH="/storage/roms/quake"
 
+stop_ui
 clear >/dev/console
 echo "Scanning for games..." >/dev/console
 pak_files=$(find "${QUAKEPATH}" -mindepth 1 -type f -iname pak0.pak)
@@ -30,5 +31,5 @@ while read -r pak_file; do
 		-- end --
 	EOM
 done <<<"${pak_files}"
-systemctl restart ${UI_SERVICE}
+start_ui
 clear >/dev/console

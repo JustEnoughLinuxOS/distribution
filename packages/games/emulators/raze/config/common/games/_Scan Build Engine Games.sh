@@ -25,6 +25,7 @@ SUPPORTED_GRP=(
 	"PLATOONL.DAT"
 )
 
+stop_ui
 clear >/dev/console
 echo "Scanning for games..." >/dev/console
 find_names=()
@@ -63,5 +64,5 @@ while read -r grp_file; do
 		-- end --
 	EOM
 done <<<"${grp_files}"
-systemctl restart ${UI_SERVICE}
 clear >/dev/console
+start_ui
