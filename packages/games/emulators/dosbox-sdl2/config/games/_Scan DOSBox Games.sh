@@ -13,8 +13,6 @@ source /usr/bin/env.sh
 source /etc/profile
 rp_registerAllModules
 
-stop_ui
-
 joy2keyStart
 clear >/dev/console
 
@@ -70,5 +68,5 @@ do
 done
 echo "Restarting EmulationStation...\n" >/dev/console
 echo "Restarting EmulationStation..." >> /tmp/logs/dosbox_scan.log
-start_ui
+systemctl restart ${UI_SERVICE}
 clear >/dev/console

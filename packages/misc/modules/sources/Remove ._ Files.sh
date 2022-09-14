@@ -7,8 +7,8 @@
 . /etc/profile
 source /usr/bin/env.sh
 clear >/dev/console
-stop_ui
+systemctl stop ${UI_SERVICE}
 echo "Cleaning ._ files from /storage/roms" >/dev/console
 find /storage/roms -iname '._*' -exec rm -rf {} \;
 clear >/dev/console
-start_ui
+systemctl start ${UI_SERVICE}

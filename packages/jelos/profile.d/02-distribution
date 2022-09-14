@@ -4,13 +4,15 @@
 
 . /etc/os-release
 
-export PATH="/usr/bin:/usr/local/bin:/storage/bin:${PATH}"
+export PATH="$PATH:/usr/local/bin:/usr/bin:/storage/bin"
 export SDL_GAMECONTROLLERCONFIG_FILE="/storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt"
 
 J_DIR="/storage/.config/system"
 J_CONF="${J_DIR}/configs/system.cfg"
 ES_CONF="/storage/.emulationstation/es_settings.cfg"
-JSLISTENCONF="${J_DIR}/configs/jslisten.cfg"
+EE_DEVICE=${HW_DEVICE}
+
+JSLISTENCONF="/storage/.config/system/configs/jslisten.cfg"
 
 get_setting() {
   if [ ! -z "${3}" ]
@@ -60,40 +62,42 @@ set_audio() {
 }
 
 get_es_setting() {
-  echo $(sed -n "s|\s*<${1} name=\"${2}\" value=\"\(.*\)\" />|\1|p" ${ES_CONF})
+	echo $(sed -n "s|\s*<${1} name=\"${2}\" value=\"\(.*\)\" />|\1|p" ${ES_CONF})
 }
 
 check_bios() {
-  PLATFORM="${1}"
-  CORE="${2}"
-  EMULATOR="${3}"
-  ROMNAME="${4}"
-  LOG="${5}"
 
-  if [[ -z "$LOG" ]]; then
-    LOG="/var/log/exec.log"
-    cat /etc/motd > "$LOG"
-  fi
+PLATFORM="${1}"
+CORE="${2}"
+EMULATOR="${3}"
+ROMNAME="${4}"
+LOG="${5}"
 
-  MISSINGBIOS="$(batocera-systems --strictfilter ${PLATFORM})"
-  if [ "$?" == "2" ]; then
-    # formating so it looks nice :)
-    PLATFORMNAME="${MISSINGBIOS##*>}"  # read from -P onwards
-    PLATFORMNAME="${PLATFORMNAME%%MISSING*}"  # until a space is found
-    PLATFORMNAME=$(echo $PLATFORMNAME | sed -e 's/\\n//g')
+if [[ -z "$LOG" ]]; then
+	LOG="/var/log/exec.log"
+	cat /etc/motd > "$LOG"
+fi
 
-    if [[ -f "${LOG}" ]]; then
-      echo "${CORE} ${EMULATOR} ${ROMNAME}" >> $LOG
-      echo "${PLATFORMNAME} missing BIOS - Could not find all BIOS: " >> $LOG
-      echo "please make sure you copied the files into the corresponding folder " >> $LOG
-      echo "${MISSINGBIOS}" >> $LOG
-    fi
-    MISSINGBIOS=$(echo "$MISSINGBIOS" | sed -e 's/$/\\n/g')
+MISSINGBIOS="$(batocera-systems --strictfilter ${PLATFORM})"
+if [ "$?" == "2" ]; then
 
-    /usr/bin/error.sh "${PLATFORMNAME} missing BIOS" "Could not find all BIOS/files in /storage/roms, the game may not work:\n\n ${MISSINGBIOS}\n\nPlease make sure you copied the files into the corresponding folder."
-    error_process="$!"
-    pkill -P $error_process
-  fi
+# formating so it looks nice :)
+PLATFORMNAME="${MISSINGBIOS##*>}"  # read from -P onwards
+PLATFORMNAME="${PLATFORMNAME%%MISSING*}"  # until a space is found
+PLATFORMNAME=$(echo $PLATFORMNAME | sed -e 's/\\n//g')
+
+if [[ -f "${LOG}" ]]; then
+echo "${CORE} ${EMULATOR} ${ROMNAME}" >> $LOG
+echo "${PLATFORMNAME} missing BIOS - Could not find all BIOS: " >> $LOG
+echo "please make sure you copied the files into the corresponding folder " >> $LOG
+echo "${MISSINGBIOS}" >> $LOG
+fi
+	MISSINGBIOS=$(echo "$MISSINGBIOS" | sed -e 's/$/\\n/g')
+
+	/usr/bin/error.sh "${PLATFORMNAME} missing BIOS" "Could not find all BIOS/files in /storage/roms, the game may not work:\n\n ${MISSINGBIOS}\n\nPlease make sure you copied the files into the corresponding folder."
+	error_process="$!"
+	pkill -P $error_process
+fi
 }
 
 # read config files from /storage/.config/profile.d
@@ -102,21 +106,3 @@ check_bios() {
       . $config
     fi
 done
-
-stop_ui() {
-  if [ "${UI_SERVICE}" = "weston.service" ]
-  then
-    chvt 2
-  else
-    systemctl stop ${UI_SERVICE}
-  fi
-}
-
-start_ui() {
-  if [ "${UI_SERVICE}" = "weston.service" ]
-  then
-    chvt 1
-  else
-    systemctl start ${UI_SERVICE}
-  fi
-}

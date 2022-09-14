@@ -5,11 +5,11 @@
 # Copyright (C) 2020-present Fewtarius
 
 . /etc/profile
-stop_ui
+
 clear >/dev/console
 echo "Scanning for games..." >/dev/console
 bash /usr/bin/start_scummvm.sh add >/dev/console
 echo "Adding games..." >/dev/console
 bash /usr/bin/start_scummvm.sh create >/dev/console
+systemctl restart ${UI_SERVICE}
 clear >/dev/console
-start_ui
