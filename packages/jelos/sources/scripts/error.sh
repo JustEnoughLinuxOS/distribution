@@ -4,7 +4,7 @@
 
 . /etc/profile
 
-clear >/dev/console
+clear
 if [ -n "$1" ]
 then
   text_viewer -w -e -t "BIOS ERROR" -m "$*"
@@ -16,4 +16,4 @@ else
   fi
 fi
 
-clear >/dev/console
+clear

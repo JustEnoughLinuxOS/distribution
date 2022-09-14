@@ -9,12 +9,12 @@ then
   if [ -e "/usr/share/post-update" ]
   then
     show_splash intro
-    echo -ne "\033[1000H\033[2K==> Preparing system.." >/dev/console
+    echo -ne "\033[1000H\033[2K==> Preparing system.."
     /usr/share/post-update
   fi
   rm /storage/.config/boot.hint
   touch /storage/.configured
 fi
 
-clear >/dev/console
+clear
 /usr/bin/show_splash intro 2>&1 >>${BOOTLOG}

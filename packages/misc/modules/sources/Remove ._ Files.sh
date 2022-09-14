@@ -5,10 +5,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 . /etc/profile
-source /usr/bin/env.sh
-clear >/dev/console
-systemctl stop ${UI_SERVICE}
-echo "Cleaning ._ files from /storage/roms" >/dev/console
+clear
+echo "Cleaning ._ files from /storage/roms"
 find /storage/roms -iname '._*' -exec rm -rf {} \;
-clear >/dev/console
-systemctl start ${UI_SERVICE}
+clear

@@ -7,10 +7,10 @@
 
 QUAKEPATH="/storage/roms/quake"
 
-clear >/dev/console
-echo "Scanning for games..." >/dev/console
+clear
+echo "Scanning for games..."
 pak_files=$(find "${QUAKEPATH}" -mindepth 1 -type f -iname pak0.pak)
-echo "Adding games..." >/dev/console
+echo "Adding games..."
 while read -r pak_file; do
 	abs_path=$(dirname "${pak_file}")
 	path=${abs_path#"$QUAKEPATH/"}
@@ -30,5 +30,4 @@ while read -r pak_file; do
 		-- end --
 	EOM
 done <<<"${pak_files}"
-systemctl restart ${UI_SERVICE}
-clear >/dev/console
+clear

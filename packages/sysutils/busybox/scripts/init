@@ -429,15 +429,15 @@ set_consolefont() {
     hres="$(fbset 2>/dev/null | awk '/geometry/ { print $2 }')"
     if [ "${hres}" -gt "0" ] && [ "${hres}" -lt "640" ]
     then
-      setfont -C /dev/tty0 ter-v12n.psf
+      setfont -C /dev/console ter-v12n.psf
     elif [ "${hres}" -ge "640" ] && [ "${hres}" -lt "720" ]
     then
-      setfont -C /dev/tty0 ter-v14n.psf
+      setfont -C /dev/console ter-v14n.psf
     elif [ "${hres}" -ge "720" ] && [ "${hres}" -lt "1080" ]
     then
-      setfont -C /dev/tty0 ter-v18n.psf
+      setfont -C /dev/console ter-v18n.psf
     else
-      setfont -C /dev/tty0 ter-v24n.psf
+      setfont -C /dev/console ter-v24n.psf
     fi
   fi
 }
@@ -873,6 +873,9 @@ check_update() {
     reboot
     #return 0
   fi
+
+  redirect_output_to_screen
+  delete_descriptors
 
   mkdir -p $UPDATE_DIR/.tmp &>/dev/null
   sync

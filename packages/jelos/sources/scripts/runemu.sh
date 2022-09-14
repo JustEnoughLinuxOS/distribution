@@ -195,7 +195,7 @@ function quit() {
 
 function clear_screen() {
 	$VERBOSE && log "Clearing screen"
-	clear >/dev/console
+	clear
 }
 
 function bluetooth() {

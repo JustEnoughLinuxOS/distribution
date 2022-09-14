@@ -25,7 +25,7 @@ install_bios() {
   SHASUM=$(echo $SHASUMS | tr '#' '\n' | awk '/'${BIOS}'/ {print $1}')
   if [ ! "${SHASUM}" == "${BINSUM}" ]
   then
-    echo "Checksum mismatch, please update the package." >/dev/console
+    echo "Checksum mismatch, please update the package."
     exit 1
   fi
   if [[ "${BIOS}" =~ .zip$ ]]
@@ -34,7 +34,7 @@ install_bios() {
     rm "${BIOS}"
     BIOS="$(echo ${BIOS} | sed "s#.zip#.exe#")"
   fi
-  /usr/bin/7z x "${BIOS}" >/dev/console
+  /usr/bin/7z x "${BIOS}"
   rm "${BIOS}"
   cd ${SOURCEPATH}
 }

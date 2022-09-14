@@ -10,7 +10,6 @@ case "${1}" in
     cp -rf /usr/config/retroarch/retroarch.cfg /storage/.config/retroarch/retroarch.cfg
   ;;
   "ALL")
-    systemctl stop ${UI_SERVICE}
     cd /
     find /storage -mindepth 1 \( ! -regex '^/storage/.update.*' -a ! -regex '^/storage/roms.*' \) -delete
     mkdir /storage/.config/
