@@ -128,8 +128,8 @@ post_makeinstall_target() {
   safe_remove ${INSTALL}/usr/lib/udev/rules.d/73-seat-late.rules
 
   # remove getty units, we dont want a console
-  #safe_remove ${INSTALL}/usr/lib/systemd/system/autovt@.service
-  #safe_remove ${INSTALL}/usr/lib/systemd/system/console-getty.service
+  safe_remove ${INSTALL}/usr/lib/systemd/system/autovt@.service
+  safe_remove ${INSTALL}/usr/lib/systemd/system/console-getty.service
   safe_remove ${INSTALL}/usr/lib/systemd/system/container-getty@.service
   safe_remove ${INSTALL}/usr/lib/systemd/system/getty.target
   safe_remove ${INSTALL}/usr/lib/systemd/system/getty@.service

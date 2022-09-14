@@ -41,7 +41,7 @@ then
   done
 fi
 
-clear 2>&1 >>${BOOTLOG}
+clear >/dev/console
 
 DEVICE_CPU_GOVERNOR=$(get_setting system.cpugovernor)
 ${DEVICE_CPU_GOVERNOR} 2>&1 >>${BOOTLOG}
