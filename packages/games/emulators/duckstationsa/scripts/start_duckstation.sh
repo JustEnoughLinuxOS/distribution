@@ -21,5 +21,6 @@ fi
 ln -sfv "/storage/roms/savestates/psx" "/storage/.config/duckstation/savestates"
 
 cp -rf /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/.config/duckstation/database/gamecontrollerdb.txt
+cp -rf /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/.config/duckstation/resources/gamecontrollerdb.txt
 
 duckstation-nogui -fullscreen -settings "/storage/.config/duckstation/settings.ini" -- "${1}" > /dev/null 2>&1
