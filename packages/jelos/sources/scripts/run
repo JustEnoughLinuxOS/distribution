@@ -6,7 +6,9 @@ then
   weston-terminal --command="${1}"
 else
   systemctl stop ${UI_SERVICE}
-  ${1} >/dev/console 2>&1
+  exec 1>/dev/console
+  exec 2>/dev/null
+  ${1}
 fi
 if [ ! "${UI_SERVICE}" = "weston.service" ]
 then
