@@ -1,0 +1,76 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2020 Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+. /etc/os-release
+
+UPDATE_ROOT="/storage/.update"
+GAMES_DEVICE=$(get_setting system.gamesdevice)
+
+mount_games() {
+      NULL=$(grep ${1} /proc/mounts >/dev/null 2>&1)
+      if [ ! "$?" = "0" ] && [ -e "${1}" ] && [ ! -e "/storage/.please_resize_me" ]
+      then
+        mount ${1} /storage/roms >/dev/null 2>&1
+      fi
+}
+
+mount_update() {
+  if [ -d "${UPDATE_ROOT}" ] && [ ! -e "/storage/.please_resize_me" ]
+  then
+    /usr/bin/busybox rm -rf "${UPDATE_ROOT}" >/dev/null 2>&1
+    /usr/bin/busybox mkdir -p "${UPDATE_ROOT}" >/dev/null 2>&1
+  fi
+
+  if [ ! -d "/storage/roms/update" ]
+  then
+    /usr/bin/busybox mkdir -p /storage/roms/update >/dev/null 2>&1
+ fi
+  if [ ! -e "/storage/.please_resize_me" ]
+  then
+    /usr/bin/busybox mkdir -p "${UPDATE_ROOT}" >/dev/null 2>&1
+    mount --bind "${UPDATE_ROOT}" /storage/roms/update >/dev/null 2>&1
+  fi
+}
+
+find_games() {
+  if /usr/bin/busybox mountpoint -q /storage ; then
+    if [ ! -d "/storage/roms" ]
+    then
+      /usr/bin/busybox mkdir -p /storage/roms >/dev/null 2>&1
+    fi
+
+    for DEV in $(blkid | awk 'BEGIN {FS=":"}; /ext4/ || /fat/ {print $1}' | sort -r)
+    do
+      ROOTDEV=$(echo ${DEV} | sed -e "s#^/.*/##g" -e "s#p[0-9].*\$##g")
+      SIZE=$(awk '/'${ROOTDEV}'/ {print $3}' /proc/partitions)
+      if [ "${SIZE}" -le "8388608" ]
+      then
+        # We don't want to mount partitions smaller than ~8GB.
+        continue
+      fi
+      if [ -L "/sys/class/block/${ROOTDEV}boot0" ]
+      then
+        # Assume this is an android boot device and ignore it.
+        continue
+      fi
+      NULL=$(grep ${DEV} /proc/mounts >/dev/null 2>&1)
+      if [ ! "$?" = "0" ] && [ -e "${DEV}" ] && [ ! -e "/storage/.please_resize_me" ]
+      then
+        GAMES_DEVICE=${DEV}
+        mount_games "${DEV}"
+        break
+      fi
+    done
+  fi
+}
+
+if [ -e "${GAMES_DEVICE}" ]
+then
+  mount_games ${GAMES_DEVICE}
+else
+  find_games
+fi
+mount_update
+set_setting system.gamesdevice ${GAMES_DEVICE}

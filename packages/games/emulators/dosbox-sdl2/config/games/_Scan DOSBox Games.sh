@@ -12,7 +12,6 @@ EE_DEVICE=$(cat /ee_arch)
 source /etc/profile
 rp_registerAllModules
 
-joy2keyStart
 clear
 
 #rm "/storage/.config/dosbox/games/*.conf"
