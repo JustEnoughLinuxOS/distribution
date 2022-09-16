@@ -4,8 +4,10 @@
 
 . /etc/profile
 
-for service in /usr/lib/autostart/daemons
+for SERVICE in /usr/lib/autostart/daemons/*
 do
+  source ${SERVICE}
+
   if [ ! -d "/storage/.cache/services" ]
   then
     mkdir -p "/storage/.cache/services"

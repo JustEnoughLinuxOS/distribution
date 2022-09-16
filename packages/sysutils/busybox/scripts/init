@@ -697,55 +697,6 @@ mount_storage() {
   fi
 }
 
-mount_games() {
-  if /usr/bin/busybox mountpoint -q /storage ; then
-    progress "Mounting games"
-    if [ ! -d "/storage/roms" ]
-    then
-      /usr/bin/busybox mkdir -p /storage/roms >/dev/null 2>&1
-    fi
-
-    for DEV in $(blkid | awk 'BEGIN {FS=":"}; /ext4/ || /fat/ {print $1}' 2>/dev/null | sort -r)
-    do
-      ROOTDEV=$(echo ${DEV} | sed -e "s#^/.*/##g" -e "s#p[0-9].*\$##g" 2>/dev/null)
-      SIZE=$(awk '/'${ROOTDEV}'/ {print $3}' /proc/partitions 2>/dev/null)
-      if [ "${SIZE}" -le "8388608" ]
-      then
-        # We don't want to mount partitions smaller than ~8GB.
-        continue
-      fi
-      if [ -L "/sys/class/block/${ROOTDEV}boot0" ]
-      then
-	# Assume this is an android boot device and ignore it.
-        continue
-      fi
-      NULL=$(grep ${DEV} /proc/mounts >/dev/null 2>&1)
-      if [ ! "$?" = "0" ] && [ -e "${DEV}" ] && [ ! -e "/storage/.please_resize_me" ]
-      then
-          mount ${DEV} /storage/roms >/dev/null 2>&1
-          break
-      fi
-    done
-
-    if [ -d "/storage/.update" ] && [ ! -e "/storage/.please_resize_me" ]
-    then
-      /usr/bin/busybox rm -rf /storage/.update >/dev/null 2>&1
-      /usr/bin/busybox mkdir -p /storage/.update >/dev/null 2>&1
-    fi
-
-    if [ ! -d "/storage/roms/update" ]
-    then
-      /usr/bin/busybox mkdir -p /storage/roms/update >/dev/null 2>&1
-    fi
-
-    if [ ! -e "/storage/.please_resize_me" ]
-    then
-      /usr/bin/busybox mkdir -p "$UPDATE_ROOT" >/dev/null 2>&1
-      mount --bind /storage/roms/update "$UPDATE_ROOT" >/dev/null 2>&1
-    fi
-  fi
-}
-
 # Make last bootloader label (installer, live, run etc.) as the new default
 update_bootmenu() {
   local crnt_default
@@ -1300,7 +1251,6 @@ for BOOT_STEP in \
     load_splash \
     mount_sysroot \
     mount_storage \
-    mount_games \
     check_update \
     prepare_sysroot \
     check_amlogic_dtb; do
@@ -1368,6 +1318,8 @@ else
   rm -f /sysroot/dev/init.log
   rm -f /sysroot/storage/init.log
 fi
+
+clear >/dev/console
 
 # switch to new sysroot and start real init
 exec /usr/bin/busybox switch_root /sysroot /usr/lib/systemd/systemd $INIT_ARGS $INIT_UNIT

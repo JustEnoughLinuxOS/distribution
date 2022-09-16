@@ -5,7 +5,7 @@ index 7b9afa5..bd964f1 100644
 @@ -1,5 +1,6 @@
  TARGET = 351Files
 
-+# DEVICE ?= handheld
++# DEVICE ?= HANDHELD
  # DEVICE ?= RG351P
  # DEVICE ?= RG351V
  # DEVICE ?= RGB10
@@ -18,20 +18,20 @@ index 92d1a01..db4fec4 100644
     #define KEYBOARD_KEY_SPACING     4
 
 +// Parameters for handheld
-+#elif defined(DEVICE_handheld)
++#elif defined(DEVICE_HANDHELD)
 +   #define SCREEN_WIDTH             1280
 +   #define SCREEN_HEIGHT            720
 +   #define HARDWARE_ACCELERATION    0
 +   #define FULLSCREEN               1
 +   #define FONT_NAME                "NotoSans-Regular.ttf"
 +   #define FONT_NAME_MONO           "NotoSansMono-Regular.ttf"
-+   #define FONT_SIZE                48
-+   #define LINE_HEIGHT              72
-+   #define ICON_SIZE                58
-+   #define MARGIN_X                 24
-+   #define KEYBOARD_MARGIN          19
-+   #define KEYBOARD_KEY_SPACING     10
-+   #define KEYBOARD_SYMBOL_SIZE     58
++   #define FONT_SIZE                20
++   #define LINE_HEIGHT              32
++   #define ICON_SIZE                24
++   #define MARGIN_X                 10
++   #define KEYBOARD_MARGIN          8
++   #define KEYBOARD_KEY_SPACING     4
++   #define KEYBOARD_SYMBOL_SIZE     24
 +
  // Paramaters for desktop PC
  #else
@@ -41,11 +41,11 @@ index 92d1a01..db4fec4 100644
 
  // Button events
 -#if defined(DEVICE_RG351P)
-+#if defined(DEVICE_handheld)
-+   #define BUTTON_PRESSED_UP              event.type == SDL_JOYBUTTONDOWN && event.jhat.value == SDL_HAT_UP
-+   #define BUTTON_PRESSED_DOWN            event.type == SDL_JOYBUTTONDOWN && event.jhat.value == SDL_HAT_DOWN
-+   #define BUTTON_PRESSED_LEFT            event.type == SDL_JOYBUTTONDOWN && event.jhat.value == SDL_HAT_LEFT
-+   #define BUTTON_PRESSED_RIGHT           event.type == SDL_JOYBUTTONDOWN && event.jhat.value == SDL_HAT_RIGHT
++#if defined(DEVICE_HANDHELD)
++   #define BUTTON_PRESSED_UP              event.type == SDL_JOYHATMOTION && event.jhat.value == SDL_HAT_UP
++   #define BUTTON_PRESSED_DOWN            event.type == SDL_JOYHATMOTION && event.jhat.value == SDL_HAT_DOWN
++   #define BUTTON_PRESSED_LEFT            event.type == SDL_JOYHATMOTION && event.jhat.value == SDL_HAT_LEFT
++   #define BUTTON_PRESSED_RIGHT           event.type == SDL_JOYHATMOTION && event.jhat.value == SDL_HAT_RIGHT
 +   #define BUTTON_PRESSED_PAGEUP          event.type == SDL_JOYBUTTONDOWN && (event.jbutton.button == 4 || event.jbutton.button == 6)
 +   #define BUTTON_PRESSED_PAGEDOWN        event.type == SDL_JOYBUTTONDOWN && (event.jbutton.button == 5 || event.jbutton.button == 7)
 +   #define BUTTON_PRESSED_VALIDATE        event.type == SDL_JOYBUTTONDOWN && event.jbutton.button == 1

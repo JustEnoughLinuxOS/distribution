@@ -6,6 +6,5 @@
 
 . /etc/profile
 jslisten set "killall 351Files"
-joy2keyStart
 
 351Files
