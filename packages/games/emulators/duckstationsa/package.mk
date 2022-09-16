@@ -21,12 +21,12 @@ esac
 
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
-  PKG_CONFIGURE_OPTS_TARGET+=" -DENABLE_X11=OFF"
+  PKG_CONFIGURE_OPTS_TARGET+=" -DUSE_X11=OFF"
 fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-  PKG_CONFIGURE_OPTS_TARGET+=" 	-DENABLE_X11=OFF \
+  PKG_CONFIGURE_OPTS_TARGET+=" 	-DUSE_X11=OFF \
 				-DUSE_DRMKMS=ON \
 				-DENABLE_EGL=ON \
 				-DUSE_MALI=OFF"
@@ -34,7 +34,7 @@ fi
 
 if [ "${DISPLAYSERVER}" = "wl" ]; then
   PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER} xorg-server xrandr libXi"
-  PKG_CONFIGURE_OPTS_TARGET+=" -DENABLE_X11=ON"
+  PKG_CONFIGURE_OPTS_TARGET+=" -DUSE_X11=ON"
 fi
 
 pre_configure_target() {
