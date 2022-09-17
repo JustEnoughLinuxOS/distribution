@@ -6,6 +6,7 @@
 . /etc/os-release
 
 UPDATE_ROOT="/storage/.update"
+MOUNT_GAMES=$(get_setting system.mountgames)
 GAMES_DEVICE=$(get_setting system.gamesdevice)
 
 mount_games() {
@@ -14,24 +15,6 @@ mount_games() {
       then
         mount -o umask=000 ${1} /storage/roms >/dev/null 2>&1
       fi
-}
-
-mount_update() {
-  if [ -d "${UPDATE_ROOT}" ] && [ ! -e "/storage/.please_resize_me" ]
-  then
-    /usr/bin/busybox rm -rf "${UPDATE_ROOT}" >/dev/null 2>&1
-    /usr/bin/busybox mkdir -p "${UPDATE_ROOT}" >/dev/null 2>&1
-  fi
-
-  if [ ! -d "/storage/roms/update" ]
-  then
-    /usr/bin/busybox mkdir -p /storage/roms/update >/dev/null 2>&1
- fi
-  if [ ! -e "/storage/.please_resize_me" ]
-  then
-    /usr/bin/busybox mkdir -p "${UPDATE_ROOT}" >/dev/null 2>&1
-    mount --bind "${UPDATE_ROOT}" /storage/roms/update >/dev/null 2>&1
-  fi
 }
 
 find_games() {
@@ -66,11 +49,16 @@ find_games() {
   fi
 }
 
+if [ "${MOUNT_GAMES}" = "0" ]
+then
+  exit 0
+fi
+
 if [ -e "${GAMES_DEVICE}" ]
 then
   mount_games ${GAMES_DEVICE}
 else
   find_games
 fi
-mount_update
+
 set_setting system.gamesdevice ${GAMES_DEVICE}
