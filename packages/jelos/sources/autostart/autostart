@@ -41,7 +41,6 @@ then
   done
 fi
 
-clear >/dev/console
 /usr/bin/show_splash intro 2>&1 >>${BOOTLOG}
 
 DEVICE_CPU_GOVERNOR=$(get_setting system.cpugovernor)

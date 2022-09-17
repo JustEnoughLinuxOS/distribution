@@ -752,18 +752,6 @@ check_out_of_space() {
 do_cleanup() {
   StartProgress spinner "Cleaning up... "
 
-  if mountpoint -q /storage/roms; then
-    umount /storage/roms &>/dev/null
-  fi
-
-  if mountpoint -q /storage; then
-    umount /storage &>/dev/null
-  fi
-
-  if mountpoint -q /update; then
-    umount /update &>/dev/null
-  fi
-
   if [ -d $UPDATE_ROOT/.tmp/mnt ]; then
     if mountpoint -q $UPDATE_ROOT/.tmp/mnt ; then
       # busybox umount deletes loop device automatically
@@ -777,10 +765,16 @@ do_cleanup() {
   [ -f "$UPDATE_IMG_GZ" ] && rm -f "$UPDATE_IMG_GZ" &>/dev/null
   [ -f "$UPDATE_IMG" ] && rm -f "$UPDATE_IMG" &>/dev/null
 
-  rm -rf $UPDATE_ROOT/[0-9a-zA-Z]* &>/dev/null
-  rm -f  $UPDATE_ROOT/* &>/dev/null
-  rm -f  $UPDATE_ROOT/.nocheck $UPDATE_ROOT/.nocompat &>/dev/null
-  rm -rf $UPDATE_ROOT/.tmp &>/dev/null
+  rm -rf $UPDATE_ROOT/.[0-9a-zA-Z]* &>/dev/null
+  rm -rf  $UPDATE_ROOT/* &>/dev/null
+
+  if mountpoint -q /storage; then
+    umount /storage &>/dev/null
+  fi
+
+  if mountpoint -q /update; then
+    umount /update &>/dev/null
+  fi
 
   sync
 
@@ -1069,8 +1063,6 @@ prepare_sysroot() {
   if [ ! -f "/sysroot/storage/.configured" ]
   then
     echo -ne "\033[1000H\033[2K==> Initializing system, please wait.." >/dev/console
-  else
-    echo -ne "\033[1000H\033[2K==> Loading, please wait.." >/dev/console
   fi
 }
 
