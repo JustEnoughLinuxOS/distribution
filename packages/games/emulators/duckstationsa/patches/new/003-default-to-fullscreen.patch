@@ -1,8 +1,8 @@
 diff --git a/src/frontend-common/fullscreen_ui.cpp b/src/frontend-common/fullscreen_ui.cpp
-index b66d1ddd..3b1ffe91 100644
+index ce53e69f..fc0b24d5 100644
 --- a/src/frontend-common/fullscreen_ui.cpp
 +++ b/src/frontend-common/fullscreen_ui.cpp
-@@ -222,6 +222,7 @@ static void DoChangeDiscFromFile();
+@@ -244,6 +244,7 @@ static void DoChangeDiscFromFile();
  static void DoChangeDisc();
  static void DoRequestExit();
  static void DoToggleFullscreen();
@@ -10,7 +10,7 @@ index b66d1ddd..3b1ffe91 100644
  static void DoCheatsMenu();
  static void DoToggleAnalogMode();
  
-@@ -922,6 +923,10 @@ void FullscreenUI::DoToggleFullscreen()
+@@ -1038,6 +1039,11 @@ void FullscreenUI::DoToggleFullscreen()
    Host::RunOnCPUThread([]() { Host::SetFullscreen(!Host::IsFullscreen()); });
  }
  
@@ -18,15 +18,16 @@ index b66d1ddd..3b1ffe91 100644
 +{
 +  Host::SetFullscreen(true);
 +}
++
  //////////////////////////////////////////////////////////////////////////
  // Landing Window
  //////////////////////////////////////////////////////////////////////////
-@@ -934,6 +939,8 @@ void FullscreenUI::SwitchToLanding()
+@@ -1050,6 +1056,8 @@ void FullscreenUI::SwitchToLanding()
  
  void FullscreenUI::DrawLandingWindow()
  {
 +  EnableDoToggleFullscreen();
 +
-   BeginFullscreenColumns();
+   BeginFullscreenColumns(nullptr, 0.0f, true);
  
-   if (BeginFullscreenColumnWindow(0.0f, 570.0f, "logo", UIPrimaryDarkColor))
+   if (BeginFullscreenColumnWindow(0.0f, -710.0f, "logo", UIPrimaryDarkColor))
