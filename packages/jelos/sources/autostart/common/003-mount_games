@@ -60,5 +60,3 @@ then
 else
   find_games
 fi
-
-set_setting system.gamesdevice ${GAMES_DEVICE}
