@@ -52,8 +52,6 @@ check_space() {
   fi
 }
 
-clear
-
 ONLINE_STATUS=$(check_network)
 if [ ! "${ONLINE_STATUS}" == true ]
 then

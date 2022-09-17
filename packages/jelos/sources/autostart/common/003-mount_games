@@ -16,6 +16,24 @@ mount_games() {
       fi
 }
 
+mount_update() {
+  if [ -d "${UPDATE_ROOT}" ] && [ ! -e "/storage/.please_resize_me" ]
+  then
+    /usr/bin/busybox rm -rf "${UPDATE_ROOT}" >/dev/null 2>&1
+    /usr/bin/busybox mkdir -p "${UPDATE_ROOT}" >/dev/null 2>&1
+  fi
+
+  if [ ! -d "/storage/roms/update" ]
+  then
+    /usr/bin/busybox mkdir -p /storage/roms/update >/dev/null 2>&1
+ fi
+  if [ ! -e "/storage/.please_resize_me" ]
+  then
+    /usr/bin/busybox mkdir -p "${UPDATE_ROOT}" >/dev/null 2>&1
+    mount --bind "${UPDATE_ROOT}" /storage/roms/update >/dev/null 2>&1
+  fi
+}
+
 find_games() {
   if /usr/bin/busybox mountpoint -q /storage ; then
     if [ ! -d "/storage/roms" ]
@@ -54,4 +72,5 @@ then
 else
   find_games
 fi
+mount_update
 set_setting system.gamesdevice ${GAMES_DEVICE}

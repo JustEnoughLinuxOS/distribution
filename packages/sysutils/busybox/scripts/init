@@ -1319,8 +1319,6 @@ else
   rm -f /sysroot/storage/init.log
 fi
 
-clear >/dev/console
-
 # switch to new sysroot and start real init
 exec /usr/bin/busybox switch_root /sysroot /usr/lib/systemd/systemd $INIT_ARGS $INIT_UNIT
 
