@@ -13,12 +13,12 @@ PKG_DEPENDS_INIT="glibc"
 PKG_LONGDESC="The Glibc package contains the main C library."
 PKG_BUILD_FLAGS="-gold"
 
-case "${TARGET_ARCH}" in
-  arm|aarch64)
+case "${DEVICE}" in
+  RG351P|RG351V|RG351MP|RG503|RG353P)
     OPT_ENABLE_KERNEL=4.4.0
     ;;
   *)
-    OPT_ENABLE_KERNEL=5.10.0
+    OPT_ENABLE_KERNEL=5.15.0
     ;;
 esac
 

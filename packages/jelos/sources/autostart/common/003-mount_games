@@ -49,7 +49,7 @@ find_games() {
   fi
 }
 
-if [ "${MOUNT_GAMES}" = "0" ]
+if [[ "${MOUNT_GAMES}" == "0" ]]
 then
   exit 0
 fi
