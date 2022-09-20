@@ -9,12 +9,12 @@ case $1 in
 
     if [ "${DEVICE_FAKE_JACKSENSE}" == "true" ]
     then
-      nohup systemctl stop headphones &
+      systemctl stop headphones
     fi
 
     if [ "${DEVICE_VOLUMECTL}" == "true" ]
     then
-      nohup systemctl stop volume &
+      systemctl stop volume
     fi
 
     # RG351x devices are notorious for losing USB when they sleep.
@@ -38,17 +38,17 @@ case $1 in
 
     if [ "${DEVICE_FAKE_JACKSENSE}" == "true" ]
     then
-      nohup systemctl start headphones &
+      systemctl start headphones
     fi
 
     if [ "${DEVICE_VOLUMECTL}" == "true" ]
     then
-      nohup systemctl start volume &
+      systemctl start volume
     fi
 
     if [ "$(get_setting wifi.enabled)" == "1" ]
     then
-      nohup wifictl reconnect &
+      wifictl reconnect
     fi
 
     DEVICE_VOLUME=$(get_setting "audio.volume" 2>/dev/null)
