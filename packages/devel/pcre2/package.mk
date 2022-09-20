@@ -1,32 +1,32 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2018-present Team CoreELEC (https://coreelec.org)
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="pcre2"
-PKG_VERSION="10.33"
-PKG_SHA256="35514dff0ccdf02b55bd2e9fa586a1b9d01f62332c3356e379eabb75f789d8aa"
+PKG_VERSION="10.40"
+PKG_SHA256="14e4b83c4783933dc17e964318e6324f7cae1bc75d8f3c79bc6969f00c159d68"
 PKG_LICENSE="BSD"
 PKG_SITE="http://www.pcre.org/"
-PKG_URL="https://ftp.pcre.org/pub/pcre/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
-PKG_DEPENDS_HOST="gcc:host"
+PKG_URL="https://github.com/PCRE2Project/pcre2/releases/download/pcre2-${PKG_VERSION}/pcre2-${PKG_VERSION}.tar.bz2"
+PKG_DEPENDS_HOST="toolchain:host"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_LONGDESC="A set of functions that implement regular expression pattern matching."
-PKG_TOOLCHAIN="configure"
-PKG_BUILD_FLAGS="+pic"
+PKG_LONGDESC="A set of functions that implement regular expression pattern matching using the same syntax."
+PKG_BUILD_FLAGS="+pic +pic:host"
 
-PKG_CONFIGURE_OPTS_HOST="--prefix=${TOOLCHAIN} \
-             --enable-static \
-             --enable-utf8 \
-             --enable-unicode-properties \
-             --with-gnu-ld"
+PKG_CMAKE_OPTS_HOST="-DBUILD_SHARED_LIBS=OFF \
+                     -DBUILD_STATIC_LIBS=ON \
+                     -DPCRE2_BUILD_PCRE2_8=ON \
+                     -DPCRE2_BUILD_PCRE2_16=ON \
+                     -DPCRE2_BUILD_PCRE2_32=ON \
+                     -DPCRE2_SUPPORT_JIT=ON \
+                     -DPCRE2_BUILD_TESTS=OFF \
+                     -DPCRE2_SUPPORT_LIBEDIT=OFF \
+                     -DPCRE2_SUPPORT_LIBREADLINE=OFF"
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
-             --enable-static \
-             --enable-utf8 \
-             --enable-pcre2-16 \
-             --enable-unicode-properties \
-             --with-gnu-ld"
+PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=OFF \
+                       -DPCRE2_BUILD_PCRE2_16=ON \
+                       -DPCRE2_SUPPORT_LIBEDIT=OFF \
+                       -DPCRE2_SUPPORT_LIBREADLINE=OFF"
 
 post_makeinstall_target() {
   safe_remove ${INSTALL}/usr/bin
-  sed -e "s:\(['= ]\)/usr:\\1${SYSROOT_PREFIX}/usr:g" -i ${SYSROOT_PREFIX}/usr/bin/${PKG_NAME}-config
 }
