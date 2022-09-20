@@ -385,7 +385,7 @@ if [ "${EES}" == "false" ] || [ "${EES}" == "none" ] || [ "${EES}" == "0" ]; the
 else
 	echo "video_shader = \"${EES}\"" >> ${RAAPPENDCONF}
 	echo 'video_shader_enable = "true"' >> ${RAAPPENDCONF}
-	echo "--set-shader /storage/shaders/${EES}"
+	echo "--set-shader /tmp/shaders/${EES}"
 fi
 
 ## Filterset
