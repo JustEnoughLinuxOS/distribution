@@ -1,7 +1,6 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
-#      Copyright (C) 2020      351ELEC team (https://github.com/fewtarius/351ELEC)
 #      Copyright (C) 2022-present Fewtarius
 #
 #  This Program is free software; you can redistribute it and/or modify
@@ -20,21 +19,25 @@
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
-PKG_NAME="common-shaders"
-PKG_VERSION="86cfa146a8dfddf6377ddb5dbcff552feae2e5bf"
+PKG_NAME="slang-shaders"
+PKG_VERSION="379eeca"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/libretro/common-shaders"
+PKG_SITE="https://github.com/libretro/slang-shaders"
 PKG_URL="${PKG_SITE}.git"
-PKG_DEPENDS_TARGET="toolchain glsl-shaders slang-shaders"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
-PKG_SHORTDESC="Libretro common shaders"
-PKG_LONGDESC="Libretro common shaders"
+PKG_SHORTDESC="Common SLANG shaders for RetroArch"
+PKG_LONGDESC="Common SLANG shaders for RetroArch"
 
-make_target() {
-  :
+PKG_IS_ADDON="no"
+PKG_TOOLCHAIN="make"
+PKG_AUTORECONF="no"
+
+configure_target() {
+  cd ${PKG_BUILD}
 }
 
 makeinstall_target() {
@@ -42,6 +45,5 @@ makeinstall_target() {
   then
     mkdir -p ${INSTALL}/usr/share/common-shaders
   fi
-  rsync -a ${BUILD}/${PKG_NAME}-${PKG_VERSION}/* ${INSTALL}/usr/share/common-shaders/
-  rm -f ${INSTALL}/usr/share/common-shaders/{Makefile,configure}
+  make install INSTALLDIR="${INSTALL}/usr/share/common-shaders"
 }

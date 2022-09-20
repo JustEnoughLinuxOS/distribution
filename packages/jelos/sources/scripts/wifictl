@@ -77,9 +77,10 @@ set_wifi() {
 Name=${OS_NAME}
 
 [service_${OS_NAME}_default]
-Type=wifi
-Name=${SSID}
-Passphrase=${PSK}
+Type = wifi
+Name = ${SSID}
+Passphrase = ${PSK}
+AutoConnect = true
 EOF
 
       STATE=$(get_wifi_state)
