@@ -19,6 +19,9 @@ pre_configure_target() {
 				--enable-udev \
 				--disable-opengl1 \
 				--disable-opengl \
+				--disable-opengles \
+				--disable-opengles3 \
+				--disable-opengles3_2 \
 				--disable-wayland \
 				--disable-x11 \
 				--enable-zlib \
@@ -52,7 +55,7 @@ pre_configure_target() {
   fi
 
   if [ "${OPENGLES_SUPPORT}" = yes ] && \
-     [ ! "${ARCH}" = "x86_64" ] || \
+     [ ! "${ARCH}" = "x86_64" ] && \
      [ ! "${DEVICE}" = "RG552" ]; then
       PKG_DEPENDS_TARGET+=" ${OPENGLES}"
       PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengles --enable-opengles3 --enable-opengles3_2 --enable-kms"
