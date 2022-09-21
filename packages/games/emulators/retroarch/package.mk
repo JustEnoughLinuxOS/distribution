@@ -46,7 +46,7 @@ pre_configure_target() {
 
   if [ ! "${OPENGL}" = "no" ]; then
       PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
-      PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengl_core"
+      PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengl"
   else
       PKG_CONFIGURE_OPTS_TARGET+=" --disable-opengl"
   fi
