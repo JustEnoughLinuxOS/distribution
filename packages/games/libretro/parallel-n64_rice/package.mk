@@ -6,7 +6,6 @@ PKG_VERSION="a03fdcba6b2e9993f050b50112f597ce2f44fa2c"
 PKG_SHA256="8ac94a0515bac7aeda51ef5cbb5c042d69d4f73960ca0ae8961e7ecbe3d182fa"
 PKG_REV="2"
 PKG_LICENSE="GPLv2"
-PKG_ARCH="arm aarch64"
 PKG_SITE="https://github.com/libretro/parallel-n64"
 PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain core-info"
@@ -58,10 +57,10 @@ pre_configure_target() {
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
   case ${ARCH} in
-    arm)
+    arm|x86_64)
       cp parallel_n64_libretro.so ${INSTALL}/usr/lib/libretro/parallel_n64_rice_libretro.so
     ;;
-    *)
+    aarch64)
       cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/parallel-n64_rice-*/.install_pkg/usr/lib/libretro/parallel_n64_rice_libretro.so ${INSTALL}/usr/lib/libretro/parallel_n64_rice_libretro.so
       cp -vP ${PKG_BUILD}/../core-info-*/parallel_n64_libretro.info ${INSTALL}/usr/lib/libretro/parallel_n64_rice_libretro.info
       sed -i 's/ParaLLEl N64/ParaLLEl N64 Rice/g' ${INSTALL}/usr/lib/libretro/parallel_n64_rice_libretro.info
