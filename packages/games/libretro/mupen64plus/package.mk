@@ -24,7 +24,6 @@ PKG_VERSION="ab8134ac90a567581df6de4fc427dd67bfad1b17"
 PKG_SHA256="98e197cdcac64c0e08eda91a6d63b637c3f151066bede25766e62bc1a59552a0"
 PKG_REV="1"
 PKG_LICENSE="GPLv2"
-PKG_ARCH="arm aarch64"
 PKG_SITE="https://github.com/libretro/mupen64plus-libretro"
 PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain nasm:host"
@@ -64,6 +63,9 @@ pre_configure_target() {
       PKG_MAKE_OPTS_TARGET=" platform=RK3566"
       CFLAGS="${CFLAGS} -DLINUX -DEGL_API_FB"
       CPPFLAGS="${CPPFLAGS} -DLINUX -DEGL_API_FB"
+    ;;
+    *)
+      PKG_MAKE_OPTS_TARGET="GLES=0 GLES3=0"
     ;;
   esac
 }

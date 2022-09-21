@@ -36,9 +36,6 @@ pre_configure_target() {
     RG503|RG353P)
       PKG_MAKE_OPTS_TARGET=" platform=RK3566"
     ;;
-    *)
-      export FORCE_GLES3=1
-    ;;
   esac
 }
 
