@@ -55,8 +55,7 @@ pre_configure_target() {
   fi
 
   if [ "${OPENGLES_SUPPORT}" = yes ] && \
-     [ ! "${ARCH}" = "x86_64" ] && \
-     [ ! "${DEVICE}" = "RG552" ]; then
+     [ ! "${ARCH}" = "x86_64" ]; then
       PKG_DEPENDS_TARGET+=" ${OPENGLES}"
       PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengles --enable-opengles3 --enable-opengles3_2 --enable-kms"
   else
