@@ -46,15 +46,17 @@ pre_configure_target() {
 
   if [ ! "${OPENGL}" = "no" ]; then
       PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
-      PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengl"
+      PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengl --enable-opengl1"
+  else
+      PKG_CONFIGURE_OPTS_TARGET+=" --disable-opengl"
   fi
 
   if [ "${OPENGLES_SUPPORT}" = yes ] && \
      [ ! "${ARCH}" = "x86_64" ]; then
       PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-      PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengles --enable-opengles3 --enable-opengles3_2 --enable-kms --disable-mali_fbdev"
+      PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengles --enable-opengles3 --enable-opengles3_2 --enable-kms"
   else
-      PKG_CONFIGURE_OPTS_TARGET+=" --disable-opengles --disable-opengles3 --disable-opengles3_2 --disable-kms --disable-mali_fbdev"
+      PKG_CONFIGURE_OPTS_TARGET+=" --disable-opengles --disable-opengles3 --disable-opengles3_2"
   fi
 
   if [ "${VULKAN_SUPPORT}" = "yes" ]
