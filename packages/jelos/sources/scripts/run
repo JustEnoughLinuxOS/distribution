@@ -7,8 +7,7 @@ then
 else
   systemctl stop ${UI_SERVICE}
   exec 1>/dev/console
-  exec 2>/dev/null
-  ${1}
+  "${1}" 2>/dev/null
 fi
 if [ ! "${UI_SERVICE}" = "weston.service" ]
 then
