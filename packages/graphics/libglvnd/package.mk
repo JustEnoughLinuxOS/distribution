@@ -20,10 +20,13 @@ configure_package() {
 pre_configure_target(){
   if [ ! "${OPENGL}" = "no" ]
   then
-    PKG_MESON_OPTS_TARGET+=" -Dgles1=true -Dgles2=true -Degl=true -Dheaders=true"
+    PKG_MESON_OPTS_TARGET+=" -Degl=true -Dheaders=true"
   fi
     
-  if [ "${OPENGLES_SUPPORT}" = "no" ]; then
+  if [ ! "${OPENGLES_SUPPORT}" = "no" ]
+  then
+    PKG_MESON_OPTS_TARGET+=" -Dgles1=true -Dgles2=true -Dheaders=true"
+  else
     PKG_MESON_OPTS_TARGET+=" -Dgles2=false"
   fi
 }

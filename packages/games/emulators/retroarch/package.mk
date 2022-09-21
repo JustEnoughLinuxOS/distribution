@@ -46,13 +46,17 @@ pre_configure_target() {
 
   if [ ! "${OPENGL}" = "no" ]; then
       PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
-      PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengl --enable-opengl1"
+      PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengl"
+      if [ "${ARCH}" = "x86_64" ]; then
+         PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengl1"
+      fi
   else
       PKG_CONFIGURE_OPTS_TARGET+=" --disable-opengl"
   fi
 
   if [ "${OPENGLES_SUPPORT}" = yes ] && \
-     [ ! "${ARCH}" = "x86_64" ]; then
+     [ ! "${ARCH}" = "x86_64" ] || \
+     [ ! "${DEVICE}" = "RG552" ]; then
       PKG_DEPENDS_TARGET+=" ${OPENGLES}"
       PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengles --enable-opengles3 --enable-opengles3_2 --enable-kms"
   else
