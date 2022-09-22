@@ -68,6 +68,11 @@ case ${PKG_SOURCE_NAME} in
   *.rar)
     unrar x ${FULL_SOURCE_PATH} ${2}
     ;;
+  *.AppImage)
+    FULL_DEST_PATH="${2}/${PKG_NAME}-${PKG_VERSION}"
+    mkdir ${FULL_DEST_PATH}
+    cp -f ${FULL_SOURCE_PATH} ${FULL_DEST_PATH}
+    ;;
   *)
     FULL_DEST_PATH="${2}/${PKG_NAME}-${PKG_VERSION}"
     mkdir ${FULL_DEST_PATH}

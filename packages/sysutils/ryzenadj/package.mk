@@ -2,7 +2,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="ryzenadj"
-PKG_VERSION="a3b8ba4"
+PKG_VERSION="feecd88d29e555fa743044dad623fb96dded2b93"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/FlyGoat/RyzenAdj"
 PKG_URL="${PKG_SITE}.git"
