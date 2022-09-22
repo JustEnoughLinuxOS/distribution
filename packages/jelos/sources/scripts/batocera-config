@@ -192,7 +192,7 @@ if [ "$command" == "audio" ];then
 	    cmdVal="1"
 	fi
         echo "setting audio output mode : $mode" >> $log
-	amixer cset numid=3 $cmdVal || exit 1
+	amixer -M cset numid=3 $cmdVal || exit 1
     elif [[ "${arch}" =~ "x86" ]]
     then
 	# auto: no .asoundrc file
@@ -222,12 +222,12 @@ if [ "$command" == "volume" ];then
 
 		# on my pc, the master is turned off at boot
 		# i don't know what are the rules to set here.
-		amixer set ${DEVICE_AUDIO_MIXER} unmute      || exit 1
-                amixer set ${DEVICE_AUDIO_MIXER}    -- ${mode}% || exit 1
+		amixer -M set ${DEVICE_AUDIO_MIXER} unmute      || exit 1
+                amixer -M set ${DEVICE_AUDIO_MIXER}    -- ${mode}% || exit 1
 
 		# maximize the sound to be sure it's not 0, allow errors
-		amixer set PCM       -- 100% #|| exit 1
-		amixer set Headphone -- 100% #|| exit 1
+		amixer -M set PCM       -- 100% #|| exit 1
+		amixer -M set Headphone -- 100% #|| exit 1
 		exit 0
 	fi
 	exit 12

@@ -25,4 +25,4 @@ then
 fi
 
 VOL=$(get_setting "audio.volume" 2>/dev/null)
-amixer set "${DEVICE_AUDIO_MIXER}" ${VOL}%
+amixer -M set "${DEVICE_AUDIO_MIXER}" ${VOL}%

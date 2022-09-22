@@ -17,12 +17,12 @@ CURRENTAUDIO=$(get_setting "audio.device")
 	case "${CURRENTAUDIO}" in
 	    "headphone")
 	    echo "setting speakers"
-		amixer cset name='Playback Path' SPK
+		amixer -M cset name='Playback Path' SPK
 		set_setting "audio.device" "speakers"
 		;;
 	    "auto"|"speakers"|*)
 	    echo "setting headphones"
-		amixer cset name='Playback Path' HP
+		amixer -M cset name='Playback Path' HP
 		set_setting "audio.device" "headphone"
 		;;
 	esac
@@ -33,12 +33,12 @@ if [ "${1}" == "setaudio" ];then
 	case "${2}" in
 	    "headphone")
 	    echo "setting headphones"
-		amixer cset name='Playback Path' HP
+		amixer -M cset name='Playback Path' HP
 		set_setting "audio.device" "headphone"
 		;;
 	  	"auto"|"speakers"|*)
 	  	echo "setting speakers"
-		amixer cset name='Playback Path' SPK
+		amixer -M cset name='Playback Path' SPK
 		set_setting "audio.device" "speakers"
 		;;
 	esac
@@ -62,7 +62,7 @@ MINVOL=0
 	fi
 	[ "$STEPVOL" -ge "$MAXVOL" ] && STEPVOL="$MAXVOL"
 	[ "$STEPVOL" -le "$MINVOL" ] && STEPVOL="$MINVOL"
-	amixer set "${DEVICE_AUDIO_MIXER}" ${STEPVOL}%
+	amixer -M set "${DEVICE_AUDIO_MIXER}" ${STEPVOL}%
 	alsactl store -f /storage/.config/asound.state
 	set_setting "audio.volume" ${STEPVOL}
   fi    
