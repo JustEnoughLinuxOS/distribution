@@ -74,10 +74,3 @@ then
   cp -f /usr/config/emulationstation/es_input.cfg /storage/.config/emulationstation/es_input.cfg
 fi
 
-# Make sure that we don't disable automounting
-MOUNTGAMES=$(get_setting system.mountgames)
-if [[ "${MOUNTGAMES}" != [0-9] ]]
-then
-  set_setting system.mountgames 1
-  /usr/lib/autostart/common/003-mount_games
-fi

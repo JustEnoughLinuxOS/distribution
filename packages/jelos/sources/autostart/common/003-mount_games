@@ -6,8 +6,16 @@
 . /etc/os-release
 
 UPDATE_ROOT="/storage/.update"
-MOUNT_GAMES=$(get_setting system.mountgames)
+MOUNT_GAMES=$(get_setting system.automount)
 GAMES_DEVICE=$(get_setting system.gamesdevice)
+
+if [[ "${MOUNTGAMES}" != [0-9] ]]
+then
+  set_setting system.automount 1
+elif [[ "${MOUNT_GAMES}" == "0" ]]
+then
+  exit 0
+fi
 
 mount_games() {
       NULL=$(grep ${1} /proc/mounts >/dev/null 2>&1)
@@ -48,11 +56,6 @@ find_games() {
     done
   fi
 }
-
-if [[ "${MOUNT_GAMES}" == "0" ]]
-then
-  exit 0
-fi
 
 if [ -e "${GAMES_DEVICE}" ]
 then
