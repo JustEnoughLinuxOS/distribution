@@ -64,8 +64,12 @@ echo -e "=> ${OS_NAME} UPGRADE UTILITY"
 
 
 # Check storage
-check_space size flash boot 2048000
-check_space available .update GAMES 4096000
+check_space size flash boot 2048000 2>/dev/null
+
+if [ "$(mountpoint -q /storage/roms)" ]
+then
+  check_space available .update GAMES 4096000 2>/dev/null
+fi
 
 # Download
 LATEST_RELEASE_TAG=$(curl -H 'Cache-Control: no-cache' -Ls "${GIT_API}/releases" | python -c "import sys, json; print(json.load(sys.stdin)[0]['tag_name'])")
