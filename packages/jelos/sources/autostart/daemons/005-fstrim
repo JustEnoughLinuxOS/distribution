@@ -1,0 +1,2 @@
+SVC="fstrim.timer"
+DAEMONS=("fstrim")
