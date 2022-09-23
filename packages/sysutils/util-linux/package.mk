@@ -92,5 +92,4 @@ post_install () {
   if [ "${SWAP_SUPPORT}" = "yes" ]; then
     enable_service swap.service
   fi
-  enable_service fstrim.timer
 }
