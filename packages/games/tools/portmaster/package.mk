@@ -4,7 +4,7 @@
 
 PKG_NAME="portmaster"
 PKG_VERSION=""
-PKG_ARCH="any"
+PKG_ARCH="aarch64"
 PKG_URL="https://github.com/christianhaitian/PortMaster/raw/main/PortMaster.zip"
 PKG_PRIORITY="optional"
 PKG_SECTION="tools"

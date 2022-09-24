@@ -24,7 +24,8 @@ makeinstall_target() {
   chmod 0755 ${INSTALL}/usr/config/modules/*
   case ${ARCH} in
     x86_64)
-      rm -f "${INSTALL}/usr/config/Start 32bit Retroarch.sh"
+      rm -f "${INSTALL}/usr/config/*32bit*"
+      rm -f "${INSTALL}/usr/config/*Master*"
     ;;
   esac
 }
