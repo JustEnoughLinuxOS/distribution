@@ -112,13 +112,16 @@ fi
 ### We need the original system cooling profile later so get it now!
 COOLINGPROFILE=$(get_setting cooling.profile)
 
-### Set the overclock mode
-OVERCLOCK=$(get_setting "overclock" "${PLATFORM}" "${ROMNAME##*/}")
-if [ ! "${OVERCLOCK}" = "system" ]
+if [ -e "/usr/bin/overclock" ]
 then
-  if [ ! -z "${OVERCLOCK}" ] && [ -e "/usr/bin/overclock" ]
+  ### Set the overclock mode
+  OVERCLOCK=$(get_setting "overclock" "${PLATFORM}" "${ROMNAME##*/}")
+  if [ ! "${OVERCLOCK}" = "system" ]
   then
-    /usr/bin/overclock ${OVERCLOCK}
+    if [ ! -z "${OVERCLOCK}" ] && [ -e "/usr/bin/overclock" ]
+    then
+      /usr/bin/overclock ${OVERCLOCK}
+    fi
   fi
 fi
 
@@ -274,7 +277,7 @@ then
 			jslisten set "retroarch"
 			if [ "$EMU" = "fbneo" ]
 			then
-				RUNTHIS='/usr/bin/retroarch -L /usr/lib/libretro/fbneo_libretro.so --subsystem neocd --config ${RATMPCONF} --appendconfig ${RAAPPENDCONF} "${ROMNAME}"'
+				RUNTHIS='/usr/bin/retroarch -L /tmp/cores/fbneo_libretro.so --subsystem neocd --config ${RATMPCONF} --appendconfig ${RAAPPENDCONF} "${ROMNAME}"'
 			fi
 		;;
 		"psx")
@@ -326,7 +329,7 @@ else
         case ${PLATFORM} in
                 "doom")
 			# EXT can be wad, WAD, iwad, IWAD, pwad, PWAD or doom
-			EXT=${ROMNAME#*.}
+			EXT=${ROMNAME##*.}
 
 			# If its not a simple wad (extension .doom) read the file and parse the data
 			if [ ${EXT} == "doom" ]; then
@@ -344,7 +347,7 @@ else
 	then
 	RUNTHIS='${EMUPERF} /usr/bin/${RABIN} -L /storage/.config/retroarch/cores/${EMU}.so --config ${RATMPCONF} --appendconfig ${RAAPPENDCONF} "${ROMNAME}"'
 	else
-	RUNTHIS='${EMUPERF} /usr/bin/${RABIN} -L /usr/lib/libretro/${EMU}.so --config ${RATMPCONF} --appendconfig ${RAAPPENDCONF} "${ROMNAME}"'
+	RUNTHIS='${EMUPERF} /usr/bin/${RABIN} -L /tmp/cores/${EMU}.so --config ${RATMPCONF} --appendconfig ${RAAPPENDCONF} "${ROMNAME}"'
 	fi
 	CONTROLLERCONFIG="${arguments#*--controllers=*}"
 
@@ -451,15 +454,18 @@ fi
 clear_screen
 
 ### Restore the overclock mode
-OVERCLOCK=$(get_setting "system.overclock")
-if [ ! -z "${OVERCLOCK}" ]
+if [ -e "/usr/bin/overclock" ]
 then
-  /usr/bin/overclock ${OVERCLOCK}
-  if [ "${DEVICE_HAS_FAN}" = "true" ]
-  then
-    set_setting cooling.profile ${COOLINGPROFILE}
-    systemctl restart fancontrol
-  fi
+	OVERCLOCK=$(get_setting "system.overclock")
+	if [ ! -z "${OVERCLOCK}" ]
+	then
+		/usr/bin/overclock ${OVERCLOCK}
+		if [ "${DEVICE_HAS_FAN}" = "true" ]
+		then
+			set_setting cooling.profile ${COOLINGPROFILE}
+			systemctl restart fancontrol
+		fi
+	fi
 fi
 
 $VERBOSE && log "Checking errors: ${ret_error} "

@@ -31,12 +31,12 @@ then
   ### Remove and link es configs so they are managed with OS updates.
   for es_cfg in es_features.cfg es_systems.cfg
   do
-    rm -f /storage/.config/emulationstation/${es_cfg}
     ln -s /usr/config/emulationstation/${es_cfg} /storage/.config/emulationstation/${es_cfg}
   done
 
-  hres="$(fbset 2>/dev/null | awk '/geometry/ { print $2 }')"
-  cp -f /usr/config/splash/splash-${hres}.png /storage/.config/emulationstation/resources/logo.png
+  ### Link the ES splash to the distribution splash
+  rm -f /storage/.config/emulationstation/resources/logo.png
+  ln -sf /usr/config/splash/splash.png /storage/.config/emulationstation/resources/logo.png
 fi
 
 if [ ! -e "/storage/.cache/ld.so.cache" ]

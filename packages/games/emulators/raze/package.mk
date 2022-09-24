@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="raze"
-PKG_VERSION="8d423fdc6f237e5ad669f90cd16515be9a67ccdd"
+PKG_VERSION="1c0c41e88d5521fbdf5cd5ae1eb2f7de073036ab"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/coelckers/Raze"
 PKG_URL="${PKG_SITE}.git"
@@ -50,10 +50,17 @@ makeinstall_target() {
   chmod 0755 ${INSTALL}/usr/bin/*
 
   mkdir -p ${INSTALL}/usr/config/game/raze
+  cp -rf ${PKG_DIR}/config/common/* ${INSTALL}/usr/config/game/raze
+  chmod 0755 ${INSTALL}/usr/config/game/raze/games/*sh
   if [ -d "${PKG_DIR}/config/${DEVICE}" ]
   then
-    cp ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/config/game/raze
+    cp -rf ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/config/game/raze
+    cat ${INSTALL}/usr/config/game/raze/defaults.ini >> ${INSTALL}/usr/config/game/raze/raze.ini
+    rm ${INSTALL}/usr/config/game/raze/defaults.ini
   fi
   cp ${PKG_BUILD}/.${TARGET_NAME}/*.pk3 ${INSTALL}/usr/config/game/raze
   cp -r ${PKG_BUILD}/.${TARGET_NAME}/soundfonts ${INSTALL}/usr/config/game/raze
+
+  mkdir -p ${INSTALL}/usr/lib/autostart/common
+  cp ${PKG_DIR}/sources/autostart/common/* ${INSTALL}/usr/lib/autostart/common
 }

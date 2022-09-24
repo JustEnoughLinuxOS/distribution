@@ -427,11 +427,17 @@ set_consolefont() {
   progress "Set console font"
   if [ -e /dev/fb0 ]; then
     hres="$(fbset 2>/dev/null | awk '/geometry/ { print $2 }')"
-    if [ "${hres}" -lt "1152" ]
+    if [ "${hres}" -gt "0" ] && [ "${hres}" -lt "640" ]
+    then
+      setfont -C /dev/tty0 ter-v12n.psf
+    elif [ "${hres}" -ge "640" ] && [ "${hres}" -lt "720" ]
     then
       setfont -C /dev/tty0 ter-v14n.psf
+    elif [ "${hres}" -ge "720" ] && [ "${hres}" -lt "1080" ]
+    then
+      setfont -C /dev/tty0 ter-v18n.psf
     else
-      setfont -C /dev/tty0 ter-v32n.psf
+      setfont -C /dev/tty0 ter-v24n.psf
     fi
   fi
 }
@@ -478,26 +484,16 @@ load_splash() {
       if [ -z "$SPLASHIMAGE" ]; then
         vres="$(fbset 2>/dev/null | awk '/geometry/ { print $3 }')"
         hres="$(fbset 2>/dev/null | awk '/geometry/ { print $2 }')"
-        RES="${hres}"
 
         
         # Test to determine if the display is rotated
         # and set the splash to suit.
         if [ ${vres} -gt ${hres} ]
         then
-          RES="${RES}l"
-          if [ ! -f "/splash/splash-${RES}.png" ]
-          then
-            RES="1080l"
-          fi
-        else
-          if [ ! -f "/splash/splash-${RES}.png" ]
-          then
-            RES="1080"
-          fi
+          RES="l"
         fi
 
-        SPLASHIMAGE="/splash/splash-${RES}.png"
+        SPLASHIMAGE="/splash/splash${RES}.png"
 
       fi
 

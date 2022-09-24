@@ -8,7 +8,7 @@ PKG_NAME="linux"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/JustEnoughLinuxOS"
 PKG_DEPENDS_HOST="ccache:host openssl:host"
-PKG_DEPENDS_TARGET="toolchain linux:host cpio:host kmod:host xz:host wireless-regdb keyutils ${KERNEL_EXTRA_DEPENDS_TARGET}"
+PKG_DEPENDS_TARGET="toolchain linux:host cpio:host kmod:host xz:host wireless-regdb keyutils util-linux binutils ${KERNEL_EXTRA_DEPENDS_TARGET}"
 PKG_DEPENDS_INIT="toolchain"
 PKG_NEED_UNPACK="${LINUX_DEPENDS} $(get_pkg_directory busybox)"
 PKG_LONGDESC="This package builds the kernel for Rockchip devices"
@@ -29,7 +29,7 @@ case ${DEVICE} in
   ;;
   RG353P|RG503)
     PKG_URL="${PKG_SITE}/rk356x-kernel.git"
-    PKG_VERSION="e75a81b17"
+    PKG_VERSION="ce84246cd"
   ;;
 esac
 
@@ -43,7 +43,7 @@ fi
 
 if [ "${PKG_BUILD_PERF}" != "no" ] && grep -q ^CONFIG_PERF_EVENTS= ${PKG_KERNEL_CFG_FILE} ; then
   PKG_BUILD_PERF="yes"
-  PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} binutils elfutils libunwind zlib openssl"
+  PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} elfutils libunwind zlib openssl"
 fi
 
 if [ "${TARGET_ARCH}" = "x86_64" ]; then

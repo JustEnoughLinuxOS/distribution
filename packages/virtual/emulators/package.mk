@@ -10,15 +10,15 @@ PKG_LONGDESC="Emulation metapackage."
 PKG_EMUS="hatarisa openbor hypseus-singe moonlight hypseus-singe pico-8 flycastsa   \
           scummvmsa PPSSPPSDL yabasanshiroSA vicesa mupen64plussa-audio-sdl         \
           mupen64plussa-input-sdl mupen64plussa-ui-console mupen64plussa-video-rice \
-          mupen64plussa-core mupen64plussa-rsp-hle mupen64plussa-video-glide64mk2   \
+          mupen64plussa-core mupen64plussa-rsp-hle mupen64plussa-video-glide64mk2 mupen64plussa-video-gliden64  \
           lzdoom gzdoom ecwolf amiberry raze drastic"
 
 PKG_RETROARCH="retroarch retroarch-overlays retroarch-assets common-shaders glsl-shaders \
                libretro-database core-info"
 
-LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce beetle-pcfx      \
+LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce beetle-pce-fast beetle-pcfx      \
                 beetle-supafaust beetle-supergrafx beetle-vb beetle-wswan bluemsx cannonball cap32   \
-                crocods daphne dinothawr dosbox-svn dosbox-pure easyrpg fbalpha2012                  \
+                crocods daphne dinothawr dosbox-svn dosbox-pure duckstation easyrpg fbalpha2012      \
                 fbalpha2019 fbneo fceumm fmsx flycast flycast_libretro freechaf freeintv             \
                 freej2me fuse-libretro gambatte gearboy gearcoleco gearsystem genesis-plus-gx        \
                 genesis-plus-gx-wide gme gpsp gw-libretro handy hatari mame2000 mame2003-plus        \

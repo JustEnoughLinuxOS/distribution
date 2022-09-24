@@ -39,20 +39,30 @@ EOF
 fi
 
 BIOS=""
-for BIOS in saturn_bios.bin sega_101.bin mpr-17933.bin mpr-18811-mx.ic1 mpr-19367-mx.ic1 stvbios.zip
-do
-  BIOS=$(find /storage/roms/bios -name ${BIOS} -print 2>/dev/null)
-  if [ ! -z "${BIOS}" ]
-  then
-    BIOS="-b ${BIOS}"
-    break
-  fi
-done
-
 GAME=$(echo "${1}"| sed "s#^/.*/##")
+USE_BIOS=$(get_setting use_hlebios saturn "${GAME}")
+if [ ! "${USE_BIOS}" = 1 ]
+then
+  USE_BIOS=$(get_setting use_hlebios saturn)
+fi
+
+if [ "$USE_BIOS" = 1 ]
+then
+  for BIOS in saturn_bios.bin sega_101.bin mpr-17933.bin mpr-18811-mx.ic1 mpr-19367-mx.ic1 stvbios.zip
+  do
+    BIOS=$(find /storage/roms/bios -name ${BIOS} -print 2>/dev/null)
+    if [ ! -z "${BIOS}" ]
+    then
+      BIOS="-b ${BIOS}"
+      break
+    fi
+  done
+fi
+
 if [ ! -e "${CONFIG_DIR}/${GAME}.config" ]
 then
   cp -f ${SOURCE_DIR}/.config "${CONFIG_DIR}/${GAME}.config"
 fi
 
-yabasanshiroSA -r 2 -i "${1}" ${BIOS} >/var/log/exec.log 2>&1 ||:
+echo "Command: yabasanshiroSA -r 2 -i "${1}" ${BIOS}" >/var/log/exec.log 2>&1
+yabasanshiroSA -r 2 -i "${1}" ${BIOS} >>/var/log/exec.log 2>&1 ||:

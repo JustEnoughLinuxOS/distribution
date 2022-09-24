@@ -27,7 +27,7 @@ VOL_EVENT='*(KEY_VOLUME*, value *' # This matches all volume events
 VOL_UP='*UP), value *'  # Differentiate 'up' volume event
 VOL_DOWN='*DOWN), value *' #Differentiate 'down' volume event
 
-V_FUNC_KEY_EVENT='*(BTN_MODE), value *' # Matches all RG351MP Fn key events
+V_FUNC_KEY_EVENT='*('${DEVICE_VOL_MODIFIER}'), value *'
 
 # Matches if a button was pressed (1), released (0) or held down (2)
 PRESS='*value 1'

@@ -43,7 +43,10 @@
   # Additional kernel make parameters (for example to specify the u-boot loadaddress)
     KERNEL_MAKE_EXTRACMD=""
     KERNEL_MAKE_EXTRACMD+=" rockchip/${DEVICE_DTB}.dtb"
-    
+   
+  # Display Resolution
+    SPLASH_RESOLUTION="320x480"
+ 
   # Mali GPU family
     MALI_FAMILY="bifrost-g31"
     OPENGLES="libmali"

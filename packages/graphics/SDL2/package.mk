@@ -32,8 +32,8 @@ then
 fi
 
 
-case ${DEVICE} in
-  RG351P|RG552)
+case ${PROJECT} in
+  Rockchip)
     PKG_DEPENDS_TARGET+=" librga"
     pre_make_host() {
       sed -i "s| -lrga||g" ${PKG_BUILD}/CMakeLists.txt

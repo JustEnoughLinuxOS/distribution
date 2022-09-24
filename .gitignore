@@ -4,6 +4,7 @@
 # build directorys
 /build.*
 /.fakeroot.*
+/.egg_cache
 /.ccache-*
 /.env
 

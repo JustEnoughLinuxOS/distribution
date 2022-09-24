@@ -58,17 +58,6 @@ program="/usr/bin/killall ${2}"
 button1=${BTN_KILL_HOTKEY}
 button2=${BTN_KILL_SELECTA}
 button3=${BTN_KILL_SELECTB}
-
-[BrightnessUp]
-program="/usr/bin/brightness up"
-button1=${BTN_BRIGHTNESS_UP_HOTKEY}
-button2=${BTN_BRIGHTNESS_UP_SELECT}
-
-[BrightnessDown]
-program="/usr/bin/brightness down"
-button1=${BTN_BRIGHTNESS_DOWN_HOTKEY}
-button2=${BTN_BRIGHTNESS_DOWN_SELECT}
-
 EOF
                 systemctl start jslisten
         elif [ "$1" == "stop" ]

@@ -2,7 +2,7 @@
 # Copyright (C) 2021-present 351ELEC (https://github.com/351ELEC)
 
 PKG_NAME="retroarch"
-PKG_VERSION="3aa1811ca911d39ef8eac3a37dff12291a119a99"
+PKG_VERSION="e1a139ec0f26aed87c1ff9042e733e2c4b1df39b"
 PKG_SITE="https://github.com/libretro/RetroArch"
 PKG_URL="${PKG_SITE}.git"
 PKG_LICENSE="GPLv3"
@@ -31,11 +31,11 @@ pre_configure_target() {
 
   case ${ARCH} in
     arm)
-      PKG_DEPENDS_TARGET+=" librga ${OPENGLES}"
+      PKG_DEPENDS_TARGET+=" ${OPENGLES}"
       PKG_CONFIGURE_OPTS_TARGET+=" --enable-neon --enable-opengles --enable-opengles3 --enable-opengles3_2 --enable-kms --disable-mali_fbdev"
     ;;
     aarch64)
-      PKG_DEPENDS_TARGET+=" librga ${OPENGLES}"
+      PKG_DEPENDS_TARGET+=" ${OPENGLES}"
       PKG_CONFIGURE_OPTS_TARGET+=" --disable-neon --enable-opengles --enable-opengles3 --enable-opengles3_2 --enable-kms --disable-mali_fbdev"
     ;;
     *)
@@ -45,7 +45,7 @@ pre_configure_target() {
 
   case ${DEVICE} in
     RG351P|RG552)
-      PKG_DEPENDS_TARGET+=" libgo2"
+      PKG_DEPENDS_TARGET+=" librga libgo2"
       PKG_CONFIGURE_OPTS_TARGET+=" --enable-odroidgo2"
     ;;
   esac
