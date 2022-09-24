@@ -3,7 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="mesa"
-PKG_VERSION="88ed8245a8cf3e902b2b11ade8adfe7ac623d159"
+PKG_VERSION="d5394296becfc97bc992c82d6f5d013b35b5275a"
 PKG_LICENSE="OSS"
 PKG_SITE="https://gitlab.freedesktop.org/mesa/mesa"
 PKG_URL="${PKG_SITE}.git"
