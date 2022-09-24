@@ -54,6 +54,9 @@ BIGFONT="1080"
 
 TEE_PID=""
 
+exec 1>/dev/console
+exec 2>/dev/null
+
 # common functions
 . /functions 2>/dev/null
 . /device.init 2>/dev/null
@@ -76,7 +79,6 @@ debug_msg() {
 }
 
 debug_shell() {
-  redirect_output_to_screen  # restore output to a screen
   echo "### Starting debugging shell for boot step: $BOOT_STEP... type  exit  to quit ###"
   showcursor
   setsid cttyhack sh
@@ -429,15 +431,15 @@ set_consolefont() {
     hres="$(fbset 2>/dev/null | awk '/geometry/ { print $2 }')"
     if [ "${hres}" -gt "0" ] && [ "${hres}" -lt "640" ]
     then
-      setfont -C /dev/tty0 ter-v12n.psf
+      setfont -C /dev/console ter-v12n.psf
     elif [ "${hres}" -ge "640" ] && [ "${hres}" -lt "720" ]
     then
-      setfont -C /dev/tty0 ter-v14n.psf
+      setfont -C /dev/console ter-v14n.psf
     elif [ "${hres}" -ge "720" ] && [ "${hres}" -lt "1080" ]
     then
-      setfont -C /dev/tty0 ter-v18n.psf
+      setfont -C /dev/console ter-v18n.psf
     else
-      setfont -C /dev/tty0 ter-v24n.psf
+      setfont -C /dev/console ter-v24n.psf
     fi
   fi
 }
@@ -515,8 +517,6 @@ do_reboot() {
   if [ -s /dev/init.log ]; then
     mv /dev/init.log /storage/init-previous.log
   fi
-  redirect_output_to_screen
-  delete_descriptors
 
   # syncing filesystem
   sync
@@ -697,49 +697,6 @@ mount_storage() {
   fi
 }
 
-mount_games() {
-  if /usr/bin/busybox mountpoint -q /storage ; then
-    progress "Mounting games"
-    if [ ! -d "/storage/roms" ]
-    then
-      /usr/bin/busybox mkdir -p /storage/roms >/dev/null 2>&1
-    fi
-
-    for DEV in $(blkid | awk 'BEGIN {FS=":"}; /ext4/ || /fat/ {print $1}' | sort -r)
-    do
-      ROOTDEV=$(echo ${DEV} | sed -e "s#^/.*/##g" -e "s#p[0-9].*\$##g")
-      if [ -L "/sys/class/block/${ROOTDEV}boot0" ]
-      then
-	# Assume this is an android boot device and ignore it.
-        continue
-      fi
-      NULL=$(grep ${DEV} /proc/mounts >/dev/null 2>&1)
-      if [ ! "$?" = "0" ] && [ -e "${DEV}" ] && [ ! -e "/storage/.please_resize_me" ]
-      then
-          mount ${DEV} /storage/roms >/dev/null 2>&1
-          break
-      fi
-    done
-
-    if [ -d "/storage/.update" ] && [ ! -e "/storage/.please_resize_me" ]
-    then
-      /usr/bin/busybox rm -rf /storage/.update >/dev/null 2>&1
-      /usr/bin/busybox mkdir -p /storage/.update >/dev/null 2>&1
-    fi
-
-    if [ ! -d "/storage/roms/update" ]
-    then
-      /usr/bin/busybox mkdir -p /storage/roms/update >/dev/null 2>&1
-    fi
-
-    if [ ! -e "/storage/.please_resize_me" ]
-    then
-      /usr/bin/busybox mkdir -p "$UPDATE_ROOT" >/dev/null 2>&1
-      mount --bind /storage/roms/update "$UPDATE_ROOT" >/dev/null 2>&1
-    fi
-  fi
-}
-
 # Make last bootloader label (installer, live, run etc.) as the new default
 update_bootmenu() {
   local crnt_default
@@ -795,18 +752,6 @@ check_out_of_space() {
 do_cleanup() {
   StartProgress spinner "Cleaning up... "
 
-  if mountpoint -q /storage/roms; then
-    umount /storage/roms &>/dev/null
-  fi
-
-  if mountpoint -q /storage; then
-    umount /storage &>/dev/null
-  fi
-
-  if mountpoint -q /update; then
-    umount /update &>/dev/null
-  fi
-
   if [ -d $UPDATE_ROOT/.tmp/mnt ]; then
     if mountpoint -q $UPDATE_ROOT/.tmp/mnt ; then
       # busybox umount deletes loop device automatically
@@ -820,10 +765,16 @@ do_cleanup() {
   [ -f "$UPDATE_IMG_GZ" ] && rm -f "$UPDATE_IMG_GZ" &>/dev/null
   [ -f "$UPDATE_IMG" ] && rm -f "$UPDATE_IMG" &>/dev/null
 
-  rm -rf $UPDATE_ROOT/[0-9a-zA-Z]* &>/dev/null
-  rm -f  $UPDATE_ROOT/* &>/dev/null
-  rm -f  $UPDATE_ROOT/.nocheck $UPDATE_ROOT/.nocompat &>/dev/null
-  rm -rf $UPDATE_ROOT/.tmp &>/dev/null
+  rm -rf $UPDATE_ROOT/.[0-9a-zA-Z]* &>/dev/null
+  rm -rf  $UPDATE_ROOT/* &>/dev/null
+
+  if mountpoint -q /storage; then
+    umount /storage &>/dev/null
+  fi
+
+  if mountpoint -q /update; then
+    umount /update &>/dev/null
+  fi
 
   sync
 
@@ -1112,8 +1063,6 @@ prepare_sysroot() {
   if [ ! -f "/sysroot/storage/.configured" ]
   then
     echo -ne "\033[1000H\033[2K==> Initializing system, please wait.." >/dev/console
-  else
-    echo -ne "\033[1000H\033[2K==> Loading, please wait.." >/dev/console
   fi
 }
 
@@ -1145,36 +1094,6 @@ check_amlogic_dtb() {
   fi
 }
 
-# create pipe and save original descriptors
-create_output_pipe() {
-  # save original stdout and stderr descriptors
-  exec 4>&1
-  exec 5>&2
-
-  # create pipe and use it with tee
-  mknod /tmp/output_pipe p
-  tee </tmp/output_pipe /dev/init.log &
-  TEE_PID=$!
-}
-
-# redirect stdout and stderr
-redirect_output_to_pipe() {
-  exec 1>/tmp/output_pipe
-  exec 2>/tmp/output_pipe
-}
-
-# restore original descriptors
-redirect_output_to_screen() {
-  exec 1>&4
-  exec 2>&5
-}
-
-# delete descriptor
-delete_descriptors() {
-  exec 4>&-
-  exec 5>&-
-}
-
 # Do init tasks to bring up system
 
 # run platform_init script if exists
@@ -1183,11 +1102,8 @@ if [ -f "./platform_init" ]; then
 fi
 
 # clear screen and hide cursor
-clear
+clear >/dev/console
 hidecursor
-
-create_output_pipe
-redirect_output_to_pipe
 
 # parse command line arguments
 for arg in $(cat /proc/cmdline); do
@@ -1327,7 +1243,6 @@ for BOOT_STEP in \
     load_splash \
     mount_sysroot \
     mount_storage \
-    mount_games \
     check_update \
     prepare_sysroot \
     check_amlogic_dtb; do
@@ -1395,10 +1310,6 @@ else
   rm -f /sysroot/dev/init.log
   rm -f /sysroot/storage/init.log
 fi
-
-# restore original descriptors and delete descriptors
-redirect_output_to_screen
-delete_descriptors
 
 # switch to new sysroot and start real init
 exec /usr/bin/busybox switch_root /sysroot /usr/lib/systemd/systemd $INIT_ARGS $INIT_UNIT

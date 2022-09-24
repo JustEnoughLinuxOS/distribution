@@ -14,9 +14,8 @@ makeinstall_target() {
   cd ${PKG_BUILD}
   LIBROOT="${ROOT}/build.${DISTRO}-${DEVICE}.arm/image/system/"
   if [ "${ARCH}" = "aarch64" ]; then
-    mkdir -p ${INSTALL}/usr/lib32/pulseaudio
-    rsync -l ${LIBROOT}/usr/lib/* ${INSTALL}/usr/lib32 >/dev/null 2>&1
-    rsync -l ${LIBROOT}/usr/lib/pulseaudio/* ${INSTALL}/usr/lib32/pulseaudio >/dev/null 2>&1
+    mkdir -p ${INSTALL}/usr/lib32
+    rsync -al ${LIBROOT}/usr/lib/* ${INSTALL}/usr/lib32 >/dev/null 2>&1
     chmod -f +x ${INSTALL}/usr/lib32/* || :
   fi
   mkdir -p ${INSTALL}/usr/lib
@@ -25,4 +24,8 @@ makeinstall_target() {
   mkdir -p "${INSTALL}/etc/ld.so.conf.d"
   echo "/usr/lib32" > "${INSTALL}/etc/ld.so.conf.d/arm-lib32.conf"
   echo "/usr/lib32/pulseaudio" >"${INSTALL}/etc/ld.so.conf.d/arm-lib32-pulseaudio.conf"
+  if [ -d "${LIBROOT}/usr/lib/dri" ]
+  then
+    echo "/usr/lib32/dri" >"${INSTALL}/etc/ld.so.conf.d/arm-lib32-dri.conf"
+  fi
 }

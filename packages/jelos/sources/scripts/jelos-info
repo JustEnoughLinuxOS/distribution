@@ -47,16 +47,26 @@ declare -a CF MF
 CNTR=0
 for CPUFREQ in /sys/devices/system/cpu/cpufreq/*
 do
+  if [[ "${CPUFREQ}" =~ boost ]]
+  then
+    continue
+  fi
   if [ "${CNTR}" -eq 0 ]
   then
     CF+=("CURRENT FREQUENCY:")
     MF+=("MAXIMUM FREQUENCY:")
   fi
-  CF+=("CORES $(cat ${CPUFREQ}/related_cpus | awk '{print $1"-"$NF}'): $(( $(cat ${CPUFREQ}/scaling_cur_freq  | sort | tail -n 1) / 1000))MHz")
-  MF+=("CORES $(cat ${CPUFREQ}/related_cpus | awk '{print $1"-"$NF}'): $(( $(cat ${CPUFREQ}/scaling_max_freq | sort | tail -n 1) / 1000))MHz")
+  RELCPUS=$(cat ${CPUFREQ}/related_cpus)
+  if [ "${#RELCPUS}" -gt 1 ]
+  then
+    FIELD="$(cat ${CPUFREQ}/related_cpus 2>/dev/null | awk '{print $1"-"$NF}')"
+  else
+    FIELD="$(cat ${CPUFREQ}/related_cpus)"
+  fi
+  CF+=("CORES ${FIELD}: $(( $(cat ${CPUFREQ}/scaling_cur_freq | sort | tail -n 1) / 1000))MHz")
+  MF+=("CORES ${FIELD}: $(( $(cat ${CPUFREQ}/scaling_max_freq | sort | tail -n 1) / 1000))MHz")
   CNTR=$(( CNTR + 1 ))
 done
-
 
 # temperature
 # Unit: millidegree Celsius
@@ -74,13 +84,14 @@ if test -n "${BATT}"
 then
     echo "BATTERY INFORMATION:"
     echo "BATTERY REMAINING: ${BATT}%"
-    if [ -e "/sys/class/power_supply/bat/health" ]
+    BATPATH="/sys/class/power_supply/$(ls /sys/class/power_supply/ | grep -i bat | tail -n 1)"
+    if [ -e "${BATPATH}/health" ]
     then
-      echo "BATTERY HEALTH: $(cat /sys/class/power_supply/bat/health)"
+      echo "BATTERY HEALTH: $(cat ${BATPATH}/health)"
     fi
-    if [ -e "/sys/class/power_supply/bat/status" ]
+    if [ -e "${BATPATH}/status" ]
     then
-      echo "BATTERY STATE: $(cat /sys/class/power_supply/bat/status)"
+      echo "BATTERY STATE: $(cat ${BATPATH}/status)"
     fi
 fi
 echo "CPU INFORMATION:"

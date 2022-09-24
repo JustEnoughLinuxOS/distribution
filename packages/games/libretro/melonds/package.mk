@@ -4,7 +4,6 @@
 PKG_NAME="melonds"
 PKG_VERSION="490a66a5834e23304addc9b16a2f95da6db9f061"
 PKG_REV="1"
-PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://git.libretro.com/libretro/melonDS"
 PKG_URL="$PKG_SITE.git"
@@ -25,15 +24,19 @@ fi
 pre_make_target() {
 
   cd ${PKG_BUILD}
-  rm CMakeLists.txt
-  
-  if [[ "${DEVICE}" =~ RG351 ]]
+  if [ -e "CMakeLists.txt" ]
   then
-    PKG_MAKE_OPTS_TARGET=" platform=odroidgoa"
-  elif [[ "${DEVICE}" =~ RG552 ]]
-  then
-    PKG_MAKE_OPTS_TARGET=" platform=RK3399"
+    rm CMakeLists.txt
   fi
+
+  case ${DEVICE} in
+    RG351P|RG351V|RG351MP)
+      PKG_MAKE_OPTS_TARGET=" platform=odroidgoa"
+    ;;
+    RG552)
+      PKG_MAKE_OPTS_TARGET=" platform=RK3399"
+    ;;
+  esac
 }
 
 makeinstall_target() {

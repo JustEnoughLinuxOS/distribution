@@ -2,7 +2,7 @@
 # Copyright (C) 2021-present 351ELEC (https://github.com/351ELEC)
 
 PKG_NAME="retroarch"
-PKG_VERSION="e1a139ec0f26aed87c1ff9042e733e2c4b1df39b"
+PKG_VERSION="ab57d3cab7d870b5dd55ddf9d9c584775bcdf03d"
 PKG_SITE="https://github.com/libretro/RetroArch"
 PKG_URL="${PKG_SITE}.git"
 PKG_LICENSE="GPLv3"
@@ -19,6 +19,9 @@ pre_configure_target() {
 				--enable-udev \
 				--disable-opengl1 \
 				--disable-opengl \
+				--disable-opengles \
+				--disable-opengles3 \
+				--disable-opengles3_2 \
 				--disable-wayland \
 				--disable-x11 \
 				--enable-zlib \
@@ -31,20 +34,42 @@ pre_configure_target() {
 
   case ${ARCH} in
     arm)
-      PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-      PKG_CONFIGURE_OPTS_TARGET+=" --enable-neon --enable-opengles --enable-opengles3 --enable-opengles3_2 --enable-kms --disable-mali_fbdev"
+      PKG_CONFIGURE_OPTS_TARGET+=" --enable-neon"
     ;;
     aarch64)
-      PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-      PKG_CONFIGURE_OPTS_TARGET+=" --disable-neon --enable-opengles --enable-opengles3 --enable-opengles3_2 --enable-kms --disable-mali_fbdev"
+      PKG_CONFIGURE_OPTS_TARGET+=" --disable-neon"
     ;;
     *)
-      PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd vulkan-loader vulkan-headers"
-      PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengl --enable-vulkan --enable-vulkan_display"
   esac
 
+  if [ "${DISPLAYSERVER}" = "wl" ]; then
+    PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER}"
+    PKG_CONFIGURE_OPTS_TARGET+=" --enable-wayland"
+  fi
+
+  if [ ! "${OPENGL}" = "no" ]; then
+      PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+      PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengl"
+  else
+      PKG_CONFIGURE_OPTS_TARGET+=" --disable-opengl"
+  fi
+
+  if [ "${OPENGLES_SUPPORT}" = yes ] && \
+     [ ! "${ARCH}" = "x86_64" ]; then
+      PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+      PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengles --enable-opengles3 --enable-opengles3_2 --enable-kms"
+  else
+      PKG_CONFIGURE_OPTS_TARGET+=" --disable-opengles --disable-opengles3 --disable-opengles3_2"
+  fi
+
+  if [ "${VULKAN_SUPPORT}" = "yes" ]
+  then
+      PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
+      PKG_CONFIGURE_OPTS_TARGET+=" --enable-vulkan --enable-vulkan_display"
+  fi
+
   case ${DEVICE} in
-    RG351P|RG552)
+    RG351P)
       PKG_DEPENDS_TARGET+=" librga libgo2"
       PKG_CONFIGURE_OPTS_TARGET+=" --enable-odroidgo2"
     ;;
@@ -63,49 +88,45 @@ make_target() {
 }
 
 makeinstall_target() {
-  if [ "${ARCH}" == "aarch64" ]; then
-    mkdir -p ${INSTALL}/usr/bin
-    cp ${PKG_BUILD}/retroarch ${INSTALL}/usr/bin
-    cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/retroarch-*/.install_pkg/usr/bin/retroarch ${INSTALL}/usr/bin/retroarch32
+  mkdir -p ${INSTALL}/usr/bin
+  cp ${PKG_BUILD}/retroarch ${INSTALL}/usr/bin
+  mkdir -p ${INSTALL}/usr/share/retroarch/filters
 
-    mkdir -p ${INSTALL}/usr/share/retroarch/filters
-    cp -rvP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/retroarch-*/.install_pkg/usr/share/retroarch/filters/* ${INSTALL}/usr/share/retroarch/filters
+  case ${ARCH} in
+    aarch64)
+      cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/retroarch-*/.install_pkg/usr/bin/retroarch ${INSTALL}/usr/bin/retroarch32
+      cp -rvP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/retroarch-*/.install_pkg/usr/share/retroarch/filters/* ${INSTALL}/usr/share/retroarch/filters
 
-    mkdir -p ${INSTALL}/etc
-    cp ${PKG_BUILD}/retroarch.cfg ${INSTALL}/etc
+    ;;
+  esac
 
-    mkdir -p ${INSTALL}/usr/share/retroarch/filters/64bit/video
-    cp ${PKG_BUILD}/gfx/video_filters/*.so ${INSTALL}/usr/share/retroarch/filters/64bit/video
-    cp ${PKG_BUILD}/gfx/video_filters/*.filt ${INSTALL}/usr/share/retroarch/filters/64bit/video
+  mkdir -p ${INSTALL}/etc
+  cp ${PKG_BUILD}/retroarch.cfg ${INSTALL}/etc
 
-    mkdir -p ${INSTALL}/usr/share/retroarch/filters/64bit/audio
-    cp ${PKG_BUILD}/libretro-common/audio/dsp_filters/*.so ${INSTALL}/usr/share/retroarch/filters/64bit/audio
-    cp ${PKG_BUILD}/libretro-common/audio/dsp_filters/*.dsp ${INSTALL}/usr/share/retroarch/filters/64bit/audio
+  mkdir -p ${INSTALL}/usr/share/retroarch/filters/64bit/video
+  cp ${PKG_BUILD}/gfx/video_filters/*.so ${INSTALL}/usr/share/retroarch/filters/64bit/video
+  cp ${PKG_BUILD}/gfx/video_filters/*.filt ${INSTALL}/usr/share/retroarch/filters/64bit/video
 
-    # General configuration
-    mkdir -p ${INSTALL}/usr/config/retroarch/
-    if [ -d "${PKG_DIR}/sources/${DEVICE}" ]; then
-		cp -rf ${PKG_DIR}/sources/${DEVICE}/* ${INSTALL}/usr/config/retroarch/
-	else
-		cp -rf ${PKG_DIR}/sources/* ${INSTALL}/usr/config/retroarch/
-	fi
+  mkdir -p ${INSTALL}/usr/share/retroarch/filters/64bit/audio
+  cp ${PKG_BUILD}/libretro-common/audio/dsp_filters/*.so ${INSTALL}/usr/share/retroarch/filters/64bit/audio
+  cp ${PKG_BUILD}/libretro-common/audio/dsp_filters/*.dsp ${INSTALL}/usr/share/retroarch/filters/64bit/audio
+
+  # General configuration
+  mkdir -p ${INSTALL}/usr/config/retroarch/
+  if [ -d "${PKG_DIR}/sources/${DEVICE}" ]; then
+    cp -rf ${PKG_DIR}/sources/${DEVICE}/* ${INSTALL}/usr/config/retroarch/
   else
-    mkdir -p ${INSTALL}/usr/bin
-    cp ${PKG_BUILD}/retroarch ${INSTALL}/usr/bin
-
-    mkdir -p ${INSTALL}/usr/share/retroarch/filters/32bit/video
-    cp ${PKG_BUILD}/gfx/video_filters/*.so ${INSTALL}/usr/share/retroarch/filters/32bit/video
-    cp ${PKG_BUILD}/gfx/video_filters/*.filt ${INSTALL}/usr/share/retroarch/filters/32bit/video
-
-    mkdir -p ${INSTALL}/usr/share/retroarch/filters/32bit/audio
-    cp ${PKG_BUILD}/libretro-common/audio/dsp_filters/*.so ${INSTALL}/usr/share/retroarch/filters/32bit/audio
-    cp ${PKG_BUILD}/libretro-common/audio/dsp_filters/*.dsp ${INSTALL}/usr/share/retroarch/filters/32bit/audio
+    echo "Configure retroarch for ${DEVICE}"
+    exit 1
   fi
 }
 
 post_install() {
   mkdir -p ${INSTALL}/etc/retroarch-joypad-autoconfig
-  cp -r ${PKG_DIR}/gamepads/device/${DEVICE}/* ${INSTALL}/etc/retroarch-joypad-autoconfig
+  if [ -d "${PKG_DIR}/gamepads/device/${DEVICE}" ]
+  then
+    cp -r ${PKG_DIR}/gamepads/device/${DEVICE}/* ${INSTALL}/etc/retroarch-joypad-autoconfig ||:
+  fi
 
   enable_service tmp-cores.mount
   enable_service tmp-joypads.mount

@@ -24,7 +24,7 @@ fi
 
 PKG_BASEOS="plymouth-lite grep wget libjpeg-turbo util-linux xmlstarlet bluetool gnupg gzip patchelf \
             imagemagick terminus-font vim bash pyudev dialog six git dbus-python coreutils miniupnpc \
-            nss-mdns avahi alsa-ucm-conf MC fbgrab modules"
+            nss-mdns avahi alsa-ucm-conf MC fbgrab modules system-utils"
 
 PKG_UI="emulationstation es-themes"
 
@@ -32,7 +32,7 @@ PKG_SOFTWARE=""
 
 PKG_COMPAT=""
 
-PKG_TOOLS="i2c-tools rclone jslisten evtest textviewer tailscale"
+PKG_TOOLS="i2c-tools rclone jslisten evtest tailscale"
 
 PKG_MULTIMEDIA="ffmpeg mpv vlc"
 
@@ -41,20 +41,11 @@ PKG_EXPERIMENTAL=""
 ### Project specific variables
 case "${PROJECT}" in
   Rockchip)
-    PKG_BASEOS+=" system-utils"
     PKG_EMUS+=" retropie-shaders"
     PKG_COMPAT+=" lib32"
   ;;
   PC)
     PKG_BASEOS+=" installer"
-  ;;
-esac
-
-### Device specific variables
-case "${DEVICE}" in
-  RG552|RG503|RG353P|RG351P|RG351V|RG351MP)
-    PKG_SOFTWARE+=" emulators gamesupport"
-    PKG_TOOLS+=" 351files"
   ;;
 esac
 
@@ -152,6 +143,26 @@ EOF
   if [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
   then
     sed -i "s#.integerscale=1#.integerscale=0#g" ${INSTALL}/usr/config/system/configs/system.cfg
+  fi
+
+  if [[ "${DEVICE}" =~ handheld ]]
+  then
+    sed -i "s#fstrim.enabled=0#fstrim.enabled=1#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#3do.cpugovernor=performance#3do.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#arcade.cpugovernor=performance#arcade.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#atarijaguar.cpugovernor=performance#atarijaguar.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#atomiswave.cpugovernor=performance#atomiswave.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#dreamcast.cpugovernor=performance#dreamcast.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#j2me.cpugovernor=performance#j2me.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#mame.cpugovernor=performance#mame.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#n64.cpugovernor=performance#n64.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#naomi.cpugovernor=performance#naomi.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#nds.cpugovernor=performance#nds.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#pcfx.cpugovernor=performance#pcfx.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#pc.cpugovernor=performance#pc.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#psp.cpugovernor=performance#psp.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#pspminis.cpugovernor=performance#pspminis.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#virtualboy.cpugovernor=performance#virtualboy.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
   fi
 
   ### Defaults for non-main builds.

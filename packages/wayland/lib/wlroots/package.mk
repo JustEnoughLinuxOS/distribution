@@ -7,7 +7,7 @@ PKG_SHA256="8bb791aed9405abc20253c570de1a3b7af91ad65bee2b60293fbbab27ea62c8d"
 PKG_LICENSE="MIT"
 PKG_SITE="https://gitlab.freedesktop.org/wlroots/wlroots/"
 PKG_URL="https://gitlab.freedesktop.org/wlroots/wlroots/-/archive/${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain libinput libxkbcommon pixman libdrm wayland wayland-protocols seatd"
+PKG_DEPENDS_TARGET="toolchain libinput libxkbcommon pixman libdrm wayland wayland-protocols seatd xorg-server"
 PKG_LONGDESC="A modular Wayland compositor library"
 
 configure_package() {
@@ -18,7 +18,7 @@ configure_package() {
 }
 
 PKG_MESON_OPTS_TARGET="-Dxcb-errors=disabled \
-                       -Dxwayland=disabled \
+                       -Dxwayland=enabled \
                        -Dexamples=false \
                        -Drenderers=gles2"
 

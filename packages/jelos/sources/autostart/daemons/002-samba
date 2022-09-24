@@ -2,3 +2,6 @@ STATE=$(get_setting samba.enabled)
 SVC="samba"
 CONF="smb.conf"
 DAEMONS=("nmbd" "smbd")
+
+mkdir -p /run/${SVC}
+ln -s /etc/${SVC}/${CONF} /run/${SVC}/${CONF}

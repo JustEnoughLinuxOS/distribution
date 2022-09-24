@@ -17,18 +17,15 @@ then
   EXCLUDE="--exclude=configs"
 fi
 
-rsync -a --delete ${EXCLUDE} /usr/config/system/ /storage/.config/system/ &
-rsync -a --ignore-existing /usr/config/game /storage/.config/ &
-rsync -a /usr/config/modules /storage/.config/ &
+rsync -a --delete ${EXCLUDE} /usr/config/system/ /storage/.config/system/
+rsync -a --ignore-existing /usr/config/game /storage/.config/
+rsync -a /usr/config/modules /storage/.config/
 
 if [ ! -L "/storage/.config/emulationstation/resources/logo.png" ]
 then
   rm -f /storage/.config/emulationstation/resources/logo.png ||:
   ln -sf /usr/config/splash/splash.png /storage/.config/emulationstation/resources/logo.png
 fi
-
-### Update add-ons and themes
-wait < <(jobs -p)
 
 cp -f /usr/config/modules/gamelist.xml /storage/.config/modules
 cp -f /usr/config/retroarch/retroarch-core-options.cfg /storage/.config/retroarch/retroarch-core-options.cfg
@@ -67,7 +64,8 @@ do
   ln -s /usr/config/emulationstation/${es_cfg} /storage/.config/emulationstation/${es_cfg}
 done
 
-### Safe to make changes below this line.
+# Default modules need to be updated to use the new stop/start ui function.
+rsync -av /usr/config/modules/* /storage/.config/modules/
 
 # Swap es_input back to a writeable file so external controller configuration works properly.
 if [ -L "/storage/.config/emulationstation/es_input.cfg" ]
@@ -76,12 +74,3 @@ then
   cp -f /usr/config/emulationstation/es_input.cfg /storage/.config/emulationstation/es_input.cfg
 fi
 
-# Re-introduce overlayfs for retroarch.
-sed -i 's#^overlay_directory.*$#overlay_directory = "/tmp/overlays"#g' /storage/.config/retroarch/retroarch.cfg
-sed -i 's#^video_shader_dir.*$#video_shader_dir = "/tmp/shaders"#g' /storage/.config/retroarch/retroarch.cfg
-sed -i 's#^joypad_autoconfig_dir.*$#joypad_autoconfig_dir = "/tmp/joypads"#g' /storage/.config/retroarch/retroarch.cfg
-sed -i 's#^cheat_database_path.*$#cheat_database_path = "/tmp/database/cht"#g' /storage/.config/retroarch/retroarch.cfg
-sed -i 's#^content_database_path.*$#content_database_path = "/tmp/database/rdb"#g' /storage/.config/retroarch/retroarch.cfg
-sed -i 's#^assets_directory.*$#assets_directory = "/tmp/assets"#g' /storage/.config/retroarch/retroarch.cfg
-sed -i 's#^libretro_directory.*$#libretro_directory = "/tmp/cores"#g' /storage/.config/retroarch/retroarch.cfg
-sed -i 's#^libretro_info_path.*$#libretro_info_path = "/tmp/cores"#g' /storage/.config/retroarch/retroarch.cfg

@@ -14,6 +14,7 @@ post_install() {
   mkdir -p ${INSTALL}/usr/bin
     cp ${PKG_DIR}/scripts/installer ${INSTALL}/usr/bin
     sed -e "s/@DISTRONAME@/${DISTRONAME}/g" \
+        -e "s/@EXTRA_CMDLINE@/${EXTRA_CMDLINE}/g" \
         -i  ${INSTALL}/usr/bin/installer
 
   mkdir -p ${INSTALL}/etc

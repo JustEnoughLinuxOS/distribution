@@ -45,7 +45,14 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
 fi
 
 pre_configure_target() {
-  PKG_MAKE_OPTS_TARGET+=" -C yabause/src/libretro platform=rockpro64 HAVE_NEON=0"
+  case ${PROJECT} in
+    Rockchip)
+      PKG_MAKE_OPTS_TARGET+=" -C yabause/src/libretro platform=rockpro64 HAVE_NEON=0"
+    ;;
+    *)
+      PKG_MAKE_OPTS_TARGET+=" -C yabause/src/libretro FORCE_GLES=1"
+    ;;
+  esac
 }
 
 makeinstall_target() {

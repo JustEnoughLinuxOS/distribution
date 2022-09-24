@@ -71,7 +71,7 @@ pulseaudio_sink_unload() {
     fi
 
     # Restore ALSA Master volume to 100%
-      amixer -q set ${MIXER},0 ${RR_AUDIO_VOLUME}% unmute >/dev/null 2>&1
+      amixer -M -q set ${MIXER},0 ${RR_AUDIO_VOLUME}% unmute >/dev/null 2>&1
       echo "Set-Audio: ALSA mixer restore volume to ${RR_AUDIO_VOLUME}%"
   fi
   systemctl stop pulseaudio >/dev/null 2>&1

@@ -12,7 +12,7 @@ PKG_TOOLCHAIN="make"
 GET_HANDLER_SUPPORT="git"
 
 if [ ! "${OPENGL}" = "no" ]; then
-  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu"
 fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then

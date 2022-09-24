@@ -3,7 +3,7 @@
 
 PKG_NAME="mupen64plussa-video-gliden64"
 PKG_VERSION="2973f5351b6326ca588b60521522df34ed7a426e"
-PKG_ARCH="any"
+PKG_ARCH="aarch64"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/gonetz/GLideN64"
 PKG_URL="${PKG_SITE}.git"

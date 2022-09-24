@@ -5,10 +5,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 . /etc/profile
-source /usr/bin/env.sh
-clear >/dev/console
-systemctl stop emustation
-message_stream "Cleaning ._ files from /storage/roms"
+clear
+echo "Cleaning ._ files from /storage/roms"
 find /storage/roms -iname '._*' -exec rm -rf {} \;
-clear >/dev/console
-systemctl start emustation
+clear

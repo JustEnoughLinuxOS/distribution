@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="flycast"
-PKG_VERSION="7457db8bba3277dcc9b4ec0c3556847f5082a455"
+PKG_VERSION="aa97a6d64fb47d3ce0febaa575b26d975dd916e4"
 PKG_SITE="https://github.com/flyinghead/flycast"
 PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain libzip"
@@ -20,7 +20,7 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
 			  -DUSE_GLES=ON"
 fi
 
-if [ "${ARCH}" = "x86_64" ]
+if [ "${VULKAN_SUPPORT}" = "yes" ]
 then
   PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
   PKG_CMAKE_OPTS_TARGET+=" -DUSE_VULKAN=ON"
@@ -36,11 +36,16 @@ pre_configure_target() {
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
-  if [ "${TARGET_ARCH}" = "aarch64" ]
-  then
-    cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/flycast-*/.install_pkg/usr/lib/libretro/flycast32_libretro.so ${INSTALL}/usr/lib/libretro
-    cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast_libretro.so
-  else
-    cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast32_libretro.so
-  fi
+  case ${TARGET_ARCH} in
+    aarch64)
+      cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/flycast-*/.install_pkg/usr/lib/libretro/flycast32_libretro.so ${INSTALL}/usr/lib/libretro
+      cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast_libretro.so
+    ;;
+    arm)
+      cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast32_libretro.so
+    ;;
+    *)
+      cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast_libretro.so
+    ;;
+  esac
 }

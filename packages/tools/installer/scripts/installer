@@ -276,16 +276,16 @@ PROMPT 0
 
 LABEL linux
  KERNEL /KERNEL
- APPEND boot=UUID=$UUID_SYSTEM disk=UUID=$UUID_STORAGE $SYSLINUX_PARAMETERS quiet
+ APPEND boot=UUID=$UUID_SYSTEM disk=UUID=$UUID_STORAGE $SYSLINUX_PARAMETERS @EXTRA_CMDLINE@
 EOF
 
     cat << EOF > $TMPDIR/part1/EFI/BOOT/grub.cfg
 set timeout="0"
-set default="LibreELEC"
+set default="${DISTRO}"
 
-menuentry "LibreELEC" {
+menuentry "${DISTRO}" {
 	search --set -f /KERNEL
-	linux /KERNEL boot=UUID=$UUID_SYSTEM disk=UUID=$UUID_STORAGE quiet
+	linux /KERNEL boot=UUID=$UUID_SYSTEM disk=UUID=$UUID_STORAGE @EXTRA_CMDLINE@
 }
 EOF
 

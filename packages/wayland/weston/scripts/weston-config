@@ -11,5 +11,5 @@ if [ ! -d "$XDG_RUNTIME_DIR" ]; then
 fi
 
 if [ ! -f /storage/.config/weston.ini ]; then
-  cp /usr/share/weston/weston.ini /storage/.config/weston.ini
+  cp /usr/share/weston/kiosk.ini /storage/.config/weston.ini
 fi

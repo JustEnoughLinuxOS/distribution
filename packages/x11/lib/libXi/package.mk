@@ -23,6 +23,10 @@ PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared \
                            --without-asciidoc \
                            --with-gnu-ld"
 
+pre_configure_target() {
+  TARGET_LDFLAGS="${LDFLAGS} -lXext"
+}
+
 post_configure_target() {
   libtool_remove_rpath libtool
 }

@@ -15,7 +15,7 @@ PKG_TOOLCHAIN="autotools"
 
 if [ "$DISPLAYSERVER" = "x11" ]; then
   DISPLAYSERVER_LIBVA="--enable-x11 --disable-wayland"
-elif [ "$DISPLAYSERVER" = "weston" ]; then
+elif [ "$DISPLAYSERVER" = "wl" ]; then
   DISPLAYSERVER_LIBVA="--disable-x11 --enable-wayland"
 else
   DISPLAYSERVER_LIBVA="--disable-x11 --disable-wayland"

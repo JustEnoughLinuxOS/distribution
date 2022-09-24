@@ -1,0 +1,47 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+if [ $# -eq 0 ] || [ "$1" == "boot" ]
+then
+  PROFILE=$(get_setting system.overclock)
+else
+  PROFILE=$1
+fi
+
+### Default clocks when not using OC.
+WATTS="12000"
+
+case ${PROFILE} in
+  2w)
+    WATTS="2000"
+  ;;
+  4w)
+    WATTS="4000"
+  ;;
+  6w)
+    WATTS="6000"
+  ;;
+  8w)
+    WATTS="8000"
+  ;;
+  10w)
+    WATTS="10000"
+  ;;
+  12w)
+    WATTS="12000"
+  ;;
+  14w)
+    WATTS="14000"
+  ;;
+  16w)
+    WATTS="16000"
+  ;;
+  18w)
+    WATTS="18000"
+  ;;
+esac
+
+ryzenadj --tctl-temp=97 --stapm-limit=${WATTS} --fast-limit=${WATTS} --stapm-time=500 --slow-limit=${WATTS} --slow-time=30 --vrmmax-current=70000

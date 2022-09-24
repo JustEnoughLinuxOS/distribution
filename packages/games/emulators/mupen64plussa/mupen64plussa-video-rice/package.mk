@@ -4,7 +4,7 @@
 PKG_NAME="mupen64plussa-video-rice"
 PKG_VERSION="51582f9e62082f2937a17ac3acfaab08cb7f46ef"
 PKG_SHA256="e72f1c865cb4f7fff4691eaccbdd23c26638e3e2205ee7bceca9e3a33ada6e73"
-PKG_ARCH="any"
+PKG_ARCH="aarch64"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/mupen64plus/mupen64plus-video-rice"
 PKG_URL="https://github.com/mupen64plus/mupen64plus-video-rice/archive/${PKG_VERSION}.tar.gz"
