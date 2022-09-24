@@ -58,7 +58,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_rtmp_RTMP_Init=yes \
                            --without-egd-socket \
                            --enable-thread \
                            --with-random=/dev/urandom \
-                           --with-gnutls \
+                           --without-gnutls \
                            --with-ssl \
                            --without-mbedtls \
                            --without-nss \
@@ -77,5 +77,4 @@ post_makeinstall_target() {
   cp ${PKG_NAME}-config ${TOOLCHAIN}/bin
   sed -e "s:\(['= ]\)/usr:\\1${PKG_ORIG_SYSROOT_PREFIX}/usr:g" -i ${TOOLCHAIN}/bin/${PKG_NAME}-config
   chmod +x ${TOOLCHAIN}/bin/${PKG_NAME}-config
-  ln -sfv $INSTALL/usr/lib/libcurl.so $INSTALL/usr/lib/libcurl-gnutls.so
 }
