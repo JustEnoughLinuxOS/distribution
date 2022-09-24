@@ -1,2 +1,2 @@
-SVC="fstrim.timer"
-DAEMONS=("fstrim")
+SVC="fstrim"
+DAEMONS=("fstrim.timer")
