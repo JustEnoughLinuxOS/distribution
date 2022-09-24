@@ -24,7 +24,7 @@ index c649abaad..7d7ad5551 100644
  
  TAPI boolean TAPIENTRY
 -txfilter_hirestex(uint64 g64crc, uint64 r_crc64, uint16 *palette, GHQTexInfo *info)
-+txfilter_hirestex(uint64 g64crc, Checksum r_crc64, uint16 *palette, N64FormatSize n64FmtSz, GHQTexInfo *info);
++txfilter_hirestex(uint64 g64crc, Checksum r_crc64, uint16 *palette, N64FormatSize n64FmtSz, GHQTexInfo *info)
  {
  	return 0;
  }
