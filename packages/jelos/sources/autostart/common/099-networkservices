@@ -13,7 +13,8 @@ do
     mkdir -p "/storage/.cache/services"
   fi
 
-  if [ -e "/storage/.cache/services/${CONF}" ]
+  if [ -n "${CONF}" ] && \
+     [ -e "/storage/.cache/services/${CONF}" ]
   then
     rm -f "/storage/.cache/services/${CONF}"
   fi

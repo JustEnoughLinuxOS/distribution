@@ -40,6 +40,7 @@ configure_package() {
                       --with-privatelibdir=/usr/lib \
                       --with-sockets-dir=/run/samba \
                       --with-configdir=/run/samba \
+                      --with-static-modules=vfs_widelinks \
                       --with-libiconv=${SYSROOT_PREFIX}/usr \
                       --cross-compile \
                       --cross-answers=${PKG_BUILD}/cache.txt \
