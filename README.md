@@ -1,14 +1,14 @@
 &nbsp;&nbsp;<img src="https://raw.githubusercontent.com/JustEnoughLinuxOS/distribution/dev/distributions/JELOS/logos/jelos-logo.png" width=192>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![Latest Version](https://img.shields.io/github/release/JustEnoughLinuxOS/distribution.svg?color=5998FF&label=latest%20version&style=flat-square)](https://github.com/JustEnoughLinuxOS/distribution/releases/latest) [![Activity](https://img.shields.io/github/commit-activity/m/JustEnoughLinuxOS/distribution?color=5998FF&style=flat-square)](https://github.com/JustEnoughLinuxOS/distribution/commits) [![Pull Requests](https://img.shields.io/github/issues-pr-closed/JustEnoughLinuxOS/distribution?color=5998FF&style=flat-square)](https://github.com/JustEnoughLinuxOS/distribution/pulls) [![Discord Server](https://img.shields.io/discord/948029830325235753?color=5998FF&label=chat&style=flat-square)](https://discord.gg/seTxckZjJy)
 #
-Just Enough Linux Operating System (JELOS) is a simple Linux distribution for ARM and PC based gaming devices.  My goal is to build an operating system that has the features and capabilities that I need, and to have fun building it.
+Just Enough Linux Operating System (JELOS) is a community developed Linux distribution for handheld gaming devices.  Our goal is to produce an operating system that has the features and capabilities that we need, and to have fun as we develop it.
 
 ## Features
 * A 64bit Linux Operating System.
 * An easy to use interface using EmulationStation
 * Provides RetroArch, a variety of cores, Stand Alone Emulators, PortMaster, and ThemeMaster.
-* Supports FAT32, ExFAT, and EXT4 file systems on devices with a second card slot.
+* Supports FAT32, ExFAT, and EXT4 file systems on removable storage (slot/device #2).
 * 2.4GHz and 5GHz 802.11 A/B/G/N/AC WIFI support.
-* Online updates for easy access to stable or development builds.
+* Online update capability for easy access to stable or development builds.
 * Support for the Anbernic WIN600, RG552, RG503, RG353P, RG351P/M, RG351MP, RG351V.
 * Developed by a small, friendly community.
 
@@ -59,7 +59,7 @@ limitations under the License.
 * Reboot the device, and the update will begin automatically.
 
 ## Network Access
-* The username for ssh and samba access is "root".  The root password is generated during every boot, it can be found in the System Settings menu.
+* External services are disabled by default in stable builds.  When enabled, the username for ssh and samba access is "root".  The root password is generated during every boot, it can be found in the System Settings menu.
 
 ## RetroArch Hotkeys
 * Hotkey Enable: Select (Hold)
