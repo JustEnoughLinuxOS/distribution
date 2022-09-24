@@ -6,6 +6,6 @@
 
 if [ "${UI_SERVICE}" = "weston.service" ]
 then
-  sed -i -e "s#[2]\>.*tty0##" -e "s#\>.*dev/tty0##g" /storage/roms/ports/PortMaster.sh
+  sed -i -e "s#/dev/tty0#/dev/tty#" /storage/roms/PortMaster.sh
 fi
 /storage/roms/ports/PortMaster.sh
