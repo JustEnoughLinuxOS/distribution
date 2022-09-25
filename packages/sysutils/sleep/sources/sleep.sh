@@ -54,7 +54,7 @@ case $1 in
     DEVICE_VOLUME=$(get_setting "audio.volume" 2>/dev/null)
     amixer -M set "${DEVICE_AUDIO_MIXER}" ${DEVICE_VOLUME}% 2>&1 >/dev/null
 
-    ### Call the brightness script to set to the last saved value.
-    /usr/lib/autostart/common/006-brightness
+    BRIGHTNESS=$(get_setting system.brightness)
+    echo ${BRIGHTNESS} >/sys/class/backlight/backlight/brightness
   ;;
 esac
