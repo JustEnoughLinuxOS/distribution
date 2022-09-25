@@ -28,6 +28,3 @@ post_makeinstall_target() {
     cp -PR src/udevil $INSTALL/usr/bin
 }
 
-post_install() {
-  enable_service udevil-mount@.service
-}
