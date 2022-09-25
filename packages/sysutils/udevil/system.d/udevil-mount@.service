@@ -1,6 +1,5 @@
 [Unit]
 Description=Udevil mount service
-After=jelos-autostart.service
 
 [Service]
 Type=oneshot
