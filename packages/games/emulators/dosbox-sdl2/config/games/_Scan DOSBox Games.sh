@@ -9,17 +9,15 @@ echo -e $(date -u)" - Script started.\n" >> /tmp/logs/dosbox_scan.log
 
 EE_DEVICE=$(cat /ee_arch)
 
-source /usr/bin/env.sh
 source /etc/profile
 rp_registerAllModules
 
-joy2keyStart
-clear >/dev/console
+clear
 
 #rm "/storage/.config/dosbox/games/*.conf"
 
 function create_launcher() {
-    message_stream "\nAdding $2..." 0
+    echo "\nAdding $2..."
     launcher_name="$1 ($2)"
     cp /storage/.config/dosbox/dosbox-SDL2.conf "/storage/.config/dosbox/games/$launcher_name.conf"
     cat <<EOF >> "/storage/.config/dosbox/games/$launcher_name.conf"
@@ -30,7 +28,7 @@ exit
 EOF
 }
 
-message_stream "Scanning for games...\n" 0
+echo "Scanning for games...\n"
 
 OIFS="$IFS"
 IFS=$'\n'
@@ -42,7 +40,7 @@ do
         do
             echo "Testing (exe) $executable"
             executable_case="$(basename "$executable" | tr '[:lower:]' '[:upper:]')"
-            echo "Case $executable"
+            echo "Case $executable" >> /tmp/logs/dosbox_scan.log
             case "$executable_case" in
                   "SETUP.EXE"    | "INSTALL.EXE"  | "INSTALLER.EXE" | \
                   "APOGEE.BAT"   | "CATALOG.EXE"  | "DEALERS.EXE"   | \
@@ -66,7 +64,6 @@ do
         done
     fi
 done
-message_stream "Restarting EmulationStation...\n" 0
-echo echo "Restarting EmulationStation..." >> /tmp/logs/dosbox_scan.log
-systemctl restart emustation
-clear >/dev/console
+echo "Restarting EmulationStation...\n"
+echo "Restarting EmulationStation..." >> /tmp/logs/dosbox_scan.log
+clear

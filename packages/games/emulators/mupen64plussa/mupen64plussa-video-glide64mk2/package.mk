@@ -4,7 +4,7 @@
 PKG_NAME="mupen64plussa-video-glide64mk2"
 PKG_VERSION="79809753e83180e6bbc3b5b3dc65120fef3e7a43"
 PKG_SHA256="124cf056bed1534a95aee363cf7682095bfe8ef9580461fc26be834b8749ac04"
-PKG_ARCH="any"
+PKG_ARCH="aarch64"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/mupen64plus/mupen64plus-video-glide64mk2"
 PKG_URL="https://github.com/mupen64plus/mupen64plus-video-glide64mk2/archive/${PKG_VERSION}.tar.gz"

@@ -3,6 +3,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2018-present Team CoreELEC (https://coreelec.org)
+# Copyright (C) 2020-present Fewtarius
 
 if [ -e /storage/.please_resize_me ] ; then
   . /usr/lib/coreelec/functions
@@ -20,10 +21,15 @@ if [ -e /storage/.please_resize_me ] ; then
   fi
 
   # get the disk. /storage on 2nd partition
-  PART=$(blkid | awk  'BEGIN {FS=":"} /STORAGE/ {print $1}')
-  DISK=$(echo ${PART} | sed s/p[0-9]//g)
-  PARTNUM=$(echo ${PART} | sed "s#^.*[0-9]p##g")
-
+  PART=$(blkid | awk 'BEGIN {FS=":"} /'$(cat /proc/cmdline | sed -e 's#^.*disk=UUID=##g' -e 's#\ .*$##g')'/ {print $1}')
+  if [ "$(echo ${PART} | awk '/mmcblk/ {print $1}')" ]
+  then
+    DISK=$(echo ${PART} | sed s/p[0-9]//g)
+    PARTNUM=$(echo ${PART} | sed "s#^.*[0-9]p##g")
+  else
+    DISK=$(echo ${PART} | sed s/[0-9]//g)
+    PARTNUM=$(echo ${PART} | sed "s#^.*sd[a-z]##g")
+  fi
   rm -f /storage/.please_resize_me
   sync
 

@@ -4,14 +4,17 @@
 
 . /etc/profile
 
-for service in /usr/lib/autostart/daemons
+for SERVICE in /usr/lib/autostart/daemons/*
 do
+  source ${SERVICE}
+
   if [ ! -d "/storage/.cache/services" ]
   then
     mkdir -p "/storage/.cache/services"
   fi
 
-  if [ -e "/storage/.cache/services/${CONF}" ]
+  if [ -n "${CONF}" ] && \
+     [ -e "/storage/.cache/services/${CONF}" ]
   then
     rm -f "/storage/.cache/services/${CONF}"
   fi

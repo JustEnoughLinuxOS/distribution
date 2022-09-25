@@ -46,62 +46,59 @@ check_space() {
   if [ "${MYSIZE}" -lt "${REQUIRED}" ]
   then
     NEEDED=$(( (${REQUIRED} - ${MYSIZE} ) / 1024 ))
-    echo -e "There is not enough free space available ${VOLNAME} to install this update.  Free up an additional ${NEEDED}MB, or reflash the newer version." >/dev/console
-    echo "Exiting in 5 seconds..." >/dev/console && sleep 5
-    systemctl start emustation &
+    echo -e "There is not enough free space available ${VOLNAME} to install this update.  Free up an additional ${NEEDED}MB, or reflash the newer version."
+    echo "Exiting in 5 seconds..." && sleep 5
     exit 1
   fi
 }
 
-systemctl stop emustation
-clear >/dev/console
-
 ONLINE_STATUS=$(check_network)
 if [ ! "${ONLINE_STATUS}" == true ]
 then
-  echo "System not online, cannot continue..." >/dev/console
-  echo "Exiting in 5 seconds..."  >/dev/console && sleep 5
-  systemctl start emustation &
+  echo "System not online, cannot continue..."
+  echo "Exiting in 5 seconds..."  && sleep 5
   exit 0
 fi
 
-echo -e "=> ${OS_NAME} UPGRADE UTILITY" >/dev/console
+echo -e "=> ${OS_NAME} UPGRADE UTILITY"
 
 
 # Check storage
-check_space size flash boot 2048000
-check_space available .update GAMES 4096000
+check_space size flash boot 2048000 2>/dev/null
+
+if [ "$(mountpoint -q /storage/roms)" ]
+then
+  check_space available .update GAMES 4096000 2>/dev/null
+fi
 
 # Download
 LATEST_RELEASE_TAG=$(curl -H 'Cache-Control: no-cache' -Ls "${GIT_API}/releases" | python -c "import sys, json; print(json.load(sys.stdin)[0]['tag_name'])")
 if [ "${OS_VERSION}" -ge "${LATEST_RELEASE_TAG}" ] && [ ! "${FORCE}" = "1" ]
 then
-  echo "No new updates are available..." >/dev/console
-  echo "Exiting in 5 seconds..." >/dev/console && sleep 5
-  systemctl start emustation &
+  echo "No new updates are available..."
+  echo "Exiting in 5 seconds..." && sleep 5
   exit 0
 fi
 
-echo -e "\nFetching: ${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.${EXTENSION}" >/dev/console
-curl -Lo "${UPDATE_PATH}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.${EXTENSION}" "${GIT_REPO}/releases/download/${LATEST_RELEASE_TAG}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.tar" 2>/dev/console
-echo -e "Fetching: ${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.${EXTENSION}.sha256" >/dev/console
-curl -Lo "${UPDATE_PATH}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.${EXTENSION}.sha256" "${GIT_REPO}/releases/download/${LATEST_RELEASE_TAG}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.tar.sha256" 2>/dev/console
+echo -e "\nFetching: ${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.${EXTENSION}"
+curl -Lo "${UPDATE_PATH}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.${EXTENSION}" "${GIT_REPO}/releases/download/${LATEST_RELEASE_TAG}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.tar" 
+echo -e "Fetching: ${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.${EXTENSION}.sha256"
+curl -Lo "${UPDATE_PATH}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.${EXTENSION}.sha256" "${GIT_REPO}/releases/download/${LATEST_RELEASE_TAG}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.tar.sha256" 
 
-echo -e "\nVerifying download, please wait..." >/dev/console
+echo -e "\nVerifying download, please wait..."
 # Verify
 MYSUM=$(sha256sum ${UPDATE_PATH}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.${EXTENSION} | awk '{print $1}')
 DLSUM=$(cat ${UPDATE_PATH}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.${EXTENSION}.sha256 | awk '{print $1}')
 
 if [ ! "${MYSUM}" == "${DLSUM}" ]
 then
-  echo "Verification failed, cleaning up and exiting..." >/dev/console
+  echo "Verification failed, cleaning up and exiting..."
   rm -f ${UPDATE_PATH}/*
   sleep 5
-  clear >/dev/console
-  systemctl start emustation
+  clear
   exit 1
 else
-  echo "Verification successful..." >/dev/console
+  echo "Verification successful..."
 fi
 
 if [ "${FORCE}" == "1" ]
@@ -109,7 +106,7 @@ then
   set_setting updates.force 0
 fi
 
-echo -e "\nRebooting to complete OS upgrade..." >/dev/console
+echo -e "\nRebooting to complete OS upgrade..."
 sync
 sleep 3
 reboot

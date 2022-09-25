@@ -25,8 +25,8 @@ SUPPORTED_GRP=(
 	"PLATOONL.DAT"
 )
 
-clear >/dev/console
-echo "Scanning for games..." >/dev/console
+clear
+echo "Scanning for games..."
 find_names=()
 for i in "${!SUPPORTED_GRP[@]}"; do
 	if [[ "${i}" != 0 ]]; then
@@ -43,7 +43,7 @@ grp_files=$(find "${BUILDENGINEPATH}" -mindepth 1 -type f \( "${find_names[@]}" 
 # expansion GRP files are named alphabetically later than base game GRP files,
 # meaning we can get by with a simple lexical sort before processing.
 grp_files=$(echo "${grp_files}" | sort)
-echo "Adding games..." >/dev/console
+echo "Adding games..."
 while read -r grp_file; do
 	abs_path=$(dirname "${grp_file}")
 	path=${abs_path#"$BUILDENGINEPATH/"}
@@ -63,5 +63,4 @@ while read -r grp_file; do
 		-- end --
 	EOM
 done <<<"${grp_files}"
-systemctl restart emustation
-clear >/dev/console
+clear

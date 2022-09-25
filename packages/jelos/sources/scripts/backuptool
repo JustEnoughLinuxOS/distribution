@@ -4,6 +4,8 @@
 # Copyright (C) 2020-present Shanti Gilbert (https://github.com/shantigilbert)
 # Copyright (C) 2020 Fewtarius (https://github.com/fewtarius)
 
+. /etc/profile
+
 # NOTE: to customize your backups, create a backuptool.conf file in
 # /storage/.config like this:
 
@@ -49,9 +51,7 @@ fi
 
 case "${1}" in
     "restore")
-        systemctl stop emustation
         unzip -o ${BACKUPFILE} -d /
-        systemctl start emustation
     ;;
     "backup")
         if [ -f ${BACKUPFILE} ]
@@ -61,9 +61,7 @@ case "${1}" in
             mv ${BACKUPFILE} "${BACKUPFOLDER}/${ARCHIVEFILENAME}"
         fi
         [ -f "${BACKUPFILE}" ] && rm "${BACKUPFILE}"
-        [ -z "$2" ] && systemctl stop emustation
         zip -9 -r ${BACKUPFILE} \
         ${COMPRESSLOCATIONS[@]}
-        [ -z "${2}" ] && systemctl start emustation
     ;;
 esac

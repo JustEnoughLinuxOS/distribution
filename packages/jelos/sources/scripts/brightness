@@ -2,14 +2,15 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2020-present Fewtarius
 
+BRIGHTNESS_DEV="$(ls /sys/class/backlight | head -n 1)"
 
-MIN=1
-MAX=$(cat /sys/class/backlight/backlight/max_brightness)
+MIN=5
+MAX=$(cat /sys/class/backlight/${BRIGHTNESS_DEV}/max_brightness)
 if [ "${MAX}" = 255 ]
 then
-  STEP=17
+  STEP=15
 else
-  STEP=6
+  STEP=5
 fi
 
 if [[ -n "$2" ]]; then
@@ -22,37 +23,41 @@ then
   source /etc/profile
 fi
 
-if [ ! -f /sys/class/backlight/backlight/brightness ]
+if [ ! -f /sys/class/backlight/${BRIGHTNESS_DEV}/brightness ]
 then
   echo "ERROR: There is no BRIGHTNESS object to manage."
   exit 1
 fi
 
+round() {
+  awk -v val=$1 'BEGIN{print int((val+5/2)/5) * 5}'
+}
+
 stepUp() {
   getBrightness
   MYBRIGHTNESS=$?
-  NEWBRIGHTNESS=$((${MYBRIGHTNESS}+${STEP}))
+  NEWBRIGHTNESS=$((${MYBRIGHTNESS}+$(round ${STEP})))
   if (( ${NEWBRIGHTNESS} > ${MAX} ))
   then
     NEWBRIGHTNESS=${MAX}
   fi
-  echo "${NEWBRIGHTNESS}" > /sys/class/backlight/backlight/brightness
+  echo "${NEWBRIGHTNESS}" > /sys/class/backlight/${BRIGHTNESS_DEV}/brightness
   set_setting system.brightness ${NEWBRIGHTNESS}
 }
 
 stepDown() {
   getBrightness
   MYBRIGHTNESS=$?
-  NEWBRIGHTNESS=$((${MYBRIGHTNESS}-${STEP}))
+  NEWBRIGHTNESS=$((${MYBRIGHTNESS}-$(round ${STEP})))
   if (( ${NEWBRIGHTNESS} < ${MIN} ))
   then
     NEWBRIGHTNESS=${MIN}
   fi
-  echo "${NEWBRIGHTNESS}" > /sys/class/backlight/backlight/brightness
+  echo "${NEWBRIGHTNESS}" > /sys/class/backlight/${BRIGHTNESS_DEV}/brightness
   set_setting system.brightness ${NEWBRIGHTNESS}
 }
 getBrightness() {
-  local BRIGHTNESS=$(cat /sys/class/backlight/backlight/brightness)
+  local BRIGHTNESS=$(cat /sys/class/backlight/${BRIGHTNESS_DEV}/brightness)
   return ${BRIGHTNESS}
 }
 
@@ -63,6 +68,9 @@ case ${1} in
         ;;
         "down")
           stepDown ${BRIGHTNESS}
+        ;;
+        "device")
+          echo ${BRIGHTNESS_DEV}
         ;;
         *)
 	  getBrightness

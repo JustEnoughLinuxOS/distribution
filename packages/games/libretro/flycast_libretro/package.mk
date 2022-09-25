@@ -48,16 +48,17 @@ pre_configure_target() {
 
 pre_make_target() {
   export BUILD_SYSROOT=${SYSROOT_PREFIX}
-
-  if [[ "${DEVICE}" =~ RG351 ]]
-  then
-    PKG_MAKE_OPTS_TARGET+=" platform=RG351x"
-  elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
-  then
-    PKG_MAKE_OPTS_TARGET+=" platform=RK3566"
-  else
-    PKG_MAKE_OPTS_TARGET+=" platform=${DEVICE}"
-  fi
+  case ${DEVICE} in
+    RG351P|RG351V|RG351MP)
+      PKG_MAKE_OPTS_TARGET+=" platform=RG351x"
+    ;;
+    RG353P|RG503)
+      PKG_MAKE_OPTS_TARGET+=" platform=RK3566"
+    ;;
+    RG552)
+      PKG_MAKE_OPTS_TARGET+=" platform=${DEVICE}"
+    ;;
+  esac
 }
 
 makeinstall_target() {

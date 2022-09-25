@@ -27,7 +27,7 @@ DISTRO="${DISTRO:-JELOS}"
 PROJECT="${PROJECT:-Rockchip}"
 
 # determines TARGET_ARCH, if not forced by user
-ARCH="${ARCH:-arm}"
+ARCH="${ARCH:-aarch64}"
 TARGET_ARCH="${ARCH}"
 
 # include helper functions
@@ -84,13 +84,18 @@ VERBOSE="${VERBOSE:-yes}"
 CCACHE_CACHE_SIZE="20G"
 
 # read local persistent options from $ROOT if available
-if [ -f "${ROOT}/.coreelec/options" ]; then
-  . "${ROOT}/.coreelec/options"
+if [ -f "${ROOT}/.jelos/options" ]; then
+  . "${ROOT}/.jelos/options"
 fi
 
 # read global persistent options from $HOME if available
-if [ -f "${HOME}/.coreelec/options" ]; then
-  . "${HOME}/.coreelec/options"
+if [ -f "${HOME}/.jelos/options" ]; then
+  . "${HOME}/.jelos/options"
+fi
+
+# read global persistent options from ${DOCKER_WORK_DIR} if available
+if [ -f "${DOCKER_WORK_DIR}/.jelos/options" ]; then
+  . "${DOCKER_WORK_DIR}/.jelos/options"
 fi
 
 # overwrite OEM_SUPPORT via commandline

@@ -28,9 +28,3 @@ post_configure_target() {
   sed -i 's/.*PKGLIBDIR.*/#define PKGLIBDIR ""/' include/config.h
 }
 
-post_makeinstall_target() {
-  rm -rf ${INSTALL}/usr/bin
-
-  mkdir -p ${INSTALL}/usr/config
-    cp -PR ${PKG_DIR}/config/modprobe.d ${INSTALL}/usr/config
-}

@@ -1,14 +1,23 @@
-#!/bin/sh
+#!/bin/bash
+
+. /etc/profile
 
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2020-present Shanti Gilbert (https://github.com/shantigilbert)
 # Copyright (C) 2022 Fewtarius (https://github.com/fewtarius)
 
+if [[ "${UI_SERVICE}" =~ ^weston ]]
+then
+  SHADERS='*.slang*'
+else
+  SHADERS='*.glsl*'
+fi
+
 for dir in /tmp/shaders
 do
   if [ -d "${dir}" ]
   then
-    find ${dir} -name '*.glslp' -print0 |
+    find ${dir} -name ${SHADERS} -print0 |
       while IFS= read -r -d '' line; do
       echo ${line#${dir}/},
     done

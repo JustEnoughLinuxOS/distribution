@@ -15,15 +15,15 @@ SYNCPATH="${SYNCPATH:=GAMES}"
 BACKUPPATH="${BACKUPPATH:=/storage/roms}"
 RSYNCOPTSRESTORE="${RSYNCOPTSRESTORE:=-raiv}"
 
-echo -e "=> ${OS_NAME} CLOUD RESTORE UTILITY\n" >/dev/console
+echo -e "=> ${OS_NAME} CLOUD RESTORE UTILITY\n"
 
-echo "Mounting ${MOUNTPATH}" >/dev/console 2>&1
-rclonectl mount ${MOUNTPATH} >/dev/console 2>&1
+echo "Mounting ${MOUNTPATH}" 2>&1
+rclonectl mount ${MOUNTPATH} 2>&1
 
-echo "Restoring data from ${MOUNTPATH}/${SYNCPATH} to ${BACKUPPATH}" >/dev/console 2>&1
-rsync ${RSYNCOPTSRESTORE} --include-from="${CONFIGPATH}/rsync-rules.conf" ${MOUNTPATH}/${SYNCPATH}/ ${BACKUPPATH}/ >/dev/console 2>&1
+echo "Restoring data from ${MOUNTPATH}/${SYNCPATH} to ${BACKUPPATH}" 2>&1
+rsync ${RSYNCOPTSRESTORE} --include-from="${CONFIGPATH}/rsync-rules.conf" ${MOUNTPATH}/${SYNCPATH}/ ${BACKUPPATH}/ 2>&1
 
-echo "Unmounting ${MOUNTPATH}" >/dev/console 2>&1
-rclonectl unmount ${MOUNTPATH} >/dev/console 2>&1
+echo "Unmounting ${MOUNTPATH}" 2>&1
+rclonectl unmount ${MOUNTPATH} 2>&1
 sleep 3
-clear >/dev/console
+clear

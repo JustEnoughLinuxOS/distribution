@@ -22,7 +22,7 @@ done
 ### Lock is a prerequisite for emustation
 rm /var/lock/start.games 2>&1 >>${BOOTLOG}
 touch /var/lock/start.games 2>&1 >>${BOOTLOG}
-${UI_SERVICE} 2>&1 >>${BOOTLOG} &
+systemctl start ${UI_SERVICE} 2>&1 >>${BOOTLOG} &
 
 ### Run common start scripts
 for script in /usr/lib/autostart/common/*
@@ -41,7 +41,7 @@ then
   done
 fi
 
-clear >/dev/console 2>&1 >>${BOOTLOG}
+clear >/dev/console
 
 DEVICE_CPU_GOVERNOR=$(get_setting system.cpugovernor)
 ${DEVICE_CPU_GOVERNOR} 2>&1 >>${BOOTLOG}

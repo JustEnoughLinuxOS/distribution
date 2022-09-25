@@ -6,6 +6,5 @@
 source /etc/profile
 
 jslisten set "killall retroarch32"
-
-set_kill_keys "retroarch32"
+export LIBGL_DRIVERS_PATH="/usr/lib32/dri"
 /usr/bin/retroarch32 --appendconfig /usr/config/retroarch/retroarch32bit-append.cfg

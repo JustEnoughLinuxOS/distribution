@@ -54,5 +54,6 @@ packages/sx05re/experimental/
 release/
 
 .lastbuild
+.jelos
 
 SOURCES

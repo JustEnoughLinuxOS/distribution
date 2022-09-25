@@ -1,29 +1,29 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="glew"
 PKG_VERSION="2.2.0"
-PKG_SHA256="d4fc82893cfb00109578d0a1a2337fb8ca335b3ceccf97b97e5cc7f08e4353e1"
 PKG_LICENSE="BSD"
 PKG_SITE="http://glew.sourceforge.net/"
 PKG_URL="${SOURCEFORGE_SRC}/glew/glew/${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tgz"
 PKG_DEPENDS_TARGET="toolchain libX11"
-PKG_LONGDESC="A cross-platform C/C++ extension loading library."
+PKG_SHORTDESC="GLEW - The OpenGL Extension Wrangler Library"
+PKG_TOOLCHAIN="cmake"
 
-make_target() {
-  make CC="${CC}" LD="${CC}" AR="${AR}" \
-       POPT="${CFLAGS}" LDFLAGS.EXTRA="${LDFLAGS}" \
-       GLEW_DEST="/usr" LIBDIR="/usr/lib" lib/libGLEW.a glew.pc
+pre_configure() {
+  PKG_CMAKE_SCRIPT=${PKG_BUILD}/build/cmake/CMakeLists.txt
 }
 
+pre_configure_target() {
+        PKG_CMAKE_OPTS_TARGET+="        -DBUILD_UTILS=OFF \
+					-DGLEW_REGAL=OFF \
+					-DGLEW_OSMESA=OFF \
+					-DGLEW_X11=ON \
+                                        -DGLEW_EGL=ON \
+                                        -DBUILD_SHARED_LIBS=ON"
+                                        }
+
 makeinstall_target() {
-  mkdir -p ${SYSROOT_PREFIX}/usr/lib
-    cp -PR lib/libGLEW.a ${SYSROOT_PREFIX}/usr/lib
-
-  mkdir -p ${SYSROOT_PREFIX}/usr/lib/pkgconfig
-    cp -PR glew.pc ${SYSROOT_PREFIX}/usr/lib/pkgconfig
-
-  mkdir -p ${SYSROOT_PREFIX}/usr/include
-    cp -PR include/GL ${SYSROOT_PREFIX}/usr/include
+  mkdir -p $INSTALL/usr/lib/
+  cp $PKG_BUILD/lib/libGLEW* $INSTALL/usr/lib/
 }

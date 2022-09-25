@@ -50,8 +50,17 @@
   # Mali GPU family
     MALI_FAMILY="bifrost-g31"
     OPENGLES="libmali"
+    OPENGL="no"
+    VULKAN_SUPPORT="no"
+
     MALI_VERSION="r13p0"
     GRAPHIC_DRIVERS=""
+
+  # Displayserver to use (weston / x11 / no)
+    DISPLAYSERVER="no"
+
+  # Windowmanager to use (fluxbox / weston / no)
+    WINDOWMANAGER="no"
 
   # Define the CPU
     HW_CPU="Rockchip RK3326"
@@ -60,7 +69,7 @@
     EXTRA_CMDLINE="quiet console=tty0 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
     
   # additional packages to install
-  # ADDITIONAL_PACKAGES=""
+    ADDITIONAL_PACKAGES=" emulators gamesupport 351files"
 
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,

@@ -195,7 +195,7 @@ function quit() {
 
 function clear_screen() {
 	$VERBOSE && log "Clearing screen"
-	clear >/dev/console
+	clear
 }
 
 function bluetooth() {
@@ -281,18 +281,24 @@ then
 			fi
 		;;
 		"psx")
-                        jslisten set "duckstationsa"
+                        jslisten set "duckstation-nogui"
 		        if [ "$EMU" = "duckstationsa" ]; then
-            		RUNTHIS='${TBASH} /usr/bin/duckstation.sh "${ROMNAME}"'
+            		RUNTHIS='${TBASH} /usr/bin/start_duckstation.sh "${ROMNAME}"'
         		fi
                 ;;
-                "gamecube")
-                        jslisten set "dolphinsa"
+                "ps2")
+                        jslisten set "-9 pcsx2"
+                        if [ "$EMU" = "pcsx2sa" ]; then
+                        RUNTHIS='${TBASH} /usr/bin/start_pcsx2.sh "${ROMNAME}"'
+                        fi
+                ;;
+                "gamecube"|"wii")
+                        jslisten set "-9 dolphin-emu-nogui"
                         if [ "$EMU" = "dolphinsa" ]; then
-                        RUNTHIS='${TBASH} /usr/bin/dolphin.sh "${ROMNAME}"'
+                        RUNTHIS='${TBASH} /usr/bin/start_dolphin.sh "${ROMNAME}"'
                         fi
 
-;;
+                ;;
 		"mplayer")
 			jslisten set "mpv"
 			RUNTHIS='${TBASH} /usr/bin/mpv_video.sh "${ROMNAME}"'
@@ -312,16 +318,17 @@ else
 	setaudio alsa
 
 
+	RABIN="retroarch"
 	if [[ "${HW_ARCH}" =~ aarch64 ]]
 	then
 		### Check if we need retroarch 32 bits or 64 bits
-		RABIN="retroarch"
 		if [[ "${CORE}" =~ pcsx_rearmed32 ]] || \
 	           [[ "${CORE}" =~ parallel_n64 ]] || \
 	           [[ "${CORE}" =~ gpsp ]] || \
 	           [[ "${CORE}" =~ flycast32 ]]
 		then
-			RABIN="retroarch32"
+                        export LIBGL_DRIVERS_PATH="/usr/lib32/dri"
+			export RABIN="retroarch32"
 		fi
 	fi
 
@@ -336,6 +343,20 @@ else
 			  dos2unix "${1}"
 			  while IFS== read -r key value; do
 			    if [ "$key" == "IWAD" ]; then
+			      ROMNAME="$value"
+			    fi
+			    done < "${1}"
+			fi
+                ;;
+				"quake")
+			# EXT can only by quake
+			EXT=${ROMNAME##*.}
+
+			# If its not a simple pak (extension .pak0) read the file and parse the data
+			if [ ${EXT} == "quake" ]; then
+			  dos2unix "${1}"
+			  while IFS== read -r key value; do
+			    if [ "$key" == "PAK" ]; then
 			      ROMNAME="$value"
 			    fi
 			    done < "${1}"

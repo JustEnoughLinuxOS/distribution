@@ -4,15 +4,13 @@
 
 . /etc/os-release
 
-export PATH="$PATH:/usr/local/bin:/usr/bin:/storage/bin"
+export PATH="/usr/bin:/usr/local/bin:/storage/bin:${PATH}"
 export SDL_GAMECONTROLLERCONFIG_FILE="/storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt"
 
 J_DIR="/storage/.config/system"
 J_CONF="${J_DIR}/configs/system.cfg"
 ES_CONF="/storage/.emulationstation/es_settings.cfg"
-EE_DEVICE=${HW_DEVICE}
-
-JSLISTENCONF="/storage/.config/system/configs/jslisten.cfg"
+JSLISTENCONF="${J_DIR}/configs/jslisten.cfg"
 
 get_setting() {
   if [ ! -z "${3}" ]
@@ -62,42 +60,40 @@ set_audio() {
 }
 
 get_es_setting() {
-	echo $(sed -n "s|\s*<${1} name=\"${2}\" value=\"\(.*\)\" />|\1|p" ${ES_CONF})
+  echo $(sed -n "s|\s*<${1} name=\"${2}\" value=\"\(.*\)\" />|\1|p" ${ES_CONF})
 }
 
 check_bios() {
+  PLATFORM="${1}"
+  CORE="${2}"
+  EMULATOR="${3}"
+  ROMNAME="${4}"
+  LOG="${5}"
 
-PLATFORM="${1}"
-CORE="${2}"
-EMULATOR="${3}"
-ROMNAME="${4}"
-LOG="${5}"
+  if [[ -z "$LOG" ]]; then
+    LOG="/var/log/exec.log"
+    cat /etc/motd > "$LOG"
+  fi
 
-if [[ -z "$LOG" ]]; then
-	LOG="/var/log/exec.log"
-	cat /etc/motd > "$LOG"
-fi
+  MISSINGBIOS="$(batocera-systems --strictfilter ${PLATFORM})"
+  if [ "$?" == "2" ]; then
+    # formating so it looks nice :)
+    PLATFORMNAME="${MISSINGBIOS##*>}"  # read from -P onwards
+    PLATFORMNAME="${PLATFORMNAME%%MISSING*}"  # until a space is found
+    PLATFORMNAME=$(echo $PLATFORMNAME | sed -e 's/\\n//g')
 
-MISSINGBIOS="$(batocera-systems --strictfilter ${PLATFORM})"
-if [ "$?" == "2" ]; then
+    if [[ -f "${LOG}" ]]; then
+      echo "${CORE} ${EMULATOR} ${ROMNAME}" >> $LOG
+      echo "${PLATFORMNAME} missing BIOS - Could not find all BIOS: " >> $LOG
+      echo "please make sure you copied the files into the corresponding folder " >> $LOG
+      echo "${MISSINGBIOS}" >> $LOG
+    fi
+    MISSINGBIOS=$(echo "$MISSINGBIOS" | sed -e 's/$/\\n/g')
 
-# formating so it looks nice :)
-PLATFORMNAME="${MISSINGBIOS##*>}"  # read from -P onwards
-PLATFORMNAME="${PLATFORMNAME%%MISSING*}"  # until a space is found
-PLATFORMNAME=$(echo $PLATFORMNAME | sed -e 's/\\n//g')
-
-if [[ -f "${LOG}" ]]; then
-echo "${CORE} ${EMULATOR} ${ROMNAME}" >> $LOG
-echo "${PLATFORMNAME} missing BIOS - Could not find all BIOS: " >> $LOG
-echo "please make sure you copied the files into the corresponding folder " >> $LOG
-echo "${MISSINGBIOS}" >> $LOG
-fi
-	MISSINGBIOS=$(echo "$MISSINGBIOS" | sed -e 's/$/\\n/g')
-
-	/usr/bin/error.sh "${PLATFORMNAME} missing BIOS" "Could not find all BIOS/files in /storage/roms, the game may not work:\n\n ${MISSINGBIOS}\n\nPlease make sure you copied the files into the corresponding folder."
-	error_process="$!"
-	pkill -P $error_process
-fi
+    /usr/bin/error.sh "${PLATFORMNAME} missing BIOS" "Could not find all BIOS/files in /storage/roms, the game may not work:\n\n ${MISSINGBIOS}\n\nPlease make sure you copied the files into the corresponding folder."
+    error_process="$!"
+    pkill -P $error_process
+  fi
 }
 
 # read config files from /storage/.config/profile.d
@@ -106,3 +102,4 @@ fi
       . $config
     fi
 done
+

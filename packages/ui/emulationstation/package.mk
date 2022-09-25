@@ -3,14 +3,14 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="emulationstation"
-PKG_VERSION="686b812"
+PKG_VERSION="7e94d3a"
 PKG_GIT_CLONE_BRANCH="main"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/JustEnoughLinuxOS/emulationstation"
 PKG_URL="${PKG_SITE}.git"
-PKG_DEPENDS_TARGET="boost toolchain SDL2 freetype curl freeimage bash rapidjson SDL2_mixer fping p7zip vlc"
+PKG_DEPENDS_TARGET="boost toolchain SDL2 freetype curl freeimage bash rapidjson SDL2_mixer fping p7zip alsa vlc"
 PKG_NEED_UNPACK="busybox"
 PKG_SHORTDESC="Emulationstation emulator frontend"
 PKG_BUILD_FLAGS="-gold"
@@ -18,8 +18,8 @@ GET_HANDLER_SUPPORT="git"
 PKG_PATCH_DIRS+="${DEVICE}"
 
 if [ ! "${OPENGL}" = "no" ]; then
-  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
-  PKG_CMAKE_OPTS_TARGET+=" -DGLES2=0"
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu"
+  PKG_CMAKE_OPTS_TARGET+=" -DGL=1"
 fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
@@ -93,11 +93,14 @@ makeinstall_target() {
 	cp ${PKG_BUILD}/es_settings ${INSTALL}/usr/bin
 	chmod 0755 ${INSTALL}/usr/bin/es_settings
 
+	cp ${PKG_BUILD}/start_es.sh ${INSTALL}/usr/bin
+	chmod 0755 ${INSTALL}/usr/bin/start_es.sh
+
 	mkdir -p ${INSTALL}/usr/lib/${PKG_PYTHON_VERSION}
 	cp -rf ${PKG_DIR}/bluez/* ${INSTALL}/usr/lib/${PKG_PYTHON_VERSION}
 
 	mkdir -p ${INSTALL}/usr/bin
-	ln -sf /storage/.config/emulationstation/resources ${INSTALL}/usr/bin/resources
+	#ln -sf /storage/.config/emulationstation/resources ${INSTALL}/usr/bin/resources
 	cp -rf ${PKG_BUILD}/emulationstation ${INSTALL}/usr/bin
 
 	mkdir -p ${INSTALL}/etc/emulationstation/

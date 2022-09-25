@@ -3,12 +3,13 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 # Copyright (C) 2021-present 351ELEC (https://github.com/351ELEC)
 # Copyright (C) 2022-present Fewtarius
+# Copyright (C) 2022-present Brooksytech
 
 PKG_NAME="linux"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/JustEnoughLinuxOS"
-PKG_DEPENDS_HOST="ccache:host openssl:host"
-PKG_DEPENDS_TARGET="toolchain linux:host cpio:host kmod:host xz:host wireless-regdb keyutils util-linux binutils ${KERNEL_EXTRA_DEPENDS_TARGET}"
+PKG_DEPENDS_HOST="ccache:host rsync:host openssl:host"
+PKG_DEPENDS_TARGET="toolchain linux:host cpio:host kmod:host xz:host wireless-regdb keyutils util-linux binutils ncurses openssl:host ${KERNEL_EXTRA_DEPENDS_TARGET}"
 PKG_DEPENDS_INIT="toolchain"
 PKG_NEED_UNPACK="${LINUX_DEPENDS} $(get_pkg_directory busybox)"
 PKG_LONGDESC="This package builds the kernel for Rockchip devices"
@@ -24,8 +25,9 @@ case ${DEVICE} in
     PKG_VERSION="a19b4df7c"
   ;;
   RG552)
-    PKG_URL="${PKG_SITE}/rk3399-kernel.git"
-    PKG_VERSION="cb0d79995"
+    PKG_URL="https://github.com/brooksytech/rk3399-kernel-5.19.git"
+    PKG_VERSION="0c47c2cd85cc4e631ca9b00f135382dd8bd1efb5"
+    PKG_GIT_CLONE_BRANCH="dev"
   ;;
   RG353P|RG503)
     PKG_URL="${PKG_SITE}/rk356x-kernel.git"

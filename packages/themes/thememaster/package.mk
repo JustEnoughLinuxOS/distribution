@@ -4,7 +4,7 @@
 
 PKG_NAME="thememaster"
 PKG_VERSION="09bee95fea09760355777af824a7ad41dc1ae577"
-PKG_ARCH="any"
+PKG_ARCH="aarch64"
 PKG_SITE="https://github.com/JohnIrvine1433/ThemeMaster"
 PKG_URL="${PKG_SITE}.git"
 PKG_PRIORITY="optional"

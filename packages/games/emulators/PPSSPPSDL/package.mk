@@ -2,7 +2,7 @@
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 # Copyright (C) 2022-present Fewtarius
 PKG_NAME="PPSSPPSDL"
-PKG_VERSION="d11640a070d7516b6a4660a0543dd9ee285e0d53"
+PKG_VERSION="9fe6338"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
@@ -32,17 +32,27 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
 			   -DUSING_X11_VULKAN=OFF"
 fi
 
-if [ "${ARCH}" = "x86_64" ]
-then
-  PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
-  PKG_CMAKE_OPTS_TARGET+=" -DUSE_VULKAN_DISPLAY_KHR=ON \
-                           -DVULKAN=ON \
-                           -DUSING_X11_VULKAN=ON"
+### Vulkan is still not working for PPSSPP on the win600 yet.
+#if [ "${VULKAN_SUPPORT}" = "yes" ]
+#then
+#  PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
+#  PKG_CMAKE_OPTS_TARGET+=" -DUSE_VULKAN_DISPLAY_KHR=ON \
+#                           -DVULKAN=ON \
+#                           -DEGL_NO_X11=1
+#                           -DMESA_EGL_NO_X11_HEADERS=1"
+#else
+  PKG_CMAKE_OPTS_TARGET+=" -DVULKAN=OFF"
+#fi
+
+if [ "${DISPLAYSERVER}" = "wl" ]; then
+  PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER}"
+  PKG_CMAKE_OPTS_TARGET+=" -DUSE_WAYLAND_WSI=ON"
+else
+  PKG_CMAKE_OPTS_TARGET+=" -DUSE_WAYLAND_WSI=OFF"
 fi
 
 PKG_CMAKE_OPTS_TARGET+="${PKG_CMAKE_OPTS_TARGET} \
 			-DUSE_SYSTEM_FFMPEG=OFF \
-			-DUSE_WAYLAND_WSI=OFF \
 			-DCMAKE_BUILD_TYPE=Release \
 			-DCMAKE_SYSTEM_NAME=Linux \
 			-DBUILD_SHARED_LIBS=OFF \

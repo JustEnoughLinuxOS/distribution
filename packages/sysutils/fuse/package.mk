@@ -15,6 +15,7 @@ PKG_BUILD_FLAGS="-gold"
 PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="MOUNT_FUSE_PATH=/usr/sbin \
+                           UDEV_RULES_PATH=/usr/lib/udev \
                            --enable-lib \
                            --enable-util \
                            --disable-example \
@@ -22,10 +23,3 @@ PKG_CONFIGURE_OPTS_TARGET="MOUNT_FUSE_PATH=/usr/sbin \
                            --disable-rpath \
                            --with-gnu-ld"
 
-makeinstall_target() {
-  mkdir -p ${INSTALL}/usr/{lib,bin}
-  cp lib/* ${INSTALL}/usr/lib 2>/dev/null ||:
-  cp util/* ${INSTALL}/usr/bin 2>/dev/null ||:
-#  ln -s fusermount3 ${INSTALL}/usr/bin/fusermount
-#  ln -s mount.fuse3 ${INSTALL}/usr/bin/mount.fuse
-}
