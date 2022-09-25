@@ -3,7 +3,7 @@
 PKG_NAME="rinputer2"
 PKG_VERSION="b1fc0fb69047011d99b54029be500280d33a8027"
 PKG_ARCH="aarch64"
-PKG_LICENSE="GPLv3"
+PKG_LICENSE="BSD 4-Clause-modified"
 PKG_SITE="https://github.com/R-ARM/rinputer2"
 PKG_URL="$PKG_SITE.git"
 PKG_DEPENDS_TARGET="toolchain"
