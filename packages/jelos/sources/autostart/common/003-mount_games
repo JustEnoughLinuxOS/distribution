@@ -18,8 +18,10 @@ then
 fi
 
 mount_games() {
-      NULL=$(cat /proc/mounts | grep -v -e "/var/media" -e "/storage" >/dev/null 2>&1 | grep ${1})
-      if [ ! "$?" = "0" ] && [ -e "${1}" ] && [ ! -e "/storage/.please_resize_me" ]
+      NULL=$(cat /proc/mounts | grep -v -e "/var/media" 2>/dev/null | grep ${1})
+      if [ ! "$?" = "0" ] && \
+         [ -e "${1}" ] && \
+         [ ! -e "/storage/.please_resize_me" ]
       then
         mount ${1} /storage/roms >/dev/null 2>&1
       fi
@@ -47,8 +49,10 @@ find_games() {
         continue
       fi
       # Udevil might mount it, and we shouldn't care if it does.
-      NULL=$(cat /proc/mounts | grep -v -e "/var/media" -e "/storage" >/dev/null 2>&1 | grep ${DEV})
-      if [ ! "$?" = "0" ] && [ -e "${DEV}" ] && [ ! -e "/storage/.please_resize_me" ]
+      NULL=$(cat /proc/mounts | grep -v -e "/var/media" 2>/dev/null | grep ${DEV})
+      if [ ! "$?" = "0" ] && \
+         [ -e "${DEV}" ] && \
+         [ ! -e "/storage/.please_resize_me" ]
       then
         GAMES_DEVICE=${DEV}
         mount_games "${DEV}"
