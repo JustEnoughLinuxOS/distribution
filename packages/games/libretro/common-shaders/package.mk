@@ -27,11 +27,18 @@ PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/libretro/common-shaders"
 PKG_URL="${PKG_SITE}.git"
-PKG_DEPENDS_TARGET="toolchain glsl-shaders slang-shaders"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="Libretro common shaders"
 PKG_LONGDESC="Libretro common shaders"
+
+if [ "${DISPLAYSERVER}" = "wl" ]
+then
+  PKG_DEPENDS_TARGET+=" slang-shaders"
+else
+  PKG_DEPENDS_TARGET+=" glsl-shaders"
+fi
 
 make_target() {
   :

@@ -1,4 +1,43 @@
 #!/bin/bash
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
+# Copyright (C) 2020-present Fewtarius
+
+# Source predefined functions and variables
 . /etc/profile
-/usr/bin/es_settings
+
+set_audio alsa
+export SDL_AUDIODRIVER=alsa
+
+TZ=$(get_setting system.timezone)
+echo -n "TIMEZONE=${TZ}" > /storage/.cache/timezone
+echo -n "${TZ}" >/storage/.cache/system_timezone
+systemctl restart tz-data.service
+
+# create charmap used for translations
+locale=$(get_setting system.language)
+if [ $? == "0" ]
+then
+  charmap="UTF-8"
+  lang="${locale}.${charmap}"
+  locpath="/storage/.config/emulationstation/locale"
+  i18npath="$locpath/i18n"
+  localepath="$locpath/$lang"
+
+  if [ ! -d $localepath ]; then
+    export I18NPATH=$i18npath
+    performance
+    /usr/bin/localedef -f $charmap -i $locale $localepath
+    ${DEVICE_CPU_GOVERNOR}
+  fi
+
+  export LOCPATH=$locpath
+  export LANG=$lang
+  export LANGUAGE=$lang
+  systemctl import-environment LANG
+  systemctl import-environment LOCPATH
+  systemctl import-environment I18NPATH
+  systemctl import-environment LANGUAGE
+fi
+
 emulationstation --log-path /var/log

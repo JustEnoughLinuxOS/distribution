@@ -140,7 +140,7 @@ EOF
     sed -i "s#audio.volume=.*\$#audio.volume=100#g" ${INSTALL}/usr/config/system/configs/system.cfg
   fi
 
-  if [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
+  if [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]] || [[ "${DEVICE}" =~ handheld ]]
   then
     sed -i "s#.integerscale=1#.integerscale=0#g" ${INSTALL}/usr/config/system/configs/system.cfg
   fi

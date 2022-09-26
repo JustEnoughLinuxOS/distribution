@@ -3,7 +3,7 @@
 
 PKG_NAME="rinputer"
 PKG_VERSION="74033c3"
-PKG_LICENSE="BSD 4-Clause"
+PKG_LICENSE="BSD 4-Clause-modified"
 PKG_SITE="https://github.com/R-ARM/Rinputer3"
 PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain rust cargo"

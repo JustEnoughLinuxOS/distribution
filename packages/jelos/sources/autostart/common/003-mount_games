@@ -9,7 +9,7 @@ UPDATE_ROOT="/storage/.update"
 MOUNT_GAMES=$(get_setting system.automount)
 GAMES_DEVICE=$(get_setting system.gamesdevice)
 
-if [[ "${MOUNTGAMES}" != [0-9] ]]
+if [[ ! "${MOUNT_GAMES}" =~ [0-9] ]]
 then
   set_setting system.automount 1
 elif [[ "${MOUNT_GAMES}" == "0" ]]
@@ -18,10 +18,13 @@ then
 fi
 
 mount_games() {
-      NULL=$(grep ${1} /proc/mounts >/dev/null 2>&1)
-      if [ ! "$?" = "0" ] && [ -e "${1}" ] && [ ! -e "/storage/.please_resize_me" ]
+      NULL=$(cat /proc/mounts | grep -v -e "/var/media" 2>/dev/null | grep ${1})
+      if [ ! "$?" = "0" ] && \
+         [ -e "${1}" ] && \
+         [ ! -e "/storage/.please_resize_me" ]
       then
-        mount -o umask=000 ${1} /storage/roms >/dev/null 2>&1
+        mount ${1} /storage/roms >/dev/null 2>&1
+        /usr/bin/systemd-tmpfiles --create /usr/lib/tmpfiles.d/jelos-dirs.conf >/dev/null 2>&1
       fi
 }
 
@@ -46,8 +49,11 @@ find_games() {
         # Assume this is an android boot device and ignore it.
         continue
       fi
-      NULL=$(grep ${DEV} /proc/mounts >/dev/null 2>&1)
-      if [ ! "$?" = "0" ] && [ -e "${DEV}" ] && [ ! -e "/storage/.please_resize_me" ]
+      # Udevil might mount it, and we shouldn't care if it does.
+      NULL=$(cat /proc/mounts | grep -v -e "/var/media" 2>/dev/null | grep ${DEV})
+      if [ ! "$?" = "0" ] && \
+         [ -e "${DEV}" ] && \
+         [ ! -e "/storage/.please_resize_me" ]
       then
         GAMES_DEVICE=${DEV}
         mount_games "${DEV}"
@@ -63,3 +69,4 @@ then
 else
   find_games
 fi
+
