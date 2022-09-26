@@ -40,8 +40,4 @@ then
   systemctl import-environment LANGUAGE
 fi
 
-if [[ ! -f "/storage/.newcfg" ]]; then
-  touch /storage/.newcfg
-fi
-
 emulationstation --log-path /var/log
