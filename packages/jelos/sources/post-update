@@ -75,7 +75,7 @@ then
 fi
 
 # Disable integer scaling by default on Win600
-if [[ "${DEVICE}" =~ handheld ]]
+if [[ "${HW_DEVICE}" =~ handheld ]]
 then
   sed -i "s#.integerscale=1#.integerscale=0#g" /storage/.config/system/configs/system.cfg
 fi

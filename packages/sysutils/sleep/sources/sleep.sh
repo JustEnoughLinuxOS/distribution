@@ -54,7 +54,8 @@ case $1 in
     DEVICE_VOLUME=$(get_setting "audio.volume" 2>/dev/null)
     amixer -M set "${DEVICE_AUDIO_MIXER}" ${DEVICE_VOLUME}% 2>&1 >/dev/null
 
+    BRIGHTNESS_DEV="$(ls /sys/class/backlight | head -n 1)"
     BRIGHTNESS=$(get_setting system.brightness)
-    echo ${BRIGHTNESS} >/sys/class/backlight/backlight/brightness
+    echo ${BRIGHTNESS} >/sys/class/backlight/${BRIGHTNESS_DEV}/brightness
   ;;
 esac
