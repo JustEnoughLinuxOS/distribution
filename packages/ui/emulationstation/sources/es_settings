@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/sh
+
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 # Copyright (C) 2020-present Fewtarius
@@ -26,7 +27,7 @@ then
 
   if [ ! -d $localepath ]; then
     export I18NPATH=$i18npath
-    performance
+    performance 
     /usr/bin/localedef -f $charmap -i $locale $localepath
     ${DEVICE_CPU_GOVERNOR}
   fi
@@ -40,4 +41,3 @@ then
   systemctl import-environment LANGUAGE
 fi
 
-emulationstation --log-path /var/log

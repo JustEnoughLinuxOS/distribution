@@ -5,7 +5,8 @@ ConditionPathExists=/var/lock/start.games
 [Service]
 Environment=HOME=/storage
 Environment=SDL_AUDIODRIVER=alsa
-ExecStart=/usr/bin/start_es.sh
+ExecStartPre=/usr/bin/es_settings
+ExecStart=/usr/bin/emulationstation --log-path /var/log
 KillMode=process
 TimeoutStopSec=3
 Restart=always
