@@ -58,7 +58,8 @@ PKG_CMAKE_OPTS_TARGET+=" -DENABLE_HEADLESS=ON \
                          -DENABLE_ANALYTICS=OFF \
                          -DENABLE_LTO=ON \
                          -DENABLE_QT=OFF \
-                         -DENCODE_FRAMEDUMPS=OFF"
+                         -DENCODE_FRAMEDUMPS=OFF \
+                         -DENABLE_CLI_TOOL=OFF"
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin
