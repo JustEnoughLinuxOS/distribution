@@ -16,7 +16,7 @@ systemctl restart tz-data.service
 
 # create charmap used for translations
 locale=$(get_setting system.language)
-if [ $? == "0" ]
+if [[ -n "${locale}" ]]
 then
   charmap="UTF-8"
   lang="${locale}.${charmap}"
