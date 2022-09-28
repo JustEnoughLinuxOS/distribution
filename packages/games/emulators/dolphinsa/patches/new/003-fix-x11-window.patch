@@ -1,0 +1,146 @@
+diff --git a/Source/Core/DolphinNoGUI/MainNoGUI.cpp b/Source/Core/DolphinNoGUI/MainNoGUI.cpp
+index 11bbf55da1..71d8960652 100644
+--- a/Source/Core/DolphinNoGUI/MainNoGUI.cpp
++++ b/Source/Core/DolphinNoGUI/MainNoGUI.cpp
+@@ -251,6 +251,10 @@ int main(int argc, char* argv[])
+   if (options.is_set("user"))
+     user_directory = static_cast<const char*>(options.get("user"));
+ 
++  UICommon::SetUserDirectory(user_directory);
++  UICommon::Init();
++  GCAdapter::Init();
++
+   s_platform = GetPlatform(options);
+   if (!s_platform || !s_platform->Init())
+   {
+@@ -258,17 +262,6 @@ int main(int argc, char* argv[])
+     return 1;
+   }
+ 
+-  const WindowSystemInfo wsi = s_platform->GetWindowSystemInfo();
+-
+-  UICommon::SetUserDirectory(user_directory);
+-  UICommon::Init();
+-  UICommon::InitControllers(wsi);
+-
+-  Common::ScopeGuard ui_common_guard([] {
+-    UICommon::ShutdownControllers();
+-    UICommon::Shutdown();
+-  });
+-
+   if (save_state_path && !game_specified)
+   {
+     fprintf(stderr, "A save state cannot be loaded without specifying a game to launch.\n");
+@@ -295,7 +288,7 @@ int main(int argc, char* argv[])
+ 
+   DolphinAnalytics::Instance().ReportDolphinStart("nogui");
+ 
+-  if (!BootManager::BootCore(std::move(boot), wsi))
++  if (!BootManager::BootCore(std::move(boot), s_platform->GetWindowSystemInfo()))
+   {
+     fprintf(stderr, "Could not boot the specified file\n");
+     return 1;
+@@ -310,6 +303,7 @@ int main(int argc, char* argv[])
+ 
+   Core::Shutdown();
+   s_platform.reset();
++  UICommon::Shutdown();
+ 
+   return 0;
+ }
+diff --git a/Source/Core/Core/Core.cpp b/Source/Core/Core/Core.cpp
+index 913c9956e9..dd09e980cb 100644
+--- a/Source/Core/Core/Core.cpp
++++ b/Source/Core/Core/Core.cpp
+@@ -470,14 +470,26 @@ static void EmuThread(std::unique_ptr<BootParameters> boot, WindowSystemInfo wsi
+   DeclareAsCPUThread();
+   s_frame_step = false;
+
+-  // Switch the window used for inputs to the render window. This way, the cursor position
+-  // is relative to the render window, instead of the main window.
+-  ASSERT(g_controller_interface.IsInit());
+-  g_controller_interface.ChangeWindow(wsi.render_window);
+-
+-  Pad::LoadConfig();
+-  Pad::LoadGBAConfig();
+-  Keyboard::LoadConfig();
++  // The frontend will likely have initialized the controller interface, as it needs
++  // it to provide the configuration dialogs. In this case, instead of re-initializing
++  // entirely, we switch the window used for inputs to the render window. This way, the
++  // cursor position is relative to the render window, instead of the main window.
++  bool init_controllers = false;
++  if (!g_controller_interface.IsInit())
++  {
++    g_controller_interface.Initialize(wsi);
++    Pad::Initialize();
++    Pad::InitializeGBA();
++    Keyboard::Initialize();
++    init_controllers = true;
++  }
++  else
++  {
++    g_controller_interface.ChangeWindow(wsi.render_window);
++    Pad::LoadConfig();
++    Pad::LoadGBAConfig();
++    Keyboard::LoadConfig();
++  }
+
+   BootSessionData boot_session_data = std::move(boot->boot_session_data);
+   const std::optional<std::string>& savestate_path = boot_session_data.GetSavestatePath();
+@@ -494,16 +506,53 @@ static void EmuThread(std::unique_ptr<BootParameters> boot, WindowSystemInfo wsi
+       Common::SyncSDImageToSDFolder();
+   }};
+
+-  // Load Wiimotes - only if we are booting in Wii mode
++  // Load and Init Wiimotes - only if we are booting in Wii mode
++  bool init_wiimotes = false;
+   if (core_parameter.bWii && !Config::Get(Config::MAIN_BLUETOOTH_PASSTHROUGH_ENABLED))
+   {
+-    Wiimote::LoadConfig();
++    if (init_controllers)
++    {
++      Wiimote::Initialize(savestate_path ? Wiimote::InitializeMode::DO_WAIT_FOR_WIIMOTES :
++                                           Wiimote::InitializeMode::DO_NOT_WAIT_FOR_WIIMOTES);
++      init_wiimotes = true;
++    }
++    else
++    {
++      Wiimote::LoadConfig();
++    }
+
+     if (NetPlay::IsNetPlayRunning())
+       NetPlay::SetupWiimotes();
+   }
+
+-  FreeLook::LoadInputConfig();
++  if (init_controllers)
++  {
++    FreeLook::Initialize();
++  }
++  else
++  {
++    FreeLook::LoadInputConfig();
++  }
++
++  Common::ScopeGuard controller_guard{[init_controllers, init_wiimotes] {
++    if (!init_controllers)
++      return;
++
++    if (init_wiimotes)
++    {
++      Wiimote::ResetAllWiimotes();
++      Wiimote::Shutdown();
++    }
++
++    FreeLook::Shutdown();
++
++    ResetRumble();
++
++    Keyboard::Shutdown();
++    Pad::Shutdown();
++    Pad::ShutdownGBA();
++    g_controller_interface.Shutdown();
++  }};
+
+   Movie::Init(*boot);
+   Common::ScopeGuard movie_guard{&Movie::Shutdown};
