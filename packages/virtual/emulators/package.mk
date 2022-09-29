@@ -13,8 +13,7 @@ PKG_EMUS="hatarisa openbor hypseus-singe moonlight hypseus-singe pico-8 flycasts
           mupen64plussa-core mupen64plussa-rsp-hle mupen64plussa-video-glide64mk2 mupen64plussa-video-gliden64  \
           lzdoom gzdoom ecwolf amiberry raze drastic"
 
-PKG_RETROARCH="retroarch retroarch-overlays retroarch-assets common-shaders glsl-shaders \
-               libretro-database core-info"
+PKG_RETROARCH="retroarch retroarch-overlays retroarch-assets libretro-database core-info"
 
 LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce beetle-pce-fast beetle-pcfx      \
                 beetle-supafaust beetle-supergrafx beetle-vb beetle-wswan bluemsx cannonball cap32   \
@@ -35,13 +34,16 @@ PKG_DEPENDS_TARGET="${PKG_EMUS} ${PKG_RETROARCH} ${LIBRETRO_CORES}"
 
 ### Emulators or cores for specific devices
 case "${DEVICE}" in
+  RG351P|RG351V|RG351MP)
+    PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders"
+  ;;
   RG552)
-    PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa dolphin"
+    PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa dolphin slang-shaders"
   ;;
   RG503|RG353P)
-    PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa"
+    PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa common-shaders glsl-shaders"
   ;;
   handheld)
-    PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa dolphin pcsx2sa pcsx2 desmume"
+    PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa dolphin pcsx2sa pcsx2 desmume slang-shaders"
   ;;
 esac
