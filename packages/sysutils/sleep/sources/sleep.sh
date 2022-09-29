@@ -9,12 +9,12 @@ case $1 in
 
     if [ "${DEVICE_FAKE_JACKSENSE}" == "true" ]
     then
-      systemctl stop headphones
+      nohup systemctl stop headphones & >/dev/null 2>&1
     fi
 
     if [ "${DEVICE_VOLUMECTL}" == "true" ]
     then
-      systemctl stop volume
+      nohup systemctl stop volume & >/dev/null 2>&1
     fi
 
     # RG351x devices are notorious for losing USB when they sleep.
@@ -23,8 +23,9 @@ case $1 in
       modprobe -r dwc2
     fi
 
-    alsactl store -f /storage/.config/asound.state
+    nohup alsactl store -f /storage/.config/asound.state >/dev/null 2>&1
 
+    wait
     touch /run/.last_sleep_time
 
   ;;
@@ -38,24 +39,21 @@ case $1 in
 
     if [ "${DEVICE_FAKE_JACKSENSE}" == "true" ]
     then
-      systemctl start headphones
+      nohup systemctl start headphones & >/dev/null 2>&1
     fi
 
     if [ "${DEVICE_VOLUMECTL}" == "true" ]
     then
-      systemctl start volume
-    fi
-
-    if [ "$(get_setting wifi.enabled)" == "1" ]
-    then
-      wifictl reconnect
+      nohup systemctl start volume & >/dev/null 2>&1
     fi
 
     DEVICE_VOLUME=$(get_setting "audio.volume" 2>/dev/null)
-    amixer -M set "${DEVICE_AUDIO_MIXER}" ${DEVICE_VOLUME}% 2>&1 >/dev/null
+    nohup amixer -M set "${DEVICE_AUDIO_MIXER}" ${DEVICE_VOLUME}% & >/dev/null 2>&1
 
     BRIGHTNESS_DEV="$(ls /sys/class/backlight | head -n 1)"
     BRIGHTNESS=$(get_setting system.brightness)
     echo ${BRIGHTNESS} >/sys/class/backlight/${BRIGHTNESS_DEV}/brightness
+
+    wait
   ;;
 esac
