@@ -21,10 +21,6 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
 fi
 
-#make_target() {
- # make PROFILE=performance
-#}
-
 makeinstall_target() {
   mkdir -p $INSTALL/usr/lib/libretro
   cp bsnes_libretro.so $INSTALL/usr/lib/libretro/
