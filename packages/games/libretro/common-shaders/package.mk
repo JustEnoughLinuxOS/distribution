@@ -38,10 +38,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  if [ ! -d "${INSTALL}/usr/share/common-shaders" ]
-  then
-    mkdir -p ${INSTALL}/usr/share/common-shaders
-  fi
-  rsync -a ${BUILD}/${PKG_NAME}-${PKG_VERSION}/* ${INSTALL}/usr/share/common-shaders/
+  mkdir -p ${INSTALL}/usr/share/common-shaders
+  cp -rf ${BUILD}/${PKG_NAME}-${PKG_VERSION}/* ${INSTALL}/usr/share/common-shaders/
   rm -f ${INSTALL}/usr/share/common-shaders/{Makefile,configure}
 }

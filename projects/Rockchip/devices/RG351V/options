@@ -29,8 +29,8 @@
     KERNEL_TARGET="Image"
     BOOTLOADER="u-boot"
     PARTITION_TABLE="msdos"
-    DEVICE_DTB="rk3326-rg351v-linux"
-    UBOOT_DTB="${DEVICE_DTB}"
+    DEVICE_DTB=("rk3326-rg351v-linux")
+    UBOOT_DTB="${DEVICE_DTB[0]}"
     UBOOT_CONFIG="odroidgoa_defconfig"
     PKG_SOC="px30"
     PKG_DATAFILE="$PKG_RKBIN/bin/rk33/rk3326_ddr_333MHz_v1.15.bin"
@@ -42,7 +42,7 @@
 
   # Additional kernel make parameters (for example to specify the u-boot loadaddress)
     KERNEL_MAKE_EXTRACMD=""
-    KERNEL_MAKE_EXTRACMD+=" rockchip/${DEVICE_DTB}.dtb"
+    KERNEL_MAKE_EXTRACMD+=" rockchip/${DEVICE_DTB[0]}.dtb"
    
   # Display Resolution
     SPLASH_RESOLUTION="640x480"

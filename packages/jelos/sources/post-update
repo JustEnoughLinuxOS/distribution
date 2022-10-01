@@ -80,3 +80,8 @@ then
   sed -i "s#.integerscale=1#.integerscale=0#g" /storage/.config/system/configs/system.cfg
 fi
 
+# We don't want to use gl on the 552, switch it to glcore.
+if [[ "${HW_DEVICE}" =~ RG552 ]]
+then
+  sed -i 's#video_driver = "gl"#video_driver = "glcore"#g' /storage/.config/retroarch/retroarch.cfg
+fi

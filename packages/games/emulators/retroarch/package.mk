@@ -119,6 +119,13 @@ makeinstall_target() {
     echo "Configure retroarch for ${DEVICE}"
     exit 1
   fi
+
+  # Make sure the shader directories exist for overlayfs.
+  for dir in common-shaders glsl-shaders slang-shaders
+  do
+    mkdir -p ${INSTALL}/usr/share/${dir}
+    touch ${INSTALL}/usr/share/${dir}/.overlay
+  done
 }
 
 post_install() {

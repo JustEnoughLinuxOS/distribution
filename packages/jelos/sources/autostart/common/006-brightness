@@ -19,10 +19,4 @@ then
   BRIGHTNESS=3
 fi
 
-BRIGHTNESS=$(printf "%.0f" ${BRIGHTNESS})
-if [ "$(cat /sys/class/backlight/${BRIGHTNESS_DEV}/max_brightness)" = 255 ]
-then
-  printf "%.0f" $(echo "${BRIGHTNESS} * 2.56" | bc) > /sys/class/backlight/${BRIGHTNESS_DEV}/brightness
-else
-  printf "%.0f" $(echo "${BRIGHTNESS}") > /sys/class/backlight/${BRIGHTNESS_DEV}/brightness
-fi
+printf "%.0f" $(echo "${BRIGHTNESS}") > /sys/class/backlight/${BRIGHTNESS_DEV}/brightness

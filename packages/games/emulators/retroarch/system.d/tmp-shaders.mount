@@ -7,7 +7,7 @@ DefaultDependencies=no
 What=none
 Where=/tmp/shaders
 Type=overlay
-Options=lowerdir=/usr/share/common-shaders,upperdir=/storage/shaders,workdir=/storage/.tmp/shaders-workdir
+Options=lowerdir=/usr/share/common-shaders:/usr/share/glsl-shaders:/usr/share/slang-shaders,upperdir=/storage/shaders,workdir=/storage/.tmp/shaders-workdir
 
 [Install]
 WantedBy=jelos.target
