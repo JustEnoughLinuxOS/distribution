@@ -30,8 +30,8 @@
     KERNEL_TARGET="Image"
     BOOTLOADER="u-boot"
     PARTITION_TABLE="msdos"
-    DEVICE_DTB="rk3399-rg552-linux"
-    UBOOT_DTB="${DEVICE_DTB}"
+    DEVICE_DTB=("rk3399-rg552-linux")
+    UBOOT_DTB="${DEVICE_DTB[0]}"
     UBOOT_CONFIG="evb-rk3399_defconfig"
     PKG_SOC="rk3399"
     PKG_DATAFILE="$PKG_RKBIN/bin/rk33/rk3399_ddr_933MHz_v1.25.bin"
@@ -41,7 +41,7 @@
 
   # Additional kernel make parameters (for example to specify the u-boot loadaddress)
     KERNEL_MAKE_EXTRACMD=""
-    KERNEL_MAKE_EXTRACMD+=" rockchip/${DEVICE_DTB}.dtb"
+    KERNEL_MAKE_EXTRACMD+=" rockchip/${DEVICE_DTB[0]}.dtb"
    
   # Define the CPU
     HW_CPU="Rockchip RK3399"

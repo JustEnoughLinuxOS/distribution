@@ -64,7 +64,7 @@ then
 odroidgoa-uboot-config
 
 setenv fdt_addr_r "0x01f00000"
-setenv dtb_name "${DEVICE_DTB}.dtb"
+setenv dtb_name "${DEVICE_DTB[0]}.dtb"
 setenv loadaddr "${PKG_LOAD_ADDR}"
 setenv scriptaddr "0x00500000"
 setenv kernel_addr_r "0x02008000"

@@ -31,7 +31,7 @@ case ${DEVICE} in
   ;;
   RG353P|RG503)
     PKG_URL="${PKG_SITE}/rk356x-kernel.git"
-    PKG_VERSION="ce84246cd"
+    PKG_VERSION="3a979e63a"
   ;;
 esac
 
@@ -232,7 +232,7 @@ make_target() {
     KERNEL_TARGET="${KERNEL_UIMAGE_TARGET}"
   fi
   if [ "${PKG_SOC}" = "rk356x" ]; then
-    kernel_make ${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD} ARCH=arm64 ${DEVICE_DTB}.img
+      kernel_make ${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD} ARCH=arm64 ${DEVICE_DTB[0]}.img
   fi
 }
 
@@ -246,7 +246,7 @@ makeinstall_target() {
       fi
     done
     if [ "${PKG_SOC}" = "rk356x" ]; then
-      ARCH=arm64 scripts/mkimg --dtb ${DEVICE_DTB}.dtb
+      ARCH=arm64 scripts/mkimg --dtb ${DEVICE_DTB[0]}.dtb
       cp -v resource.img ${INSTALL}/usr/share/bootloader
       ARCH=${TARGET_ARCH}
     fi
