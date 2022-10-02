@@ -3,12 +3,13 @@
 # Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
-#If PortMaster does not exist copy PortMaster folder to roms/ports
-if [ ! -e "/storage/roms/ports/PortMaster" ]
+
+if [ ! -d "/storage/roms/ports/PortMaster" ]
 then
-	cp -r /usr/share/PortMaster /storage/roms/ports
-	chmod +x /storage/roms/ports/PortMaster -R
-	mv /storage/roms/ports/PortMaster/PortMaster.sh /storage/roms/ports/PortMaster.sh
+  mkdir -p /storage/roms/ports/PortMaster
+  rsync -a /usr/share/PortMaster/* /storage/roms/ports/PortMaster/
+  chmod -R 755 /storage/roms/ports/PortMaster
+  mv -f /storage/roms/ports/PortMaster/PortMaster.sh /storage/roms/ports/PortMaster.sh
 fi
 
 #Check if gamelist.xml exists, if not create gamelist.xml to hide portmaster by default.

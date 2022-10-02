@@ -55,9 +55,8 @@ case $1 in
     DEVICE_VOLUME=$(get_setting "audio.volume" 2>/dev/null)
     nohup amixer -M set "${DEVICE_AUDIO_MIXER}" ${DEVICE_VOLUME}% & >/dev/null 2>&1
 
-    BRIGHTNESS_DEV="$(ls /sys/class/backlight | head -n 1)"
     BRIGHTNESS=$(get_setting system.brightness)
-    echo ${BRIGHTNESS} >/sys/class/backlight/${BRIGHTNESS_DEV}/brightness
+    echo ${BRIGHTNESS} >/sys/class/backlight/$(brightness device)/brightness
 
     wait
   ;;

@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2020-present Fewtarius
 
-BRIGHTNESS_DEV="$(ls /sys/class/backlight)"
+BRIGHTNESS_DEV="$(ls /sys/class/backlight | head -n 1)"
 
 MIN=1
 MAX=$(cat /sys/class/backlight/${BRIGHTNESS_DEV}/max_brightness)

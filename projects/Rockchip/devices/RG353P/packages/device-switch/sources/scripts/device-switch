@@ -8,9 +8,11 @@ mount -o remount,rw /flash
 case $1 in
   RG353P)
     sed -i "s#rk3566-rg353v-linux.dtb#rk3566-rg353p-linux.dtb#g" /flash/extlinux/extlinux.conf
+    cp /usr/config/asound.conf /storage/.config
   ;;
   RG353V)
     sed -i "s#rk3566-rg353p-linux.dtb#rk3566-rg353v-linux.dtb#g" /flash/extlinux/extlinux.conf
+    cp /usr/config/asound.conf.RG353V /storage/.config/asound.conf
   ;;
 esac
 
