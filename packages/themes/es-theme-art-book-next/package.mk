@@ -4,7 +4,7 @@
 # Copyright (C) 2021 Fewtarius
 
 PKG_NAME="es-theme-art-book-next"
-PKG_VERSION="236310621bd5a14fcac26cd480cf8a231844716c"
+PKG_VERSION="ce90c47bb5c414c8aeb2ecb21b87492e8c5e7ad1"
 PKG_ARCH="any"
 PKG_LICENSE="CUSTOM"
 PKG_SITE="https://github.com/anthonycaccese/art-book-next-batocera"

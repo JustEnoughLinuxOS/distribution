@@ -31,7 +31,7 @@ case ${DEVICE} in
   ;;
   RG353P|RG503)
     PKG_URL="${PKG_SITE}/rk356x-kernel.git"
-    PKG_VERSION="c2913a910"
+    PKG_VERSION="7e1b435e1"
   ;;
 esac
 

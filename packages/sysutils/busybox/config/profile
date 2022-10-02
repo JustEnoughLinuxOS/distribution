@@ -32,3 +32,16 @@
       . $config
     fi
   done
+
+# read user config files
+
+  if [ ! -d "/storage/.config/profile.d" ]
+  then
+   mkdir -p /storage/.config/profile.d
+  fi
+
+  for config in /storage/.config/profile.d/*; do
+    if [ -f "$config" ] ; then
+      . $config
+    fi
+  done
