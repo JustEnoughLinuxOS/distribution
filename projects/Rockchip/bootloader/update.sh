@@ -59,9 +59,11 @@ CONFS=$SYSTEM_ROOT/usr/share/bootloader/extlinux/*.conf
 for all_conf in $CONFS; do
   conf="$(basename ${all_conf})"
   echo "Updating ${conf}..."
+  DTB=$(awk '/FDT/ {print $2}' $SYSTEM_ROOT/extlinux/extlinux.conf)
   cp -p $SYSTEM_ROOT/usr/share/bootloader/extlinux/${conf} $BOOT_ROOT/extlinux/${conf} &>/dev/null
   sed -e "s/@BOOT_UUID@/$BOOT_UUID/" \
       -e "s/@DISK_UUID@/$DISK_UUID/" \
+      -e "s#FDT.*\$#FDT ${DTB}#g" \
       -i $BOOT_ROOT/extlinux/${conf}
 done
 
