@@ -64,6 +64,26 @@ do
   ln -s /usr/config/emulationstation/${es_cfg} /storage/.config/emulationstation/${es_cfg}
 done
 
+# Make sure PortMaster is in sync
+if [ ! -d "/storage/roms/ports/PortMaster" ]
+then
+  mkdir -p /storage/roms/ports/PortMaster
+fi
+
+rsync -a --delete /usr/share/PortMaster/* /storage/roms/ports/PortMaster/
+chmod +x /storage/roms/ports/PortMaster -R
+mv -f /storage/roms/ports/PortMaster/PortMaster.sh /storage/roms/ports/PortMaster.sh
+
+# Ensure JelosAddOns is in sync
+if [ ! -d "/storage/roms/ports/JelosAddOns" ]
+then
+  mkdir -p /storage/roms/ports/JelosAddOns
+fi
+
+rsync -a /usr/share/JelosAddOns/* /storage/roms/ports/JelosAddOns/
+chmod -R 755 /storage/roms/ports/JelosAddOns
+mv -f /storage/roms/ports/JelosAddOns/JelosAddOns.sh /storage/roms/ports/JelosAddOns
+
 # Default modules need to be updated to use the new stop/start ui function.
 rsync -av /usr/config/modules/* /storage/.config/modules/
 
