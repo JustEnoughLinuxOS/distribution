@@ -328,6 +328,7 @@ else
 	           [[ "${CORE}" =~ flycast32 ]]
 		then
                         export LIBGL_DRIVERS_PATH="/usr/lib32/dri"
+                        export LD_LIBRARY_PATH="/usr/lib32"
 			export RABIN="retroarch32"
 		fi
 	fi

@@ -208,9 +208,12 @@ elif [ "${BOOTLOADER}" = "u-boot" -a \( -n "${UBOOT_CONFIG}" -o "${UBOOT_VERSION
   echo "image: creating bootloader configuration... (u-boot)"
 
   if [ "${UBOOT_VERSION}" != "vendor" ]; then
-    if [ -f "${RELEASE_DIR}/3rdparty/bootloader/${DEVICE_DTB}.dtb" ]; then
-      mcopy "${RELEASE_DIR}/3rdparty/bootloader/${DEVICE_DTB}.dtb" ::
-    fi
+    for DTB in ${DEVICE_DTB[@]}
+    do
+      if [ -f "${RELEASE_DIR}/3rdparty/bootloader/${DTB}.dtb" ]; then
+        mcopy "${RELEASE_DIR}/3rdparty/bootloader/${DTB}.dtb" ::
+      fi
+    done
   fi
 
   if [ -f "${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/bootloader/mkimage" ]; then

@@ -4,11 +4,12 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 #If ThemeMaster does not exist copy ThemeMaster folder to roms/ports
-if [ ! -e "/storage/roms/ports/ThemeMaster" ]
+if [ ! -d "/storage/roms/ports/ThemeMaster" ]
 then
-	cp -r /usr/share/ThemeMaster /storage/roms/ports
-	chmod +x /storage/roms/ports/ThemeMaster -R
-	mv /storage/roms/ports/ThemeMaster/ThemeMaster.sh /storage/roms/ports/ThemeMaster.sh
+  mkdir -p /storage/roms/ports/ThemeMaster
+  rsync -a /usr/share/ThemeMaster/* /storage/roms/ports/ThemeMaster/
+  chmod -R 755 /storage/roms/ports/ThemeMaster
+  mv -f /storage/roms/ports/ThemeMaster/ThemeMaster.sh /storage/roms/ports/ThemeMaster.sh
 fi
 
 #Check if gamelist.xml exists, if not create gamelist.xml to hide ThemeMaster by default.

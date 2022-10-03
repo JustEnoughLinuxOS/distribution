@@ -9,7 +9,7 @@ Just Enough Linux Operating System (JELOS) is a community developed Linux distri
 * Supports FAT32, ExFAT, and EXT4 file systems on removable storage (slot/device #2).
 * 2.4GHz and 5GHz 802.11 A/B/G/N/AC WIFI support.
 * Online update capability for easy access to stable or development builds.
-* Support for the Anbernic WIN600, RG552, RG503, RG353P, RG351P/M, RG351MP, RG351V.
+* Support for the Anbernic WIN600, RG552, RG503, RG353P, RG353V, RG351P/M, RG351MP, RG351V.
 * Developed by a small, friendly community.
 
 ## Licenses

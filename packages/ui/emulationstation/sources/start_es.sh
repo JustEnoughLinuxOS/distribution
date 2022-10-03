@@ -14,26 +14,30 @@ echo -n "TIMEZONE=${TZ}" > /storage/.cache/timezone
 echo -n "${TZ}" >/storage/.cache/system_timezone
 systemctl restart tz-data.service
 
-# create charmap used for translations
-locale=$(get_setting system.language)
-if [[ -n "${locale}" ]]
+MYLOCALE=$(get_setting system.language)
+if [[ -n "${MYLOCALE}" ]]
 then
-  charmap="UTF-8"
-  lang="${locale}.${charmap}"
-  locpath="/storage/.config/emulationstation/locale"
-  i18npath="$locpath/i18n"
-  localepath="$locpath/$lang"
 
-  if [ ! -d $localepath ]; then
-    export I18NPATH=$i18npath
+  unset I18NPATH LANG LANGUAGE LOCPATH
+
+  MYCHARMAP="UTF-8"
+  MYLANG="${MYLOCALE}.${MYCHARMAP}"
+  MYLOCPATH="/storage/.config/emulationstation"
+
+  if [ ! -e "${MYLOCPATH}/locale/${MYLANG}/LC_NAME" ]; then
     performance
-    /usr/bin/localedef -f $charmap -i $locale $localepath
+ I18NPATH="/usr/share/i18n"
+ localedef -i ${MYLOCALE} \
+           -c \
+           -v \
+           -f ${MYCHARMAP} \
+           ${MYLOCPATH}/locale/${MYLANG} >/var/log/start_es.log 2>&1
     ${DEVICE_CPU_GOVERNOR}
   fi
 
-  export LOCPATH=$locpath
-  export LANG=$lang
-  export LANGUAGE=$lang
+  export LOCPATH="${MYLOCPATH}/locale"
+  export LANG=${MYLANG}
+  export LANGUAGE=${MYLANG}
   systemctl import-environment LANG
   systemctl import-environment LOCPATH
   systemctl import-environment I18NPATH

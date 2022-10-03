@@ -4,13 +4,13 @@
 
 BRIGHTNESS_DEV="$(ls /sys/class/backlight | head -n 1)"
 
-MIN=5
+MIN=1
 MAX=$(cat /sys/class/backlight/${BRIGHTNESS_DEV}/max_brightness)
 if [ "${MAX}" = 255 ]
 then
-  STEP=15
+  STEP=17
 else
-  STEP=5
+  STEP=6
 fi
 
 if [[ -n "$2" ]]; then
@@ -29,14 +29,10 @@ then
   exit 1
 fi
 
-round() {
-  awk -v val=$1 'BEGIN{print int((val+5/2)/5) * 5}'
-}
-
 stepUp() {
   getBrightness
   MYBRIGHTNESS=$?
-  NEWBRIGHTNESS=$((${MYBRIGHTNESS}+$(round ${STEP})))
+  NEWBRIGHTNESS=$((${MYBRIGHTNESS}+${STEP}))
   if (( ${NEWBRIGHTNESS} > ${MAX} ))
   then
     NEWBRIGHTNESS=${MAX}
@@ -48,7 +44,7 @@ stepUp() {
 stepDown() {
   getBrightness
   MYBRIGHTNESS=$?
-  NEWBRIGHTNESS=$((${MYBRIGHTNESS}-$(round ${STEP})))
+  NEWBRIGHTNESS=$((${MYBRIGHTNESS}-${STEP}))
   if (( ${NEWBRIGHTNESS} < ${MIN} ))
   then
     NEWBRIGHTNESS=${MIN}
