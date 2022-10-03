@@ -4,6 +4,8 @@
 
 . /etc/profile
 
+HOSTNAME=$(get_setting system.hostname)
+hostname ${HOSTNAME}
 
 if [ "$(get_setting internal.wifi)" == 0 ] && [ "${DEVICE_INTERNAL_WIFI}" = true ]
 then
