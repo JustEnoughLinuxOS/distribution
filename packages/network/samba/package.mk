@@ -174,11 +174,12 @@ post_makeinstall_target() {
   rm -rf ${INSTALL}/usr/lib64
 
   if find_file_path config/smb.conf; then
-    mkdir -p ${INSTALL}/etc/samba
-      cp ${FOUND_PATH} ${INSTALL}/etc/samba
     mkdir -p ${INSTALL}/usr/config
-      cp ${INSTALL}/etc/samba/smb.conf ${INSTALL}/usr/config/samba.conf.sample
+      cp ${FOUND_PATH} ${INSTALL}/usr/config
   fi
+
+  mkdir -p ${INSTALL}/etc/samba
+  ln -s /usr/config/smb.conf ${INSTALL}/etc/samba/smb.conf
 
   mkdir -p ${INSTALL}/usr/bin
     cp -PR bin/default/source3/client/smbclient ${INSTALL}/usr/bin

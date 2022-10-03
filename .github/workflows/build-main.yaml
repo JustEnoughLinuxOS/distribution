@@ -27,7 +27,7 @@ jobs:
     steps:
       - uses: hmarr/debug-action@v2
         name: debug
-      - name: get current branch as it may not be 'default branch;
+      - name: get current branch as it may not be default branch;
         id: branch
         run: |
             branch_arg="${{ github.event.client_payload.branch }}"
@@ -43,9 +43,6 @@ jobs:
       - name: Get date for artifacts
         id: date
         run: echo "::set-output name=date::$(date +'%Y%m%d')"
-      - name: Get short SHA for artifacts
-        id: sha
-        run: echo "::set-output name=sha::$(git rev-parse --short HEAD)"
       - name: Get version
         id: version
         run: |
@@ -54,7 +51,7 @@ jobs:
            if [[ "${{ github.event.client_payload.release_tag }}" != "" ]]; then
                echo "::set-output name=version::${{ github.event.client_payload.release_tag }}"
            else
-               echo "::set-output name=version::${{ steps.date.outputs.date }}-${{ steps.sha.outputs.sha }}"
+               echo "::set-output name=version::${{ steps.date.outputs.date }}"
            fi
       - name: Build World
         run: |
