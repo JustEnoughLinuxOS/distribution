@@ -3,14 +3,14 @@
 
 PKG_NAME="dolphinsa"
 PKG_LICENSE="GPLv2"
-PKG_DEPENDS_TARGET="toolchain libevdev libdrm ffmpeg zlib libpng lzo libusb"
+PKG_DEPENDS_TARGET="toolchain libevdev libdrm ffmpeg zlib libpng lzo libusb zstd"
 PKG_LONGDESC="Dolphin is a GameCube / Wii emulator, allowing you to play games for these two platforms on PC with improvements. "
 
 case ${DEVICE} in
   RG552|handheld)
     PKG_SITE="https://github.com/dolphin-emu/dolphin"
     PKG_URL="${PKG_SITE}.git"
-    PKG_VERSION="d9cd819a76d4f1c171c47cdc81dc2ef7c0adb07f"
+    PKG_VERSION="5479f0e776009d85c509fc6f9874aceeaed9b85b"
     PKG_PATCH_DIRS+=" new"
   ;;
   *)
