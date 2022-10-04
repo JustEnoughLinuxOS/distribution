@@ -48,8 +48,9 @@ index 11bbf55da1..71d8960652 100644
  
    return 0;
  }
+
 diff --git a/Source/Core/Core/Core.cpp b/Source/Core/Core/Core.cpp
-index 913c9956e9..dd09e980cb 100644
+index 8a02534c57..00d8ac09e8 100644
 --- a/Source/Core/Core/Core.cpp
 +++ b/Source/Core/Core/Core.cpp
 @@ -470,14 +470,26 @@ static void EmuThread(std::unique_ptr<BootParameters> boot, WindowSystemInfo wsi
@@ -87,7 +88,7 @@ index 913c9956e9..dd09e980cb 100644
 
    BootSessionData boot_session_data = std::move(boot->boot_session_data);
    const std::optional<std::string>& savestate_path = boot_session_data.GetSavestatePath();
-@@ -494,16 +506,53 @@ static void EmuThread(std::unique_ptr<BootParameters> boot, WindowSystemInfo wsi
+@@ -494,13 +506,50 @@ static void EmuThread(std::unique_ptr<BootParameters> boot, WindowSystemInfo wsi
        Common::SyncSDImageToSDFolder();
    }};
 
@@ -107,9 +108,6 @@ index 913c9956e9..dd09e980cb 100644
 +    {
 +      Wiimote::LoadConfig();
 +    }
-
-     if (NetPlay::IsNetPlayRunning())
-       NetPlay::SetupWiimotes();
    }
 
 -  FreeLook::LoadInputConfig();
