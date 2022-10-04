@@ -179,7 +179,7 @@ post_makeinstall_target() {
   fi
 
   mkdir -p ${INSTALL}/etc/samba
-  ln -s /usr/config/smb.conf ${INSTALL}/etc/samba/smb.conf
+  ln -s /storage/.config/smb.conf ${INSTALL}/etc/samba/smb.conf
 
   mkdir -p ${INSTALL}/usr/bin
     cp -PR bin/default/source3/client/smbclient ${INSTALL}/usr/bin

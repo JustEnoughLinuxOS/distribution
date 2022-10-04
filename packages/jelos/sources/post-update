@@ -105,3 +105,9 @@ if [[ "${HW_DEVICE}" =~ RG552 ]]
 then
   sed -i 's#video_driver = "gl"#video_driver = "glcore"#g' /storage/.config/retroarch/retroarch.cfg
 fi
+
+# If smb.conf doesn't exist in ~/.config, add it.
+if [ ! -e "/storage/.config/smb.conf" ]
+then
+  cp -f /usr/config/smb.conf /storage/.config
+fi

@@ -1,0 +1,20 @@
+diff -rupN stella.orig/src/os/libretro/Makefile stella/src/os/libretro/Makefile
+--- stella.orig/src/os/libretro/Makefile	2022-10-02 14:39:47.954719313 -0400
++++ stella/src/os/libretro/Makefile	2022-10-03 19:19:12.544824555 -0400
+@@ -114,6 +114,16 @@ else ifeq ($(platform), osx)
+    CXXFLAGS  += $(ARCHFLAGS)
+    LDFLAGS   += $(ARCHFLAGS)
+ 
++else ifeq ($(platform), aarch64)
++   TARGET := $(TARGET_NAME)_libretro.so
++   fpic := -fPIC
++   SHARED := -shared -Wl,--version-script=link.T -Wl,--no-undefined
++   CXXFLAGS += -lpthread -DARM64
++   LDFLAGS += -lpthread -static-libgcc -lstdc++
++   ARCH = arm64
++   USE_DYNAREC = 1
++
++
+ # iOS
+ else ifneq (,$(findstring ios,$(platform)))
+    CXXFLAGS += $(LTO) -stdlib=libc++
