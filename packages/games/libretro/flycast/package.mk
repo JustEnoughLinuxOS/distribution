@@ -12,18 +12,24 @@ PKG_TOOLCHAIN="cmake"
 
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+  PKG_CMAKE_OPTS_TARGET+="  USE_OPENGL=ON"
+else
+  PKG_CMAKE_OPTS_TARGET+="  USE_OPENGL=OFF"
 fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-  PKG_CMAKE_OPTS_TARGET+="-DUSE_VULKAN=OFF \
-			  -DUSE_GLES=ON"
+  PKG_CMAKE_OPTS_TARGET+=" -DUSE_GLES=ON"
+else
+  PKG_CMAKE_OPTS_TARGET+=" -DUSE_GLES=OFF"
 fi
 
 if [ "${VULKAN_SUPPORT}" = "yes" ]
 then
   PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
   PKG_CMAKE_OPTS_TARGET+=" -DUSE_VULKAN=ON"
+else
+  PKG_CMAKE_OPTS_TARGET+=" -DUSE_VULKAN=OFF"
 fi
 
 pre_configure_target() {
