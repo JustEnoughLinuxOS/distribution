@@ -6,7 +6,7 @@ PKG_VERSION="2.2.0"
 PKG_LICENSE="BSD"
 PKG_SITE="http://glew.sourceforge.net/"
 PKG_URL="${SOURCEFORGE_SRC}/glew/glew/${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tgz"
-PKG_DEPENDS_TARGET="toolchain libX11"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_SHORTDESC="GLEW - The OpenGL Extension Wrangler Library"
 PKG_TOOLCHAIN="cmake"
 
@@ -15,15 +15,28 @@ pre_configure() {
 }
 
 pre_configure_target() {
-        PKG_CMAKE_OPTS_TARGET+="        -DBUILD_UTILS=OFF \
-					-DGLEW_REGAL=OFF \
-					-DGLEW_OSMESA=OFF \
-					-DGLEW_X11=ON \
-                                        -DGLEW_EGL=ON \
-                                        -DBUILD_SHARED_LIBS=ON"
-                                        }
+
+  if [ "${DISPLAYSERVER}" = "wl" ]; then
+    PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER} xorg-server xrandr libXi libX11"
+    PKG_CMAKE_OPTS_TARGET+=" -DGLEW_EGL=ON"
+  fi
+
+  if [ ! "${OPENGL}" = "no" ]; then
+    PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+  fi
+
+  if [ "${OPENGLES_SUPPORT}" = yes ]; then
+    PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+  fi
+
+  PKG_CMAKE_OPTS_TARGET+="      -DBUILD_UTILS=OFF \
+				-DGLEW_REGAL=OFF \
+				-DGLEW_OSMESA=OFF \
+				-DGLEW_EGL=ON \
+				-DBUILD_SHARED_LIBS=ON"
+}
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/
-  cp $PKG_BUILD/lib/libGLEW* $INSTALL/usr/lib/
+  mkdir -p ${INSTALL}/usr/lib
+  cp ${PKG_BUILD}/lib/libGLEW* ${INSTALL}/usr/lib/
 }

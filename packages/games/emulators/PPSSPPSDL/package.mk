@@ -2,7 +2,7 @@
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 # Copyright (C) 2022-present Fewtarius
 PKG_NAME="PPSSPPSDL"
-PKG_VERSION="bc1975bc9975e5e96f09bceca9ae036d92877fc9"
+PKG_VERSION="317ecdaad1ec9768b3ad234bb8b35c186b7e2916"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
@@ -17,7 +17,7 @@ PKG_BUILD_FLAGS="+lto"
 PKG_PATCH_DIRS+="${DEVICE}"
 
 if [ ! "${OPENGL}" = "no" ]; then
-  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd glew"
   PKG_CMAKE_OPTS_TARGET+=" -DUSING_FBDEV=OFF \
 			   -DUSING_GLES2=OFF"
 fi
