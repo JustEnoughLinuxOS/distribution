@@ -8,6 +8,7 @@ PKG_ARCH="aarch64"
 PKG_URL="https://github.com/christianhaitian/PortMaster/raw/main/PortMaster.zip"
 PKG_PRIORITY="optional"
 PKG_SECTION="tools"
+PKG_DEPENDS_TARGET="glew"
 PKG_SHORTDESC="A simple tool that allows you to download various game ports that are available for Jelos"
 PKG_TOOLCHAIN="manual"
 
@@ -16,9 +17,9 @@ pre_unpack() {
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/share/
+  mkdir -p ${INSTALL}/usr/share/
   cp -r ${PKG_BUILD}/PortMaster ${INSTALL}/usr/share/
-  chmod 0755 $INSTALL/usr/share/PortMaster
+  chmod 0755 ${INSTALL}/usr/share/PortMaster
 
   mkdir -p ${INSTALL}/usr/lib/autostart/common
   cp ${PKG_DIR}/sources/autostart/common/* ${INSTALL}/usr/lib/autostart/common
