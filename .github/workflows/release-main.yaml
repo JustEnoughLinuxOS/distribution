@@ -6,6 +6,17 @@
 
 name: release-main
 on:
+  push:
+    paths-ignore:
+      - '.github/**'
+      - '*.md'
+      - 'Dockerfile'
+      - '.dockerignore'
+      - '.gitignore'
+      - 'licenses/**'
+      - 'tools/**'
+    branches:
+      - main
   workflow_dispatch:
 
 env:
@@ -31,6 +42,16 @@ jobs:
           run: |
                echo "::set-output name=full_name::$(git config --get remote.origin.url | sed 's|^.*github.com/||g' | sed 's/.git$//g')"
         
+        - name: changes
+          id: changes
+          run: |
+               prevrelcommit="$(git rev-list --tags --max-count=1)"
+               release_notes="$(git log ${prevrelcommit}..HEAD --pretty=format:"* %h: %s")"
+               release_notes="${release_notes//'%'/'%25'}"
+               release_notes="${release_notes//$'\n'/'%0A'}"
+               release_notes="${release_notes//$'\r'/'%0D'}"
+               echo "::set-output name=changes::$(echo ${release_notes} | wc -l)"
+               echo "::set-output name=release_notes::${release_notes}"
         - name: Get date for artifacts
           id: date
           run: echo "::set-output name=date::$(date +'%Y%m%d')"
@@ -46,5 +67,6 @@ jobs:
                {
                  "branch" : "${{ env.BRANCH }}",
                  "release_tag" : "${{steps.date.outputs.date}}",
+                 "release_notes" : ${{toJSON(steps.changes.outputs.release_notes)}}
                }
             
