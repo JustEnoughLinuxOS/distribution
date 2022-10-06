@@ -55,7 +55,7 @@ for es_cfg in es_features.cfg es_systems.cfg
 do
   if [ -e "/storage/.config/emulationstation/${es_cfg}" ]
   then
-    mv /storage/.config/emulationstation/${es_cfg} /storage/.config/emulationstation/last_${es_cfg}
+    mv -f /storage/.config/emulationstation/${es_cfg} /storage/.config/emulationstation/last_${es_cfg}
   fi
   ln -s /usr/config/emulationstation/${es_cfg} /storage/.config/emulationstation/${es_cfg}
 done
@@ -78,7 +78,7 @@ fi
 
 rsync -a /usr/share/JelosAddOns/* /storage/roms/ports/JelosAddOns/
 chmod -R 755 /storage/roms/ports/JelosAddOns
-cp -f /storage/roms/ports/JelosAddOns/JelosAddOns.sh /storage/roms/ports/JelosAddOns
+cp -f /storage/roms/ports/JelosAddOns/JelosAddOns.sh /storage/roms/ports/JelosAddOns.sh
 
 # Make sure ThemeMaster is in sync
 if [ ! -d "/storage/roms/ports/ThemeMaster" ]
