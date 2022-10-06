@@ -10,25 +10,20 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SHORTDESC="GLEW - The OpenGL Extension Wrangler Library"
 PKG_TOOLCHAIN="cmake"
 
+if [ "${DISPLAYSERVER}" = "wl" ]; then
+  PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER} xorg-server xrandr libXi libX11"
+  PKG_CMAKE_OPTS_TARGET+=" -DGLEW_X11=ON"
+fi
+
+if [ ! "${OPENGL}" = "no" ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+fi
+
 pre_configure() {
   PKG_CMAKE_SCRIPT=${PKG_BUILD}/build/cmake/CMakeLists.txt
 }
 
 pre_configure_target() {
-
-  if [ "${DISPLAYSERVER}" = "wl" ]; then
-    PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER} xorg-server xrandr libXi libX11"
-    PKG_CMAKE_OPTS_TARGET+=" -DGLEW_EGL=ON"
-  fi
-
-  if [ ! "${OPENGL}" = "no" ]; then
-    PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
-  fi
-
-  if [ "${OPENGLES_SUPPORT}" = yes ]; then
-    PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-  fi
-
   PKG_CMAKE_OPTS_TARGET+="      -DBUILD_UTILS=OFF \
 				-DGLEW_REGAL=OFF \
 				-DGLEW_OSMESA=OFF \
