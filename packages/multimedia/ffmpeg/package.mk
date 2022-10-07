@@ -120,8 +120,6 @@ if [ "${FFMPEG_TESTING}" = "yes" ]; then
   if [ "${PROJECT}" = "RPi" ]; then
     PKG_FFMPEG_TESTING+=" --enable-vout-drm --enable-outdev=vout_drm"
   fi
-else
-  PKG_FFMPEG_TESTING="--disable-programs"
 fi
 
 configure_target() {
