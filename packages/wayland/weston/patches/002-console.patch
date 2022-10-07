@@ -16,7 +16,7 @@ diff -rupN weston-10.0.1.orig/clients/terminal.c weston-10.0.1/clients/terminal.
  		setenv("COLORTERM", option_term, 1);
 +
 +		if (option_command) {
-+			if (execl(path, path, "-e", option_command, NULL)) {
++			if (execl(path, path, "-c", option_command, NULL)) {
 +				fprintf(stderr, "command '%s' couldn't executed: %m",
 +				option_command);
 +			}
