@@ -129,14 +129,7 @@ makeinstall_target() {
 }
 
 post_install() {
-  mkdir -p ${INSTALL}/etc/retroarch-joypad-autoconfig
-  if [ -d "${PKG_DIR}/gamepads/device/${DEVICE}" ]
-  then
-    cp -r ${PKG_DIR}/gamepads/device/${DEVICE}/* ${INSTALL}/etc/retroarch-joypad-autoconfig ||:
-  fi
-
   enable_service tmp-cores.mount
-  enable_service tmp-joypads.mount
   enable_service tmp-database.mount
   enable_service tmp-assets.mount
   enable_service tmp-shaders.mount
