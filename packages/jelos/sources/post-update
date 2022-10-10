@@ -27,12 +27,8 @@ then
   ln -sf /usr/config/splash/splash.png /storage/.config/emulationstation/resources/logo.png
 fi
 
-cp -f /usr/config/modules/gamelist.xml /storage/.config/modules
+rsync -a /usr/config/modules/* /storage/.config/modules/
 cp -f /usr/config/retroarch/retroarch-core-options.cfg /storage/.config/retroarch/retroarch-core-options.cfg
-rm -rf /storage/roms/ports/JelosAddOns*
-cp -r /usr/share/JelosAddOns /storage/roms/ports/
-mv /storage/roms/ports/JelosAddOns/JelosAddOns.sh /storage/roms/ports/JelosAddOns.sh
-chmod +x /storage/roms/ports/JelosAddOns.sh
 
 cd /usr/share/themes
 for theme in *
@@ -59,7 +55,7 @@ for es_cfg in es_features.cfg es_systems.cfg
 do
   if [ -e "/storage/.config/emulationstation/${es_cfg}" ]
   then
-    mv /storage/.config/emulationstation/${es_cfg} /storage/.config/emulationstation/last_${es_cfg}
+    mv -f /storage/.config/emulationstation/${es_cfg} /storage/.config/emulationstation/last_${es_cfg}
   fi
   ln -s /usr/config/emulationstation/${es_cfg} /storage/.config/emulationstation/${es_cfg}
 done
@@ -72,7 +68,7 @@ fi
 
 rsync -a --delete /usr/share/PortMaster/* /storage/roms/ports/PortMaster/
 chmod +x /storage/roms/ports/PortMaster -R
-mv -f /storage/roms/ports/PortMaster/PortMaster.sh /storage/roms/ports/PortMaster.sh
+cp -f /storage/roms/ports/PortMaster/PortMaster.sh /storage/roms/ports/PortMaster.sh
 
 # Ensure JelosAddOns is in sync
 if [ ! -d "/storage/roms/ports/JelosAddOns" ]
@@ -82,7 +78,17 @@ fi
 
 rsync -a /usr/share/JelosAddOns/* /storage/roms/ports/JelosAddOns/
 chmod -R 755 /storage/roms/ports/JelosAddOns
-mv -f /storage/roms/ports/JelosAddOns/JelosAddOns.sh /storage/roms/ports/JelosAddOns
+cp -f /storage/roms/ports/JelosAddOns/JelosAddOns.sh /storage/roms/ports/JelosAddOns.sh
+
+# Make sure ThemeMaster is in sync
+if [ ! -d "/storage/roms/ports/ThemeMaster" ]
+then
+  mkdir -p /storage/roms/ports/ThemeMaster
+fi
+
+rsync -a /usr/share/ThemeMaster/* /storage/roms/ports/ThemeMaster/
+chmod -R 755 /storage/roms/ports/ThemeMaster
+cp -f /storage/roms/ports/ThemeMaster/ThemeMaster /storage/roms/ports/ThemeMaster.sh
 
 # Default modules need to be updated to use the new stop/start ui function.
 rsync -av /usr/config/modules/* /storage/.config/modules/

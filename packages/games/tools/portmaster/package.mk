@@ -11,14 +11,20 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="A simple tool that allows you to download various game ports that are available for Jelos"
 PKG_TOOLCHAIN="manual"
 
+case ${DEVICE} in
+  RG552|handheld)
+    PKG_DEPENDS_TARGET="glew"
+  ;;
+esac
+
 pre_unpack() {
   unzip sources/portmaster/portmaster-.zip -d ${PKG_BUILD}
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/share/
+  mkdir -p ${INSTALL}/usr/share/
   cp -r ${PKG_BUILD}/PortMaster ${INSTALL}/usr/share/
-  chmod 0755 $INSTALL/usr/share/PortMaster
+  chmod 0755 ${INSTALL}/usr/share/PortMaster
 
   mkdir -p ${INSTALL}/usr/lib/autostart/common
   cp ${PKG_DIR}/sources/autostart/common/* ${INSTALL}/usr/lib/autostart/common

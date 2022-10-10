@@ -2,7 +2,8 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="glfw"
-PKG_VERSION="6b57e08bb0078c9834889eab871bac2368198c15"
+PKG_VERSION="dd8a678a66f1967372e5a5e3deac41ebf65ee127"
+PKG_SHA256="4bc4f4efd561ed063aa654b4867f1cebed9044c7711b401693ddda19634ebf99"
 PKG_ARCH="any"
 PKG_LICENSE="zlib"
 PKG_DEPENDS_TARGET="toolchain expat libdrm libxkbcommon libXrandr libXinerama libXcursor libXi Mako:host "
@@ -29,13 +30,9 @@ if [ "${DISPLAYSERVER}" = "wl" ]; then
 	PKG_CMAKE_OPTS_TARGET+=" -DGLFW_BUILD_WAYLAND=ON"
 fi
 
-case ${ARCH} in
-	arm)
-		PKG_CMAKE_OPTS_TARGET+=" -DGLFW_BUILD_X11=OFF"
-	;;
-esac
-
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/
-  cp $PKG_BUILD/.$TARGET_NAME/src/libglfw* $INSTALL/usr/lib/
+  mkdir -p ${INSTALL}/usr/lib/
+  cp ${PKG_BUILD}/.${TARGET_NAME}/src/libglfw* $INSTALL/usr/lib/
+  cp -rf ${PKG_BUILD}/include/* ${SYSROOT_PREFIX}/usr/include
 }
+

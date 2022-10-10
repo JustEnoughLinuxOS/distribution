@@ -8,14 +8,6 @@ name: build-main
 on:
   repository_dispatch:
     types: [release-main]
-  push:
-    paths-ignore:
-      - '.github/**'
-      - 'README.md'
-      - 'Dockerfile'
-      - '.dockerignore'
-    branches:
-      - main
 
 concurrency:
   group: main
@@ -27,7 +19,7 @@ jobs:
     steps:
       - uses: hmarr/debug-action@v2
         name: debug
-      - name: get current branch as it may not be default branch;
+      - name: get current branch as it may not be 'default branch;
         id: branch
         run: |
             branch_arg="${{ github.event.client_payload.branch }}"
@@ -43,6 +35,9 @@ jobs:
       - name: Get date for artifacts
         id: date
         run: echo "::set-output name=date::$(date +'%Y%m%d')"
+      - name: Get short SHA for artifacts
+        id: sha
+        run: echo "::set-output name=sha::$(git rev-parse --short HEAD)"
       - name: Get version
         id: version
         run: |
@@ -51,7 +46,7 @@ jobs:
            if [[ "${{ github.event.client_payload.release_tag }}" != "" ]]; then
                echo "::set-output name=version::${{ github.event.client_payload.release_tag }}"
            else
-               echo "::set-output name=version::${{ steps.date.outputs.date }}"
+               echo "::set-output name=version::${{ steps.date.outputs.date }}-${{ steps.sha.outputs.sha }}"
            fi
       - name: Build World
         run: |
@@ -98,15 +93,22 @@ jobs:
             limitations under the License.
 
             ## Installation
-            * Download the latest [version of JELOS](https://github.com/JustEnoughLinuxOS/distribution/releases) (.img.gz) for your device.
+            * Download the latest version of JELOS.
             * Decompress the image.
             * Write the image to an SDCARD using an imaging tool.  Common imaging tools include [Balena Etcher](https://www.balena.io/etcher/), [Raspberry Pi Imager](https://www.raspberrypi.com/software/), and [Win32 Disk Imager](https://sourceforge.net/projects/win32diskimager/).  If you're skilled with the command line, dd works fine too.
 
+            Download: [[Win600/x86_64](https://github.com/JustEnoughLinuxOS/distribution/releases/download/JELOS-handheld.x86_64-${{ steps.version.outputs.version }}.img.gz)] [[RG353V/RG353P](https://github.com/JustEnoughLinuxOS/distribution/releases/download/JELOS-RG353P.aarch64-${{ steps.version.outputs.version }}.img.gz)] [[RG503](https://github.com/JustEnoughLinuxOS/distribution/releases/download/JELOS-RG503.aarch64-${{ steps.version.outputs.version }}.img.gz)] [[RG552](https://github.com/JustEnoughLinuxOS/distribution/releases/download/JELOS-RG552.aarch64-${{ steps.version.outputs.version }}.img.gz)] [[RG351P](https://github.com/JustEnoughLinuxOS/distribution/releases/download/JELOS-RG351P.aarch64-${{ steps.version.outputs.version }}.img.gz)] [[RG351V](https://github.com/JustEnoughLinuxOS/distribution/releases/download/JELOS-RG351V.aarch64-${{ steps.version.outputs.version }}.img.gz)] [[RG351MP](https://github.com/JustEnoughLinuxOS/distribution/releases/download/JELOS-RG351MP.aarch64-${{ steps.version.outputs.version }}.img.gz)]
+
             ## Upgrading
             * Download and install the update online via the System Settings menu.
-            * Download the latest [version of JELOS](https://github.com/JustEnoughLinuxOS/distribution/releases) (.tar) for your device.
-            * Copy the update to your device over the network or to the sdcard's update folder.
-            * Reboot the device, and the update will begin automatically.
+            ## Upgrading
+            * Download and install the update online via the System Settings menu.
+            * If you are unable to update online
+              * Download the latest version of JELOS from Github
+              * Copy the update to your device over the network or to the sdcard's update folder.
+              * Reboot the device, and the update will begin automatically.
+
+            Download: [[Win600/x86_64](https://github.com/JustEnoughLinuxOS/distribution/releases/download/JELOS-handheld.x86_64-${{ steps.version.outputs.version }}.tar)] [[RG353V/RG353P](https://github.com/JustEnoughLinuxOS/distribution/releases/download/JELOS-RG353P.aarch64-${{ steps.version.outputs.version }}.tar)] [[RG503](https://github.com/JustEnoughLinuxOS/distribution/releases/download/JELOS-RG503.aarch64-${{ steps.version.outputs.version }}.tar)] [[RG552](https://github.com/JustEnoughLinuxOS/distribution/releases/download/JELOS-RG552.aarch64-${{ steps.version.outputs.version }}.tar)] [[RG351P](https://github.com/JustEnoughLinuxOS/distribution/releases/download/JELOS-RG351P.aarch64-${{ steps.version.outputs.version }}.tar)] [[RG351V](https://github.com/JustEnoughLinuxOS/distribution/releases/download/JELOS-RG351V.aarch64-${{ steps.version.outputs.version }}.tar)] [[RG351MP](https://github.com/JustEnoughLinuxOS/distribution/releases/download/JELOS-RG351MP.aarch64-${{ steps.version.outputs.version }}.tar)]
 
             ## Documentation
             * [Home](https://github.com/JustEnoughLinuxOS/distribution/wiki)

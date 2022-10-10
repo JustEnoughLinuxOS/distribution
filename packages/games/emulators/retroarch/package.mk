@@ -2,7 +2,7 @@
 # Copyright (C) 2021-present 351ELEC (https://github.com/351ELEC)
 
 PKG_NAME="retroarch"
-PKG_VERSION="284466b04b0dcf8c086bfa33a8c2df61fc4afc2b"
+PKG_VERSION="f8a9b0a197258c27c00fc575675668088b132bd2"
 PKG_SITE="https://github.com/libretro/RetroArch"
 PKG_URL="${PKG_SITE}.git"
 PKG_LICENSE="GPLv3"
@@ -129,14 +129,7 @@ makeinstall_target() {
 }
 
 post_install() {
-  mkdir -p ${INSTALL}/etc/retroarch-joypad-autoconfig
-  if [ -d "${PKG_DIR}/gamepads/device/${DEVICE}" ]
-  then
-    cp -r ${PKG_DIR}/gamepads/device/${DEVICE}/* ${INSTALL}/etc/retroarch-joypad-autoconfig ||:
-  fi
-
   enable_service tmp-cores.mount
-  enable_service tmp-joypads.mount
   enable_service tmp-database.mount
   enable_service tmp-assets.mount
   enable_service tmp-shaders.mount
