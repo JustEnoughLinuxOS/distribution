@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
+
+ACTION!="add|change", GOTO="end_modeswitch"
+
+# Atheros Wireless / Netgear WNDA3200
+ATTRS{idVendor}=="0cf3", ATTRS{idProduct}=="20ff", RUN+="/usr/bin/eject '/dev/%k'"
+
+# Realtek RTL8821CU chipset 802.11ac NIC
+#   initial cdrom mode 0bda:1a2b, wlan mode 0bda:c811
+# Odroid WiFi Module 5B
+#   initial cdrom mode 0bda:1a2b, wlan mode 0bda:c820
+ATTR{idVendor}=="0bda", ATTR{idProduct}=="1a2b", RUN+="/usr/sbin/usb_modeswitch -K -v 0bda -p 1a2b"
+ATTR{idVendor}=="0bda", ATTR{idProduct}=="c811", RUN+="/usr/sbin/usb_modeswitch -K -v 0bda -p c811"
+
+LABEL="end_modeswitch"
