@@ -9,6 +9,11 @@
 set_audio alsa
 export SDL_AUDIODRIVER=alsa
 
+while [ -e "/storage/.mounting" ]
+do
+  sleep .5
+done
+
 TZ=$(get_setting system.timezone)
 echo -n "TIMEZONE=${TZ}" > /storage/.cache/timezone
 echo -n "${TZ}" >/storage/.cache/system_timezone

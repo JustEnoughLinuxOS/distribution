@@ -9,11 +9,14 @@ UPDATE_ROOT="/storage/.update"
 MOUNT_GAMES=$(get_setting system.automount)
 GAMES_DEVICE=$(get_setting system.gamesdevice)
 
+touch /storage/.mounting
+
 if [[ ! "${MOUNT_GAMES}" =~ [0-9] ]]
 then
   set_setting system.automount 1
 elif [[ "${MOUNT_GAMES}" == "0" ]]
 then
+  rm /storage/.mounting
   exit 0
 fi
 
@@ -69,4 +72,5 @@ then
 else
   find_games
 fi
-
+i
+rm /storage/.mounting
