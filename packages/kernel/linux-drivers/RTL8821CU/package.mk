@@ -4,7 +4,7 @@
 # Copyright (C) 2021-present Fewtarius
 
 PKG_NAME="RTL8821CU"
-PKG_VERSION="14798a1"
+PKG_VERSION="4dfe0bc"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/morrownr/8821cu-20210118"
 PKG_URL="${PKG_SITE}.git"
