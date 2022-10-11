@@ -105,7 +105,7 @@ EOF
       list_wifi | awk '{sub(/\S+=/,"",$0);print}'
     ;;
     "scan")
-      connmanctl scan 2>/dev/null
+      connmanctl scan wifi 2>/dev/null
     ;;
     "scanlist")
       set_wifi scan 2>/dev/null
