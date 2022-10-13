@@ -3,7 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="mesa"
-PKG_VERSION="f00b54bc9e70e49f546ac2efeceb59540ff4a6fd"
+PKG_VERSION="d5394296becfc97bc992c82d6f5d013b35b5275a"
 PKG_LICENSE="OSS"
 PKG_SITE="https://gitlab.freedesktop.org/mesa/mesa"
 PKG_URL="${PKG_SITE}.git"
@@ -16,6 +16,7 @@ get_graphicdrivers
 PKG_MESON_OPTS_TARGET="-Ddri-drivers= \
                        -Dgallium-drivers=${GALLIUM_DRIVERS// /,} \
                        -Dgallium-extra-hud=false \
+                       -Dgallium-xvmc=disabled \
                        -Dgallium-omx=disabled \
                        -Dgallium-nine=false \
                        -Dgallium-opencl=disabled \
