@@ -26,11 +26,14 @@ PKG_URL="https://github.com/hrydgard/ppsspp.git"
 PKG_DEPENDS_TARGET="toolchain SDL2 ffmpeg libzip"
 PKG_LONGDESC="A PSP emulator for Android, Windows, Mac, Linux and Blackberry 10, written in C++."
 GET_HANDLER_SUPPORT="git"
+PKG_GIT_CLONE_DEPTH="1"
+PKG_GIT_SUBMODULE_DEPTH="1"
 
 PKG_LIBNAME="ppsspp_libretro.so"
 PKG_LIBPATH="lib/$PKG_LIBNAME"
 
 pre_configure_target() {
+  git submodule update --init --recursive
   PKG_CMAKE_OPTS_TARGET="-DLIBRETRO=ON \
                          -DUSE_SYSTEM_FFMPEG=ON \
                          -DUSING_X11_VULKAN=OFF"
