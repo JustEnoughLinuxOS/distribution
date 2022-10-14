@@ -117,3 +117,9 @@ if [ ! -e "/storage/.config/smb.conf" ]
 then
   cp -f /usr/config/smb.conf /storage/.config
 fi
+
+# Merge alsa configs on 353P/V
+if [[ "${HW_DEVICE}" =~ RG353P ]]
+then
+  cp /usr/config/asound.conf /storage/.config
+fi
