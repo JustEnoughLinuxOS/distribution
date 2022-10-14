@@ -9,14 +9,11 @@ UPDATE_ROOT="/storage/.update"
 MOUNT_GAMES=$(get_setting system.automount)
 GAMES_DEVICE=$(get_setting system.gamesdevice)
 
-touch /storage/.mounting
-
 if [[ ! "${MOUNT_GAMES}" =~ [0-9] ]]
 then
   set_setting system.automount 1
 elif [[ "${MOUNT_GAMES}" == "0" ]]
 then
-  rm /storage/.mounting
   exit 0
 fi
 
@@ -26,6 +23,7 @@ mount_games() {
          [ -e "${1}" ] && \
          [ ! -e "/storage/.please_resize_me" ]
       then
+        echo "Mounting ${1} on /storage/roms"
         mount ${1} /storage/roms >/dev/null 2>&1
         /usr/bin/systemd-tmpfiles --create /usr/lib/tmpfiles.d/jelos-dirs.conf >/dev/null 2>&1
       fi
@@ -41,14 +39,16 @@ find_games() {
     for DEV in $(blkid | awk 'BEGIN {FS=":"}; /ext4/ || /fat/ {print $1}' | sort -r)
     do
       ROOTDEV=$(echo ${DEV} | sed -e "s#^/.*/##g" -e "s#p[0-9].*\$##g")
-      SIZE=$(awk '/'${ROOTDEV}'/ {print $3}' /proc/partitions)
-      if [ "${SIZE}" -le "8388608" ]
+      SIZE=$(awk '/'${ROOTDEV}'$/ {print $3}' /proc/partitions)
+      if (( ${SIZE} <= 8388608 ))
       then
+        echo "Device ${ROOTDEV} is too small, ignoring."
         # We don't want to mount partitions smaller than ~8GB.
         continue
       fi
       if [ -L "/sys/class/block/${ROOTDEV}boot0" ]
       then
+        echo "Device ${ROOTDEV} might be Android, ignoring."
         # Assume this is an android boot device and ignore it.
         continue
       fi
@@ -72,5 +72,3 @@ then
 else
   find_games
 fi
-i
-rm /storage/.mounting

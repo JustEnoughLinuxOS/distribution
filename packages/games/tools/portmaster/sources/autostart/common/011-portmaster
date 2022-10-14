@@ -3,7 +3,6 @@
 # Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
-
 if [ ! -d "/storage/roms/ports/PortMaster" ]
 then
   mkdir -p /storage/roms/ports/PortMaster
