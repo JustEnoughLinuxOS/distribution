@@ -51,6 +51,7 @@ limitations under the License.
 
 ## Installation
 * x86_64 versions of JELOS include an installation tool.  This tool may be run from the boot menu or from within JELOS by switching to desktop mode and running "installer" in a terminal.
+* RG353V users should use the RG353P image, and select "DEVICE IS RG353V" from the system settings menu in EmulationStation.
 
 ## Upgrading
 * Download and install the update online via the System Settings menu.

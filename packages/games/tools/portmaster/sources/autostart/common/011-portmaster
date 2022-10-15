@@ -3,13 +3,11 @@
 # Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
-
 if [ ! -d "/storage/roms/ports/PortMaster" ]
 then
   mkdir -p /storage/roms/ports/PortMaster
   rsync -a /usr/share/PortMaster/* /storage/roms/ports/PortMaster/
   chmod -R 755 /storage/roms/ports/PortMaster
-  mv -f /storage/roms/ports/PortMaster/PortMaster.sh /storage/roms/ports/PortMaster.sh
 fi
 
 #Check if gamelist.xml exists, if not create gamelist.xml to hide portmaster by default.
@@ -20,7 +18,7 @@ touch /storage/roms/ports/gamelist.xml
 <?xml version="1.0"?>
 <gameList>
 	<game>
-		<path>/storage/roms/ports/PortMaster.sh</path>
+		<path>/storage/roms/ports/PortMaster/PortMaster.sh</path>
 		<name>PortMaster</name>
 		<hidden>true</hidden>
 	</game>
@@ -33,7 +31,7 @@ if ! grep -R "PortMaster" "/storage/roms/ports/gamelist.xml"
 then
 sed -i 's|<gameList>|&   \
 	<game>\
-		<path>/storage/roms/ports/PortMaster.sh</path>\
+		<path>/storage/roms/ports/PortMaster/PortMaster.sh</path>\
 		<name>PortMaster</name>\
 		<hidden>true</hidden>\
 	</game>|' /storage/roms/ports/gamelist.xml

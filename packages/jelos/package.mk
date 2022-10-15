@@ -125,6 +125,7 @@ post_install() {
 EOF
 
   cp ${PKG_DIR}/sources/scripts/* ${INSTALL}/usr/bin
+  enable_service jelos-automount.service
 
   if [ -d "${PKG_DIR}/sources/asound/${DEVICE}" ]
   then
@@ -171,4 +172,5 @@ EOF
   then
     sed -i "s#ssh.enabled=0#ssh.enabled=1#g" ${INSTALL}/usr/config/system/configs/system.cfg
   fi
+
 }
