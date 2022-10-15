@@ -2,7 +2,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="moonlight"
-PKG_VERSION="13390594f56b56220ba301b6bfcffc38178b3fd8"
+PKG_VERSION="f021439d1bb33b4869273f7521ec77edb6804fe1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/moonlight-stream/moonlight-embedded"
