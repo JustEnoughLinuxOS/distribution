@@ -9,4 +9,5 @@ if [ "${UI_SERVICE}" = "weston.service" ]
 then
   sed -i -e "s#/dev/tty0#/dev/tty#" /storage/roms/ports/JelosAddOns.sh
 fi
-/storage/roms/ports/JelosAddOns.sh
+cd /storage/roms/ports/JelosAddOns
+./JelosAddOns.sh

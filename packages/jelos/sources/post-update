@@ -47,6 +47,7 @@ then
   cp /usr/config/ssh/authorized_keys /storage/.ssh
 fi
 
+### Sync rsync configs
 rsync --ignore-existing /usr/config/rsync-rules.conf /storage/.config/
 rsync --ignore-existing /usr/config/rsync.conf /storage/.config/
 
@@ -64,31 +65,40 @@ done
 if [ ! -d "/storage/roms/ports/PortMaster" ]
 then
   mkdir -p /storage/roms/ports/PortMaster
+else
+  rm -rf /storage/roms/ports/PortMaster
+  mkdir -p /storage/roms/ports/PortMaster
+  rm -f /storage/roms/ports/PortMaster.sh ||:
 fi
 
 rsync -a --delete /usr/share/PortMaster/* /storage/roms/ports/PortMaster/
 chmod +x /storage/roms/ports/PortMaster -R
-cp -f /storage/roms/ports/PortMaster/PortMaster.sh /storage/roms/ports/PortMaster.sh
 
 # Ensure JelosAddOns is in sync
 if [ ! -d "/storage/roms/ports/JelosAddOns" ]
 then
   mkdir -p /storage/roms/ports/JelosAddOns
+else
+  rm -rf /storage/roms/ports/JelosAddOns
+  mkdir -p /storage/roms/ports/JelosAddOns
+  rm -f /storage/roms/ports/JelosAddOns.sh ||:
 fi
 
 rsync -a /usr/share/JelosAddOns/* /storage/roms/ports/JelosAddOns/
 chmod -R 755 /storage/roms/ports/JelosAddOns
-cp -f /storage/roms/ports/JelosAddOns/JelosAddOns.sh /storage/roms/ports/JelosAddOns.sh
 
 # Make sure ThemeMaster is in sync
 if [ ! -d "/storage/roms/ports/ThemeMaster" ]
 then
   mkdir -p /storage/roms/ports/ThemeMaster
+else
+  rm -rf /storage/roms/ports/ThemeMaster
+  mkdir -p /storage/roms/ports/ThemeMaster
+  rm -f /storage/roms/ports/ThemeMaster.sh ||:
 fi
 
 rsync -a /usr/share/ThemeMaster/* /storage/roms/ports/ThemeMaster/
 chmod -R 755 /storage/roms/ports/ThemeMaster
-cp -f /storage/roms/ports/ThemeMaster/ThemeMaster /storage/roms/ports/ThemeMaster.sh
 
 # Default modules need to be updated to use the new stop/start ui function.
 rsync -av /usr/config/modules/* /storage/.config/modules/
