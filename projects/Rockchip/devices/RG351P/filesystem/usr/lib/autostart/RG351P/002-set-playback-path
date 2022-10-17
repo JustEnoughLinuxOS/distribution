@@ -1,0 +1,4 @@
+#!/bin/sh
+
+amixer set "Playback Path" "SPK_HP"
+exit 0
