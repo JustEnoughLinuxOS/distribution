@@ -1,0 +1,10 @@
+[Unit]
+Description=After Suspend
+After=suspend.target
+
+[Service]
+Type=oneshot
+ExecStart=-amixer set "Playback Path" "SPK_HP"
+
+[Install]
+WantedBy=suspend.target
