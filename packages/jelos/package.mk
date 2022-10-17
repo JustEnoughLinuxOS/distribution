@@ -24,7 +24,7 @@ fi
 
 PKG_BASEOS="plymouth-lite grep wget libjpeg-turbo util-linux xmlstarlet bluetool gnupg gzip patchelf \
             imagemagick terminus-font vim bash pyudev dialog six git dbus-python coreutils miniupnpc \
-            nss-mdns avahi alsa-ucm-conf MC fbgrab modules system-utils"
+            nss-mdns avahi alsa-ucm-conf MC fbgrab modules system-utils mesa-demos"
 
 PKG_UI="emulationstation es-themes"
 
@@ -33,6 +33,13 @@ PKG_SOFTWARE=""
 PKG_COMPAT=""
 
 PKG_TOOLS="i2c-tools rclone jslisten evtest tailscale"
+
+### Tools for mainline devices
+case "${DEVICE}" in
+  handheld|RG552)
+    PKG_TOOLS+=" mesa-demos"
+  ;;
+esac
 
 PKG_MULTIMEDIA="ffmpeg mpv vlc"
 
