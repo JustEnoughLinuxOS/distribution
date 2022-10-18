@@ -1,5 +1,5 @@
 [Unit]
-Description=After Suspend
+Description=After resume, set playback path back to SPK_HP.
 After=suspend.target
 
 [Service]
