@@ -25,8 +25,8 @@ case ${DEVICE} in
     PKG_VERSION="a19b4df7c"
   ;;
   RG552)
-    PKG_URL="https://github.com/brooksytech/rk3399-kernel-5.19.git"
-    PKG_VERSION="0c47c2cd85cc4e631ca9b00f135382dd8bd1efb5"
+    PKG_VERSION="5.19.16"
+    PKG_URL="https://www.kernel.org/pub/linux/kernel/v5.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
     PKG_GIT_CLONE_BRANCH="dev"
   ;;
   RG353P|RG503)
