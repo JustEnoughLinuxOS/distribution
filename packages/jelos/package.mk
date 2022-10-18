@@ -34,6 +34,13 @@ PKG_COMPAT=""
 
 PKG_TOOLS="i2c-tools rclone jslisten evtest tailscale"
 
+### Tools for mainline devices
+case "${DEVICE}" in
+  handheld|RG552)
+    PKG_TOOLS+=" mesa-demos"
+  ;;
+esac
+
 PKG_MULTIMEDIA="ffmpeg mpv vlc"
 
 PKG_EXPERIMENTAL=""
