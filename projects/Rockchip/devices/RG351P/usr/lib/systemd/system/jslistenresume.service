@@ -1,0 +1,10 @@
+[Unit]
+Description=Delay and restart jslisten after resume so it correctly polls the controls
+After=suspend.target
+
+[Service]
+Type=oneshot
+ExecStart=-nohup sh -c 'sleep 4; systemctl restart jslisten'
+
+[Install]
+WantedBy=suspend.target
