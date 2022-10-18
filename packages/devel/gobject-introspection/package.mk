@@ -4,8 +4,8 @@
 # Copyright (C) 2020-present Team CoreELEC (https://coreelec.org)
 
 PKG_NAME="gobject-introspection"
-PKG_VERSION="1.72.0"
-PKG_SHA256="07c30d7f465dabd861c03a950430343e976d445179ad451a4dd1b17329e1cbae"
+PKG_VERSION="1.74.0"
+PKG_SHA256="79ed5d764d288f046b027ff064be174d7904904565de150a94841740a2a0455d"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.gtk.org/"
@@ -18,7 +18,9 @@ PKG_LONGDESC="GLib is a library which includes support routines for C such as li
 PKG_TOOLCHAIN="meson"
 
 pre_configure_host() {
-  PKG_MESON_OPTS_HOST="-Ddoctool=disabled"
+  PKG_MESON_OPTS_HOST=" \
+    -Ddoctool=disabled \
+    -Dbuild_introspection_data=false"
 
   # prevent g-ir-scanner from writing cache data to $HOME
   export GI_SCANNER_DISABLE_CACHE="1"
