@@ -13,3 +13,8 @@ fi
 
 cd /storage/roms/ports/PortMaster
 ./PortMaster.sh
+
+if [ -e "/storage/roms/ports/PortMaster.sh" ]
+then
+  mv /storage/roms/ports/PortMaster.sh /storage/roms/ports/PortMaster/
+fi
