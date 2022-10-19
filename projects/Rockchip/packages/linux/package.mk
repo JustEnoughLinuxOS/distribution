@@ -17,21 +17,22 @@ PKG_IS_KERNEL_PKG="yes"
 PKG_STAMP="${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD}"
 PKG_PATCH_DIRS+="${DEVICE}"
 PKG_GIT_CLONE_BRANCH="main"
-GET_HANDLER_SUPPORT="git"
 
 case ${DEVICE} in
   RG351P|RG351V|RG351MP)
     PKG_URL="${PKG_SITE}/rk3326-kernel.git"
     PKG_VERSION="a19b4df7c"
+    GET_HANDLER_SUPPORT="git"
   ;;
   RG552)
-    PKG_URL="https://github.com/brooksytech/rk3399-kernel-5.19.git"
-    PKG_VERSION="0c47c2cd85cc4e631ca9b00f135382dd8bd1efb5"
+    PKG_VERSION="5.19.16"
+    PKG_URL="https://www.kernel.org/pub/linux/kernel/v5.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
     PKG_GIT_CLONE_BRANCH="dev"
   ;;
   RG353P|RG503)
     PKG_URL="${PKG_SITE}/rk356x-kernel.git"
     PKG_VERSION="7e1b435e1"
+    GET_HANDLER_SUPPORT="git"
   ;;
 esac
 

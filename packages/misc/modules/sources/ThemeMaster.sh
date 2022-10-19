@@ -12,4 +12,4 @@ then
 fi
 
 cd /storage/roms/ports/ThemeMaster
-./ThemeMaster.sh
+./ThemeMaster.sh 2>/dev/null
