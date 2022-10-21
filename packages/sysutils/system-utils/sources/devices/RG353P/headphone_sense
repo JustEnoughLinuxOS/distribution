@@ -14,20 +14,20 @@ HP_OFF='*headset status is out*'
 BOOT_SETTING=$(journalctl | grep "headset status is" | tail -n 1)
 case ${BOOT_SETTING} in
 	(${HP_ON})
-		amixer cset name='Playback Path' HP
+		amixer cset name='Playback Path' ${DEVICE_PLAYBACK_PATH_HP}
 	;;
         *)
-                amixer cset name='Playback Path' SPK
+                amixer cset name='Playback Path' ${DEVICE_PLAYBACK_PATH_SPK}
         ;;
 esac
 
 journalctl -f | while read line; do
     case $line in
 	(${HP_ON})
-		amixer cset name='Playback Path' HP
+		amixer cset name='Playback Path' ${DEVICE_PLAYBACK_PATH_HP}
 	;;
         (${HP_OFF})
-                amixer cset name='Playback Path' SPK
+                amixer cset name='Playback Path' ${DEVICE_PLAYBACK_PATH_SPK}
         ;;
     esac
 done
