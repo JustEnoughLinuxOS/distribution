@@ -23,8 +23,8 @@ then
   rm drastic.tar.gz
 
   if [ ! -d "/storage/.config/drastic/aarch64/drastic/config" ]; then
-    mkdir -p /storage/.config/aarch64/drastic/config
-    cp /usr/config/drastic/drastic.cfg /storage/.config/drastic/config/drastic.cfg
+    mkdir -p /storage/.config/drastic/aarch64/drastic/config
+    cp /usr/config/drastic/drastic.cfg /storage/.config/drastic/aarch64/drastic/config/drastic.cfg
   fi
 
   cd /storage/.config/drastic/aarch64/drastic/
@@ -41,8 +41,8 @@ clear
 else
 
 if [ ! -d "/storage/.config/drastic/aarch64/drastic/config" ]; then
-  mkdir -p /storage/.config/aarch64/drastic/config
-  cp /usr/config/drastic/drastic.cfg /storage/.config/drastic/config/drastic.cfg
+  mkdir -p /storage/.config/drastic/aarch64/drastic/config
+  cp /usr/config/drastic/drastic.cfg /storage/.config/drastic/aarch64/drastic/config/drastic.cfg
 fi
 
 cd /storage/.config/drastic/aarch64/drastic/
