@@ -36,5 +36,4 @@ makeinstall_target() {
   cp ${PKG_BUILD}/pcsx_rearmed_libretro.info ${INSTALL}/usr/lib/libretro/pcsx_rearmed32_libretro.info
   cp ${PKG_BUILD}/flycast_libretro.info ${INSTALL}/usr/lib/libretro/flycast_libretro_libretro.info
   cp ${PKG_BUILD}/flycast_libretro.info ${INSTALL}/usr/lib/libretro/flycast32_libretro.info
-  cp ${PKG_BUILD}/duckstation_libretro.info ${INSTALL}/usr/lib/libretro/duckstation_custom_libretro.info
 }
