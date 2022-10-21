@@ -58,10 +58,10 @@ source /tmp/${OUTFILE}
 echo "${CONTROLLER}" >/storage/.controller
 
 cat <<EOF >/storage/.config/profile.d/99-controller
-DEVICE_BTN_SOUTH="${a}"
-DEVICE_BTN_EAST="${b}"
-DEVICE_BTN_NORTH="${y}"
-DEVICE_BTN_WEST="${x}"
+DEVICE_BTN_SOUTH="${b}"
+DEVICE_BTN_EAST="${a}"
+DEVICE_BTN_NORTH="${x}"
+DEVICE_BTN_WEST="${y}"
 DEVICE_BTN_TL="${leftshoulder}"
 DEVICE_BTN_TR="${rightshoulder}"
 DEVICE_BTN_TL2="${lefttrigger}"
