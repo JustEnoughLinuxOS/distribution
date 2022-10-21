@@ -17,12 +17,12 @@ CURRENTAUDIO=$(get_setting "audio.device")
 	case "${CURRENTAUDIO}" in
 	    "headphone")
 	    echo "setting speakers"
-		amixer -M cset name='Playback Path' SPK
+		amixer -M cset name='Playback Path' ${DEVICE_PLAYBACK_PATH_SPK}
 		set_setting "audio.device" "speakers"
 		;;
 	    "auto"|"speakers"|*)
 	    echo "setting headphones"
-		amixer -M cset name='Playback Path' HP
+		amixer -M cset name='Playback Path' ${DEVICE_PLAYBACK_PATH_HP}
 		set_setting "audio.device" "headphone"
 		;;
 	esac
@@ -33,12 +33,12 @@ if [ "${1}" == "setaudio" ];then
 	case "${2}" in
 	    "headphone")
 	    echo "setting headphones"
-		amixer -M cset name='Playback Path' HP
+		amixer -M cset name='Playback Path' ${DEVICE_PLAYBACK_PATH_HP}
 		set_setting "audio.device" "headphone"
 		;;
 	  	"auto"|"speakers"|*)
 	  	echo "setting speakers"
-		amixer -M cset name='Playback Path' SPK
+		amixer -M cset name='Playback Path' ${DEVICE_PLAYBACK_PATH_SPK}
 		set_setting "audio.device" "speakers"
 		;;
 	esac

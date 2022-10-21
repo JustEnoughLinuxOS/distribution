@@ -25,11 +25,11 @@ HP_OFF='*(SW_HEADPHONE_INSERT), value 1*'
 evtest "${DEVICE}" | while read line; do
     case $line in
 	(${HP_ON})
-	amixer cset name='Playback Path' HP
+	amixer cset name='Playback Path' ${DEVICE_PLAYBACK_PATH_HP}
 	set_setting "audio.device" "headphone"
 	;;
 	(${HP_OFF})
-	amixer cset name='Playback Path' SPK
+	amixer cset name='Playback Path' ${DEVICE_PLAYBACK_PATH_SPK}
 	set_setting "audio.device" "speakers"
 	;;
     esac
