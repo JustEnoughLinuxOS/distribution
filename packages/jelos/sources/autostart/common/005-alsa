@@ -4,6 +4,24 @@
 
 . /etc/profile
 
+AUDIO_DEVICE="$(aplay -L | awk 'BEGIN{ FS=":"} /[a-z]:/ {print $1; exit}')"
+if [[ "${AUDIO_DEVICE}" =~ hdmi ]]
+then
+  cat <<EOF >/storage/.config/asound.conf
+pcm.!default {
+  type plug
+  slave {
+    pcm "hdmi:0,0"
+  }
+}
+ctl.!default {
+  type hw
+  card 0
+}
+EOF
+exit 0
+fi
+
 # Copy in the configuration
 if [ ! -e "/storage/.config/asound.conf" ]
 then

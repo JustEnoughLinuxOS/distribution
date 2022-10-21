@@ -4,14 +4,9 @@
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 # Copyright (C) 2020-present Fewtarius
 
-# TODO: Set Atari800 to Atari5200 when neeeded / done?
-# TODO: retroachivements / done?
-# I use ${} for easier reading
-
 # IMPORTANT: This script should not return (echo) anything other than the shader if its set
 
 . /etc/profile
-. /etc/os-release
 
 RETROACHIEVEMENTS=(arcade atari2600 atari7800 atarilynx colecovision famicom fbn fds gamegear gb gba gbah gbc gbch gbh genesis genh ggh intellivision mastersystem megacd megadrive megadrive-japan msx msx2 n64 neogeo neogeocd nes nesh ngp ngpc odyssey2 pcengine pcenginecd pcfx pokemini psp psx sega32x segacd sfc sg-1000 snes snesh snesmsu1 supergrafx supervision tg16 tg16cd vectrex virtualboy wonderswan wonderswancolor)
 NOREWIND=(sega32x psx zxspectrum odyssey2 mame n64 dreamcast atomiswave naomi neogeocd saturn psp pspminis)
@@ -124,18 +119,33 @@ log "Core: ${CORE}"
 
 ##
 ## Global Setting that have to stay in retroarch.cfg
-## All setttings that should apply when retroarch is run as standalone
+## All settings that should apply when retroarch is run as standalone
 ##
 
-### Wifi
-## Cleanup old settings first
-#sed -i "/wifi_enabled/d" ${RACONF}
-## Get configuration from system.cfg and set to retroarch.cfg
-#if [ "$(get_setting wifi.enabled)" = "1" ]; then
-#	echo 'wifi_enabled = "true"' >> ${RACONF}
-#else
-#	echo 'wifi_enabled = "false"' >> ${RACONF}
-#fi
+## Configure hotkeys if they're not already configured for this device.
+mkcontroller
+if [ -e "/storage/.retroarch_controller" ]
+then
+  LAST_CONTROLLER="$(cat /storage/.retroarch_controller)"
+fi
+
+MY_CONTROLLER="$(cat /storage/.controller)"
+if [ ! "${LAST_CONTROLLER}" == "${MY_CONTROLLER}" ]
+then
+  sed -i "/input_bind_hold/d" ${RACONF}
+  sed -i "/input_fps_toggle_btn/d" ${RACONF}
+  sed -i "/input_menu_toggle_btn/d" ${RACONF}
+  sed -i "/input_save_state_btn/d" ${RACONF}
+  sed -i "/input_load_state_btn/d" ${RACONF}
+  cat <<EOF >>${RACONF}
+input_bind_hold = "${DEVICE_BTN_SELECT}"
+input_fps_toggle_btn = "${DEVICE_BTN_NORTH}"
+input_menu_toggle_btn = "${DEVICE_BTN_WEST}"
+input_save_state_btn = "${DEVICE_BTN_TL}"
+input_load_state_btn = "${DEVICE_BTN_TR}"
+EOF
+  echo "${MY_CONTROLLER}" >/storage/.retroarch_controller
+fi
 
 # RA menu rgui, ozone, glui or xmb (fallback if everthing else fails)
 # if empty (auto in ES) do nothing to enable configuration in RA
