@@ -41,19 +41,6 @@
 	</game>
 	
 	<game>
-		<path>./JelosAddOns.sh</path>
-		<name>JelosAddOns</name>
-		<desc>Game port installer</desc>
-		<developer>brooksytech</developer>
-		<publisher>Jelos</publisher>
-		<rating>1.0</rating>
-		<releasedate>2021</releasedate>
-		<genre>Script</genre>
-		<thumbnail>./downloaded_images/jelos-thumb.png</thumbnail>
-		<image>./downloaded_images/jelos-image.png</image>
-	</game>
-
-	<game>
 		<path>./PortMaster.sh</path>
 		<name>PortMaster</name>
 		<desc>Game port installer</desc>
