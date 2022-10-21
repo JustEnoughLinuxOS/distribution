@@ -19,27 +19,22 @@ ctl.!default {
   card 0
 }
 EOF
-exit 0
-fi
-
-# Copy in the configuration
-if [ ! -e "/storage/.config/asound.conf" ]
-then
+else
   cp /usr/config/asound.conf /storage/.config
-fi
 
-if [ ! -e "/storage/.config/asound.state" ] && [ -e /usr/config/asound.state ]
-then
-  cp /usr/config/asound.state /storage/.config
-fi
+  if [ ! -e "/storage/.config/asound.state" ] && [ -e /usr/config/asound.state ]
+  then
+    cp /usr/config/asound.state /storage/.config
+  fi
 
-# Set the mixer in ES
-sed -i 's#<string name="AudioDevice" value="'.*'" />#<string name="AudioDevice" value="'${DEVICE_AUDIO_MIXER}'" />#' /storage/.emulationstation/es_settings.cfg
+  # Set the mixer in ES
+  sed -i 's#<string name="AudioDevice" value="'.*'" />#<string name="AudioDevice" value="'${DEVICE_AUDIO_MIXER}'" />#' /storage/.emulationstation/es_settings.cfg
 
-# Initialize sound using the state if available.
-if [ -e "/storage/.config/asound.state" ]
-then
-  alsactl restore -f /storage/.config/asound.state
+  # Initialize sound using the state if available.
+  if [ -e "/storage/.config/asound.state" ]
+  then
+    alsactl restore -f /storage/.config/asound.state
+  fi
 fi
 
 VOL=$(get_setting "audio.volume" 2>/dev/null)
