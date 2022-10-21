@@ -139,8 +139,8 @@ then
   sed -i "/input_load_state_btn/d" ${RACONF}
   cat <<EOF >>${RACONF}
 input_bind_hold = "${DEVICE_BTN_SELECT}"
-input_fps_toggle_btn = "${DEVICE_BTN_NORTH}"
-input_menu_toggle_btn = "${DEVICE_BTN_WEST}"
+input_fps_toggle_btn = "${DEVICE_BTN_WEST}"
+input_menu_toggle_btn = "${DEVICE_BTN_NORTH}"
 input_save_state_btn = "${DEVICE_BTN_TL}"
 input_load_state_btn = "${DEVICE_BTN_TR}"
 EOF
