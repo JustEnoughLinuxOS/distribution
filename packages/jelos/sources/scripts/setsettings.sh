@@ -141,8 +141,8 @@ then
 input_bind_hold = "${DEVICE_BTN_SELECT}"
 input_fps_toggle_btn = "${DEVICE_BTN_WEST}"
 input_menu_toggle_btn = "${DEVICE_BTN_NORTH}"
-input_save_state_btn = "${DEVICE_BTN_TL}"
-input_load_state_btn = "${DEVICE_BTN_TR}"
+input_save_state_btn = "${DEVICE_BTN_TR}"
+input_load_state_btn = "${DEVICE_BTN_TL}"
 EOF
   echo "${MY_CONTROLLER}" >/storage/.retroarch_controller
 fi
