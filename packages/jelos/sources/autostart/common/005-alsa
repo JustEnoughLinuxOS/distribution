@@ -4,48 +4,23 @@
 
 . /etc/profile
 
-AUDIO_DEVICE="$(aplay -L | awk 'BEGIN{ FS=":"} /[a-z]:/ {print $1; exit}')"
-if [[ "${AUDIO_DEVICE}" =~ hdmi ]]
+if [ ! -e "/storage/.config/asound.conf" ]
 then
-  cat <<EOF >/storage/.config/asound.conf
-pcm.!default {
-  type plug
-  slave {
-    pcm "hdmi:0,0"
-  }
-}
-ctl.!default {
-  type hw
-  card 0
-}
-EOF
-
-if [ -e "/storage/.config/modprobe.d/alsa-base.conf" ]
-then
-  touch /storage/.config/modprobe.d/alsa-base.conf
-  reboot
-fi
-else
-  if [ -e "/storage/.config/modprobe.d/alsa-base.conf" ]
-  then
-    rm -f /storage/.config/modprobe.d/alsa-base.conf
-    reboot
-  fi
   cp /usr/config/asound.conf /storage/.config
+fi
 
-  if [ ! -e "/storage/.config/asound.state" ] && [ -e /usr/config/asound.state ]
-  then
-    cp /usr/config/asound.state /storage/.config
-  fi
+if [ ! -e "/storage/.config/asound.state" ] && [ -e /usr/config/asound.state ]
+then
+  cp /usr/config/asound.state /storage/.config
+fi
 
-  # Set the mixer in ES
-  sed -i 's#<string name="AudioDevice" value="'.*'" />#<string name="AudioDevice" value="'${DEVICE_AUDIO_MIXER}'" />#' /storage/.emulationstation/es_settings.cfg
+# Set the mixer in ES
+sed -i 's#<string name="AudioDevice" value="'.*'" />#<string name="AudioDevice" value="'${DEVICE_AUDIO_MIXER}'" />#' /storage/.emulationstation/es_settings.cfg
 
-  # Initialize sound using the state if available.
-  if [ -e "/storage/.config/asound.state" ]
-  then
-    alsactl restore -f /storage/.config/asound.state
-  fi
+# Initialize sound using the state if available.
+if [ -e "/storage/.config/asound.state" ]
+then
+  alsactl restore -f /storage/.config/asound.state
 fi
 
 VOL=$(get_setting "audio.volume" 2>/dev/null)
