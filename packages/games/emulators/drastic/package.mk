@@ -3,6 +3,7 @@
 
 PKG_NAME="drastic"
 PKG_LICENSE="GPLv3"
+PKG_ARCH="arm aarch64"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_TOOLCHAIN="make"
 PKG_LONGDESC="Install Drastic Launcher script, will dowload bin on first run"
