@@ -19,7 +19,18 @@ ctl.!default {
   card 0
 }
 EOF
+
+if [ -e "/storage/.config/modprobe.d/alsa-base.conf" ]
+then
+  touch /storage/.config/modprobe.d/alsa-base.conf
+  reboot
+fi
 else
+  if [ -e "/storage/.config/modprobe.d/alsa-base.conf" ]
+  then
+    rm -f /storage/.config/modprobe.d/alsa-base.conf
+    reboot
+  fi
   cp /usr/config/asound.conf /storage/.config
 
   if [ ! -e "/storage/.config/asound.state" ] && [ -e /usr/config/asound.state ]
