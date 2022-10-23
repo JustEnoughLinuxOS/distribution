@@ -11,6 +11,10 @@ then
   THIS_DEVICE="$(/usr/sbin/dmidecode -s system-product-name)"
   if [[ "${THIS_DEVICE}" =~ ^VCS ]]
   then
+    if [ ! -d "/storage/.config/modprobe.d/" ]
+    then
+      mkdir -p /storage/.config/modprobe.d
+    fi
     touch /storage/.config/modprobe.d/alsa-base.conf
     cat <<EOF >/storage/.config/asound.conf
 pcm.!default {
