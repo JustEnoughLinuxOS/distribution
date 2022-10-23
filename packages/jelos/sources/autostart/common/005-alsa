@@ -12,8 +12,7 @@ then
   if [[ "${THIS_DEVICE}" =~ ^VCS ]]
   then
     touch /storage/.config/modprobe.d/alsa-base.conf
-   fi
-  cat <<EOF >/storage/.config/asound.conf
+    cat <<EOF >/storage/.config/asound.conf
 pcm.!default {
   type plug
   slave {
@@ -25,7 +24,8 @@ ctl.!default {
   card 0
 }
 EOF
-  reboot
+    reboot
+  fi
 fi
 
 if [ ! -e "/storage/.config/asound.conf" ]
