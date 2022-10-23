@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="ecwolf_libretro"
-PKG_VERSION="1c82ef94f25a358774d4b9daa44537ab406a1203"
+PKG_VERSION="f098da0d003c4780adf6a9503801081f1f25cc27"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/ecwolf"
 PKG_URL="${PKG_SITE}.git"

@@ -74,19 +74,6 @@ fi
 rsync -a --delete /usr/share/PortMaster/* /storage/roms/ports/PortMaster/
 chmod +x /storage/roms/ports/PortMaster -R
 
-# Ensure JelosAddOns is in sync
-if [ ! -d "/storage/roms/ports/JelosAddOns" ]
-then
-  mkdir -p /storage/roms/ports/JelosAddOns
-else
-  rm -rf /storage/roms/ports/JelosAddOns
-  mkdir -p /storage/roms/ports/JelosAddOns
-  rm -f /storage/roms/ports/JelosAddOns.sh ||:
-fi
-
-rsync -a /usr/share/JelosAddOns/* /storage/roms/ports/JelosAddOns/
-chmod -R 755 /storage/roms/ports/JelosAddOns
-
 # Make sure ThemeMaster is in sync
 if [ ! -d "/storage/roms/ports/ThemeMaster" ]
 then

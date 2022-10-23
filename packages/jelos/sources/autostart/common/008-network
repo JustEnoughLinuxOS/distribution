@@ -6,6 +6,7 @@
 
 HOSTNAME=$(get_setting system.hostname)
 hostname ${HOSTNAME}
+avahi-set-hostname ${HOSTNAME}
 
 if [ "$(get_setting internal.wifi)" == 0 ] && [ "${DEVICE_INTERNAL_WIFI}" = true ]
 then

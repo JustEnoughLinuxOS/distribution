@@ -10,7 +10,7 @@ PKG_SHORTDESC="Fast PlayStation 1 emulator for x86-64/AArch32/AArch64 "
 
 case ${DEVICE} in
   RG552|handheld)
-    PKG_VERSION="ab1422b69026befb96b8cef9748c8ec2017c6aa1"
+    PKG_VERSION="8438506206af6f9bb7bcf2303d55913edb5579a0"
     PKG_PATCH_DIRS+=" new"
   ;;
   *)

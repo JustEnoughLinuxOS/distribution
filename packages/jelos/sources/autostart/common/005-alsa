@@ -4,7 +4,30 @@
 
 . /etc/profile
 
-# Copy in the configuration
+### Temporary device quirk for VCS
+if [ -e "/usr/sbin/dmidecode" ] && \
+   [ ! -e "/storage/.config/modprobe.d/alsa-base.conf" ]
+then
+  THIS_DEVICE="$(/usr/sbin/dmidecode -s system-product-name)"
+  if [[ "${THIS_DEVICE}" =~ ^VCS ]]
+  then
+    touch /storage/.config/modprobe.d/alsa-base.conf
+   fi
+  cat <<EOF >/storage/.config/asound.conf
+pcm.!default {
+  type plug
+  slave {
+    pcm "hdmi:0,0"
+  }
+}
+ctl.!default {
+  type hw
+  card 0
+}
+EOF
+  reboot
+fi
+
 if [ ! -e "/storage/.config/asound.conf" ]
 then
   cp /usr/config/asound.conf /storage/.config

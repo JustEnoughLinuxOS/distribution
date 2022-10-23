@@ -20,8 +20,8 @@
 ################################################################################
 
 PKG_NAME="core-info"
-PKG_VERSION="90eff5d4e72db1b5929af7210c9b665c33034536"
-PKG_SHA256="81cf84ef5d9b15698641dd976ee175e365199df0e34012d4c501fa78490aa6a5"
+PKG_VERSION="cbf7be9d90c407abbe7d3406a8aa5ed1d23a71d8"
+PKG_SHA256="f66a8aa1c791ca0fa8facee95185d2928c639f97d2d84ad71e0ace51a19cd53b"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/libretro/libretro-core-info"
 PKG_URL="https://github.com/libretro/libretro-core-info/archive/${PKG_VERSION}.tar.gz"
@@ -36,5 +36,4 @@ makeinstall_target() {
   cp ${PKG_BUILD}/pcsx_rearmed_libretro.info ${INSTALL}/usr/lib/libretro/pcsx_rearmed32_libretro.info
   cp ${PKG_BUILD}/flycast_libretro.info ${INSTALL}/usr/lib/libretro/flycast_libretro_libretro.info
   cp ${PKG_BUILD}/flycast_libretro.info ${INSTALL}/usr/lib/libretro/flycast32_libretro.info
-  cp ${PKG_BUILD}/duckstation_libretro.info ${INSTALL}/usr/lib/libretro/duckstation_custom_libretro.info
 }
