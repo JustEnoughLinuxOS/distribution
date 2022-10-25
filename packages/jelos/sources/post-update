@@ -115,3 +115,5 @@ then
   cp -f /usr/config/smb.conf /storage/.config
 fi
 
+# Reset the retroarch hotkeys
+rm -f /storage/.retroarch_controller

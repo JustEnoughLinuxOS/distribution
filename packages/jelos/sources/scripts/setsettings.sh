@@ -40,7 +40,7 @@ SNAPSHOT="$@"
 SNAPSHOT="${SNAPSHOT#*--snapshot=*}"
 
 ### Enable logging
-if [ "$(get_es_setting string LogLevel)" == "minimal" ]; then
+if [ "$(get_setting string LogLevel)" == "minimal" ]; then
 	LOG=false
 else
 	LOG=true
@@ -123,7 +123,6 @@ log "Core: ${CORE}"
 ##
 
 ## Configure hotkeys if they're not already configured for this device.
-mkcontroller
 if [ -e "/storage/.retroarch_controller" ]
 then
   LAST_CONTROLLER="$(cat /storage/.retroarch_controller)"
@@ -132,19 +131,26 @@ fi
 MY_CONTROLLER="$(cat /storage/.controller)"
 if [ ! "${LAST_CONTROLLER}" == "${MY_CONTROLLER}" ]
 then
-  sed -i "/input_bind_hold/d" ${RACONF}
-  sed -i "/input_fps_toggle_btn/d" ${RACONF}
-  sed -i "/input_menu_toggle_btn/d" ${RACONF}
-  sed -i "/input_save_state_btn/d" ${RACONF}
-  sed -i "/input_load_state_btn/d" ${RACONF}
-  cat <<EOF >>${RACONF}
-input_bind_hold = "${DEVICE_BTN_SELECT}"
-input_fps_toggle_btn = "${DEVICE_BTN_WEST}"
-input_menu_toggle_btn = "${DEVICE_BTN_NORTH}"
-input_save_state_btn = "${DEVICE_BTN_TR}"
-input_load_state_btn = "${DEVICE_BTN_TL}"
+  if [ -e "/usr/share/libretro/autoconfig/${MY_CONTROLLER}.cfg" ]
+  then
+    cp /usr/share/libretro/autoconfig/"${MY_CONTROLLER}.cfg" /tmp
+    sed -i "s# = #=#g" /tmp/"${MY_CONTROLLER}.cfg"
+    source /tmp/"${MY_CONTROLLER}.cfg"
+    sed -i "/input_bind_hold/d" ${RACONF}
+    sed -i "/input_fps_toggle_btn/d" ${RACONF}
+    sed -i "/input_menu_toggle_btn/d" ${RACONF}
+    sed -i "/input_save_state_btn/d" ${RACONF}
+    sed -i "/input_load_state_btn/d" ${RACONF}
+    cat <<EOF >>${RACONF}
+input_bind_hold = "${input_select_btn}"
+input_fps_toggle_btn = "${input_x_btn}"
+input_menu_toggle_btn = "${input_y_btn}"
+input_save_state_btn = "${input_r_btn}"
+input_load_state_btn = "${input_l_btn}"
 EOF
-  echo "${MY_CONTROLLER}" >/storage/.retroarch_controller
+    echo "${MY_CONTROLLER}" >/storage/.retroarch_controller
+    rm -f /tmp/"${MY_CONTROLLER}.cfg"
+  fi
 fi
 
 # RA menu rgui, ozone, glui or xmb (fallback if everthing else fails)

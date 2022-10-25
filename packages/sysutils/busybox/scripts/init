@@ -838,6 +838,7 @@ check_update() {
 
     if [ "${TARRESULT}" -eq "0" ]; then
       mv $UPDATE_DIR/.tmp/*/target/* $UPDATE_DIR &>/dev/null
+      echo "UPDATE" > /storage/.config/boot.hint
       sync
       StopProgress "done"
     else
