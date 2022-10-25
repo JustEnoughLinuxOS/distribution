@@ -22,9 +22,9 @@ then
   mkdir -p "${BIOS_BACKUP}"
 fi
 
-if [ ! -e "${ROM_DIR}/${ROM_DIR}/input.cfg" ]
+if [ ! -e "${CONFIG_DIR}/input.cfg" ]
 then
-  GAMEPAD=$(grep -b4 $(readlink ${DEVICE_CONTROLLER_DEV} | sed "s#^.*/##") /proc/bus/input/devices | awk 'BEGIN {FS="\""}; /Name/ {printf $2}')
+  GAMEPAD=$(grep -b4 js0 /proc/bus/input/devices | awk 'BEGIN {FS="\""}; /Name/ {printf $2}')
   GAMEPADCONFIG=$(xmlstarlet sel -t -c '//inputList/inputConfig[@deviceName="'${GAMEPAD}'"]' -n /storage/.emulationstation/es_input.cfg)
 
   if [ ! -z "${GAMEPADCONFIG}" ]
