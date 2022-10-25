@@ -117,3 +117,6 @@ fi
 
 # Reset the retroarch hotkeys
 rm -f /storage/.retroarch_controller
+
+# Set automatic hotkey management by default.
+set_setting system.autohotkeys 1
