@@ -122,14 +122,14 @@ log "Core: ${CORE}"
 ## All settings that should apply when retroarch is run as standalone
 ##
 
+
 ## Configure hotkeys if they're not already configured for this device.
 if [ -e "/storage/.retroarch_controller" ]
 then
   LAST_CONTROLLER="$(cat /storage/.retroarch_controller)"
 fi
 
-MY_CONTROLLER="$(cat /storage/.controller)"
-if [ ! "${LAST_CONTROLLER}" == "${MY_CONTROLLER}" ]
+if [ "$(get_setting system.autohotkeys)" = "1" ]
 then
   if [ -e "/usr/share/libretro/autoconfig/${MY_CONTROLLER}.cfg" ]
   then
