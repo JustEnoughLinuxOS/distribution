@@ -17,6 +17,11 @@ PKG_CONFIGURE_OPTS_TARGET="bash_cv_wcwidth_broken=no \
                            --disable-static \
                            --with-curses"
 
+pre_configure_target() {
+  export LDFLAGS="${LDFLAGS} -lncursesw -ltinfow"
+  export CFLAGS="${CFLAGS} -fcommon"
+}
+
 post_makeinstall_target() {
   sed -i 's/-lreadline/-lreadline -lncursesw/' ${SYSROOT_PREFIX}/usr/lib/pkgconfig/readline.pc
   rm -rf ${INSTALL}/usr/share/readline
