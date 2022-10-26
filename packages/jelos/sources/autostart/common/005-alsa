@@ -16,25 +16,14 @@ then
       mkdir -p /storage/.config/modprobe.d
     fi
     touch /storage/.config/modprobe.d/alsa-base.conf
-    cat <<EOF >/storage/.config/asound.conf
-pcm.!default {
-  type plug
-  slave {
-    pcm "hdmi:0,0"
-  }
-}
-ctl.!default {
-  type hw
-  card 0
-}
-EOF
+    set-audio "DEFAULT HDMI"
     reboot
   fi
 fi
 
 if [ ! -e "/storage/.config/asound.conf" ]
 then
-  cp /usr/config/asound.conf /storage/.config
+  set-audio "DEFAULT (SYSTEM PROVIDED)"
 fi
 
 if [ ! -e "/storage/.config/asound.state" ] && [ -e /usr/config/asound.state ]
@@ -42,8 +31,8 @@ then
   cp /usr/config/asound.state /storage/.config
 fi
 
-# Set the mixer in ES
-sed -i 's#<string name="AudioDevice" value="'.*'" />#<string name="AudioDevice" value="'${DEVICE_AUDIO_MIXER}'" />#' /storage/.emulationstation/es_settings.cfg
+# Remove the mixer from ES
+sed -i '/<string name="AudioDevice".*$/d' /storage/.emulationstation/es_settings.cfg
 
 # Initialize sound using the state if available.
 if [ -e "/storage/.config/asound.state" ]
