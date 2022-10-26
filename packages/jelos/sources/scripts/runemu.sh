@@ -219,17 +219,6 @@ function bluetooth() {
 	fi
 }
 
-function setaudio() {
-	$VERBOSE && log "Setting up audio"
-	AUDIO_DEVICE="hw:$(get_setting audio_device)"
-	if [ $AUDIO_DEVICE = "hw:" ]
-	then
-		AUDIO_DEVICE="hw:0,0"
-	fi
-	sed -i "s|pcm \"hw:.*|pcm \"${AUDIO_DEVICE}\"|" /storage/.config/asound.conf
-	set_audio alsa
-}
-
 ### Main Screen Turn On
 
 loginit "$1" "$2" "$3" "$4"
@@ -315,8 +304,6 @@ else
 
 	### Set jslisten to kill the appropriate retroarch
 	jslisten set "retroarch retroarch32"
-	setaudio alsa
-
 
 	RABIN="retroarch"
 	if [[ "${HW_ARCH}" =~ aarch64 ]]
