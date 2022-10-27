@@ -61,32 +61,6 @@ do
   ln -s /usr/config/emulationstation/${es_cfg} /storage/.config/emulationstation/${es_cfg}
 done
 
-# Make sure PortMaster is in sync
-if [ ! -d "/storage/roms/ports/PortMaster" ]
-then
-  mkdir -p /storage/roms/ports/PortMaster
-else
-  rm -rf /storage/roms/ports/PortMaster
-  mkdir -p /storage/roms/ports/PortMaster
-  rm -f /storage/roms/ports/PortMaster.sh ||:
-fi
-
-rsync -a --delete /usr/share/PortMaster/* /storage/roms/ports/PortMaster/
-chmod +x /storage/roms/ports/PortMaster -R
-
-# Make sure ThemeMaster is in sync
-if [ ! -d "/storage/roms/ports/ThemeMaster" ]
-then
-  mkdir -p /storage/roms/ports/ThemeMaster
-else
-  rm -rf /storage/roms/ports/ThemeMaster
-  mkdir -p /storage/roms/ports/ThemeMaster
-  rm -f /storage/roms/ports/ThemeMaster.sh ||:
-fi
-
-rsync -a /usr/share/ThemeMaster/* /storage/roms/ports/ThemeMaster/
-chmod -R 755 /storage/roms/ports/ThemeMaster
-
 # Default modules need to be updated to use the new stop/start ui function.
 rsync -av /usr/config/modules/* /storage/.config/modules/
 
@@ -120,3 +94,6 @@ rm -f /storage/.retroarch_controller
 
 # Set automatic hotkey management by default.
 set_setting system.autohotkeys 1
+
+# Set the default weston startup to ES
+set_setting weston.startup "/usr/bin/start_es.sh"
