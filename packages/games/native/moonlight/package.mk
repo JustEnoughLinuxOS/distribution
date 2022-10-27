@@ -34,6 +34,11 @@ fi
 post_makeinstall_target() {
   mkdir -p ${INSTALL}/usr/config/moonlight
     cp -R ${PKG_BUILD}/moonlight.conf ${INSTALL}/usr/config/moonlight
+    if [ "${ARCH}" = "aarch64" ] && [ -n "${SPLASH_RESOLUTION}" ]; then
+      # Patch config file - stream in native screen resolution.
+      sed -i "s/#width = 1280/width = ${SPLASH_RESOLUTION%x*}/g" "${INSTALL}/usr/config/moonlight/moonlight.conf"
+      sed -i "s/#height = 720/height = ${SPLASH_RESOLUTION#*x}/g" "${INSTALL}/usr/config/moonlight/moonlight.conf"
+    fi
 
 	rm ${INSTALL}/usr/etc/moonlight.conf 
 	rm ${INSTALL}/usr/share/moonlight/gamecontrollerdb.txt 

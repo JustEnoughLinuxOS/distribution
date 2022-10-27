@@ -34,7 +34,7 @@ then
   jslisten set "pico8_dyn"
   /storage/roms/pico-8/pico8_dyn -home -root_path /storage/roms/pico-8 -joystick 0 ${OPTIONS} "${CART}"
 else
-  text_viewer -e -w -t "Missing Pico-8 binaries!" -m "Extract your purchased pico8 and pico8.dat and place them in the pico-8 directory on your games partition."
+  text_viewer -e -w -t "Missing Pico-8 binaries!" -m "Extract your purchased pico8 package into the pico-8 directory on your games partition."
 fi
 
 ret_error=$?

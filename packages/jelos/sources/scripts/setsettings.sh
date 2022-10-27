@@ -40,7 +40,7 @@ SNAPSHOT="$@"
 SNAPSHOT="${SNAPSHOT#*--snapshot=*}"
 
 ### Enable logging
-if [ "$(get_es_setting string LogLevel)" == "minimal" ]; then
+if [ "$(get_setting string LogLevel)" == "minimal" ]; then
 	LOG=false
 else
 	LOG=true
@@ -77,7 +77,8 @@ function doexit() {
 	exit 0
 }
 
-function get_setting() {
+## This needs to be killed with fire.
+function get_game_setting() {
 	log "Get Settings function (${1})"
 	#We look for the setting on the ROM first, if not found we search for platform and lastly we search globally
 	escaped_rom_name=$(echo "${ROM}" | sed -E 's|([][])|\\\1|g')
@@ -122,34 +123,33 @@ log "Core: ${CORE}"
 ## All settings that should apply when retroarch is run as standalone
 ##
 
-## Configure hotkeys if they're not already configured for this device.
-mkcontroller
-if [ -e "/storage/.retroarch_controller" ]
+MY_CONTROLLER=$(cat /storage/.controller)
+if [ "$(get_setting system.autohotkeys)" == "1" ]
 then
-  LAST_CONTROLLER="$(cat /storage/.retroarch_controller)"
-fi
-
-MY_CONTROLLER="$(cat /storage/.controller)"
-if [ ! "${LAST_CONTROLLER}" == "${MY_CONTROLLER}" ]
-then
-  sed -i "/input_bind_hold/d" ${RACONF}
-  sed -i "/input_fps_toggle_btn/d" ${RACONF}
-  sed -i "/input_menu_toggle_btn/d" ${RACONF}
-  sed -i "/input_save_state_btn/d" ${RACONF}
-  sed -i "/input_load_state_btn/d" ${RACONF}
-  cat <<EOF >>${RACONF}
-input_bind_hold = "${DEVICE_BTN_SELECT}"
-input_fps_toggle_btn = "${DEVICE_BTN_WEST}"
-input_menu_toggle_btn = "${DEVICE_BTN_NORTH}"
-input_save_state_btn = "${DEVICE_BTN_TR}"
-input_load_state_btn = "${DEVICE_BTN_TL}"
+  if [ -e "/usr/share/libretro/autoconfig/${MY_CONTROLLER}.cfg" ]
+  then
+    cp /usr/share/libretro/autoconfig/"${MY_CONTROLLER}.cfg" /tmp
+    sed -i "s# = #=#g" /tmp/"${MY_CONTROLLER}.cfg"
+    source /tmp/"${MY_CONTROLLER}.cfg"
+    sed -i "/input_bind_hold/d" ${RACONF}
+    sed -i "/input_fps_toggle_btn/d" ${RACONF}
+    sed -i "/input_menu_toggle_btn/d" ${RACONF}
+    sed -i "/input_save_state_btn/d" ${RACONF}
+    sed -i "/input_load_state_btn/d" ${RACONF}
+    cat <<EOF >>${RACONF}
+input_bind_hold = "${input_select_btn}"
+input_fps_toggle_btn = "${input_y_btn}"
+input_menu_toggle_btn = "${input_x_btn}"
+input_save_state_btn = "${input_r_btn}"
+input_load_state_btn = "${input_l_btn}"
 EOF
-  echo "${MY_CONTROLLER}" >/storage/.retroarch_controller
+    rm -f /tmp/"${MY_CONTROLLER}.cfg"
+  fi
 fi
 
 # RA menu rgui, ozone, glui or xmb (fallback if everthing else fails)
 # if empty (auto in ES) do nothing to enable configuration in RA
-get_setting "retroarch.menu_driver"
+get_game_setting "retroarch.menu_driver"
 if [ "${EES}" != "false" ]; then
 	# delete setting only if we set new ones
 	# therefore configuring in RA is still possible
@@ -177,28 +177,28 @@ fi
 
 ## FPS
 # Get configuration from system.cfg and set to retroarch.cfg
-get_setting "showFPS"
+get_game_setting "showFPS"
 [ "${EES}" == "1" ] && echo 'fps_show = "true"' >> ${RAAPPENDCONF} || echo 'fps_show = "false"' >> ${RAAPPENDCONF}
 
 
 ## RetroAchievements / Cheevos
 # Get configuration from system.cfg and set to retroarch.cfg
-get_setting "retroachievements"
+get_game_setting "retroachievements"
 for i in "${!RETROACHIEVEMENTS[@]}"; do
 	if [[ "${RETROACHIEVEMENTS[$i]}" = "${PLATFORM}" ]]; then
 		if [ "${EES}" == "1" ]; then
 			echo 'cheevos_enable = "true"' >> ${RAAPPENDCONF}
-			get_setting "retroachievements.username"
+			get_game_setting "retroachievements.username"
 			echo "cheevos_username = \"${EES}\"" >> ${RAAPPENDCONF}
-			get_setting "retroachievements.password"
+			get_game_setting "retroachievements.password"
 			echo "cheevos_password = \"${EES}\"" >> ${RAAPPENDCONF}
 
 			# retroachievements_hardcore_mode
-			get_setting "retroachievements.hardcore"
+			get_game_setting "retroachievements.hardcore"
 			[ "${EES}" == "1" ] && echo 'cheevos_hardcore_mode_enable = "true"' >> ${RAAPPENDCONF} || echo 'cheevos_hardcore_mode_enable = "false"' >> ${RAAPPENDCONF}
 
 			# retroachievements_leaderboards
-			get_setting "retroachievements.leaderboards"
+			get_game_setting "retroachievements.leaderboards"
 			if [ "${EES}" == "enabled" ]; then
 				echo 'cheevos_leaderboards_enable = "true"' >> ${RAAPPENDCONF}
 			elif [ "${EES}" == "trackers only" ]; then
@@ -210,35 +210,35 @@ for i in "${!RETROACHIEVEMENTS[@]}"; do
 			fi
 
 			# retroachievements_verbose_mode
-			get_setting "retroachievements.verbose"
+			get_game_setting "retroachievements.verbose"
 			[ "${EES}" == "1" ] && echo 'cheevos_verbose_enable = "true"' >> ${RAAPPENDCONF} || echo 'cheevos_verbose_enable = "false"' >> ${RAAPPENDCONF}
 
 			# retroachievements_automatic_screenshot
-			get_setting "retroachievements.screenshot"
+			get_game_setting "retroachievements.screenshot"
 			[ "${EES}" == "1" ] && echo 'cheevos_auto_screenshot = "true"' >> ${RAAPPENDCONF} || echo 'cheevos_auto_screenshot = "false"' >> ${RAAPPENDCONF}
 
 			# cheevos_richpresence_enable
-			get_setting "retroachievements.richpresence"
+			get_game_setting "retroachievements.richpresence"
 			[ "${EES}" == "1" ] && echo 'cheevos_richpresence_enable = "true"' >> ${RAAPPENDCONF} || echo 'cheevos_richpresence_enable = "false"' >> ${RAAPPENDCONF}
 
 			# cheevos_challenge_indicators
-			get_setting "retroachievements.challengeindicators"
+			get_game_setting "retroachievements.challengeindicators"
 			[ "${EES}" == "1" ] && echo 'cheevos_challenge_indicators = "true"' >> ${RAAPPENDCONF} || echo 'cheevos_challenge_indicators = "false"' >> ${RAAPPENDCONF}
 
 			# cheevos_test_unofficial
-			get_setting "retroachievements.testunofficial"
+			get_game_setting "retroachievements.testunofficial"
 			[ "${EES}" == "1" ] && echo 'cheevos_test_unofficial = "true"' >> ${RAAPPENDCONF} || echo 'cheevos_test_unofficial = "false"' >> ${RAAPPENDCONF}
 
 			# cheevos_badges_enable
-			get_setting "retroachievements.badges"
+			get_game_setting "retroachievements.badges"
 			[ "${EES}" == "1" ] && echo 'cheevos_badges_enable = "true"' >> ${RAAPPENDCONF} || echo 'cheevos_badges_enable = "false"' >> ${RAAPPENDCONF}
 
 			# cheevos_start_active
-			get_setting "retroachievements.active"
+			get_game_setting "retroachievements.active"
 			[ "${EES}" == "1" ] && echo 'cheevos_start_active = "true"' >> ${RAAPPENDCONF} || echo 'cheevos_start_active = "false"' >> ${RAAPPENDCONF}
 
 			# cheevos_unlock_sound_enable
-			get_setting "retroachievements.soundenable"
+			get_game_setting "retroachievements.soundenable"
 			[ "${EES}" == "1" ] && echo 'cheevos_unlock_sound_enable = "true"' >> ${RAAPPENDCONF} || echo 'cheevos_unlock_sound_enable = "false"' >> ${RAAPPENDCONF}
 		else
 			echo 'cheevos_enable = "false"' >> ${RAAPPENDCONF}
@@ -260,12 +260,12 @@ done
 
 ## Netplay
 # Get configuration from system.cfg and set to retroarch.cfg
-get_setting "netplay"
+get_game_setting "netplay"
 if [ "${EES}" == "false" ] || [ "${EES}" == "none" ] || [ "${EES}" == "0" ]; then
 	echo 'netplay = false' >> ${RAAPPENDCONF}
 else
 	echo 'netplay = true' >> ${RAAPPENDCONF}
-	get_setting "netplay.mode"
+	get_game_setting "netplay.mode"
 	NETPLAY_MODE=${EES}
 	# Security : hardcore mode disables save states, which would kill netplay
 	sed -i '/cheevos_hardcore_mode_enable =/d' ${RAAPPENDCONF}
@@ -275,20 +275,20 @@ else
 		# Quite strangely, host mode requires netplay_mode to be set to false when launched from command line
 		echo 'netplay_mode = false' >> ${RAAPPENDCONF}
 		echo 'netplay_client_swap_input = false' >> ${RAAPPENDCONF}
-		get_setting "netplay.port"
+		get_game_setting "netplay.port"
 		echo "netplay_ip_port = ${EES}" >> ${RAAPPENDCONF}
 	elif [[ "${NETPLAY_MODE}" == "client" ]]; then
 		# But client needs netplay_mode = true ... bug ?
 		echo 'netplay_mode = true' >> ${RAAPPENDCONF}
-		get_setting "netplay.client.ip"
+		get_game_setting "netplay.client.ip"
 		echo "netplay_ip_address = ${EES}" >> ${RAAPPENDCONF}
-		get_setting "netplay.client.port"
+		get_game_setting "netplay.client.port"
 		echo "netplay_ip_port = ${EES}" >> ${RAAPPENDCONF}
 		echo 'netplay_client_swap_input = true' >> ${RAAPPENDCONF}
 	fi # Host or Client
 
 	# relay
-	get_setting "netplay.relay"
+	get_game_setting "netplay.relay"
 	if [[ ! -z "${EES}" && "${EES}" != "false" ]]; then
 		echo 'netplay_use_mitm_server = true' >> ${RAAPPENDCONF}
 		echo "netplay_mitm_server = ${EES}" >> ${RAAPPENDCONF}
@@ -297,20 +297,20 @@ else
 		# sed -i "/netplay_mitm_server/d" ${RACONF}
 	fi
 
-	get_setting "netplay.frames"
+	get_game_setting "netplay.frames"
 	echo "netplay_delay_frames = ${EES}" >> ${RAAPPENDCONF}
-	get_setting "netplay.nickname"
+	get_game_setting "netplay.nickname"
 	echo "netplay_nickname = ${EES}" >> ${RAAPPENDCONF}
 	# spectator mode
-	get_setting "netplay.spectator"
+	get_game_setting "netplay.spectator"
 	[ "${EES}" == "1" ] && echo 'netplay_spectator_mode_enable = true' >> ${RAAPPENDCONF} || echo 'netplay_spectator_mode_enable = false' >> ${RAAPPENDCONF}
-	get_setting "netplay_public_announce"
+	get_game_setting "netplay_public_announce"
 	[ "${EES}" == "1" ] && echo 'netplay_public_announce = true' >> ${RAAPPENDCONF} || echo 'netplay_public_announce = false' >> ${RAAPPENDCONF}
 fi
 
 ## AI Translation Service
 # Get configuration from system.cfg and set to retroarch.cfg
-get_setting "ai_service_enabled"
+get_game_setting "ai_service_enabled"
 if [ "${EES}" == "false" ] || [ "${EES}" == "none" ] || [ "${EES}" == "0" ]; then
 	echo 'ai_service_enable = "false"' >> ${RAAPPENDCONF}
 else
@@ -339,10 +339,10 @@ else
 							["Zh"]="13"
                   		)
 	echo 'ai_service_enable = "true"' >> ${RAAPPENDCONF}
-	get_setting "ai_target_lang"
+	get_game_setting "ai_target_lang"
 	AI_LANG=${EES}
 	# [[ "$AI_LANG" == "false" ]] && AI_LANG="0"
-	get_setting "ai_service_url"
+	get_game_setting "ai_service_url"
 	AI_URL=${EES}
 	echo "ai_service_target_lang = \"${LangCodes[${AI_LANG}]}\"" >> ${RAAPPENDCONF}
 	if [ "${AI_URL}" == "false" ] || [ "${AI_URL}" == "auto" ] || [ "${AI_URL}" == "none" ]; then
@@ -358,7 +358,7 @@ fi
 
 ## Ratio
 # Get configuration from system.cfg and set to retroarch.cfg
-get_setting "ratio"
+get_game_setting "ratio"
 if [[ "${EES}" == "false" ]]; then
 	# 22 is the "Core Provided" aspect ratio and its set by default if no other is selected
 	echo 'aspect_ratio_index = "22"' >> ${RAAPPENDCONF}
@@ -373,22 +373,22 @@ fi
 
 ## Bilinear filtering
 # Get configuration from system.cfg and set to retroarch.cfg
-get_setting "smooth"
+get_game_setting "smooth"
 [ "${EES}" == "1" ] && echo 'video_smooth = "true"' >> ${RAAPPENDCONF} || echo 'video_smooth = "false"' >> ${RAAPPENDCONF}
 
 ## Video Integer Scale
 # Get configuration from system.cfg and set to retroarch.cfg
-get_setting "integerscale"
+get_game_setting "integerscale"
 [ "${EES}" == "1" ] && echo 'video_scale_integer = "true"' >> ${RAAPPENDCONF} || echo 'video_scale_integer = "false"' >> ${RAAPPENDCONF}
 
 ## RGA Scaling / CTX Scaling
 # Get configuration from system.cfg and set to retroarch.cfg
-get_setting	"rgascale"
+get_game_setting	"rgascale"
 [ "${EES}" == "1" ] && echo 'video_ctx_scaling = "true"' >> ${RAAPPENDCONF} || echo 'video_ctx_scaling = "false"' >> ${RAAPPENDCONF}
 
 ## Shaderset
 # Get configuration from system.cfg and set to retroarch.cfg
-get_setting "shaderset"
+get_game_setting "shaderset"
 if [ "${EES}" == "false" ] || [ "${EES}" == "none" ] || [ "${EES}" == "0" ]; then
 	echo 'video_shader_enable = "false"' >> ${RAAPPENDCONF}
 	echo 'video_shader = ""' >> ${RAAPPENDCONF}
@@ -400,7 +400,7 @@ fi
 
 ## Filterset
 # Get configuration from system.cfg and set to retroarch.cfg
-get_setting "filterset"
+get_game_setting "filterset"
 if [ "${EES}" == "false" ] || [ "${EES}" == "none" ]; then
 	echo 'video_filter = ""' >> ${RAAPPENDCONF}
 else
@@ -425,7 +425,7 @@ fi
 
 ## Rewind
 # Get configuration from system.cfg and set to retroarch.cfg
-get_setting "rewind"
+get_game_setting "rewind"
 (for e in "${NORUNAHEAD[@]}"; do [[ "${e}" == "${PLATFORM}" ]] && exit 0; done) && RA=0 || RA=1
 if [ $RA == 1 ] && [ "${EES}" == "1" ]; then
 	echo 'rewind_enable = "true"' >> ${RAAPPENDCONF}
@@ -435,7 +435,7 @@ fi
 
 ## Incrementalsavestates
 # Get configuration from system.cfg and set to retroarch.cfg
-get_setting "incrementalsavestates"
+get_game_setting "incrementalsavestates"
 if [ "${EES}" == "false" ] || [ "${EES}" == "none" ] || [ "${EES}" == "0" ]; then
 	echo 'savestate_auto_index = "false"' >> ${RAAPPENDCONF}
 	echo 'savestate_max_keep = "50"' >> ${RAAPPENDCONF}
@@ -446,7 +446,7 @@ fi
 
 ## Autosave
 # Get configuration from system.cfg and set to retroarch.cfg
-get_setting "autosave"
+get_game_setting "autosave"
 if [ "${EES}" == "false" ] || [ "${EES}" == "none" ] || [ "${EES}" == "0" ]; then
 	echo 'savestate_auto_save = "false"' >> ${RAAPPENDCONF}
 	echo 'savestate_auto_load = "false"' >> ${RAAPPENDCONF}
@@ -473,7 +473,7 @@ fi
 
 ## Runahead
 # Get configuration from system.cfg and set to retroarch.cfg
-get_setting "runahead"
+get_game_setting "runahead"
 (for e in "${NORUNAHEAD[@]}"; do [[ "${e}" == "${PLATFORM}" ]] && exit 0; done) && RA=0 || RA=1
 if [ $RA == 1 ]; then
 	if [ "${EES}" == "false" ] || [ "${EES}" == "none" ] || [ "${EES}" == "0" ]; then
@@ -487,7 +487,7 @@ fi
 
 ## Secondinstance
 # Get configuration from system.cfg and set to retroarch.cfg
-get_setting "secondinstance"
+get_game_setting "secondinstance"
 (for e in "${NORUNAHEAD[@]}"; do [[ "${e}" == "${PLATFORM}" ]] && exit 0; done) && RA=0 || RA=1
 if [ $RA == 1 ]; then
 	[ "${EES}" == "1" ] && echo 'run_ahead_secondary_instance = "true"' >> ${RAAPPENDCONF} || echo 'run_ahead_secondary_instance = "false"' >> ${RAAPPENDCONF}
@@ -495,7 +495,7 @@ fi
 
 ## D-Pad to Analogue support, option in ES is missing atm but is managed as global.analogue=1 in system.cfg (that is made by postupdate.sh)
 # Get configuration from system.cfg and set to retroarch.cfg
-get_setting "analogue"
+get_game_setting "analogue"
 (for e in "${NOANALOGUE[@]}"; do [[ "${e}" == "${PLATFORM}" ]] && exit 0; done) && RA=1 || RA=0
 if [ $RA == 1 ] || [ "${EES}" == "false" ] || [ "${EES}" == "0" ]; then
         echo 'input_player1_analog_dpad_mode = "0"' >> ${RAAPPENDCONF}
@@ -507,7 +507,7 @@ fi
 ## Tate Mode
 ##
 
-get_setting "tatemode"
+get_game_setting "tatemode"
 MAME2003DIR="/storage/.config/retroarch/config/MAME 2003-Plus"
 MAME2003REMAPDIR="/storage/remappings/MAME 2003-Plus"
 if [ "${EES}" == "1" ]
@@ -584,7 +584,7 @@ if [ "${CORE}" == "gambatte" ]; then
 		sed -i "/gambatte_gb_colorization =/d" ${GAMBATTECONF}
 		sed -i "/gambatte_gb_internal_palette =/d" ${GAMBATTECONF}
 	fi
-	get_setting "renderer.colorization"
+	get_game_setting "renderer.colorization"
 	if [ "${EES}" == "false" ] || [ "${EES}" == "auto" ] || [ "${EES}" == "none" ]; then
 		echo "gambatte_gb_colorization = \"disabled\"" >> ${GAMBATTECONF}
 	elif [ "${EES}" == "Best Guess" ]; then

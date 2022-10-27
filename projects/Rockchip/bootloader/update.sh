@@ -122,7 +122,4 @@ esac
   sync
   mount -o remount,ro $BOOT_ROOT &>/dev/null
   
-# Leave a hint that we just did an update
-echo "UPDATE" > /storage/.config/boot.hint
-
 sync
