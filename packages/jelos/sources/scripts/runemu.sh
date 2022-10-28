@@ -477,6 +477,18 @@ then
 	fi
 fi
 
+### Backup save games
+CLOUD_BACKUP=$(get_setting "cloud.backup")
+if [ "${CLOUD_BACKUP}" = "1" ]
+then
+  INETUP=$(/usr/bin/amionline >/dev/null 2>&1)
+  if [ $? == 0 ]
+  then
+    log "backup saves to the cloud."
+    run /usr/bin/cloud_backup
+  fi
+fi
+
 $VERBOSE && log "Checking errors: ${ret_error} "
 if [ "${ret_error}" == "0" ]
 then
