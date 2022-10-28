@@ -442,7 +442,7 @@ if __name__ == '__main__':
   bus.add_signal_receiver(properties_changed, dbus_interface = "org.freedesktop.DBus.Properties",    signal_name = "PropertiesChanged", arg0 = "org.bluez.Device1", path_keyword = "path")
 
   # register the agent
-  agentpath = "/storage/.cache/agent"
+  agentpath = "/storage/agent"
   obj = bus.get_object("org.bluez", "/org/bluez")
   manager = dbus.Interface(obj, "org.bluez.AgentManager1")
   manager.RegisterAgent(agentpath, "NoInputNoOutput")
