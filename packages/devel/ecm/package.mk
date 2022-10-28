@@ -7,7 +7,6 @@ PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/KDE/extra-cmake-modules"
 PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
-PKG_SECTION="libretro"
 PKG_SHORTDESC="KDE Extra CMake Modules"
 PKG_TOOLCHAIN="cmake"
 
