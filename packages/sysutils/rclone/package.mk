@@ -3,16 +3,39 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="rclone"
-PKG_VERSION="1.58.0"
-PKG_URL="https://downloads.rclone.org/v${PKG_VERSION}/rclone-v${PKG_VERSION}-linux-arm64.zip"
+PKG_VERSION="1.60.0"
 PKG_DEPENDS_TARGET="toolchain fuse rsync"
 PKG_SECTION="tools"
 PKG_SHORTDESC="rsync for cloud storage"
 PKG_TOOLCHAIN="manual"
 
+case ${ARCH} in
+    aarch64)
+      RCLONE_ARCH="arm64"
+    ;;
+    *)
+      RCLONE_ARCH="amd64"
+    ;;
+esac
+
+PKG_URL="https://downloads.rclone.org/v${PKG_VERSION}/rclone-v${PKG_VERSION}-linux-${RCLONE_ARCH}.zip"
+PKG_RCLONE="rclone-v${PKG_VERSION}-linux-${RCLONE_ARCH}/rclone"
+
 pre_unpack() {
-  unzip sources/rclone/rclone-${PKG_VERSION}.zip -d ${PKG_BUILD}/
+  # Will need to figure out why unpack isn't handling this correctly.
+  cd sources/rclone
+  if [ ! -e "rclone-${PKG_VERSION}-${RCLONE_ARCH}.zip" ]
+  then
+    mv rclone-${PKG_VERSION}.zip rclone-${PKG_VERSION}-${RCLONE_ARCH}.zip
+  fi
 }
+
+unpack() {
+  unzip rclone-${PKG_VERSION}-${RCLONE_ARCH}.zip -d ${PKG_BUILD}/
+  rm -f rclone-${PKG_VERSION}.*
+  cd -
+}
+
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin/
@@ -20,7 +43,7 @@ makeinstall_target() {
   cp ${PKG_DIR}/sources/rclonectl ${INSTALL}/usr/bin/
   cp ${PKG_DIR}/sources/cloud_backup ${INSTALL}/usr/bin/
   cp ${PKG_DIR}/sources/cloud_restore ${INSTALL}/usr/bin/
-  cp ${PKG_BUILD}/rclone-v${PKG_VERSION}-linux-arm64/rclone ${INSTALL}/usr/bin/
+  cp ${PKG_BUILD}/${PKG_RCLONE} ${INSTALL}/usr/bin/
   chmod 0755 ${INSTALL}/usr/bin/*
   cp ${PKG_DIR}/sources/rsync-rules.conf ${INSTALL}/usr/config/
   cp ${PKG_DIR}/sources/rsync.conf ${INSTALL}/usr/config/
