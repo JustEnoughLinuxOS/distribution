@@ -21,32 +21,25 @@ esac
 PKG_URL="https://downloads.rclone.org/v${PKG_VERSION}/rclone-v${PKG_VERSION}-linux-${RCLONE_ARCH}.zip"
 PKG_RCLONE="rclone-v${PKG_VERSION}-linux-${RCLONE_ARCH}/rclone"
 
-pre_unpack() {
-  # Will need to figure out why unpack isn't handling this correctly.
-  cd ${SOURCES_DIR}/rclone
-  if [ ! -e "rclone-${PKG_VERSION}-${RCLONE_ARCH}.zip" ]
+unpack() {
+  if [ ! -e "${SOURCES}/rclone/rclone-${PKG_VERSION}-${RCLONE_ARCH}.zip" ]
   then
-    mv rclone-${PKG_VERSION}.zip rclone-${PKG_VERSION}-${RCLONE_ARCH}.zip
+    mv ${SOURCES}/rclone/rclone-${PKG_VERSION}.zip ${SOURCES}/rclone/rclone-${PKG_VERSION}-${RCLONE_ARCH}.zip
+    unzip ${SOURCES}/rclone/rclone-${PKG_VERSION}-${RCLONE_ARCH}.zip -d ${PKG_BUILD}/
+    rm -f ${SOURCES}/rclone/rclone-${PKG_VERSION}*
   fi
 }
-
-unpack() {
-  unzip rclone-${PKG_VERSION}-${RCLONE_ARCH}.zip -d ${PKG_BUILD}/
-  rm -f rclone-${PKG_VERSION}.*
-  cd -
-}
-
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin/
   mkdir -p ${INSTALL}/usr/config/
-  cp ${PKG_DIR}/sources/rclonectl ${INSTALL}/usr/bin/
-  cp ${PKG_DIR}/sources/cloud_backup ${INSTALL}/usr/bin/
-  cp ${PKG_DIR}/sources/cloud_restore ${INSTALL}/usr/bin/
+  cp rclonectl ${INSTALL}/usr/bin/
+  cp cloud_backup ${INSTALL}/usr/bin/
+  cp cloud_restore ${INSTALL}/usr/bin/
   cp ${PKG_BUILD}/${PKG_RCLONE} ${INSTALL}/usr/bin/
   chmod 0755 ${INSTALL}/usr/bin/*
-  cp ${PKG_DIR}/sources/rsync-rules.conf ${INSTALL}/usr/config/
-  cp ${PKG_DIR}/sources/rsync.conf ${INSTALL}/usr/config/
+  cp rsync-rules.conf ${INSTALL}/usr/config/
+  cp rsync.conf ${INSTALL}/usr/config/
   chmod 755 ${INSTALL}/usr/bin/rclone
   mkdir -p ${INSTALL}/usr/config/modules
   ln -sf /usr/bin/cloud_backup ${INSTALL}/usr/config/modules/cloud_backup.sh
