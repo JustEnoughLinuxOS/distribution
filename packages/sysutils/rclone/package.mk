@@ -23,7 +23,7 @@ PKG_RCLONE="rclone-v${PKG_VERSION}-linux-${RCLONE_ARCH}/rclone"
 
 pre_unpack() {
   # Will need to figure out why unpack isn't handling this correctly.
-  cd sources/rclone
+  cd ${SOURCES_DIR}/rclone
   if [ ! -e "rclone-${PKG_VERSION}-${RCLONE_ARCH}.zip" ]
   then
     mv rclone-${PKG_VERSION}.zip rclone-${PKG_VERSION}-${RCLONE_ARCH}.zip
