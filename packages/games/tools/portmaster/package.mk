@@ -18,7 +18,7 @@ case ${DEVICE} in
 esac
 
 pre_unpack() {
-  unzip sources/portmaster/portmaster-.zip -d ${PKG_BUILD}
+  unzip ${SOURCES}/portmaster/portmaster-.zip -d ${PKG_BUILD}
 }
 
 makeinstall_target() {
