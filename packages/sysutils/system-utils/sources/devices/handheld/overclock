@@ -42,6 +42,15 @@ case ${PROFILE} in
   18w)
     WATTS="18000"
   ;;
+  20w)
+    WATTS="18000"
+  ;;
+  22w)
+    WATTS="18000"
+  ;;
+  24w)
+    WATTS="18000"
+  ;;
 esac
 
 ryzenadj --tctl-temp=97 --stapm-limit=${WATTS} --fast-limit=${WATTS} --stapm-time=500 --slow-limit=${WATTS} --slow-time=30 --vrmmax-current=70000
