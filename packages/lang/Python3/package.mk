@@ -3,12 +3,12 @@
 
 PKG_NAME="Python3"
 # When changing PKG_VERSION remember to sync PKG_PYTHON_VERSION!
-PKG_VERSION="3.9.12"
-PKG_SHA256="2cd94b20670e4159c6d9ab57f91dbf255b97d8c1a1451d1c35f4ec1968adf971"
+PKG_VERSION="3.9.15"
+PKG_SHA256="12daff6809528d9f6154216950423c9e30f0e47336cb57c6aa0b4387dd5eb4b2"
 PKG_LICENSE="OSS"
 PKG_SITE="https://www.python.org/"
 PKG_URL="https://www.python.org/ftp/python/${PKG_VERSION}/${PKG_NAME::-1}-${PKG_VERSION}.tar.xz"
-PKG_DEPENDS_HOST="zlib:host bzip2:host libffi:host util-linux:host xz:host"
+PKG_DEPENDS_HOST="zlib:host bzip2:host libffi:host util-linux:host xz:host autoconf-archive:host"
 PKG_DEPENDS_TARGET="toolchain Python3:host sqlite expat zlib bzip2 xz openssl libffi readline ncurses util-linux"
 PKG_LONGDESC="Python3 is an interpreted object-oriented programming language."
 PKG_TOOLCHAIN="autotools"
@@ -75,8 +75,8 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
                            --enable-lib2to3
                            --disable-idle3
                            --without-cxx-main
-			   --disable-static
-			   --enable-shared
+                           --disable-static
+                           --enable-shared
                            --with-expat=system
                            --with-libmpdec=none
                            --with-doc-strings

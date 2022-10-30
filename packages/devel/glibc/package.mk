@@ -15,10 +15,7 @@ PKG_BUILD_FLAGS="-gold"
 
 case "${DEVICE}" in
   RG351P|RG351V|RG351MP|RG503|RG353P)
-    OPT_ENABLE_KERNEL=4.4.0
-    ;;
-  *)
-    OPT_ENABLE_KERNEL=5.15.0
+    OPT_ENABLE_KERNEL="--enable-kernel=4.4.0"
     ;;
 esac
 
@@ -36,7 +33,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=${BUILD}/toolchain/bin \
                            --with-headers=${SYSROOT_PREFIX}/usr/include \
-                           --enable-kernel=${OPT_ENABLE_KERNEL} \
+                           ${OPT_ENABLE_KERNEL} \
                            --without-cvs \
                            --without-gd \
                            --disable-build-nscd \

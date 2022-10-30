@@ -5,11 +5,10 @@
 
 PKG_NAME="gobject-introspection"
 PKG_VERSION="1.74.0"
-PKG_SHA256="79ed5d764d288f046b027ff064be174d7904904565de150a94841740a2a0455d"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.gtk.org/"
-PKG_URL="https://github.com/GNOME/$PKG_NAME/archive/$PKG_VERSION.tar.gz"
+PKG_URL="https://gitlab.gnome.org/GNOME/${PKG_NAME}/-/archive/${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libffi glib Python3 qemu:host gobject-introspection:host"
 PKG_DEPENDS_HOST="libffi:host glib:host"
 PKG_SECTION="devel"
@@ -73,6 +72,10 @@ EOF
 EOF
 
   chmod +x ${TOOLCHAIN}/bin/g-ir-scanner-*-wrapper
+}
+
+post_makeinstall_host() {
+  python_fix_abi "${TOOLCHAIN}/lib/gobject-introspection"
 }
 
 post_makeinstall_target() {
