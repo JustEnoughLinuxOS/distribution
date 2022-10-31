@@ -21,17 +21,11 @@ esac
 PKG_URL="https://downloads.rclone.org/v${PKG_VERSION}/rclone-v${PKG_VERSION}-linux-${RCLONE_ARCH}.zip"
 PKG_RCLONE="rclone-v${PKG_VERSION}-linux-${RCLONE_ARCH}/rclone"
 
-pre_unpack() {
-  if [ ! -e "${SOURCES}/rclone/rclone-${PKG_VERSION}-${RCLONE_ARCH}.zip" ]
-  then
-    mv ${SOURCES}/rclone/rclone-${PKG_VERSION}.zip ${SOURCES}/rclone/rclone-${PKG_VERSION}-${RCLONE_ARCH}.zip
-    unzip ${SOURCES}/rclone/rclone-${PKG_VERSION}-${RCLONE_ARCH}.zip -d ${PKG_BUILD}/
-    rm -f ${SOURCES}/rclone/rclone-${PKG_VERSION}*
-  fi
-}
-
 unpack() {
-  :
+  mkdir -p ${PKG_BUILD}
+  mv ${SOURCES}/rclone/rclone-${PKG_VERSION}.zip ${SOURCES}/rclone/rclone-${PKG_VERSION}-${RCLONE_ARCH}.zip
+  unzip ${SOURCES}/rclone/rclone-${PKG_VERSION}-${RCLONE_ARCH}.zip -d ${PKG_BUILD}/
+  rm -f ${SOURCES}/rclone/rclone-${PKG_VERSION}*
 }
 
 makeinstall_target() {
