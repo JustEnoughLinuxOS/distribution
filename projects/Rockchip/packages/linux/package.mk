@@ -16,22 +16,23 @@ PKG_LONGDESC="This package builds the kernel for Rockchip devices"
 PKG_IS_KERNEL_PKG="yes"
 PKG_STAMP="${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD}"
 PKG_PATCH_DIRS+="${DEVICE}"
-PKG_GIT_CLONE_BRANCH="main"
-GET_HANDLER_SUPPORT="git"
 
 case ${DEVICE} in
   RG351P|RG351V|RG351MP)
     PKG_URL="${PKG_SITE}/rk3326-kernel.git"
     PKG_VERSION="0b4eef36a"
+    GET_HANDLER_SUPPORT="git"
+    PKG_GIT_CLONE_BRANCH="main"
   ;;
   RG552)
-    PKG_URL="https://github.com/brooksytech/rk3399-kernel-5.19.git"
-    PKG_VERSION="f1c01bbdb7d4539eac2221f2650a14201860d928"
-    PKG_GIT_CLONE_BRANCH="dev"
+    PKG_VERSION="6.0.6"
+    PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
   ;;
   RG353P|RG503)
     PKG_URL="${PKG_SITE}/rk356x-kernel.git"
     PKG_VERSION="178e6ca92"
+    GET_HANDLER_SUPPORT="git"
+    PKG_GIT_CLONE_BRANCH="main"
   ;;
 esac
 
