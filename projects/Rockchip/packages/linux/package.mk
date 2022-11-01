@@ -22,7 +22,7 @@ GET_HANDLER_SUPPORT="git"
 case ${DEVICE} in
   RG351P|RG351V|RG351MP)
     PKG_URL="${PKG_SITE}/rk3326-kernel.git"
-    PKG_VERSION="a19b4df7c"
+    PKG_VERSION="0b4eef36a"
   ;;
   RG552)
     PKG_URL="https://github.com/brooksytech/rk3399-kernel-5.19.git"
@@ -31,7 +31,7 @@ case ${DEVICE} in
   ;;
   RG353P|RG503)
     PKG_URL="${PKG_SITE}/rk356x-kernel.git"
-    PKG_VERSION="7e1b435e1"
+    PKG_VERSION="178e6ca92"
   ;;
 esac
 

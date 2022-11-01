@@ -40,12 +40,18 @@ pre_configure_target() {
   CFLAGS="${TARGET_CFLAGS}"
   LDFLAGS="${TARGET_LDFLAGS}"
 
-  PKG_MESON_OPTS_TARGET=" \
+  case ${ARCH} in
+    arm|aarch64)
+       PKG_MESON_OPTS_TARGET+=" \
+         -Dgi_cross_use_prebuilt_gi=true \
+         -Dgi_cross_binary_wrapper=${TOOLCHAIN}/bin/g-ir-scanner-binary-wrapper \
+         -Dgi_cross_ldd_wrapper=${TOOLCHAIN}/bin/g-ir-scanner-ldd-wrapper"
+    ;;
+  esac
+
+  PKG_MESON_OPTS_TARGET+=" \
     -Ddoctool=disabled \
     -Dpython=${TOOLCHAIN}/bin/${PKG_PYTHON_VERSION} \
-    -Dgi_cross_use_prebuilt_gi=true \
-    -Dgi_cross_binary_wrapper=${TOOLCHAIN}/bin/g-ir-scanner-binary-wrapper \
-    -Dgi_cross_ldd_wrapper=${TOOLCHAIN}/bin/g-ir-scanner-ldd-wrapper \
     -Dbuild_introspection_data=true"
 
   # prevent g-ir-scanner from writing cache data to $HOME
