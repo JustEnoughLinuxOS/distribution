@@ -1,5 +1,7 @@
 [Unit]
 Description=Attach /dev/ttyS1 to BlueZ stack
+Before=bluetooth-agent.service
+PartOf=bluetooth.service
 
 [Service]
 Type=simple

@@ -451,7 +451,7 @@ if __name__ == '__main__':
   logging.info("agent registered")
 
   # run the agent, allows some tries while hardware can take time to initiate
-  time.sleep(5)
+  time.sleep(2)
   try:
     do_main_loop(options.dev_id)
   except Exception as e:

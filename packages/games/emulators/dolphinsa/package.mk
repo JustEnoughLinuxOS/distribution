@@ -3,15 +3,15 @@
 
 PKG_NAME="dolphinsa"
 PKG_LICENSE="GPLv2"
-PKG_DEPENDS_TARGET="toolchain libevdev libdrm ffmpeg zlib libpng lzo libusb zstd"
+PKG_DEPENDS_TARGET="toolchain libevdev libdrm ffmpeg zlib libpng lzo libusb zstd ecm"
 PKG_LONGDESC="Dolphin is a GameCube / Wii emulator, allowing you to play games for these two platforms on PC with improvements. "
 
 case ${DEVICE} in
   RG552|handheld)
     PKG_SITE="https://github.com/dolphin-emu/dolphin"
     PKG_URL="${PKG_SITE}.git"
-    PKG_VERSION="1d86a48db658e5ba7c65629c984e5ba111656da0"
-    PKG_PATCH_DIRS+=" new"
+    PKG_VERSION="d3718b1b81e64db540005f3ced6a0edfde76f411"
+    PKG_PATCH_DIRS+=" wayland"
   ;;
   *)
     PKG_SITE="https://github.com/rtissera/dolphin"
@@ -24,26 +24,26 @@ esac
 
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
-  PKG_CONFIGURE_OPTS_TARGET+=" -DENABLE_X11=OFF \
+  PKG_CMAKE_OPTS_TARGET+="     -DENABLE_X11=OFF \
                                -DENABLE_EGL=ON"
 fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-  PKG_CONFIGURE_OPTS_TARGET+=" -DENABLE_X11=OFF \
+  PKG_CMAKE_OPTS_TARGET+="     -DENABLE_X11=OFF \
                                -DENABLE_EGL=ON"
 fi
 
 if [ "${DISPLAYSERVER}" = "wl" ]; then
   PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER} xorg-server xrandr libXi"
-  PKG_CONFIGURE_OPTS_TARGET+=" -DENABLE_X11=ON \
-                               -DENABLE_EGL=ON"
+  PKG_CMAKE_OPTS_TARGET+="     -DENABLE_WAYLAND=ON \
+                               -DENABLE_X11=OFF"
 fi
 
 if [ "${VULKAN_SUPPORT}" = "yes" ]
 then
   PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
-  PKG_CONFIGURE_OPTS_TARGET+=" -DENABLE_VULKAN=ON"
+  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_VULKAN=ON"
 fi
 
 PKG_CMAKE_OPTS_TARGET+=" -DENABLE_HEADLESS=ON \
@@ -60,6 +60,7 @@ PKG_CMAKE_OPTS_TARGET+=" -DENABLE_HEADLESS=ON \
                          -DENABLE_QT=OFF \
                          -DENCODE_FRAMEDUMPS=OFF \
                          -DENABLE_CLI_TOOL=OFF"
+
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin
@@ -79,7 +80,7 @@ post_install() {
         DOLPHIN_PLATFORM="drm"
       ;;
       *)
-        DOLPHIN_PLATFORM="x11"
+        DOLPHIN_PLATFORM="wayland"
       ;;
     esac
     sed -e "s/@DOLPHIN_PLATFORM@/${DOLPHIN_PLATFORM}/g" \

@@ -25,6 +25,8 @@ case $1 in
 
     nohup alsactl store -f /storage/.config/asound.state >/dev/null 2>&1
 
+    nohup systemctl stop bluetooth & >/dev/null 2>&1
+
     wait
     touch /run/.last_sleep_time
 
@@ -48,9 +50,14 @@ case $1 in
     fi
 
     if [ "$(get_setting wifi.enabled)" == "1" ]
-     then
-       nohup wifictl reconnect & >/dev/null 2>&1
-     fi
+    then
+      nohup wifictl reconnect & >/dev/null 2>&1
+    fi
+
+    if [ "$(get_setting bluetooth.enabled)" == "1" ]
+    then
+      nohup systemctl start bluetooth & >/dev/null 2>&1
+    fi
 
     DEVICE_VOLUME=$(get_setting "audio.volume" 2>/dev/null)
     nohup amixer -M set "${DEVICE_AUDIO_MIXER}" ${DEVICE_VOLUME}% & >/dev/null 2>&1

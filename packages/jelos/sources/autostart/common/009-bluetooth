@@ -1,0 +1,8 @@
+#!/bin/bash
+
+. /etc/profile
+
+if [ "$(get_setting bluetooth.enabled)" == "1" ]
+then
+  nohup systemctl start bluetooth &
+fi
