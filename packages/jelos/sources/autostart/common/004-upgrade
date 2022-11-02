@@ -8,7 +8,7 @@ if [ "$(cat /storage/.config/boot.hint 2>/dev/null)" = "UPDATE" ] || [ ! -e "/st
 then
   if [ -e "/usr/share/post-update" ]
   then
-    /usr/share/post-update
+    /usr/share/post-update >/var/log/upgrade.log 2>&1
   fi
   rm /storage/.config/boot.hint
   touch /storage/.configured

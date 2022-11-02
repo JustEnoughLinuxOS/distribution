@@ -16,30 +16,31 @@ PKG_LONGDESC="This package builds the kernel for Rockchip devices"
 PKG_IS_KERNEL_PKG="yes"
 PKG_STAMP="${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD}"
 PKG_PATCH_DIRS+="${DEVICE}"
-PKG_GIT_CLONE_BRANCH="main"
-GET_HANDLER_SUPPORT="git"
 
 case ${DEVICE} in
   RG351P|RG351V|RG351MP)
     PKG_URL="${PKG_SITE}/rk3326-kernel.git"
-    PKG_VERSION="a19b4df7c"
+    PKG_VERSION="0b4eef36a"
+    GET_HANDLER_SUPPORT="git"
+    PKG_GIT_CLONE_BRANCH="main"
   ;;
   RG552)
-    PKG_URL="https://github.com/brooksytech/rk3399-kernel-5.19.git"
-    PKG_VERSION="db9acc833faead79f78f33477a099523f2dffa7e"
-    PKG_GIT_CLONE_BRANCH="dev"
+    PKG_VERSION="6.0.6"
+    PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
   ;;
   RG353P|RG503)
     PKG_URL="${PKG_SITE}/rk356x-kernel.git"
-    PKG_VERSION="7e1b435e1"
+    PKG_VERSION="178e6ca92"
+    GET_HANDLER_SUPPORT="git"
+    PKG_GIT_CLONE_BRANCH="main"
   ;;
 esac
 
 PKG_KERNEL_CFG_FILE=$(kernel_config_path) || die
 
 if [ -n "${KERNEL_TOOLCHAIN}" ]; then
-  PKG_DEPENDS_HOST="${PKG_DEPENDS_HOST} gcc-arm-${KERNEL_TOOLCHAIN}:host"
-  PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} gcc-arm-${KERNEL_TOOLCHAIN}:host"
+  PKG_DEPENDS_HOST="${PKG_DEPENDS_HOST} gcc-${KERNEL_TOOLCHAIN}:host"
+  PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} gcc-${KERNEL_TOOLCHAIN}:host"
   HEADERS_ARCH=${TARGET_ARCH}
 fi
 

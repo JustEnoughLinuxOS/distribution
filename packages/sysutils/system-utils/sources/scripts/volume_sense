@@ -91,7 +91,7 @@ get_devices
 
 # If the input devices change, it may be a new controller
 # so handle it here.
-mkcontroller
+mkcontroller 2>/dev/null ||:
 
 # Logic:
 #  - Listen to both:
