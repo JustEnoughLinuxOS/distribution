@@ -10,7 +10,7 @@ case ${DEVICE} in
   RG552|handheld)
     PKG_SITE="https://github.com/dolphin-emu/dolphin"
     PKG_URL="${PKG_SITE}.git"
-    PKG_VERSION="d3718b1b81e64db540005f3ced6a0edfde76f411"
+    PKG_VERSION="0210d115c22a1c5745c76eaefe38b5d0af3247f9"
     PKG_PATCH_DIRS+=" wayland"
   ;;
   *)
@@ -67,7 +67,8 @@ makeinstall_target() {
   cp -rf ${PKG_BUILD}/.${TARGET_NAME}/Binaries/dolphin* ${INSTALL}/usr/bin
   cp -rf ${PKG_DIR}/scripts/* ${INSTALL}/usr/bin
 
-  chmod +x ${INSTALL}/usr/bin/start_dolphin.sh
+  chmod +x ${INSTALL}/usr/bin/start_dolphin_gc.sh
+  chmod +x ${INSTALL}/usr/bin/start_dolphin_wii.sh
 
   mkdir -p ${INSTALL}/usr/config/dolphin-emu
   cp -rf ${PKG_BUILD}/Data/Sys/* ${INSTALL}/usr/config/dolphin-emu
@@ -84,5 +85,8 @@ post_install() {
       ;;
     esac
     sed -e "s/@DOLPHIN_PLATFORM@/${DOLPHIN_PLATFORM}/g" \
-        -i  ${INSTALL}/usr/bin/start_dolphin.sh
+        -i  ${INSTALL}/usr/bin/start_dolphin_gc.sh
+    sed -e "s/@DOLPHIN_PLATFORM@/${DOLPHIN_PLATFORM}/g" \
+        -i  ${INSTALL}/usr/bin/start_dolphin_wii.sh
+
 }
