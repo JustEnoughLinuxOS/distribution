@@ -10,17 +10,19 @@ PKG_DEPENDS_TARGET="toolchain linux libmnl libnftnl"
 PKG_LONGDESC="IP packet filter administration."
 PKG_TOOLCHAIN="autotools"
 
-## Workaround until I can fix this correctly, or we get to mainline.
-if [[ "$(kernel_version)" =~ ^5. ]]
-then
-  PKG_VERSION="1.8.8"
-  PKG_PATCH_DIRS+="5.x"
-else
-  PKG_VERSION="1.8.3"
-  PKG_PATCH_DIRS+="4.x"
-  PKG_CONFIGURE_OPTS_TARGET="--with-kernel=$(kernel_path)
-                           CPPFLAGS=-I${SYSROOT_PREFIX}/usr/include"
-fi
+
+case ${DEVICE} in
+  RG503|RG353P|RG351P|RG351V|RG351MP) 
+    PKG_VERSION="1.8.3"
+    PKG_PATCH_DIRS+="4.x"
+    PKG_CONFIGURE_OPTS_TARGET="--with-kernel=$(kernel_path)
+                             CPPFLAGS=-I${SYSROOT_PREFIX}/usr/include"
+  ;;
+  *)
+    PKG_VERSION="1.8.8"
+    PKG_PATCH_DIRS+="5.x"
+  ;;
+esac
 
 PKG_URL="https://www.netfilter.org/projects/iptables/files/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
 
