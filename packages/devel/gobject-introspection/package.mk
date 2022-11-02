@@ -5,10 +5,11 @@
 
 PKG_NAME="gobject-introspection"
 PKG_VERSION="1.74.0"
+PKG_SHA256="79ed5d764d288f046b027ff064be174d7904904565de150a94841740a2a0455d"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.gtk.org/"
-PKG_URL="https://gitlab.gnome.org/GNOME/${PKG_NAME}/-/archive/${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.gz"
+PKG_URL="https://github.com/GNOME/$PKG_NAME/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libffi glib Python3 qemu:host gobject-introspection:host"
 PKG_DEPENDS_HOST="libffi:host glib:host"
 PKG_SECTION="devel"
@@ -17,9 +18,7 @@ PKG_LONGDESC="GLib is a library which includes support routines for C such as li
 PKG_TOOLCHAIN="meson"
 
 pre_configure_host() {
-  PKG_MESON_OPTS_HOST=" \
-    -Ddoctool=disabled \
-    -Dbuild_introspection_data=false"
+  PKG_MESON_OPTS_HOST="-Ddoctool=disabled"
 
   # prevent g-ir-scanner from writing cache data to $HOME
   export GI_SCANNER_DISABLE_CACHE="1"
@@ -41,12 +40,18 @@ pre_configure_target() {
   CFLAGS="${TARGET_CFLAGS}"
   LDFLAGS="${TARGET_LDFLAGS}"
 
-  PKG_MESON_OPTS_TARGET=" \
+  case ${ARCH} in
+    arm|aarch64)
+       PKG_MESON_OPTS_TARGET+=" \
+         -Dgi_cross_use_prebuilt_gi=true \
+         -Dgi_cross_binary_wrapper=${TOOLCHAIN}/bin/g-ir-scanner-binary-wrapper \
+         -Dgi_cross_ldd_wrapper=${TOOLCHAIN}/bin/g-ir-scanner-ldd-wrapper"
+    ;;
+  esac
+
+  PKG_MESON_OPTS_TARGET+=" \
     -Ddoctool=disabled \
     -Dpython=${TOOLCHAIN}/bin/${PKG_PYTHON_VERSION} \
-    -Dgi_cross_use_prebuilt_gi=true \
-    -Dgi_cross_binary_wrapper=${TOOLCHAIN}/bin/g-ir-scanner-binary-wrapper \
-    -Dgi_cross_ldd_wrapper=${TOOLCHAIN}/bin/g-ir-scanner-ldd-wrapper \
     -Dbuild_introspection_data=true"
 
   # prevent g-ir-scanner from writing cache data to $HOME
@@ -72,10 +77,6 @@ EOF
 EOF
 
   chmod +x ${TOOLCHAIN}/bin/g-ir-scanner-*-wrapper
-}
-
-post_makeinstall_host() {
-  python_fix_abi "${TOOLCHAIN}/lib/gobject-introspection"
 }
 
 post_makeinstall_target() {

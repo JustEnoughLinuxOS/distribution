@@ -14,6 +14,7 @@ PKG_LONGDESC="Foreign Function Interface Library."
 PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-debug \
+                           --enable-static --disable-shared \
                            --with-pic \
                            --enable-structs \
                            --enable-raw-api \
