@@ -3,7 +3,6 @@
 
 PKG_NAME="mame"
 PKG_VERSION="b8cd169fab8dec3e61f81c9f2df529ac2afe729e"
-PKG_SHA256="f65301ad01293998e031326a7555a20c67ed3335f84c8a69a64d8598a95d4352"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/mame"
@@ -14,6 +13,14 @@ PKG_SHORTDESC="MAME - Multiple Arcade Machine Emulator"
 PKG_TOOLCHAIN="make"
 PKG_BUILD_FLAGS="-lto"
 
+case ${TARGET_ARCH} in
+  arm|aarch64)
+    PLATFORM=arm64
+  ;;
+  x86_64)
+    PLATFORM=x86_64
+  ;;
+esac
 
 PKG_MAKE_OPTS_TARGET="REGENIE=1 \
 		      VERBOSE=1 \
@@ -28,7 +35,7 @@ PKG_MAKE_OPTS_TARGET="REGENIE=1 \
 		      CONFIG=libretro \
 		      LIBRETRO_OS=unix \
 		      LIBRETRO_CPU= \
-		      PLATFORM=arm64 \
+		      PLATFORM=${PLATFORM} \
 		      ARCH= \
 		      TARGET=mame \
 		      SUBTARGET=mame \
@@ -46,7 +53,10 @@ make_target() {
   unset ARCH
   unset DISTRO
   unset PROJECT
-  export ARCHOPTS="-D__aarch64__ -DASMJIT_BUILD_X86"
+  if [ "${PLATFORM}" = "arm64" ]
+  then
+    export ARCHOPTS="-D__aarch64__ -DASMJIT_BUILD_X86"
+  fi
   make $PKG_MAKE_OPTS_TARGET OVERRIDE_CC=$CC OVERRIDE_CXX=$CXX OVERRIDE_LD=$LD AR=$AR $MAKEFLAGS
 }
 
