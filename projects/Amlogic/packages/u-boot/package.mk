@@ -16,7 +16,7 @@ case ${DEVICE} in
   OGU)
     PKG_URL="${PKG_SITE}/u-boot.git"
     PKG_VERSION="d89910f962ec610fe94c0d7b3423e7fc74c8a95c"
-    PKG_GIT_CLONE_BRANCH="dev"
+    PKG_GIT_CLONE_BRANCH="odroidgoU-v2015.01"
   ;;
 esac
 
