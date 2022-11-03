@@ -73,6 +73,9 @@ pre_configure_target() {
       PKG_DEPENDS_TARGET+=" librga libgo2"
       PKG_CONFIGURE_OPTS_TARGET+=" --enable-odroidgo2"
     ;;
+    *)
+      PKG_CONFIGURE_OPTS_TARGET+=" --disable-odroidgo2"
+    ;;
   esac
 
   cd ${PKG_BUILD}
