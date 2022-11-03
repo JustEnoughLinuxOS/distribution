@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
+
+SRCDIR="$BUILD/image/system/usr/share/bootloader"
+DSTDIR="$RELEASE_DIR/3rdparty/bootloader"
+
+mkdir -p "$DSTDIR"
+  cp -a "$SRCDIR"/*.scr "$SRCDIR"/*script "$DSTDIR"
+
+  if find_file_path "bootloader/${UBOOT_SYSTEM}.ini"; then
+    cp -av "${FOUND_PATH}" "$DSTDIR/boot.ini"
+  fi
+
+mkdir -p "$DSTDIR/dtb"
+  case ${DEVICE:-$PROJECT} in
+    AMLGX)
+      cp -a "$SRCDIR"/*gxbb*.dtb "$DSTDIR/dtb"
+      cp -a "$SRCDIR"/*gxl*.dtb "$DSTDIR/dtb"
+      cp -a "$SRCDIR"/*gxm*.dtb "$DSTDIR/dtb"
+      cp -a "$SRCDIR"/*g12a*.dtb "$DSTDIR/dtb"
+      cp -a "$SRCDIR"/*g12b*.dtb "$DSTDIR/dtb"
+      cp -a "$SRCDIR"/*sm1*.dtb "$DSTDIR/dtb"
+      ;;
+  esac

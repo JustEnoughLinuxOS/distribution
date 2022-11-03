@@ -28,6 +28,10 @@ world: RG552 RG503 RG353P RG351P RG351V RG351MP handheld
 handheld:
 	DEVICE_ROOT=handheld PROJECT=PC DEVICE=handheld ARCH=x86_64 ./scripts/build_distro
 
+OGU:
+        DEVICE_ROOT=OGU PROJECT=Amlogic DEVICE=OGU ARCH=arm ./scripts/build_distro
+        DEVICE_ROOT=OGU PROJECT=Amlogic DEVICE=OGU ARCH=aarch64 ./scripts/build_distro
+
 RG552:
 	DEVICE_ROOT=RG552 PROJECT=Rockchip DEVICE=RG552 ARCH=arm ./scripts/build_distro
 	DEVICE_ROOT=RG552 PROJECT=Rockchip DEVICE=RG552 ARCH=aarch64 ./scripts/build_distro
