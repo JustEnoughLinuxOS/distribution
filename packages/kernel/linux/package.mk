@@ -175,7 +175,7 @@ pre_make_target() {
     ${PKG_BUILD}/scripts/config --set-str CONFIG_EXTRA_FIRMWARE_DIR "external-firmware"
   fi
 
-  kernel_make oldconfig
+  yes "" | kernel_make oldconfig
 
   if [ -f "${ROOT}/${DISTRO}/kernel_options" ]; then
     while read OPTION; do
