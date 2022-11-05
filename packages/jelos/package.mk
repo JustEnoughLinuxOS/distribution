@@ -45,7 +45,7 @@ esac
 
 ### Bluetooth support for some devices
 case "${DEVICE}" in
-  RG503|RG353P|RG552)
+  RG503|RG353P|RG552|RG351P|RG351V|RG351MP)
     PKG_TOOLS+=" pygobject"
   ;;
 esac
