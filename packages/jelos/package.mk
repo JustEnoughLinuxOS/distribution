@@ -32,6 +32,8 @@ PKG_SOFTWARE=""
 
 PKG_COMPAT=""
 
+PKG_MULTIMEDIA="ffmpeg mpv vlc"
+
 PKG_TOOLS="i2c-tools rclone jslisten evtest tailscale"
 
 ### Tools for mainline devices
@@ -41,9 +43,12 @@ case "${DEVICE}" in
   ;;
 esac
 
-PKG_MULTIMEDIA="ffmpeg mpv vlc"
-
-PKG_EXPERIMENTAL=""
+### Bluetooth support for some devices
+case "${DEVICE}" in
+  RG503|RG353P)
+    PKG_TOOLS+=" pygobject"
+  ;;
+esac
 
 ### Project specific variables
 case "${PROJECT}" in
@@ -60,7 +65,7 @@ if [ ! -z "${BASE_ONLY}" ]
 then
   PKG_DEPENDS_TARGET+=" ${PKG_BASEOS} ${PKG_TOOLS} ${PKG_UI}"
 else
-  PKG_DEPENDS_TARGET+=" ${PKG_BASEOS} ${PKG_TOOLS} ${PKG_UI} ${PKG_COMPAT} ${PKG_MULTIMEDIA} ${PKG_SOFTWARE} ${PKG_EXPERIMENTAL}"
+  PKG_DEPENDS_TARGET+=" ${PKG_BASEOS} ${PKG_TOOLS} ${PKG_UI} ${PKG_COMPAT} ${PKG_MULTIMEDIA} ${PKG_SOFTWARE}"
 fi
 
 make_target() {

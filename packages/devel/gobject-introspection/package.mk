@@ -18,7 +18,9 @@ PKG_LONGDESC="GLib is a library which includes support routines for C such as li
 PKG_TOOLCHAIN="meson"
 
 pre_configure_host() {
-  PKG_MESON_OPTS_HOST="-Ddoctool=disabled"
+  PKG_MESON_OPTS_HOST=" \
+    -Ddoctool=disabled \
+    -Dbuild_introspection_data=false"
 
   # prevent g-ir-scanner from writing cache data to $HOME
   export GI_SCANNER_DISABLE_CACHE="1"
@@ -40,18 +42,12 @@ pre_configure_target() {
   CFLAGS="${TARGET_CFLAGS}"
   LDFLAGS="${TARGET_LDFLAGS}"
 
-  case ${ARCH} in
-    arm|aarch64)
-       PKG_MESON_OPTS_TARGET+=" \
-         -Dgi_cross_use_prebuilt_gi=true \
-         -Dgi_cross_binary_wrapper=${TOOLCHAIN}/bin/g-ir-scanner-binary-wrapper \
-         -Dgi_cross_ldd_wrapper=${TOOLCHAIN}/bin/g-ir-scanner-ldd-wrapper"
-    ;;
-  esac
-
-  PKG_MESON_OPTS_TARGET+=" \
+  PKG_MESON_OPTS_TARGET=" \
     -Ddoctool=disabled \
     -Dpython=${TOOLCHAIN}/bin/${PKG_PYTHON_VERSION} \
+    -Dgi_cross_use_prebuilt_gi=true \
+    -Dgi_cross_binary_wrapper=${TOOLCHAIN}/bin/g-ir-scanner-binary-wrapper \
+    -Dgi_cross_ldd_wrapper=${TOOLCHAIN}/bin/g-ir-scanner-ldd-wrapper \
     -Dbuild_introspection_data=true"
 
   # prevent g-ir-scanner from writing cache data to $HOME
