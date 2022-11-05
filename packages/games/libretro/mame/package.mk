@@ -16,10 +16,13 @@ PKG_BUILD_FLAGS="-lto"
 
 case ${TARGET_ARCH} in
   arm|aarch64)
-    PLATFORM=arm64
+    MAME_PLATFORM="PLATFORM=arm64"
+    CROSS_BUILD="1"
+    PTR64=0
   ;;
-  x86_64)
-    PLATFORM=x86_64
+  *)
+    CROSS_BUILD="0"
+    PTR64=1
   ;;
 esac
 
@@ -27,16 +30,16 @@ PKG_MAKE_OPTS_TARGET="REGENIE=1 \
 		      VERBOSE=1 \
 		      NOWERROR=1 \
 		      OPENMP=1 \
-		      CROSS_BUILD=1 \
+		      CROSS_BUILD=${CROSS_BUILD} \
 		      TOOLS=0 \
 		      RETRO=1 \
-		      PTR64=0 \
+		      PTR64=${PTR64} \
 		      NOASM=0 \
 		      PYTHON_EXECUTABLE=python3 \
 		      CONFIG=libretro \
 		      LIBRETRO_OS=unix \
 		      LIBRETRO_CPU= \
-		      PLATFORM=${PLATFORM} \
+		      ${MAME_PLATFORM} \
 		      ARCH= \
 		      TARGET=mame \
 		      SUBTARGET=mame \
