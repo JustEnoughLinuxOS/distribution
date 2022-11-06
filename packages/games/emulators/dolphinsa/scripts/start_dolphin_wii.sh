@@ -11,10 +11,13 @@ if [ ! -d "/storage/.config/dolphin-emu" ]; then
         cp -r "/usr/config/dolphin-emu" "/storage/.config/"
 fi
 
-#Check if WiiControllerProfiles exists in .config/dolphin-emu
-if [ ! -d "/storage/.config/dolphin-emu/WiiControllerProfiles" ]; then
-        cp -r "/usr/config/dolphin-emu" "/storage/.config/dolphin-emu/WiiControllerProfiles"
+#Check if Wii custom controller profile exists in .config/dolphin-emu
+if [ ! -f "/storage/.config/dolphin-emu/Custom_WiimoteNew.ini" ]; then
+        cp -r "/usr/config/dolphin-emu/WiiControllerProfiles/remote.ini" "/storage/.config/dolphin-emu/Custom_WiimoteNew.ini"
 fi
+
+#Gamecube controller profile needed for hotkeys to work
+cp -r "/usr/config/dolphin-emu/GCPadNew.ini" "/storage/.config/dolphin-emu/GCPadNew.ini"
 
 #Link Save States to /roms/savestates/wii
 if [ ! -d "/storage/roms/savestates/wii/" ]; then
@@ -130,15 +133,19 @@ ln -sf /storage/roms/savestates/wii /storage/.config/dolphin-emu/StateSaves
   #Wii Controller Profile
         if [ "$CON" = "remote" ]
         then
-		cp -r /storage/.config/dolphin-emu/WiiControllerProfiles/remote.ini /storage/.config/dolphin-emu/WiimoteNew.ini
+		cp -r /usr/config/dolphin-emu/WiiControllerProfiles/remote.ini /storage/.config/dolphin-emu/WiimoteNew.ini
         fi
         if [ "$CON" = "nunchuck" ]
         then
-                cp -r /storage/.config/dolphin-emu/WiiControllerProfiles/nunchuck.ini /storage/.config/dolphin-emu/WiimoteNew.ini
+                cp -r /usr/config/dolphin-emu/WiiControllerProfiles/nunchuck.ini /storage/.config/dolphin-emu/WiimoteNew.ini
         fi
         if [ "$CON" = "classic" ]
         then
-                cp -r /storage/.config/dolphin-emu/WiiControllerProfiles/classic.ini /storage/.config/dolphin-emu/WiimoteNew.ini
+                cp -r /usr/config/dolphin-emu/WiiControllerProfiles/classic.ini /storage/.config/dolphin-emu/WiimoteNew.ini
+        fi
+        if [ "$CON" = "custom" ]
+        then
+                cp -r /storage/.config/dolphin-emu/Custom_WiimoteNew.ini /storage/.config/dolphin-emu/WiimoteNew.ini
         fi
 
 #Link  .config/dolphin-emu to .local
