@@ -1,6 +1,6 @@
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/Makefile linux/arch/arm64/boot/dts/rockchip/Makefile
---- linux.orig/arch/arm64/boot/dts/rockchip/Makefile	2022-11-01 17:55:23.658604366 -0400
-+++ linux/arch/arm64/boot/dts/rockchip/Makefile	2022-11-01 17:56:17.128793891 -0400
+--- linux.orig/arch/arm64/boot/dts/rockchip/Makefile	2022-10-29 04:08:36.000000000 -0400
++++ linux/arch/arm64/boot/dts/rockchip/Makefile	2022-11-06 16:11:01.831219486 -0500
 @@ -43,6 +43,7 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-na
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-orangepi.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-pinebook-pro.dtb
@@ -10,8 +10,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/Makefile linux/arch/arm64/boo
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-roc-pc-mezzanine.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-roc-pc-plus.dtb
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-opp.dtsi linux/arch/arm64/boot/dts/rockchip/rk3399-opp.dtsi
---- linux.orig/arch/arm64/boot/dts/rockchip/rk3399-opp.dtsi	2022-11-01 17:55:23.662604223 -0400
-+++ linux/arch/arm64/boot/dts/rockchip/rk3399-opp.dtsi	2022-11-01 17:56:17.128793891 -0400
+--- linux.orig/arch/arm64/boot/dts/rockchip/rk3399-opp.dtsi	2022-10-29 04:08:36.000000000 -0400
++++ linux/arch/arm64/boot/dts/rockchip/rk3399-opp.dtsi	2022-11-06 16:11:01.831219486 -0500
 @@ -101,6 +101,10 @@
  			opp-hz = /bits/ 64 <800000000>;
  			opp-microvolt = <1100000 1100000 1150000>;
@@ -25,8 +25,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-opp.dtsi linux/arch/ar
  
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts	1969-12-31 19:00:00.000000000 -0500
-+++ linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts	2022-11-01 17:56:17.132793763 -0400
-@@ -0,0 +1,1407 @@
++++ linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts	2022-11-06 16:12:01.866771975 -0500
+@@ -0,0 +1,1394 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2017 Fuzhou Rockchip Electronics Co., Ltd.
@@ -62,28 +62,21 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +	};
 +
 +	volume-keys {
-+		compatible = "gpio-keys";
-+		autorepeat;
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&vol_pwr_btn>;
++			compatible = "gpio-keys";
++			#address-cells = <1>;
++			#size-cells = <0>;
++			autorepeat;
++			button@0 {
++				label = "GPIO BTN-VOLUP";
++				linux,code = <KEY_VOLUMEUP>;
++				gpios = <&gpio3 RK_PB5 GPIO_ACTIVE_LOW>;
++			};
++			button@1 {
++				label = "GPIO BTN-VOLDN";
++				linux,code = <KEY_VOLUMEDOWN>;
++				gpios = <&gpio3 RK_PB6 GPIO_ACTIVE_LOW>;
++			};
 +
-+		sw1 {
-+			debounce-interval = <100>;
-+			gpios = <&gpio0 RK_PA5 GPIO_ACTIVE_LOW>;
-+			label = "BTN PWR";
-+			linux,code = <KEY_POWER>;
-+			wakeup-source;
-+		};
-+		sw2 {
-+			label = "BTN VOL+";
-+			linux,code = <KEY_VOLUMEUP>;
-+			gpios = <&gpio3 RK_PB5 GPIO_ACTIVE_LOW>;
-+		};
-+		sw3 {
-+			label = "BTN VOL-";
-+			linux,code = <KEY_VOLUMEDOWN>;
-+			gpios = <&gpio3 RK_PB6 GPIO_ACTIVE_LOW>;
-+		};
 +	};
 +
 +	adc-keys {
@@ -1296,12 +1289,6 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +					<3 RK_PB1 RK_FUNC_GPIO &pcfg_pull_up>,
 +					<3 RK_PC0 RK_FUNC_GPIO &pcfg_pull_up>;
 +		};
-+		vol_pwr_btn: vol-pwr-btn {
-+			rockchip,pins =
-+					<0 RK_PA5 RK_FUNC_GPIO &pcfg_pull_up>,
-+					<3 RK_PB5 RK_FUNC_GPIO &pcfg_pull_up>,
-+					<3 RK_PB6 RK_FUNC_GPIO &pcfg_pull_up>;
-+		};
 +	};
 +};
 +
@@ -1436,7 +1423,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +};
 diff -rupN linux.orig/arch/arm64/configs/rg552_defconfig linux/arch/arm64/configs/rg552_defconfig
 --- linux.orig/arch/arm64/configs/rg552_defconfig	1969-12-31 19:00:00.000000000 -0500
-+++ linux/arch/arm64/configs/rg552_defconfig	2022-11-01 17:56:17.136793634 -0400
++++ linux/arch/arm64/configs/rg552_defconfig	2022-11-06 16:11:01.835219456 -0500
 @@ -0,0 +1,7577 @@
 +#
 +# Automatically generated file; DO NOT EDIT.
@@ -9016,8 +9003,8 @@ diff -rupN linux.orig/arch/arm64/configs/rg552_defconfig linux/arch/arm64/config
 +# end of Kernel Testing and Coverage
 +# end of Kernel hacking
 diff -rupN linux.orig/drivers/gpu/drm/panel/Kconfig linux/drivers/gpu/drm/panel/Kconfig
---- linux.orig/drivers/gpu/drm/panel/Kconfig	2022-11-01 17:55:26.614499464 -0400
-+++ linux/drivers/gpu/drm/panel/Kconfig	2022-11-01 17:56:17.136793634 -0400
+--- linux.orig/drivers/gpu/drm/panel/Kconfig	2022-10-29 04:08:36.000000000 -0400
++++ linux/drivers/gpu/drm/panel/Kconfig	2022-11-06 16:11:01.835219456 -0500
 @@ -588,6 +588,15 @@ config DRM_PANEL_SHARP_LS043T1LE01
  	  Say Y here if you want to enable support for Sharp LS043T1LE01 qHD
  	  (540x960) DSI panel as found on the Qualcomm APQ8074 Dragonboard
@@ -9035,8 +9022,8 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/Kconfig linux/drivers/gpu/drm/panel/
  	tristate "Sharp LS060T1SX01 FullHD video mode panel"
  	depends on OF
 diff -rupN linux.orig/drivers/gpu/drm/panel/Makefile linux/drivers/gpu/drm/panel/Makefile
---- linux.orig/drivers/gpu/drm/panel/Makefile	2022-11-01 17:55:26.614499464 -0400
-+++ linux/drivers/gpu/drm/panel/Makefile	2022-11-01 17:56:17.136793634 -0400
+--- linux.orig/drivers/gpu/drm/panel/Makefile	2022-10-29 04:08:36.000000000 -0400
++++ linux/drivers/gpu/drm/panel/Makefile	2022-11-06 16:11:01.835219456 -0500
 @@ -59,6 +59,7 @@ obj-$(CONFIG_DRM_PANEL_SEIKO_43WVF1G) +=
  obj-$(CONFIG_DRM_PANEL_SHARP_LQ101R1SX01) += panel-sharp-lq101r1sx01.o
  obj-$(CONFIG_DRM_PANEL_SHARP_LS037V7DW01) += panel-sharp-ls037v7dw01.o
@@ -9047,7 +9034,7 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/Makefile linux/drivers/gpu/drm/panel
  obj-$(CONFIG_DRM_PANEL_SITRONIX_ST7703) += panel-sitronix-st7703.o
 diff -rupN linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c linux/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c
 --- linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c	2022-11-01 17:58:24.801136793 -0400
++++ linux/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c	2022-11-06 16:11:01.835219456 -0500
 @@ -0,0 +1,368 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +/*
@@ -9419,7 +9406,7 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c linux/driv
 +MODULE_LICENSE("GPL v2");
 diff -rupN linux.orig/drivers/input/input-polldev.c linux/drivers/input/input-polldev.c
 --- linux.orig/drivers/input/input-polldev.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux/drivers/input/input-polldev.c	2022-11-01 17:56:17.140793505 -0400
++++ linux/drivers/input/input-polldev.c	2022-11-06 16:11:01.835219456 -0500
 @@ -0,0 +1,362 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +/*
@@ -9784,8 +9771,8 @@ diff -rupN linux.orig/drivers/input/input-polldev.c linux/drivers/input/input-po
 +}
 +EXPORT_SYMBOL(input_unregister_polled_device);
 diff -rupN linux.orig/drivers/input/joystick/Kconfig linux/drivers/input/joystick/Kconfig
---- linux.orig/drivers/input/joystick/Kconfig	2022-11-01 17:55:27.006485589 -0400
-+++ linux/drivers/input/joystick/Kconfig	2022-11-01 17:56:17.140793505 -0400
+--- linux.orig/drivers/input/joystick/Kconfig	2022-10-29 04:08:36.000000000 -0400
++++ linux/drivers/input/joystick/Kconfig	2022-11-06 16:11:01.835219456 -0500
 @@ -392,6 +392,12 @@ config JOYSTICK_FSIA6B
  	  To compile this driver as a module, choose M here: the
  	  module will be called fsia6b.
@@ -9800,8 +9787,8 @@ diff -rupN linux.orig/drivers/input/joystick/Kconfig linux/drivers/input/joystic
  	bool "N64 controller"
  	depends on MACH_NINTENDO64
 diff -rupN linux.orig/drivers/input/joystick/Makefile linux/drivers/input/joystick/Makefile
---- linux.orig/drivers/input/joystick/Makefile	2022-11-01 17:55:27.006485589 -0400
-+++ linux/drivers/input/joystick/Makefile	2022-11-01 17:56:17.140793505 -0400
+--- linux.orig/drivers/input/joystick/Makefile	2022-10-29 04:08:36.000000000 -0400
++++ linux/drivers/input/joystick/Makefile	2022-11-06 16:11:01.835219456 -0500
 @@ -30,6 +30,7 @@ obj-$(CONFIG_JOYSTICK_PXRC)		+= pxrc.o
  obj-$(CONFIG_JOYSTICK_QWIIC)		+= qwiic-joystick.o
  obj-$(CONFIG_JOYSTICK_SENSEHAT)	+= sensehat-joystick.o
@@ -9812,7 +9799,7 @@ diff -rupN linux.orig/drivers/input/joystick/Makefile linux/drivers/input/joysti
  obj-$(CONFIG_JOYSTICK_STINGER)		+= stinger.o
 diff -rupN linux.orig/drivers/input/joystick/singleadcjoy.c linux/drivers/input/joystick/singleadcjoy.c
 --- linux.orig/drivers/input/joystick/singleadcjoy.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux/drivers/input/joystick/singleadcjoy.c	2022-11-01 17:56:17.140793505 -0400
++++ linux/drivers/input/joystick/singleadcjoy.c	2022-11-06 16:11:01.835219456 -0500
 @@ -0,0 +1,1416 @@
 +/*----------------------------------------------------------------------------*/
 +
@@ -11231,8 +11218,8 @@ diff -rupN linux.orig/drivers/input/joystick/singleadcjoy.c linux/drivers/input/
 +late_initcall(joypad_init);
 +module_exit(joypad_exit);
 diff -rupN linux.orig/drivers/input/Kconfig linux/drivers/input/Kconfig
---- linux.orig/drivers/input/Kconfig	2022-11-01 17:55:27.002485730 -0400
-+++ linux/drivers/input/Kconfig	2022-11-01 17:56:17.140793505 -0400
+--- linux.orig/drivers/input/Kconfig	2022-10-29 04:08:36.000000000 -0400
++++ linux/drivers/input/Kconfig	2022-11-06 16:11:01.835219456 -0500
 @@ -51,6 +51,19 @@ config INPUT_FF_MEMLESS
  	  To compile this driver as a module, choose M here: the
  	  module will be called ff-memless.
@@ -11254,8 +11241,8 @@ diff -rupN linux.orig/drivers/input/Kconfig linux/drivers/input/Kconfig
  	tristate "Sparse keymap support library"
  	help
 diff -rupN linux.orig/drivers/input/Makefile linux/drivers/input/Makefile
---- linux.orig/drivers/input/Makefile	2022-11-01 17:55:27.002485730 -0400
-+++ linux/drivers/input/Makefile	2022-11-01 17:56:17.140793505 -0400
+--- linux.orig/drivers/input/Makefile	2022-10-29 04:08:36.000000000 -0400
++++ linux/drivers/input/Makefile	2022-11-06 16:11:01.835219456 -0500
 @@ -10,6 +10,7 @@ input-core-y := input.o input-compat.o i
  input-core-y += touchscreen.o
  
@@ -11265,8 +11252,8 @@ diff -rupN linux.orig/drivers/input/Makefile linux/drivers/input/Makefile
  obj-$(CONFIG_INPUT_MATRIXKMAP)	+= matrix-keymap.o
  obj-$(CONFIG_INPUT_VIVALDIFMAP)	+= vivaldi-fmap.o
 diff -rupN linux.orig/drivers/power/supply/cw2015_battery.c linux/drivers/power/supply/cw2015_battery.c
---- linux.orig/drivers/power/supply/cw2015_battery.c	2022-11-01 17:55:28.710425434 -0400
-+++ linux/drivers/power/supply/cw2015_battery.c	2022-11-01 17:56:17.144793376 -0400
+--- linux.orig/drivers/power/supply/cw2015_battery.c	2022-10-29 04:08:36.000000000 -0400
++++ linux/drivers/power/supply/cw2015_battery.c	2022-11-06 16:11:01.835219456 -0500
 @@ -552,7 +552,7 @@ static enum power_supply_property cw_bat
  };
  
@@ -11278,7 +11265,7 @@ diff -rupN linux.orig/drivers/power/supply/cw2015_battery.c linux/drivers/power/
  	.num_properties	= ARRAY_SIZE(cw_battery_properties),
 diff -rupN linux.orig/drivers/power/supply/cw2015_battery.c.orig linux/drivers/power/supply/cw2015_battery.c.orig
 --- linux.orig/drivers/power/supply/cw2015_battery.c.orig	1969-12-31 19:00:00.000000000 -0500
-+++ linux/drivers/power/supply/cw2015_battery.c.orig	2022-10-29 04:08:36.000000000 -0400
++++ linux/drivers/power/supply/cw2015_battery.c.orig	2022-11-06 16:11:01.835219456 -0500
 @@ -0,0 +1,764 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -12045,8 +12032,8 @@ diff -rupN linux.orig/drivers/power/supply/cw2015_battery.c.orig linux/drivers/p
 +MODULE_DESCRIPTION("cw2015/cw2013 battery driver");
 +MODULE_LICENSE("GPL");
 diff -rupN linux.orig/include/linux/compiler.h linux/include/linux/compiler.h
---- linux.orig/include/linux/compiler.h	2022-11-01 17:55:30.018379377 -0400
-+++ linux/include/linux/compiler.h	2022-11-01 17:56:17.144793376 -0400
+--- linux.orig/include/linux/compiler.h	2022-10-29 04:08:36.000000000 -0400
++++ linux/include/linux/compiler.h	2022-11-06 16:11:01.835219456 -0500
 @@ -213,6 +213,8 @@ void ftrace_likely_update(struct ftrace_
  #define function_nocfi(x) (x)
  #endif
@@ -12065,7 +12052,7 @@ diff -rupN linux.orig/include/linux/compiler.h linux/include/linux/compiler.h
  #endif /* __LINUX_COMPILER_H */
 diff -rupN linux.orig/include/linux/compiler.h.orig linux/include/linux/compiler.h.orig
 --- linux.orig/include/linux/compiler.h.orig	1969-12-31 19:00:00.000000000 -0500
-+++ linux/include/linux/compiler.h.orig	2022-10-29 04:08:36.000000000 -0400
++++ linux/include/linux/compiler.h.orig	2022-11-06 16:11:01.835219456 -0500
 @@ -0,0 +1,256 @@
 +/* SPDX-License-Identifier: GPL-2.0 */
 +#ifndef __LINUX_COMPILER_H
@@ -12325,7 +12312,7 @@ diff -rupN linux.orig/include/linux/compiler.h.orig linux/include/linux/compiler
 +#endif /* __LINUX_COMPILER_H */
 diff -rupN linux.orig/include/linux/input-polldev.h linux/include/linux/input-polldev.h
 --- linux.orig/include/linux/input-polldev.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux/include/linux/input-polldev.h	2022-11-01 17:56:17.144793376 -0400
++++ linux/include/linux/input-polldev.h	2022-11-06 16:11:01.835219456 -0500
 @@ -0,0 +1,58 @@
 +/* SPDX-License-Identifier: GPL-2.0-only */
 +#ifndef _INPUT_POLLDEV_H
@@ -12386,8 +12373,8 @@ diff -rupN linux.orig/include/linux/input-polldev.h linux/include/linux/input-po
 +
 +#endif
 diff -rupN linux.orig/Makefile linux/Makefile
---- linux.orig/Makefile	2022-11-01 17:55:23.054625866 -0400
-+++ linux/Makefile	2022-11-01 17:56:17.128793891 -0400
+--- linux.orig/Makefile	2022-10-29 04:08:36.000000000 -0400
++++ linux/Makefile	2022-11-06 16:11:01.835219456 -0500
 @@ -755,6 +755,8 @@ KBUILD_CFLAGS	+= $(call cc-disable-warni
  KBUILD_CFLAGS	+= $(call cc-disable-warning, format-truncation)
  KBUILD_CFLAGS	+= $(call cc-disable-warning, format-overflow)
