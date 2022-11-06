@@ -11,6 +11,11 @@ if [ ! -d "/storage/.config/dolphin-emu" ]; then
         cp -r "/usr/config/dolphin-emu" "/storage/.config/"
 fi
 
+#Check if GC custom controller profile exists in .config/dolphin-emu
+if [ ! -f "/storage/.config/dolphin-emu/Custom_GCPadNew.ini" ]; then
+        cp -r "/usr/config/dolphin-emu/GCPadNew.ini" "/storage/.config/dolphin-emu/Custom_GCPadNew.ini"
+fi
+
 #Link Save States to /roms/savestates
 if [ ! -d "/storage/roms/savestates/gamecube/" ]; then
     mkdir -p "/storage/roms/savestates/gamecube/"
@@ -26,6 +31,7 @@ ln -sf /storage/roms/savestates/gamecube /storage/.config/dolphin-emu/StateSaves
   RENDERER=$(get_setting graphics_backend gamecube "${GAME}")
   IRES=$(get_setting internal_resolution gamecube "${GAME}")
   FPS=$(get_setting show_fps gamecube "${GAME}")
+  CON=$(get_setting gamecube_controller_profile gamecube "${GAME}")
 
   #Anti-Aliasing
 	if [ "$AA" = "0" ]
@@ -120,6 +126,16 @@ ln -sf /storage/roms/savestates/gamecube /storage/.config/dolphin-emu/StateSaves
 	then
   		sed -i '/ShowFPS/c\ShowFPS = true' /storage/.config/dolphin-emu/GFX.ini
 	fi
+
+  #GC Controller Profile
+        if [ "$CON" = "default" ]
+        then
+                cp -r /usr/config/dolphin-emu/GCPadNew.ini /storage/.config/dolphin-emu/GCPadNew.ini
+        fi
+        if [ "$CON" = "custom" ]
+        then
+                cp -r /storage/.config/dolphin-emu/Custom_GCPadNew.ini /storage/.config/dolphin-emu/GCPadNew.ini
+        fi
 
 #Link  .config/dolphin-emu to .local
 rm -rf /storage/.local/share/dolphin-emu
