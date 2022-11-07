@@ -2,7 +2,7 @@
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 # Copyright (C) 2022-present Fewtarius
 PKG_NAME="PPSSPPSDL"
-PKG_VERSION="eb18a87eeec1827a83ac6e9b3bc0e29043616205"
+PKG_VERSION="109db81eca29fcd618b4ebf7969d1f2a40918410"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
@@ -32,17 +32,16 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
 			   -DUSING_X11_VULKAN=OFF"
 fi
 
-### Vulkan is still not working for PPSSPP on the win600 yet.
-#if [ "${VULKAN_SUPPORT}" = "yes" ]
-#then
-#  PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
-#  PKG_CMAKE_OPTS_TARGET+=" -DUSE_VULKAN_DISPLAY_KHR=ON \
-#                           -DVULKAN=ON \
-#                           -DEGL_NO_X11=1
-#                           -DMESA_EGL_NO_X11_HEADERS=1"
-#else
+if [ "${VULKAN_SUPPORT}" = "yes" ]
+then
+  PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
+  PKG_CMAKE_OPTS_TARGET+=" -DUSE_VULKAN_DISPLAY_KHR=ON \
+                           -DVULKAN=ON \
+                           -DEGL_NO_X11=1
+                           -DMESA_EGL_NO_X11_HEADERS=1"
+else
   PKG_CMAKE_OPTS_TARGET+=" -DVULKAN=OFF"
-#fi
+fi
 
 if [ "${DISPLAYSERVER}" = "wl" ]; then
   PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER}"

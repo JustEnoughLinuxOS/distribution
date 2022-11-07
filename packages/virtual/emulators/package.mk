@@ -17,7 +17,7 @@ PKG_RETROARCH="retroarch retroarch-overlays retroarch-joypads retroarch-assets l
 
 LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce beetle-pce-fast beetle-pcfx      \
                 beetle-supafaust beetle-supergrafx beetle-vb beetle-wswan bluemsx cannonball cap32   \
-                crocods daphne dinothawr dosbox-svn dosbox-pure duckstation easyrpg fbalpha2012      \
+                crocods daphne dinothawr dosbox-svn dosbox-pure easyrpg fbalpha2012                  \
                 fbalpha2019 fbneo fceumm fmsx flycast flycast_libretro freechaf freeintv             \
                 freej2me fuse-libretro gambatte gearboy gearcoleco gearsystem genesis-plus-gx        \
                 genesis-plus-gx-wide gme gpsp gw-libretro handy hatari mame2000 mame2003-plus        \
@@ -41,7 +41,7 @@ case "${DEVICE}" in
     PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa dolphin slang-shaders"
   ;;
   RG503|RG353P)
-    PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa common-shaders glsl-shaders"
+    PKG_DEPENDS_TARGET+=" duckstationsa common-shaders glsl-shaders"
   ;;
   handheld)
     PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa dolphin pcsx2sa pcsx2 desmume bsnes citra slang-shaders"

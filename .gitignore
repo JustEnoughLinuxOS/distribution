@@ -28,7 +28,7 @@ mkpkg-temp
 /lost+found/
 
 # symlinks...
-/sources
+/sources*
 /.work
 
 # ccache

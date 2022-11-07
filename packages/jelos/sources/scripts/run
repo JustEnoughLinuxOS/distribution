@@ -4,15 +4,19 @@
 
 . /etc/profile
 
-RUN=$(echo ${1} | sed 's# #\\ #g')
-
 if [ "${UI_SERVICE}" = "weston.service" ]
 then
-  weston-terminal --command="${RUN}"
+  if [ -f "${*}" ]
+  then
+    RUN=$(echo ${*} | sed 's# #\\ #g')
+    weston-terminal --command="${RUN}"
+  else
+    weston-terminal --command="${*}"
+  fi
 else
   systemctl stop ${UI_SERVICE}
   clear >/dev/console 2>&1
-  $* >/dev/console 2>&1 || "$*"
+  $* >/dev/console 2>&1 || "$*" 2>&1
   clear >/dev/console 2>&1
 fi
 if [ ! "${UI_SERVICE}" = "weston.service" ]

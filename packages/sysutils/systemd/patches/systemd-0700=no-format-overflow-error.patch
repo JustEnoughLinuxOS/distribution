@@ -1,0 +1,11 @@
+diff -rupN systemd.orig/meson.build systemd/meson.build
+--- systemd.orig/meson.build	2022-11-01 14:19:46.286920312 +0000
++++ systemd/meson.build	2022-11-01 15:20:34.490729536 +0000
+@@ -370,6 +370,7 @@ possible_common_cc_flags = [
+         '-Wsuggest-attribute=noreturn',
+         '-Wunused-function',
+         '-Wwrite-strings',
++	'-Wno-error=format-overflow',
+ 
+         # negative arguments are correctly detected starting with meson 0.46.
+         '-Wno-error=#warnings',  # clang

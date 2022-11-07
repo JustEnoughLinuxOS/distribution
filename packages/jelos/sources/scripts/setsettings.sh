@@ -126,9 +126,9 @@ log "Core: ${CORE}"
 MY_CONTROLLER=$(cat /storage/.controller)
 if [ "$(get_setting system.autohotkeys)" == "1" ]
 then
-  if [ -e "/usr/share/libretro/autoconfig/${MY_CONTROLLER}.cfg" ]
+  if [ -e "/tmp/joypads/${MY_CONTROLLER}.cfg" ]
   then
-    cp /usr/share/libretro/autoconfig/"${MY_CONTROLLER}.cfg" /tmp
+    cp /tmp/joypads/"${MY_CONTROLLER}.cfg" /tmp
     sed -i "s# = #=#g" /tmp/"${MY_CONTROLLER}.cfg"
     source /tmp/"${MY_CONTROLLER}.cfg"
     sed -i "/input_bind_hold/d" ${RACONF}

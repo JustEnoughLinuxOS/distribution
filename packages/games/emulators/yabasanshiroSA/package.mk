@@ -10,7 +10,7 @@ GET_HANDLER_SUPPORT="git"
 PKG_BUILD_FLAGS="+speed"
 PKG_PATCH_DIRS+="${DEVICE}"
 
-case ${ARCH} in
+case ${TARGET_ARCH} in
   aarch64|arm)
     PKG_VERSION="c7618d2ecbf77b1e8188fa8af4fa1cfb34833a72"
     PKG_GIT_CLONE_BRANCH="pi4-1-9-0"
@@ -53,11 +53,11 @@ pre_configure_target() {
   PKG_CMAKE_OPTS_TARGET="${PKG_BUILD}/yabause "
 
   if [ ! "${OPENGL}" = "no" ]; then
-    PKG_CMAKE_OPTS_TARGET+=" -DUSE_EGL=ON"
+    PKG_CMAKE_OPTS_TARGET+=" -DUSE_EGL=ON -DUSE_OPENGL=ON"
   fi
 
   if [ "${OPENGLES_SUPPORT}" = yes ]; then
-    PKG_CMAKE_OPTS_TARGET+=" -DUSE_EGL=ON"
+    PKG_CMAKE_OPTS_TARGET+=" -DUSE_EGL=ON -DUSE_OPENGL=OFF"
   fi
 
   #if [ "${VULKAN_SUPPORT}" = "yes" ]

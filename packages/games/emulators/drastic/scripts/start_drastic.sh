@@ -9,7 +9,7 @@ if [ ! -d "/storage/.config/drastic/aarch64/drastic" ]; then
   echo -e "=> ${OS_NAME} DRASTIC INSTALLATION"
   echo -e "\nChecking for internet connection..."
 
-  INETUP=$(ping -c1 -w1 www.google.com >/dev/null 2>&1)
+  INETUP=$(/usr/bin/amionline >/dev/null 2>&1)
   if [ $? == 0 ]
   then
     mkdir -p "/storage/.config/drastic/aarch64"

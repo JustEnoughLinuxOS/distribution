@@ -281,12 +281,18 @@ then
                         RUNTHIS='${TBASH} /usr/bin/start_pcsx2.sh "${ROMNAME}"'
                         fi
                 ;;
-                "gamecube"|"wii")
+                "gamecube")
                         jslisten set "-9 dolphin-emu-nogui"
-                        if [ "$EMU" = "dolphinsa" ]; then
-                        RUNTHIS='${TBASH} /usr/bin/start_dolphin.sh "${ROMNAME}"'
+                        if [ "$EMU" = "dolphinsa-gc" ]; then
+                        RUNTHIS='${TBASH} /usr/bin/start_dolphin_gc.sh "${ROMNAME}"'
                         fi
 
+                ;;
+                "wii")
+                        jslisten set "-9 dolphin-emu-nogui"
+                        if [ "$EMU" = "dolphinsa-wii" ]; then
+                        RUNTHIS='${TBASH} /usr/bin/start_dolphin_wii.sh "${ROMNAME}"'
+                        fi
                 ;;
 		"mplayer")
 			jslisten set "mpv"
@@ -475,6 +481,18 @@ then
 			systemctl restart fancontrol
 		fi
 	fi
+fi
+
+### Backup save games
+CLOUD_BACKUP=$(get_setting "cloud.backup")
+if [ "${CLOUD_BACKUP}" = "1" ]
+then
+  INETUP=$(/usr/bin/amionline >/dev/null 2>&1)
+  if [ $? == 0 ]
+  then
+    log "backup saves to the cloud."
+    run /usr/bin/cloud_backup
+  fi
 fi
 
 $VERBOSE && log "Checking errors: ${ret_error} "

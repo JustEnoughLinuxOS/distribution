@@ -4,13 +4,17 @@
 
 . /etc/profile
 
+LOG="/var/log/boot.log"
+
 ### This script contains items that we only want to execute after a JELOS upgrade,
 ### or after a fresh installation.
 
+echo "Rebuild library cache..." >>${LOG}
 ### Rebuild the library cache
 rm -f /storage/.cache/ld.so.cache
 ldconfig -X
 
+echo "Sync configuration files..." >>${LOG}
 ### Sync configurations
 if [ -d "/storage/.config/system/configs" ]
 then
@@ -21,15 +25,19 @@ rsync -a --delete ${EXCLUDE} /usr/config/system/ /storage/.config/system/
 rsync -a --ignore-existing /usr/config/game /storage/.config/
 rsync -a /usr/config/modules /storage/.config/
 
+echo "Update logo..." >>${LOG}
 if [ ! -L "/storage/.config/emulationstation/resources/logo.png" ]
 then
   rm -f /storage/.config/emulationstation/resources/logo.png ||:
   ln -sf /usr/config/splash/splash.png /storage/.config/emulationstation/resources/logo.png
 fi
 
+echo "Sync modules..." >>${LOG}
 rsync -a /usr/config/modules/* /storage/.config/modules/
 cp -f /usr/config/retroarch/retroarch-core-options.cfg /storage/.config/retroarch/retroarch-core-options.cfg
 
+
+echo "Sync theme..." >>${LOG}
 cd /usr/share/themes
 for theme in *
 do
@@ -42,16 +50,19 @@ done
 cd -
 
 ### Apply developer ssh keys if they exist
+echo "Apply dev keys if available..." >>${LOG}
 if [ -e /usr/config/ssh/authorized_keys ]
 then
   cp /usr/config/ssh/authorized_keys /storage/.ssh
 fi
 
 ### Sync rsync configs
+echo "Update rsync configuration files..." >>${LOG}
 rsync --ignore-existing /usr/config/rsync-rules.conf /storage/.config/
 rsync --ignore-existing /usr/config/rsync.conf /storage/.config/
 
 ### Replace es_systems and es_features with links to manage them
+echo "Sync ES configuration files..." >>${LOG}
 for es_cfg in es_features.cfg es_systems.cfg
 do
   if [ -e "/storage/.config/emulationstation/${es_cfg}" ]
@@ -62,9 +73,11 @@ do
 done
 
 # Default modules need to be updated to use the new stop/start ui function.
+echo "Sync modules (tools)..." >>${LOG}
 rsync -av /usr/config/modules/* /storage/.config/modules/
 
 # Swap es_input back to a writeable file so external controller configuration works properly.
+echo "Make sure es_input isn't a link..." >>${LOG}
 if [ -L "/storage/.config/emulationstation/es_input.cfg" ]
 then
   rm -f /storage/.config/emulationstation/es_input.cfg
@@ -74,26 +87,36 @@ fi
 # Disable integer scaling by default on Win600
 if [[ "${HW_DEVICE}" =~ handheld ]]
 then
+  echo "No integer scaling (Win600 only)..." >>${LOG}
   sed -i "s#.integerscale=1#.integerscale=0#g" /storage/.config/system/configs/system.cfg
 fi
 
 # We don't want to use gl on the 552, switch it to glcore.
 if [[ "${HW_DEVICE}" =~ RG552 ]]
 then
+  echo "Switch to glcore (RG552 only)..." >>${LOG}
   sed -i 's#video_driver = "gl"#video_driver = "glcore"#g' /storage/.config/retroarch/retroarch.cfg
 fi
 
 # If smb.conf doesn't exist in ~/.config, add it.
 if [ ! -e "/storage/.config/smb.conf" ]
 then
+  echo "Make sure smb.conf is in .config..." >>${LOG}
   cp -f /usr/config/smb.conf /storage/.config
 fi
 
-# Reset the retroarch hotkeys
-rm -f /storage/.retroarch_controller
-
 # Set automatic hotkey management by default.
-set_setting system.autohotkeys 1
+AUTOHOTKEYS=$(get_setting system.autohotkeys)
+if [ -z "${AUTOHOTKEYS}" ]
+then
+  echo "Set up hotkey management..." >>${LOG}
+  set_setting system.autohotkeys 1
+fi
 
 # Set the default weston startup to ES
-set_setting weston.startup "/usr/bin/start_es.sh"
+WESTONSTARTUP=$(get_setting weston.startup)
+if [ -z "${WESTONSTARTUP}" ]
+then
+  echo "Make sure weston is our default." >>${LOG}
+  set_setting weston.startup "/usr/bin/start_es.sh"
+fi

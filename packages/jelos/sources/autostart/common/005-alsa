@@ -31,8 +31,18 @@ then
   cp /usr/config/asound.state /storage/.config
 fi
 
-# Remove the mixer from ES
-sed -i '/<string name="AudioDevice".*$/d' /storage/.emulationstation/es_settings.cfg
+# Temporary patch since ES doesn't find the DAC on the RG552.
+if [[ "${DEVICE}" =~ RG552 ]]
+then
+  DACTEST=$(grep DAC /storage/.config/emulationstation/es_settings.cfg 2>/dev/null)
+  if [ ! "$?" = 0 ]
+  then
+    sed -i '/^.*AudioCard.*$/a \\t<string name="AudioDevice" value="DAC" \/>' /storage/.config/emulationstation/es_settings.cfg
+  fi
+else
+  # Remove the mixer from ES
+  sed -i '/<string name="AudioDevice".*$/d' /storage/.emulationstation/es_settings.cfg
+fi
 
 # Initialize sound using the state if available.
 if [ -e "/storage/.config/asound.state" ]
