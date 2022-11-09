@@ -31,13 +31,15 @@ then
   cp /usr/config/asound.state /storage/.config
 fi
 
-# Temporary patch since ES doesn't find the DAC on the RG552.
-if [[ "${HW_DEVICE}" =~ RG552 ]]
+AUDIODEVICE=$(get_setting system.audiodevice)
+AUDIOTEST=$(grep "${AUDIODEVICE}" /storage/.config/emulationstation/es_settings.cfg 2>/dev/null)
+if [ ! "$?" = 0 ]
 then
-  DACTEST=$(grep DAC /storage/.config/emulationstation/es_settings.cfg 2>/dev/null)
-  if [ ! "$?" = 0 ]
+  sed -i '/^.*AudioCard.*$/a \\t<string name="AudioDevice" value="${AUDIODEVICE}" \/>' /storage/.config/emulationstation/es_settings.cfg
+else
+  if [ -z "${AUDIODEVICE}" ]
   then
-    sed -i '/^.*AudioCard.*$/a \\t<string name="AudioDevice" value="DAC" \/>' /storage/.config/emulationstation/es_settings.cfg
+    sed -i '/<string name="AudioDevice".*$/d' /storage/.emulationstation/es_settings.cfg
   fi
 fi
 
