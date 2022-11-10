@@ -13,19 +13,32 @@ PKG_DEPENDS_TARGET="toolchain alsa-lib bluez sbc dbus libopenaptx"
 PKG_LONGDESC="Bluetooth audio ALSA backend"
 PKG_TOOLCHAIN="autotools"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-aptx \
+if build_with_debug; then
+  PKG_BLUEALSA_DEBUG=--with-debug
+fi
+
+PKG_CONFIGURE_OPTS_TARGET="${PKG_BLUEALSA_DEBUG} \
+			   --enable-aptx \
                            --with-libopenaptx \
 			   --enable-upower \
 			   --enable-a2dpconf \
-			   --enable-cli"
+			   --enable-cli \
+			   --enable-systemd"
 
 post_makeinstall_target() {
 # workaround until I figure out how to query this directory
 mkdir -p ${INSTALL}/usr/lib/alsa-lib
 cp -P ${PKG_BUILD}/.*/src/asound/.libs/*.so ${INSTALL}/usr/lib/alsa-lib/
+sed -i ${INSTALL}/etc/dbus-1/system.d/bluealsa.conf -e "s|audio|root|g"
+sed -i ${INSTALL}/usr/lib/systemd/system/bluealsa.service \
+  -e "s|ExecStart=.*|ExecStart=/usr/bin/bluealsa -p a2dp-source -p a2dp-sink -c aptx|g"
 rm -rf ${INSTALL}/home
 #  rm -rf ${INSTALL}/lib ${INSTALL}/var
 #  rm -rf ${INSTALL}/usr/share/alsa/speaker-test
 #  rm -rf ${INSTALL}/usr/share/sounds
 #  rm -rf ${INSTALL}/usr/lib/systemd/system
+}
+
+post_install() {
+  enable_service bluealsa.service
 }
