@@ -1,0 +1,11 @@
+pcm.!default {
+	type asym
+	capture.pcm cards.pcm.default
+	playback.pcm bluealsa
+	hint.description "Bluetooth Audio Device"
+}
+
+ctl.!default {
+	type bluealsa
+	hint.description "Bluetooth Audio Device"
+}
