@@ -9,7 +9,7 @@ PKG_SHA256="ce5e060e61669d61d44f5f9bad34a7b88378376e9d49d31482406a68127a6b29"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/Arkq/bluez-alsa"
 PKG_URL="https://github.com/Arkq/bluez-alsa/archive/refs/tags/v${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain alsa-lib bluez sbc dbus libopenaptx"
+PKG_DEPENDS_TARGET="toolchain alsa-lib bluez sbc dbus libopenaptx fdk-aac libldac"
 PKG_LONGDESC="Bluetooth audio ALSA backend"
 PKG_TOOLCHAIN="autotools"
 
@@ -20,6 +20,8 @@ fi
 PKG_CONFIGURE_OPTS_TARGET="${PKG_BLUEALSA_DEBUG} \
 			   --enable-aptx \
                            --with-libopenaptx \
+			   --enable-aac \
+			   --enable-ldac \
 			   --enable-upower \
 			   --enable-a2dpconf \
 			   --enable-cli \
@@ -31,12 +33,8 @@ mkdir -p ${INSTALL}/usr/lib/alsa-lib
 cp -P ${PKG_BUILD}/.*/src/asound/.libs/*.so ${INSTALL}/usr/lib/alsa-lib/
 sed -i ${INSTALL}/etc/dbus-1/system.d/bluealsa.conf -e "s|audio|root|g"
 sed -i ${INSTALL}/usr/lib/systemd/system/bluealsa.service \
-  -e "s|ExecStart=.*|ExecStart=/usr/bin/bluealsa -p a2dp-source -p a2dp-sink -c aptx|g"
+  -e "s|ExecStart=.*|ExecStart=/usr/bin/bluealsa -p a2dp-source -p a2dp-sink -c aptx -c aac|g"
 rm -rf ${INSTALL}/home
-#  rm -rf ${INSTALL}/lib ${INSTALL}/var
-#  rm -rf ${INSTALL}/usr/share/alsa/speaker-test
-#  rm -rf ${INSTALL}/usr/share/sounds
-#  rm -rf ${INSTALL}/usr/lib/systemd/system
 }
 
 post_install() {
