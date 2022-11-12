@@ -1,6 +1,4 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
+# SPDX-License-Identifier: Apache-2.0
 # Copyright (C) 2022-present Marek Moeckel (wansti@discarded-ideas.org)
 
 PKG_NAME="fdk-aac"
