@@ -28,8 +28,8 @@ state.rockchipes8316c {
 	control.3 {
 		iface MIXER
 		name 'Headphone Mixer Volume'
-		value.0 0
-		value.1 0
+		value.0 10
+		value.1 10
 		comment {
 			access 'read write'
 			type INTEGER
@@ -37,14 +37,14 @@ state.rockchipes8316c {
 			range '0 - 11'
 			dbmin -1200
 			dbmax 0
-			dbvalue.0 -1200
-			dbvalue.1 -1200
+			dbvalue.0 -150
+			dbvalue.1 -150
 		}
 	}
 	control.4 {
 		iface MIXER
 		name 'Playback Polarity'
-		value 'R Invert'
+		value Normal
 		comment {
 			access 'read write'
 			type ENUMERATED
@@ -57,9 +57,9 @@ state.rockchipes8316c {
 	}
 	control.5 {
 		iface MIXER
-		name 'DAC Playback Volume'
-		value.0 0
-		value.1 0
+		name 'Master Playback Volume'
+		value.0 152
+		value.1 152
 		comment {
 			access 'read write'
 			type INTEGER
@@ -67,8 +67,8 @@ state.rockchipes8316c {
 			range '0 - 192'
 			dbmin -9999999
 			dbmax 0
-			dbvalue.0 -9999999
-			dbvalue.1 -9999999
+			dbvalue.0 -2000
+			dbvalue.1 -2000
 		}
 	}
 	control.6 {
@@ -95,7 +95,7 @@ state.rockchipes8316c {
 	control.8 {
 		iface MIXER
 		name 'DAC Notch Filter Switch'
-		value true
+		value false
 		comment {
 			access 'read write'
 			type BOOLEAN
@@ -105,7 +105,7 @@ state.rockchipes8316c {
 	control.9 {
 		iface MIXER
 		name 'DAC Double Fs Switch'
-		value true
+		value false
 		comment {
 			access 'read write'
 			type BOOLEAN
@@ -115,7 +115,7 @@ state.rockchipes8316c {
 	control.10 {
 		iface MIXER
 		name 'DAC Stereo Enhancement'
-		value 7
+		value 0
 		comment {
 			access 'read write'
 			type INTEGER
@@ -126,7 +126,7 @@ state.rockchipes8316c {
 	control.11 {
 		iface MIXER
 		name 'DAC Mono Mix Switch'
-		value true
+		value false
 		comment {
 			access 'read write'
 			type BOOLEAN
