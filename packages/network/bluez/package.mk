@@ -23,7 +23,7 @@ BLUEZ_CONFIG+=" --enable-monitor --enable-test"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --disable-silent-rules \
-                           --disable-library \
+                           --enable-library \
                            --enable-udev \
                            --disable-cups \
                            --disable-obex \
@@ -69,9 +69,10 @@ post_makeinstall_target() {
   # bluez looks in /etc/firmware/
     ln -sf /usr/lib/firmware ${INSTALL}/etc/firmware
 
-  # pulseaudio checks for bluez via pkgconfig but lib is not actually needed
-    sed -i 's/-lbluetooth//g' ${PKG_BUILD}/lib/bluez.pc
+  # libbluetooth required for bluez-alsa
+  #  sed -i 's/-lbluetooth//g' ${PKG_BUILD}/lib/bluez.pc
     cp -P ${PKG_BUILD}/lib/bluez.pc ${SYSROOT_PREFIX}/usr/lib/pkgconfig
+    cp -P -r ${PKG_BUILD}/lib/bluetooth ${SYSROOT_PREFIX}/usr/include/
 }
 
 post_install() {
