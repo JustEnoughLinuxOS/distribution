@@ -3,7 +3,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="emulationstation"
-PKG_VERSION="7e94d3a"
+PKG_VERSION="d5663ee"
 PKG_GIT_CLONE_BRANCH="main"
 PKG_REV="1"
 PKG_ARCH="any"
@@ -22,7 +22,7 @@ if [ ! "${OPENGL}" = "no" ]; then
   PKG_CMAKE_OPTS_TARGET+=" -DGL=1"
 fi
 
-if [ "${OPENGLES_SUPPORT}" = yes ]; then
+if [ ! "${OPENGLES_SUPPORT}" = no ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
   PKG_CMAKE_OPTS_TARGET+=" -DGLES2=1"
 fi
@@ -109,11 +109,6 @@ makeinstall_target() {
 
         cp -rf ${PKG_DIR}/config/common/*.cfg ${INSTALL}/usr/config/emulationstation
 	cp -rf ${PKG_DIR}/config/device/${DEVICE}/*.cfg ${INSTALL}/usr/config/emulationstation
-
-	if [ "${DEVICE}" == "RG552" ]
-	then
-	   sed -i 's#<string name="AudioDevice" value="Playback" />#<string name="AudioDevice" value="DAC" />#' ${INSTALL}/usr/config/emulationstation/es_settings.cfg
-	fi
 
 	ln -sf /storage/.cache/system_timezone ${INSTALL}/etc/timezone
 

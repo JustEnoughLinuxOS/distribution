@@ -35,3 +35,6 @@ fi
 ### Test for binary data in system.cfg and clean it
 ### if it exists.
 /usr/bin/clean_sysconfig
+
+### Set up our controller variables.
+/usr/bin/mkcontroller

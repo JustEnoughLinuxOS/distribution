@@ -11,4 +11,5 @@ then
   sed -i -e "s#/dev/tty1#/dev/tty#" /storage/roms/ports/ThemeMaster/ThemeMaster
 fi
 
-/storage/roms/ports/ThemeMaster.sh
+cd /storage/roms/ports/ThemeMaster
+./ThemeMaster.sh 2>/dev/null

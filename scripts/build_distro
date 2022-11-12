@@ -54,7 +54,7 @@ then
   PKG_CLEAN="${PKG_CLEAN} mupen64plus-nx mupen64plus flycast_libretro dosbox-pure parallel-n64_glide64 \
              parallel-n64_gln64 parallel-n64_rice pcsx_rearmed pcsx_rearmed gpsp raze amiberry lzdoom  \
              PPSSPPSDL gzdoom mupen64plussa-core mupen64plussa-input-sdl 351files libgo2 \
-             gamecontrollerdb duckstationsa"
+             gamecontrollerdb duckstationsa moonlight"
 
 fi
 

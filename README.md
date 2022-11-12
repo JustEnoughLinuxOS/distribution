@@ -9,7 +9,7 @@ Just Enough Linux Operating System (JELOS) is a community developed Linux distri
 * Supports FAT32, ExFAT, and EXT4 file systems on removable storage (slot/device #2).
 * 2.4GHz and 5GHz 802.11 A/B/G/N/AC WIFI support.
 * Online update capability for easy access to stable or development builds.
-* Support for the Anbernic WIN600, RG552, RG503, RG353P, RG351P/M, RG351MP, RG351V.
+* Support for the Anbernic WIN600, RG552, RG503, RG353P, RG353M, RG353V, RG351P, RG351M, RG351MP, RG351V, and Atari VCS.
 * Developed by a small, friendly community.
 
 ## Licenses
@@ -51,11 +51,12 @@ limitations under the License.
 
 ## Installation
 * x86_64 versions of JELOS include an installation tool.  This tool may be run from the boot menu or from within JELOS by switching to desktop mode and running "installer" in a terminal.
+* RG353V users should use the RG353P image, and select "DEVICE IS RG353V" from the system settings menu in EmulationStation.
 
 ## Upgrading
 * Download and install the update online via the System Settings menu.
 * Download the latest [version of JELOS](https://github.com/JustEnoughLinuxOS/distribution/releases) (.tar) for your device.
-* Copy the update to your device over the network or to the sdcard's update folder.
+* Copy the update to your device over the network to your device's update share.
 * Reboot the device, and the update will begin automatically.
 
 ## Network Access

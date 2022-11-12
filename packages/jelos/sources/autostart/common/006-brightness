@@ -4,8 +4,6 @@
 
 . /etc/profile
 
-BRIGHTNESS_DEV="$(ls /sys/class/backlight | head -n 1)"
-
 ### Variables may need to be device specific here.
 BRIGHTNESS=$(get_setting system.brightness)
 if [[ ! "${BRIGHTNESS}" =~ [0-9] ]]
@@ -19,6 +17,4 @@ then
   BRIGHTNESS=3
 fi
 
-BRIGHTNESS=$(printf "%.0f" $(echo "${BRIGHTNESS}"))
-echo ${BRIGHTNESS} > /sys/class/backlight/${BRIGHTNESS_DEV}/brightness
-set_setting system.brightness ${BRIGHTNESS}
+printf "%.0f" $(echo "${BRIGHTNESS}") > /sys/class/backlight/$(brightness device)/brightness

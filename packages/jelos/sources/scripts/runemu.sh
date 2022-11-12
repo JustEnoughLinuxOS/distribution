@@ -94,7 +94,10 @@ fi
 
 ### Set the performance mode
 PERFORMANCE_MODE=$(get_setting "cpugovernor" "${PLATFORM}" "${ROMNAME##*/}")
-${PERFORMANCE_MODE}
+if [ ! "${PERFORMANCE_MODE}" = "auto" ]
+then
+  ${PERFORMANCE_MODE}
+fi
 
 ### Set the cores to use
 CORES=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
@@ -219,17 +222,6 @@ function bluetooth() {
 	fi
 }
 
-function setaudio() {
-	$VERBOSE && log "Setting up audio"
-	AUDIO_DEVICE="hw:$(get_setting audio_device)"
-	if [ $AUDIO_DEVICE = "hw:" ]
-	then
-		AUDIO_DEVICE="hw:0,0"
-	fi
-	sed -i "s|pcm \"hw:.*|pcm \"${AUDIO_DEVICE}\"|" /storage/.config/asound.conf
-	set_audio alsa
-}
-
 ### Main Screen Turn On
 
 loginit "$1" "$2" "$3" "$4"
@@ -247,7 +239,7 @@ then
 		;;
 		"nds")
 			jslisten set "drastic"
-			RUNTHIS='${TBASH} /usr/bin/drastic.sh "${ROMNAME}"'
+			RUNTHIS='${TBASH} /usr/bin/start_drastic.sh "${ROMNAME}"'
 		;;
 		"solarus")
 			if [ "$EMU" = "solarus" ]
@@ -292,12 +284,18 @@ then
                         RUNTHIS='${TBASH} /usr/bin/start_pcsx2.sh "${ROMNAME}"'
                         fi
                 ;;
-                "gamecube"|"wii")
+                "gamecube")
                         jslisten set "-9 dolphin-emu-nogui"
-                        if [ "$EMU" = "dolphinsa" ]; then
-                        RUNTHIS='${TBASH} /usr/bin/start_dolphin.sh "${ROMNAME}"'
+                        if [ "$EMU" = "dolphinsa-gc" ]; then
+                        RUNTHIS='${TBASH} /usr/bin/start_dolphin_gc.sh "${ROMNAME}"'
                         fi
 
+                ;;
+                "wii")
+                        jslisten set "-9 dolphin-emu-nogui"
+                        if [ "$EMU" = "dolphinsa-wii" ]; then
+                        RUNTHIS='${TBASH} /usr/bin/start_dolphin_wii.sh "${ROMNAME}"'
+                        fi
                 ;;
 		"mplayer")
 			jslisten set "mpv"
@@ -315,8 +313,6 @@ else
 
 	### Set jslisten to kill the appropriate retroarch
 	jslisten set "retroarch retroarch32"
-	setaudio alsa
-
 
 	RABIN="retroarch"
 	if [[ "${HW_ARCH}" =~ aarch64 ]]
@@ -328,6 +324,7 @@ else
 	           [[ "${CORE}" =~ flycast32 ]]
 		then
                         export LIBGL_DRIVERS_PATH="/usr/lib32/dri"
+                        export LD_LIBRARY_PATH="/usr/lib32"
 			export RABIN="retroarch32"
 		fi
 	fi
@@ -487,6 +484,18 @@ then
 			systemctl restart fancontrol
 		fi
 	fi
+fi
+
+### Backup save games
+CLOUD_BACKUP=$(get_setting "cloud.backup")
+if [ "${CLOUD_BACKUP}" = "1" ]
+then
+  INETUP=$(/usr/bin/amionline >/dev/null 2>&1)
+  if [ $? == 0 ]
+  then
+    log "backup saves to the cloud."
+    run /usr/bin/cloud_backup
+  fi
 fi
 
 $VERBOSE && log "Checking errors: ${ret_error} "

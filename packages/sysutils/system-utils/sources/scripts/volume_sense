@@ -89,6 +89,10 @@ get_devices() {
 
 get_devices
 
+# If the input devices change, it may be a new controller
+# so handle it here.
+mkcontroller 2>/dev/null ||:
+
 # Logic:
 #  - Listen to both:
 #    - 'rg351' events to get volume keys (not part of the joystick api)

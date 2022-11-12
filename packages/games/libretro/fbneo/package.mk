@@ -3,8 +3,8 @@
 # Maintenance 2020 351ELEC team (https://github.com/fewtarius/351ELEC)
 
 PKG_NAME="fbneo"
-PKG_VERSION="23b56b5e3e11132e3a3168345c04314c623e0d3a"
-PKG_SHA256="fc3b6f2f9be0bc19d6e65b9ce5bec7ead019f8fb3d45a24e788311a4b2544db1"
+PKG_VERSION="ea3040f720ca841a4c7409b1b5d09fc5bab0f6b2"
+PKG_SHA256=""
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="Non-commercial"

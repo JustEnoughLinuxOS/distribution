@@ -12,9 +12,9 @@ diff -rupN dosbox-pure.orig/Makefile dosbox-pure/Makefile
 +CFLAGS   := -DNDEBUG -O3 -fno-ident
 +LDFLAGS  += -O3 -fno-ident
 +
-+CPUFLAGS := -mtune=cortex-a55 -mcpu=cortex-a55 -march=armv8-a+crc+fp+simd
++CPUFLAGS := -mtune=cortex-a55 -march=armv8-a+crc+fp+simd
 +   
-+CFLAGS  += $(CPUFLAGS) -fpic -fomit-frame-pointer -fno-non-call-exceptions -Wno-psabi -Wno-format
++CFLAGS  += $(CPUFLAGS) -fpic -fomit-frame-pointer -fno-non-call-exceptions -Wno-psabi -Wno-format -fexceptions
 +LDFLAGS += $(CPUFLAGS) -lpthread -Wl,--gc-sections -shared
 +CXX = $(CC)
 +endif

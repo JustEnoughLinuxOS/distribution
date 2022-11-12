@@ -1,0 +1,25 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+mount -o remount,rw /flash
+case $1 in
+  RG353P)
+    sed -i "s#rk3566-rg353v-linux.dtb#rk3566-rg353p-linux.dtb#g" /flash/extlinux/extlinux.conf
+    set-audio set "DEFAULT (SYSTEM PROVIDED)"
+    rm -f /storage/.config/profile.d/001-fake-jacksense
+  ;;
+  RG353V)
+    sed -i "s#rk3566-rg353p-linux.dtb#rk3566-rg353v-linux.dtb#g" /flash/extlinux/extlinux.conf
+    set-audio set "DEFAULT (SYSTEM PROVIDED)"
+    echo "DEVICE_FAKE_JACKSENSE=true" >/storage/.config/profile.d/001-fake-jacksense
+    chmod 0755 /storage/.config/profile.d/001-fake-jacksense
+  ;;
+esac
+
+set_setting system.hostname ${1}
+
+sync
+reboot

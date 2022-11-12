@@ -32,7 +32,7 @@
     PARTITION_TABLE="gpt"
     UBOOT_LABEL="uboot"
     TRUST_LABEL="resource"
-    DEVICE_DTB="rk3566-rg503-linux"
+    DEVICE_DTB=("rk3566-rg503-linux")
     UBOOT_DTB="rk3566"
     UBOOT_CONFIG="rk3568_defconfig"
     PKG_SOC="rk356x"
@@ -43,7 +43,7 @@
 
   # Additional kernel make parameters (for example to specify the u-boot loadaddress)
     KERNEL_MAKE_EXTRACMD=""
-    KERNEL_MAKE_EXTRACMD+=" rockchip/${DEVICE_DTB}.dtb"
+    KERNEL_MAKE_EXTRACMD+=" rockchip/${DEVICE_DTB[0]}.dtb"
   
   # Display Resolution
     SPLASH_RESOLUTION="960x544"
@@ -66,7 +66,7 @@
     WINDOWMANAGER="no"
 
   # kernel serial console
-    EXTRA_CMDLINE="quiet console=ttyS2,1500000 console=tty0 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20 video=HDMI-A-1:1280x720@60"
+    EXTRA_CMDLINE="quiet rootwait console=ttyS2,1500000 console=tty0 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20 video=HDMI-A-1:1280x720@60"
 
   # additional packages to install
     ADDITIONAL_PACKAGES=" emulators gamesupport 351files"
@@ -74,7 +74,7 @@
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
   # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
-    FIRMWARE="misc-firmware wlan-firmware"
+    FIRMWARE="misc-firmware wlan-firmware RTL8821CS-prebuilt-firmware"
 
   # additional drivers to install:
   # for a list of additional drivers see packages/linux-drivers

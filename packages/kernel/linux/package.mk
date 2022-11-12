@@ -4,8 +4,8 @@
 
 PKG_NAME="linux"
 PKG_LICENSE="GPL"
-PKG_VERSION="5.19.9"
-PKG_URL="https://www.kernel.org/pub/linux/kernel/v5.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
+PKG_VERSION="6.0.7"
+PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_SITE="http://www.kernel.org"
 PKG_DEPENDS_HOST="ccache:host rsync:host openssl:host"
 PKG_DEPENDS_TARGET="toolchain linux:host kmod:host cpio:host xz:host keyutils ncurses openssl:host ${KERNEL_EXTRA_DEPENDS_TARGET}"
@@ -19,8 +19,8 @@ PKG_PATCH_DIRS+="${LINUX} ${DEVICE} default"
 PKG_KERNEL_CFG_FILE=$(kernel_config_path) || die
 
 if [ -n "${KERNEL_TOOLCHAIN}" ]; then
-  PKG_DEPENDS_HOST="${PKG_DEPENDS_HOST} gcc-arm-${KERNEL_TOOLCHAIN}:host"
-  PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} gcc-arm-${KERNEL_TOOLCHAIN}:host"
+  PKG_DEPENDS_HOST="${PKG_DEPENDS_HOST} gcc-${KERNEL_TOOLCHAIN}:host"
+  PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} gcc-${KERNEL_TOOLCHAIN}:host"
   HEADERS_ARCH=${TARGET_ARCH}
 fi
 
@@ -175,7 +175,7 @@ pre_make_target() {
     ${PKG_BUILD}/scripts/config --set-str CONFIG_EXTRA_FIRMWARE_DIR "external-firmware"
   fi
 
-  kernel_make oldconfig
+  yes "" | kernel_make oldconfig
 
   if [ -f "${ROOT}/${DISTRO}/kernel_options" ]; then
     while read OPTION; do

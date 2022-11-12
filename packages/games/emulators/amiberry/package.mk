@@ -3,7 +3,7 @@
 
 PKG_NAME="amiberry"
 PKG_ARCH="arm aarch64"
-PKG_VERSION="59d6cc9986f41b59f78f5c30d2d98ed3b955d39e"
+PKG_VERSION="db08da43942643164163f1dc7042603f6d7e4d6e"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/midwan/amiberry"
 PKG_URL="${PKG_SITE}.git"
@@ -47,7 +47,7 @@ makeinstall_target() {
   ln -s /storage/roms/bios            ${INSTALL}/usr/config/amiberry/kickstarts
 
   # Create links to Retroarch controller files
-  ln -s "/etc/retroarch-joypad-autoconfig" "${INSTALL}/usr/config/amiberry/controller"
+  ln -s "/usr/share/libretro/autoconfig" "${INSTALL}/usr/config/amiberry/controller"
 
   # Copy binary, scripts & link libcapsimg
   cp -a amiberry* ${INSTALL}/usr/bin/amiberry

@@ -1,0 +1,34 @@
+diff --git a/src/frontend-common/platform_misc_unix.cpp b/src/frontend-common/platform_misc_unix.cpp
+index 1f7ae9ec..e0487476 100644
+--- a/src/frontend-common/platform_misc_unix.cpp
++++ b/src/frontend-common/platform_misc_unix.cpp
+@@ -24,12 +24,12 @@ static bool SetScreensaverInhibitX11(bool inhibit, const WindowInfo& wi)
+   char* argv[4] = {command.GetWriteableCharArray(), operation.GetWriteableCharArray(), id.GetWriteableCharArray(),
+                    nullptr};
+   pid_t pid;
+-  int res = posix_spawnp(&pid, "xdg-screensaver", nullptr, nullptr, argv, environ);
+-  if (res != 0)
+-  {
+-    Log_ErrorPrintf("posix_spawnp() failed: %d", res);
+-    return false;
+-  }
++  //int res = posix_spawnp(&pid, "xdg-screensaver", nullptr, nullptr, argv, environ);
++  //if (res != 0)
++  //{
++  //  Log_ErrorPrintf("posix_spawnp() failed: %d", res);
++  //  return false;
++  //}
+ 
+   return true;
+ }
+@@ -95,8 +95,8 @@ bool FrontendCommon::PlaySoundAsync(const char* path)
+   pid_t pid;
+ 
+   // Since we set SA_NOCLDWAIT in Qt, we don't need to wait here.
+-  int res = posix_spawnp(&pid, cmdname, nullptr, nullptr, const_cast<char**>(argv), environ);
+-  return (res == 0);
++//  int res = posix_spawnp(&pid, cmdname, nullptr, nullptr, const_cast<char**>(argv), environ);
++//  return (res == 0);
+ #else
+   return false;
+ #endif

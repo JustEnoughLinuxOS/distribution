@@ -402,7 +402,7 @@ update_bootloader() {
 
   export BOOT_ROOT="/flash"
   export SYSTEM_ROOT="/update"
-
+  echo "UPDATE" > $SYSTEM_ROOT/storage/.config/boot.hint
   if [ -f $SYSTEM_ROOT/usr/share/bootloader/update.sh ]; then
     echo ""
     echo "Updating Boot Files... "

@@ -2,8 +2,8 @@
 # Copyright (C) 2019 Trond Haugland (trondah@gmail.com)
 
 PKG_NAME="mame"
-PKG_VERSION="5526dd0fbf6d312a12261643915b9f489ef7510b"
-PKG_SHA256="3f75a74016e1fa2007d9f1792db0d1d83f2e3ebbcc71673d3f8be76b09bc1241"
+PKG_VERSION="57622367cb780013690d6ef23b2066b500f6ce92"
+PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/mame"
@@ -14,21 +14,32 @@ PKG_SHORTDESC="MAME - Multiple Arcade Machine Emulator"
 PKG_TOOLCHAIN="make"
 PKG_BUILD_FLAGS="-lto"
 
+case ${TARGET_ARCH} in
+  arm|aarch64)
+    MAME_PLATFORM="PLATFORM=arm64"
+    CROSS_BUILD="1"
+    PTR64=0
+  ;;
+  *)
+    CROSS_BUILD="0"
+    PTR64=1
+  ;;
+esac
 
 PKG_MAKE_OPTS_TARGET="REGENIE=1 \
 		      VERBOSE=1 \
 		      NOWERROR=1 \
 		      OPENMP=1 \
-		      CROSS_BUILD=1 \
+		      CROSS_BUILD=${CROSS_BUILD} \
 		      TOOLS=0 \
 		      RETRO=1 \
-		      PTR64=0 \
+		      PTR64=${PTR64} \
 		      NOASM=0 \
 		      PYTHON_EXECUTABLE=python3 \
 		      CONFIG=libretro \
 		      LIBRETRO_OS=unix \
 		      LIBRETRO_CPU= \
-		      PLATFORM=arm64 \
+		      ${MAME_PLATFORM} \
 		      ARCH= \
 		      TARGET=mame \
 		      SUBTARGET=mame \
@@ -46,7 +57,10 @@ make_target() {
   unset ARCH
   unset DISTRO
   unset PROJECT
-  export ARCHOPTS="-D__aarch64__ -DASMJIT_BUILD_X86"
+  if [ "${PLATFORM}" = "arm64" ]
+  then
+    export ARCHOPTS="-D__aarch64__ -DASMJIT_BUILD_X86"
+  fi
   make $PKG_MAKE_OPTS_TARGET OVERRIDE_CC=$CC OVERRIDE_CXX=$CXX OVERRIDE_LD=$LD AR=$AR $MAKEFLAGS
 }
 

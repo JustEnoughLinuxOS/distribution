@@ -15,7 +15,7 @@ PKG_PATCH_DIRS+="${DEVICE}"
 case ${DEVICE} in
   RG351P|RG351V|RG351MP)
     PKG_URL="${PKG_SITE}/rk3326-uboot.git"
-    PKG_VERSION="9f8c2e3936"
+    PKG_VERSION="120aff9560"
   ;;
   RG552)
     PKG_URL="${PKG_SITE}/rk3399-uboot.git"
@@ -23,7 +23,7 @@ case ${DEVICE} in
   ;;
   RG353P|RG503)
     PKG_URL="${PKG_SITE}/rk356x-uboot.git"
-    PKG_VERSION="ab7b555"
+    PKG_VERSION="dcb37cb"
   ;;
 esac
 

@@ -4,10 +4,26 @@
 
 . /etc/profile
 
-# Copy in the configuration
+### Temporary device quirk for VCS
+if [ -e "/usr/sbin/dmidecode" ] && \
+   [ ! -e "/storage/.config/modprobe.d/alsa-base.conf" ]
+then
+  THIS_DEVICE="$(/usr/sbin/dmidecode -s system-product-name)"
+  if [[ "${THIS_DEVICE}" =~ ^VCS ]]
+  then
+    if [ ! -d "/storage/.config/modprobe.d/" ]
+    then
+      mkdir -p /storage/.config/modprobe.d
+    fi
+    touch /storage/.config/modprobe.d/alsa-base.conf
+    set-audio "DEFAULT HDMI"
+    reboot
+  fi
+fi
+
 if [ ! -e "/storage/.config/asound.conf" ]
 then
-  cp /usr/config/asound.conf /storage/.config
+  set-audio "DEFAULT (SYSTEM PROVIDED)"
 fi
 
 if [ ! -e "/storage/.config/asound.state" ] && [ -e /usr/config/asound.state ]
@@ -15,8 +31,17 @@ then
   cp /usr/config/asound.state /storage/.config
 fi
 
-# Set the mixer in ES
-sed -i 's#<string name="AudioDevice" value="'.*'" />#<string name="AudioDevice" value="'${DEVICE_AUDIO_MIXER}'" />#' /storage/.emulationstation/es_settings.cfg
+AUDIODEVICE=$(get_setting system.audiodevice)
+AUDIOTEST=$(grep "${AUDIODEVICE}" /storage/.config/emulationstation/es_settings.cfg 2>/dev/null)
+if [ ! "$?" = 0 ]
+then
+  sed -i '/^.*AudioCard.*$/a \\t<string name="AudioDevice" value="${AUDIODEVICE}" \/>' /storage/.config/emulationstation/es_settings.cfg
+else
+  if [ -z "${AUDIODEVICE}" ]
+  then
+    sed -i '/<string name="AudioDevice".*$/d' /storage/.emulationstation/es_settings.cfg
+  fi
+fi
 
 # Initialize sound using the state if available.
 if [ -e "/storage/.config/asound.state" ]

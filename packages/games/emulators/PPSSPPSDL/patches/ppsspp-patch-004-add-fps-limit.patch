@@ -1,0 +1,120 @@
+diff --git a/Core/Config.cpp b/Core/Config.cpp
+index 4b75a46c5..051dd20cf 100644
+--- a/Core/Config.cpp
++++ b/Core/Config.cpp
+@@ -898,6 +898,7 @@ static ConfigSetting graphicsSettings[] = {
+ #if defined(USING_WIN_UI)
+ 	ConfigSetting("RestartRequired", &g_Config.bRestartRequired, false, false),
+ #endif
++	ReportedConfigSetting("ForceMaxEmulatedFPS", &g_Config.iForceMaxEmulatedFPS, 0, true, true),
+ 
+ 	// Most low-performance (and many high performance) mobile GPUs do not support aniso anyway so defaulting to 4 is fine.
+ 	ConfigSetting("AnisotropyLevel", &g_Config.iAnisotropyLevel, 4, true, true),
+diff --git a/Core/Config.h b/Core/Config.h
+index af20f6289..1eea77626 100644
+--- a/Core/Config.h
++++ b/Core/Config.h
+@@ -218,6 +218,7 @@ struct Config {
+ 	bool bTexHardwareScaling;
+ 	int iFpsLimit1;
+ 	int iFpsLimit2;
++	int iForceMaxEmulatedFPS;
+ 	int iAnalogFpsLimit;
+ 	int iAnalogFpsMode; // 0 = auto, 1 = single direction, 2 = mapped to opposite
+ 	int iMaxRecent;
+diff --git a/Core/HLE/sceDisplay.cpp b/Core/HLE/sceDisplay.cpp
+index 342d52262..9cf1e7e5e 100644
+--- a/Core/HLE/sceDisplay.cpp
++++ b/Core/HLE/sceDisplay.cpp
+@@ -822,6 +822,12 @@ u32 sceDisplaySetFramebuf(u32 topaddr, int linesize, int pixelformat, int sync)
+ 	hleEatCycles(290);
+ 
+ 	s64 delayCycles = 0;
++
++	int MaxFPS = g_Config.iForceMaxEmulatedFPS;
++		if (topaddr != 0 && topaddr != framebuf.topaddr && framebuf.topaddr != 0 && MaxFPS > 0) {
++		MaxFPS = 60;
++	}
++
+ 	// Don't count transitions between display off and display on.
+ 	if (topaddr != 0 &&
+ 		(topaddr != framebuf.topaddr || PSP_CoreParameter().compat.flags().SplitFramebufferMargin) &&
+@@ -850,7 +856,7 @@ u32 sceDisplaySetFramebuf(u32 topaddr, int linesize, int pixelformat, int sync)
+ 		}
+ 
+ 		// 1001 to account for NTSC timing (59.94 fps.)
+-		u64 expected = msToCycles(1001) / framerate - LEEWAY_CYCLES_PER_FLIP;
++		u64 expected = msToCycles(1001) / MaxFPS - LEEWAY_CYCLES_PER_FLIP;
+ 		lastFlipCycles = now;
+ 		nextFlipCycles = std::max(lastFlipCycles, nextFlipCycles) + expected;
+ 	}
+diff --git a/UI/GameSettingsScreen.cpp b/UI/GameSettingsScreen.cpp
+index 080d19e68..dd5d93434 100644
+--- a/UI/GameSettingsScreen.cpp
++++ b/UI/GameSettingsScreen.cpp
+@@ -201,6 +201,8 @@ void GameSettingsScreen::CreateViews() {
+ 		g_Config.loadGameConfig(gameID_, info->GetTitle());
+ 	}
+ 
++	maxFpsChoice = (g_Config.iForceMaxEmulatedFPS / 10);
++
+ 	iAlternateSpeedPercent1_ = g_Config.iFpsLimit1 < 0 ? -1 : (g_Config.iFpsLimit1 * 100) / 60;
+ 	iAlternateSpeedPercent2_ = g_Config.iFpsLimit2 < 0 ? -1 : (g_Config.iFpsLimit2 * 100) / 60;
+ 	iAlternateSpeedPercentAnalog_ = (g_Config.iAnalogFpsLimit * 100) / 60;
+@@ -310,7 +312,10 @@ void GameSettingsScreen::CreateViews() {
+ 	graphicsSettings->Add(new PopupMultiChoice(&g_Config.iFrameSkipType, gr->T("Frame Skipping Type"), frameSkipType, 0, ARRAY_SIZE(frameSkipType), gr->GetName(), screenManager()));
+ 	frameSkipAuto_ = graphicsSettings->Add(new CheckBox(&g_Config.bAutoFrameSkip, gr->T("Auto FrameSkip")));
+ 	frameSkipAuto_->OnClick.Handle(this, &GameSettingsScreen::OnAutoFrameskip);
+-
++	static const char *maxFps[] = {"Auto", "10", "20", "30", "40", "50", "60", "70", "80"};
++	maxFps_ = graphicsSettings->Add(new PopupMultiChoice(&maxFpsChoice, gr->T("Force Max FPS (lower helps GoW)"), maxFps, 0, ARRAY_SIZE(maxFps), gr->GetName(), screenManager()));
++	maxFps_->OnChoice.Handle(this, &GameSettingsScreen::OnForceMaxEmulatedFPS);
++	
+ 	PopupSliderChoice *altSpeed1 = graphicsSettings->Add(new PopupSliderChoice(&iAlternateSpeedPercent1_, 0, 1000, gr->T("Alternative Speed", "Alternative speed"), 5, screenManager(), gr->T("%, 0:unlimited")));
+ 	altSpeed1->SetFormat("%i%%");
+ 	altSpeed1->SetZeroLabel(gr->T("Unlimited"));
+@@ -1337,6 +1342,16 @@ UI::EventReturn GameSettingsScreen::OnDisplayLayoutEditor(UI::EventParams &e) {
+ 	return UI::EVENT_DONE;
+ };
+ 
++UI::EventReturn GameSettingsScreen::OnForceMaxEmulatedFPS(UI::EventParams &e) {
++	if (maxFpsChoice > 0) {
++		g_Config.iForceMaxEmulatedFPS = (maxFpsChoice * 10);
++	} else {
++		g_Config.iForceMaxEmulatedFPS = 0;
++	}
++	Reporting::UpdateConfig();
++	return UI::EVENT_DONE;
++}
++
+ UI::EventReturn GameSettingsScreen::OnResolutionChange(UI::EventParams &e) {
+ 	if (g_Config.iAndroidHwScale == 1) {
+ 		RecreateActivity();
+diff --git a/UI/GameSettingsScreen.h b/UI/GameSettingsScreen.h
+index 2fd7d6e59..6e9f1db70 100644
+--- a/UI/GameSettingsScreen.h
++++ b/UI/GameSettingsScreen.h
+@@ -59,6 +59,7 @@ class GameSettingsScreen : public UIDialogScreenWithGameBackground {
+ 	UI::Choice *displayEditor_;
+ 	UI::Choice *backgroundChoice_ = nullptr;
+ 	UI::PopupMultiChoice *resolutionChoice_;
++	UI::PopupMultiChoice *maxFps_;
+ 	UI::CheckBox *frameSkipAuto_;
+ 	SettingInfoMessage *settingInfo_;
+ 	UI::Choice *clearSearchChoice_;
+@@ -107,6 +108,7 @@ class GameSettingsScreen : public UIDialogScreenWithGameBackground {
+ 	UI::EventReturn OnFullscreenMultiChange(UI::EventParams &e);
+ 	UI::EventReturn OnDisplayLayoutEditor(UI::EventParams &e);
+ 	UI::EventReturn OnResolutionChange(UI::EventParams &e);
++	UI::EventReturn OnForceMaxEmulatedFPS(UI::EventParams &e);
+ 	UI::EventReturn OnHwScaleChange(UI::EventParams &e);
+ 	UI::EventReturn OnRestoreDefaultSettings(UI::EventParams &e);
+ 	UI::EventReturn OnRenderingMode(UI::EventParams &e);
+@@ -135,6 +137,7 @@ class GameSettingsScreen : public UIDialogScreenWithGameBackground {
+ 	UI::EventReturn OnClearSearchFilter(UI::EventParams &e);
+ 
+ 	// Temporaries to convert setting types, cache enabled, etc.
++	int maxFpsChoice;
+ 	int iAlternateSpeedPercent1_;
+ 	int iAlternateSpeedPercent2_;
+ 	int iAlternateSpeedPercentAnalog_;

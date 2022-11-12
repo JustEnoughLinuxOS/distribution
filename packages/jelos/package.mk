@@ -32,11 +32,23 @@ PKG_SOFTWARE=""
 
 PKG_COMPAT=""
 
-PKG_TOOLS="i2c-tools rclone jslisten evtest tailscale"
-
 PKG_MULTIMEDIA="ffmpeg mpv vlc"
 
-PKG_EXPERIMENTAL=""
+PKG_TOOLS="i2c-tools rclone jslisten evtest tailscale"
+
+### Tools for mainline devices
+case "${DEVICE}" in
+  handheld|RG552)
+    PKG_TOOLS+=" mesa-demos"
+  ;;
+esac
+
+### Bluetooth support for some devices
+case "${DEVICE}" in
+  RG503|RG353P|RG552|RG351P|RG351V|RG351MP)
+    PKG_TOOLS+=" pygobject"
+  ;;
+esac
 
 ### Project specific variables
 case "${PROJECT}" in
@@ -53,7 +65,7 @@ if [ ! -z "${BASE_ONLY}" ]
 then
   PKG_DEPENDS_TARGET+=" ${PKG_BASEOS} ${PKG_TOOLS} ${PKG_UI}"
 else
-  PKG_DEPENDS_TARGET+=" ${PKG_BASEOS} ${PKG_TOOLS} ${PKG_UI} ${PKG_COMPAT} ${PKG_MULTIMEDIA} ${PKG_SOFTWARE} ${PKG_EXPERIMENTAL}"
+  PKG_DEPENDS_TARGET+=" ${PKG_BASEOS} ${PKG_TOOLS} ${PKG_UI} ${PKG_COMPAT} ${PKG_MULTIMEDIA} ${PKG_SOFTWARE}"
 fi
 
 make_target() {
@@ -125,6 +137,7 @@ post_install() {
 EOF
 
   cp ${PKG_DIR}/sources/scripts/* ${INSTALL}/usr/bin
+  enable_service jelos-automount.service
 
   if [ -d "${PKG_DIR}/sources/asound/${DEVICE}" ]
   then
@@ -140,7 +153,7 @@ EOF
     sed -i "s#audio.volume=.*\$#audio.volume=100#g" ${INSTALL}/usr/config/system/configs/system.cfg
   fi
 
-  if [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
+  if [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]] || [[ "${DEVICE}" =~ handheld ]]
   then
     sed -i "s#.integerscale=1#.integerscale=0#g" ${INSTALL}/usr/config/system/configs/system.cfg
   fi
@@ -171,4 +184,6 @@ EOF
   then
     sed -i "s#ssh.enabled=0#ssh.enabled=1#g" ${INSTALL}/usr/config/system/configs/system.cfg
   fi
+
+  enable_service bluetooth-agent.service
 }

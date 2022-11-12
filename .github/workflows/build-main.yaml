@@ -8,14 +8,6 @@ name: build-main
 on:
   repository_dispatch:
     types: [release-main]
-  push:
-    paths-ignore:
-      - '.github/**'
-      - 'README.md'
-      - 'Dockerfile'
-      - '.dockerignore'
-    branches:
-      - main
 
 concurrency:
   group: main
@@ -68,7 +60,7 @@ jobs:
           body: |
             &nbsp;&nbsp;<img src="https://raw.githubusercontent.com/JustEnoughLinuxOS/distribution/dev/distributions/JELOS/logos/jelos-logo.png" width=192>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![Latest Version](https://img.shields.io/github/release/JustEnoughLinuxOS/distribution.svg?color=5998FF&label=latest%20version&style=flat-square)](https://github.com/JustEnoughLinuxOS/distribution/releases/latest) [![Activity](https://img.shields.io/github/commit-activity/m/JustEnoughLinuxOS/distribution?color=5998FF&style=flat-square)](https://github.com/JustEnoughLinuxOS/distribution/commits) [![Pull Requests](https://img.shields.io/github/issues-pr-closed/JustEnoughLinuxOS/distribution?color=5998FF&style=flat-square)](https://github.com/JustEnoughLinuxOS/distribution/pulls) [![Discord Server](https://img.shields.io/discord/948029830325235753?color=5998FF&label=chat&style=flat-square)](https://discord.gg/seTxckZjJy)
             #
-            Just Enough Linux Operating System (JELOS) is a simple Linux distribution for ARM based devices that specializes in handhelds.  My goal is to build an operating system that has the features and capabilities that I need, and to have fun building it.
+            Just Enough Linux Operating System (JELOS) is a community developed Linux distribution for handheld gaming devices.  Our goal is to produce an operating system that has the features and capabilities that we need, and to have fun as we develop it.
 
             ## Licenses
             JELOS is a Linux distribution that is made up of many open-source components.  Components are provided under their respective licenses.  This distribution includes components licensed for non-commercial use only.
@@ -101,15 +93,24 @@ jobs:
             limitations under the License.
 
             ## Installation
-            * Download the latest [version of JELOS](https://github.com/JustEnoughLinuxOS/distribution/releases) (.img.gz) for your device.
+            * Download the latest version of JELOS.
             * Decompress the image.
             * Write the image to an SDCARD using an imaging tool.  Common imaging tools include [Balena Etcher](https://www.balena.io/etcher/), [Raspberry Pi Imager](https://www.raspberrypi.com/software/), and [Win32 Disk Imager](https://sourceforge.net/projects/win32diskimager/).  If you're skilled with the command line, dd works fine too.
 
+            Download: [[Win600/Atari VCS/Generic x86_64](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-handheld.x86_64-${{ steps.version.outputs.version }}.img.gz)] [[RG353P/RG353M/RG353V](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RG353P.aarch64-${{ steps.version.outputs.version }}.img.gz)] [[RG503](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RG503.aarch64-${{ steps.version.outputs.version }}.img.gz)] [[RG552](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RG552.aarch64-${{ steps.version.outputs.version }}.img.gz)] [[RG351P/RG351M](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RG351P.aarch64-${{ steps.version.outputs.version }}.img.gz)] [[RG351V](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RG351V.aarch64-${{ steps.version.outputs.version }}.img.gz)] [[RG351MP](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RG351MP.aarch64-${{ steps.version.outputs.version }}.img.gz)]
+
+            > RG353V users, enable "DEVICE IS RG353V" in the system settings menu after flashing.
+
             ## Upgrading
             * Download and install the update online via the System Settings menu.
-            * Download the latest [version of JELOS](https://github.com/JustEnoughLinuxOS/distribution/releases) (.tar) for your device.
-            * Copy the update to your device over the network or to the sdcard's update folder.
-            * Reboot the device, and the update will begin automatically.
+            ## Upgrading
+            * Download and install the update online via the System Settings menu.
+            * If you are unable to update online
+              * Download the latest version of JELOS from Github
+              * Copy the update to your device over the network to your device's update share.
+              * Reboot the device, and the update will begin automatically.
+
+            Download: [[Win600/x86_64](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-handheld.x86_64-${{ steps.version.outputs.version }}.tar)] [[RG353P/RG353M/RG353P](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RG353P.aarch64-${{ steps.version.outputs.version }}.tar)] [[RG503](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RG503.aarch64-${{ steps.version.outputs.version }}.tar)] [[RG552](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RG552.aarch64-${{ steps.version.outputs.version }}.tar)] [[RG351P/RG353M](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RG351P.aarch64-${{ steps.version.outputs.version }}.tar)] [[RG351V](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RG351V.aarch64-${{ steps.version.outputs.version }}.tar)] [[RG351MP](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RG351MP.aarch64-${{ steps.version.outputs.version }}.tar)]
 
             ## Documentation
             * [Home](https://github.com/JustEnoughLinuxOS/distribution/wiki)
@@ -120,6 +121,9 @@ jobs:
             * [Moonlight Game Streaming](https://github.com/JustEnoughLinuxOS/distribution/wiki/Moonlight-Game-Streaming)
             * [Using Cloud Drives](https://github.com/JustEnoughLinuxOS/distribution/wiki/Using-Cloud-Drives)
             * [Wireguard VPN](https://github.com/JustEnoughLinuxOS/distribution/wiki/WireGuard-VPN)
+
+            ## Contributing
+            * [Developing and Building JELOS](https://github.com/JustEnoughLinuxOS/distribution/blob/dev/BUILDING.md)
 
             ## Change Log
             ${{ github.event.client_payload.release_notes }}

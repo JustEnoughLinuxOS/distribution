@@ -3,18 +3,18 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="glibc"
-PKG_VERSION="2.35"
-PKG_SHA256="5123732f6b67ccd319305efd399971d58592122bcc2a6518a1bd2510dd0cf52e"
+PKG_VERSION="2.36"
+PKG_SHA256="1c959fea240906226062cb4b1e7ebce71a9f0e3c0836c09e7e3423d434fcfe75"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.gnu.org/software/libc/"
 PKG_URL="https://ftp.gnu.org/pub/gnu/glibc/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host linux:host gcc:bootstrap pigz:host Python3:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_LONGDESC="The Glibc package contains the main C library."
-PKG_BUILD_FLAGS="-gold"
+PKG_BUILD_FLAGS="+bfd -gold"
 
 case "${DEVICE}" in
-  RG351P|RG351V|RG351MP|RG503|RG353P)
+  RG353P|RG503|RG351P|RG351V|RG351MP)
     OPT_ENABLE_KERNEL=4.4.0
     ;;
   *)
@@ -98,6 +98,16 @@ EOF
 
   # binaries to install into target
   GLIBC_INCLUDE_BIN="getent ldd locale localedef"
+
+  # glibc does not need / nor build successfully with _FILE_OFFSET_BITS or _TIME_BITS set
+  case ${ARCH} in
+    arm|aarch64)
+      export CFLAGS=$(echo ${CFLAGS} | sed -e "s|-D_FILE_OFFSET_BITS=64||g")
+      export CFLAGS=$(echo ${CFLAGS} | sed -e "s|-D_TIME_BITS=64||g")
+      export CXXFLAGS=$(echo ${CXXFLAGS} | sed -e "s|-D_FILE_OFFSET_BITS=64||g")
+      export CXXFLAGS=$(echo ${CXXFLAGS} | sed -e "s|-D_TIME_BITS=64||g")
+    ;;
+  esac
 }
 
 post_makeinstall_target() {
@@ -108,9 +118,7 @@ post_makeinstall_target() {
 
   safe_remove ${INSTALL}/usr/lib/audit
   safe_remove ${INSTALL}/usr/lib/glibc
-  safe_remove ${INSTALL}/usr/lib/libc_pic
   safe_remove ${INSTALL}/usr/lib/*.o
-  safe_remove ${INSTALL}/usr/lib/*.map
   safe_remove ${INSTALL}/var
 
 # add UTF-8 charmap

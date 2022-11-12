@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="yabasanshiro"
-PKG_VERSION="2848d5053fef1a69f68c600b65a1b9e0d915056c"
+PKG_VERSION="fd459968aae4a251d839174404a346b1f428912a"
 PKG_GIT_CLONE_BRANCH="yabasanshiro"
 PKG_REV="1"
 PKG_ARCH="any"
@@ -45,12 +45,12 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
 fi
 
 pre_configure_target() {
-  case ${PROJECT} in
-    Rockchip)
-      PKG_MAKE_OPTS_TARGET+=" -C yabause/src/libretro platform=rockpro64 HAVE_NEON=0"
+  case ${DEVICE} in
+    RG351P|RG351V|RG351MP|RG353P|RG503|RG552)
+      PKG_MAKE_OPTS_TARGET+=" -C yabause/src/libretro platform=rockpro64 HAVE_NEON=0 FORCE_GLES=1"
     ;;
     *)
-      PKG_MAKE_OPTS_TARGET+=" -C yabause/src/libretro FORCE_GLES=1"
+      PKG_MAKE_OPTS_TARGET+=" -C yabause/src/libretro"
     ;;
   esac
 }

@@ -1,14 +1,23 @@
 #!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2020-present Fewtarius
+
 . /etc/profile
 
 if [ "${UI_SERVICE}" = "weston.service" ]
 then
-  weston-terminal --command="${1}"
+  if [ -f "${*}" ]
+  then
+    RUN=$(echo ${*} | sed 's# #\\ #g')
+    weston-terminal --command="${RUN}"
+  else
+    weston-terminal --command="${*}"
+  fi
 else
   systemctl stop ${UI_SERVICE}
-  clear
-  "${1}" >/dev/console 2>&1
-  clear
+  clear >/dev/console 2>&1
+  $* >/dev/console 2>&1 || "$*" 2>&1
+  clear >/dev/console 2>&1
 fi
 if [ ! "${UI_SERVICE}" = "weston.service" ]
 then

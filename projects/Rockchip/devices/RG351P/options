@@ -29,8 +29,8 @@
     KERNEL_TARGET="Image"
     BOOTLOADER="u-boot"
     PARTITION_TABLE="msdos"
-    DEVICE_DTB="rk3326-rg351p-linux"
-    UBOOT_DTB="${DEVICE_DTB}"
+    DEVICE_DTB=("rk3326-rg351p-linux")
+    UBOOT_DTB="${DEVICE_DTB[0]}"
     UBOOT_CONFIG="odroidgoa_defconfig"
     PKG_SOC="px30"
     PKG_DATAFILE="$PKG_RKBIN/bin/rk33/rk3326_ddr_333MHz_v1.15.bin"
@@ -42,7 +42,7 @@
 
   # Additional kernel make parameters (for example to specify the u-boot loadaddress)
     KERNEL_MAKE_EXTRACMD=""
-    KERNEL_MAKE_EXTRACMD+=" rockchip/${DEVICE_DTB}.dtb"
+    KERNEL_MAKE_EXTRACMD+=" rockchip/${DEVICE_DTB[0]}.dtb"
    
   # Display Resolution
     SPLASH_RESOLUTION="320x480"
@@ -66,7 +66,7 @@
     HW_CPU="Rockchip RK3326"
 
   # kernel serial console
-    EXTRA_CMDLINE="quiet console=tty0 fbcon=rotate:3 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
+    EXTRA_CMDLINE="quiet rootwait console=tty0 fbcon=rotate:3 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
     
   # additional packages to install
     ADDITIONAL_PACKAGES=" emulators gamesupport 351files"

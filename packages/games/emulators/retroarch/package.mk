@@ -2,11 +2,11 @@
 # Copyright (C) 2021-present 351ELEC (https://github.com/351ELEC)
 
 PKG_NAME="retroarch"
-PKG_VERSION="ab57d3cab7d870b5dd55ddf9d9c584775bcdf03d"
+PKG_VERSION="6083ab14e5d33ba4d80d16ad96f4e726bce5a728"
 PKG_SITE="https://github.com/libretro/RetroArch"
 PKG_URL="${PKG_SITE}.git"
 PKG_LICENSE="GPLv3"
-PKG_DEPENDS_TARGET="toolchain SDL2 alsa-lib openssl freetype zlib retroarch-assets core-info ffmpeg libass joyutils empty nss-mdns openal-soft libogg libvorbisidec libvorbis libvpx libpng libdrm pulseaudio miniupnpc flac"
+PKG_DEPENDS_TARGET="toolchain SDL2 alsa-lib libass openssl freetype zlib retroarch-assets core-info ffmpeg libass joyutils empty nss-mdns openal-soft libogg libvorbisidec libvorbis libvpx libpng libdrm pulseaudio miniupnpc flac"
 PKG_LONGDESC="Reference frontend for the libretro API."
 GET_HANDLER_SUPPORT="git"
 
@@ -73,6 +73,9 @@ pre_configure_target() {
       PKG_DEPENDS_TARGET+=" librga libgo2"
       PKG_CONFIGURE_OPTS_TARGET+=" --enable-odroidgo2"
     ;;
+    *)
+      PKG_CONFIGURE_OPTS_TARGET+=" --disable-odroidgo2"
+    ;;
   esac
 
   cd ${PKG_BUILD}
@@ -119,17 +122,17 @@ makeinstall_target() {
     echo "Configure retroarch for ${DEVICE}"
     exit 1
   fi
+
+  # Make sure the shader directories exist for overlayfs.
+  for dir in common-shaders glsl-shaders slang-shaders
+  do
+    mkdir -p ${INSTALL}/usr/share/${dir}
+    touch ${INSTALL}/usr/share/${dir}/.overlay
+  done
 }
 
 post_install() {
-  mkdir -p ${INSTALL}/etc/retroarch-joypad-autoconfig
-  if [ -d "${PKG_DIR}/gamepads/device/${DEVICE}" ]
-  then
-    cp -r ${PKG_DIR}/gamepads/device/${DEVICE}/* ${INSTALL}/etc/retroarch-joypad-autoconfig ||:
-  fi
-
   enable_service tmp-cores.mount
-  enable_service tmp-joypads.mount
   enable_service tmp-database.mount
   enable_service tmp-assets.mount
   enable_service tmp-shaders.mount

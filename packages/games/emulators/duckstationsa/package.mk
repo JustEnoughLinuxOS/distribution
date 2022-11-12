@@ -3,14 +3,14 @@
 
 PKG_NAME="duckstationsa"
 PKG_LICENSE="GPLv3"
-PKG_DEPENDS_TARGET="toolchain SDL2 nasm:host pulseaudio openssl libidn2 nghttp2 zlib curl libevdev"
+PKG_DEPENDS_TARGET="toolchain SDL2 nasm:host pulseaudio openssl libidn2 nghttp2 zlib curl libevdev ecm"
 PKG_SITE="https://github.com/stenzek/duckstation"
 PKG_URL="${PKG_SITE}.git"
 PKG_SHORTDESC="Fast PlayStation 1 emulator for x86-64/AArch32/AArch64 "
 
 case ${DEVICE} in
   RG552|handheld)
-    PKG_VERSION="ef3ad91ad0969013bc29ad1276c13aa2842ecc2b"
+    PKG_VERSION="8438506206af6f9bb7bcf2303d55913edb5579a0"
     PKG_PATCH_DIRS+=" new"
   ;;
   *)
@@ -29,12 +29,18 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_CMAKE_OPTS_TARGET+=" 	-DUSE_X11=OFF \
 				-DUSE_DRMKMS=ON \
 				-DENABLE_EGL=ON \
-				-DUSE_MALI=OFF"
+				-DUSE_MALI=OFF \
+                                -DENABLE_VULKAN=OFF"
 fi
 
 if [ "${DISPLAYSERVER}" = "wl" ]; then
   PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER} xorg-server xrandr libXi"
-  PKG_CMAKE_OPTS_TARGET+=" -DUSE_X11=ON"
+  PKG_CMAKE_OPTS_TARGET+=" -DUSE_X11=OFF -DUSE_WAYLAND=ON"
+fi
+
+if [ "${VULKAN_SUPPORT}" = "yes" ]; then
+  PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
+  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_VULKAN=ON"
 fi
 
 pre_configure_target() {
@@ -47,8 +53,6 @@ pre_configure_target() {
 					-DUSE_SDL2=ON \
 					-DENABLE_CHEEVOS=ON \
 					-DUSE_FBDEV=OFF \
-					-DUSE_WAYLAND=OFF \
-					-DENABLE_VULKAN=OFF
 					-DUSE_EVDEV=ON"
 }
 

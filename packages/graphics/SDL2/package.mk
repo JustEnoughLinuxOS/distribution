@@ -77,6 +77,7 @@ case ${PROJECT} in
 esac
 
 pre_configure_target(){
+  export LDFLAGS="${LDFLAGS} -ludev"
   PKG_CMAKE_OPTS_TARGET="-DSDL_STATIC=OFF \
                          -DLIBC=ON \
                          -DGCC_ATOMICS=ON \
