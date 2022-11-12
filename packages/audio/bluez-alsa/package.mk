@@ -33,7 +33,7 @@ mkdir -p ${INSTALL}/usr/lib/alsa-lib
 cp -P ${PKG_BUILD}/.*/src/asound/.libs/*.so ${INSTALL}/usr/lib/alsa-lib/
 sed -i ${INSTALL}/etc/dbus-1/system.d/bluealsa.conf -e "s|audio|root|g"
 sed -i ${INSTALL}/usr/lib/systemd/system/bluealsa.service \
-  -e "s|ExecStart=.*|ExecStart=/usr/bin/bluealsa -p a2dp-source -p a2dp-sink -c aptx -c aac|g"
+  -e "s|ExecStart=.*|ExecStart=/usr/bin/bluealsa -p a2dp-source -p a2dp-sink -c aptx -c aac -c ldac|g"
 rm -rf ${INSTALL}/home
 }
 
