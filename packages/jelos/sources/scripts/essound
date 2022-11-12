@@ -21,25 +21,35 @@ get_controls() {
   done
 }
 
+get_es() {
+  AUDIODEVICE=$(grep AudioDevice ${ES_SETTINGS} | sed -e 's#^.*="##g' -e 's#"\ .*$##g')
+  if [ -z "${AUDIODEVICE}" ]
+  then
+    echo "DEFAULT"
+  else
+    echo "${AUDIODEVICE}"
+  fi
+}
+
 set_es() {
   AUDIODEVICE=${1}
-  systemctl stop ${UI_SERVICE}
   AUDIOTEST=$(grep "AudioDevice" ${ES_SETTINGS} 2>/dev/null)
-  if [ ! "$?" = 0 ]
+  sed -i '/<string name="AudioDevice".*$/d' ${ES_SETTINGS}
+  if [ ! "${AUDIODEVICE}" = "DEFAULT" ]
   then
-    sed -i '/^.*AudioCard.*$/a \\t<string name="AudioDevice" value="${AUDIODEVICE}" \/>' ${ES_SETTINGS}
-  else
-    sed -i '/<string name="AudioDevice".*$/d' 
-    sed -i '/^.*AudioCard.*$/a \\t<string name="AudioDevice" value="${AUDIODEVICE}" \/>' ${ES_SETTINGS}
+    sed -i '/^.*AudioCard.*$/a \\t<string name="AudioDevice" value="'"${AUDIODEVICE}"'" \/>' ${ES_SETTINGS}
   fi
   set_setting system.audiodevice "${AUDIODEVICE}"
-  systemctl start ${UI_SERVICE}
 }
+
 case ${1} in
   controls)
     get_controls 2>/dev/null
   ;;
-  set_es)
-    set_es $2
+  set)
+    set_es "$2"
+  ;;
+  get)
+    get_es
   ;;
 esac
