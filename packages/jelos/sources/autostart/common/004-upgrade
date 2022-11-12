@@ -12,4 +12,6 @@ then
   fi
   rm /storage/.config/boot.hint
   touch /storage/.configured
+else
+  echo "No update hint found." >/var/log/upgrade.log 2>&1
 fi

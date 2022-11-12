@@ -16,31 +16,19 @@ then
       mkdir -p /storage/.config/modprobe.d
     fi
     touch /storage/.config/modprobe.d/alsa-base.conf
-    set-audio "DEFAULT HDMI"
+    set-audio set "DEFAULT HDMI"
     reboot
   fi
 fi
 
 if [ ! -e "/storage/.config/asound.conf" ]
 then
-  set-audio "DEFAULT (SYSTEM PROVIDED)"
+  set-audio set "DEFAULT (SYSTEM PROVIDED)"
 fi
 
 if [ ! -e "/storage/.config/asound.state" ] && [ -e /usr/config/asound.state ]
 then
   cp /usr/config/asound.state /storage/.config
-fi
-
-AUDIODEVICE=$(get_setting system.audiodevice)
-AUDIOTEST=$(grep "${AUDIODEVICE}" /storage/.config/emulationstation/es_settings.cfg 2>/dev/null)
-if [ ! "$?" = 0 ]
-then
-  sed -i '/^.*AudioCard.*$/a \\t<string name="AudioDevice" value="${AUDIODEVICE}" \/>' /storage/.config/emulationstation/es_settings.cfg
-else
-  if [ -z "${AUDIODEVICE}" ]
-  then
-    sed -i '/<string name="AudioDevice".*$/d' /storage/.emulationstation/es_settings.cfg
-  fi
 fi
 
 # Initialize sound using the state if available.
