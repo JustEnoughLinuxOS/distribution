@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: Apache-2.0
-# Copyright (C) 2020-present Fewtarius
+# Copyright (C) 2022-present Marek Moeckel (wansti@discarded-ideas.org)
 
 PKG_NAME="libldac"
 PKG_VERSION="fbffba45d15d959da6ee04eafe14c0d4721f6030"
