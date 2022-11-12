@@ -16,29 +16,19 @@ then
       mkdir -p /storage/.config/modprobe.d
     fi
     touch /storage/.config/modprobe.d/alsa-base.conf
-    set-audio "DEFAULT HDMI"
+    set-audio set "DEFAULT HDMI"
     reboot
   fi
 fi
 
 if [ ! -e "/storage/.config/asound.conf" ]
 then
-  set-audio "DEFAULT (SYSTEM PROVIDED)"
+  set-audio set "DEFAULT (SYSTEM PROVIDED)"
 fi
 
 if [ ! -e "/storage/.config/asound.state" ] && [ -e /usr/config/asound.state ]
 then
   cp /usr/config/asound.state /storage/.config
-fi
-
-# Temporary patch since ES doesn't find the DAC on the RG552.
-if [[ "${HW_DEVICE}" =~ RG552 ]]
-then
-  DACTEST=$(grep DAC /storage/.config/emulationstation/es_settings.cfg 2>/dev/null)
-  if [ ! "$?" = 0 ]
-  then
-    sed -i '/^.*AudioCard.*$/a \\t<string name="AudioDevice" value="DAC" \/>' /storage/.config/emulationstation/es_settings.cfg
-  fi
 fi
 
 # Initialize sound using the state if available.
