@@ -402,7 +402,6 @@ update_bootloader() {
 
   export BOOT_ROOT="/flash"
   export SYSTEM_ROOT="/update"
-  echo "UPDATE" > $SYSTEM_ROOT/storage/.config/boot.hint
   if [ -f $SYSTEM_ROOT/usr/share/bootloader/update.sh ]; then
     echo ""
     echo "Updating Boot Files... "
@@ -882,6 +881,8 @@ check_update() {
       UPDATE_FILENAME="$UPDATE_IMG"
       mv "$UPDATE_IMG" $IMG_FILE
     fi
+
+    echo "UPDATE" > $UPDATE_DIR/../.config/boot.hint
 
     LOOP=$(losetup -f)
     LOOP_NUM=$(echo $LOOP | sed 's|/dev/loop||')
