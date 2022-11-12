@@ -103,6 +103,15 @@ else
 	SET_PARAMS="$SET_PARAMS --set Video-Glide64mk2[show_fps]=1 --set Video-Rice[ShowFPS]=\"True\" --set Video-GLideN64[ShowFPS]=1"
 fi
 
+# RSP
+get_setting "rsp_plugin"
+echo ${EES}
+if [ "${EES}" == "default" ] || [ "${EES}" == "hle" ]; then
+	SET_PARAMS="$SET_PARAMS --set UI-Console[RspPlugin]=\"mupen64plus-rsp-hle.so\""
+else
+	SET_PARAMS="$SET_PARAMS --set UI-Console[RspPlugin]=\"mupen64plus-rsp-cxd4.so\""
+fi
+
 echo ${SET_PARAMS}
 
 case $1 in
