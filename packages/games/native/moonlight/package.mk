@@ -2,7 +2,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="moonlight"
-PKG_VERSION="f021439d1bb33b4869273f7521ec77edb6804fe1"
+PKG_VERSION="28ace5187458b3bd3c9af086274d19a9bf480fff"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/moonlight-stream/moonlight-embedded"
@@ -15,7 +15,7 @@ PKG_PATCH_DIRS+="${DEVICE}"
 
 if [ "${PROJECT}" = "Rockchip" ]
 then
-  PKG_DEPENDS_TARGET+=" rkmpp"
+  PKG_DEPENDS_TARGET+=" librga rkmpp"
 fi
 
 if [ ! "${OPENGL}" = "no" ]; then

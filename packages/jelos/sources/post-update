@@ -36,7 +36,6 @@ echo "Sync modules..." >>${LOG}
 rsync -a /usr/config/modules/* /storage/.config/modules/
 cp -f /usr/config/retroarch/retroarch-core-options.cfg /storage/.config/retroarch/retroarch-core-options.cfg
 
-
 echo "Sync theme..." >>${LOG}
 cd /usr/share/themes
 for theme in *
