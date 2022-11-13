@@ -108,7 +108,7 @@ function set_es_path() {
     exit 0
   fi
   AUDIOTEST=$(grep "AudioDevice" ${ES_SETTINGS} 2>/dev/null)
-  sed -i '/<string name="AudioDevice".*$/d' ${ES_SETTINGS}
+  sed -i '/^.*<string name="AudioDevice".*$/d' ${ES_SETTINGS}
   if [ -e "/storage/.config/profile.d/99-mixer" ]
   then
     rm "/storage/.config/profile.d/99-mixer"
