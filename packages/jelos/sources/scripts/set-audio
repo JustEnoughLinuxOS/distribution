@@ -116,7 +116,7 @@ function set_es_path() {
     exit 0
   fi
   AUDIOTEST=$(grep "AudioDevice" ${ES_SETTINGS} 2>/dev/null)
-  sed -i '/<string name="AudioDevice".*$/d' ${ES_SETTINGS}
+  sed -i '/^.*<string name="AudioDevice".*$/d' ${ES_SETTINGS}
   if [ -e "/storage/.config/profile.d/99-mixer" ]
   then
     rm "/storage/.config/profile.d/99-mixer"
@@ -125,6 +125,10 @@ function set_es_path() {
   then
     sed -i '/^.*AudioCard.*$/a \\t<string name="AudioDevice" value="'"${AUDIODEVICE}"'" \/>' ${ES_SETTINGS}
     echo "DEVICE_AUDIO_MIXER=\"${AUDIODEVICE}\"" >/storage/.config/profile.d/99-mixer
+    if [ "${DEVICE_VOLUMECTL}" = true ]
+    then
+      systemctl restart volume
+    fi
   fi
 }
 
