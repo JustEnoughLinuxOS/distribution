@@ -4,10 +4,29 @@
 
 . /etc/profile
 
+ES_SETTINGS="/storage/.config/emulationstation/es_settings.cfg"
+
+function list_audio_controls() {
+  IFS=""
+  CONTROLS=$(amixer controls | sed -e 's#^.*name=##g' -e "s#'##g")
+  echo "DEFAULT (SYSTEM PROVIDED)"
+  echo "CUSTOM (UNMANAGED)"
+  for CONTROL in "${CONTROLS[@]}"
+  do
+    echo ${CONTROL} | awk '{print $1}' | grep -v -E 'Mic|Extension|Capture|Differential|Left|Right' | uniq
+  done
+  echo "--------"
+  for CONTROL in "${CONTROLS[@]}"
+  do
+    echo ${CONTROL}
+  done
+}
+
 function list_audio_devices() {
   echo "DEFAULT (SYSTEM PROVIDED)"
   echo "DEFAULT HDMI"
   echo "CUSTOM (UNMANAGED)"
+  echo "--------"
   for SDEVICE in $(find /proc/asound/card*/pcm*/info)
   do
     TYPE=$(awk '/^stream:/ {print $2}' ${SDEVICE})
@@ -48,6 +67,10 @@ function set_audio_device() {
   then
     exit 0
   else
+    if [ "${SELECTION}" == "--------" ]
+    then
+      exit 0
+    fi
     for SDEVICE in $(find /proc/asound/card*/pcm*/info)
     do
       TYPE=$(awk '/^stream:/ {print $2}' ${SDEVICE})
@@ -77,6 +100,30 @@ ctl.!default {
 EOF
 }
 
+function set_es_path() {
+  AUDIODEVICE=${1}
+ if [ "${AUDIODEVICE}" == "CUSTOM (UNMANAGED)" ] || \
+    [ "${AUDIODEVICE}" == "--------" ]
+  then
+    exit 0
+  fi
+  AUDIOTEST=$(grep "AudioDevice" ${ES_SETTINGS} 2>/dev/null)
+  sed -i '/<string name="AudioDevice".*$/d' ${ES_SETTINGS}
+  if [ -e "/storage/.config/profile.d/99-mixer" ]
+  then
+    rm "/storage/.config/profile.d/99-mixer"
+  fi
+  if [ ! "${AUDIODEVICE}" = "DEFAULT (SYSTEM PROVIDED)" ]
+  then
+    sed -i '/^.*AudioCard.*$/a \\t<string name="AudioDevice" value="'"${AUDIODEVICE}"'" \/>' ${ES_SETTINGS}
+    echo "DEVICE_AUDIO_MIXER=\"${AUDIODEVICE}\"" >/storage/.config/profile.d/99-mixer
+    if [ "${DEVICE_VOLUMECTL}" = true ]
+    then
+      systemctl restart volume
+    fi
+  fi
+}
+
 function get_audio_device() {
   MYAUDIODEVICE=$(get_setting system.audiodevice)
   if [ ! -z "${MYAUDIODEVICE}" ]
@@ -87,14 +134,33 @@ function get_audio_device() {
   fi
 }
 
+function get_es_path() {
+  AUDIODEVICE=$(grep AudioDevice ${ES_SETTINGS} | sed -e 's#^.*="##g' -e 's#"\ .*$##g')
+  if [ -z "${AUDIODEVICE}" ]
+  then
+    echo "DEFAULT (SYSTEM PROVIDED)"
+  else
+    echo "${AUDIODEVICE}"
+  fi
+}
+
 case $1 in
+  controls)
+    list_audio_controls
+  ;;
   list)
      list_audio_devices
   ;;
   set)
-     set_audio_device "$2"
+    set_audio_device "$2"
+  ;;
+  esset)
+    set_es_path "$2"
   ;;
   get)
-     get_audio_device
+    get_audio_device
+  ;;
+  esget)
+    get_es_path
   ;;
 esac
