@@ -104,12 +104,11 @@ else
 fi
 
 # RSP
-get_setting "rsp_plugin"
-echo ${EES}
-if [ "${EES}" == "default" ] || [ "${EES}" == "hle" ]; then
-	SET_PARAMS="$SET_PARAMS --set UI-Console[RspPlugin]=\"mupen64plus-rsp-hle.so\""
+RSP=$(get_setting rsp_plugin)
+if [ "${RSP}" == "default" ] || [ "${RSP}" == "hle" ]; then
+	SET_PARAMS="$SET_PARAMS --set UI-Console[RspPlugin]=\"mupen64plus-rsp-hle.so\" "
 else
-	SET_PARAMS="$SET_PARAMS --set UI-Console[RspPlugin]=\"mupen64plus-rsp-cxd4.so\""
+	SET_PARAMS="$SET_PARAMS --set UI-Console[RspPlugin]=\"mupen64plus-rsp-cxd4.so\" "
 fi
 
 echo ${SET_PARAMS}
