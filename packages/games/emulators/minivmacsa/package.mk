@@ -6,7 +6,7 @@ PKG_VERSION="37.03"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://www.gryphel.com/c/minivmac/"
-PKG_URL="https://www.gryphel.com/d/minivmac/${PKG_NAME}-${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.src.tgz"
+PKG_URL="https://www.gryphel.com/d/minivmac/minivmac-${PKG_VERSION}/minivmac-${PKG_VERSION}.src.tgz"
 PKG_DEPENDS_TARGET="toolchain libX11"
 PKG_PRIORITY="optional"
 PKG_SECTION="emulators"
@@ -16,7 +16,7 @@ PKG_TOOLCHAIN="manual"
 make_target() {
   cd ${PKG_BUILD}
   gcc setup/tool.c -o setup_t
-  ./setup_t -t lx64 -emm 0 -fullscreen 1 > setup.sh
+  ./setup_t -t lx64 -fullscreen 1 > setup.sh
   . setup.sh
   make
 }
