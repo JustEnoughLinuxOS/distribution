@@ -3,7 +3,7 @@
 
 PKG_NAME="parallel-n64_rice"
 PKG_VERSION="a03fdcba6b2e9993f050b50112f597ce2f44fa2c"
-PKG_SHA256="8ac94a0515bac7aeda51ef5cbb5c042d69d4f73960ca0ae8961e7ecbe3d182fa"
+PKG_SHA256=""
 PKG_REV="2"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/parallel-n64"

@@ -3,7 +3,7 @@
 
 PKG_NAME="mupen64plussa-input-sdl"
 PKG_VERSION="ac3b878cd14cf455cc40d94985ad1303383b1b7a"
-PKG_SHA256="b345a56373de7cbb16bdfd3c4fc813bf16dbc2cdbaeef8d948c17c446a7854f6"
+PKG_SHA256=""
 PKG_ARCH="aarch64"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/mupen64plus/mupen64plus-input-sdl"
