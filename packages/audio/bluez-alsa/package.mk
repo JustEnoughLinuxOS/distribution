@@ -26,15 +26,19 @@ PKG_CONFIGURE_OPTS_TARGET="${PKG_BLUEALSA_DEBUG} \
 			   --enable-systemd"
 
 post_makeinstall_target() {
+mkdir -p ${INSTALL}/usr/share/services
+cp -P ${PKG_DIR}/default.d/*.conf ${INSTALL}/usr/share/services/
+cp -P ${PKG_DIR}/system.d/*.service ${INSTALL}/usr/lib/systemd/system/
 # workaround until I figure out how to query this directory
 mkdir -p ${INSTALL}/usr/lib/alsa-lib
 cp -P ${PKG_BUILD}/.*/src/asound/.libs/*.so ${INSTALL}/usr/lib/alsa-lib/
 sed -i ${INSTALL}/etc/dbus-1/system.d/bluealsa.conf -e "s|audio|root|g"
-sed -i ${INSTALL}/usr/lib/systemd/system/bluealsa.service \
-  -e "s|ExecStart=.*|ExecStart=/usr/bin/bluealsa -p a2dp-source -p a2dp-sink -c aptx -c aac -c ldac --ldac-quality=mobile|g"
+#sed -i ${INSTALL}/usr/lib/systemd/system/bluealsa.service \
+#  -e "s|ExecStart=.*|ExecStart=/usr/bin/bluealsa -p a2dp-source -p a2dp-sink -c aptx -c aac -c ldac --ldac-quality=mobile|g"
 rm -rf ${INSTALL}/home
 }
 
 post_install() {
   enable_service bluealsa.service
+  enable_service bluealsa-defaults.service
 }
