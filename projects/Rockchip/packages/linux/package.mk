@@ -25,12 +25,12 @@ case ${DEVICE} in
     PKG_GIT_CLONE_BRANCH="main"
   ;;
   RG552)
-    PKG_VERSION="6.0.6"
+    PKG_VERSION="6.0.7"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
   ;;
   RG353P|RG503)
     PKG_URL="${PKG_SITE}/rk356x-kernel.git"
-    PKG_VERSION="178e6ca92"
+    PKG_VERSION="0ab76df23"
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="main"
   ;;

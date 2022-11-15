@@ -26,7 +26,7 @@
     esac
 
   # Kernel target
-    DEVICE_NAME="RG353P"
+    DEVICE_NAME="RG353P/M"
     KERNEL_TARGET="Image"
     BOOTLOADER="u-boot"
     PARTITION_TABLE="gpt"

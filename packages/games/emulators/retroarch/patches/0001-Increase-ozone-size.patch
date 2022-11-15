@@ -1,16 +1,17 @@
-diff -rupN retroarch.orig/menu/drivers/ozone.c retroarch/menu/drivers/ozone.c
---- retroarch.orig/menu/drivers/ozone.c	2022-07-13 17:45:03.418008630 -0400
-+++ retroarch/menu/drivers/ozone.c	2022-07-13 17:46:31.712754701 -0400
-@@ -7454,7 +7454,7 @@ static void *ozone_init(void **userdata,
-    ozone->last_width        = width;
-    ozone->last_height       = height;
-    ozone->last_scale_factor = gfx_display_get_dpi_scale(p_disp,
+diff --git a/menu/drivers/ozone.c b/menu/drivers/ozone.c
+index 6720c22fff..e799b2299a 100644
+--- a/menu/drivers/ozone.c
++++ b/menu/drivers/ozone.c
+@@ -8087,7 +8087,7 @@ static void *ozone_init(void **userdata, bool video_is_threaded)
+    ozone->last_width                            = width;
+    ozone->last_height                           = height;
+    ozone->last_scale_factor                     = gfx_display_get_dpi_scale(p_disp,
 -         settings, width, height, false, false);
-+         settings, width, height, false, false) * 2.000f;
-    ozone->last_thumbnail_scale_factor = settings->floats.ozone_thumbnail_scale_factor;
++         settings, width, height, false, false)  * 2.000f;
+    ozone->last_thumbnail_scale_factor           = settings->floats.ozone_thumbnail_scale_factor;
  
-    file_list_initialize(&ozone->selection_buf_old);
-@@ -8551,7 +8551,7 @@ static void ozone_render(void *data,
+    ozone->selection_buf_old.list                = NULL;
+@@ -9187,7 +9187,7 @@ static void ozone_render(void *data,
     /* Check whether screen dimensions or menu scale
      * factor have changed */
     scale_factor           = gfx_display_get_dpi_scale(p_disp, settings,
@@ -19,4 +20,3 @@ diff -rupN retroarch.orig/menu/drivers/ozone.c retroarch/menu/drivers/ozone.c
     thumbnail_scale_factor = settings->floats.ozone_thumbnail_scale_factor;
  
     if ((scale_factor != ozone->last_scale_factor) ||
-Binary files retroarch.orig/menu/drivers/.ozone.c.rej.swp and retroarch/menu/drivers/.ozone.c.rej.swp differ
