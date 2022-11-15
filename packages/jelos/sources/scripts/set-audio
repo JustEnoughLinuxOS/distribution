@@ -63,9 +63,13 @@ function set_audio_device() {
   elif [[ "${SELECTION}" =~ ^Device.* ]]
   then
     MAC=$(echo "${SELECTION}" | awk '/^Device/ {print $2}')
-    set_setting system.audiodevice "BLUETOOTH"
-    cp /usr/config/asound.conf.bluealsa /storage/.config/asound.conf
-    bluetoothctl connect ${MAC}
+    # Reconnect device in case it auto-connected.
+    bluetoothctl disconnect ${MAC}
+    if bluetoothctl connect ${MAC}
+    then 
+      set_setting system.audiodevice "BLUETOOTH"
+      cp /usr/config/asound.conf.bluealsa /storage/.config/asound.conf
+    fi 
     exit 0
   else
     for SDEVICE in $(find /proc/asound/card*/pcm*/info)
