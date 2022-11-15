@@ -21,6 +21,15 @@ then
   fi
 fi
 
+# Revert to default when bluetooth was still selected at last shutdown.
+# This is a workaround - headsets that auto-connect at boot tend to be
+# unreliable, so for now it's better to force a manual reconnect.
+LAST_AUDIO_DEVICE=$(set-audio get)
+if [[ "${LAST_AUDIO_DEVICE}" =~ ^Device.* ]]
+then
+  set-audio "DEFAULT (SYSTEM PROVIDED)"
+fi
+
 if [ ! -e "/storage/.config/asound.conf" ]
 then
   set-audio "DEFAULT (SYSTEM PROVIDED)"
