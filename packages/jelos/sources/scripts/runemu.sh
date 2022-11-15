@@ -94,7 +94,10 @@ fi
 
 ### Set the performance mode
 PERFORMANCE_MODE=$(get_setting "cpugovernor" "${PLATFORM}" "${ROMNAME##*/}")
-${PERFORMANCE_MODE}
+if [ ! "${PERFORMANCE_MODE}" = "auto" ]
+then
+  ${PERFORMANCE_MODE}
+fi
 
 ### Set the cores to use
 CORES=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
