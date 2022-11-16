@@ -8,7 +8,13 @@ ES_SETTINGS="/storage/.config/emulationstation/es_settings.cfg"
 
 function list_audio_controls() {
   IFS=""
-  CONTROLS=$(amixer controls | sed -e 's#^.*name=##g' -e "s#'##g")
+  ACTIVE_DEVICE=$(get_audio_device)
+  if [[ "${ACTIVE_DEVICE}" =~ ^Device.* ]]
+  then
+    CONTROLS=$(amixer -D bluealsa controls | sed -e 's#^.*name=##g' -e "s#'##g")
+  else
+    CONTROLS=$(amixer controls | sed -e 's#^.*name=##g' -e "s#'##g")
+  fi
   echo "DEFAULT (SYSTEM PROVIDED)"
   echo "CUSTOM (UNMANAGED)"
   for CONTROL in "${CONTROLS[@]}"
