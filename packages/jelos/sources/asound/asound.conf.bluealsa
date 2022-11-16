@@ -5,7 +5,8 @@ pcm.!default {
 	hint.description "Bluetooth Audio Device"
 }
 
+# Leave mixer at default card for now
 ctl.!default {
-	type bluealsa
-	hint.description "Bluetooth Audio Device"
+	type hw
+	card 0
 }

@@ -27,12 +27,16 @@ function list_audio_devices() {
   echo "DEFAULT HDMI"
   echo "CUSTOM (UNMANAGED)"
   echo "--------"
-  BTDEVICES=$(bluetoothctl paired-devices)
-  while read -r BTDEV
-  do
-    echo "${BTDEV}"
-  done <<< "${BTDEVICES}"
-  echo "--------"
+  BTACTIVE=$(systemctl is-active bluetooth)
+  if [ "${BTACTIVE}" == "active" ]
+  then
+    BTDEVICES=$(bluetoothctl paired-devices)
+    while read -r BTDEV
+    do
+      echo "${BTDEV}"
+    done <<< "${BTDEVICES}"
+    echo "--------"
+  fi
   for SDEVICE in $(find /proc/asound/card*/pcm*/info)
   do
     TYPE=$(awk '/^stream:/ {print $2}' ${SDEVICE})
