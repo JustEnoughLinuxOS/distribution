@@ -80,6 +80,7 @@ function set_audio_device() {
     if bluetoothctl connect ${MAC}
     then 
       cp /usr/config/asound.conf.bluealsa /storage/.config/asound.conf
+      set_es_path "DEFAULT (SYSTEM PROVIDED)"
     fi 
     exit 0
   else

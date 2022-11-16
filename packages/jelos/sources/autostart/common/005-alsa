@@ -28,6 +28,7 @@ LAST_AUDIO_DEVICE=$(set-audio get)
 if [[ "${LAST_AUDIO_DEVICE}" =~ ^Device.* ]]
 then
   set-audio set "DEFAULT (SYSTEM PROVIDED)"
+  set-audio esset "DEFAULT (SYSTEM PROVIDED)"
 fi
 
 if [ ! -e "/storage/.config/asound.conf" ]
