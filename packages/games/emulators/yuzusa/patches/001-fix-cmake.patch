@@ -1,0 +1,59 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index c6fc5dd9e..78098416b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -195,7 +195,7 @@ if (YUZU_TESTS)
+     find_package(Catch2 2.13.7 REQUIRED CONFIG)
+ endif()
+
+-find_package(Boost 1.73.0 COMPONENTS context)
++find_package(Boost 1.80.0 COMPONENTS context REQUIRED)
+ if (Boost_FOUND)
+     set(Boost_LIBRARIES Boost::boost)
+     # Conditionally add Boost::context only if the found Boost package provides it
+@@ -205,7 +205,7 @@ if (Boost_FOUND)
+         list(APPEND Boost_LIBRARIES Boost::context)
+     endif()
+ else()
+-    message(FATAL_ERROR "Boost 1.73.0 or newer not found")
++    message(FATAL_ERROR "Boost 1.80.0 or newer not found")
+ endif()
+
+ # boost:asio has functions that require AcceptEx et al
+@@ -386,11 +386,9 @@ endif()
+
+ # Ensure libusb is properly configured (based on dolphin libusb include)
+ if(NOT APPLE AND NOT YUZU_USE_BUNDLED_LIBUSB)
+-    find_package(PkgConfig)
++    add_definitions(-D__LIBUSB__)
+     if (PKG_CONFIG_FOUND AND NOT CMAKE_SYSTEM_NAME MATCHES "DragonFly|FreeBSD")
+-        pkg_check_modules(LIBUSB QUIET libusb-1.0>=1.0.24)
+-    else()
+-        find_package(LibUSB)
++               find_package(LibUSB)
+     endif()
+
+     if (LIBUSB_FOUND)
+@@ -398,8 +396,7 @@ if(NOT APPLE AND NOT YUZU_USE_BUNDLED_LIBUSB)
+         target_include_directories(usb INTERFACE "${LIBUSB_INCLUDE_DIRS}")
+         target_link_libraries(usb INTERFACE "${LIBUSB_LIBRARIES}")
+     else()
+-        message(WARNING "libusb not found, falling back to externals")
+-        set(YUZU_USE_BUNDLED_LIBUSB ON)
++        message(WARNING "libusb not found")
+     endif()
+ endif()
+
+diff --git a/src/input_common/drivers/gc_adapter.cpp b/src/input_common/drivers/gc_adapter.cpp
+index 826fa2109..bc6d90f1d 100644
+--- a/src/input_common/drivers/gc_adapter.cpp
++++ b/src/input_common/drivers/gc_adapter.cpp
+@@ -2,7 +2,7 @@
+ // SPDX-License-Identifier: GPL-2.0-or-later
+
+ #include <fmt/format.h>
+-#include <libusb.h>
++#include <libusb-1.0/libusb.h>
+
+ #include "common/logging/log.h"
+ #include "common/param_package.h"
