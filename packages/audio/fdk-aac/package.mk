@@ -1,10 +1,10 @@
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: FDK-AAC
 # Copyright (C) 2022-present Marek Moeckel (wansti@discarded-ideas.org)
 
 PKG_NAME="fdk-aac"
 PKG_VERSION="2.0.2"
 PKG_SHA256="7812b4f0cf66acda0d0fe4302545339517e702af7674dd04e5fe22a5ade16a90"
-PKG_LICENSE="Apache2"
+PKG_LICENSE="Software License for The Fraunhofer FDK AAC Codec Library for Android"
 PKG_SITE="https://github.com/mstorsjo/fdk-aac"
 PKG_URL="https://github.com/mstorsjo/fdk-aac/archive/refs/tags/v${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
