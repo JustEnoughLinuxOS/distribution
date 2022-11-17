@@ -125,5 +125,5 @@ AUDIOLATENCY=$(get_setting system.audiolatency)
 if [ -z "${AUDIOLATENCY}" ]
 then
   echo "Set up audio latency..." >>${LOG}
-  set_setting global.audiolatency default
+  set_setting system.audiolatency default
 fi
