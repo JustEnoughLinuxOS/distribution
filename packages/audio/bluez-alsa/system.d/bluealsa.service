@@ -13,7 +13,7 @@ ConditionPathExists=/storage/.cache/services/bluealsa.conf
 #
 # $ sudo systemctl edit bluealsa
 # [Service]
-# ExecStart=/usr/bin/bluealsa -p a2dp-source -p a2dp-sink -c aptx -c aac -c ldac
+# ExecStart=
 # ExecStart=/usr/bin/bluealsa -p a2dp-source -p a2dp-sink -c aptx -c aac -c ldac
 
 [Service]
