@@ -119,11 +119,3 @@ then
   echo "Make sure weston is our default." >>${LOG}
   set_setting weston.startup "/usr/bin/start_es.sh"
 fi
-
-# Set audiolatency to default.
-AUDIOLATENCY=$(get_setting system.audiolatency)
-if [ -z "${AUDIOLATENCY}" ]
-then
-  echo "Set up audio latency..." >>${LOG}
-  set_setting system.audiolatency default
-fi
