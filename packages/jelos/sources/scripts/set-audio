@@ -80,7 +80,8 @@ function set_audio_device() {
   then
     MAC=$(echo "${SELECTION}" | awk '/^Device/ {print $2}')
     # Reconnect device in case it auto-connected.
-    bluetoothctl disconnect ${MAC}
+    # This doesn't seem necessary anymore, re-activate in case of issues.
+    # bluetoothctl disconnect ${MAC}
     if bluetoothctl connect ${MAC}
     then 
       cp /usr/config/asound.conf.bluealsa /storage/.config/asound.conf
