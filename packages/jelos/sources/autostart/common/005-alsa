@@ -4,32 +4,16 @@
 
 . /etc/profile
 
-### Temporary device quirk for VCS
-if [ -e "/usr/sbin/dmidecode" ] && \
-   [ ! -e "/storage/.config/modprobe.d/alsa-base.conf" ]
-then
-  THIS_DEVICE="$(/usr/sbin/dmidecode -s system-product-name)"
-  if [[ "${THIS_DEVICE}" =~ ^VCS ]]
-  then
-    if [ ! -d "/storage/.config/modprobe.d/" ]
-    then
-      mkdir -p /storage/.config/modprobe.d
-    fi
-    touch /storage/.config/modprobe.d/alsa-base.conf
-    set-audio set "DEFAULT HDMI"
-    reboot
-  fi
-fi
-
+### REMINDER: This needs to be refactored or it will break audio on other devices.
 # Revert to default when bluetooth was still selected at last shutdown.
 # This is a workaround - headsets that auto-connect at boot tend to be
 # unreliable, so for now it's better to force a manual reconnect.
-LAST_AUDIO_DEVICE=$(set-audio get)
-if [[ "${LAST_AUDIO_DEVICE}" =~ ^Device.* ]]
-then
-  set-audio set "DEFAULT (SYSTEM PROVIDED)"
-  set-audio esset "DEFAULT (SYSTEM PROVIDED)"
-fi
+#LAST_AUDIO_DEVICE=$(set-audio get)
+#if [[ "${LAST_AUDIO_DEVICE}" =~ ^Device.* ]]
+#then
+#  set-audio set "DEFAULT (SYSTEM PROVIDED)"
+#  set-audio esset "DEFAULT (SYSTEM PROVIDED)"
+#fi
 
 if [ ! -e "/storage/.config/asound.conf" ]
 then
