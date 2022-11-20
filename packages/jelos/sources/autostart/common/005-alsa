@@ -4,6 +4,17 @@
 
 . /etc/profile
 
+### REMINDER: This needs to be refactored or it will break audio on other devices.
+# Revert to default when bluetooth was still selected at last shutdown.
+# This is a workaround - headsets that auto-connect at boot tend to be
+# unreliable, so for now it's better to force a manual reconnect.
+#LAST_AUDIO_DEVICE=$(set-audio get)
+#if [[ "${LAST_AUDIO_DEVICE}" =~ ^Device.* ]]
+#then
+#  set-audio set "DEFAULT (SYSTEM PROVIDED)"
+#  set-audio esset "DEFAULT (SYSTEM PROVIDED)"
+#fi
+
 if [ ! -e "/storage/.config/asound.conf" ]
 then
   set-audio set "DEFAULT (SYSTEM PROVIDED)"
