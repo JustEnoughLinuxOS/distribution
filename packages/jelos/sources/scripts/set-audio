@@ -36,7 +36,7 @@ function list_audio_devices() {
   BTACTIVE=$(systemctl is-active bluetooth)
   if [ "${BTACTIVE}" == "active" ]
   then
-    BTDEVICES=$(bluetoothctl paired-devices)
+    BTDEVICES=$(bluetoothctl devices Paired)
     while read -r BTDEV
     do
       echo "${BTDEV}"
