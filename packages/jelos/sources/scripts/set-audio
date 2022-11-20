@@ -8,7 +8,13 @@ ES_SETTINGS="/storage/.config/emulationstation/es_settings.cfg"
 
 function list_audio_controls() {
   IFS=""
-  CONTROLS=$(amixer controls | sed -e 's#^.*name=##g' -e "s#'##g")
+  ACTIVE_DEVICE=$(get_audio_device)
+  if [[ "${ACTIVE_DEVICE}" =~ ^Device.* ]]
+  then
+    CONTROLS=$(amixer -D bluealsa controls | sed -e 's#^.*name=##g' -e "s#'##g")
+  else
+    CONTROLS=$(amixer controls | sed -e 's#^.*name=##g' -e "s#'##g")
+  fi
   echo "DEFAULT (SYSTEM PROVIDED)"
   echo "CUSTOM (UNMANAGED)"
   for CONTROL in "${CONTROLS[@]}"
@@ -27,6 +33,16 @@ function list_audio_devices() {
   echo "DEFAULT HDMI"
   echo "CUSTOM (UNMANAGED)"
   echo "--------"
+  BTACTIVE=$(systemctl is-active bluetooth)
+  if [ "${BTACTIVE}" == "active" ]
+  then
+    BTDEVICES=$(bluetoothctl paired-devices)
+    while read -r BTDEV
+    do
+      echo "${BTDEV}"
+    done <<< "${BTDEVICES}"
+    echo "--------"
+  fi
   for SDEVICE in $(find /proc/asound/card*/pcm*/info)
   do
     TYPE=$(awk '/^stream:/ {print $2}' ${SDEVICE})
@@ -47,7 +63,7 @@ function set_audio_device() {
   then
     if [ "$(get_setting system.rg353v)" = "1" ]
     then
-      cp /usr/config/asound.conf.RG353V /storage/.config
+      cp /usr/config/asound.conf.RG353V /storage/.config/asound.conf
       exit 0
     else
       if [ -e "/usr/config/asound.conf" ]
@@ -65,6 +81,18 @@ function set_audio_device() {
     HWDEV="hdmi"
   elif [ "${SELECTION}" == "CUSTOM (UNMANAGED)" ]
   then
+    exit 0
+  elif [[ "${SELECTION}" =~ ^Device.* ]]
+  then
+    MAC=$(echo "${SELECTION}" | awk '/^Device/ {print $2}')
+    # Reconnect device in case it auto-connected.
+    # This doesn't seem necessary anymore, re-activate in case of issues.
+    # bluetoothctl disconnect ${MAC}
+    if bluetoothctl connect ${MAC}
+    then 
+      cp /usr/config/asound.conf.bluealsa /storage/.config/asound.conf
+      set_es_path "DEFAULT (SYSTEM PROVIDED)"
+    fi 
     exit 0
   else
     if [ "${SELECTION}" == "--------" ]
