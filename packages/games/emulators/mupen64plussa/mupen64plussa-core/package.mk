@@ -33,7 +33,10 @@ make_target() {
 
   export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -D_REENTRANT"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
-  export USE_GLES=1
+  if [ "${DEVICE}" = "RG552" || "${DEVICE}" = "X86_64"]
+  then
+      export USE_GLES=1
+  fi
   export V=1
   export OSD=0
   make -C projects/unix clean

@@ -104,7 +104,7 @@ else
 fi
 
 # RSP
-RSP=$(get_setting rsp_plugin)
+RSP=$(get_setting rsp_plugin n64)
 if [ "${RSP}" == "default" ] || [ "${RSP}" == "hle" ]; then
 	SET_PARAMS="$SET_PARAMS --set UI-Console[RspPlugin]=mupen64plus-rsp-hle.so"
 else
