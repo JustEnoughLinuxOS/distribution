@@ -496,7 +496,7 @@ fi
 ## Audiolatency
 # Get configuration from system.cfg and set to retroarch.cfg
 get_game_setting "audiolatency"
-if [ "${EES}" =~ ^[0-9]+$ ] && [ "${EES}" -gt "0" ]; then
+if [[ "${EES}" =~ ^[0-9]+$ ]] && [[ "${EES}" -gt "0" ]]; then
 	echo "audio_latency = \"${EES}\"" >> ${RAAPPENDCONF}
 fi
 
