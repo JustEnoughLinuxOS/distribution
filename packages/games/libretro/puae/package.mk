@@ -20,7 +20,7 @@
 ################################################################################
 
 PKG_NAME="puae"
-PKG_VERSION="4fa4c695606fa26dc55c53b791cf1a832af28a51"
+PKG_VERSION="1618077ebde376de1638455c19b315de376d90b4"
 PKG_SHA256=""
 PKG_REV="1"
 PKG_ARCH="any"

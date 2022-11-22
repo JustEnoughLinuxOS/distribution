@@ -1,0 +1,10 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+if [ ! -e "/storage/.config/profile.d/99-mixer" ]
+then
+  set-audio esset "DAC"
+fi 
