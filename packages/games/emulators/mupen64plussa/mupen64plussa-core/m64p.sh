@@ -6,21 +6,6 @@
 
 . /etc/profile
 
-rm -rf $TMP
-mkdir -p $TMP
-
-if [[ ! -f "$GAMEDATA/custominput.ini" ]]; then
-	mkdir -p $GAMEDATA
-	cp $SHARE/default.ini $GAMEDATA/custominput.ini
-fi
-
-if [[ ! -f "$M64PCONF" ]]; then
-	mkdir -p /storage/.config/game/configs/mupen64plussa
-	cp $SHARE/mupen64plus.cfg $M64PCONF
-fi
-
-cp $M64PCONF $TMP
-
 #Emulation Station Features
 CORE="$1"
 GAME=$(echo "${2}"| sed "s#^/.*/##")
@@ -42,13 +27,27 @@ SCREENHEIGHT=$((RESA<RESB ? RESA : RESB))
 
 SET_PARAMS="--set Core[SharedDataPath]=$TMP --set Video-Rice[ResolutionWidth]=$SCREENWIDTH"
 
+cp $M64PCONF $TMP
+rm -rf $TMP
+mkdir -p $TMP
+
+if [[ ! -f "$GAMEDATA/custominput.ini" ]]; then
+	mkdir -p $GAMEDATA
+	cp $SHARE/default.ini $GAMEDATA/custominput.ini
+fi
+
+if [[ ! -f "$M64PCONF" ]]; then
+	mkdir -p /storage/.config/game/configs/mupen64plussa
+	cp $SHARE/mupen64plus.cfg $M64PCONF
+fi
+
 #Aspect Ratio
 	if [ "${ASPECT}" == "fullscreen" ]; then
 		# TODO: Set aspect ratio to fullscreen
 		SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$SCREENWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT --set Video-Glide64mk2[aspect]=2 --set Video-GLideN64[AspectRatio]=3"
 	else
 		# TODO: Set aspect ratio to 4:3
-		if [ $1 = "m64p_rice" ]; then
+		if [ "{$CORE}" == "m64p_rice" ]; then
 			GAMEWIDTH=$(((SCREENHEIGHT * 4) / 3))
 			SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$GAMEWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT"
 		else
@@ -58,7 +57,7 @@ SET_PARAMS="--set Core[SharedDataPath]=$TMP --set Video-Rice[ResolutionWidth]=$S
 
 # Native Res Factor (Upscaling)
 #UseNativeResolutionFactor
-	if [ $1 = "m64p_gliden64"]; then
+	if [ "{$CORE}" == "m64p_gliden64" ]; then
 		SET_PARAMS="$SET_PARAMS --set Video-GLideN64[UseNativeResolutionFactor]=$IRES"
 	fi
 
