@@ -3,7 +3,7 @@
 
 PKG_NAME="amiberry"
 PKG_ARCH="arm aarch64"
-PKG_VERSION="e2667f1454bdbf5a1e2b12e171ed2cdd815608a7"
+PKG_VERSION="611809edb3ac7fa7529a199f97a3b7b8d3f2544b"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/midwan/amiberry"
 PKG_URL="${PKG_SITE}.git"
