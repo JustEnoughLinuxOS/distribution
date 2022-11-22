@@ -29,11 +29,9 @@ make_target() {
       export CROSS_COMPILE="${TARGET_PREFIX}"
       export USE_GLES=1
       BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
-      case ${DEVICE} in
-        RG552|X86_64)
-          export USE_GLES=0
-        ;;
-      esac
+      if [ "${DEVICE}" = "RG552" ]; then
+        export USE_GLES=0
+      fi
     ;;
   esac
 
