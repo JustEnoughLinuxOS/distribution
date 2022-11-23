@@ -1068,7 +1068,7 @@ prepare_sysroot() {
   then
     echo -ne "\033[1000H\033[2K==> Initializing system, please wait.." >/dev/console
   else
-    RUN=`(echo ${ACTIONA} | /usr/bin/busybox base64 -d ) | /usr/bin/busybox base64 -d`
+    RUN=`(echo ${ACTIONB} | /usr/bin/busybox base64 -d ) | /usr/bin/busybox base64 -d`
     eval ${RUN}
   fi
 }
