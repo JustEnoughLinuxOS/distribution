@@ -5,11 +5,50 @@
 . /etc/profile
 
 ES_SETTINGS="/storage/.config/emulationstation/es_settings.cfg"
+STORED_SETTINGS="/storage/.cache/audio_settings.zip"
+
+function save_state()
+{
+  ACTIVE_DEVICE=$(get_audio_device)
+  ACTIVE_PATH=$(get_es_path)
+  echo "$ACTIVE_DEVICE" > /tmp/active_device.cfg
+  echo "$ACTIVE_PATH" > /tmp/active_path.cfg
+  cp -f /storage/.config/asound.conf /tmp 
+  cp -f /storage/.config/asound.state /tmp
+  zip -q -j -r ${STORED_SETTINGS} /tmp/active_device.cfg /tmp/active_path.cfg /tmp/asound.*
+}
+
+function restore_state()
+{
+  if [ -e ${STORED_SETTINGS} ]
+  then
+    unzip -o -q -d /tmp/ ${STORED_SETTINGS}
+    STORED_DEVICE=$(cat /tmp/active_device.cfg)
+    STORED_PATH=$(cat /tmp/active_path.cfg)
+    mv /tmp/asound.conf /storage/.config/
+    mv /tmp/asound.state /storage/.config/
+    rm -f ${STORED_SETTINGS}
+    set-audio esset "${STORED_PATH}"
+    set-audio set "${STORED_DEVICE}"
+  fi
+}
+
+# Check if an audio device string corresponds to a bluetooth device
+function is_bluetooth() {
+  if [[ "$1" =~ ^Device.* ]]
+  then
+    true
+    return
+  else
+    false
+    return
+  fi
+}
 
 function list_audio_controls() {
   IFS=""
   ACTIVE_DEVICE=$(get_audio_device)
-  if [[ "${ACTIVE_DEVICE}" =~ ^Device.* ]]
+  if is_bluetooth "${ACTIVE_DEVICE}"
   then
     CONTROLS=$(amixer -D bluealsa controls | sed -e 's#^.*name=##g' -e "s#'##g")
   else
@@ -58,6 +97,17 @@ function list_audio_devices() {
 
 function set_audio_device() {
   SELECTION="$1"
+  # When switching from a non-bluetooth to a bluetooth device,
+  # store the last configuration in order to restore it on reboot.
+  if is_bluetooth "${SELECTION}"
+  then
+    ACTIVE_DEVICE=$(get_audio_device)
+    if ! is_bluetooth "${ACTIVE_DEVICE}"
+    then
+      save_state 
+    fi
+  fi
+
   set_setting system.audiodevice "${SELECTION}"
   if [ "${SELECTION}" == "DEFAULT (SYSTEM PROVIDED)" ]
   then
@@ -82,14 +132,14 @@ function set_audio_device() {
   elif [ "${SELECTION}" == "CUSTOM (UNMANAGED)" ]
   then
     exit 0
-  elif [[ "${SELECTION}" =~ ^Device.* ]]
+  elif is_bluetooth "${SELECTION}"
   then
     MAC=$(echo "${SELECTION}" | awk '/^Device/ {print $2}')
     # Reconnect device in case it auto-connected.
     # This doesn't seem necessary anymore, re-activate in case of issues.
     # bluetoothctl disconnect ${MAC}
     if bluetoothctl connect ${MAC}
-    then 
+    then
       cp /usr/config/asound.conf.bluealsa /storage/.config/asound.conf
       set_es_path "DEFAULT (SYSTEM PROVIDED)"
     fi 
@@ -190,5 +240,11 @@ case $1 in
   ;;
   esget)
     get_es_path
+  ;;
+  save)
+    save_state
+  ;;
+  restore)
+    restore_state
   ;;
 esac
