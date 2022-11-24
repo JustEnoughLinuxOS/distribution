@@ -5,6 +5,7 @@
 . /etc/profile
 
 ES_SETTINGS="/storage/.config/emulationstation/es_settings.cfg"
+STORED_SETTINGS="/storage/.cache/audio_settings.zip"
 
 function save_state()
 {
@@ -14,20 +15,21 @@ function save_state()
   echo "$ACTIVE_PATH" > /tmp/active_path.cfg
   cp -f /storage/.config/asound.conf /tmp 
   cp -f /storage/.config/asound.state /tmp
-  zip -q -j -r /storage/.cache/audio_settings.zip /tmp/active_device.cfg /tmp/active_path.cfg /tmp/asound.*
+  zip -q -j -r ${STORED_SETTINGS} /tmp/active_device.cfg /tmp/active_path.cfg /tmp/asound.*
 }
 
 function restore_state()
 {
-  if [ -e /storage/.cache/audio_settings.zip ]
+  if [ -e ${STORED_SETTINGS} ]
   then
-    unzip -o -q -d /tmp/ /storage/.cache/audio_settings.zip
+    unzip -o -q -d /tmp/ ${STORED_SETTINGS}
     STORED_DEVICE=$(cat /tmp/active_device.cfg)
     STORED_PATH=$(cat /tmp/active_path.cfg)
     mv /tmp/asound.conf /storage/.config/
     mv /tmp/asound.state /storage/.config/
     set_audio_device "${STORED_DEVICE}"
     set_es_path "${STORED_PATH}"
+    rm -f ${STORED_SETTINGS}
   fi
 }
 
