@@ -27,9 +27,9 @@ function restore_state()
     STORED_PATH=$(cat /tmp/active_path.cfg)
     mv /tmp/asound.conf /storage/.config/
     mv /tmp/asound.state /storage/.config/
-    set_audio_device "${STORED_DEVICE}"
-    set_es_path "${STORED_PATH}"
     rm -f ${STORED_SETTINGS}
+    set-audio esset "${STORED_PATH}"
+    set-audio set "${STORED_DEVICE}"
   fi
 }
 
