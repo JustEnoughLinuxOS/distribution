@@ -96,6 +96,7 @@ function list_audio_devices() {
 }
 
 function set_audio_device() {
+  SELECTION="$1"
   # When switching from a non-bluetooth to a bluetooth device,
   # store the last configuration in order to restore it on reboot.
   if is_bluetooth "${SELECTION}"
@@ -107,7 +108,6 @@ function set_audio_device() {
     fi
   fi
 
-  SELECTION="$1"
   set_setting system.audiodevice "${SELECTION}"
   if [ "${SELECTION}" == "DEFAULT (SYSTEM PROVIDED)" ]
   then
