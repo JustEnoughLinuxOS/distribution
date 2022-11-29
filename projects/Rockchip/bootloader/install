@@ -3,6 +3,7 @@
 # Copyright (C) 2021-present Fewtarius
 
 PKG_RKBIN="$(get_build_dir rkbin)"
+PKG_UBOOT="$(get_build_dir u-boot)"
 source ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
 
 if [ -n "${PKG_DATAFILE}" -a -n "${PKG_LOADER}" ]; then
@@ -31,7 +32,7 @@ case "${PKG_SOC}" in
   ;;
   *)
     echo "uboot: build loader image uboot.img at ${PKG_LOAD_ADDR}..."
-    ${PKG_RKBIN}/tools/loaderimage --pack --uboot u-boot-dtb.bin uboot.img ${PKG_LOAD_ADDR} ||:
+    ${PKG_UBOOT}/tools/loaderimage --pack --uboot u-boot-dtb.bin uboot.img ${PKG_LOAD_ADDR} ||:
     cp -av uboot.img ${INSTALL}/usr/share/bootloader
   ;;
 esac
@@ -53,7 +54,7 @@ SEC=0
 PATH=trust.img
 EOF
   TROPTS="--verbose"
-  ${PKG_RKBIN}/tools/trust_merger ${TROPTS} trust.ini
+  ${PKG_UBOOT}/tools/trust_merger ${TROPTS} trust.ini
   cp -av trust.img ${INSTALL}/usr/share/bootloader
 fi
 
