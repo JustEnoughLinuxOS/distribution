@@ -19,6 +19,14 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
 fi
 
+make_target() {
+  if [ "$ARCH" == "i386" -o "$ARCH" == "x86_64" ]; then
+    make platform=unix CC=$CC CXX=$CXX AR=$AR
+  else
+    make platform=armv CC=$CC CXX=$CXX AR=$AR
+  fi
+}
+
 makeinstall_target() {
   mkdir -p $INSTALL/usr/lib/libretro
   cp mednafen_saturn_libretro.so $INSTALL/usr/lib/libretro/beetle_saturn_libretro.so
