@@ -38,7 +38,7 @@ case "${DEVICE}" in
     PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders"
   ;;
   RG552)
-    PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa dolphin slang-shaders"
+    PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa dolphin slang-shaders beetle-saturn"
   ;;
   RG503|RG353P)
     PKG_DEPENDS_TARGET+=" duckstationsa common-shaders glsl-shaders"
