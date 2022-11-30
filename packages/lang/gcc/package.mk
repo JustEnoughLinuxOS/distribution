@@ -19,7 +19,7 @@ if [ "${MOLD_SUPPORT}" = "yes" ]; then
 fi
 
 case ${TARGET_ARCH} in
-  arm|riscv64)
+  arm|aarch64|riscv64)
     OPTS_LIBATOMIC="--enable-libatomic"
     ;;
   *)
