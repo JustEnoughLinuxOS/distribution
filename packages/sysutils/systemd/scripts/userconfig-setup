@@ -13,12 +13,9 @@ done
 
 if [ ! -e "/storage/.configured" ]
 then
-  if [ -e "/usr/share/bootloader/update.sh" ]
-  then
-    # Ensure that the boot images are configured properly (Resolves boot when charging issue on the RG503 and RG353P
-    /usr/share/bootloader/update.sh &>/dev/null
-    rm -f /storage/.config/boot.hint &>/dev/null
-  fi
+  # Ensure that the boot images are configured properly (Resolves boot when charging issue on the RG503 and RG353P
+  /usr/share/bootloader/update.sh &>/dev/null
+  rm -f /storage/.config/boot.hint &>/dev/null
 
   # Copy config files, but don't overwrite.  Only run if /storage is fresh
   ## cp -iRp /usr/config/* /storage/.config/ &>/dev/null
@@ -42,7 +39,6 @@ then
   ln -sf /usr/config/splash/splash.png /storage/.config/emulationstation/resources/logo.png
 
   mkdir -p /storage/.config/modprobe.d
-  touch /storage/.configured
 fi
 
 if [ ! -e "/storage/.cache/ld.so.cache" ]

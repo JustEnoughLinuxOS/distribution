@@ -297,12 +297,6 @@ then
                         RUNTHIS='${TBASH} /usr/bin/start_dolphin_wii.sh "${ROMNAME}"'
                         fi
                 ;;
-                "switch")
-                        jslisten set "-9 yuzu-cmd"
-                        if [ "$EMU" = "yuzu" ]; then
-                        RUNTHIS='${TBASH} /usr/bin/start_yuzu.sh "${ROMNAME}"'
-                        fi
-                ;;
 		"mplayer")
 			jslisten set "mpv"
 			RUNTHIS='${TBASH} /usr/bin/mpv_video.sh "${ROMNAME}"'

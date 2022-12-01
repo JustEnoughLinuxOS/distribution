@@ -12,7 +12,7 @@ PKG_SHORTDESC="Zero config VPN. Installs on any device in minutes, manages firew
 PKG_TOOLCHAIN="manual"
 
 case ${DEVICE} in
-  RG351P|RG351V|RG351MP|RG503|RG353P)
+  RG351P|RG351V|RG351MP|RG503|RG353P|RGB20S)
     PKG_DEPENDS_TARGET+=" wireguard-linux-compat"
   ;;
 esac

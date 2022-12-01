@@ -29,3 +29,10 @@ PKG_MESON_OPTS_TARGET="-Ddefault_library=shared \
                        -Dforce_posix_threads=true \
                        -Dtests=false"
 
+post_makeinstall_target() {
+  rm -rf ${INSTALL}/usr/bin
+  rm -rf ${INSTALL}/usr/lib/gdbus-2.0
+  rm -rf ${INSTALL}/usr/lib/glib-2.0
+  rm -rf ${INSTALL}/usr/lib/installed-tests
+  rm -rf ${INSTALL}/usr/share
+}

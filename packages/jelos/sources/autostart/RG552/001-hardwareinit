@@ -1,0 +1,16 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+# Silence PWM
+echo 0 > /sys/class/pwm/${DEVICE_PWM_MOTOR}/export 
+echo 1000000 > /sys/class/pwm/${DEVICE_PWM_MOTOR}/pwm0/period 
+echo 1 > /sys/class/pwm/${DEVICE_PWM_MOTOR}/pwm0/enable 
+echo 1000000 > /sys/class/pwm/${DEVICE_PWM_MOTOR}/pwm0/duty_cycle 
+# Enable WIFI
+echo ${DEVICE_WIFI} > /sys/class/gpio/export 
+echo out > /sys/class/gpio/gpio${DEVICE_WIFI}/direction 
+echo 1 > /sys/class/gpio/gpio${DEVICE_WIFI}/value 
+fbset -g 1152 1920 1152 1920 32 

@@ -493,13 +493,6 @@ if [ $RA == 1 ]; then
 	[ "${EES}" == "1" ] && echo 'run_ahead_secondary_instance = "true"' >> ${RAAPPENDCONF} || echo 'run_ahead_secondary_instance = "false"' >> ${RAAPPENDCONF}
 fi
 
-## Audiolatency
-# Get configuration from system.cfg and set to retroarch.cfg
-get_game_setting "audiolatency"
-if [[ "${EES}" =~ ^[0-9]+$ ]] && [[ "${EES}" -gt "0" ]]; then
-	echo "audio_latency = \"${EES}\"" >> ${RAAPPENDCONF}
-fi
-
 ## D-Pad to Analogue support, option in ES is missing atm but is managed as global.analogue=1 in system.cfg (that is made by postupdate.sh)
 # Get configuration from system.cfg and set to retroarch.cfg
 get_game_setting "analogue"
