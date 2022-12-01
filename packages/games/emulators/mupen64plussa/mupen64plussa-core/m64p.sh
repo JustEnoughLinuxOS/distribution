@@ -25,12 +25,6 @@ RESB=${RESOLUTION#*x}
 SCREENWIDTH=$((RESA>=RESB ? RESA : RESB))
 SCREENHEIGHT=$((RESA<RESB ? RESA : RESB))
 
-rm -rf $TMP
-mkdir -p $TMP
-
-cp $M64PCONF $TMP
-SET_PARAMS="--set Core[SharedDataPath]=$TMP --set Video-Rice[ResolutionWidth]=$SCREENWIDTH"
-
 if [[ ! -f "$GAMEDATA/custominput.ini" ]]; then
 	mkdir -p $GAMEDATA
 	cp $SHARE/default.ini $GAMEDATA/custominput.ini
@@ -41,13 +35,19 @@ if [[ ! -f "$M64PCONF" ]]; then
 	cp $SHARE/mupen64plus.cfg $M64PCONF
 fi
 
+rm -rf $TMP
+mkdir -p $TMP
+
+cp $M64PCONF $TMP
+SET_PARAMS="--set Core[SharedDataPath]=$TMP --set Video-Rice[ResolutionWidth]=$SCREENWIDTH"
+
 #Aspect Ratio
-	if [ "${ASPECT}" == "fullscreen" ]; then
+	if [ "${ASPECT}" = "fullscreen" ]; then
 		# TODO: Set aspect ratio to fullscreen
 		SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$SCREENWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT --set Video-Glide64mk2[aspect]=2 --set Video-GLideN64[AspectRatio]=3"
 	else
 		# TODO: Set aspect ratio to 4:3
-		if [ "{$CORE}" == "m64p_rice" ]; then
+		if [ "{$CORE}" = "m64p_rice" ]; then
 			GAMEWIDTH=$(((SCREENHEIGHT * 4) / 3))			
 			SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$GAMEWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT"
 		else
@@ -56,18 +56,14 @@ fi
 	fi
 
 # Native Res Factor (Upscaling)
-	if [ "{$CORE}" == "m64p_gliden64" ]; then
-		if [ $IRES == "default"]; then
-			sed -i "/UseNativeResolutionFactor/c\UseNativeResolutionFactor = 1" /tmp/mupen64plussa/mupen64plus.cfg
-		else
-			sed -i "/UseNativeResolutionFactor/c\UseNativeResolutionFactor = $IRES" /tmp/mupen64plussa/mupen64plus.cfg
-		fi
+	if [ "{$CORE}" = "m64p_gliden64" ]; then
+		sed -i "/UseNativeResolutionFactor/c\UseNativeResolutionFactor = $IRES" /tmp/mupen64plussa/mupen64plus.cfg
 	fi
 
 # Input Config
-	if [ "${CON}" == "zlswap" ]; then
+	if [ "${CON}" = "zlswap" ]; then
 		cp $SHARE/zlswap.ini $TMP/InputAutoCfg.ini
-	elif [ "${CON}" == "custom" ]; then
+	elif [ "${CON}" = "custom" ]; then
 		cp $GAMEDATA/custominput.ini $TMP/InputAutoCfg.ini
 	else
 		# Default
@@ -76,7 +72,7 @@ fi
 
 # Show FPS
 # Get configuration from system.cfg
-	if [ "${FPS}" == "true" ]; then
+	if [ "${FPS}" = "true" ]; then
 		sed -i '/ShowFPS = (False|True)/c\ShowFPS = True' /tmp/mupen64plussa/mupen64plus.cfg
 		sed -i '/ShowFPS = [0,1]/c\ShowFPS = 1' /tmp/mupen64plussa/mupen64plus.cfg
 		sed -i '/show_fps/c\show_fps = 1' /tmp/mupen64plussa/mupen64plus.cfg
@@ -87,7 +83,7 @@ fi
 	fi
 
 # RSP
-if [ "${RSP}" == "default" ] || [ "${RSP}" == "hle" ]; then
+if [ "${RSP}" = "hle" ]; then
 	SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-hle.so"
 else
 	SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-cxd4.so"
