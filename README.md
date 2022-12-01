@@ -2,16 +2,6 @@
 #
 Just Enough Linux Operating System (JELOS) is a community developed Linux distribution for handheld gaming devices.  Our goal is to produce an operating system that has the features and capabilities that we need, and to have fun as we develop it.
 
-## Features
-* A 64bit Linux Operating System.
-* An easy to use interface using EmulationStation
-* Provides RetroArch, a variety of cores, Stand Alone Emulators, PortMaster, and ThemeMaster.
-* Supports FAT32, ExFAT, and EXT4 file systems on removable storage (slot/device #2).
-* 2.4GHz and 5GHz 802.11 A/B/G/N/AC WIFI support.
-* Online update capability for easy access to stable or development builds.
-* Support for the Anbernic WIN600, RG552, RG503, RG353P, RG353M, RG353V, RG351P, RG351M, RG351MP, RG351V, and Atari VCS.
-* Developed by a small, friendly community.
-
 ## Licenses
 JELOS is a Linux distribution that is made up of many open-source components.  Components are provided under their respective licenses.  This distribution includes components licensed for non-commercial use only.
 
@@ -42,22 +32,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-## Flashing
-* Download the latest [version of JELOS](https://github.com/JustEnoughLinuxOS/distribution/releases) (.img.gz) for your device.
-* Decompress the image.
-* Write the image to an SDCARD using an imaging tool.  Common imaging tools include [Balena Etcher](https://www.balena.io/etcher/), [Raspberry Pi Imager](https://www.raspberrypi.com/software/), and [Win32 Disk Imager](https://sourceforge.net/projects/win32diskimager/).  If you're skilled with the command line, dd works fine too.
-
-> This repository hosts stable versions of JELOS.  If you would like to install the unstable development version, please visit the [development build repository](https://github.com/JustEnoughLinuxOS/distribution-dev).
-
 ## Installation
-* x86_64 versions of JELOS include an installation tool.  This tool may be run from the boot menu or from within JELOS by switching to desktop mode and running "installer" in a terminal.
-* RG353V users should use the RG353P image, and select "DEVICE IS RG353V" from the system settings menu in EmulationStation.
-
-## Upgrading
-* Download and install the update online via the System Settings menu.
-* Download the latest [version of JELOS](https://github.com/JustEnoughLinuxOS/distribution/releases) (.tar) for your device.
-* Copy the update to your device over the network to your device's update share.
-* Reboot the device, and the update will begin automatically.
+* JELOS is a source based Linux distribution.  To install, follow BUILDING.md and then write the resulting image to your micro sd card using your favorite image writing tool.
 
 ## Network Access
 * External services are disabled by default in stable builds.  When enabled, the username for ssh and samba access is "root".  The root password is generated during every boot, it can be found in the System Settings menu.
@@ -86,5 +62,5 @@ limitations under the License.
 * [Developing and Building JELOS](https://github.com/JustEnoughLinuxOS/distribution/blob/dev/BUILDING.md)
 
 ## Credits
-Like any Linux distribution, this project is not the work of one person.  It is the work of many persons all over the world who have developed the open source bits without which this project could not exist.  Special thanks to CoreELEC, LibreELEC, Anbernic, and to developers and contributors across the ARM handheld community.
+Like any Linux distribution, this project is not the work of one person.  It is the work of many persons all over the world who have developed the open source bits without which this project could not exist.  Special thanks to CoreELEC, LibreELEC, and to developers and contributors across the ARM handheld community.
 
