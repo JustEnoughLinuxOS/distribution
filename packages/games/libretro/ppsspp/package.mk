@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="ppsspp"
-PKG_VERSION="1ae6047da9743aea8595516815755c37f76c96ae"
+PKG_VERSION="f0a905cadd0db3124a5368dc88b5ecf4a9b6eb5d"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/hrydgard/ppsspp"
 PKG_URL="https://github.com/hrydgard/ppsspp.git"
@@ -65,6 +65,15 @@ if [ "${DISPLAYSERVER}" = "wl" ]; then
 else
   PKG_CMAKE_OPTS_TARGET+=" -DUSE_WAYLAND_WSI=OFF"
 fi
+
+case ${TARGET_ARCH} in
+  arm)
+    PKG_CMAKE_OPTS_TARGET+=" -DARMV7=ON"
+  ;;
+  aarch64)
+    PKG_CMAKE_OPTS_TARGET+=" -DARM64=ON"
+  ;;
+esac
 
 PKG_CMAKE_OPTS_TARGET+="${PKG_CMAKE_OPTS_TARGET} \
                         -DUSE_SYSTEM_FFMPEG=OFF \

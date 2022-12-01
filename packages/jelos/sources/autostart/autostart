@@ -13,7 +13,7 @@ date 2>&1 >>${BOOTLOG}
 /usr/bin/show_splash intro 2>&1 >>${BOOTLOG}
 
 ### Apply device quirks
-if [ -e "/usr/bin/dmidecode" ]
+if [ -e "/usr/sbin/dmidecode" ]
 then
   QUIRK_DEVICE=$(echo "$(dmidecode -s system-manufacturer) $(dmidecode -s system-product-name)")
 else

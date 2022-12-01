@@ -4,14 +4,13 @@
 
 . /etc/profile
 
-if [ "$(cat /storage/.config/boot.hint 2>/dev/null)" = "UPDATE" ] || [ ! -e "/storage/.configured" ]
+if [[ "$(cat /storage/.config/boot.hint 2>/dev/null)" =~ UPDATE ]] && [ -e "/storage/.configured" ]
 then
   if [ -e "/usr/share/post-update" ]
   then
     /usr/share/post-update >/var/log/upgrade.log 2>&1
   fi
   rm /storage/.config/boot.hint
-  touch /storage/.configured
 else
   echo "No update hint found." >/var/log/upgrade.log 2>&1
 fi
