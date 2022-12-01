@@ -48,16 +48,20 @@ fi
 	else
 		# TODO: Set aspect ratio to 4:3
 		if [ "{$CORE}" == "m64p_rice" ]; then
-			GAMEWIDTH=((($SCREENHEIGHT * 4) / 3))
+			GAMEWIDTH=$(((SCREENHEIGHT * 4) / 3))			
 			SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$GAMEWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT"
 		else
-		SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$SCREENWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT --set Video-Glide64mk2[aspect]=0 --set Video-GLideN64[AspectRatio]=1"
+			SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$SCREENWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT --set Video-Glide64mk2[aspect]=0 --set Video-GLideN64[AspectRatio]=1"
 		fi
 	fi
 
 # Native Res Factor (Upscaling)
 	if [ "{$CORE}" == "m64p_gliden64" ]; then
-		sed -i "/UseNativeResolutionFactor/c\UseNativeResolutionFactor = $IRES" /storage/.config/game/configs/mupen64plussa/mupen64plus.cfg
+		if [ $IRES == "default"]; then
+			sed -i "/UseNativeResolutionFactor/c\UseNativeResolutionFactor = 1" /tmp/mupen64plussa/mupen64plus.cfg
+		else
+			sed -i "/UseNativeResolutionFactor/c\UseNativeResolutionFactor = $IRES" /tmp/mupen64plussa/mupen64plus.cfg
+		fi
 	fi
 
 # Input Config
@@ -73,13 +77,13 @@ fi
 # Show FPS
 # Get configuration from system.cfg
 	if [ "${FPS}" == "true" ]; then
-		sed -i '/ShowFPS = (False|True)/c\ShowFPS = True' /storage/.config/game/configs/mupen64plussa/mupen64plus.cfg
-		sed -i '/ShowFPS = [0,1]/c\ShowFPS = 1' /storage/.config/game/configs/mupen64plussa/mupen64plus.cfg
-		sed -i '/show_fps/c\show_fps = 1' /storage/.config/game/configs/mupen64plussa/mupen64plus.cfg
+		sed -i '/ShowFPS = (False|True)/c\ShowFPS = True' /tmp/mupen64plussa/mupen64plus.cfg
+		sed -i '/ShowFPS = [0,1]/c\ShowFPS = 1' /tmp/mupen64plussa/mupen64plus.cfg
+		sed -i '/show_fps/c\show_fps = 1' /tmp/mupen64plussa/mupen64plus.cfg
 	else
-		sed -i '/ShowFPS = (False|True)/c\ShowFPS = False' /storage/.config/game/configs/mupen64plussa/mupen64plus.cfg
-		sed -i '/ShowFPS = [0,1]/c\ShowFPS = 0' /storage/.config/game/configs/mupen64plussa/mupen64plus.cfg
-		sed -i '/show_fps/c\show_fps = 0' /storage/.config/game/configs/mupen64plussa/mupen64plus.cfg
+		sed -i '/ShowFPS = (False|True)/c\ShowFPS = False' /tmp/mupen64plussa/mupen64plus.cfg
+		sed -i '/ShowFPS = [0,1]/c\ShowFPS = 0' /tmp/mupen64plussa/mupen64plus.cfg
+		sed -i '/show_fps/c\show_fps = 0' /tmp/mupen64plussa/mupen64plus.cfg
 	fi
 
 # RSP

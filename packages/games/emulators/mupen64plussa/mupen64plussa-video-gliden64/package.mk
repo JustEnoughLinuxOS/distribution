@@ -40,9 +40,8 @@ make_target() {
   export CROSS_COMPILE="${TARGET_PREFIX}"
   export V=1
   export VC=0
-  export CXXFLAGS="${CXXFLAGS} -pthread"
   ./src/getRevision.sh
-  cmake ${PKG_MAKE_OPTS_TARGET} -DMUPENPLUSAPI=On -DGLIDEN64_BUILD_TYPE=Release -S src -B projects/cmake
+  cmake ${PKG_MAKE_OPTS_TARGET} -DMUPENPLUSAPI=On -DGLIDEN64_BUILD_TYPE=Release -DCMAKE_C_COMPILER="${CC}" -DCMAKE_CXX_COMPILER="${CXX}" -DCMAKE_C_FLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS} -pthread" -S src -B projects/cmake
   make clean -C projects/cmake
   make -Wno-unused-variable -C projects/cmake
 }
