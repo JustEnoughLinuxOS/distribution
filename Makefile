@@ -23,7 +23,7 @@ distclean:
 src-pkg:
 	tar cvJf sources.tar.xz sources .stamps
 
-world: RG552 RG503 RG353P RG351P RG351V RG351MP handheld
+world: RG552 RG503 RG353P handheld
 
 handheld:
 	DEVICE_ROOT=handheld PROJECT=PC DEVICE=handheld ARCH=x86_64 ./scripts/build_distro
