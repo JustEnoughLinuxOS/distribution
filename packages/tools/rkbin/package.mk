@@ -9,7 +9,7 @@ PKG_SITE="https://github.com/JustEnoughLinuxOS/rkbin"
 PKG_URL="${PKG_SITE}.git"
 PKG_LONGDESC="rkbin: Rockchip Firmware and Tool Binaries"
 PKG_TOOLCHAIN="manual"
-if [[ "${DEVICE}" =~ RG351 ]]
+if [[ "${DEVICE}" =~ RG351 ]] || [[ "${DEVICE}" =~ RGB20S ]]
 then
   PKG_VERSION="73945d35fd3a7fe1c7037209e36dd5a0b32c5560"
 fi

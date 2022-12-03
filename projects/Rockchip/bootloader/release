@@ -33,3 +33,10 @@ for dtb in $(find ${LINUX_DTS_DIR} -name "*.dtb") ; do
     cp -a $dtb ${RELEASE_DIR}/3rdparty/bootloader
   fi
 done
+
+if [ -n "${ROOT_UBOOT_DTB}" ]; then
+  UBOOT_DTB_FILE=$(get_build_dir u-boot)/arch/arm/dts/${ROOT_UBOOT_DTB}.dtb
+  if [ -f $UBOOT_DTB_FILE ]; then
+    cp -a $UBOOT_DTB_FILE ${RELEASE_DIR}/3rdparty/bootloader
+  fi
+fi

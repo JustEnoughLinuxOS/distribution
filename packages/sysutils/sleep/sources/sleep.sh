@@ -18,7 +18,7 @@ case $1 in
     fi
 
     # RG351x devices are notorious for losing USB when they sleep.
-    if [[ "${HW_DEVICE}" =~ RG351 ]]
+    if [[ "${HW_DEVICE}" =~ RG351 ]] || [[ "${HW_DEVICE}" =~ RGB20S ]]
     then
       modprobe -r dwc2
     fi
@@ -34,7 +34,7 @@ case $1 in
   post)
     alsactl restore -f /storage/.config/asound.state
 
-    if [[ "${HW_DEVICE}" =~ RG351 ]]
+    if [[ "${HW_DEVICE}" =~ RG351 ]] || [[ "${HW_DEVICE}" =~ RGB20S ]]
     then
       modprobe -i dwc2
     fi

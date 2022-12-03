@@ -29,8 +29,9 @@
     KERNEL_TARGET="Image"
     BOOTLOADER="u-boot"
     PARTITION_TABLE="msdos"
-    DEVICE_DTB=("rk3326-rg351mp-linux")
+    DEVICE_DTB=("rk3326-rg351mp-linux" "rg351mp-uboot")
     UBOOT_DTB="${DEVICE_DTB[0]}"
+    ROOT_UBOOT_DTB="${DEVICE_DTB[1]}"
     UBOOT_CONFIG="odroidgoa_defconfig"
     PKG_SOC="px30"
     PKG_DATAFILE="$PKG_RKBIN/bin/rk33/rk3326_ddr_333MHz_v1.15.bin"
