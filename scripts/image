@@ -135,14 +135,22 @@ echo "${TARGET_VERSION}" > ${INSTALL}/etc/release
 cat <<EOF >${INSTALL}/etc/os-release
 OS_NAME="${DISTRONAME}"
 OS_VERSION="${OS_VERSION}"
-HW_DEVICE="${DEVICE}"
-HW_ARCH="${ARCH}"
-HW_CPU="${HW_CPU}"
+GIT_ORGANIZATION="${GIT_ORGANIZATION}"
+GIT_REPO="${GIT_REPO}"
 HOME_URL="${HOME_URL}"
 BUILD_ID="${GIT_HASH}"
 BUILD_BRANCH="$(git branch --show-current)"
 BUILD_DATE="${BUILD_DATE}"
+HW_DEVICE="${DEVICE}"
+HW_ARCH="${ARCH}"
 EOF
+
+if [ -zn "${HW_CPU}" ]
+then
+  cat <<EOF >>${INSTALL}/etc/os-release
+HW_CPU="${HW_CPU}"
+EOF
+fi
 
 # Add release notes / changelog
 
