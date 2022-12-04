@@ -127,3 +127,13 @@ then
   echo "Fix asound.state." >>${LOG}
   cp /usr/config/asound.state /storage/.config/asound.state
 fi
+
+# Disable PCSX2SA auto update check
+if [ -e "/storage/.config/PCSX2/inis/PCSX2.ini" ] && \
+   [ ! "$(grep -i AutoUpdater /storage/.config/PCSX2/inis/PCSX2.ini)" ]
+then
+  cat <<EOF >>/storage/.config/PCSX2/inis/PCSX2.ini
+[AutoUpdater]
+CheckAtStartup = false
+EOF
+fi
