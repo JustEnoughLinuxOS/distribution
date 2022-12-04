@@ -145,7 +145,7 @@ HW_DEVICE="${DEVICE}"
 HW_ARCH="${ARCH}"
 EOF
 
-if [ -zn "${HW_CPU}" ]
+if [ -n "${HW_CPU}" ]
 then
   cat <<EOF >>${INSTALL}/etc/os-release
 HW_CPU="${HW_CPU}"
