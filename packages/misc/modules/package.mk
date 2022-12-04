@@ -22,10 +22,16 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/config/modules
   cp -rf ${PKG_DIR}/sources/* ${INSTALL}/usr/config/modules
   chmod 0755 ${INSTALL}/usr/config/modules/*
+}
+
+post_makeinstall_target() {
   case ${ARCH} in
     x86_64)
-      rm -f "${INSTALL}/usr/config/*32bit*"
-      rm -f "${INSTALL}/usr/config/*Master*"
+      rm -f "${INSTALL}/usr/config/modules/*32bit*"
+      rm -f "${INSTALL}/usr/config/modules/*Master*"
+    ;;
+    *)
+      rm -f "${INSTALL}/usr/config/modules/Install*"
     ;;
   esac
 }

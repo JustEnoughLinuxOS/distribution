@@ -39,6 +39,19 @@
 		<thumbnail>./downloaded_images/rclone-thumb.png</thumbnail>
 		<image>./downloaded_images/rclone-back.png</image>
 	</game>
+
+        <game>
+                <path>./Install JELOS.sh</path>
+                <name>Install JELOS</name>
+                <desc>Install JELOS to local storage</desc>
+                <developer>JELOS</developer>
+                <publisher>JELOS</publisher>
+                <rating>1.0</rating>
+                <releasedate>2022</releasedate>
+                <genre>Script</genre>
+                <thumbnail>./downloaded_images/jelos-thumb.png</thumbnail>
+                <image>./downloaded_images/jelos-image.png</image>
+        </game>
 	
 	<game>
 		<path>./PortMaster.sh</path>

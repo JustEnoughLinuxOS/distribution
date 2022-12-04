@@ -174,6 +174,7 @@ EOF
 
   if [[ "${DEVICE}" =~ handheld ]]
   then
+    sed -i "s#system.automount=1#system.automount=0#g" ${INSTALL}/usr/config/system/configs/system.cfg
     sed -i "s#fstrim.enabled=0#fstrim.enabled=1#g" ${INSTALL}/usr/config/system/configs/system.cfg
     sed -i "s#3do.cpugovernor=performance#3do.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
     sed -i "s#arcade.cpugovernor=performance#arcade.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg

@@ -115,20 +115,9 @@ if [ "${BOOTLOADER}" = "syslinux" ]; then
   # create bootloader configuration
   echo "image: creating bootloader configuration..."
   cat << EOF > "${LE_TMP}/syslinux.cfg"
-SAY ${DISTRO} - Boot options...
-SAY
-SAY installer: permanently installs ${DISTRO} to HDD/SSD
-SAY run: boots ${DISTRO} from this device (default)
-SAY
-SAY Booting in "run" mode in 5 seconds...
-SAY
 DEFAULT run
-TIMEOUT 50
-PROMPT 1
-
-LABEL installer
-  KERNEL /${KERNEL_NAME}
-  APPEND boot=UUID=${UUID_SYSTEM} installer systemd.debug_shell vga=current ${EXTRA_CMDLINE}
+TIMEOUT 0
+PROMPT 0
 
 LABEL run
   KERNEL /${KERNEL_NAME}
