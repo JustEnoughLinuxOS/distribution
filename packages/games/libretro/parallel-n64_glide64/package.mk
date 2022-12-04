@@ -3,7 +3,6 @@
 
 PKG_NAME="parallel-n64_glide64"
 PKG_VERSION="a03fdcba6b2e9993f050b50112f597ce2f44fa2c"
-PKG_SHA256=""
 PKG_REV="2"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/parallel-n64"

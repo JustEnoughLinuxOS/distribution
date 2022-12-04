@@ -16,7 +16,7 @@
 # )
 
 BACKUPFOLDER="/storage/roms/backup"
-BACKUPFILE="${BACKUPFOLDER}/JELOS_BACKUP.zip"
+BACKUPFILE="${BACKUPFOLDER}/${DISTRO}_BACKUP.zip"
 mkdir -p ${BACKUPFOLDER}
 
 DEFAULT=(
@@ -57,7 +57,7 @@ case "${1}" in
         if [ -f ${BACKUPFILE} ]
         then
             TODAY=`date +%y-%m-%d_%H_%M_%S`
-            ARCHIVEFILENAME="ARCHIVED_JELOS_BACKUP-${TODAY}.zip"
+            ARCHIVEFILENAME="ARCHIVED_${DISTRO}_BACKUP-${TODAY}.zip"
             mv ${BACKUPFILE} "${BACKUPFOLDER}/${ARCHIVEFILENAME}"
         fi
         [ -f "${BACKUPFILE}" ] && rm "${BACKUPFILE}"
