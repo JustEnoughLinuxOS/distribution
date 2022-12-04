@@ -89,7 +89,7 @@ Building JELOS is easy, the fastest and most recommended method is to use Docker
 |RG351P||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG351P```|
 |RG351V|RG351P|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-351V```|
 |RG351MP|RG351P|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG351MP```|
-|x86_64||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-X86_64```|
+|handheld||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-handheld```|
 |ALL DEVICES||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-world```|
 
 > Devices that list a dependency require the dependency to be built first as that build will be used as the root of the device you are building.
