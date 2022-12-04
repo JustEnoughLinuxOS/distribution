@@ -1,5 +1,5 @@
   # kernel command line
-    EXTRA_CMDLINE="quiet ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
+    EXTRA_CMDLINE="quiet console=tty0 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
 
   # Partition label
     PARTITION_TABLE="msdos"
@@ -49,6 +49,9 @@
   # for a list of additinoal drivers see packages/linux-driver-addons
   # Space separated list is supported,
     DRIVER_ADDONS=""
+
+  # debug tty path
+    DEBUG_TTY="/dev/ttyFIQ0"
 
   # build and install PulseAudio support (yes / no)
     PULSEAUDIO_SUPPORT="yes"
