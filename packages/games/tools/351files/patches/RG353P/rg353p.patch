@@ -1,25 +1,23 @@
 diff -rupN 351Files.orig/Makefile 351Files/Makefile
 --- 351Files.orig/Makefile	2022-06-18 17:50:00.300183649 -0400
 +++ 351Files/Makefile	2022-06-18 17:53:38.851801772 -0400
-@@ -1,5 +1,7 @@
+@@ -1,5 +1,6 @@
  TARGET = 351Files
  
 +# DEVICE ?= RG353P
-+# DEVICE ?= RGB20S
  # DEVICE ?= RG351P
  # DEVICE ?= RG351V
  # DEVICE ?= RG351MP
 diff -rupN 351Files.orig/Makefile.orig 351Files/Makefile.orig
 --- 351Files.orig/Makefile.orig	1969-12-31 19:00:00.000000000 -0500
 +++ 351Files/Makefile.orig	2022-06-18 17:49:55.532191964 -0400
-@@ -0,0 +1,33 @@
+@@ -0,0 +1,32 @@
 +TARGET = 351Files
 +
 +# DEVICE ?= RG351P
 +# DEVICE ?= RG351V
 +# DEVICE ?= RG351MP
 +# DEVICE ?= RGB10
-+# DEVICE ?= RGB20S
 +# DEVICE ?= RK2020
 +# DEVICE ?= CHI
 +DEVICE ?= PC
