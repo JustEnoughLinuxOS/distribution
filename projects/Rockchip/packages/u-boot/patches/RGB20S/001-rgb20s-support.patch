@@ -1,0 +1,1205 @@
+diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
+index 1dacb095a1..d897fee6fd 100644
+--- a/arch/arm/dts/Makefile
++++ b/arch/arm/dts/Makefile
+@@ -50,9 +50,7 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += \
+ 	rk3399-puma-ddr1600.dtb \
+ 	rk3399-puma-ddr1866.dtb \
+ 	rv1108-evb.dtb \
+-	rg351p-uboot.dtb \
+-	rg351v-uboot.dtb \
+-	rg351mp-uboot.dtb
++	rgb20s-uboot.dtb
+ dtb-$(CONFIG_ARCH_MESON) += \
+ 	meson-gxbb-odroidc2.dtb
+ dtb-$(CONFIG_TEGRA) += tegra20-harmony.dtb \
+diff --git a/arch/arm/dts/odroidgoa.dts b/arch/arm/dts/odroidgoa.dts
+index 30b6e69b59..115f70d31c 100644
+--- a/arch/arm/dts/odroidgoa.dts
++++ b/arch/arm/dts/odroidgoa.dts
+@@ -10,8 +10,8 @@
+ #include <dt-bindings/input/input.h>
+ 
+ / {
+-	model = "Rockchip RK3326 RG351 Series";
+-	compatible = "rockchip,rg351mp", "rockchip,rk3326";
++	model = "Rockchip RK3326 RGB20S Series";
++	compatible = "rockchip,rgb20s", "rockchip,rk3326";
+ 
+ 	backlight: backlight {
+ 		compatible = "pwm-backlight";
+diff --git a/arch/arm/dts/rgb20s-uboot.dts b/arch/arm/dts/rgb20s-uboot.dts
+new file mode 100644
+index 0000000000..0174bf3438
+--- /dev/null
++++ b/arch/arm/dts/rgb20s-uboot.dts
+@@ -0,0 +1,968 @@
++/*
++ * (C) Copyright 2019 Hardkernel Co., Ltd
++ *
++ * SPDX-License-Identifier:     GPL-2.0+
++ */
++
++/dts-v1/;
++#include <dt-bindings/display/drm_mipi_dsi.h>
++#include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/input/input.h>
++#include <dt-bindings/pinctrl/rockchip.h>
++#include "px30.dtsi"
++#include "rk3326.dtsi"
++#include "rk3326-linux.dtsi"
++
++/ {
++	model = "RGB20S for linux based on Rockchip rk3326";
++	compatible = "rockchip,rk3326-rgb20s-linux", "rockchip,rk3326";
++
++	chosen {
++                bootargs = "";
++	};
++
++	fiq-debugger {
++		compatible = "rockchip,fiq-debugger";
++		rockchip,serial-id = <2>;
++		rockchip,wake-irq = <0>;
++		/* If enable uart uses irq instead of fiq */
++		rockchip,irq-mode-enable = <0>;
++		rockchip,baudrate = <115200>;  /* Only 115200 and 1500000 */
++		interrupts = <GIC_SPI 127 IRQ_TYPE_LEVEL_LOW>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&uart2m1_xfer>;
++		status = "okay";
++	};
++
++	leds: gpio_leds {
++		compatible = "gpio-leds";
++		status = "okay";
++
++		/* Blue LED : GPIO0_C1 */
++		heartbeat {
++			label = "blue:heartbeat";
++			gpios = <&gpio0 RK_PC1 GPIO_ACTIVE_HIGH>;
++			default-state = "off";
++		};
++
++		battery {
++			label = "battery_low";
++			gpios = <&gpio2 RK_PB5 GPIO_ACTIVE_LOW>;
++			default-state = "on";
++		};
++	};
++
++	backlight: backlight {
++		compatible = "pwm-backlight";
++		pwms = <&pwm1 0 62745 0>;
++		brightness-levels = <
++			  2   3   4   5   6   7
++			  8   9  10  11  12  13  14  15
++			 16  17  18  19  20  21  22  23
++			 24  25  26  27  28  29  30  31
++			 32  33  34  35  36  37  38  39
++			 40  41  42  43  44  45  46  47
++			 48  49  50  51  52  53  54  55
++			 56  57  58  59  60  61  62  63
++			 64  65  66  67  68  69  70  71
++			 72  73  74  75  76  77  78  79
++			 80  81  82  83  84  85  86  87
++			 88  89  90  91  92  93  94  95
++			 96  97  98  99 100 101 102 >;
++		default-brightness-level = <51>; /* default 50% */
++	};
++
++	rk817-sound {
++		compatible = "simple-audio-card";
++		simple-audio-card,format = "i2s";
++		simple-audio-card,name = "rockchip,rk817-codec";
++		simple-audio-card,mclk-fs = <256>;
++		simple-audio-card,widgets =
++			"Microphone", "Mic Jack",
++			"Headphone", "Headphone Jack";
++		simple-audio-card,routing =
++			"MIC_IN", "Mic Jack",
++			/*"IN1P", "Mic Jack",*/
++			"Headphone Jack", "HPOL",
++			"Headphone Jack", "HPOR";
++		simple-audio-card,hp-det-gpio = <&gpio2 RK_PC6 GPIO_ACTIVE_HIGH>;
++		simple-audio-card,codec-hp-det = <1>;
++		simple-audio-card,cpu {
++			sound-dai = <&i2s1_2ch>;
++		};
++		simple-audio-card,codec {
++			sound-dai = <&rk817_codec>;
++		};
++	};
++
++	vccsys: vccsys {
++		compatible = "regulator-fixed";
++		regulator-name = "vcc3v8_sys";
++		regulator-always-on;
++		regulator-min-microvolt = <3800000>;
++		regulator-max-microvolt = <3800000>;
++	};
++
++	charge-animation {
++		compatible = "rockchip,uboot-charge";
++		status = "okay";
++
++		rockchip,uboot-charge-on = <1>;
++		rockchip,android-charge-on = <0>;
++		rockchip,uboot-exit-charge-level = <0>;
++		rockchip,uboot-exit-charge-voltage = <3090>;
++		rockchip,screen-on-voltage = <3045>;
++		rockchip,uboot-low-power-voltage = <3055>;
++		/* turn off screen only, no suspend */
++		rockchip,system-suspend = <0>;
++		/* auto screen-off in 10 seconds */
++		rockchip,auto-off-screen-interval = <10>;
++		/* no auto wake-up */
++		rockchip,auto-wakeup-interval = <0>;
++		rockchip,auto-wakeup-screen-invert = <1>;
++	};
++};
++
++
++&bus_apll {
++	bus-supply = <&vdd_logic>;
++	status = "okay";
++};
++
++&cpu0 {
++	cpu-supply = <&vdd_arm>;
++};
++
++&cpu0_opp_table {
++	rockchip,avs = <1>;
++
++	/* bin scaling clock 1.296MHz */
++	rockchip,bin-scaling-sel = <
++		0               13
++		1               13
++	>;
++
++	/delete-node/ opp-1416000000;
++};
++
++&display_subsystem {
++	status = "okay";
++};
++
++&dsi {
++	status = "okay";
++
++	panel@0 {
++		compatible = "elida,kd35t133", "simple-panel-dsi";
++		reg = <0>;
++
++		/* pwm1 backlight */
++		backlight = <&backlight>;
++		/* RK817 LDO7 */
++		backlight-supply = <&vcc_backlight>;
++		/* RK817 LDO8 */
++		power-supply = <&vcc_lcd>;
++
++		/* Rev 0.2 LCD reset gpio GPIO3.C0 */
++		reset-gpios = <&gpio3 RK_PC0 GPIO_ACTIVE_LOW>;
++
++		prepare-delay-ms = <2>;
++		reset-delay-ms = <1>;
++		init-delay-ms = <20>;
++		enable-delay-ms = <120>;
++		disable-delay-ms = <50>;
++		unprepare-delay-ms = <20>;
++
++		/* LCD size */
++		width-mm = <52>;
++		height-mm = <70>;
++
++		dsi,flags = <(MIPI_DSI_MODE_VIDEO           |
++			      MIPI_DSI_MODE_VIDEO_BURST     |
++			      MIPI_DSI_MODE_LPM             |
++			      MIPI_DSI_MODE_EOT_PACKET)>;
++
++		dsi,format = <MIPI_DSI_FMT_RGB888>;
++		dsi,lanes = <4>;
++		/*
++			- panel-init-sequence data description -
++			  mipi_cmd, delay(ms), len, lcd_cmd, lcd_data...
++
++			- mipi_cmd description -
++			  05 : MIPI_DSI_SHORT_WRITE
++			  15 : MIPI_DSI_SHORT_WRITE_PARAM
++			  39 : MIPI_DSI_LONG_WRITE		
++		*/
++		panel-init-sequence = [
++			15 00 02 FF 30
++			15 00 02 FF 52
++			15 00 02 FF 01
++			15 00 02 E3 00
++			15 00 02 40 0A
++			15 00 02 03 40
++			15 00 02 04 00
++			15 00 02 05 03
++			15 00 02 24 12
++			15 00 02 25 1E
++			15 00 02 26 28
++			15 00 02 27 52
++			15 00 02 28 57
++			15 00 02 29 01
++			15 00 02 2A DF
++			15 00 02 38 9C
++			15 00 02 39 A7
++			15 00 02 3A 53
++			15 00 02 44 00
++			15 00 02 49 3C
++			15 00 02 59 FE
++			15 00 02 5C 00
++			15 00 02 91 77
++			15 00 02 92 77
++			15 00 02 A0 55
++			15 00 02 A1 50
++			15 00 02 A4 9C
++			15 00 02 A7 02
++			15 00 02 A8 01
++			15 00 02 A9 01
++			15 00 02 AA FC
++			15 00 02 AB 28
++			15 00 02 AC 06
++			15 00 02 AD 06
++			15 00 02 AE 06
++			15 00 02 AF 03
++			15 00 02 B0 08
++			15 00 02 B1 26
++			15 00 02 B2 28
++			15 00 02 B3 28
++			15 00 02 B4 33
++			15 00 02 B5 08
++			15 00 02 B6 26
++			15 00 02 B7 08
++			15 00 02 B8 26
++			15 00 02 FF 30
++			15 00 02 FF 52
++			15 00 02 FF 02
++			15 00 02 B0 0B
++			15 00 02 B1 16
++			15 00 02 B2 17
++			15 00 02 B3 2C
++			15 00 02 B4 32
++			15 00 02 B5 3B
++			15 00 02 B6 29
++			15 00 02 B7 40
++			15 00 02 B8 0D
++			15 00 02 B9 05
++			15 00 02 BA 12
++			15 00 02 BB 10
++			15 00 02 BC 12
++			15 00 02 BD 15
++			15 00 02 BE 19
++			15 00 02 BF 0E
++			15 00 02 C0 16
++			15 00 02 C1 0A
++			15 00 02 D0 0C
++			15 00 02 D1 17
++			15 00 02 D2 14
++			15 00 02 D3 2E
++			15 00 02 D4 32
++			15 00 02 D5 3C
++			15 00 02 D6 22
++			15 00 02 D7 3D
++			15 00 02 D8 0D
++			15 00 02 D9 07
++			15 00 02 DA 13
++			15 00 02 DB 13
++			15 00 02 DC 11
++			15 00 02 DD 15
++			15 00 02 DE 19
++			15 00 02 DF 10
++			15 00 02 E0 17
++			15 00 02 E1 0A
++			15 00 02 FF 30
++			15 00 02 FF 52
++			15 00 02 FF 03
++			15 00 02 00 2A
++			15 00 02 01 2A
++			15 00 02 02 2A
++			15 00 02 03 2A
++			15 00 02 04 61
++			15 00 02 05 80
++			15 00 02 06 C7
++			15 00 02 07 01
++			15 00 02 08 82
++			15 00 02 09 83
++			15 00 02 30 2A
++			15 00 02 31 2A
++			15 00 02 32 2A
++			15 00 02 33 2A
++			15 00 02 34 61
++			15 00 02 35 C5
++			15 00 02 36 80
++			15 00 02 37 23
++			15 00 02 40 82
++			15 00 02 41 83
++			15 00 02 42 80
++			15 00 02 43 81
++			15 00 02 44 11
++			15 00 02 45 E6
++			15 00 02 46 E5
++			15 00 02 47 11
++			15 00 02 48 E8
++			15 00 02 49 E7
++			15 00 02 50 02
++			15 00 02 51 01
++			15 00 02 52 04
++			15 00 02 53 03
++			15 00 02 54 11
++			15 00 02 55 EA
++			15 00 02 56 E9
++			15 00 02 57 11
++			15 00 02 58 EC
++			15 00 02 59 EB
++			15 00 02 7E 02
++			15 00 02 7F 80
++			15 00 02 E0 5A
++			15 00 02 B1 00
++			15 00 02 B4 0E
++			15 00 02 B5 0F
++			15 00 02 B6 04
++			15 00 02 B7 07
++			15 00 02 B8 06
++			15 00 02 B9 05
++			15 00 02 BA 0F
++			15 00 02 C7 00
++			15 00 02 CA 0E
++			15 00 02 CB 0F
++			15 00 02 CC 04
++			15 00 02 CD 07
++			15 00 02 CE 06
++			15 00 02 CF 05
++			15 00 02 D0 0F
++			15 00 02 81 0F
++			15 00 02 84 0E
++			15 00 02 85 0F
++			15 00 02 86 07
++			15 00 02 87 04
++			15 00 02 88 05
++			15 00 02 89 06
++			15 00 02 8A 00
++			15 00 02 97 0F
++			15 00 02 9A 0E
++			15 00 02 9B 0F
++			15 00 02 9C 07
++			15 00 02 9D 04
++			15 00 02 9E 05
++			15 00 02 9F 06
++			15 00 02 A0 00
++			15 00 02 FF 30
++			15 00 02 FF 52
++			15 00 02 FF 02
++			15 00 02 01 01
++			15 00 02 02 DA
++			15 00 02 03 BA
++			15 00 02 04 A8
++			15 00 02 05 9A
++			15 00 02 06 70
++			15 00 02 07 FF
++			15 00 02 08 91
++			15 00 02 09 90
++			15 00 02 0A FF
++			15 00 02 0B 8F
++			15 00 02 0C 60
++			15 00 02 0D 58
++			15 00 02 0E 48
++			15 00 02 0F 38
++			15 00 02 10 2B
++			15 00 02 FF 30
++			15 00 02 FF 52
++			15 00 02 FF 00
++			15 00 02 36 02
++			15 00 02 3A 70
++			05 C8 01 11
++			05 0A 01 29
++		];
++
++		/* 28: DisplayOff */
++		/* 10: SleepIn */
++		panel-exit-sequence = [
++			05 14 01 28
++			05 0A 01 10
++		];
++
++		display-timings {
++			native-mode = <&timing0>;
++
++			timing0: timing0 {
++				clock-frequency = <26400000>;
++				hactive = <640>;
++				vactive = <480>;
++				hfront-porch = <119>;
++				hsync-len = <2>;
++				hback-porch = <119>;
++				vfront-porch = <13>;
++				vsync-len = <2>;
++				vback-porch = <5>;
++				hsync-active = <0>;
++				vsync-active = <0>;
++				de-active = <0>;
++				pixelclk-active = <0>;
++			};
++		};
++	};
++};
++&dsi_in_vopb {
++	status = "okay";
++};
++
++&route_dsi {
++	connect = <&vopb_out_dsi>;
++	status = "okay";
++};
++
++&dfi {
++	status = "okay";
++};
++
++&dmc {
++	center-supply = <&vdd_logic>;
++	status = "okay";
++};
++
++&emmc {
++	status = "disabled";
++};
++
++
++&sfc {
++	status = "disabled";
++};
++
++&gpu {
++	mali-supply = <&vdd_logic>;
++	status = "okay";
++};
++
++&i2c0 {
++	status = "okay";
++	clock-frequency = <400000>;
++	i2c-scl-rising-time-ns = <280>;
++	i2c-scl-falling-time-ns = <16>;
++
++	rk817: pmic@20 {
++		compatible = "rockchip,rk817";
++		reg = <0x20>;
++		interrupt-parent = <&gpio0>;
++		interrupts = <10 IRQ_TYPE_LEVEL_LOW>;
++		pinctrl-names = "default", "pmic-sleep",
++				"pmic-power-off", "pmic-reset";
++		pinctrl-0 = <&pmic_int>;
++		pinctrl-1 = <&soc_slppin_slp>, <&rk817_slppin_slp>;
++		pinctrl-2 = <&soc_slppin_gpio>, <&rk817_slppin_pwrdn>;
++		pinctrl-3 = <&soc_slppin_rst>, <&rk817_slppin_rst>;
++		rockchip,system-power-controller;
++		wakeup-source;
++		#clock-cells = <1>;
++		clock-output-names = "rk808-clkout1", "rk808-clkout2";
++		//fb-inner-reg-idxs = <2>;
++
++		/* 1: rst regs (default in codes), 0: rst the pmic */
++		pmic-reset-func = <1>;
++
++		vcc1-supply = <&vccsys>;
++		vcc2-supply = <&vccsys>;
++		vcc3-supply = <&vccsys>;
++		vcc4-supply = <&vccsys>;
++		vcc5-supply = <&vccsys>;
++		vcc6-supply = <&vccsys>;
++		vcc7-supply = <&vccsys>;
++		vcc8-supply = <&vccsys>;
++		vcc9-supply = <&dcdc_boost>;
++
++		pwrkey {
++			status = "okay";
++		};
++
++		pinctrl_rk8xx: pinctrl_rk8xx {
++			gpio-controller;
++			#gpio-cells = <2>;
++
++			rk817_ts_gpio1: rk817_ts_gpio1 {
++				pins = "gpio_ts";
++				function = "pin_fun1";
++				/* output-low; */
++				/* input-enable; */
++			};
++
++			rk817_gt_gpio2: rk817_gt_gpio2 {
++				pins = "gpio_gt";
++				function = "pin_fun1";
++			};
++
++			rk817_pin_ts: rk817_pin_ts {
++				pins = "gpio_ts";
++				function = "pin_fun0";
++			};
++
++			rk817_pin_gt: rk817_pin_gt {
++				pins = "gpio_gt";
++				function = "pin_fun0";
++			};
++
++			rk817_slppin_null: rk817_slppin_null {
++				pins = "gpio_slp";
++				function = "pin_fun0";
++			};
++
++			rk817_slppin_slp: rk817_slppin_slp {
++				pins = "gpio_slp";
++				function = "pin_fun1";
++			};
++
++			rk817_slppin_pwrdn: rk817_slppin_pwrdn {
++				pins = "gpio_slp";
++				function = "pin_fun2";
++			};
++
++			rk817_slppin_rst: rk817_slppin_rst {
++				pins = "gpio_slp";
++				function = "pin_fun3";
++			};
++		};
++
++		regulators {
++			vdd_logic: DCDC_REG1 {
++				regulator-always-on;
++				regulator-boot-on;
++				regulator-min-microvolt = <1000000>;
++				regulator-max-microvolt = <1100000>;
++				regulator-ramp-delay = <6001>;
++				regulator-initial-mode = <0x2>;
++				regulator-name = "vdd_logic";
++				regulator-state-mem {
++					regulator-on-in-suspend;
++					regulator-suspend-microvolt = <950000>;
++				};
++			};
++
++			vdd_arm: DCDC_REG2 {
++				regulator-always-on;
++				regulator-boot-on;
++				regulator-min-microvolt = <950000>;
++				regulator-max-microvolt = <1350000>;
++				regulator-ramp-delay = <6001>;
++				regulator-initial-mode = <0x2>;
++				regulator-name = "vdd_arm";
++				regulator-state-mem {
++					regulator-off-in-suspend;
++					regulator-suspend-microvolt = <950000>;
++				};
++			};
++
++			vcc_ddr: DCDC_REG3 {
++				regulator-always-on;
++				regulator-boot-on;
++				regulator-initial-mode = <0x2>;
++				regulator-name = "vcc_ddr";
++				regulator-state-mem {
++					regulator-on-in-suspend;
++				};
++			};
++
++			vcc_3v3: DCDC_REG4 {
++				regulator-always-on;
++				regulator-boot-on;
++				regulator-min-microvolt = <3300000>;
++				regulator-max-microvolt = <3300000>;
++				regulator-initial-mode = <0x2>;
++				regulator-name = "vcc_3v3";
++				regulator-state-mem {
++					regulator-off-in-suspend;
++					regulator-suspend-microvolt = <3300000>;
++				};
++			};
++
++			/* Not Used */
++			vcc_1v0: LDO_REG1 {
++				regulator-min-microvolt = <1000000>;
++				regulator-max-microvolt = <1000000>;
++				regulator-name = "vcc_1v0";
++				regulator-state-mem {
++					regulator-off-in-suspend;
++					regulator-suspend-microvolt = <1000000>;
++				};
++			};
++
++			vcc1v8_soc: LDO_REG2 {
++				regulator-always-on;
++				regulator-boot-on;
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <1800000>;
++
++				regulator-name = "vcc1v8_soc";
++				regulator-state-mem {
++					regulator-on-in-suspend;
++					regulator-suspend-microvolt = <1800000>;
++				};
++			};
++
++			vdd1v0_soc: LDO_REG3 {
++				regulator-always-on;
++				regulator-boot-on;
++				regulator-min-microvolt = <1000000>;
++				regulator-max-microvolt = <1000000>;
++
++				regulator-name = "vcc1v0_soc";
++				regulator-state-mem {
++					regulator-on-in-suspend;
++					regulator-suspend-microvolt = <1000000>;
++				};
++			};
++
++			vcc3v3_pmu: LDO_REG4 {
++				regulator-always-on;
++				regulator-boot-on;
++				regulator-min-microvolt = <3300000>;
++				regulator-max-microvolt = <3300000>;
++
++				regulator-name = "vcc3v3_pmu";
++				regulator-state-mem {
++					regulator-on-in-suspend;
++					regulator-suspend-microvolt = <3300000>;
++
++				};
++			};
++
++			vccio_sd: LDO_REG5 {
++				regulator-always-on;
++				regulator-boot-on;
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <3300000>;
++
++				regulator-name = "vccio_sd";
++				regulator-state-mem {
++					regulator-on-in-suspend;
++					regulator-suspend-microvolt = <3300000>;
++				};
++			};
++
++			vcc_sd: LDO_REG6 {
++				regulator-min-microvolt = <3300000>;
++				regulator-max-microvolt = <3300000>;
++				regulator-boot-on;
++
++				regulator-name = "vcc_sd";
++				regulator-state-mem {
++					regulator-on-in-suspend;
++					regulator-suspend-microvolt = <3300000>;
++
++				};
++			};
++
++			/* Rev 0.2 LCD Backlight Power */
++			vcc_backlight: LDO_REG7 {
++				regulator-min-microvolt = <3300000>;
++				regulator-max-microvolt = <3300000>;
++				regulator-name = "vcc_backlight";
++				regulator-state-mem {
++					regulator-off-in-suspend;
++					regulator-suspend-microvolt = <3300000>;
++				};
++			};
++
++			/* Rev 0.2 LCD IO Power */
++			vcc_lcd: LDO_REG8 {
++				regulator-min-microvolt = <2800000>;
++				regulator-max-microvolt = <2800000>;
++				regulator-name = "vcc_lcd";
++				regulator-state-mem {
++					regulator-off-in-suspend;
++					regulator-suspend-microvolt = <2800000>;
++				};
++			};
++
++
++
++			dcdc_boost: BOOST {
++				regulator-always-on;
++				regulator-boot-on;
++				regulator-min-microvolt = <5000000>;
++				regulator-max-microvolt = <5400000>;
++				regulator-name = "boost";
++			};
++
++			otg_switch: OTG_SWITCH {
++				regulator-boot-on;
++				regulator-name = "otg_switch";
++			};
++		};
++
++		battery {
++			compatible = "rk817_fg";
++			ocv_table = <3165 3220 3280 3330 3380 3430 3480
++			3530 3580 3630 3670 3710 3750 3790
++			3830 3870 3910 3950 3990 3995 4000>;
++
++
++			/* KPL605475 Battery Spec */
++			/*
++				Capacity : 3.7V 3000mA
++				Normal Voltage = 3.7V
++				Cut-Off Voltage : 3.1V
++				Internal Impedance : 180 mOhm
++				Charging Voltage : 4.2V
++				Charging Voltage Max : 4.25V
++				Sample resister : 10 mohm
++			*/
++			design_capacity = <3380>;
++			design_qmax = <3718>;
++			bat_res = <100>;
++			sleep_enter_current = <300>;
++			sleep_exit_current = <300>;
++			sleep_filter_current = <100>;
++			power_off_thresd = <3000>;
++			zero_algorithm_vol = <3850>;
++			max_soc_offset = <60>;
++			monitor_sec = <5>;
++			virtual_power = <0>;
++			sample_res = <10>;
++			power_dc2otg = <0>;
++		};
++
++		charger {
++			compatible = "rk817,charger";
++			min_input_voltage = <4500>;
++			max_input_current = <1500>;
++			max_chrg_current = <2000>;
++			max_chrg_voltage = <4200>;
++			chrg_term_mode = <0>;
++			chrg_finish_cur = <52>;
++			virtual_power = <0>;
++			sample_res = <10>;
++
++			/* P.C.B rev0.2 DC Detect & Charger Status LED GPIO */
++			dc_det_gpio  = <&gpio0 RK_PB3 GPIO_ACTIVE_HIGH>;
++
++			extcon = <&u2phy>;
++		};
++
++		rk817_codec: codec {
++			#sound-dai-cells = <0>;
++			compatible = "rockchip,rk817-codec";
++			clocks = <&cru SCLK_I2S1_OUT>;
++			clock-names = "mclk";
++			pinctrl-names = "default";
++			pinctrl-0 = <&i2s1_2ch_mclk>;
++			hp-volume = <20>;
++			spk-volume = <3>;
++			status = "okay";
++		};
++	};
++};
++
++/* EXT Header(P2) : 7(SCL:GPIO0.C2), 8(SDA:GPIO0.C3) */
++&i2c1 {
++	status = "okay";
++	clock-frequency = <400000>;
++};
++
++/* MIPI CSI I2C */
++&i2c2 {
++	status = "disabled";
++};
++
++/* I2S 1 Channel Used */
++&i2s1_2ch {
++	status = "okay";
++	#sound-dai-cells = <0>;
++};
++
++&io_domains {
++	/* GRF Register Voltage select control */
++	status = "okay";
++
++	/* SDIO I/O Voltage */
++	vccio1-supply = <&vccio_sd>;
++	/* SDMMC I/O Voltage */
++	vccio2-supply = <&vccio_sd>;
++	/* CAM I/O Voltage */
++	vccio3-supply = <&vcc_3v3>;
++	/* LVDS/LCDC I/O Voltage */
++	vccio4-supply = <&vcc_3v3>;
++	/* I2S I/O Voltage */
++	vccio5-supply = <&vcc_3v3>;
++	/* eMMC I/O Voltage */
++	vccio6-supply = <&vcc_3v3>;
++};
++
++&isp_mmu {
++	status = "okay";
++};
++
++&mipi_dphy_rx0 {
++	status = "okay";
++};
++
++&rkisp1 {
++	status = "okay";
++};
++
++&spi0 {
++	status = "disabled";
++};
++
++&pmu_io_domains {
++	/* PMU GRF Register Voltage select control */
++	status = "okay";
++
++	/* PMU I/O Voltage */
++	pmuio1-supply = <&vcc3v3_pmu>;
++	/* GPIO0_B/GPIO0_C, Flash */
++	pmuio2-supply = <&vcc3v3_pmu>;
++};
++
++/* LCD Backlight PWM */
++&pwm1 {
++	status = "okay";
++};
++
++&rk_rga {
++	status = "okay";
++};
++
++&saradc {
++	status = "okay";
++	vref-supply = <&vcc1v8_soc>;
++};
++
++&sdmmc {
++	bus-width = <4>;
++	cap-mmc-highspeed;
++	cap-sd-highspeed;
++	supports-sd;
++	card-detect-delay = <800>;
++	ignore-pm-notify;
++	cd-gpios = <&gpio0 RK_PA3 GPIO_ACTIVE_LOW>; /*[> CD GPIO <]*/
++	sd-uhs-sdr12;
++	sd-uhs-sdr25;
++	sd-uhs-sdr50;
++	sd-uhs-sdr104;
++	vqmmc-supply = <&vccio_sd>;
++	vmmc-supply = <&vcc_sd>;
++	status = "okay";
++};
++
++&sdio {
++	status = "disabled";
++};
++
++&tsadc {
++	pinctrl-names = "gpio", "otpout";
++	pinctrl-0 = <&tsadc_otp_gpio>;
++	pinctrl-1 = <&tsadc_otp_out>;
++	status = "okay";
++};
++
++&u2phy {
++	status = "okay";
++
++	u2phy_host: host-port {
++		status = "okay";
++	};
++
++	u2phy_otg: otg-port {
++		status = "disabled";
++	};
++};
++
++&usb20_otg {
++	status = "okay";
++};
++
++/*
++	EXT Header(P2) UART :
++	2(RXD:GPIO1.C0),3(TXD:GPIO1.C1),4(CTS:GPIO1.C2),5(RTS:GPIO1.C3)
++*/
++&uart1 {
++	pinctrl-names = "default";
++	pinctrl-0 = <&uart1_xfer &uart1_cts>;
++	status = "okay";
++};
++
++&vip_mmu {
++	status = "okay";
++};
++
++&vopb {
++	status = "okay";
++};
++
++&vopb_mmu {
++	status = "okay";
++};
++
++&vpu_combo {
++	status = "okay";
++};
++
++&pinctrl {
++	pmic {
++		/* ODROID-GO2 : PMIC_INT(GPIO0.PB2) */
++		pmic_int: pmic_int {
++			rockchip,pins =
++				<0 RK_PB2 RK_FUNC_GPIO &pcfg_pull_up>,
++				<0 RK_PB3 RK_FUNC_GPIO &pcfg_pull_none>;
++		};
++
++		/* ODROID-GO2 : PMIC_SLEEP(GPIO0.PA4) */
++		soc_slppin_gpio: soc_slppin_gpio {
++			rockchip,pins =
++				<0 RK_PA4 RK_FUNC_GPIO &pcfg_output_low>;
++		};
++
++		soc_slppin_slp: soc_slppin_slp {
++			rockchip,pins =
++				<0 RK_PA4 RK_FUNC_1 &pcfg_pull_none>;
++		};
++
++		soc_slppin_rst: soc_slppin_rst {
++			rockchip,pins =
++				<0 RK_PA4 RK_FUNC_2 &pcfg_pull_none>;
++		};
++	};
++
++	leds {
++		led_pins: led-pins {
++			rockchip,pins = <0 RK_PC1 RK_FUNC_GPIO &pcfg_pull_none>;
++		};
++	};
++	
++	rumble {
++		rumble_pins: rumble-pins {
++			rockchip,pins = <0 RK_PB7 RK_FUNC_GPIO &pcfg_pull_none>;
++		};
++	};
++	
++	btns {
++		btn_pins: btn-pins {
++			rockchip,pins = <1 RK_PB4 RK_FUNC_GPIO &pcfg_pull_up>,
++					<1 RK_PB5 RK_FUNC_GPIO &pcfg_pull_up>,
++					<1 RK_PB6 RK_FUNC_GPIO &pcfg_pull_up>,
++					<1 RK_PB7 RK_FUNC_GPIO &pcfg_pull_up>,
++					<1 RK_PA2 RK_FUNC_GPIO &pcfg_pull_up>,
++					<1 RK_PA5 RK_FUNC_GPIO &pcfg_pull_up>,
++					<1 RK_PA6 RK_FUNC_GPIO &pcfg_pull_up>,
++					<1 RK_PA7 RK_FUNC_GPIO &pcfg_pull_up>,
++
++					<2 RK_PA0 RK_FUNC_GPIO &pcfg_pull_up>,
++					<2 RK_PA1 RK_FUNC_GPIO &pcfg_pull_up>,
++					<2 RK_PA2 RK_FUNC_GPIO &pcfg_pull_up>,
++					<2 RK_PA3 RK_FUNC_GPIO &pcfg_pull_up>,
++					<2 RK_PA4 RK_FUNC_GPIO &pcfg_pull_up>,
++					<2 RK_PA5 RK_FUNC_GPIO &pcfg_pull_up>,
++					<2 RK_PA6 RK_FUNC_GPIO &pcfg_pull_up>,
++					<2 RK_PA7 RK_FUNC_GPIO &pcfg_pull_up>,
++					<3 RK_PB2 RK_FUNC_GPIO &pcfg_pull_up>,
++					<3 RK_PB7 RK_FUNC_GPIO &pcfg_pull_up>;
++		};
++	};
++};
+diff --git a/arch/arm/mach-rockchip/board.c b/arch/arm/mach-rockchip/board.c
+index 6140ef58d8..984ef1f0bb 100755
+--- a/arch/arm/mach-rockchip/board.c
++++ b/arch/arm/mach-rockchip/board.c
+@@ -313,9 +313,9 @@ void board_set_spilayout(void)
+ 	char *hwrev = env_get("hwrev");
+ 
+ 	/* adjust only offsets, size values are same */
+-	if (strcmp(hwrev, "rg351mp") == 0)
++	if (strcmp(hwrev, "rgb20s") == 0)
+ 	{
+-		/* RG351MP */
++		/* RGB20S */
+ 		env_set_hex("st_dtb", 0x3068);
+ 
+ 		env_set_hex("st_logo_hardkernel", 0x3130);
+@@ -330,7 +330,6 @@ void board_set_spilayout(void)
+ 		env_set_hex("st_battery_3", 0x3DB0);
+ 		env_set_hex("st_battery_fail", 0x3F40);
+ 	} else {
+-		/* RG351P / RG351V */
+ 		env_set_hex("st_dtb", 0x2000);
+ 
+ 		env_set_hex("st_logo_hardkernel", 0x20C8);
+diff --git a/board/rockchip/odroidgoa/odroidgoa.c b/board/rockchip/odroidgoa/odroidgoa.c
+index ef8b2ba58e..564c68815d 100644
+--- a/board/rockchip/odroidgoa/odroidgoa.c
++++ b/board/rockchip/odroidgoa/odroidgoa.c
+@@ -41,16 +41,12 @@ bool is_odroidgo3(void)
+ #endif
+ }
+ 
+-int get_rg351_rev(void)
++int get_rgb20s_rev(void)
+ {
+ 	char *hwrev = env_get("hwrev");
+ 
+-	if (!strcmp(hwrev, "rg351p"))
+-		return MODEL_RG351P;
+-	else if (!strcmp(hwrev, "rg351v"))
+-		return MODEL_RG351V;
+-	else if (!strcmp(hwrev, "rg351mp"))
+-		return MODEL_RG351MP;
++	if (!strcmp(hwrev, "rgb20s"))
++		return MODEL_RGB20S;
+ 	return 0;
+ 
+ }
+@@ -184,10 +180,9 @@ err:
+ 
+ int rk_board_late_init(void)
+ {
+-	switch (get_rg351_rev())
++	switch (get_rgb20s_rev())
+ 	{
+-		case MODEL_RG351V:
+-		case MODEL_RG351MP:
++		case MODEL_RGB20S:
+ 			disp_offs = 10;
+ 		break;
+ 		
+diff --git a/cmd/hwrev.c b/cmd/hwrev.c
+index 95557bd83d..c230c69cd4 100755
+--- a/cmd/hwrev.c
++++ b/cmd/hwrev.c
+@@ -18,29 +18,17 @@ int do_hwrev(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
+ 		printf("board hw rev failed\n");
+ 		return CMD_RET_FAILURE;
+ 	}
+-	/* RG351MP */
++	/* RGB20S */
+ 	if (check_range(146, 186, hwrev_adc)) {
+-		env_set("hwrev", "rg351mp");
+-		env_set("dtb_uboot", "rg351mp-uboot.dtb");
+-		env_set("dtb_kernel", "rk3326-rg351mp-linux.dtb");
+-	}
+-	/* RG351V */
+-	else if (check_range(494, 534, hwrev_adc)) {
+-		env_set("hwrev", "rg351v");
+-		env_set("dtb_uboot", "rg351v-uboot.dtb");
+-		env_set("dtb_kernel", "rk3326-rg351v-linux.dtb");
+-	}
+-	/* RG351P */
+-	else if (check_range(655, 695, hwrev_adc)) {
+-		env_set("hwrev", "rg351p");
+-		env_set("dtb_uboot", "rg351p-uboot.dtb");
+-		env_set("dtb_kernel", "rk3326-rg351p-linux.dtb");
++		env_set("hwrev", "rgb20s");
++		env_set("dtb_uboot", "rgb20s-uboot.dtb");
++		env_set("dtb_kernel", "rk3326-rgb20s-linux.dtb");
+ 	}
+ 	/* Unknown */
+ 	else {
+ 		env_set("hwrev", "v00");
+-		env_set("dtb_uboot", "rg351p-uboot.dtb");
+-		env_set("dtb_kernel", "rk3326-rg351p-linux.dtb");
++		env_set("dtb_uboot", "rgb20s-uboot.dtb");
++		env_set("dtb_kernel", "rk3326-rgb20s-linux.dtb");
+ 	}
+ 	printf("adc0 (hw rev) %d\n", hwrev_adc);
+ printf("Model = %s\n",env_get("hwrev"));
+diff --git a/drivers/video/drm/rockchip_display.c b/drivers/video/drm/rockchip_display.c
+index 41faef4cc3..01f3e3d04a 100644
+--- a/drivers/video/drm/rockchip_display.c
++++ b/drivers/video/drm/rockchip_display.c
+@@ -1043,13 +1043,9 @@ void rockchip_show_fbbase(ulong fbbase)
+ 		s->logo.mode = ROCKCHIP_DISPLAY_FULLSCREEN;
+ 		s->logo.mem = (char *)fbbase;
+ #if defined(CONFIG_PLATFORM_ODROID_GOADV)
+-		if (!strcmp(env_get("hwrev"), "rg351p")) {
+-			s->logo.width = 320;
+-			s->logo.height = 480;
+-		} else {
+-			s->logo.width = 640;
+-			s->logo.height = 480;
+-		}
++		s->logo.width = 640;
++		s->logo.height = 480;
++
+ #else
+ 		s->logo.width = DRM_ROCKCHIP_FB_WIDTH;
+ 		s->logo.height = DRM_ROCKCHIP_FB_HEIGHT;
+@@ -1418,13 +1414,8 @@ static int rockchip_display_probe(struct udevice *dev)
+ 	}
+ 
+ #if defined(CONFIG_PLATFORM_ODROID_GOADV)
+-	if (!strcmp(env_get("hwrev"), "rg351p")) {
+-		uc_priv->xsize = 320;
+-		uc_priv->ysize = 480;
+-	} else {
+ 		uc_priv->xsize = 640;
+ 		uc_priv->ysize = 480;
+-	}
+ #else
+ 	uc_priv->xsize = DRM_ROCKCHIP_FB_WIDTH;
+ 	uc_priv->ysize = DRM_ROCKCHIP_FB_HEIGHT;
+diff --git a/drivers/video/drm/rockchip_display_cmds.c b/drivers/video/drm/rockchip_display_cmds.c
+index 238400dc75..4d1582e078 100644
+--- a/drivers/video/drm/rockchip_display_cmds.c
++++ b/drivers/video/drm/rockchip_display_cmds.c
+@@ -41,14 +41,10 @@ int lcd_getrot(void)
+ {
+ 	unsigned long rot;
+ 	unsigned long default_rot;
+-	switch(get_rg351_rev())
++	switch(get_rgb20s_rev())
+ 	{
+-		case MODEL_RG351P:
+-			default_rot = LCD_ROTATE_270;
+-		break;
+-			
+-		case MODEL_RG351MP:
+-		case MODEL_RG351V:
++
++		case MODEL_RGB20S:
+ 		default:
+ 			default_rot = LCD_ROTATE_0;
+ 		break;
+@@ -503,14 +499,10 @@ static int do_lcd_cmds(cmd_tbl_t *cmdtp, int flag, int argc,
+ 				char *const argv[])
+ {
+ 	unsigned long default_rot;
+-	switch(get_rg351_rev())
++	switch(get_rgb20s_rev())
+ 	{
+-		case MODEL_RG351P:
+-			default_rot = LCD_ROTATE_270;
+-		break;
+ 			
+-		case MODEL_RG351MP:
+-		case MODEL_RG351V:
++		case MODEL_RGB20S:
+ 		default:
+ 			default_rot = LCD_ROTATE_0;
+ 		break;
+diff --git a/include/odroidgoa_status.h b/include/odroidgoa_status.h
+index 43062cd503..a065e7c4da 100644
+--- a/include/odroidgoa_status.h
++++ b/include/odroidgoa_status.h
+@@ -6,10 +6,8 @@
+ #ifndef _ODROIDGOA_STATUS_H_
+ #define _ODROIDGOA_STATUS_H_
+ 
+-enum rg351_rev{
+-	MODEL_RG351P = 0,
+-	MODEL_RG351V,
+-	MODEL_RG351MP,
++enum rgb20s_rev{
++	MODEL_RGB20S = 0,
+ };
+ 
+ enum logo_storage {
+@@ -26,7 +24,7 @@ enum logo_mode {
+ 	LOGO_MODE_NO_SDCARD,
+ };
+ 
+-int get_rg351_rev(void);
++int get_rgb20s_rev(void);
+ int odroid_display_status(int logo_mode, int logo_storage, const char *str);
+ void odroid_wait_pwrkey(void);
+ void odroid_alert_leds(void);

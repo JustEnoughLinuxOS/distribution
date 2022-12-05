@@ -40,7 +40,7 @@ PKG_AUTORECONF="no"
 if [ "${ARCH}" = "arm" ]
 then
   make_target() {
-    if [[ "${DEVICE}" =~ RG351 ]]
+    if [[ "${DEVICE}" =~ RG351 ]] || [[ "${DEVICE}" =~ RGB20S ]]
     then
       make CC=${CC} platform=RG351x
     elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]

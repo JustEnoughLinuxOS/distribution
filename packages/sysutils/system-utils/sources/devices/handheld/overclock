@@ -43,13 +43,13 @@ case ${PROFILE} in
     WATTS="18000"
   ;;
   20w)
-    WATTS="20000"
+    WATTS="18000"
   ;;
   22w)
-    WATTS="22000"
+    WATTS="18000"
   ;;
   24w)
-    WATTS="24000"
+    WATTS="18000"
   ;;
 esac
 

@@ -63,7 +63,7 @@ def connect_device(path, address, properties, forceConnect, typeInput, typeAudio
     logging.info("Skipping device {} (no type)".format(getDevName(rproperties)));
     return
 
-  if not ( (typeInput and properties["Icon"].startswith("input")) or (typeAudio and properties["Icon"].startswith("audio")) ):
+  if not ( (typeInput and properties["Icon"].startswith("input")) or (typeAudio and properties["Icon"].startswith("audio-card")) ):
     logging.info("Skipping device {} because of type {}".format(getDevName(rproperties), properties["Icon"]));
     return
 

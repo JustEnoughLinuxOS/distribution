@@ -48,7 +48,7 @@ pre_configure_target() {
 pre_make_target() {
   export BUILD_SYSROOT=${SYSROOT_PREFIX}
   case ${DEVICE} in
-    RG351P|RG351V|RG351MP)
+    RG351P|RG351V|RG351MP|RGB20S)
       PKG_MAKE_OPTS_TARGET+=" platform=RG351x"
     ;;
     RG353P|RG503)
