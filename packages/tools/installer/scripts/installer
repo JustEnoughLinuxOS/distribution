@@ -26,6 +26,9 @@
 # exclude mounted partitions
 # for i in `cat /proc/mounts | grep ^/dev/ | cut -f1 -d " " | sed "s/[0-9]//"`; do TEST="$TEST `echo "| grep -v $i"`"; done
 
+# Unmount anything caught by udevil so we can use it.
+umount /var/media/* >/dev/null 2>&1 ||:
+
 # disable Ctrl+C - can be very dangerous
 trap '' 2
 

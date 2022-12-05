@@ -119,3 +119,21 @@ then
   echo "Make sure weston is our default." >>${LOG}
   set_setting weston.startup "/usr/bin/start_es.sh"
 fi
+
+# Fixing asound.state on RG552 with broken values
+if [ "${HW_DEVICE}" == "RG552" ] && \
+   [ "$(grep -i 'value.*Invert' /storage/.config/asound.state)" ]
+then
+  echo "Fix asound.state." >>${LOG}
+  cp /usr/config/asound.state /storage/.config/asound.state
+fi
+
+# Disable PCSX2SA auto update check
+if [ -e "/storage/.config/PCSX2/inis/PCSX2.ini" ] && \
+   [ ! "$(grep -i AutoUpdater /storage/.config/PCSX2/inis/PCSX2.ini)" ]
+then
+  cat <<EOF >>/storage/.config/PCSX2/inis/PCSX2.ini
+[AutoUpdater]
+CheckAtStartup = false
+EOF
+fi

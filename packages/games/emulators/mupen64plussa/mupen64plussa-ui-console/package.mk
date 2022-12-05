@@ -3,7 +3,6 @@
 
 PKG_NAME="mupen64plussa-ui-console"
 PKG_VERSION="3ad5cbb56fcf4921ffae8c7b8ee52ea0ae82c044"
-PKG_SHA256=""
 PKG_ARCH="aarch64"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/mupen64plus/mupen64plus-ui-console"

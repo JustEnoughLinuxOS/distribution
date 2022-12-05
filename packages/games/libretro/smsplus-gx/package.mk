@@ -21,7 +21,6 @@
 
 PKG_NAME="smsplus-gx"
 PKG_VERSION="60af17ddb2231ba98f4ed1203e2a2f58d08ea088"
-PKG_SHA256=""
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="Non-commercial"
