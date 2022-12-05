@@ -131,13 +131,17 @@ then
     cp /tmp/joypads/"${MY_CONTROLLER}.cfg" /tmp
     sed -i "s# = #=#g" /tmp/"${MY_CONTROLLER}.cfg"
     source /tmp/"${MY_CONTROLLER}.cfg"
+    sed -i "/input_enable_hotkey_btn/d" ${RACONF}
     sed -i "/input_bind_hold/d" ${RACONF}
+    sed -i "/input_exit_emulator_btn/d" ${RACONF}
     sed -i "/input_fps_toggle_btn/d" ${RACONF}
     sed -i "/input_menu_toggle_btn/d" ${RACONF}
     sed -i "/input_save_state_btn/d" ${RACONF}
     sed -i "/input_load_state_btn/d" ${RACONF}
     cat <<EOF >>${RACONF}
+input_enable_hotkey_btn = "${input_select_btn}"
 input_bind_hold = "${input_select_btn}"
+input_exit_emulator_btn = "${input_start_btn}"
 input_fps_toggle_btn = "${input_y_btn}"
 input_menu_toggle_btn = "${input_x_btn}"
 input_save_state_btn = "${input_r_btn}"

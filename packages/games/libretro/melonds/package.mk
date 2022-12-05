@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="melonds"
-PKG_VERSION="5e52c245fb38cabe881fbfa6513280ee44fc5bd8"
+PKG_VERSION="1eebc828769f2619bd79f39545573a991391de5d"
 PKG_REV="1"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://git.libretro.com/libretro/melonDS"
