@@ -84,6 +84,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
                            --without-pymalloc
                            --without-ensurepip
                            --enable-ipv6
+                           --with-build-python=${TOOLCHAIN}/bin/python
 "
 
 pre_configure_host() {

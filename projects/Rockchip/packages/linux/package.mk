@@ -137,6 +137,7 @@ pre_make_target() {
   if grep -q ^CONFIG_CFG80211_INTERNAL_REGDB= ${PKG_BUILD}/.config ; then
     cp $(get_build_dir wireless-regdb)/db.txt ${PKG_BUILD}/net/wireless/db.txt
   fi
+  makeinstall_host
 }
 
 make_target() {

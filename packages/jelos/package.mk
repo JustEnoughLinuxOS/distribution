@@ -34,19 +34,12 @@ PKG_COMPAT=""
 
 PKG_MULTIMEDIA="ffmpeg mpv vlc"
 
-PKG_TOOLS="i2c-tools rclone jslisten evtest tailscale"
+PKG_TOOLS="i2c-tools rclone jslisten evtest tailscale pygobject"
 
 ### Tools for mainline devices
 case "${DEVICE}" in
   handheld|RG552)
     PKG_TOOLS+=" mesa-demos"
-  ;;
-esac
-
-### Bluetooth support for some devices
-case "${DEVICE}" in
-  RG503|RG353P|RG552|RG351P|RG351V|RG351MP|RGB20S)
-    PKG_TOOLS+=" pygobject"
   ;;
 esac
 

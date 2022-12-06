@@ -313,4 +313,5 @@ makeinstall_target() {
     done
     cp -p arch/${TARGET_KERNEL_ARCH}/boot/dts/overlays/README ${INSTALL}/usr/share/bootloader/overlays
   fi
+  makeinstall_host
 }
