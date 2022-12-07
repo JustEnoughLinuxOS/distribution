@@ -75,8 +75,3 @@ EOF
   chmod +x ${TOOLCHAIN}/bin/g-ir-scanner-*-wrapper
 }
 
-post_makeinstall_target() {
-  rm -rf ${INSTALL}/usr/bin
-  rm -rf ${INSTALL}/usr/lib/gobject-introspection
-  rm -rf ${INSTALL}/usr/share
-}
