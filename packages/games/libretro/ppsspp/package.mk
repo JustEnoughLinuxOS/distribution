@@ -65,6 +65,15 @@ else
   PKG_CMAKE_OPTS_TARGET+=" -DUSE_WAYLAND_WSI=OFF"
 fi
 
+case ${TARGET_ARCH} in
+  arm)
+    PKG_CMAKE_OPTS_TARGET+=" -DARMV7=ON"
+  ;;
+  aarch64)
+    PKG_CMAKE_OPTS_TARGET+=" -DARM64=ON"
+  ;;
+esac
+
 PKG_CMAKE_OPTS_TARGET+="${PKG_CMAKE_OPTS_TARGET} \
                         -DUSE_SYSTEM_FFMPEG=OFF \
                         -DCMAKE_BUILD_TYPE=Release \

@@ -119,11 +119,8 @@ post_install() {
   mkdir -p ${INSTALL}/usr/lib/autostart/daemons
   cp ${PKG_DIR}/sources/autostart/common/* ${INSTALL}/usr/lib/autostart/common
   cp ${PKG_DIR}/sources/autostart/daemons/* ${INSTALL}/usr/lib/autostart/daemons
-  if [ -d "${PKG_DIR}/sources/autostart/${DEVICE}" ]
-  then
-    mkdir -p ${INSTALL}/usr/lib/autostart/${DEVICE}
-    cp ${PKG_DIR}/sources/autostart/${DEVICE}/* ${INSTALL}/usr/lib/autostart/${DEVICE}
-  fi
+  mkdir -p ${INSTALL}/usr/lib/autostart/quirks
+  cp -r ${PKG_DIR}/sources/autostart/quirks/* ${INSTALL}/usr/lib/autostart/quirks
   chmod -R 0755 ${INSTALL}/usr/lib/autostart ${INSTALL}/usr/bin/autostart
   enable_service jelos-autostart.service
 
@@ -144,12 +141,15 @@ post_install() {
 EOF
 
   cp ${PKG_DIR}/sources/scripts/* ${INSTALL}/usr/bin
+  chmod 0755 ${INSTALL}/usr/bin/* ||:
   enable_service jelos-automount.service
 
   if [ -d "${PKG_DIR}/sources/asound/${DEVICE}" ]
   then
     cp ${PKG_DIR}/sources/asound/${DEVICE}/* ${INSTALL}/usr/config/
   fi
+  
+  cp ${PKG_DIR}/sources/asound/asound.conf.bluealsa ${INSTALL}/usr/config/
 
   sed -i "s#@DEVICENAME@#${DEVICE}#g" ${INSTALL}/usr/config/system/configs/system.cfg
 
