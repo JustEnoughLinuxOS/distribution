@@ -25,7 +25,7 @@ case ${DEVICE} in
     PKG_GIT_CLONE_BRANCH="main"
   ;;
   RG552)
-    PKG_VERSION="6.0.7"
+    PKG_VERSION="6.0.11"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
   ;;
   RG353P|RG503)
@@ -137,6 +137,7 @@ pre_make_target() {
   if grep -q ^CONFIG_CFG80211_INTERNAL_REGDB= ${PKG_BUILD}/.config ; then
     cp $(get_build_dir wireless-regdb)/db.txt ${PKG_BUILD}/net/wireless/db.txt
   fi
+  makeinstall_host
 }
 
 make_target() {

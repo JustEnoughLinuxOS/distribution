@@ -21,7 +21,6 @@
 
 PKG_NAME="fbalpha2019"
 PKG_VERSION="0581797db6fdffd826086b053ced4b6b29bb6678"
-PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="Non-commercial"
 PKG_SITE="https://github.com/libretro/fbalpha"

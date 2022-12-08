@@ -3,7 +3,6 @@
 
 PKG_NAME="mupen64plus-nx"
 PKG_VERSION="1b67122ff6a923c93a56ff94273e3768a6da5dff"
-PKG_SHA256=""
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/mupen64plus-libretro-nx"
 PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"

@@ -39,8 +39,8 @@ pre_configure_target() {
   AR="${TARGET_AR}"
   CPP="${TARGET_PREFIX}cpp"
   CPPFLAGS="${TARGET_CPPFLAGS}"
-  CFLAGS="${TARGET_CFLAGS}"
-  LDFLAGS="${TARGET_LDFLAGS}"
+  CFLAGS="${TARGET_CFLAGS} -fPIC"
+  LDFLAGS="${TARGET_LDFLAGS} -Wl,--dynamic-linker=${GLIBC_DYNAMIC_LINKER}"
 
   PKG_MESON_OPTS_TARGET=" \
     -Ddoctool=disabled \
@@ -75,8 +75,3 @@ EOF
   chmod +x ${TOOLCHAIN}/bin/g-ir-scanner-*-wrapper
 }
 
-post_makeinstall_target() {
-  rm -rf ${INSTALL}/usr/bin
-  rm -rf ${INSTALL}/usr/lib/gobject-introspection
-  rm -rf ${INSTALL}/usr/share
-}
