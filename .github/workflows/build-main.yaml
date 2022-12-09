@@ -110,5 +110,5 @@ jobs:
           prerelease: false
           draft: true
           token: ${{ secrets.REPO_ACCESS }}
-          owner: JustEnoughLinuxOS
+          owner: fewtarius
           repo: distribution
