@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="dolphin"
-PKG_VERSION="016a5926aeda89087a073b1e6d245396da4b2256"
+PKG_VERSION="0df1b5be3be8884522ca15de71deaaa8143d0d09"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_DEPENDS_TARGET="toolchain libevdev libdrm ffmpeg zlib libpng lzo libusb"

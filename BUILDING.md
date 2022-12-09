@@ -130,21 +130,24 @@ For development build, you can use the following env variables to customize the 
 
 **SSH keys**
 ```
-export JELOS_SSH_KEYS_FILE=~/.ssh/jelos/authorized_keys
+export LOCAL_SSH_KEYS_FILE=~/.ssh/jelos/authorized_keys
 ```
 **WiFi SSID and password**
 ```
-export JELOS_WIFI_SSID=MYWIFI
-export JELOS_WIFI_KEY=secret
+export LOCAL_WIFI_SSID=MYWIFI
+export LOCAL_WIFI_KEY=secret
 ```
 
 **Screenscraper, GamesDB, and RetroAchievements**
 
-To enable Screenscraper, GamesDB, and RetroAchievements, register at each site and apply the api keys in ~/developer_settings.conf. This configuration is picked up by EmulationStation during the build.
+To enable Screenscraper, GamesDB, and RetroAchievements, register at each site and apply the api keys in ~/developer_settings.conf or add them as environment variables. Unsetting one of the variables will disable it in EmulationStation. This configuration is picked up by EmulationStation during the build.
 
 ```
-export SCREENSCRAPER_DEV_LOGIN="devid=DEVID&devpassword=DEVPASSWORD
+# Apply for a Screenscraper API Key here: https://www.screenscraper.fr/forumsujets.php?frub=12&numpage=0
+export SCREENSCRAPER_DEV_LOGIN="devid=DEVID&devpassword=DEVPASSWORD"
+# Apply for a GamesDB API Key here: https://forums.thegamesdb.net/viewforum.php?f=10
 export GAMESDB_APIKEY="APIKEY"
+# Find your Cheevos Web API key here: https://retroachievements.org/controlpanel.php
 export CHEEVOS_DEV_LOGIN="z=DEVID&y=DEVPASSWORD"
 ```
 
