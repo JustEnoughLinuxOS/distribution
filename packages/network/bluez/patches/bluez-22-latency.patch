@@ -1,0 +1,14 @@
+diff -rupN bluez.orig/src/main.conf bluez/src/main.conf
+--- bluez.orig/src/main.conf	2022-12-09 13:26:20.491487002 -0500
++++ bluez/src/main.conf	2022-12-09 13:53:53.254613635 -0500
+@@ -207,6 +207,10 @@
+ #ConnectionSupervisionTimeout=
+ #Autoconnecttimeout=
+ 
++MinConnectionInterval=7
++MaxConnectionInterval=9
++ConnectionLatency=44
++
+ # Scan duration during interleaving scan. Only used when scanning for ADV
+ # monitors. The units are msec.
+ # Default: 300

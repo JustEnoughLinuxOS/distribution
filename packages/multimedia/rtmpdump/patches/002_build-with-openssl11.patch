@@ -1,6 +1,3 @@
-Source: https://github.com/xbmc/inputstream.rtmp/tree/master/depends/common/librtmp
-Date:  Feb 9, 2019
-
 --- a/librtmp/dh.h
 +++ b/librtmp/dh.h
 @@ -253,20 +253,42 @@

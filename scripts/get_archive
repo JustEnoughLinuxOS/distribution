@@ -29,9 +29,15 @@ unset LD_LIBRARY_PATH
 
 rm -f "${STAMP_URL}" "${STAMP_SHA}"
 
+PKG_URLS="${PKG_URL}"
+if [ -n "${PACKAGE_MIRROR}" ]
+then
+  PKG_URLS="${PKG_URL} ${PACKAGE_MIRROR}"
+fi
+
 NBWGET=10
 while [ ${NBWGET} -gt 0 ]; do
-  for url in "${PKG_URL}" "${PACKAGE_MIRROR}"; do
+  for url in ${PKG_URLS}; do
     if [[ "$PKG_USETOKEN" == "yes" ]]; then
       if [[ $url == https://github.com/* ]] && [[ -n $COREELEC_GHTOKEN ]]; then
         WGET_HEADER=--header="Authorization: token $COREELEC_GHTOKEN"
