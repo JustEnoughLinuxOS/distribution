@@ -102,7 +102,7 @@ git checkout dev
 ```
 
 ### Building with Docker
-Building JELOS is easy, the fastest and most recommended method is to use Docker.  At this time building the distribution using Docker is only known to work on a Linux system.  To build JELOS use the table below.
+Building JELOS is easy, the fastest and most recommended method is to instruct the build to use Docker, this is only known to work on a Linux system.  To build JELOS with Docker use the table below.
 
 | Device | Dependency | Docker Command |
 | ---- | ---- | ---- |
