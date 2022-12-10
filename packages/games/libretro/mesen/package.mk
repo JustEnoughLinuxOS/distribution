@@ -3,6 +3,7 @@
 
 PKG_NAME="mesen"
 PKG_VERSION="9b412c1533a6d7eec7b2904775cbd26c21f02119"
+PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/libretro/Mesen"
