@@ -44,7 +44,7 @@ jobs:
         run: |
           rm -rf /home/holly/actions-runner/_work
           sudo mkdir -p /mnt/_work
-          sudo chown -R holly:holly /mnt/_work
+          #sudo chown -R holly:holly /mnt/_work
           ln -sf /mnt/_work /home/holly/actions-runner/_work
           ls -la /home/holly/actions-runner
           ls -la /mnt
