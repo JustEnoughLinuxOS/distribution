@@ -42,6 +42,7 @@ jobs:
               docker-compose-plugin
       - name: Create Symlink
         run: |
+          sudo rm -rf /home/holly/actions-runner/_work
           sudo mkdir -p /mnt/_work
           sudo ln -sf /mnt/_work /home/holly/actions-runner/_work
           sudo ls -la /home/holly/actions-runner
