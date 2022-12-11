@@ -83,10 +83,10 @@ jobs:
            else
                echo "::set-output name=version::${{ steps.date.outputs.date }}-${{ steps.sha.outputs.sha }}"
            fi
-      #- name: Build RG353P/RG353V/RG353M
-      #  run: |
-      #      set -e
-      #      CUSTOM_VERSION="${{ steps.version.outputs.version }}" DOCKER_WORK_DIR="/work" DOCKER_EXTRA_OPTS="-v /buildroot:/buildroot" PYTHON_EGG_CACHE="${DOCKER_WORK_DIR}/.egg_cache" make docker-RG353P
+      - name: Build RG353P/RG353V/RG353M
+        run: |
+            set -e
+            CUSTOM_VERSION="${{ steps.version.outputs.version }}" DOCKER_WORK_DIR="/work" DOCKER_EXTRA_OPTS="-v /buildroot:/buildroot" PYTHON_EGG_CACHE="${DOCKER_WORK_DIR}/.egg_cache" make docker-RG353P
       - name: Create release as draft at first to hide during uploads
         #if: github.event.action == 'release-main'
         uses: ncipollo/release-action@v1
