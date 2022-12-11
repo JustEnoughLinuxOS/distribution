@@ -41,11 +41,11 @@ jobs:
       #        containerd.io \
       #        docker-compose-plugin
 
-      #- name: Create Symlink
-      #  run: |
-      #    sudo ln -s /home/runner/_work /mnt/_work
-      #    sudo ls -la /home/runner
-      #    sudo ls -la /mnt
+      - name: Create Symlink
+        run: |
+          sudo ln -s /home/holly/actions-runner/_work /mnt/_work
+          sudo ls -la /home/holly/actions-runner
+          sudo ls -la /mnt
       - name: get current branch as it may not be 'default branch;
         id: branch
         run: |
