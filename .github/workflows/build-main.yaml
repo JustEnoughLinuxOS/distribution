@@ -42,12 +42,12 @@ jobs:
               docker-compose-plugin
       - name: Create Symlink
         run: |
-          sudo rm -rf /home/holly/actions-runner/_work
+          rm -rf /home/holly/actions-runner/_work
           sudo mkdir -p /mnt/_work
-          #sudo chown -R holly:holly /mnt/_work
-          sudo ln -sf /mnt/_work /home/holly/actions-runner/_work
-          sudo ls -la /home/holly/actions-runner
-          sudo ls -la /mnt
+          sudo chown -R holly:holly /mnt/_work
+          ln -sf /mnt/_work /home/holly/actions-runner/_work
+          ls -la /home/holly/actions-runner
+          ls -la /mnt
       - name: get current branch as it may not be 'default branch;
         id: branch
         run: |
