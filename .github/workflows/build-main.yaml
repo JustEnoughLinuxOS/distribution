@@ -88,7 +88,7 @@ jobs:
       #      set -e
       #      CUSTOM_VERSION="${{ steps.version.outputs.version }}" DOCKER_WORK_DIR="/work" DOCKER_EXTRA_OPTS="-v /buildroot:/buildroot" PYTHON_EGG_CACHE="${DOCKER_WORK_DIR}/.egg_cache" make docker-RG353P
       - name: Create release as draft at first to hide during uploads
-        if: github.event.action == 'release-main'
+        #if: github.event.action == 'release-main'
         uses: ncipollo/release-action@v1
         with:
           tag: "${{ steps.version.outputs.version }}"
