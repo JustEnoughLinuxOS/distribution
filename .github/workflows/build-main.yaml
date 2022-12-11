@@ -132,5 +132,5 @@ jobs:
           prerelease: false
           draft: true
           token: ${{ secrets.REPO_ACCESS }}
-          owner: JustEnoughLinuxOS
+          owner: holly79
           repo: distribution
