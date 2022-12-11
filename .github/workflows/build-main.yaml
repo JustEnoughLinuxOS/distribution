@@ -55,6 +55,10 @@ jobs:
         with:
           clean: false
           ref: "${{ steps.branch.outputs.branch }}"
+      - name: Create Symlink
+        run: |
+          sudo ls -la /home/runner
+          sudo ls -la /mnt
       - name: Get date for artifacts
         id: date
         run: echo "::set-output name=date::$(date +'%Y%m%d')"
