@@ -132,6 +132,6 @@ jobs:
           artifacts: "release/*"
           prerelease: false
           draft: true
-          token: ${{ secrets.REPO_ACCESS }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           owner: holly79
           repo: distribution
