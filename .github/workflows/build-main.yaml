@@ -15,7 +15,7 @@ concurrency:
 jobs:
   build:
     timeout-minutes: 1440
-    runs-on: main
+    runs-on: ubuntu-20.04
     steps:
       - uses: hmarr/debug-action@v2
         name: debug
