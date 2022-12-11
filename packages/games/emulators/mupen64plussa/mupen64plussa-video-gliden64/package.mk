@@ -16,7 +16,7 @@ if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
 fi
 
-if [ "${OPENGLES_SUPPORT}" = yes ]; then
+if [ "${OPENGLES_SUPPORT}" = yes && ! "${DEVICE}" = "RG552" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
 fi
 
@@ -27,6 +27,7 @@ make_target() {
       BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
       if [ "${DEVICE}" = "RG552" ]
       then
+        export USE_GLES=0
         PKG_MAKE_OPTS_TARGET+="-DNOHQ=On -DCRC_ARMV8=On -DNEON_OPT=On"
       else
         export USE_GLES=1

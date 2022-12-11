@@ -18,20 +18,30 @@ if [ ! "${OPENGL}" = "no" ]; then
 fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
-  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-  PKG_MAKE_OPTS_TARGET+="USE_GLES=1"
+  if [ "${DEVICE}" = "RG552" ]
+  then
+    PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
+  else
+    PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+    PKG_MAKE_OPTS_TARGET+="USE_GLES=1"
+  fi
 fi
 
 make_target() {
   case ${ARCH} in
     arm|aarch64)
       export HOST_CPU=aarch64
-      export USE_GLES=1
+      if [ "${DEVICE}" = "RG552" ]
+      then
+        export USE_GLES=0
+      else
+        export USE_GLES=1
+      fi
       BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
     ;;
   esac
   export APIDIR=$(get_build_dir mupen64plussa-core)/.install_pkg/usr/local/include/mupen64plus
-  export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -D_REENTRANT"
+  export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -pthread"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
   export CROSS_COMPILE="${TARGET_PREFIX}"
   export V=1
