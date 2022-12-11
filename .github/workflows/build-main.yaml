@@ -43,8 +43,8 @@ jobs:
 
       - name: Create Symlink
         run: |
-          sudo mkdir /mnt/_work
-          sudo ln -s /mnt/_work /home/holly/actions-runner/_work
+          sudo mkdir -p /mnt/_work
+          sudo ln -sf /mnt/_work /home/holly/actions-runner/_work
           sudo ls -la /home/holly/actions-runner
           sudo ls -la /mnt
       - name: get current branch as it may not be 'default branch;
