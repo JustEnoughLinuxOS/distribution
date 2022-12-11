@@ -8,9 +8,10 @@ name: build-main
 on:
   repository_dispatch:
     types: [release-main]
+  workflow_dispatch:
 
-concurrency:
-  group: main
+# concurrency:
+#  group: main
 
 jobs:
   build:
