@@ -60,7 +60,7 @@ jobs:
           if: steps.changes.outputs.changes != '0'
           uses: peter-evans/repository-dispatch@v1
           with:
-            token: ${{ secrets.REPO_ACCESS }}
+            token: ${{ secrets.GITHUB_TOKEN }}
             repository: ${{ steps.full_name.outputs.full_name }}
             event-type: release-main
             client-payload: |
