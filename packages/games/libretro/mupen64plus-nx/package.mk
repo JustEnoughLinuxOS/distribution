@@ -27,7 +27,7 @@ fi
 pre_configure_target() {
   sed -e "s|^GIT_VERSION ?.*$|GIT_VERSION := \" ${PKG_VERSION:0:7}\"|" -i Makefile
   case ${DEVICE} in
-    RG351P|RG351V|RG351MP)
+    RG351P|RG351V|RG351MP|RGB20S)
       PKG_MAKE_OPTS_TARGET=" platform=RK3326"
     ;;
     RG552)

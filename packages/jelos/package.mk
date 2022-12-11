@@ -153,7 +153,7 @@ EOF
 
   sed -i "s#@DEVICENAME@#${DEVICE}#g" ${INSTALL}/usr/config/system/configs/system.cfg
 
-  if [[ "${DEVICE}" =~ RG351P ]]
+  if [[ "${DEVICE}" =~ RG351P ]] || [[ "${DEVICE}" =~ RGB20S ]]
   then
     sed -i "s#.integerscale=1#.integerscale=0#g" ${INSTALL}/usr/config/system/configs/system.cfg
     sed -i "s#.rgascale=0#.rgascale=1#g" ${INSTALL}/usr/config/system/configs/system.cfg

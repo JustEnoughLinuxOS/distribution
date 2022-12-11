@@ -28,4 +28,3 @@ PKG_MESON_OPTS_TARGET="-Ddefault_library=shared \
                        -Dbsymbolic_functions=true \
                        -Dforce_posix_threads=true \
                        -Dtests=false"
-
