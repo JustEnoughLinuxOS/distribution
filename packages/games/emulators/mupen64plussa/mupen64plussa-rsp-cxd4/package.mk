@@ -13,7 +13,7 @@ if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
 fi
 
-if [ "${OPENGLES_SUPPORT}" = yes && ! "${DEVICE}" = "RG552" ]; then
+if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
 fi
 
@@ -27,12 +27,12 @@ make_target() {
   case ${ARCH} in
     arm|aarch64)
       export HOST_CPU=aarch64
-      if [ "${DEVICE}" = "RG552" ]
-      then
-        export USE_GLES=0
-      else
-        export USE_GLES=1
-      fi
+      # if [ "${DEVICE}" = "RG552" ]
+      # then
+      #   export USE_GLES=0
+      # else
+      export USE_GLES=1
+      # fi
       BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
       CPPFLAGS="-DUSE_SSE2NEON"
     ;;

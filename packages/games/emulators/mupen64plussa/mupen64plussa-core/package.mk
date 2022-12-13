@@ -17,7 +17,7 @@ if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu"
 fi
 
-if [ "${OPENGLES_SUPPORT}" = yes && ! "${DEVICE}" = "RG552" ]; then
+if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
 fi
 
@@ -28,11 +28,12 @@ make_target() {
       export VC=0
       export CROSS_COMPILE="${TARGET_PREFIX}"
       BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
-      if [ "${DEVICE}" = "RG552" ]; then
-        export USE_GLES=0
-      else
-        export USE_GLES=1
-      fi
+      # if [ "${DEVICE}" = "RG552" ]
+      # then
+      #   export USE_GLES=0
+      # else
+      export USE_GLES=1
+      # fi
     ;;
   esac
 
@@ -61,6 +62,11 @@ makeinstall_target() {
     cp ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/local/share/mupen64plus/
     chmod 644 ${INSTALL}/usr/local/share/mupen64plus/mupen64plus.cfg
   fi
+
+  # Install the gptk bindings
+  cp ${PKG_DIR} m64psa.gptk ${INSTALL}/usr/local/share/mupen64plus
+  chmod 644 ${INSTALL}/usr/local/share/mupen64plus/m64psa.gptk
+
   mkdir -p ${INSTALL}/usr/bin
   cp ${PKG_DIR}/m64p.sh ${INSTALL}/usr/bin
   chmod 755 ${INSTALL}/usr/bin/m64p.sh

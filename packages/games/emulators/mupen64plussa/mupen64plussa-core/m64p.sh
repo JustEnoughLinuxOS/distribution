@@ -57,7 +57,10 @@ SET_PARAMS="--set Core[SharedDataPath]=$TMP --set Video-Rice[ResolutionWidth]=$S
 
 # Native Res Factor (Upscaling)
 	if [ "{$CORE}" = "m64p_gliden64" ]; then
-		sed -i "/UseNativeResolutionFactor/c\UseNativeResolutionFactor = $IRES" /tmp/mupen64plussa/mupen64plus.cfg
+		if [ "$IRES" = 0 ]; then
+			sed -i "/UseNativeResolutionFactor/c\UseNativeResolutionFactor = 1" /tmp/mupen64plussa/mupen64plus.cfg
+		else
+			sed -i "/UseNativeResolutionFactor/c\UseNativeResolutionFactor = $IRES" /tmp/mupen64plussa/mupen64plus.cfg
 	fi
 
 # Input Config
@@ -91,6 +94,8 @@ fi
 
 echo ${SET_PARAMS}
 
+gptokeyb -c /usr/local/share/mupen64plus/m64psa.gptk -k mupen64plus &
+
 case $1 in
 	"m64p_gliden64")
 		/usr/local/bin/mupen64plus --configdir $TMP --gfx mupen64plus-video-GLideN64 $SET_PARAMS "$2"
@@ -105,3 +110,5 @@ case $1 in
 		/usr/local/bin/mupen64plus --configdir $TMP --gfx mupen64plus-video-rice $SET_PARAMS "$2"
 	;;
 esac
+
+killall gptokeyb &
