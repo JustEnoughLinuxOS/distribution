@@ -27,8 +27,13 @@ if [ ! "${OPENGLES_SUPPORT}" = no ]; then
   PKG_CMAKE_OPTS_TARGET+=" -DGLES2=1"
 fi
 
+if [ ! "${ENABLE_UPDATES}" = "no" ]; then
+  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_UPDATES=1"
+else
+  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_UPDATES=0"
+fi
 
-PKG_CMAKE_OPTS_TARGET+=" -DENABLE_UPDATES=0 -DENABLE_EMUELEC=1 -DDISABLE_KODI=1 -DENABLE_FILEMANAGER=0 -DCEC=0"
+PKG_CMAKE_OPTS_TARGET+=" -DENABLE_EMUELEC=1 -DDISABLE_KODI=1 -DENABLE_FILEMANAGER=0 -DCEC=0"
 
 ##########################################################################################################
 # The following allows building Emulation station from local copy by using EMULATIONSTATION_SRC.
@@ -51,7 +56,7 @@ PKG_CMAKE_OPTS_TARGET+=" -DENABLE_UPDATES=0 -DENABLE_EMUELEC=1 -DDISABLE_KODI=1 
 #
 # Run from the device:
 # --------------------
-# Copy ./emulationstation binary found in build.JELOS-<device>.aarch64/emulationstation-*/.install_pkg/usr/bin/ 
+# Copy ./emulationstation binary found in build.JELOS-<device>.aarch64/emulationstation-*/.install_pkg/usr/bin/
 # Via ssh, run emulationstation with
 # systemctl stop emustation
 # chmod +x ./emulationstation
