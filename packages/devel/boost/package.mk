@@ -59,5 +59,6 @@ makeinstall_target() {
                           --with-system \
                           --with-thread \
                           --with-nowide \
+			  --with-context \
                           install
 }
