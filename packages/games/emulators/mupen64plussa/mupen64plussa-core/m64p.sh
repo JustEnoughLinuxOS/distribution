@@ -56,7 +56,7 @@ SET_PARAMS="--set Core[SharedDataPath]=$TMP --set Video-Rice[ResolutionWidth]=$S
 	fi
 
 # Native Res Factor (Upscaling)
-	if [ "{$CORE}" = "m64p_gliden64" && "{$IRES}" = 0 ]; then
+	if [ "{$CORE}" = "m64p_gliden64" ] && [ $IRES = 0 ]; then
 		sed -i "/UseNativeResolutionFactor/c\UseNativeResolutionFactor = 1" /tmp/mupen64plussa/mupen64plus.cfg
 	else
 		sed -i "/UseNativeResolutionFactor/c\UseNativeResolutionFactor = $IRES" /tmp/mupen64plussa/mupen64plus.cfg
@@ -85,15 +85,13 @@ SET_PARAMS="--set Core[SharedDataPath]=$TMP --set Video-Rice[ResolutionWidth]=$S
 	fi
 
 # RSP
-if [ "${RSP}" = "hle" || "${RSP}" = 0 ]; then
+if [ "${RSP}" = "hle"] || [ $RSP = 0 ]; then
 	SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-hle.so"
 else
 	SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-cxd4.so"
 fi
 
 echo ${SET_PARAMS}
-
-gptokeyb -c /usr/local/share/mupen64plus/m64psa.gptk -k mupen64plus &
 
 case $1 in
 	"m64p_gliden64")
@@ -109,5 +107,3 @@ case $1 in
 		/usr/local/bin/mupen64plus --configdir $TMP --gfx mupen64plus-video-rice $SET_PARAMS "$2"
 	;;
 esac
-
-killall gptokeyb &

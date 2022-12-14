@@ -63,10 +63,6 @@ makeinstall_target() {
     chmod 644 ${INSTALL}/usr/local/share/mupen64plus/mupen64plus.cfg
   fi
 
-  # Install the gptk bindings
-  cp ${PKG_DIR}/m64psa.gptk ${INSTALL}/usr/local/share/mupen64plus
-  chmod 644 ${INSTALL}/usr/local/share/mupen64plus/m64psa.gptk
-
   mkdir -p ${INSTALL}/usr/bin
   cp ${PKG_DIR}/m64p.sh ${INSTALL}/usr/bin
   chmod 755 ${INSTALL}/usr/bin/m64p.sh
