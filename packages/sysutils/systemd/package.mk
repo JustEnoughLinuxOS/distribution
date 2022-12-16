@@ -98,8 +98,11 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dkmod-path=/usr/bin/kmod \
                        -Dmount-path=/usr/bin/mount \
                        -Dumount-path=/usr/bin/umount \
-                       -Ddebug-tty=${DEBUG_TTY} \
                        -Dversion-tag=${PKG_VERSION}"
+if [ -n "${BUILD_WITH_DEBUG}" ]
+then
+  PKG_MESON_OPTS_TARGET+=" -Ddebug-tty=${DEBUG_TTY}"
+fi
 
 pre_configure_target() {
   export TARGET_CFLAGS="${TARGET_CFLAGS} -fno-schedule-insns -fno-schedule-insns2 -Wno-format-truncation"

@@ -86,13 +86,15 @@ Building JELOS is easy, the fastest and most recommended method is to use Docker
 |RG552||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG552```|
 |RG503||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG503```|
 |RG353P|RG503|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG353P```|
+|RG353V|RG503|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG353P```|
+|RG353M|RG503|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG353P```|
 |RG351P||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG351P```|
 |RG351V|RG351P|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-351V```|
 |RG351MP|RG351P|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG351MP```|
-|x86_64||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-X86_64```|
+|handheld||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-handheld```|
 |ALL DEVICES||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-world```|
 
-> Devices that list a dependency require the dependency to be built first as that build will be used as the root of the device you are building.
+> Devices that list a dependency require the dependency to be built first as that build will be used as the root of the device you are building.  This will be done automatically by the build tooling when you start a build for your device.
 
 ### Building Manually
 To build JELOS manually, you will need several prerequisite packages installed.
@@ -128,21 +130,24 @@ For development build, you can use the following env variables to customize the 
 
 **SSH keys**
 ```
-export JELOS_SSH_KEYS_FILE=~/.ssh/jelos/authorized_keys
+export LOCAL_SSH_KEYS_FILE=~/.ssh/jelos/authorized_keys
 ```
 **WiFi SSID and password**
 ```
-export JELOS_WIFI_SSID=MYWIFI
-export JELOS_WIFI_KEY=secret
+export LOCAL_WIFI_SSID=MYWIFI
+export LOCAL_WIFI_KEY=secret
 ```
 
 **Screenscraper, GamesDB, and RetroAchievements**
 
-To enable Screenscraper, GamesDB, and RetroAchievements, register at each site and apply the api keys in ~/developer_settings.conf. This configuration is picked up by EmulationStation during the build.
+To enable Screenscraper, GamesDB, and RetroAchievements, register at each site and apply the api keys in ~/developer_settings.conf or add them as environment variables. Unsetting one of the variables will disable it in EmulationStation. This configuration is picked up by EmulationStation during the build.
 
 ```
-export SCREENSCRAPER_DEV_LOGIN="devid=DEVID&devpassword=DEVPASSWORD
+# Apply for a Screenscraper API Key here: https://www.screenscraper.fr/forumsujets.php?frub=12&numpage=0
+export SCREENSCRAPER_DEV_LOGIN="devid=DEVID&devpassword=DEVPASSWORD"
+# Apply for a GamesDB API Key here: https://forums.thegamesdb.net/viewforum.php?f=10
 export GAMESDB_APIKEY="APIKEY"
+# Find your Cheevos Web API key here: https://retroachievements.org/controlpanel.php
 export CHEEVOS_DEV_LOGIN="z=DEVID&y=DEVPASSWORD"
 ```
 

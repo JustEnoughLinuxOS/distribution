@@ -4,15 +4,17 @@
 
 . /etc/profile
 
-ORGANIZATION="JustEnoughLinuxOS"
 
+ORGANIZATION="${GIT_ORGANIZATION}"
 BRANCH="$(get_setting updates.branch)"
-if [ "${BRANCH}" == "dev" ]
-then
-  PROJECT="distribution-dev"
-else
-  PROJECT="distribution"
-fi
+case ${BRANCH} in
+  dev)
+    PROJECT="${GIT_REPO}-dev"
+  ;;
+  *)
+    PROJECT="${GIT_REPO}"
+  ;;
+esac
 
 FORCE="$(get_setting updates.force)"
 

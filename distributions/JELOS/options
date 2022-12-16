@@ -7,6 +7,12 @@
 # HARDENING (security relevant linker and compiler flags) support
   HARDENING_SUPPORT="no"
 
+# The name of the parent organization for updates
+  GIT_ORGANIZATION="JustEnoughLinuxOS"
+
+# The name of the github project for updates
+  GIT_REPO="distribution"
+
 # Name of the Distro to build (full name, without special characters)
   DISTRONAME="JELOS"
 

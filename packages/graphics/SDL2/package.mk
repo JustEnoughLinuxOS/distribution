@@ -3,8 +3,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="SDL2"
-PKG_VERSION="2.0.20"
-PKG_SHA256="c56aba1d7b5b0e7e999e4a7698c70b63a3394ff9704b5f6e1c57e0c16f04dd06"
+PKG_VERSION="2.26.0"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.libsdl.org/"
 PKG_URL="https://www.libsdl.org/release/SDL2-${PKG_VERSION}.tar.gz"
@@ -53,13 +52,15 @@ then
                            -DVIDEO_WAYLAND_QT_TOUCH=OFF \
                            -DWAYLAND_SHARED=ON \
                            -DVIDEO_X11=OFF \
-                           -DSDL_X11=OFF"
+                           -DSDL_X11=OFF \
+			   -DSDL_HIDAPI_JOYSTICK=ON"
 else
   PKG_CMAKE_OPTS_TARGET+=" -DVIDEO_WAYLAND=OFF \
                            -DVIDEO_WAYLAND_QT_TOUCH=ON \
                            -DWAYLAND_SHARED=OFF \
                            -DVIDEO_X11=OFF \
-                           -DSDL_X11=OFF"
+                           -DSDL_X11=OFF \
+			   -DSDL_HIDAPI_JOYSTICK=OFF"
 fi
 
 case ${PROJECT} in
@@ -78,7 +79,7 @@ esac
 
 pre_configure_target(){
   export LDFLAGS="${LDFLAGS} -ludev"
-  PKG_CMAKE_OPTS_TARGET="-DSDL_STATIC=OFF \
+  PKG_CMAKE_OPTS_TARGET+="-DSDL_STATIC=OFF \
                          -DLIBC=ON \
                          -DGCC_ATOMICS=ON \
                          -DALTIVEC=OFF \
@@ -120,6 +121,6 @@ pre_configure_target(){
 }
 
 post_makeinstall_target() {
-  sed -e "s:\(['=LI]\)/usr:\\1${SYSROOT_PREFIX}/usr:g" -i $SYSROOT_PREFIX/usr/bin/sdl2-config
-  rm -rf $INSTALL/usr/bin
+  sed -e "s:\(['=LI]\)/usr:\\1${SYSROOT_PREFIX}/usr:g" -i ${SYSROOT_PREFIX}/usr/bin/sdl2-config
+  rm -rf ${INSTALL}/usr/bin
 }
