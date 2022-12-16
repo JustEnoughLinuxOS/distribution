@@ -1,0 +1,13 @@
+diff --git a/Source/Core/DolphinNoGUI/CMakeLists.txt b/Source/Core/DolphinNoGUI/CMakeLists.txt
+index f21955d809..e4a6ab61a2 100644
+--- a/Source/Core/DolphinNoGUI/CMakeLists.txt
++++ b/Source/Core/DolphinNoGUI/CMakeLists.txt
+@@ -17,7 +17,7 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+   target_sources(dolphin-nogui PRIVATE PlatformFBDev.cpp)
+ endif()
+ 
+-set_target_properties(dolphin-nogui PROPERTIES OUTPUT_NAME dolphin-emu-nogui)
++set_target_properties(dolphin-nogui PROPERTIES OUTPUT_NAME primehack-nogui)
+ 
+ target_link_libraries(dolphin-nogui
+ PRIVATE

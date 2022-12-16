@@ -288,6 +288,8 @@ then
                         jslisten set "-9 dolphin-emu-nogui"
                         if [ "$EMU" = "dolphinsa-gc" ]; then
                         RUNTHIS='${TBASH} /usr/bin/start_dolphin_gc.sh "${ROMNAME}"'
+                        elif [ "$EMU" = "primehack" ]; then
+                        RUNTHIS='${TBASH} /usr/bin/start_primehack.sh "${ROMNAME}"'
                         fi
 
                 ;;
@@ -295,6 +297,8 @@ then
                         jslisten set "-9 dolphin-emu-nogui"
                         if [ "$EMU" = "dolphinsa-wii" ]; then
                         RUNTHIS='${TBASH} /usr/bin/start_dolphin_wii.sh "${ROMNAME}"'
+                        elif [ "$EMU" = "primehack" ]; then
+                        RUNTHIS='${TBASH} /usr/bin/start_primehack.sh "${ROMNAME}"'
                         fi
                 ;;
                 "switch")
