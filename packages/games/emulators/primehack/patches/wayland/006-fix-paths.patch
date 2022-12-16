@@ -1,0 +1,39 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 5124dfbc81..7936cca11d 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -134,7 +134,7 @@ set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+ # Set up paths
+ set(bindir  ${CMAKE_INSTALL_PREFIX}/bin               CACHE PATH "bindir")
+-set(datadir ${CMAKE_INSTALL_PREFIX}/share/dolphin-emu CACHE PATH "datadir")
++set(datadir ${CMAKE_INSTALL_PREFIX}/share/primehack CACHE PATH "datadir")
+ set(mandir  ${CMAKE_INSTALL_PREFIX}/share/man         CACHE PATH "mandir")
+ add_definitions(-DDATA_DIR="${datadir}/")
+
+diff --git a/Source/Core/Common/CommonPaths.h b/Source/Core/Common/CommonPaths.h
+index cb8aacddf8..b6d4637cc4 100644
+--- a/Source/Core/Common/CommonPaths.h
++++ b/Source/Core/Common/CommonPaths.h
+@@ -24,7 +24,7 @@
+ #define NOMEDIA_FILE ".nomedia"
+ #else
+ #define USERDATA_DIR "user"
+-#define DOLPHIN_DATA_DIR "dolphin-emu"
++#define DOLPHIN_DATA_DIR "primehack"
+ #endif
+ 
+ // Dirs in both User and Sys
+diff --git a/Source/Core/DolphinNoGUI/CMakeLists.txt b/Source/Core/DolphinNoGUI/CMakeLists.txt
+index f21955d809..e4a6ab61a2 100644
+--- a/Source/Core/DolphinNoGUI/CMakeLists.txt
++++ b/Source/Core/DolphinNoGUI/CMakeLists.txt
+@@ -17,7 +17,7 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+   target_sources(dolphin-nogui PRIVATE PlatformFBDev.cpp)
+ endif()
+
+-set_target_properties(dolphin-nogui PROPERTIES OUTPUT_NAME dolphin-emu-nogui)
++set_target_properties(dolphin-nogui PROPERTIES OUTPUT_NAME primehack-nogui)
+
+ target_link_libraries(dolphin-nogui
+ PRIVATE
