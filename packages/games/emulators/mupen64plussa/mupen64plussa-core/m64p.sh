@@ -13,6 +13,7 @@ ASPECT=$(get_setting game_aspect_ratio n64 "${GAME}")
 IRES=$(get_setting internal_resolution n64 "${GAME}")
 RSP=$(get_setting rsp_plugin n64 "${GAME}")
 FPS=$(get_setting show_fps n64 "${GAME}")
+PAK=$(get_setting controller_pak n64 "${GAME}")
 CON=$(get_setting input_configuration n64 "${GAME}")
 SHARE="/usr/local/share/mupen64plus"
 M64PCONF="/storage/.config/game/configs/mupen64plussa/mupen64plus.cfg"
@@ -56,11 +57,10 @@ SET_PARAMS="--set Core[SharedDataPath]=$TMP --set Video-Rice[ResolutionWidth]=$S
 	fi
 
 # Native Res Factor (Upscaling)
-	if [ "{$CORE}" = "m64p_gliden64" ] && [ $IRES = 0 ]; then
-		sed -i "/UseNativeResolutionFactor/c\UseNativeResolutionFactor = 1" /tmp/mupen64plussa/mupen64plus.cfg
-	else
+	if [ "{$CORE}" = "m64p_gliden64" ]; then
 		sed -i "/UseNativeResolutionFactor/c\UseNativeResolutionFactor = $IRES" /tmp/mupen64plussa/mupen64plus.cfg
 	fi
+
 
 # Input Config
 	if [ "${CON}" = "zlswap" ]; then
@@ -71,6 +71,9 @@ SET_PARAMS="--set Core[SharedDataPath]=$TMP --set Video-Rice[ResolutionWidth]=$S
 		# Default
 		cp $SHARE/default.ini $TMP/InputAutoCfg.ini
 	fi
+
+# Controller Pak
+	sed -i "0,/plugin =/c\plugin = $PAK" /tmp/mupen64plussa/mupen64plus.cfg
 
 # Show FPS
 # Get configuration from system.cfg
@@ -85,7 +88,7 @@ SET_PARAMS="--set Core[SharedDataPath]=$TMP --set Video-Rice[ResolutionWidth]=$S
 	fi
 
 # RSP
-if [ "${RSP}" = "hle"] || [ $RSP = 0 ]; then
+if [ "${RSP}" = "hle" ]; then
 	SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-hle.so"
 else
 	SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-cxd4.so"
