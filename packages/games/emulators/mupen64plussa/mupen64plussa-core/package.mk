@@ -28,12 +28,17 @@ make_target() {
       export VC=0
       export CROSS_COMPILE="${TARGET_PREFIX}"
       BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
+      # if [ "${DEVICE}" = "RG552" ]
+      # then
+      #   export USE_GLES=0
+      # else
+      export USE_GLES=1
+      # fi
     ;;
   esac
 
-  export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -D_REENTRANT"
+  export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -pthread"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
-  export USE_GLES=1
   export V=1
   export OSD=0
   make -C projects/unix clean
@@ -57,6 +62,7 @@ makeinstall_target() {
     cp ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/local/share/mupen64plus/
     chmod 644 ${INSTALL}/usr/local/share/mupen64plus/mupen64plus.cfg
   fi
+
   mkdir -p ${INSTALL}/usr/bin
   cp ${PKG_DIR}/m64p.sh ${INSTALL}/usr/bin
   chmod 755 ${INSTALL}/usr/bin/m64p.sh
