@@ -3,7 +3,7 @@
 
 PKG_NAME="amiberry"
 PKG_ARCH="arm aarch64"
-PKG_VERSION="5a644d8079831f39fa0734a07a1c6647a7f8a012"
+PKG_VERSION="c82bef1970b1983e66d45e9dd6e939b0f06cbb3d"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/midwan/amiberry"
 PKG_URL="${PKG_SITE}.git"
@@ -17,7 +17,7 @@ PKG_PATCH_DIRS+="${DEVICE}"
 pre_configure_target() {
   cd ${PKG_BUILD}
   export SYSROOT_PREFIX=${SYSROOT_PREFIX}
-  if [[ "${DEVICE}" =~ RG351 ]]
+  if [[ "${DEVICE}" =~ RG351 ]] || [[ "${DEVICE}" =~ RGB20S ]]
   then
     AMIBERRY_PLATFORM="PLATFORM=RG351x"
   elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]

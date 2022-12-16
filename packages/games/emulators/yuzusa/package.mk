@@ -2,12 +2,12 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="yuzusa"
-PKG_VERSION="48b4eca28a397adbaa68d1042262172fcdee6be8"
+PKG_VERSION="a4696285af946588dc33b19e49a3baa0f8b2b60d"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/yuzu-emu/yuzu"
 PKG_URL="$PKG_SITE.git"
-PKG_DEPENDS_TARGET="toolchain libfmt boost ffmpeg zstd zlib libzip lz4 opus libusb"
+PKG_DEPENDS_TARGET="toolchain libfmt boost ffmpeg zstd zlib libzip lz4 opus libusb nlohmann-json"
 PKG_SHORTDESC="Nintendo Switch emulator"
 PKG_TOOLCHAIN="cmake"
 GET_HANDLER_SUPPORT="git"
@@ -37,7 +37,6 @@ PKG_CMAKE_OPTS_TARGET+="        -DENABLE_QT=OFF \
                                 -DENABLE_SDL2=ON \
                                 -DARCHITECTURE_x86_64=ON \
                                 -DBUILD_SHARED_LIBS=OFF \
-                                -DYUZU_USE_BUNDLED_LIBUSB=OFF \
 				-DENABLE_WEB_SERVICE=OFF \
                                 -DUSE_DISCORD_PRESENCE=OFF"
 

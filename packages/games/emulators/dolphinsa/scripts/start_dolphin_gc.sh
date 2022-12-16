@@ -128,7 +128,7 @@ ln -sf /storage/roms/savestates/gamecube /storage/.config/dolphin-emu/StateSaves
 	fi
 
   #GC Controller Profile
-        if [ "$CON" = "default" ]
+        if [ "$CON" = "gcpad" ]
         then
                 cp -r /usr/config/dolphin-emu/GCPadNew.ini /storage/.config/dolphin-emu/GCPadNew.ini
         fi

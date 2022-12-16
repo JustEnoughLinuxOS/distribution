@@ -26,7 +26,7 @@ index 700146a..f853845 100644
 +    GLES := 1
 +    GLES31 := 1
 +
-+# Anbernic RG351P/M, RG351MP, RG351V
++# Anbernic RG351P/M, RG351MP, RG351V, RGB20S
 +else ifeq ($(platform), RK3326)
 +    TARGET := $(TARGET_NAME)_libretro.so
 +	fpic := -fPIC

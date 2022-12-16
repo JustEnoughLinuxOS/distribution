@@ -3,14 +3,13 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libva"
-PKG_VERSION="2.14.0"
-PKG_SHA256="f21152a2170edda9d1c4dd463d52eaf62b553e83e553c0a946654523cca86d5e"
+PKG_VERSION="2.16.0"
+PKG_SHA256="766edf51fd86efe9e836a4467d4ec7c3af690a3c601b3c717237cee856302279"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://01.org/linuxmedia"
 PKG_URL="https://github.com/intel/libva/archive/${PKG_VERSION}.tar.gz"
 PKG_LONGDESC="Libva is an implementation for VA-API (VIdeo Acceleration API)."
-PKG_TOOLCHAIN="meson"
 
 if [ "${DISPLAYSERVER}" = "x11" ]; then
   PKG_DEPENDS_TARGET="toolchain libX11 libXext libXfixes libdrm"

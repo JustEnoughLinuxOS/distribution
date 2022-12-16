@@ -3,23 +3,24 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="intel-vaapi-driver"
-PKG_VERSION="2.3.0"
-PKG_SHA256="fcc3f09291e58fd316fd015d4e1329e7e03c38cffa4651bda725d500a66aa74e"
+PKG_VERSION="2.4.1"
+PKG_SHA256="03cd7e16acc94f828b6e7f3087863d8ca06e99ffa3385588005b1984bdd56157"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://01.org/linuxmedia"
-PKG_URL="https://github.com/intel/intel-vaapi-driver/archive/$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/intel/intel-vaapi-driver/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libva libdrm"
 PKG_LONGDESC="intel-vaapi-driver: VA-API user mode driver for Intel GEN Graphics family"
-PKG_TOOLCHAIN="autotools"
 
-if [ "$DISPLAYSERVER" = "x11" ]; then
-  DISPLAYSERVER_LIBVA="--enable-x11 --disable-wayland"
-elif [ "$DISPLAYSERVER" = "wl" ]; then
-  DISPLAYSERVER_LIBVA="--disable-x11 --enable-wayland"
+if [ "${DISPLAYSERVER}" = "x11" ]; then
+  DISPLAYSERVER_LIBVA="-Dwith_x11=yes -Dwith_wayland=no"
+elif [ "${DISPLAYSERVER}" = "wl" ]; then
+  DISPLAYSERVER_LIBVA="-Dwith_x11=no -Dwith_wayland=yes"
 else
-  DISPLAYSERVER_LIBVA="--disable-x11 --disable-wayland"
+  DISPLAYSERVER_LIBVA="-Dwith_x11=no -Dwith_wayland=no"
 fi
 
-PKG_CONFIGURE_OPTS_TARGET="--disable-silent-rules \
-                           $DISPLAYSERVER_LIBVA"
+PKG_MESON_OPTS_TARGET="-Denable_hybrid_codec=false \
+                       -Denable_tests=false \
+                       ${DISPLAYSERVER_LIBVA}"
+

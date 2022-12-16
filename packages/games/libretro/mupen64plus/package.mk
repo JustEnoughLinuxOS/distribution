@@ -21,6 +21,7 @@
 
 PKG_NAME="mupen64plus"
 PKG_VERSION="ab8134ac90a567581df6de4fc427dd67bfad1b17"
+PKG_SHA256=""
 PKG_REV="1"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/mupen64plus-libretro"
@@ -48,7 +49,7 @@ pre_make_target() {
 
 pre_configure_target() {
   case ${DEVICE} in
-    RG351P|RG351V|RG351MP)
+    RG351P|RG351V|RG351MP|RGB20S)
       PKG_MAKE_OPTS_TARGET=" platform=RK3326"
       CFLAGS="${CFLAGS} -DLINUX -DEGL_API_FB"
       CPPFLAGS="${CPPFLAGS} -DLINUX -DEGL_API_FB"
