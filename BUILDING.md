@@ -78,21 +78,47 @@ The tools directory contains utility scripts that can be used during the develop
 ## Building JELOS
 Building JELOS requires an Ubuntu 20.04 host with approximately 200GB of free space for a single device, or 800GB of free space for a full world build.  Other Linux distributions may be used when building using Docker, however this is untested and unsupported.  We recommend building with no more than 8 cores.
 
+### Cloning the JELOS Sources
+To build JELOS, start by cloning the project git repository.
+
+```
+cd ~
+git clone https://github.com/JustEnoughLinuxOS/distribution.git
+```
+
+### Selecting the Desired Branch
+Once you have cloned the repo, you will want to determine if you want to build the main branch which is more stable, or the development branch which is unstable but hosts our newest features.
+
+|Branch|Purpose|
+|----|----|
+|main|Stable JELOS sources|
+|dev|Unstable JELOS sources|
+
+To check out our development branch, cd into the project directory and checkout `dev`.
+
+```
+cd distribution
+git checkout dev
+```
+
 ### Building with Docker
-Building JELOS is easy, the fastest and most recommended method is to use Docker.  At this time building the distribution using Docker is only known to work on a Linux system.  To build JELOS use the table below.
+Building JELOS is easy, the fastest and most recommended method is to instruct the build to use Docker, this is only known to work on a Linux system.  To build JELOS with Docker use the table below.
 
 | Device | Dependency | Docker Command |
 | ---- | ---- | ---- |
 |RG552||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG552```|
 |RG503||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG503```|
 |RG353P|RG503|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG353P```|
+|RG353V|RG503|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG353P```|
+|RG353M|RG503|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG353P```|
 |RG351P||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG351P```|
 |RG351V|RG351P|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-351V```|
 |RG351MP|RG351P|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG351MP```|
-|x86_64||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-X86_64```|
+|RGB20S||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RGB20S```|
+|handheld||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-handheld```|
 |ALL DEVICES||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-world```|
 
-> Devices that list a dependency require the dependency to be built first as that build will be used as the root of the device you are building.
+> Devices that list a dependency require the dependency to be built first as that build will be used as the root of the device you are building.  This will be done automatically by the build tooling when you start a build for your device.
 
 ### Building Manually
 To build JELOS manually, you will need several prerequisite packages installed.
@@ -128,21 +154,24 @@ For development build, you can use the following env variables to customize the 
 
 **SSH keys**
 ```
-export JELOS_SSH_KEYS_FILE=~/.ssh/jelos/authorized_keys
+export LOCAL_SSH_KEYS_FILE=~/.ssh/jelos/authorized_keys
 ```
 **WiFi SSID and password**
 ```
-export JELOS_WIFI_SSID=MYWIFI
-export JELOS_WIFI_KEY=secret
+export LOCAL_WIFI_SSID=MYWIFI
+export LOCAL_WIFI_KEY=secret
 ```
 
 **Screenscraper, GamesDB, and RetroAchievements**
 
-To enable Screenscraper, GamesDB, and RetroAchievements, register at each site and apply the api keys in ~/developer_settings.conf. This configuration is picked up by EmulationStation during the build.
+To enable Screenscraper, GamesDB, and RetroAchievements, register at each site and apply the api keys in ~/developer_settings.conf or add them as environment variables. Unsetting one of the variables will disable it in EmulationStation. This configuration is picked up by EmulationStation during the build.
 
 ```
-export SCREENSCRAPER_DEV_LOGIN="devid=DEVID&devpassword=DEVPASSWORD
+# Apply for a Screenscraper API Key here: https://www.screenscraper.fr/forumsujets.php?frub=12&numpage=0
+export SCREENSCRAPER_DEV_LOGIN="devid=DEVID&devpassword=DEVPASSWORD"
+# Apply for a GamesDB API Key here: https://forums.thegamesdb.net/viewforum.php?f=10
 export GAMESDB_APIKEY="APIKEY"
+# Find your Cheevos Web API key here: https://retroachievements.org/controlpanel.php
 export CHEEVOS_DEV_LOGIN="z=DEVID&y=DEVPASSWORD"
 ```
 

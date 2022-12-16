@@ -3,21 +3,21 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libbluray"
-PKG_VERSION="1.0.2"
-PKG_SHA256="6d9e7c4e416f664c330d9fa5a05ad79a3fb39b95adfc3fd6910cbed503b7aeff"
+PKG_VERSION="1.3.3"
+PKG_SHA256="58ff52cdcee64c55dcc3c777a1c39fb41abd951b927978e4d2b6811b9193a488"
 PKG_LICENSE="LGPL"
 PKG_SITE="https://www.videolan.org/developers/libbluray.html"
-PKG_URL="http://download.videolan.org/pub/videolan/libbluray/$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain fontconfig freetype libxml2"
+PKG_URL="http://download.videolan.org/pub/videolan/libbluray/${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
+PKG_DEPENDS_TARGET="toolchain fontconfig freetype libxml2 libudfread"
 PKG_LONGDESC="libbluray is an open-source library designed for Blu-Ray Discs playback for media players."
 PKG_TOOLCHAIN="autotools"
 
-if [ "$BLURAY_AACS_SUPPORT" = "yes" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libaacs"
+if [ "${BLURAY_AACS_SUPPORT}" = "yes" ]; then
+  PKG_DEPENDS_TARGET+=" libaacs"
 fi
 
-if [ "$BLURAY_BDPLUS_SUPPORT" = "yes" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libbdplus"
+if [ "${BLURAY_BDPLUS_SUPPORT}" = "yes" ]; then
+  PKG_DEPENDS_TARGET+=" libbdplus"
 fi
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-werror \
@@ -39,3 +39,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-werror \
                            --with-fontconfig \
                            --with-libxml2 \
                            --with-gnu-ld"
+
+post_configure_target() {
+  libtool_remove_rpath libtool
+}

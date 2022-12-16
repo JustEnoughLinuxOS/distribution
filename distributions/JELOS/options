@@ -7,6 +7,12 @@
 # HARDENING (security relevant linker and compiler flags) support
   HARDENING_SUPPORT="no"
 
+# The name of the parent organization for updates
+  GIT_ORGANIZATION="JustEnoughLinuxOS"
+
+# The name of the github project for updates
+  GIT_REPO="distribution"
+
 # Name of the Distro to build (full name, without special characters)
   DISTRONAME="JELOS"
 
@@ -125,7 +131,7 @@
   CRON_SUPPORT="yes"
 
 # Distribution Specific source location
-  DISTRO_MIRROR="http://sources.libreelec.tv/mirror"
+  DISTRO_MIRROR=""
   DISTRO_SRC="https://github.com/JustEnoughLinuxOS"
 
 # Default size of system partition, in MB, eg. 512

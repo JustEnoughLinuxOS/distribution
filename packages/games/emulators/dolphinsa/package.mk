@@ -10,7 +10,7 @@ case ${DEVICE} in
   RG552|handheld)
     PKG_SITE="https://github.com/dolphin-emu/dolphin"
     PKG_URL="${PKG_SITE}.git"
-    PKG_VERSION="7cd9a78ebf6e49b21a5a5eee99858822a8946faa"
+    PKG_VERSION="a1c4861ad8666b622f96266a20af6e8e787c9693"
     PKG_PATCH_DIRS+=" wayland"
   ;;
   *)

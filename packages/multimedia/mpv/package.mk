@@ -3,11 +3,12 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="mpv"
-PKG_VERSION="349e437"
+PKG_VERSION="25b66256d7ff48254b2055a066e29f260414112f"
+PKG_SHA256=""
 PKG_LICENSE="GPLv2+"
 PKG_SITE="https://github.com/mpv-player/mpv"
 PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain ffmpeg SDL2 luajit libass"
+PKG_DEPENDS_TARGET="toolchain ffmpeg SDL2 luajit libass waf:host"
 PKG_LONGDESC="Video player based on MPlayer/mplayer2 https://mpv.io"
 PKG_TOOLCHAIN="manual"
 
@@ -21,16 +22,17 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_WAF_OPTS=" --disable-gl --enable-egl"
 fi
 
+pre_configure_target() {
+  cp -f ${TOOLCHAIN}/bin/waf ${PKG_BUILD}
+}
+
 configure_target() {
-  #./bootstrap.py 
-  # the bootstrap was failing for some reason. 
-  cp ${PKG_DIR}/waf/* ${PKG_BUILD}  
-  
-  ./waf configure --enable-sdl2 --enable-sdl2-gamepad --disable-pulse --disable-libbluray ${PKG_WAF_OPTS}
+  cd ${PKG_BUILD}
+  ${PKG_BUILD}/waf configure --enable-sdl2 --enable-sdl2-gamepad --disable-pulse --disable-libbluray ${PKG_WAF_OPTS}
 }
 
 make_target() {
-  ./waf build
+  ${PKG_BUILD}/waf build
 }
 
 makeinstall_target() {

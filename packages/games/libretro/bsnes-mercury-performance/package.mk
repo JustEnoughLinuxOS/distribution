@@ -15,7 +15,7 @@ PKG_TOOLCHAIN="make"
 PKG_AUTORECONF="no"
 
 pre_make_target() {
-  if [[ "${DEVICE}" =~ RG351 ]]
+  if [[ "${DEVICE}" =~ RG351 ]] || [[ "${DEVICE}" =~ RGB20S ]]
   then
     PKG_MAKE_OPTS_TARGET+=" platform=RK3326"
   elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]

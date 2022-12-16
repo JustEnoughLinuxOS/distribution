@@ -20,7 +20,7 @@
 ################################################################################
 
 PKG_NAME="beetle-lynx"
-PKG_VERSION="3d2fcc5a555bea748b76f92a082c40227dff8222"
+PKG_VERSION="e3da38c7ff73ac0d442482e699c99890ac09f00f"
 PKG_SHA256=""
 PKG_REV="1"
 PKG_ARCH="any"
