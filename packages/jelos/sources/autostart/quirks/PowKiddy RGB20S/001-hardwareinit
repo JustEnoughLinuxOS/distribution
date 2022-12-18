@@ -12,6 +12,3 @@ echo 0 > /sys/class/pwm/${DEVICE_PWM_MOTOR}/export
 echo 1000000 > /sys/class/pwm/${DEVICE_PWM_MOTOR}/pwm0/period 
 echo 1 > /sys/class/pwm/${DEVICE_PWM_MOTOR}/pwm0/enable 
 echo 1000000 > /sys/class/pwm/${DEVICE_PWM_MOTOR}/pwm0/duty_cycle 
-
-# Volume Fix
-amixer -c 0 cset iface=MIXER,name='Playback Path' SPK_HP

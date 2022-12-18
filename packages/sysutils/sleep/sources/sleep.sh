@@ -62,11 +62,6 @@ case $1 in
     DEVICE_VOLUME=$(get_setting "audio.volume" 2>/dev/null)
     nohup amixer -M set "${DEVICE_AUDIO_MIXER}" ${DEVICE_VOLUME}% & >/dev/null 2>&1
 
-    if [[ "${HW_DEVICE}" =~ RGB20S ]]
-    then
-      nohup amixer -c 0 cset iface=MIXER,name='Playback Path' SPK_HP
-    fi
-
     BRIGHTNESS=$(get_setting system.brightness)
     echo ${BRIGHTNESS} >/sys/class/backlight/$(brightness device)/brightness
 
