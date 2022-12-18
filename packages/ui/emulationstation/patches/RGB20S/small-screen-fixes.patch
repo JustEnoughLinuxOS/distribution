@@ -1,0 +1,13 @@
+diff --git a/es-app/src/guis/GuiSaveState.cpp b/es-app/src/guis/GuiSaveState.cpp
+index 9a256c6..4ba27b6 100644
+--- a/es-app/src/guis/GuiSaveState.cpp
++++ b/es-app/src/guis/GuiSaveState.cpp
+@@ -40,7 +40,7 @@ GuiSaveState::GuiSaveState(Window* window, FileData* game, const std::function<v
+ 	float screenProportion = (float)Renderer::getScreenWidth() / (float)Renderer::getScreenHeight();
+ 
+ 	float sh = (float)Math::min(Renderer::getScreenHeight(), Renderer::getScreenWidth());
+-	sh = (float) theme->TextSmall.font->getSize() / sh * 0.8;
++	sh = (float) theme->TextSmall.font->getSize() / sh * 0.5;
+ 
+ 	std::string xml =
+ 		"<theme defaultView=\"Tiles\">"
