@@ -31,6 +31,8 @@ DEFAULT=(
     /storage/.config/game/*
     /storage/.emulationstation/es_*.cfg
     /storage/.emulationstation/scripts/*
+    /storage/.emulationstation/themesettings/*
+    $(find /storage/.emulationstation/themes/* -type d -maxdepth 0 -not -path "*es-theme-art-book-next" -not -path "*es-theme-minielec" -not -path "*es-theme-minimal" -not -path "*system-theme")
 )
 
 if [ -e "/storage/.config/backuptool.conf" ]
