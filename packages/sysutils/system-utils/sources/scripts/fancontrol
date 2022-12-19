@@ -33,19 +33,19 @@ then
     TEMPS=(55000 45000 0)
   elif [ "${COOLING_PROFILE}" = "moderate" ]
   then
-    SPEEDS=(255 190 125 85)
+    SPEEDS=(255 192 128 96)
     TEMPS=(65000 55000 45000 0)
   else
     # Quiet.
-    SPEEDS=(255 127 85 0)
-    TEMPS=(75000 65000 55000 0)
+    SPEEDS=(255 192 128 96 64)
+    TEMPS=(70000 60000 55000 50000 0)
   fi
 fi
 
 while true
 do
   INDEX=0
-  CPU_TEMP=$(printf "%.0f" $(cat /sys/devices/virtual/thermal/thermal_zone*/temp | awk '{ total += $1; count++ } END { print total/count }'))
+  CPU_TEMP=$(printf "%.0f" $(cat ${DEVICE_TEMP_SENSOR} | awk '{ total += $1; count++ } END { print total/count }'))
   $DEBUG && echo "CPU TEMP: ${CPU_TEMP}" 2>/dev/null
   for TEMP in "${TEMPS[@]}"
   do

@@ -16,3 +16,8 @@ then
   set-audio esset "Master"
   reboot
 fi
+
+### Disables speaker output when headphones are connected.
+alsactl restore -f /storage/.config/asound.state
+/usr/bin/amixer -c 1 sset "Auto-Mute Mode" Enabled
+alsactl store -f /storage/.config/asound.state
