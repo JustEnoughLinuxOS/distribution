@@ -116,14 +116,8 @@ function set_audio_device() {
       cp /usr/config/asound.conf.RG353V /storage/.config/asound.conf
       exit 0
     else
-      if [ -e "/usr/config/asound.conf" ]
-      then
-        cp /usr/config/asound.conf /storage/.config
-        exit 0
-      else
-        CARD="0"
-        HWDEV="hw:${CARD},0"
-      fi
+      CARD="0"
+      HWDEV="hw:${CARD},0"
     fi
   elif [ "${SELECTION}" == "DEFAULT HDMI" ]
   then
@@ -157,7 +151,7 @@ function set_audio_device() {
         CARD=$(awk '/^card:/ {print $2}' ${SDEVICE})
         DEVICE=$(awk '/^device:/ {print $2}' ${SDEVICE})
         NAME=$(awk '/^name:/ {print $2}' ${SDEVICE})
-        if [ "${SELECTION}" == "${NAME} (${CARD}:${DEVICE})" ]
+        if [[ "${SELECTION}" =~ ${NAME} ]]
         then
           HWDEV="hw:${CARD},${DEVICE}"
         fi

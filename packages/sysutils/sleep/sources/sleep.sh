@@ -25,7 +25,15 @@ case $1 in
 
     nohup alsactl store -f /storage/.config/asound.state >/dev/null 2>&1
 
-    nohup systemctl stop bluetooth & >/dev/null 2>&1
+    if [ "$(get_setting bluetooth.enabled)" == "1" ]
+    then
+      nohup systemctl stop bluetooth >/dev/null 2>&1
+    fi
+
+    if [ "${DEVICE_WIFI_MODULE_SLEEPS}" = false ]
+    then
+       rmmod ${DEVICE_WIFI_MODULE} >/dev/null 2>&1
+    fi
 
     wait
     touch /run/.last_sleep_time
@@ -47,6 +55,11 @@ case $1 in
     if [ "${DEVICE_VOLUMECTL}" == "true" ]
     then
       nohup systemctl start volume & >/dev/null 2>&1
+    fi
+
+    if [ "${DEVICE_WIFI_MODULE_SLEEPS}" = false ]
+    then
+       modprobe ${DEVICE_WIFI_MODULE} >/dev/null 2>&1
     fi
 
     if [ "$(get_setting wifi.enabled)" == "1" ]
