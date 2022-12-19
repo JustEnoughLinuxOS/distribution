@@ -485,16 +485,35 @@ load_splash() {
       if [ -z "${SPLASHIMAGE}" ]; then
         vres="$(fbset 2>/dev/null | awk '/geometry/ { print $3 }')"
         hres="$(fbset 2>/dev/null | awk '/geometry/ { print $2 }')"
-
+        rotation="$(cat /sys/devices/virtual/graphics/fbcon/rotate)"
         
         # Test to determine if the display is rotated
         # and set the splash to suit.
-        if [ ${vres} -gt ${hres} ]
+        if [ ${vres} -gt ${hres} ] && \
+           [ -e "/splash/splashl.png" ]
         then
-          RES="l"
+          SPLASHIMAGE="/splash/splashl.png"
+        elif [ ! -e "/splash/splashl.png" ]
+        then
+          ### When we don't define a splash
+          case ${rotation} in
+            0)
+              SPLASHIMAGE="/splash/splash.png"
+            ;;
+            1)
+              SPLASHIMAGE="/splash/splash_90.png"
+            ;;
+            2)
+              SPLASHIMAGE="/splash/splash_180.png"
+            ;;
+            3)
+              SPLASHIMAGE="/splash/splash_270.png"
+            ;;
+          esac
+        else
+          ### When we don't know what to do.
+          SPLASHIMAGE="/splash/splash.png"
         fi
-
-        SPLASHIMAGE="/splash/splash${RES}.png"
 
       fi
 

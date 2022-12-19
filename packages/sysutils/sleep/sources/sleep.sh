@@ -17,12 +17,6 @@ case $1 in
       nohup systemctl stop volume & >/dev/null 2>&1
     fi
 
-    # RG351x devices are notorious for losing USB when they sleep.
-    if [[ "${HW_DEVICE}" =~ RG351 ]] || [[ "${HW_DEVICE}" =~ RGB20S ]]
-    then
-      modprobe -r dwc2
-    fi
-
     nohup alsactl store -f /storage/.config/asound.state >/dev/null 2>&1
 
     if [ "$(get_setting bluetooth.enabled)" == "1" ]
@@ -30,9 +24,13 @@ case $1 in
       nohup systemctl stop bluetooth >/dev/null 2>&1
     fi
 
-    if [ "${DEVICE_WIFI_MODULE_SLEEPS}" = false ]
+    if [ -e "/usr/config/modules.bad" ]
     then
-       rmmod ${DEVICE_WIFI_MODULE} >/dev/null 2>&1
+      for module in $(cat /usr/config/modules.bad)
+      do
+        echo ${module} >>/tmp/modules.load
+        modprobe -r ${module}
+      done
     fi
 
     wait
@@ -42,9 +40,13 @@ case $1 in
   post)
     alsactl restore -f /storage/.config/asound.state
 
-    if [[ "${HW_DEVICE}" =~ RG351 ]] || [[ "${HW_DEVICE}" =~ RGB20S ]]
+    if [ -e "/tmp/modules.load" ]
     then
-      modprobe -i dwc2
+      for module in $(cat /tmp/modules.load)
+      do
+        modprobe ${module}
+      done
+      rm -f /tmp/modules.load
     fi
 
     if [ "${DEVICE_FAKE_JACKSENSE}" == "true" ]
@@ -55,11 +57,6 @@ case $1 in
     if [ "${DEVICE_VOLUMECTL}" == "true" ]
     then
       nohup systemctl start volume & >/dev/null 2>&1
-    fi
-
-    if [ "${DEVICE_WIFI_MODULE_SLEEPS}" = false ]
-    then
-       modprobe ${DEVICE_WIFI_MODULE} >/dev/null 2>&1
     fi
 
     if [ "$(get_setting wifi.enabled)" == "1" ]
