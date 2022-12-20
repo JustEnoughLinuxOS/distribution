@@ -51,4 +51,5 @@ makeinstall_target() {
   cp -rf $PKG_DIR/config/common/* $INSTALL/usr/config/game/tyrquake
   chmod 0755 $INSTALL/usr/config/game/tyrquake/games/*sh
   cp $PKG_DIR/sources/autostart/common/* $INSTALL/usr/lib/autostart/common
+  chmod 0755 ${INSTALL}/usr/lib/autostart/common/*
 }
