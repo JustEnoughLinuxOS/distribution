@@ -2,7 +2,7 @@
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="mupen64plussa-video-gliden64"
-PKG_VERSION="026953df43ac9afafa01424ea940478626fb2c0b"
+PKG_VERSION="ff47414c2bd6e572872e9148b2f3e1dbc83e5fee"
 PKG_ARCH="aarch64"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/gonetz/GLideN64"
@@ -24,19 +24,25 @@ make_target() {
   case ${ARCH} in
     arm|aarch64)
       export HOST_CPU=aarch64
-      export USE_GLES=1
       BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
-      PKG_MAKE_OPTS_TARGET+="-DNOHQ=On -DCRC_ARMV8=On -DEGL=0n -DNEON_OPT=On"
+      # if [ "${DEVICE}" = "RG552" ]
+      # then
+      #   export USE_GLES=0
+      #   PKG_MAKE_OPTS_TARGET+="-DNOHQ=On -DCRC_ARMV8=On -DNEON_OPT=On"
+      # else
+      export USE_GLES=1
+      PKG_MAKE_OPTS_TARGET+="-DNOHQ=On -DCRC_ARMV8=On -DEGL=On -DNEON_OPT=On"
+      # fi
     ;;
   esac
   export APIDIR=$(get_build_dir mupen64plussa-core)/.install_pkg/usr/local/include/mupen64plus
-  export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -D_REENTRANT"
+  export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -pthread"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
   export CROSS_COMPILE="${TARGET_PREFIX}"
   export V=1
   export VC=0
   ./src/getRevision.sh
-  cmake ${PKG_MAKE_OPTS_TARGET} -DMUPENPLUSAPI=On -S src -B projects/cmake
+  cmake ${PKG_MAKE_OPTS_TARGET} -DMUPENPLUSAPI=On -DGLIDEN64_BUILD_TYPE=Release -DCMAKE_C_COMPILER="${CC}" -DCMAKE_CXX_COMPILER="${CXX}" -DCMAKE_C_FLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS} -pthread" -S src -B projects/cmake
   make clean -C projects/cmake
   make -Wno-unused-variable -C projects/cmake
 }

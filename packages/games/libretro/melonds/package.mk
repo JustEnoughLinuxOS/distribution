@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="melonds"
-PKG_VERSION="1eebc828769f2619bd79f39545573a991391de5d"
+PKG_VERSION="0e1f06da626cbe67215c3f06f6bdf510dd4e4649"
 PKG_REV="1"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://git.libretro.com/libretro/melonDS"
@@ -30,7 +30,7 @@ pre_make_target() {
   fi
 
   case ${DEVICE} in
-    RG351P|RG351V|RG351MP)
+    RG351P|RG351V|RG351MP|RGB20S)
       PKG_MAKE_OPTS_TARGET=" platform=odroidgoa"
     ;;
     RG552)

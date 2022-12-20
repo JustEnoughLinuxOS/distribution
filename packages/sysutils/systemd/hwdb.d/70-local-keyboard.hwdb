@@ -6,3 +6,9 @@ evdev:input:b0005v0217p0000e0110*
 evdev:input:b0003v2017p1689*
  KEYBOARD_KEY_7002e=f10 # volume up
  KEYBOARD_KEY_7002d=f9 # volume down
+
+###########################################################
+# AYANEO Air / Air Pro
+###########################################################
+evdev:atkbd:dmi:bvn*:bvr*:bd*:svnAYANEO:pnAIR*:pvr*
+ KEYBOARD_KEY_67=power

@@ -131,7 +131,7 @@
   CRON_SUPPORT="yes"
 
 # Distribution Specific source location
-  DISTRO_MIRROR="http://sources.libreelec.tv/mirror"
+  DISTRO_MIRROR=""
   DISTRO_SRC="https://github.com/JustEnoughLinuxOS"
 
 # Default size of system partition, in MB, eg. 512
@@ -149,3 +149,5 @@
 # Settings package name - blank if not required
   DISTRO_PKG_SETTINGS=""
 
+# Enable Updates
+  ENABLE_UPDATES="no"

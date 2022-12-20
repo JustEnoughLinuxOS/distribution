@@ -1,0 +1,66 @@
+state.rockchiprk817co {
+	control.1 {
+		iface MIXER
+		name 'Playback Path'
+		value SPK_HP
+		comment {
+			access 'read write'
+			type ENUMERATED
+			count 1
+			item.0 OFF
+			item.1 SPK
+			item.2 HP
+			item.3 SPK_HP
+		}
+	}
+	control.2 {
+		iface MIXER
+		name 'Capture MIC Path'
+		value 'MIC OFF'
+		comment {
+			access 'read write'
+			type ENUMERATED
+			count 1
+			item.0 'MIC OFF'
+			item.1 'Main Mic'
+		}
+	}
+	control.3 {
+		iface MIXER
+		name 'Playback Volume'
+		value.0 176
+		value.1 176
+		comment {
+			access 'read write'
+			type INTEGER
+			count 2
+			range '0 - 237'
+			dbmin -9500
+			dbmax -675
+			dbvalue.0 -2947
+			dbvalue.1 -2947
+		}
+	}
+	control.4 {
+		iface MIXER
+		name 'Record Volume'
+		value.0 255
+		value.1 255
+		comment {
+			access 'read write'
+			type INTEGER
+			count 2
+			range '0 - 255'
+		}
+	}
+	control.5 {
+		iface CARD
+		name 'Headphone Jack'
+		value false
+		comment {
+			access read
+			type BOOLEAN
+			count 1
+		}
+	}
+}

@@ -4,6 +4,7 @@
 
 PKG_NAME="pcsx_rearmed"
 PKG_VERSION="a4e249a1373cf6269e1e4e0d60105e72210e67d3"
+PKG_SHA256=""
 PKG_REV="1"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPLv2"
@@ -16,7 +17,7 @@ PKG_PATCH_DIRS+="${TARGET_ARCH}/${DEVICE}"
 
 make_target() {
   cd ${PKG_BUILD}
-  if [[ "${DEVICE}" =~ RG351 ]]
+  if [[ "${DEVICE}" =~ RG351 ]] || [[ "${DEVICE}" =~ RGB20S ]]
   then
     make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=RG351x
   elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]

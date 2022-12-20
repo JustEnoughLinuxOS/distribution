@@ -24,7 +24,7 @@ fi
 
 PKG_BASEOS="plymouth-lite grep wget libjpeg-turbo util-linux xmlstarlet bluetool gnupg gzip patchelf \
             imagemagick terminus-font vim bash pyudev dialog six git dbus-python coreutils miniupnpc \
-            nss-mdns avahi alsa-ucm-conf MC fbgrab modules system-utils"
+            nss-mdns avahi alsa-ucm-conf MC fbgrab modules system-utils autostart"
 
 PKG_UI="emulationstation es-themes"
 
@@ -113,17 +113,6 @@ post_install() {
   mkdir -p ${INSTALL}/etc/profile.d
   cp ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/device.config ${INSTALL}/etc/profile.d/01-deviceconfig
 
-  # Split this up into other packages
-  cp ${PKG_DIR}/sources/autostart/autostart ${INSTALL}/usr/bin
-  mkdir -p ${INSTALL}/usr/lib/autostart/common
-  mkdir -p ${INSTALL}/usr/lib/autostart/daemons
-  cp ${PKG_DIR}/sources/autostart/common/* ${INSTALL}/usr/lib/autostart/common
-  cp ${PKG_DIR}/sources/autostart/daemons/* ${INSTALL}/usr/lib/autostart/daemons
-  mkdir -p ${INSTALL}/usr/lib/autostart/quirks
-  cp -r ${PKG_DIR}/sources/autostart/quirks/* ${INSTALL}/usr/lib/autostart/quirks
-  chmod -R 0755 ${INSTALL}/usr/lib/autostart ${INSTALL}/usr/bin/autostart
-  enable_service jelos-autostart.service
-
   if [ ! -d "${INSTALL}/usr/share" ]
   then
     mkdir "${INSTALL}/usr/share"
@@ -144,6 +133,9 @@ EOF
   chmod 0755 ${INSTALL}/usr/bin/* ||:
   enable_service jelos-automount.service
 
+  ### Fix and migrate to autostart package
+  enable_service jelos-autostart.service
+
   if [ -d "${PKG_DIR}/sources/asound/${DEVICE}" ]
   then
     cp ${PKG_DIR}/sources/asound/${DEVICE}/* ${INSTALL}/usr/config/
@@ -153,7 +145,7 @@ EOF
 
   sed -i "s#@DEVICENAME@#${DEVICE}#g" ${INSTALL}/usr/config/system/configs/system.cfg
 
-  if [[ "${DEVICE}" =~ RG351P ]]
+  if [[ "${DEVICE}" =~ RG351P ]] || [[ "${DEVICE}" =~ RGB20S ]]
   then
     sed -i "s#.integerscale=1#.integerscale=0#g" ${INSTALL}/usr/config/system/configs/system.cfg
     sed -i "s#.rgascale=0#.rgascale=1#g" ${INSTALL}/usr/config/system/configs/system.cfg

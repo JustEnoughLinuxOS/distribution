@@ -21,6 +21,7 @@
 
 PKG_NAME="flycast_libretro"
 PKG_VERSION="4c293f306bc16a265c2d768af5d0cea138426054"
+PKG_SHA256=""
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/flycast"
 PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
@@ -48,7 +49,7 @@ pre_configure_target() {
 pre_make_target() {
   export BUILD_SYSROOT=${SYSROOT_PREFIX}
   case ${DEVICE} in
-    RG351P|RG351V|RG351MP)
+    RG351P|RG351V|RG351MP|RGB20S)
       PKG_MAKE_OPTS_TARGET+=" platform=RG351x"
     ;;
     RG353P|RG503)

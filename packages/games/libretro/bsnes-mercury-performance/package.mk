@@ -3,6 +3,7 @@
 
 PKG_NAME="bsnes-mercury-performance"
 PKG_VERSION="fb9a41fe9bc230a07c4506cad3cbf21d3fa635b4"
+PKG_SHA256=""
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/bsnes-mercury"
 PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
@@ -14,7 +15,7 @@ PKG_TOOLCHAIN="make"
 PKG_AUTORECONF="no"
 
 pre_make_target() {
-  if [[ "${DEVICE}" =~ RG351 ]]
+  if [[ "${DEVICE}" =~ RG351 ]] || [[ "${DEVICE}" =~ RGB20S ]]
   then
     PKG_MAKE_OPTS_TARGET+=" platform=RK3326"
   elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
