@@ -20,7 +20,7 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/autostart/daemons
   cp ${PKG_DIR}/sources/common/* ${INSTALL}/usr/lib/autostart/common
   cp ${PKG_DIR}/sources/daemons/* ${INSTALL}/usr/lib/autostart/daemons
-  chmod -R 0755 ${INSTALL}/usr/lib/autostart ${INSTALL}/usr/bin/autostart
   mkdir -p ${INSTALL}/usr/lib/autostart/quirks
   cp -r ${PKG_DIR}/sources/quirks/* ${INSTALL}/usr/lib/autostart/quirks
+  chmod -R 0755 ${INSTALL}/usr/lib/autostart ${INSTALL}/usr/bin/autostart
 }
