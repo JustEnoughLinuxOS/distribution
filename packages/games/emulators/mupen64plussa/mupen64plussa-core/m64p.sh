@@ -46,8 +46,10 @@ mkdir -p $TMP
 if [ `echo $2 | grep -i .zip | wc -l` -eq 1 ]; then
 	#unpack the zip file
   	unzip -q -o "$2" -d $TMP
+	ROM=$(unzip -Zl -1 )
 else
 	cp $2 $TMP
+	ROM="$GAME"
 fi
 
 cp $M64PCONF $TMP
@@ -104,10 +106,6 @@ if [ "${RSP}" = "hle" ]; then
 else
 	SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-cxd4.so"
 fi
-
-# Get the true filename without extension
-ROM_W_EXT="${2##*/}"
-ROM="${FILE_W_EXT%%.*}"
 
 echo ${SET_PARAMS}
 
