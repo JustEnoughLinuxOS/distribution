@@ -158,7 +158,9 @@ function set_audio_device() {
       fi
     done
   fi
-  cat <<EOF >/storage/.config/asound.conf
+  if [[ "${HWDEV}" =~ ^hw: ]]
+  then
+    cat <<EOF >/storage/.config/asound.conf
 ctl.!default {
   type hw
   card ${CARD}
@@ -183,6 +185,29 @@ pcm.dmixer  {
 	    0 0
 	    1 1
 	}
+}
+EOF
+  else
+    cat <<EOF >/storage/.config/asound.conf
+pcm.!default {
+       type plug
+       slave.pcm "dmixer"
+}
+
+pcm.dmixer  {
+       type dmix
+       ipc_key 1024
+       slave {
+           pcm "${HWDEV}"
+           period_time 0
+           period_size 1024
+           buffer_size 4096
+           rate 44100
+       }
+       bindings {
+           0 0
+           1 1
+       }
 }
 EOF
 }
