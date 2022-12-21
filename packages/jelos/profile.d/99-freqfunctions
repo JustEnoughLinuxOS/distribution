@@ -50,8 +50,8 @@ ondemand() {
   set_dmc_gov ondemand
 }
 
-interactive() {
-  set_cpu_gov interactive
+schedutil() {
+  set_cpu_gov schedutil
   set_amdgpu_perf auto
   set_gpu_gov ondemand
   set_dmc_gov ondemand

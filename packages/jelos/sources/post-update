@@ -120,6 +120,14 @@ then
   set_setting system.autohotkeys 1
 fi
 
+# Swap to schedutil as the default governor
+GOVERNOR=$(get_setting system.cpugovernor)
+if [ "${GOVERNOR}" = "interactive" ]
+then
+  set_setting system.cpugovernor schedutil
+  schedutil
+fi
+
 # Set the default weston startup to ES
 WESTONSTARTUP=$(get_setting weston.startup)
 if [ -z "${WESTONSTARTUP}" ]
