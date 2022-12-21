@@ -1,0 +1,2 @@
+ACTION=="change", SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_STATUS}=="Disch*", RUN+="/usr/bin/powerstate battery"
+ACTION=="change", SUBSYSTEM=="power_supply", ENV{POWER_SUPPLY_STATUS}=="Charg*", RUN+="/usr/bin/powerstate ac"

@@ -3,8 +3,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="pcsx_rearmed"
-PKG_VERSION="a4e249a1373cf6269e1e4e0d60105e72210e67d3"
-PKG_SHA256=""
+PKG_VERSION="aced3eb3fcaa0fe13c44c4dd196cdab42555fd98"
 PKG_REV="1"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPLv2"
