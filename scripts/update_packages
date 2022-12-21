@@ -45,9 +45,6 @@ update_packages() {
      if grep -q PKG_SHA256 "${f}"; then
        echo "PKG_SHA256 exists on ${f}, clearing"
        sed -i "/PKG_SHA256=.*\$/d" ${f}
-     else
-       echo "PKG_SHA256 does not exists on ${f}, creating"
-       sed -i -e "s/PKG_VERSION=\"${UPS_VERSION}\(.*\)\"/PKG_VERSION=\"${UPS_VERSION}\1\"\nPKG_SHA256=\"\"/g" ${f}
      fi
      source "${f}"
      ./scripts/get "${PKG_NAME}" >/dev/null

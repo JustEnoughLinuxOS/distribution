@@ -17,3 +17,7 @@ makeinstall_target() {
 	cp powerstate.sh ${INSTALL}/usr/bin/powerstate
 	chmod +x ${INSTALL}/usr/bin/powerstate
 }
+
+post_install() {
+  enable_service powerstate.service
+}
