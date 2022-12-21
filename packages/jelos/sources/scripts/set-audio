@@ -151,14 +151,16 @@ function set_audio_device() {
         CARD=$(awk '/^card:/ {print $2}' ${SDEVICE})
         DEVICE=$(awk '/^device:/ {print $2}' ${SDEVICE})
         NAME=$(awk '/^name:/ {print $2}' ${SDEVICE})
-        if [[ "${SELECTION}" =~ ${NAME} ]]
+        if [ "${SELECTION}" == "${NAME} (${CARD}:${DEVICE})" ]
         then
           HWDEV="hw:${CARD},${DEVICE}"
         fi
       fi
     done
   fi
-  cat <<EOF >/storage/.config/asound.conf
+  if [[ "${HWDEV}" =~ ^hw ]]
+  then
+    cat <<EOF >/storage/.config/asound.conf
 ctl.!default {
   type hw
   card ${CARD}
@@ -185,6 +187,21 @@ pcm.dmixer  {
 	}
 }
 EOF
+  else
+    cat <<EOF >/storage/.config/asound.conf
+pcm.!default {
+  type plug
+  slave {
+    pcm "${HWDEV}"
+  }
+}
+
+ctl.!default {
+  type hw
+  card ${CARD}
+}
+EOF
+  fi
 }
 
 function set_es_path() {

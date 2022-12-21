@@ -28,7 +28,7 @@ LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-
                 sameduck scummvm smsplus-gx snes9x snes9x2002 snes9x2005_plus snes9x2010 stella      \
                 stella-2014 swanstation TIC-80 tgbdual tyrquake xrick uae4arm uzem vba-next vbam     \
                 vecx vice yabasanshiro xmil mesen virtualjaguar ecwolf_libretro vitaquake2           \
-                bsnes-mercury-performance duckstation"
+                bsnes-mercury-performance duckstation fake08"
 
 PKG_DEPENDS_TARGET="${PKG_EMUS} ${PKG_RETROARCH} ${LIBRETRO_CORES}"
 
