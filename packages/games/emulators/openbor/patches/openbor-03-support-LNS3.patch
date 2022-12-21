@@ -1,0 +1,54 @@
+diff --git a/engine/openborscript.c b/engine/openborscript.c
+index 9b4be67f..277d2571 100644
+--- a/engine/openborscript.c
++++ b/engine/openborscript.c
+@@ -1054,10 +1054,46 @@ int mapstrings_systemvariant(ScriptVariant **varlist, int paramCount)
+     char *propname;
+     int prop;
+ 
++	 
++    //    MAPSTRINGS(varlist[0], svlist, _sv_the_end,
++    //               "openborvariant: System variable name not found: '%s'\n");
++    //#define MAPSTRINGS(VAR, LIST, MAXINDEX, FAILMSG, args...)
++	
++	
++    
++    {
++        int proplist_cursor;
++        if (varlist[0]->vt == VT_STR)
++        {
++            propname = (char *)StrCache_Get(varlist[0]->strVal);
++            prop = searchList(svlist, propname, _sv_the_end);
++            if (prop >= 0)
++            {
++                ScriptVariant_ChangeType(varlist[0], VT_INTEGER);
++                varlist[0]->lVal = prop;
++            }
++            else
++            {
++                if (strcmp(propname, "in_sa_count") == 0)
++                {
++                    printf("ERROR 0  openborvariant: System variable name not found: '%s'\n", propname);
++                    ScriptVariant_ChangeType(varlist[0], VT_INTEGER);
++                    varlist[0]->lVal = _sv_in_level;
++                    return 1;
++                }
++                printf("ERROR 1 openborvariant: System variable name not found: '%s'\n", propname);
++                printf("\n Available properties:\n");
+ 
+-    MAPSTRINGS(varlist[0], svlist, _sv_the_end,
+-               "openborvariant: System variable name not found: '%s'\n");
+-
++                for (proplist_cursor = 0; svlist[proplist_cursor] != NULL; proplist_cursor++)
++                {
++                    printf("\n\t%s", svlist[proplist_cursor]);
++                }
++                printf("\n\n");
++                return 0;
++            }
++        }
++    }
++    
+     return 1;
+ }
+ 
