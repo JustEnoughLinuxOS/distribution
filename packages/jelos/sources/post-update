@@ -104,6 +104,14 @@ then
   cp -f /usr/config/smb.conf /storage/.config
 fi
 
+# Set GPU power saving by default
+GPUPOWER=$(get_setting gpu.powersave)
+if [ -z "${GPUPOWER}" ]
+then
+  echo "Set up GPU power saving..." >>${LOG}
+  set_setting gpu.powersave 0
+fi
+
 # Set automatic hotkey management by default.
 AUTOHOTKEYS=$(get_setting system.autohotkeys)
 if [ -z "${AUTOHOTKEYS}" ]
