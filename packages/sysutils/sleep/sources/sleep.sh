@@ -17,15 +17,21 @@ case $1 in
       nohup systemctl stop volume & >/dev/null 2>&1
     fi
 
-    # RG351x devices are notorious for losing USB when they sleep.
-    if [[ "${HW_DEVICE}" =~ RG351 ]]
-    then
-      modprobe -r dwc2
-    fi
-
     nohup alsactl store -f /storage/.config/asound.state >/dev/null 2>&1
 
-    nohup systemctl stop bluetooth & >/dev/null 2>&1
+    if [ "$(get_setting bluetooth.enabled)" == "1" ]
+    then
+      nohup systemctl stop bluetooth >/dev/null 2>&1
+    fi
+
+    if [ -e "/usr/config/modules.bad" ]
+    then
+      for module in $(cat /usr/config/modules.bad)
+      do
+        echo ${module} >>/tmp/modules.load
+        modprobe -r ${module}
+      done
+    fi
 
     wait
     touch /run/.last_sleep_time
@@ -34,9 +40,13 @@ case $1 in
   post)
     alsactl restore -f /storage/.config/asound.state
 
-    if [[ "${HW_DEVICE}" =~ RG351 ]]
+    if [ -e "/tmp/modules.load" ]
     then
-      modprobe -i dwc2
+      for module in $(cat /tmp/modules.load)
+      do
+        modprobe ${module}
+      done
+      rm -f /tmp/modules.load
     fi
 
     if [ "${DEVICE_FAKE_JACKSENSE}" == "true" ]

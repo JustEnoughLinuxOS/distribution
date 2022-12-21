@@ -20,11 +20,11 @@ diff -rupN es-theme-minielec.orig/theme.xml es-theme-minielec/theme.xml
 +      <include ifArch="rg503,amberelec-rg503" name="16-9" displayName="16:9" />
 +      <include ifArch="rg552,amberelec-rg552" name="5-3" displayName="5:3" />
 +      <include ifArch="rg351p,amberelec-rg351p" name="3-2" displayName="3:2" />
-+      <include ifArch="rg353p,rg351mp,rg351v,amberelec-rg351mp,amberelec-rg351v" name="4-3" displayName="4:3" />
-+      <include ifNotArch="rg351p,rg351mp,rg351v,amberelec-rg351p,amberelec-rg351mp,amberelec-rg351v" name="16-9" displayName="16:9" />
-+      <include ifNotArch="rg503,rg552,rg351p,rg351mp,rg351v,amberelec-rg552,amberelec-rg351p,amberelec-rg351mp,amberelec-rg351v" name="4-3" displayName="4:3" />
-+      <include ifNotArch="rg503,rg552,rg351p,rg351mp,rg351v,amberelec-rg552,amberelec-rg351p,amberelec-rg351mp,amberelec-rg351v" name="3-2" displayName="3:2" />
-+      <include ifNotArch="rg552,rg351p,rg351mp,rg351v,amberelec-rg552,amberelec-rg351p,amberelec-rg351mp,amberelec-rg351v" name="5-3" displayName="5:3" />
++      <include ifArch="rg353p,rg351mp,rgb20s,rg351v,amberelec-rg351mp,amberelec-rg351v" name="4-3" displayName="4:3" />
++      <include ifNotArch="rg351p,rg351mp,rgb20s,rg351v,amberelec-rg351p,amberelec-rg351mp,amberelec-rg351v" name="16-9" displayName="16:9" />
++      <include ifNotArch="rg503,rg552,rg351p,rg351mp,rgb20s,rg351v,amberelec-rg552,amberelec-rg351p,amberelec-rg351mp,amberelec-rg351v" name="4-3" displayName="4:3" />
++      <include ifNotArch="rg503,rg552,rg351p,rg351mp,rgb20s,rg351v,amberelec-rg552,amberelec-rg351p,amberelec-rg351mp,amberelec-rg351v" name="3-2" displayName="3:2" />
++      <include ifNotArch="rg552,rg351p,rg351mp,rgb20s,rg351v,amberelec-rg552,amberelec-rg351p,amberelec-rg351mp,amberelec-rg351v" name="5-3" displayName="5:3" />
 +   </subset>
  
    <subset name="display-top-bar" displayName="display top bar?">

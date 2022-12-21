@@ -1,5 +1,6 @@
 PKG_NAME="vitaquake2"
 PKG_VERSION="59053244a03ed0f0976956365e60ca584fa6f162"
+PKG_SHA256=""
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/vitaquake2"
@@ -16,7 +17,7 @@ PKG_AUTORECONF="no"
 pre_make_target() {
   export BUILD_SYSROOT=${SYSROOT_PREFIX}
 
-  if [[ "${DEVICE}" =~ RG351 ]]
+  if [[ "${DEVICE}" =~ RG351 ]] || [[ "${DEVICE}" =~ RGB20S ]]
   then
     PKG_MAKE_OPTS_TARGET+=" platform=RK3326"
   elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]

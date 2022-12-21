@@ -22,6 +22,7 @@
 
 PKG_NAME="gpsp"
 PKG_VERSION="81649a2c8075201bb823cce8fdf16a31c92a3b6c"
+PKG_SHA256=""
 PKG_REV="1"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPLv2"
@@ -40,7 +41,7 @@ PKG_AUTORECONF="no"
 if [ "${ARCH}" = "arm" ]
 then
   make_target() {
-    if [[ "${DEVICE}" =~ RG351 ]]
+    if [[ "${DEVICE}" =~ RG351 ]] || [[ "${DEVICE}" =~ RGB20S ]]
     then
       make CC=${CC} platform=RG351x
     elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]

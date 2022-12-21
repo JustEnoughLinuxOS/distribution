@@ -20,6 +20,7 @@
 
 PKG_NAME="mgba"
 PKG_VERSION="ec5ecb26deba8d7ac830fc66ade9fac0eeaeb4ae"
+PKG_SHA256=""
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="MPLv2.0"

@@ -27,11 +27,11 @@ makeinstall_target() {
 post_makeinstall_target() {
   case ${ARCH} in
     x86_64)
-      rm -f "${INSTALL}/usr/config/modules/*32bit*"
-      rm -f "${INSTALL}/usr/config/modules/*Master*"
+      rm -f ${INSTALL}/usr/config/modules/*32bit*
+      rm -f ${INSTALL}/usr/config/modules/*Master*
     ;;
     *)
-      rm -f "${INSTALL}/usr/config/modules/Install*"
+      rm -f ${INSTALL}/usr/config/modules/Install*
     ;;
   esac
 }

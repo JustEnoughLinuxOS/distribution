@@ -4,7 +4,7 @@
 # Copyright (C) 2021-present Fewtarius
 
 PKG_NAME="RTL8812AU"
-PKG_VERSION="b7c68a25d41cf14da9f7176ccc260d6efba5c5db"
+PKG_VERSION="65949c530359ece8f28c84516f4d17fe7ab7d897"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/morrownr/8812au-20210629"
 PKG_URL="${PKG_SITE}.git"
