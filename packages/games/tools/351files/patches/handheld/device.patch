@@ -19,19 +19,19 @@ index 92d1a01..db4fec4 100644
 
 +// Parameters for handheld
 +#elif defined(DEVICE_HANDHELD)
-+   #define SCREEN_WIDTH             1280
-+   #define SCREEN_HEIGHT            720
++   #define SCREEN_WIDTH             1920
++   #define SCREEN_HEIGHT            1080
 +   #define HARDWARE_ACCELERATION    0
 +   #define FULLSCREEN               1
 +   #define FONT_NAME                "NotoSans-Regular.ttf"
 +   #define FONT_NAME_MONO           "NotoSansMono-Regular.ttf"
-+   #define FONT_SIZE                20
-+   #define LINE_HEIGHT              32
-+   #define ICON_SIZE                24
-+   #define MARGIN_X                 10
-+   #define KEYBOARD_MARGIN          8
-+   #define KEYBOARD_KEY_SPACING     4
-+   #define KEYBOARD_SYMBOL_SIZE     24
++   #define FONT_SIZE                48
++   #define LINE_HEIGHT              72
++   #define ICON_SIZE                58
++   #define MARGIN_X                 24
++   #define KEYBOARD_MARGIN          19
++   #define KEYBOARD_KEY_SPACING     10
++   #define KEYBOARD_SYMBOL_SIZE     58
 +
  // Paramaters for desktop PC
  #else
