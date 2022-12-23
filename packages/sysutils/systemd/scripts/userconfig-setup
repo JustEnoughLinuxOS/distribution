@@ -26,6 +26,8 @@ then
   rsync -a --ignore-existing --exclude=es_systems.cfg /usr/config/* /storage/.config/
   mkdir -p /storage/.config/emulationstation/themes
   ln -s /usr/share/themes/es-theme-art-book-next /storage/.config/emulationstation/themes/system-theme
+  ln -s /usr/share/themes/es-theme-minielec /storage/.config/emulationstation/themes/es-theme-minielec
+  ln -s /usr/share/themes/es-theme-minimal /storage/.config/emulationstation/themes/es-theme-minimal
 
   ### Link the game controller database so it is managed with OS updates.
   rm -f /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt
