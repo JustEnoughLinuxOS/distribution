@@ -26,10 +26,10 @@ ln -sf /tmp/cache /storage/cache/.cores
 set_setting clouddrive.mounted 0
 
 ### If we don't have a default governor set, set it
-### to interactive.
+### to schedutil.
 if [ -z "$(get_setting system.cpugovernor)" ]
 then
-  set_setting system.cpugovernor interactive
+  set_setting system.cpugovernor schedutil
 fi
 
 ### Test for binary data in system.cfg and clean it

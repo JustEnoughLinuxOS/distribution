@@ -20,7 +20,6 @@
 
 PKG_NAME="tyrquake"
 PKG_VERSION="89f3e032757b9b56e8d62a528a4a2472e60631aa"
-PKG_SHA256=""
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
@@ -51,4 +50,5 @@ makeinstall_target() {
   cp -rf $PKG_DIR/config/common/* $INSTALL/usr/config/game/tyrquake
   chmod 0755 $INSTALL/usr/config/game/tyrquake/games/*sh
   cp $PKG_DIR/sources/autostart/common/* $INSTALL/usr/lib/autostart/common
+  chmod 0755 ${INSTALL}/usr/lib/autostart/common/*
 }

@@ -112,7 +112,7 @@ Building JELOS is easy, the fastest and most recommended method is to instruct t
 |RG353V|RG503|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG353P```|
 |RG353M|RG503|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG353P```|
 |RG351P||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG351P```|
-|RG351V|RG351P|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-351V```|
+|RG351V|RG351P|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG351V```|
 |RG351MP|RG351P|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG351MP```|
 |RGB20S||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RGB20S```|
 |handheld||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-handheld```|

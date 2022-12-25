@@ -149,3 +149,5 @@
 # Settings package name - blank if not required
   DISTRO_PKG_SETTINGS=""
 
+# Enable Updates
+  ENABLE_UPDATES="no"

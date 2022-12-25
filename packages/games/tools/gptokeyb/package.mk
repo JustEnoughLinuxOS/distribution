@@ -2,12 +2,12 @@
 # Copyright (C) 2021-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="gptokeyb"
-PKG_VERSION="0d807e67d9dab1f23b9593467ea5d0c1c1bf2e50"
-PKG_ARCH="aarch64"
+PKG_VERSION="0303b36b5376a9b25cf82a53ed4242509daf14e9"
+PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/EmuELEC/gptokeyb"
 PKG_URL="$PKG_SITE.git"
-PKG_DEPENDS_TARGET="toolchain libevdev SDL2"
+PKG_DEPENDS_TARGET="toolchain libevdev SDL2 control-gen"
 PKG_TOOLCHAIN="make"
 GET_HANDLER_SUPPORT="git"
 
@@ -19,6 +19,5 @@ pre_make_target() {
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/bin
-  cp $PKG_BUILD/gptokeyb $INSTALL/usr/bin
+  cp ${PKG_BUILD}/gptokeyb $INSTALL/usr/bin
 }
-
