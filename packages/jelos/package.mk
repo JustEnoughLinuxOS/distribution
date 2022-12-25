@@ -24,7 +24,7 @@ fi
 
 PKG_BASEOS="plymouth-lite grep wget libjpeg-turbo util-linux xmlstarlet bluetool gnupg gzip patchelf \
             imagemagick terminus-font vim bash pyudev dialog six git dbus-python coreutils miniupnpc \
-            nss-mdns avahi alsa-ucm-conf MC fbgrab modules system-utils"
+            nss-mdns avahi alsa-ucm-conf MC fbgrab modules system-utils autostart powerstate"
 
 PKG_UI="emulationstation es-themes"
 
@@ -113,17 +113,6 @@ post_install() {
   mkdir -p ${INSTALL}/etc/profile.d
   cp ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/device.config ${INSTALL}/etc/profile.d/01-deviceconfig
 
-  # Split this up into other packages
-  cp ${PKG_DIR}/sources/autostart/autostart ${INSTALL}/usr/bin
-  mkdir -p ${INSTALL}/usr/lib/autostart/common
-  mkdir -p ${INSTALL}/usr/lib/autostart/daemons
-  cp ${PKG_DIR}/sources/autostart/common/* ${INSTALL}/usr/lib/autostart/common
-  cp ${PKG_DIR}/sources/autostart/daemons/* ${INSTALL}/usr/lib/autostart/daemons
-  mkdir -p ${INSTALL}/usr/lib/autostart/quirks
-  cp -r ${PKG_DIR}/sources/autostart/quirks/* ${INSTALL}/usr/lib/autostart/quirks
-  chmod -R 0755 ${INSTALL}/usr/lib/autostart ${INSTALL}/usr/bin/autostart
-  enable_service jelos-autostart.service
-
   if [ ! -d "${INSTALL}/usr/share" ]
   then
     mkdir "${INSTALL}/usr/share"
@@ -143,6 +132,9 @@ EOF
   cp ${PKG_DIR}/sources/scripts/* ${INSTALL}/usr/bin
   chmod 0755 ${INSTALL}/usr/bin/* ||:
   enable_service jelos-automount.service
+
+  ### Fix and migrate to autostart package
+  enable_service jelos-autostart.service
 
   if [ -d "${PKG_DIR}/sources/asound/${DEVICE}" ]
   then
@@ -169,21 +161,21 @@ EOF
   then
     sed -i "s#system.automount=1#system.automount=0#g" ${INSTALL}/usr/config/system/configs/system.cfg
     sed -i "s#fstrim.enabled=0#fstrim.enabled=1#g" ${INSTALL}/usr/config/system/configs/system.cfg
-    sed -i "s#3do.cpugovernor=performance#3do.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
-    sed -i "s#arcade.cpugovernor=performance#arcade.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
-    sed -i "s#atarijaguar.cpugovernor=performance#atarijaguar.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
-    sed -i "s#atomiswave.cpugovernor=performance#atomiswave.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
-    sed -i "s#dreamcast.cpugovernor=performance#dreamcast.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
-    sed -i "s#j2me.cpugovernor=performance#j2me.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
-    sed -i "s#mame.cpugovernor=performance#mame.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
-    sed -i "s#n64.cpugovernor=performance#n64.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
-    sed -i "s#naomi.cpugovernor=performance#naomi.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
-    sed -i "s#nds.cpugovernor=performance#nds.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
-    sed -i "s#pcfx.cpugovernor=performance#pcfx.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
-    sed -i "s#pc.cpugovernor=performance#pc.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
-    sed -i "s#psp.cpugovernor=performance#psp.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
-    sed -i "s#pspminis.cpugovernor=performance#pspminis.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
-    sed -i "s#virtualboy.cpugovernor=performance#virtualboy.cpugovernor=interactive#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#3do.cpugovernor=performance#3do.cpugovernor=schedutil#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#arcade.cpugovernor=performance#arcade.cpugovernor=schedutil#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#atarijaguar.cpugovernor=performance#atarijaguar.cpugovernor=schedutil#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#atomiswave.cpugovernor=performance#atomiswave.cpugovernor=schedutil#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#dreamcast.cpugovernor=performance#dreamcast.cpugovernor=schedutil#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#j2me.cpugovernor=performance#j2me.cpugovernor=schedutil#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#mame.cpugovernor=performance#mame.cpugovernor=schedutil#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#n64.cpugovernor=performance#n64.cpugovernor=schedutil#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#naomi.cpugovernor=performance#naomi.cpugovernor=schedutil#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#nds.cpugovernor=performance#nds.cpugovernor=schedutil#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#pcfx.cpugovernor=performance#pcfx.cpugovernor=schedutil#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#pc.cpugovernor=performance#pc.cpugovernor=schedutil#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#psp.cpugovernor=performance#psp.cpugovernor=schedutil#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#pspminis.cpugovernor=performance#pspminis.cpugovernor=schedutil#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#virtualboy.cpugovernor=performance#virtualboy.cpugovernor=schedutil#g" ${INSTALL}/usr/config/system/configs/system.cfg
   fi
 
   ### Defaults for non-main builds.

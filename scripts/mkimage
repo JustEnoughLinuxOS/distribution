@@ -118,6 +118,7 @@ if [ "${BOOTLOADER}" = "syslinux" ]; then
 DEFAULT run
 TIMEOUT 0
 PROMPT 0
+NOESCAPE 1
 
 LABEL run
   KERNEL /${KERNEL_NAME}
@@ -125,12 +126,8 @@ LABEL run
 EOF
 
   cat << EOF > "${LE_TMP}/grub.cfg"
-set timeout="25"
+set timeout="0"
 set default="Run"
-menuentry "Installer" {
-	search --set -f /KERNEL
-	linux /KERNEL boot=UUID=${UUID_SYSTEM} installer systemd.debug_shell vga=current ${EXTRA_CMDLINE}
-}
 menuentry "Run" {
 	search --set -f /KERNEL
 	linux /KERNEL boot=UUID=${UUID_SYSTEM} disk=UUID=${UUID_STORAGE} grub_portable ${EXTRA_CMDLINE}

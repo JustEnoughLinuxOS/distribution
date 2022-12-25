@@ -8,9 +8,18 @@ if [ ! -d "/storage/.config/modprobe.d/" ]
 then
   mkdir -p /storage/.config/modprobe.d
 fi
+
 if [ ! -e "/storage/.config/modprobe.d/alsa-base.conf" ]
 then
   touch /storage/.config/modprobe.d/alsa-base.conf
-  set-audio set "DEFAULT HDMI"
   reboot
 fi
+
+### Set the audio device.
+set-audio set "ALC269VB (1:0)"
+set-audio esset "Master"
+
+### Disables speaker output when headphones are connected.
+alsactl restore -f /storage/.config/asound.state
+/usr/bin/amixer -c 1 sset "Auto-Mute Mode" Enabled
+alsactl store -f /storage/.config/asound.state

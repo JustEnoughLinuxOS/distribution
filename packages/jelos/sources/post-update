@@ -104,12 +104,28 @@ then
   cp -f /usr/config/smb.conf /storage/.config
 fi
 
+# Set GPU power saving by default
+GPUPOWER=$(get_setting gpu.powersave)
+if [ -z "${GPUPOWER}" ]
+then
+  echo "Set up GPU power saving..." >>${LOG}
+  set_setting gpu.powersave 0
+fi
+
 # Set automatic hotkey management by default.
 AUTOHOTKEYS=$(get_setting system.autohotkeys)
 if [ -z "${AUTOHOTKEYS}" ]
 then
   echo "Set up hotkey management..." >>${LOG}
   set_setting system.autohotkeys 1
+fi
+
+# Swap to schedutil as the default governor
+GOVERNOR=$(get_setting system.cpugovernor)
+if [ "${GOVERNOR}" = "interactive" ]
+then
+  set_setting system.cpugovernor schedutil
+  schedutil
 fi
 
 # Set the default weston startup to ES

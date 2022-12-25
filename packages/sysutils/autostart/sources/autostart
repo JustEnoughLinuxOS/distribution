@@ -22,11 +22,11 @@ fi
 QUIRK_DEVICE=$(echo ${QUIRK_DEVICE} | sed -e "s#[/]#-#g")
 if [ -d "/usr/lib/autostart/quirks/${QUIRK_DEVICE}" ]
 then
-  echo "Executing ${QUIRK_DEVICE} quirks."
-  for script in "/usr/lib/autostart/quirks/${QUIRK_DEVICE}/*"
+  echo "Executing ${QUIRK_DEVICE} quirks." 2>&1 >>${BOOTLOG}
+  for script in "/usr/lib/autostart/quirks/${QUIRK_DEVICE}"/*
   do
     echo "Executing ${script}" 2>&1 >>${BOOTLOG}
-    ${script} 2>&1 >>${BOOTLOG} &
+    "${script}" 2>&1 >>${BOOTLOG} &
   done
 fi
 

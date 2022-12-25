@@ -3,7 +3,6 @@
 
 PKG_NAME="mupen64plussa-core"
 PKG_VERSION="ba9a52483052248b67c324e3fd0e073b807bbea4"
-PKG_SHA256=""
 PKG_ARCH="aarch64"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/mupen64plus/mupen64plus-core"
