@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <SDL.h>
+#include <cstdlib>
 
 int main()
 {
