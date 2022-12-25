@@ -43,12 +43,12 @@ fi
 mkdir -p $TMP
 
 # Unzip or copy the rom to the working directory
-if [ `echo $2 | grep -i .zip | wc -l` -eq 1 ]; then
+if [ $(echo $2 | grep -i .zip | wc -l) -eq 1 ]; then
 	#unpack the zip file
   	unzip -q -o "$2" -d $TMP
-	ROM=$(unzip -Zl -1 )
+	ROM=$(unzip -Zl -1 "$2")
 else
-	cp $2 $TMP
+	cp "$2" $TMP
 	ROM="$GAME"
 fi
 
