@@ -1,16 +1,16 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2022-present Fewtarius
 
-PKG_NAME="pcsx2"
-PKG_VERSION="ad7650949e6c8c87cd2c5e278af88e3722a321bc"
+PKG_NAME="lrps2"
+PKG_VERSION="097acdbb3b42017b27bff8f03d2e0505979bc4d1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_DEPENDS_TARGET="toolchain alsa-lib freetype zlib libpng libaio libsamplerate libfmt libpcap soundtouch yamlcpp wxwidgets"
-PKG_SITE="https://github.com/libretro/pcsx2"
+PKG_SITE="https://github.com/libretro/LRPS2"
 PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="libretro"
-PKG_SHORTDESC="PCSX2 core for RetroArch."
+PKG_SHORTDESC="Hard fork / port of PCSX2. Will target only Libretro specifically."
 
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
