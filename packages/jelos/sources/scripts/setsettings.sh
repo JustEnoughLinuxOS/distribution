@@ -13,7 +13,7 @@ NOREWIND=(sega32x psx zxspectrum odyssey2 mame n64 dreamcast atomiswave naomi ne
 NORUNAHEAD=(psp sega32x n64 dreamcast atomiswave naomi neogeocd saturn)
 # The following systems are listed as they don't need the Analogue D-Pad mode on RA
 NOANALOGUE=(n64 psx wonderswan wonderswancolor psp pspminis dreamcast)
-IS32BITCORE=(pcsx_rearmed parallel_n64 parallel_n64_gln64 gpsp)
+IS32BITCORE=(pcsx_rearmed gpsp)
 
 INDEXRATIOS=(4/3 16/9 16/10 16/15 21/9 1/1 2/1 3/2 3/4 4/1 9/16 5/4 6/5 7/9 8/3 8/7 19/12 19/14 30/17 32/9 config squarepixel core custom full)
 CONF="/storage/.config/system/configs/system.cfg"
@@ -583,11 +583,6 @@ get_game_setting "parallel_n64_video_core"
         if [ "${EES}" == "gln64" ]
         then
                 sed -i '/parallel-n64-gfxplugin = /c\parallel-n64-gfxplugin = "gln64"' "/storage/.config/retroarch/config/ParaLLEl N64/ParaLLEl N64.opt"
-        fi
-
-        if [ "${EES}" == "angrylion" ]
-        then
-                sed -i '/parallel-n64-gfxplugin = /c\parallel-n64-gfxplugin = "angrylion"' "/storage/.config/retroarch/config/ParaLLEl N64/ParaLLEl N64.opt"
         fi
 
 get_game_setting "parallel_n64_internal_resolution"
