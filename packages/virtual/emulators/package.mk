@@ -22,8 +22,8 @@ LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-
                 freej2me fuse-libretro gambatte gearboy gearcoleco gearsystem genesis-plus-gx        \
                 genesis-plus-gx-wide gme gpsp gw-libretro handy hatari mame2000 mame2003-plus        \
                 mame2010 mame2015 mame melonds meowpc98 mgba mrboom mupen64plus mupen64plus-nx       \
-                neocd_libretro nestopia np2kai nxengine o2em opera parallel-n64_rice                 \
-                parallel-n64_gln64 parallel-n64_glide64 pcsx_rearmed picodrive pokemini potator      \
+                neocd_libretro nestopia np2kai nxengine o2em opera parallel-n64                      \
+                pcsx_rearmed picodrive pokemini potator                                              \
                 ppsspp prboom prosystem puae px68k quasi88 quicknes race reminiscence sameboy        \
                 sameduck scummvm smsplus-gx snes9x snes9x2002 snes9x2005_plus snes9x2010 stella      \
                 stella-2014 swanstation TIC-80 tgbdual tyrquake xrick uae4arm uzem vba-next vbam     \
@@ -44,6 +44,6 @@ case "${DEVICE}" in
     PKG_DEPENDS_TARGET+=" duckstationsa common-shaders glsl-shaders drastic dolphinsa"
   ;;
   handheld)
-    PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa dolphin pcsx2sa lrps2 desmume bsnes citra slang-shaders minivmac minivmacsa play beetle-saturn yuzusa primehack parallel-n64"
+    PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa dolphin pcsx2sa lrps2 desmume bsnes citra slang-shaders minivmac minivmacsa play beetle-saturn yuzusa primehack"
   ;;
 esac

@@ -12,7 +12,6 @@ PKG_SECTION="libretro"
 PKG_SHORTDESC="Optimized/rewritten Nintendo 64 emulator made specifically for Libretro. Originally based on Mupen64 Plus."
 PKG_TOOLCHAIN="make"
 PKG_BUILD_FLAGS="-lto"
-PKG_PATCH_DIRS+="${DEVICE}"
 
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
@@ -24,13 +23,13 @@ fi
 
 case ${DEVICE} in
   RG351P|RG351V|RG351MP|RGB20S)
-    PKG_MAKE_OPTS_TARGET=" platform=RG351x"
+    PKG_MAKE_OPTS_TARGET=" platform=unix_RK3326"
   ;;
   RG503|RG353P)
-   PKG_MAKE_OPTS_TARGET+=" platform=RK3566"
+   PKG_MAKE_OPTS_TARGET+=" platform=unix_RK3566"
   ;;
   RG552)
-    PKG_MAKE_OPTS_TARGET=" platform=${DEVICE}"
+    PKG_MAKE_OPTS_TARGET=" platform=unix_RK3399"
   ;;
 esac
 

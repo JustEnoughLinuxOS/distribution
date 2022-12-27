@@ -329,7 +329,6 @@ else
 	then
 		### Check if we need retroarch 32 bits or 64 bits
 		if [[ "${CORE}" =~ pcsx_rearmed32 ]] || \
-	           [[ "${CORE}" =~ parallel_n64_ ]] || \
 	           [[ "${CORE}" =~ gpsp ]] || \
 	           [[ "${CORE}" =~ flycast32 ]]
 		then
