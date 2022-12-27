@@ -16,7 +16,7 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_lib_z_zlibVersion=yes \
                            --enable-static \
                            --enable-shared"
 
-PKG_CONFIGURE_OPTS_HOST="--disable-static --enable-shared"
+PKG_CONFIGURE_OPTS_HOST="--enable-static --disable-shared"
 
 pre_configure_host() {
   export CPPFLAGS="$CPPFLAGS -I${TOOLCHAIN}/include"
