@@ -553,6 +553,100 @@ else
 fi
 
 ##
+## Parallel-N64 core options
+##
+
+PARALLELN64DIR="/storage/.config/retroarch/config/ParaLLEl N64"
+
+        if [ ! -d "${PARALLELN64DIR}" ]
+        then
+                mkdir -p "${PARALLELN64DIR}"
+        fi
+
+        if [ ! -f "${PARALLELN64DIR}/ParaLLEl N64.opt" ]
+        then
+                cp "/usr/config/retroarch/ParaLLEl N64.opt" "${PARALLELN64DIR}/ParaLLEl N64.opt"
+        fi
+
+get_game_setting "parallel_n64_video_core"
+
+        if [ "${EES}" == "glide64" ]
+        then
+                sed -i '/parallel-n64-gfxplugin = /c\parallel-n64-gfxplugin = "glide64"' "/storage/.config/retroarch/config/ParaLLEl N64/ParaLLEl N64.opt"
+        fi
+
+        if [ "${EES}" == "rice" ]
+        then
+                sed -i '/parallel-n64-gfxplugin = /c\parallel-n64-gfxplugin = "rice"' "/storage/.config/retroarch/config/ParaLLEl N64/ParaLLEl N64.opt"
+        fi
+
+        if [ "${EES}" == "gln64" ]
+        then
+                sed -i '/parallel-n64-gfxplugin = /c\parallel-n64-gfxplugin = "gln64"' "/storage/.config/retroarch/config/ParaLLEl N64/ParaLLEl N64.opt"
+        fi
+
+        if [ "${EES}" == "angrylion" ]
+        then
+                sed -i '/parallel-n64-gfxplugin = /c\parallel-n64-gfxplugin = "angrylion"' "/storage/.config/retroarch/config/ParaLLEl N64/ParaLLEl N64.opt"
+        fi
+
+get_game_setting "parallel_n64_internal_resolution"
+
+        if [ "${EES}" == "240p" ]
+        then
+                sed -i '/parallel-n64-screensize = /c\parallel-n64-screensize = "320x240"' "/storage/.config/retroarch/config/ParaLLEl N64/ParaLLEl N64.opt"
+        fi
+
+        if [ "${EES}" == "480p" ]
+        then
+                sed -i '/parallel-n64-screensize = /c\parallel-n64-screensize = "640x480"' "/storage/.config/retroarch/config/ParaLLEl N64/ParaLLEl N64.opt"
+        fi
+
+        if [ "${EES}" == "720p" ]
+        then
+                sed -i '/parallel-n64-screensize = /c\parallel-n64-screensize = "960x720"' "/storage/.config/retroarch/config/ParaLLEl N64/ParaLLEl N64.opt"
+        fi
+
+        if [ "${EES}" == "1080p" ]
+        then
+                sed -i '/parallel-n64-screensize = /c\parallel-n64-screensize = "1440x1080"' "/storage/.config/retroarch/config/ParaLLEl N64/ParaLLEl N64.opt"
+        fi
+
+get_game_setting "parallel_n64_gamespeed"
+
+        if [ "${EES}" == "original" ]
+        then
+                sed -i '/parallel-n64-framerate = /c\parallel-n64-framerate = "original"' "/storage/.config/retroarch/config/ParaLLEl N64/ParaLLEl N64.opt"
+        fi
+
+        if [ "${EES}" == "fullspeed" ]
+        then
+                sed -i '/parallel-n64-framerate = /c\parallel-n64-framerate = "fullspeed"' "/storage/.config/retroarch/config/ParaLLEl N64/ParaLLEl N64.opt"
+        fi
+
+get_game_setting "parallel_n64_gfx_accuracy"
+
+        if [ "${EES}" == "low" ]
+        then
+                sed -i '/parallel-n64-gfxplugin-accuracy = /c\parallel-n64-gfxplugin-accuracy = "low"' "/storage/.config/retroarch/config/ParaLLEl N64/ParaLLEl N64.opt"
+        fi
+
+        if [ "${EES}" == "medium" ]
+        then
+                sed -i '/parallel-n64-gfxplugin-accuracy = /c\parallel-n64-gfxplugin-accuracy = "medium"' "/storage/.config/retroarch/config/ParaLLEl N64/ParaLLEl N64.opt"
+        fi
+
+		if [ "${EES}" == "high" ]
+        then
+                sed -i '/parallel-n64-gfxplugin-accuracy = /c\parallel-n64-gfxplugin-accuracy = "high"' "/storage/.config/retroarch/config/ParaLLEl N64/ParaLLEl N64.opt"
+        fi
+
+        if [ "${EES}" == "veryhigh" ]
+        then
+                sed -i '/parallel-n64-gfxplugin-accuracy = /c\parallel-n64-gfxplugin-accuracy = "veryhigh"' "/storage/.config/retroarch/config/ParaLLEl N64/ParaLLEl N64.opt"
+        fi
+
+##
 ## Settings for special cores
 ##
 
