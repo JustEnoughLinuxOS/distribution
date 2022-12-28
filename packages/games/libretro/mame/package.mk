@@ -11,7 +11,7 @@ PKG_DEPENDS_TARGET="toolchain zlib flac sqlite expat"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="MAME - Multiple Arcade Machine Emulator"
 PKG_TOOLCHAIN="make"
-PKG_BUILD_FLAGS="-lto"
+PKG_BUILD_FLAGS="-lto +pic"
 
 case ${TARGET_ARCH} in
   arm|aarch64)
