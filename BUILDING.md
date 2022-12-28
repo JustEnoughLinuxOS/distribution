@@ -172,7 +172,7 @@ export SCREENSCRAPER_DEV_LOGIN="devid=DEVID&devpassword=DEVPASSWORD"
 # Apply for a GamesDB API Key here: https://forums.thegamesdb.net/viewforum.php?f=10
 export GAMESDB_APIKEY="APIKEY"
 # Find your Cheevos Web API key here: https://retroachievements.org/controlpanel.php
-export CHEEVOS_DEV_LOGIN="z=DEVID&y=DEVPASSWORD"
+export CHEEVOS_DEV_LOGIN="z=RETROACHIEVEMENTSUSERNAME&y=APIKEYID"
 ```
 
 ### Creating a patch for a package
