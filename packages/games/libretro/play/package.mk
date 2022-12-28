@@ -7,7 +7,7 @@ PKG_ARCH="x86_64"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/jpd002/Play-"
 PKG_URL="${PKG_SITE}.git"
-PKG_DEPENDS_TARGET="toolchain libevdev"
+PKG_DEPENDS_TARGET="toolchain libevdev zstd"
 PKG_LONGDESC="Play! is an attempt to create a PlayStation 2 emulator for Windows, macOS, UNIX, Android & iOS platforms."
 PKG_TOOLCHAIN="cmake"
 
