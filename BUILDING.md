@@ -76,7 +76,7 @@ As the distribution is being built, package source are fetched and hosted in thi
 The tools directory contains utility scripts that can be used during the development process, including a simple tool to burn an image to a usb drive or sdcard.
 
 ## Building JELOS
-Building JELOS requires an Ubuntu 20.04 host with approximately 200GB of free space for a single device, or 800GB of free space for a full world build.  Other Linux distributions may be used when building using Docker, however this is untested and unsupported.  We recommend building with no more than 8 cores.
+Building JELOS requires an Ubuntu 22.04 host with approximately 200GB of free space for a single device, or 800GB of free space for a full world build.  Other Linux distributions may be used when building using Docker, however this is untested and unsupported.  We recommend building with no more than 8 cores.
 
 ### Cloning the JELOS Sources
 To build JELOS, start by cloning the project git repository.
