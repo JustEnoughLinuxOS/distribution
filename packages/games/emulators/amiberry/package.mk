@@ -17,10 +17,7 @@ PKG_PATCH_DIRS+="${DEVICE}"
 pre_configure_target() {
   cd ${PKG_BUILD}
   export SYSROOT_PREFIX=${SYSROOT_PREFIX}
-  if [[ "${DEVICE}" =~ RG351 ]] || [[ "${DEVICE}" =~ RGB20S ]]
-  then
-    AMIBERRY_PLATFORM="PLATFORM=RG351x"
-  elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
+  if [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
   then
     AMIBERRY_PLATFORM="PLATFORM=RK3566"
   else

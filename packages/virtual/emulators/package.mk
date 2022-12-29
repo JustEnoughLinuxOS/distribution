@@ -34,9 +34,6 @@ PKG_DEPENDS_TARGET="${PKG_EMUS} ${PKG_RETROARCH} ${LIBRETRO_CORES}"
 
 ### Emulators or cores for specific devices
 case "${DEVICE}" in
-  RG351P|RG351V|RG351MP|RGB20S)
-    PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders drastic"
-  ;;
   RG552)
     PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa dolphin slang-shaders beetle-saturn drastic"
   ;;

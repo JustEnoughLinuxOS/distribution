@@ -14,7 +14,7 @@ PKG_LONGDESC="The Glibc package contains the main C library."
 PKG_BUILD_FLAGS="+bfd -gold"
 
 case "${DEVICE}" in
-  RG353P|RG503|RG351P|RG351V|RG351MP|RGB20S)
+  RG353P|RG503)
     OPT_ENABLE_KERNEL=4.4.0
     ;;
   *)

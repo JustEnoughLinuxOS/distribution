@@ -27,9 +27,6 @@ fi
 case ${ARCH} in
   arm)
     case ${DEVICE} in
-      RG351P|RG351V|RG351MP|RGB20S)
-        PKG_MAKE_OPTS_TARGET=" platform=RG351x"
-      ;;
       RG503|RG353P)
         PKG_MAKE_OPTS_TARGET+=" platform=RK3566"
       ;;
