@@ -84,7 +84,7 @@ case "${DISTRO}" in
       ;;
     gentoo|sabayon)
       deps+=(g++ mkfontscale mkfontdir bdftopcf xsltproc java python3)
-      deps_pkg+=("gcc[cxx]" mkfontscale mkfontdir bdftopcf libxslt virtual/jre python3)
+      deps_pkg+=("sys-devel/gcc[cxx]" mkfontscale mkfontdir bdftopcf libxslt virtual/jre python3)
       files_pkg=(glibc ncurses)
       perl_pkg=(JSON XML-Parser)
       ;;
