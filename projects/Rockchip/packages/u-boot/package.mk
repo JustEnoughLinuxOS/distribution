@@ -19,7 +19,7 @@ case ${DEVICE} in
   ;;
   RG353P|RG503)
     PKG_URL="${PKG_SITE}/rk356x-uboot.git"
-    PKG_VERSION="62a0e69"
+    PKG_VERSION="b2b0125"
   ;;
 esac
 
@@ -52,12 +52,10 @@ make_target() {
     [ "${BUILD_WITH_DEBUG}" = "yes" ] && PKG_DEBUG=1 || PKG_DEBUG=0
     if [ "${PKG_SOC}" = "rk356x" ]
     then
-      cd ${PKG_BUILD}
-      git checkout make.sh
       echo "Making for GPT (${UBOOT_DTB})..."
       sed -i "s|TOOLCHAIN_ARM64=.*|TOOLCHAIN_ARM64=${TOOLCHAIN}/bin|" make.sh
       sed -i "s|aarch64-linux-gnu|${TARGET_NAME}|g" make.sh
-      sed -i "s|../rkbin|$(get_build_dir rkbin)|" make.sh
+      sed -i "s|RKBIN_TOOLS=../rkbin/tools|RKBIN_TOOLS=$(get_build_dir rkbin)/tools|" make.sh
       ./make.sh ${UBOOT_DTB}
     else
       echo "Building for MBR (${UBOOT_DTB})..."
