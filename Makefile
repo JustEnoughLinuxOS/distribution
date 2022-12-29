@@ -31,8 +31,6 @@ RK3566: RG503 RG353P
 
 RK3399: RG552
 
-RK3326: RG351P RG351V RG351MP RGB20S
-
 handheld:
 	DEVICE_ROOT=handheld PROJECT=PC DEVICE=handheld ARCH=x86_64 ./scripts/build_distro
 
@@ -48,22 +46,6 @@ RG353P:
 	DEVICE_ROOT=RG503 PROJECT=Rockchip DEVICE=RG353P ARCH=arm ./scripts/build_distro
 	DEVICE_ROOT=RG503 PROJECT=Rockchip DEVICE=RG353P ARCH=aarch64 ./scripts/build_distro
 
-RG351P:
-	DEVICE_ROOT=RG351P PROJECT=Rockchip DEVICE=RG351P ARCH=arm ./scripts/build_distro
-	DEVICE_ROOT=RG351P PROJECT=Rockchip DEVICE=RG351P ARCH=aarch64 ./scripts/build_distro
-
-RG351V:
-	DEVICE_ROOT=RG351P PROJECT=Rockchip DEVICE=RG351V ARCH=arm ./scripts/build_distro
-	DEVICE_ROOT=RG351P PROJECT=Rockchip DEVICE=RG351V ARCH=aarch64 ./scripts/build_distro
-
-RG351MP:
-	DEVICE_ROOT=RG351P PROJECT=Rockchip DEVICE=RG351MP ARCH=arm ./scripts/build_distro
-	DEVICE_ROOT=RG351P PROJECT=Rockchip DEVICE=RG351MP ARCH=aarch64 ./scripts/build_distro
-
-RGB20S:
-	DEVICE_ROOT=RGB20S PROJECT=Rockchip DEVICE=RGB20S ARCH=arm ./scripts/build_distro
-	DEVICE_ROOT=RGB20S PROJECT=Rockchip DEVICE=RGB20S ARCH=aarch64 ./scripts/build_distro
-	
 update:
 	PROJECT=Rockchip DEVICE=RG552 ARCH=aarch64 ./scripts/update_packages
 

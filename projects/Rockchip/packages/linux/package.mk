@@ -18,12 +18,6 @@ PKG_STAMP="${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD}"
 PKG_PATCH_DIRS+="${DEVICE}"
 
 case ${DEVICE} in
-  RG351P|RG351V|RG351MP|RGB20S)
-    PKG_URL="${PKG_SITE}/rk3326-kernel.git"
-    PKG_VERSION="0b4eef36a"
-    GET_HANDLER_SUPPORT="git"
-    PKG_GIT_CLONE_BRANCH="main"
-  ;;
   RG552)
     PKG_VERSION="6.0.11"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
