@@ -111,10 +111,6 @@ Building JELOS is easy, the fastest and most recommended method is to instruct t
 |RG353P|RG503|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG353P```|
 |RG353V|RG503|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG353P```|
 |RG353M|RG503|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG353P```|
-|RG351P||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG351P```|
-|RG351V|RG351P|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG351V```|
-|RG351MP|RG351P|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG351MP```|
-|RGB20S||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RGB20S```|
 |handheld||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-handheld```|
 |ALL DEVICES||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-world```|
 
@@ -134,17 +130,17 @@ sudo apt install gcc make git unzip wget \
                 qemu-user-binfmt zstd parted imagemagick docker.io
 ```
 
-Next, build the version of JELOS for your device.  See the table above for dependencies.  If you're building for the RG351V, RG351P will be built first to provide the build root dependency.  To execute a build, run `make {device}`
+Next, build the version of JELOS for your device.  See the table above for dependencies. 
 
 ```
-make RG351V
+make handheld
 ```
 
 ### Building a single package
 It is also possible to build individual packages.
 ```
-DEVICE=RG351V ARCH=aarch64 ./scripts/clean busybox
-DEVICE=RG351V ARCH=aarch64 ./scripts/build busybox
+DEVICE=handheld ARCH=x86_64 ./scripts/clean busybox
+DEVICE=handheld ARCH=x86_64 ./scripts/build busybox
 ```
 
 > Note: Emulation Station package build requires additional steps because its source code located in a separate repository, see instructions inside, [link](https://github.com/JustEnoughLinuxOS/distribution/blob/main/packages/ui/emulationstation/package.mk).

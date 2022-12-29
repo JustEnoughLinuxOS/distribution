@@ -30,6 +30,7 @@ pre_configure_target() {
 				--disable-vg \
 				--disable-sdl \
 				--enable-sdl2 \
+				--disable-odroidgo2 \
 				--enable-ffmpeg"
 
   case ${ARCH} in
@@ -67,16 +68,6 @@ pre_configure_target() {
       PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
       PKG_CONFIGURE_OPTS_TARGET+=" --enable-vulkan --enable-vulkan_display"
   fi
-
-  case ${DEVICE} in
-    RG351P)
-      PKG_DEPENDS_TARGET+=" librga libgo2"
-      PKG_CONFIGURE_OPTS_TARGET+=" --enable-odroidgo2"
-    ;;
-    *)
-      PKG_CONFIGURE_OPTS_TARGET+=" --disable-odroidgo2"
-    ;;
-  esac
 
   cd ${PKG_BUILD}
 }
