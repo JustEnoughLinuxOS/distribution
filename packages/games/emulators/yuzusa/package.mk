@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="yuzusa"
-PKG_VERSION="9fdacb5e3a03928a5671670d0db1e0058daf344e"
+PKG_VERSION="88f5d38b9349afefd9257a779323531b21001500"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/yuzu-emu/yuzu"
@@ -30,7 +30,7 @@ then
   PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
 fi
 
-PKG_CMAKE_OPTS_TARGET+="        -DENABLE_QT=OFF \
+PKG_CMAKE_OPTS_TARGET+="        -DENABLE_QT=ON \
                                 -DCMAKE_BUILD_TYPE=Release \
                                 -DYUZU_USE_BUNDLED_SDL2=OFF \
                                 -DYUZU_TESTS=OFF \
@@ -42,7 +42,7 @@ PKG_CMAKE_OPTS_TARGET+="        -DENABLE_QT=OFF \
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin
-  cp -rf ${PKG_BUILD}/.${TARGET_NAME}/bin/yuzu-cmd ${INSTALL}/usr/bin
+  cp -rf ${PKG_BUILD}/.${TARGET_NAME}/bin/yuzu* ${INSTALL}/usr/bin
   cp -rf ${PKG_DIR}/scripts/* ${INSTALL}/usr/bin
 
   chmod +x ${INSTALL}/usr/bin/start_yuzu.sh
