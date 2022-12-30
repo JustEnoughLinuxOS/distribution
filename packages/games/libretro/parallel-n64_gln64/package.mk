@@ -29,9 +29,6 @@ case ${ARCH} in
       RG503|RG353P)
         PKG_MAKE_OPTS_TARGET+=" platform=RK3566"
       ;;
-      RG552)
-        PKG_MAKE_OPTS_TARGET=" platform=${DEVICE}"
-      ;;
     esac
   ;;
   aarch64)

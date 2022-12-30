@@ -33,11 +33,6 @@ PKG_SHORTDESC="Atari 5200 libretro core"
 PKG_TOOLCHAIN="auto"
 GET_HANDLER_SUPPORT="git"
 
-if [ "${DEVICE}" = "RG552" ]
-then
-  PKG_MAKE_OPTS_TARGET="platform=rg552 GIT_VERSION=${PKG_VERSION:0:7}"
-fi
-
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
   cp a5200_libretro.so ${INSTALL}/usr/lib/libretro/
