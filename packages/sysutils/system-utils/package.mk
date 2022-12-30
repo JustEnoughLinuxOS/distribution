@@ -8,7 +8,7 @@ PKG_LICENSE="mix"
 PKG_DEPENDS_TARGET="toolchain sleep"
 PKG_SITE=""
 PKG_URL=""
-PKG_LONGDESC="Support scripts for Rockchip/Anbernic devices"
+PKG_LONGDESC="Hardware button support scripts."
 PKG_TOOLCHAIN="manual"
 
 makeinstall_target() {
