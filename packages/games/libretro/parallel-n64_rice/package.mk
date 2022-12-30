@@ -24,13 +24,6 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
 fi
 
 case ${ARCH} in
-  arm)
-    case ${DEVICE} in
-      RG503|RG353P)
-        PKG_MAKE_OPTS_TARGET+=" platform=RK3566"
-      ;;
-    esac
-  ;;
   aarch64)
     make_target() {
       :

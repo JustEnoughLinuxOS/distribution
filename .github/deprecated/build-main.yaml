@@ -97,9 +97,7 @@ jobs:
             * Decompress the image.
             * Write the image to an SDCARD using an imaging tool.  Common imaging tools include [Balena Etcher](https://www.balena.io/etcher/), [Raspberry Pi Imager](https://www.raspberrypi.com/software/), and [Win32 Disk Imager](https://sourceforge.net/projects/win32diskimager/).  If you're skilled with the command line, dd works fine too.
 
-            Download: [[Win600/Atari VCS/Generic x86_64](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-handheld.x86_64-${{ steps.version.outputs.version }}.img.gz)] [[RG353P/RG353M/RG353V](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RG353P.aarch64-${{ steps.version.outputs.version }}.img.gz)] [[RG503](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RG503.aarch64-${{ steps.version.outputs.version }}.img.gz)]
-
-            > RG353V users, enable "DEVICE IS RG353V" in the system settings menu after flashing.
+            Download: [[Win600/Atari VCS/Generic x86_64](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-handheld.x86_64-${{ steps.version.outputs.version }}.img.gz)]
 
             ## Upgrading
             * Download and install the update online via the System Settings menu.
@@ -110,7 +108,7 @@ jobs:
               * Copy the update to your device over the network to your device's update share.
               * Reboot the device, and the update will begin automatically.
 
-            Download: [[Win600/Atari VCS/x86_64](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-handheld.x86_64-${{ steps.version.outputs.version }}.tar)] [[RG353P/RG353M/RG353P](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RG353P.aarch64-${{ steps.version.outputs.version }}.tar)] [[RG503](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RG503.aarch64-${{ steps.version.outputs.version }}.tar)]
+            Download: [[Win600/Atari VCS/x86_64](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-handheld.x86_64-${{ steps.version.outputs.version }}.tar)]
 
             ## Documentation
             * [Home](https://github.com/JustEnoughLinuxOS/distribution/wiki)

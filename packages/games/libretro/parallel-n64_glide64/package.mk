@@ -23,22 +23,6 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
 fi
 
-
-case ${ARCH} in
-  arm)
-    case ${DEVICE} in
-      RG503|RG353P)
-        PKG_MAKE_OPTS_TARGET+=" platform=RK3566"
-      ;;
-    esac
-  ;;
-  aarch64)
-    make_target() {
-      :
-    }
-  ;;
-esac
-
 pre_configure_target() {
   sed -i 's/info->library_name = "ParaLLEl N64";/info->library_name = "ParaLLEl N64 Glide64";/g' ${PKG_BUILD}/libretro/libretro.c
   sed -i 's/"GFX Plugin; auto|glide64|gln64|rice/"GFX Plugin; glide64|auto|gln64|rice/g' ${PKG_BUILD}/libretro/libretro.c

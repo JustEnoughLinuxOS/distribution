@@ -47,11 +47,6 @@ pre_configure_target() {
 
 pre_make_target() {
   export BUILD_SYSROOT=${SYSROOT_PREFIX}
-  case ${DEVICE} in
-    RG353P|RG503)
-      PKG_MAKE_OPTS_TARGET+=" platform=RK3566"
-    ;;
-  esac
 }
 
 makeinstall_target() {

@@ -37,13 +37,7 @@ PKG_TOOLCHAIN="make"
 PKG_PATCH_DIRS+="${DEVICE}"
 
 make_target() {
-  if [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
-  then
-    PKG_MAKE_OPTS_TARGET+=" platform=RK3566"
-  else
-    PKG_MAKE_OPTS_TARGET+=" platform=${DEVICE}"
-  fi
-  make ${PKG_MAKE_OPTS_TARGET}
+  PKG_MAKE_OPTS_TARGET+=" platform=${DEVICE}"
 }
 
 makeinstall_target() {
