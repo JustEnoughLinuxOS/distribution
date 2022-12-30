@@ -18,7 +18,7 @@ if [ ! "${OPENGL}" = "no" ]; then
 fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
-  PKG_DEPENDS_TARGET+=" ${OPENGLES} libglu"
+  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
 fi
 
 case ${DEVICE} in
