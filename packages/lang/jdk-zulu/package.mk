@@ -18,9 +18,10 @@ case ${HOST_ARCH} in
 esac
 
 PKG_URL="https://cdn.azul.com/zulu/bin/zulu${PKG_VERSION}-linux_${ZULUARCH}.tar.gz"
+
 PKG_LONGDESC="Zulu, the open Java(TM) platform from Azul Systems."
 PKG_TOOLCHAIN="manual"
 
 post_unpack() {
-  rm -f ${PKG_BUILD}/src.zip
+  rm -f ${PKG_BUILD}/src.zip ${SOURCES}/${PKG_NAME}/*
 }

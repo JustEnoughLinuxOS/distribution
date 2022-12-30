@@ -36,10 +36,6 @@ PKG_AUTORECONF="no"
 PKG_TOOLCHAIN="make"
 PKG_PATCH_DIRS+="${DEVICE}"
 
-make_target() {
-  PKG_MAKE_OPTS_TARGET+=" platform=${DEVICE}"
-}
-
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
   ${STRIP} --strip-debug dosbox_pure_libretro.so
