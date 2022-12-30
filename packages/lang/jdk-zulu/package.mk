@@ -7,7 +7,8 @@ PKG_VERSION="18.32.13-ca-jdk18.0.2.1"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://www.azul.com/products/zulu-enterprise/"
 
-case ${TARGET_ARCH} in
+HOST_ARCH=$(uname -m)
+case ${HOST_ARCH} in
   aarch64)
     ZULUARCH="aarch64"
   ;;

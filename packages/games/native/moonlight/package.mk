@@ -13,11 +13,6 @@ PKG_TOOLCHAIN="cmake"
 GET_HANDLER_SUPPORT="git"
 PKG_PATCH_DIRS+="${DEVICE}"
 
-if [ "${PROJECT}" = "Rockchip" ]
-then
-  PKG_DEPENDS_TARGET+=" librga rkmpp"
-fi
-
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
 fi

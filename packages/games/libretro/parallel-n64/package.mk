@@ -18,14 +18,8 @@ if [ ! "${OPENGL}" = "no" ]; then
 fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
-  PKG_DEPENDS_TARGET+=" ${OPENGLES} libglu"
+  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
 fi
-
-case ${DEVICE} in
-  RG503|RG353P)
-   PKG_MAKE_OPTS_TARGET+=" platform=unix_RK3566"
-  ;;
-esac
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro

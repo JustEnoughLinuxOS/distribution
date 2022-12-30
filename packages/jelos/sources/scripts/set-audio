@@ -111,14 +111,8 @@ function set_audio_device() {
   set_setting system.audiodevice "${SELECTION}"
   if [ "${SELECTION}" == "DEFAULT (SYSTEM PROVIDED)" ]
   then
-    if [ "$(get_setting system.rg353v)" = "1" ]
-    then
-      cp /usr/config/asound.conf.RG353V /storage/.config/asound.conf
-      exit 0
-    else
-      CARD="0"
-      HWDEV="hw:${CARD},0"
-    fi
+    CARD="0"
+    HWDEV="hw:${CARD},0"
   elif [ "${SELECTION}" == "DEFAULT HDMI" ]
   then
     CARD="0"

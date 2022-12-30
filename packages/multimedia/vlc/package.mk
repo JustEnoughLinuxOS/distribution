@@ -124,11 +124,11 @@ DISABLED_FEATURES="--disable-dependency-tracking \
 
   case ${ARCH} in
     arm)
-      PKG_DEPENDS_TARGET+=" ${OPENGLES} libglvnd"
+      PKG_DEPENDS_TARGET+=" ${OPENGLES}"
       ENABLED_FEATURES+=" --enable-gles2 --enable-neon"
     ;;
     aarch64)
-      PKG_DEPENDS_TARGET+=" ${OPENGLES} libglvnd"
+      PKG_DEPENDS_TARGET+=" ${OPENGLES}"
       ENABLED_FEATURES+=" --enable-gles2"
     ;;
     *)

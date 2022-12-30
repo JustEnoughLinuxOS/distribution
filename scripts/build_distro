@@ -53,7 +53,7 @@ then
 
   PKG_CLEAN="${PKG_CLEAN} mupen64plus-nx mupen64plus flycast_libretro dosbox-pure pcsx_rearmed pcsx_rearmed \
              gpsp raze amiberry lzdoom PPSSPPSDL gzdoom mupen64plussa-core mupen64plussa-input-sdl 351files \
-             libgo2 gamecontrollerdb duckstationsa moonlight"
+             gamecontrollerdb duckstationsa moonlight"
 
 fi
 

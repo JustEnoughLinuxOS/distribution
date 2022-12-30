@@ -23,22 +23,12 @@ distclean:
 src-pkg:
 	tar cvJf sources.tar.xz sources .stamps
 
-world: x86_64 RK3566 RK3399
+world: x86_64
 
 x86_64: handheld
 
-RK3566: RG503 RG353P
-
 handheld:
 	DEVICE_ROOT=handheld PROJECT=PC DEVICE=handheld ARCH=x86_64 ./scripts/build_distro
-
-RG503:
-	DEVICE_ROOT=RG503 PROJECT=Rockchip DEVICE=RG503 ARCH=arm ./scripts/build_distro
-	DEVICE_ROOT=RG503 PROJECT=Rockchip DEVICE=RG503 ARCH=aarch64 ./scripts/build_distro
-
-RG353P:
-	DEVICE_ROOT=RG503 PROJECT=Rockchip DEVICE=RG353P ARCH=arm ./scripts/build_distro
-	DEVICE_ROOT=RG503 PROJECT=Rockchip DEVICE=RG353P ARCH=aarch64 ./scripts/build_distro
 
 update:
 	PROJECT=PC DEVICE=handheld ARCH=x86_64 ./scripts/update_packages
