@@ -28,12 +28,6 @@ pre_make_target() {
   then
     rm CMakeLists.txt
   fi
-
-  case ${DEVICE} in
-    RG552)
-      PKG_MAKE_OPTS_TARGET=" platform=RK3399"
-    ;;
-  esac
 }
 
 makeinstall_target() {

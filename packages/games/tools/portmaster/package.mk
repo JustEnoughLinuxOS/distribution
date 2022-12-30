@@ -12,7 +12,7 @@ PKG_SHORTDESC="A simple tool that allows you to download various game ports that
 PKG_TOOLCHAIN="manual"
 
 case ${DEVICE} in
-  RG552|handheld)
+  handheld)
     PKG_DEPENDS_TARGET="glew"
   ;;
 esac

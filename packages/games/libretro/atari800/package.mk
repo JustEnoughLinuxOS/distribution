@@ -34,11 +34,6 @@ PKG_LONGDESC="atari800 3.1.0 for libretro/libco WIP"
 PKG_TOOLCHAIN="auto"
 GET_HANDLER_SUPPORT="git"
 
-if [ "${DEVICE}" = "RG552" ]
-then
-  PKG_MAKE_OPTS_TARGET="platform=rg552 GIT_VERSION=${PKG_VERSION:0:7}"
-fi
-
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
   cp atari800_libretro.so ${INSTALL}/usr/lib/libretro/

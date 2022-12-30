@@ -25,14 +25,8 @@ make_target() {
     arm|aarch64)
       export HOST_CPU=aarch64
       BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
-      # if [ "${DEVICE}" = "RG552" ]
-      # then
-      #   export USE_GLES=0
-      #   PKG_MAKE_OPTS_TARGET+="-DNOHQ=On -DCRC_ARMV8=On -DNEON_OPT=On"
-      # else
       export USE_GLES=1
       PKG_MAKE_OPTS_TARGET+="-DNOHQ=On -DCRC_ARMV8=On -DEGL=On -DNEON_OPT=On"
-      # fi
     ;;
   esac
   export APIDIR=$(get_build_dir mupen64plussa-core)/.install_pkg/usr/local/include/mupen64plus

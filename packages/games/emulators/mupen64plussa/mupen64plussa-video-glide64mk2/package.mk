@@ -17,25 +17,15 @@ if [ ! "${OPENGL}" = "no" ]; then
 fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
-  # if [ "${DEVICE}" = "RG552" ]
-  # then
-  #   PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
-  # else
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
   PKG_MAKE_OPTS_TARGET+="USE_GLES=1"
-  # fi
 fi
 
 make_target() {
   case ${ARCH} in
     arm|aarch64)
       export HOST_CPU=aarch64
-      # if [ "${DEVICE}" = "RG552" ]
-      # then
-      #   export USE_GLES=0
-      # else
       export USE_GLES=1
-      # fi
       BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
     ;;
   esac

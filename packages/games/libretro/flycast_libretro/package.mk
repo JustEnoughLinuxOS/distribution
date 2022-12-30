@@ -51,9 +51,6 @@ pre_make_target() {
     RG353P|RG503)
       PKG_MAKE_OPTS_TARGET+=" platform=RK3566"
     ;;
-    RG552)
-      PKG_MAKE_OPTS_TARGET+=" platform=${DEVICE}"
-    ;;
   esac
 }
 

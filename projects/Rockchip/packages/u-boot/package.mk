@@ -13,10 +13,6 @@ GET_HANDLER_SUPPORT="git"
 PKG_PATCH_DIRS+="${DEVICE}"
 
 case ${DEVICE} in
-  RG552)
-    PKG_URL="${PKG_SITE}/rk3399-uboot.git"
-    PKG_VERSION="b2b3fa8268"
-  ;;
   RG353P|RG503)
     PKG_URL="${PKG_SITE}/rk356x-uboot.git"
     PKG_VERSION="b2b0125"
