@@ -10,6 +10,12 @@ FAN_PWM="${DEVICE_PWM_FAN}"
 
 $DEBUG && echo "Setting profile to ${COOLING_PROFILE}"
 
+$DEBUG && echo "Enabling fan control."
+if [ -e "${DEVICE_PWM_FAN}_enable" ]
+then
+  echo 1 >${DEVICE_PWM_FAN}_enable
+fi
+
 if [ -e "/storage/.config/fancontrol.conf" ] && [ "${COOLING_PROFILE}" = "custom" ]
 then
   $DEBUG && echo "Loading configuration file" 2>/dev/null
@@ -37,8 +43,8 @@ then
     TEMPS=(65000 55000 45000 0)
   else
     # Quiet.
-    SPEEDS=(255 192 128 96 64)
-    TEMPS=(70000 60000 55000 50000 0)
+    SPEEDS=(255 192 128 96 64 48)
+    TEMPS=(70000 60000 55000 50000 47000 0)
   fi
 fi
 
@@ -62,3 +68,9 @@ do
   sleep 2
   $DEBUG && echo "Loop" 2>/dev/null
 done
+
+$DEBUG && echo "Disabling fan control."
+if [ -e "${DEVICE_PWM_FAN}_enable" ]
+then
+  echo 0 >${DEVICE_PWM_FAN}_enable
+fi

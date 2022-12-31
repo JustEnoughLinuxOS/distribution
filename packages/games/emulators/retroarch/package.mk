@@ -2,7 +2,7 @@
 # Copyright (C) 2021-present 351ELEC (https://github.com/351ELEC)
 
 PKG_NAME="retroarch"
-PKG_VERSION="02ba825c8848ae791497ec2155b010063d40839b"
+PKG_VERSION="2b669f4e4b7417c95b07c9ee760ea797836034a6"
 PKG_SITE="https://github.com/libretro/RetroArch"
 PKG_URL="${PKG_SITE}.git"
 PKG_LICENSE="GPLv3"
@@ -30,6 +30,7 @@ pre_configure_target() {
 				--disable-vg \
 				--disable-sdl \
 				--enable-sdl2 \
+				--disable-odroidgo2 \
 				--enable-ffmpeg"
 
   case ${ARCH} in
@@ -67,16 +68,6 @@ pre_configure_target() {
       PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
       PKG_CONFIGURE_OPTS_TARGET+=" --enable-vulkan --enable-vulkan_display"
   fi
-
-  case ${DEVICE} in
-    RG351P)
-      PKG_DEPENDS_TARGET+=" librga libgo2"
-      PKG_CONFIGURE_OPTS_TARGET+=" --enable-odroidgo2"
-    ;;
-    *)
-      PKG_CONFIGURE_OPTS_TARGET+=" --disable-odroidgo2"
-    ;;
-  esac
 
   cd ${PKG_BUILD}
 }

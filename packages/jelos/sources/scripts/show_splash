@@ -9,38 +9,24 @@
 
 SPLASH_TYPE="$1"
 
-hres="$(fbset 2>/dev/null | awk '/geometry/ { print $2 }')"
-vres="$(fbset 2>/dev/null | awk '/geometry/ { print $3 }')"
 rotation="$(cat /sys/devices/virtual/graphics/fbcon/rotate)"
 
 if [ "${SPLASH_TYPE}" == "intro" ] || [ "${SPLASH_TYPE}" == "exit" ]
 then
-  if [ ${vres} -gt ${hres} ] && \
-     [ -e "/usr/config/splash/splashl.png" ]
-  then
-    ### When we have a device specific splash
-    SPLASH="/usr/config/splash/splashl.png"
-  elif [ ! -e "/usr/config/splash/splashl.png" ]
-  then
-    ### When we don't define a splash
-    case ${rotation} in
-      0)
-        SPLASH="/usr/config/splash/splash.png"
-      ;;
-      1)
-        SPLASH="/usr/config/splash/splash_90.png"
-      ;;
-      2)
-        SPLASH="/usr/config/splash/splash_180.png"
-      ;;
-      3)
-        SPLASH="/usr/config/splash/splash_270.png"
-      ;;
-    esac
-  else
-    ### When we don't know what to do.
-    SPLASH="/usr/config/splash/splash.png"
-  fi
+  case ${rotation} in
+    0)
+      SPLASH="/usr/config/splash/splash.png"
+    ;;
+    1)
+      SPLASH="/usr/config/splash/splash_90.png"
+    ;;
+    2)
+      SPLASH="/usr/config/splash/splash_180.png"
+    ;;
+    3)
+      SPLASH="/usr/config/splash/splash_270.png"
+    ;;
+  esac
 else
   exit 0
 fi

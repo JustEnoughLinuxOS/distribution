@@ -29,10 +29,6 @@ pre_configure_target() {
   sed -i 's|ImGui::PushStyleColor(ImGuiCol_WindowBg, ImVec4(ImColor(94, 11, 22, 255))); // Set window background to red|ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(ImColor(100, 0, 0, 255)));\n    ImGui::PushStyleColor(ImGuiCol_NavHighlight, ImVec4(ImColor(180, 0, 0, 255)));\n    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(ImColor(180, 0, 0, 255)));|g' main.cpp
   sed -i 's|ImColor(94, 11, 22,|ImColor(180, 0, 0,|g' main.cpp
   sed -i 's|BUTTON_START|BUTTON_INVALID|g' main.cpp
-
-  # For RG552
-  sed -i 's|    ImGui::GetIO().Fonts->AddFontDefault(&config);|    ImGui::GetIO().Fonts->AddFontDefault(\&config);\n  }\n  else\n  {\n    ImFontConfig config;\n    config.SizePixels = 48;\n    ImGui::GetIO().Fonts->AddFontDefault(\&config);|g' main.cpp
-
 }
 
 makeinstall_target(){

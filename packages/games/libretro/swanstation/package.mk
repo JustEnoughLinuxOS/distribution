@@ -4,7 +4,6 @@
 
 PKG_NAME="swanstation"
 PKG_VERSION="f2e335bfd4751410dfb24d933f762b9a4fd7fdeb"
-PKG_SHA256=""
 PKG_ARCH=""
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/libretro/swanstation"

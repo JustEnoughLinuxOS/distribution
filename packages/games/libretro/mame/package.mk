@@ -3,7 +3,6 @@
 
 PKG_NAME="mame"
 PKG_VERSION="85581d60bb24fea14542b154aef2c7b624f5b60f"
-PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/mame"
@@ -12,7 +11,7 @@ PKG_DEPENDS_TARGET="toolchain zlib flac sqlite expat"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="MAME - Multiple Arcade Machine Emulator"
 PKG_TOOLCHAIN="make"
-PKG_BUILD_FLAGS="-lto"
+PKG_BUILD_FLAGS="-lto +pic"
 
 case ${TARGET_ARCH} in
   arm|aarch64)

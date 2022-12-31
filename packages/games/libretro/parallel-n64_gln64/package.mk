@@ -3,7 +3,6 @@
 
 PKG_NAME="parallel-n64_gln64"
 PKG_VERSION="a03fdcba6b2e9993f050b50112f597ce2f44fa2c"
-PKG_SHA256=""
 PKG_REV="2"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/parallel-n64"
@@ -25,19 +24,6 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
 fi
 
 case ${ARCH} in
-  arm)
-    case ${DEVICE} in
-      RG351P|RG351V|RG351MP|RGB20S)
-        PKG_MAKE_OPTS_TARGET=" platform=RG351x"
-      ;;
-      RG503|RG353P)
-        PKG_MAKE_OPTS_TARGET+=" platform=RK3566"
-      ;;
-      RG552)
-        PKG_MAKE_OPTS_TARGET=" platform=${DEVICE}"
-      ;;
-    esac
-  ;;
   aarch64)
     make_target() {
       :

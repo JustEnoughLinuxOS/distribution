@@ -3,7 +3,6 @@
 
 PKG_NAME="parallel-n64_glide64"
 PKG_VERSION="a03fdcba6b2e9993f050b50112f597ce2f44fa2c"
-PKG_SHA256=""
 PKG_REV="2"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/parallel-n64"
@@ -23,28 +22,6 @@ fi
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
 fi
-
-
-case ${ARCH} in
-  arm)
-    case ${DEVICE} in
-      RG351P|RG351V|RG351MP|RGB20S)
-        PKG_MAKE_OPTS_TARGET=" platform=RG351x"
-      ;;
-      RG503|RG353P)
-        PKG_MAKE_OPTS_TARGET+=" platform=RK3566"
-      ;;
-      RG552)
-        PKG_MAKE_OPTS_TARGET=" platform=${DEVICE}"
-      ;;
-    esac
-  ;;
-  aarch64)
-    make_target() {
-      :
-    }
-  ;;
-esac
 
 pre_configure_target() {
   sed -i 's/info->library_name = "ParaLLEl N64";/info->library_name = "ParaLLEl N64 Glide64";/g' ${PKG_BUILD}/libretro/libretro.c

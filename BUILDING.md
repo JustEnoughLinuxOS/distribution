@@ -76,7 +76,7 @@ As the distribution is being built, package source are fetched and hosted in thi
 The tools directory contains utility scripts that can be used during the development process, including a simple tool to burn an image to a usb drive or sdcard.
 
 ## Building JELOS
-Building JELOS requires an Ubuntu 20.04 host with approximately 200GB of free space for a single device, or 800GB of free space for a full world build.  Other Linux distributions may be used when building using Docker, however this is untested and unsupported.  We recommend building with no more than 8 cores.
+Building JELOS requires an Ubuntu 22.04 host with approximately 200GB of free space for a single device, or 800GB of free space for a full world build.  Other Linux distributions may be used when building using Docker, however this is untested and unsupported.  We recommend building with no more than 8 cores.
 
 ### Cloning the JELOS Sources
 To build JELOS, start by cloning the project git repository.
@@ -106,15 +106,6 @@ Building JELOS is easy, the fastest and most recommended method is to instruct t
 
 | Device | Dependency | Docker Command |
 | ---- | ---- | ---- |
-|RG552||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG552```|
-|RG503||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG503```|
-|RG353P|RG503|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG353P```|
-|RG353V|RG503|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG353P```|
-|RG353M|RG503|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG353P```|
-|RG351P||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG351P```|
-|RG351V|RG351P|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-351V```|
-|RG351MP|RG351P|```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RG351MP```|
-|RGB20S||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RGB20S```|
 |handheld||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-handheld```|
 |ALL DEVICES||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-world```|
 
@@ -128,23 +119,23 @@ sudo apt install gcc make git unzip wget \
                 xz-utils libsdl2-dev libsdl2-mixer-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev \
                 rapidjson-dev libasound2-dev libgl1-mesa-dev build-essential libboost-all-dev cmake fonts-droid-fallback \
                 libvlc-dev libvlccore-dev vlc-bin texinfo premake4 golang libssl-dev curl patchelf \
-                xmlstarlet patchutils gawk gperf xfonts-utils default-jre python xsltproc libjson-perl \
+                xmlstarlet patchutils gawk gperf xfonts-utils default-jre python-is-python3 xsltproc libjson-perl \
                 lzop libncurses5-dev device-tree-compiler u-boot-tools rsync p7zip libparse-yapp-perl \
                 zip binutils-aarch64-linux-gnu dos2unix p7zip-full libvpx-dev bsdmainutils bc meson p7zip-full \
-                qemu-user-binfmt zstd parted imagemagick
+                qemu-user-binfmt zstd parted imagemagick docker.io
 ```
 
-Next, build the version of JELOS for your device.  See the table above for dependencies.  If you're building for the RG351V, RG351P will be built first to provide the build root dependency.  To execute a build, run `make {device}`
+Next, build the version of JELOS for your device.  See the table above for dependencies. 
 
 ```
-make RG351V
+make handheld
 ```
 
 ### Building a single package
 It is also possible to build individual packages.
 ```
-DEVICE=RG351V ARCH=aarch64 ./scripts/clean busybox
-DEVICE=RG351V ARCH=aarch64 ./scripts/build busybox
+DEVICE=handheld ARCH=x86_64 ./scripts/clean busybox
+DEVICE=handheld ARCH=x86_64 ./scripts/build busybox
 ```
 
 > Note: Emulation Station package build requires additional steps because its source code located in a separate repository, see instructions inside, [link](https://github.com/JustEnoughLinuxOS/distribution/blob/main/packages/ui/emulationstation/package.mk).
@@ -172,7 +163,7 @@ export SCREENSCRAPER_DEV_LOGIN="devid=DEVID&devpassword=DEVPASSWORD"
 # Apply for a GamesDB API Key here: https://forums.thegamesdb.net/viewforum.php?f=10
 export GAMESDB_APIKEY="APIKEY"
 # Find your Cheevos Web API key here: https://retroachievements.org/controlpanel.php
-export CHEEVOS_DEV_LOGIN="z=DEVID&y=DEVPASSWORD"
+export CHEEVOS_DEV_LOGIN="z=RETROACHIEVEMENTSUSERNAME&y=APIKEYID"
 ```
 
 ### Creating a patch for a package
@@ -185,9 +176,9 @@ mv wireguard-linux-compat-v1.0.20211208 wireguard-linux-compat
 cp -rf wireguard-linux-compat wireguard-linux-compat.orig
 
 # Make your changes to wireguard-linux-compat
-mkdir -p ../../packages/network/wireguard-linux-compat/patches/RG503
+mkdir -p ../../packages/network/wireguard-linux-compat/patches/handheld
 # run from the sources dir
-diff -rupN wireguard-linux-compat wireguard-linux-compat.orig >../../packages/network/wireguard-linux-compat/patches/RG503/mychanges.patch
+diff -rupN wireguard-linux-compat wireguard-linux-compat.orig >../../packages/network/wireguard-linux-compat/patches/handheld/mychanges.patch
 ```
 
 ### Creating a patch for a package using git
@@ -209,9 +200,9 @@ If you already have a build for your device made using the above process, it's s
 ```
 # Update the package version for a new package, or apply your patch as above.
 vim/emacs/vscode/notepad.exe
-# Export the variables needed to complete your build, we'll assume you are building for the RG503, update the device to match your configuration.
+# Export the variables needed to complete your build, we'll assume you are building handheld, update the device to match your configuration.
 export OS_VERSION=$(date +%Y%m%d) BUILD_DATE=$(date)
-export PROJECT=Rockchip DEVICE=RG503 ARCH=aarch64
+export PROJECT=PC ARCH=x86_64 DEVICE=handheld
 # Clean the package you are building.
 ./scripts/clean emulationstation
 # Build the package.

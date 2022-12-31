@@ -13,19 +13,14 @@ done
 
 if [ ! -e "/storage/.configured" ]
 then
-  if [ -e "/usr/share/bootloader/update.sh" ]
-  then
-    # Ensure that the boot images are configured properly (Resolves boot when charging issue on the RG503 and RG353P
-    /usr/share/bootloader/update.sh &>/dev/null
-    rm -f /storage/.config/boot.hint &>/dev/null
-  fi
-
   # Copy config files, but don't overwrite.  Only run if /storage is fresh
   ## cp -iRp /usr/config/* /storage/.config/ &>/dev/null
   ## ignore es_systems.cfg and switch to rsync
   rsync -a --ignore-existing --exclude=es_systems.cfg /usr/config/* /storage/.config/
   mkdir -p /storage/.config/emulationstation/themes
   ln -s /usr/share/themes/es-theme-art-book-next /storage/.config/emulationstation/themes/system-theme
+  ln -s /usr/share/themes/es-theme-minielec /storage/.config/emulationstation/themes/es-theme-minielec
+  ln -s /usr/share/themes/es-theme-minimal /storage/.config/emulationstation/themes/es-theme-minimal
 
   ### Link the game controller database so it is managed with OS updates.
   rm -f /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt

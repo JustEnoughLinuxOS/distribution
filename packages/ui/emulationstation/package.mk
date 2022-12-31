@@ -3,7 +3,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="emulationstation"
-PKG_VERSION="6a24c96"
+PKG_VERSION="07285b7"
 PKG_GIT_CLONE_BRANCH="main"
 PKG_REV="1"
 PKG_ARCH="any"
@@ -24,7 +24,7 @@ fi
 
 if [ ! "${OPENGLES_SUPPORT}" = no ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-  PKG_CMAKE_OPTS_TARGET+=" -DGLES2=1"
+  PKG_CMAKE_OPTS_TARGET+=" -DGLES2=1 -DGL=0"
 fi
 
 if [ ! "${ENABLE_UPDATES}" = "no" ]; then
@@ -113,7 +113,6 @@ makeinstall_target() {
 	ln -sf /usr/config/emulationstation/es_systems.cfg ${INSTALL}/etc/emulationstation/es_systems.cfg
 
         cp -rf ${PKG_DIR}/config/common/*.cfg ${INSTALL}/usr/config/emulationstation
-	cp -rf ${PKG_DIR}/config/device/${DEVICE}/*.cfg ${INSTALL}/usr/config/emulationstation
 
 	ln -sf /storage/.cache/system_timezone ${INSTALL}/etc/timezone
 

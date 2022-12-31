@@ -11,6 +11,8 @@ fi
 if [ ! -e "/storage/.config/modprobe.d/alsa-base.conf" ]
 then
   touch /storage/.config/modprobe.d/alsa-base.conf
-  set-audio set "DEFAULT HDMI"
   reboot
 fi
+
+### Set the audio device
+set-audio set "HDMI (0:3)"

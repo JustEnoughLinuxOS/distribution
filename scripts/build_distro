@@ -51,16 +51,15 @@ then
   # If DEVICE_ROOT is defined, take additional clean steps to ensure everything is built
   # properly for all devices including the root device.
 
-  PKG_CLEAN="${PKG_CLEAN} mupen64plus-nx mupen64plus flycast_libretro dosbox-pure parallel-n64_glide64 \
-             parallel-n64_gln64 parallel-n64_rice pcsx_rearmed pcsx_rearmed gpsp raze amiberry lzdoom  \
-             PPSSPPSDL gzdoom mupen64plussa-core mupen64plussa-input-sdl 351files libgo2 \
+  PKG_CLEAN="${PKG_CLEAN} mupen64plus-nx mupen64plus flycast_libretro dosbox-pure pcsx_rearmed pcsx_rearmed \
+             gpsp raze amiberry lzdoom PPSSPPSDL gzdoom mupen64plussa-core mupen64plussa-input-sdl 351files \
              gamecontrollerdb duckstationsa moonlight"
 
 fi
 
 # Clean OS specific packages.
 PKG_CLEAN="${PKG_CLEAN} system-utils plymouth-lite initramfs busybox linux grub u-boot SDL2 modules \
-           emulationstation retroarch lib32 splash jelos"
+           emulationstation retroarch lib32 autostart splash jelos mesa"
 
 if [ ! -n "${DIRTY}" ]
 then

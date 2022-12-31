@@ -3,7 +3,6 @@
 
 PKG_NAME="hatarisa"
 PKG_VERSION="bac8ef7521b4ef8d31b8f6d6c2ecbf9f50e43c25"
-PKG_SHA256=""
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/hatari/hatari"
 PKG_URL="https://github.com/hatari/hatari/archive/${PKG_VERSION}.tar.gz"

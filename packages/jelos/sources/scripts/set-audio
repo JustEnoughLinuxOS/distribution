@@ -111,14 +111,8 @@ function set_audio_device() {
   set_setting system.audiodevice "${SELECTION}"
   if [ "${SELECTION}" == "DEFAULT (SYSTEM PROVIDED)" ]
   then
-    if [ "$(get_setting system.rg353v)" = "1" ]
-    then
-      cp /usr/config/asound.conf.RG353V /storage/.config/asound.conf
-      exit 0
-    else
-      CARD="0"
-      HWDEV="hw:${CARD},0"
-    fi
+    CARD="0"
+    HWDEV="hw:${CARD},0"
   elif [ "${SELECTION}" == "DEFAULT HDMI" ]
   then
     CARD="0"
@@ -151,14 +145,16 @@ function set_audio_device() {
         CARD=$(awk '/^card:/ {print $2}' ${SDEVICE})
         DEVICE=$(awk '/^device:/ {print $2}' ${SDEVICE})
         NAME=$(awk '/^name:/ {print $2}' ${SDEVICE})
-        if [[ "${SELECTION}" =~ ${NAME} ]]
+        if [ "${SELECTION}" == "${NAME} (${CARD}:${DEVICE})" ]
         then
           HWDEV="hw:${CARD},${DEVICE}"
         fi
       fi
     done
   fi
-  cat <<EOF >/storage/.config/asound.conf
+  if [[ "${HWDEV}" =~ ^hw ]]
+  then
+    cat <<EOF >/storage/.config/asound.conf
 ctl.!default {
   type hw
   card ${CARD}
@@ -185,6 +181,21 @@ pcm.dmixer  {
 	}
 }
 EOF
+  else
+    cat <<EOF >/storage/.config/asound.conf
+pcm.!default {
+  type plug
+  slave {
+    pcm "${HWDEV}"
+  }
+}
+
+ctl.!default {
+  type hw
+  card ${CARD}
+}
+EOF
+  fi
 }
 
 function set_es_path() {

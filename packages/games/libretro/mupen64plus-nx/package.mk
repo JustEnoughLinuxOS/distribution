@@ -2,8 +2,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="mupen64plus-nx"
-PKG_VERSION="1b67122ff6a923c93a56ff94273e3768a6da5dff"
-PKG_SHA256=""
+PKG_VERSION="bc241538b9ef85d8b22c392d7699dc73f460e283"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/mupen64plus-libretro-nx"
 PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
@@ -26,17 +25,6 @@ fi
 
 pre_configure_target() {
   sed -e "s|^GIT_VERSION ?.*$|GIT_VERSION := \" ${PKG_VERSION:0:7}\"|" -i Makefile
-  case ${DEVICE} in
-    RG351P|RG351V|RG351MP|RGB20S)
-      PKG_MAKE_OPTS_TARGET=" platform=RK3326"
-    ;;
-    RG552)
-      PKG_MAKE_OPTS_TARGET=" platform=RK3399"
-    ;;
-    RG503|RG353P)
-      PKG_MAKE_OPTS_TARGET=" platform=RK3566"
-    ;;
-  esac
 }
 
 makeinstall_target() {
