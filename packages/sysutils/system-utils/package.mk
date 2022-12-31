@@ -20,6 +20,7 @@ makeinstall_target() {
   cp ${PKG_DIR}/sources/scripts/fancontrol ${INSTALL}/usr/bin
   cp ${PKG_DIR}/sources/scripts/headphone_sense ${INSTALL}/usr/bin
   cp ${PKG_DIR}/sources/scripts/system_utils ${INSTALL}/usr/bin
+  cp ${PKG_DIR}/sources/scripts/internalwifi ${INSTALL}/usr/bin
   cp ${PKG_DIR}/sources/scripts/volume_sense ${INSTALL}/usr/bin
   if [ -d "${PKG_DIR}/sources/devices/${DEVICE}" ]
   then

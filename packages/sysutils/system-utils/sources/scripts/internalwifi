@@ -1,0 +1,27 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+if [ -z "${DEVICE_INTERNAL_WIFI}" ] || [ "${DEVICE_INTERNAL_WIFI}" = false ]
+then
+  exit 0
+fi
+
+case $1 in
+  disable)
+    connmanctl disable wifi
+    rmmod ${DEVICE_WIFI_MODULE}
+    echo 0 >/sys/class/gpio/gpio${DEVICE_WIFI}/value
+    set_setting internal.wifi 0
+  ;;
+  enable)
+    echo 1 >/sys/class/gpio/gpio${DEVICE_WIFI}/value
+    modprobe ${DEVICE_WIFI_MODULE}
+    connmanctl enable wifi
+    set_setting internal.wifi 1
+  ;;
+esac
+
+systemctl restart connman
