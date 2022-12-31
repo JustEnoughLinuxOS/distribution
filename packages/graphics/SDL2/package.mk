@@ -63,20 +63,6 @@ else
 			   -DSDL_HIDAPI_JOYSTICK=OFF"
 fi
 
-case ${PROJECT} in
-  Rockchip)
-    PKG_DEPENDS_TARGET+=" librga"
-    pre_make_host() {
-      sed -i "s| -lrga||g" ${PKG_BUILD}/CMakeLists.txt
-    }
-    pre_make_target() {
-      if ! `grep -rnw "${PKG_BUILD}/CMakeLists.txt" -e '-lrga'`; then
-        sed -i "s|--no-undefined|--no-undefined -lrga|" ${PKG_BUILD}/CMakeLists.txt
-      fi
-    }
-  ;;
-esac
-
 pre_configure_target(){
   export LDFLAGS="${LDFLAGS} -ludev"
   PKG_CMAKE_OPTS_TARGET+="-DSDL_STATIC=OFF \

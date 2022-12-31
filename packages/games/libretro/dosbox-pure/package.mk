@@ -36,19 +36,6 @@ PKG_AUTORECONF="no"
 PKG_TOOLCHAIN="make"
 PKG_PATCH_DIRS+="${DEVICE}"
 
-make_target() {
-  if [[ "${DEVICE}" =~ RG351 ]] || [[ "${DEVICE}" =~ RGB20S ]]
-  then
-    PKG_MAKE_OPTS_TARGET+=" platform=RG351x"
-  elif [[ "${DEVICE}" =~ RG503 ]] || [[ "${DEVICE}" =~ RG353P ]]
-  then
-    PKG_MAKE_OPTS_TARGET+=" platform=RK3566"
-  else
-    PKG_MAKE_OPTS_TARGET+=" platform=${DEVICE}"
-  fi
-  make ${PKG_MAKE_OPTS_TARGET}
-}
-
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
   ${STRIP} --strip-debug dosbox_pure_libretro.so

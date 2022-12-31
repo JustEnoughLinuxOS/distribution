@@ -3,7 +3,7 @@
 
 PKG_NAME="mupen64plussa-core"
 PKG_VERSION="ba9a52483052248b67c324e3fd0e073b807bbea4"
-PKG_ARCH="aarch64"
+PKG_SHA256=""
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/mupen64plus/mupen64plus-core"
 PKG_URL="https://github.com/mupen64plus/mupen64plus-core/archive/${PKG_VERSION}.tar.gz"
@@ -27,12 +27,7 @@ make_target() {
       export VC=0
       export CROSS_COMPILE="${TARGET_PREFIX}"
       BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
-      # if [ "${DEVICE}" = "RG552" ]
-      # then
-      #   export USE_GLES=0
-      # else
       export USE_GLES=1
-      # fi
     ;;
   esac
 

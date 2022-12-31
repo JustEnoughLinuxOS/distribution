@@ -2,8 +2,7 @@
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="mupen64plussa-video-gliden64"
-PKG_VERSION="7a182fbf0f7ca7527cff05e7eec292ca67ab4e48"
-PKG_ARCH="aarch64"
+PKG_VERSION="ff47414c2bd6e572872e9148b2f3e1dbc83e5fee"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/gonetz/GLideN64"
 PKG_URL="${PKG_SITE}.git"
@@ -25,14 +24,8 @@ make_target() {
     arm|aarch64)
       export HOST_CPU=aarch64
       BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
-      # if [ "${DEVICE}" = "RG552" ]
-      # then
-      #   export USE_GLES=0
-      #   PKG_MAKE_OPTS_TARGET+="-DNOHQ=On -DCRC_ARMV8=On -DNEON_OPT=On"
-      # else
       export USE_GLES=1
       PKG_MAKE_OPTS_TARGET+="-DNOHQ=On -DCRC_ARMV8=On -DEGL=On -DNEON_OPT=On"
-      # fi
     ;;
   esac
   export APIDIR=$(get_build_dir mupen64plussa-core)/.install_pkg/usr/local/include/mupen64plus

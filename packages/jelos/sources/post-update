@@ -83,18 +83,11 @@ then
   cp -f /usr/config/emulationstation/es_input.cfg /storage/.config/emulationstation/es_input.cfg
 fi
 
-# Disable integer scaling by default on Win600
+# Disable integer scaling by default on Handheld 
 if [[ "${HW_DEVICE}" =~ handheld ]]
 then
-  echo "No integer scaling (Win600 only)..." >>${LOG}
+  echo "No integer scaling (Handheld only)..." >>${LOG}
   sed -i "s#.integerscale=1#.integerscale=0#g" /storage/.config/system/configs/system.cfg
-fi
-
-# We don't want to use gl on the 552, switch it to glcore.
-if [[ "${HW_DEVICE}" =~ RG552 ]]
-then
-  echo "Switch to glcore (RG552 only)..." >>${LOG}
-  sed -i 's#video_driver = "gl"#video_driver = "glcore"#g' /storage/.config/retroarch/retroarch.cfg
 fi
 
 # If smb.conf doesn't exist in ~/.config, add it.
@@ -134,14 +127,6 @@ if [ -z "${WESTONSTARTUP}" ]
 then
   echo "Make sure weston is our default." >>${LOG}
   set_setting weston.startup "/usr/bin/start_es.sh"
-fi
-
-# Fixing asound.state on RG552 with broken values
-if [ "${HW_DEVICE}" == "RG552" ] && \
-   [ "$(grep -i 'value.*Invert' /storage/.config/asound.state)" ]
-then
-  echo "Fix asound.state." >>${LOG}
-  cp /usr/config/asound.state /storage/.config/asound.state
 fi
 
 # Disable PCSX2SA auto update check

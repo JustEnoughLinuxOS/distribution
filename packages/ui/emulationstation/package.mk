@@ -24,7 +24,7 @@ fi
 
 if [ ! "${OPENGLES_SUPPORT}" = no ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-  PKG_CMAKE_OPTS_TARGET+=" -DGLES2=1"
+  PKG_CMAKE_OPTS_TARGET+=" -DGLES2=1 -DGL=0"
 fi
 
 if [ ! "${ENABLE_UPDATES}" = "no" ]; then
@@ -113,7 +113,6 @@ makeinstall_target() {
 	ln -sf /usr/config/emulationstation/es_systems.cfg ${INSTALL}/etc/emulationstation/es_systems.cfg
 
         cp -rf ${PKG_DIR}/config/common/*.cfg ${INSTALL}/usr/config/emulationstation
-	cp -rf ${PKG_DIR}/config/device/${DEVICE}/*.cfg ${INSTALL}/usr/config/emulationstation
 
 	ln -sf /storage/.cache/system_timezone ${INSTALL}/etc/timezone
 

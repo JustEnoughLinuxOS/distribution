@@ -14,12 +14,9 @@ PKG_LONGDESC="The Glibc package contains the main C library."
 PKG_BUILD_FLAGS="+bfd -gold"
 
 case "${DEVICE}" in
-  RG353P|RG503|RG351P|RG351V|RG351MP|RGB20S)
-    OPT_ENABLE_KERNEL=4.4.0
-    ;;
   *)
     OPT_ENABLE_KERNEL=5.15.0
-    ;;
+  ;;
 esac
 
 PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \

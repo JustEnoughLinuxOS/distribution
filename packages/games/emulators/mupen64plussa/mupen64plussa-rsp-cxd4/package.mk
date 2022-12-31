@@ -1,6 +1,5 @@
 PKG_NAME="mupen64plussa-rsp-cxd4"
 PKG_VERSION="39f79201baa15890c4cbae92f2215a634cc3ee6d"
-PKG_ARCH="aarch64"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/mupen64plus/mupen64plus-rsp-cxd4"
 PKG_URL="${PKG_SITE}.git"
@@ -27,12 +26,7 @@ make_target() {
   case ${ARCH} in
     arm|aarch64)
       export HOST_CPU=aarch64
-      # if [ "${DEVICE}" = "RG552" ]
-      # then
-      #   export USE_GLES=0
-      # else
       export USE_GLES=1
-      # fi
       BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
       CPPFLAGS="-DUSE_SSE2NEON"
     ;;
