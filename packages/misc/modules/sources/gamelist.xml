@@ -54,19 +54,6 @@
         </game>
 	
 	<game>
-		<path>./PortMaster.sh</path>
-		<name>PortMaster</name>
-		<desc>Game port installer</desc>
-		<developer>christianhaitian</developer>
-		<publisher>Jelos</publisher>
-		<rating>1.0</rating>
-		<releasedate>2021</releasedate>
-		<genre>Script</genre>
-		<thumbnail>./downloaded_images/port-thumb.png</thumbnail>
-		<image>./downloaded_images/ports-image.png</image>
-	</game>
-
-	<game>
 		<path>./Start PPSSPP.sh</path>
 		<name>Start PPSSPP</name>
 		<desc>Run the PPSSPP emulator without starting a game.</desc>
@@ -129,19 +116,6 @@
 		<genre>Script</genre>
 		<thumbnail>./downloaded_images/clean-thumb.png</thumbnail>
 		<image>./downloaded_images/clean.png</image>
-	</game>
-
-	<game>
-		<path>./ThemeMaster.sh</path>
-		<name>ThemeMaster</name>
-		<desc>Theme installer</desc>
-		<developer>JohnIrvine1433</developer>
-		<publisher>Jelos</publisher>
-		<rating>1.0</rating>
-		<releasedate>2022</releasedate>
-		<genre>Script</genre>
-		<thumbnail>./downloaded_images/theme-thumb.png</thumbnail>
-		<image>./downloaded_images/theme-image.png</image>
 	</game>
 
 </gameList>
