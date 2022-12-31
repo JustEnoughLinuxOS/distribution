@@ -30,6 +30,9 @@ PROJECT="${PROJECT:-PC}"
 ARCH="${ARCH:-x86_64}"
 TARGET_ARCH="${ARCH}"
 
+# determines the default device, if not forced by user
+DEVICE="${DEVICE:-handheld}"
+
 # include helper functions
 . config/functions
 

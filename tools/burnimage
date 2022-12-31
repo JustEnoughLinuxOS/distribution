@@ -2,6 +2,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
 
+. config/options
+
 if [ -z "$1" ]
 then
   export OS_VERSION=$(date +%Y%m%d)
