@@ -17,6 +17,8 @@ makeinstall_target() {
   cp -rf ${PKG_DIR}/scripts/* ${INSTALL}/usr/bin
 
   chmod +x ${INSTALL}/usr/bin/start_drastic.sh
+
   mkdir -p ${INSTALL}/usr/config/drastic
+  cp -rf ${PKG_DIR}/drastic.tar.gz ${INSTALL}/usr/config/drastic/drastic.tar.gz
   cp -rf ${PKG_DIR}/config/${DEVICE}/drastic.cfg ${INSTALL}/usr/config/drastic/drastic.cfg
 }
