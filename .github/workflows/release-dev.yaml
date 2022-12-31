@@ -14,12 +14,12 @@ env:
 
 jobs:
   launch-dev-release:
-      runs-on: ubuntu-20.04
+      runs-on: ubuntu-22.04
       if: |
         ${{ github.event_name == 'workflow_dispatch' }} || 
         ${{ github.event.label.name == 'build' }}
       steps:
-        - uses: actions/checkout@v2
+        - uses: actions/checkout@v3
           name: checkout
           with:
             clean: false
@@ -33,7 +33,7 @@ jobs:
         - name: repository full name
           id: full_name
           run: |
-               echo "::set-output name=full_name::$(git config --get remote.origin.url | sed 's|^.*github.com/||g' | sed 's/.git$//g')"
+               echo "name=full_name::$(git config --get remote.origin.url | sed 's|^.*github.com/||g' | sed 's/.git$//g')" >> $GITHUB_OUTPUT
         
         - name: changes
           id: changes
@@ -42,21 +42,21 @@ jobs:
                release_notes="${release_notes//'%'/'%25'}"
                release_notes="${release_notes//$'\n'/'%0A'}"
                release_notes="${release_notes//$'\r'/'%0D'}"
-               echo ::set-output name=release_notes::${release_notes}
+               echo "name=release_notes::${release_notes}" >> $GITHUB_OUTPUT
 
         - name: change_counter
           id: counter
           run: |
                count="$(git log --after "$(date -d "yesterday" +%Y-%m-%d)" --pretty=format:"* %h: %s" | wc -l)"
-               echo "::set-output name=count::${count}"
+               echo "name=count::${count}" >> $GITHUB_OUTPUT
 
         - name: Get date for artifacts
           id: date
-          run: echo "::set-output name=date::$(date +'%Y%m%d%H%M')"
+          run: echo "name=date::$(date +'%Y%m%d%H%M')" >> $GITHUB_OUTPUT
   
         - name: Repository Dispatch
           if: steps.counter.outputs.count != '0'
-          uses: peter-evans/repository-dispatch@v1
+          uses: peter-evans/repository-dispatch@v2
           with:
             token: ${{ secrets.REPO_ACCESS }}
             repository: ${{ steps.full_name.outputs.full_name }}
