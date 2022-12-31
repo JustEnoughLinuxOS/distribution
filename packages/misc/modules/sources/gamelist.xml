@@ -2,13 +2,13 @@
 <gameList>
 
 	<game>
-		<path>./351Files.sh</path>
-		<name>351Files</name>
+		<path>./fileman.sh</path>
+		<name>fileman</name>
 		<desc>Single panel file manager</desc>
-		<developer>Tardigrade</developer>
+		<developer>Tardigrade and JELOS</developer>
 		<publisher>JELOS</publisher>
 		<rating>1.0</rating>
-		<releasedate>2021</releasedate>
+		<releasedate>2022</releasedate>
 		<genre>Script</genre>
 		<thumbnail>./downloaded_images/filemanager-thumb.png</thumbnail>
 		<image>./downloaded_images/filemanager.png</image>

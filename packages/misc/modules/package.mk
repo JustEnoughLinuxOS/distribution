@@ -29,6 +29,7 @@ post_makeinstall_target() {
     x86_64)
       rm -f ${INSTALL}/usr/config/modules/*32bit*
       rm -f ${INSTALL}/usr/config/modules/*Master*
+      rm -f ${INSTALL}/usr/config/modules/*351Files*
     ;;
     *)
       rm -f ${INSTALL}/usr/config/modules/Install*
