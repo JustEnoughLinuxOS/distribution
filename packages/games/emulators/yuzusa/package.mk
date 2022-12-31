@@ -30,9 +30,10 @@ then
   PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
 fi
 
-PKG_CMAKE_OPTS_TARGET+="        -DENABLE_QT=ON \
+PKG_CMAKE_OPTS_TARGET+="        -DENABLE_QT=OFF \
                                 -DCMAKE_BUILD_TYPE=Release \
                                 -DYUZU_USE_BUNDLED_SDL2=OFF \
+                                -DYUZU_USE_BUNDLED_QT=OFF \
                                 -DYUZU_TESTS=OFF \
                                 -DENABLE_SDL2=ON \
                                 -DARCHITECTURE_x86_64=ON \
