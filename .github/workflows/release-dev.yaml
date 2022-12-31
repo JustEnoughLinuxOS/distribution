@@ -14,7 +14,7 @@ env:
 
 jobs:
   launch-dev-release:
-      runs-on: ubuntu-20.04
+      runs-on: ubuntu-22.04
       if: |
         ${{ github.event_name == 'workflow_dispatch' }} || 
         ${{ github.event.label.name == 'build' }}
