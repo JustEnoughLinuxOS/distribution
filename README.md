@@ -32,8 +32,22 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-## Installation
-* JELOS is a source based Linux distribution.  To install, follow BUILDING.md and then write the resulting image to your micro sd card using your favorite image writing tool.
+## Flashing
+* Download the latest [version of JELOS](https://github.com/JustEnoughLinuxOS/distribution/releases) (.img.gz) for your device.
+* Decompress the image.
+* Write the image to an SDCARD using an imaging tool.  Common imaging tools include [Balena Etcher](https://www.balena.
+io/etcher/), [Raspberry Pi Imager](https://www.raspberrypi.com/software/), and [Win32 Disk Imager](https://sourceforge.net/projects/win32diskimager/).  If you're skilled with the command line, dd works fine too.
+
+> This repository hosts stable versions of JELOS.  If you would like to install the unstable development version, please visit the [development build repository](https://github.com/JustEnoughLinuxOS/distribution-dev).
+
+ ## Installation
+* JELOS includes an installation tool.  The installation tool can be found in the tools menu.
+
+## Upgrading
+* Download and install the update online via the System Settings menu.
+* Download the latest [version of JELOS](https://github.com/JustEnoughLinuxOS/distribution/releases) (.tar) for your device.
+* Copy the update to your device over the network to your device's update share.
+* Reboot the device, and the update will begin automatically.
 
 ## Network Access
 * External services are disabled by default in stable builds.  When enabled, the username for ssh and samba access is "root".  The root password is generated during every boot, it can be found in the System Settings menu.
