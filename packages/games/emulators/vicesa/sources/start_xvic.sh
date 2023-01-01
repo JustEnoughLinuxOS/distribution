@@ -12,4 +12,4 @@ fi
 ARG=${1//[\\]/}
 export SDL_AUDIODRIVER=alsa
 echo "[${ARG}]"
-${FAST_CORES} xvic -sounddev alsa -sdl2renderer opengles2 "$ARG"
+xvic -sounddev alsa -sdl2renderer opengles2 "$ARG"
