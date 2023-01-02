@@ -11,13 +11,6 @@ else
   nohup systemctl stop fancontrol &
 fi
 
-if [ "${DEVICE_POWER_LED}" == "true" ]
-then
-  nohup systemctl start battery &
-else
-  nohup systemctl stop battery &
-fi
-
 if [ "${DEVICE_FAKE_JACKSENSE}" == "true" ]
 then
   nohup systemctl start headphones &

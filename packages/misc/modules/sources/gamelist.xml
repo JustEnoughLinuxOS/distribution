@@ -2,19 +2,6 @@
 <gameList>
 
 	<game>
-		<path>./351Files.sh</path>
-		<name>351Files</name>
-		<desc>Single panel file manager</desc>
-		<developer>Tardigrade</developer>
-		<publisher>JELOS</publisher>
-		<rating>1.0</rating>
-		<releasedate>2021</releasedate>
-		<genre>Script</genre>
-		<thumbnail>./downloaded_images/filemanager-thumb.png</thumbnail>
-		<image>./downloaded_images/filemanager.png</image>
-	</game>
-
-	<game>
 		<path>./cloud_backup.sh</path>
 		<name>Cloud Backup</name>
 		<desc>Backup your saves to a cloud drive.</desc>
@@ -39,6 +26,19 @@
 		<thumbnail>./downloaded_images/rclone-thumb.png</thumbnail>
 		<image>./downloaded_images/rclone-back.png</image>
 	</game>
+
+        <game>
+                <path>./fileman.sh</path>
+                <name>File Manager</name>
+                <desc>Single panel file manager</desc>
+                <developer>Tardigrade and JELOS</developer>
+                <publisher>JELOS</publisher>
+                <rating>1.0</rating>
+                <releasedate>2022</releasedate>
+                <genre>Script</genre>
+                <thumbnail>./downloaded_images/filemanager-thumb.png</thumbnail>
+                <image>./downloaded_images/filemanager.png</image>
+        </game>
 
         <game>
                 <path>./Install JELOS.sh</path>
@@ -77,19 +77,6 @@
 		<genre>Script</genre>
 		<thumbnail>./downloaded_images/scummvm-thumb.png</thumbnail>
 		<image>./downloaded_images/scummvm.png</image>
-	</game>
-
-	<game>
-		<path>./Start 32bit Retroarch.sh</path>
-		<name>Start 32bit RetroArch</name>
-		<desc>Run 32bit RetroArch</desc>
-		<developer>JELOS</developer>
-		<publisher>JELOS</publisher>
-		<rating>1.0</rating>
-		<releasedate>2021</releasedate>
-		<genre>Script</genre>
-		<thumbnail>./downloaded_images/retroarch32-thumb.png</thumbnail>
-		<image>./downloaded_images/retroarch32.png</image>
 	</game>
 
 	<game>

@@ -11,7 +11,7 @@ set -o pipefail
 LOG="/var/log/$(basename "$0").log"
 
 ### Summary
-#   This script listens to volume keys on the RG351MP and adjusts volume
+#   This script listens to volume keys and adjusts volume
 #   Fn + Volume up/down will adjust brightness
 ###
 
@@ -94,9 +94,7 @@ get_devices
 mkcontroller 2>/dev/null ||:
 
 # Logic:
-#  - Listen to both:
-#    - 'rg351' events to get volume keys (not part of the joystick api)
-#    - 'joystick' events - as the V's 'fn' key is mapped to the joystick
+#  - Listen to any input device events to get volume keys (not part of the joystick api)
 #  - Switch statement keeps high level cases to only 'volume' and 'V function key'
 #      this is to avoid processing for other events or creating a lot of cases as this will be called
 #      for all button pushes
