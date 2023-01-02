@@ -4,6 +4,40 @@
 
 . /etc/os-release
 
+set_online_cores() {
+  AVAILABLE_CPUS=$(($(ls /sys/devices/system/cpu | grep cpu[0-9] | wc -l) - 1))
+  MODE=${2}
+  if [ -z "${MODE}" ]
+  then
+    MODE=0
+  fi
+  case ${1} in
+    all)
+      CORES=0
+      MODE="1"
+    ;;
+    *)
+      CORES=${1}
+    ;;
+  esac
+
+  if (( "${1}" < 2 )) && \
+     [ "${MODE}" = "0" ]
+  then
+    echo "Invalid selection."
+    exit 1
+  fi
+
+  for core in $(seq 0 1 $(( ${1} - 1 )))
+  do
+    echo 1 >/sys/devices/system/cpu/cpu${core}/online 2>/dev/null
+  done
+
+  for core in $(seq ${CORES} 1 ${AVAILABLE_CPUS})
+  do
+    echo ${MODE} >/sys/devices/system/cpu/cpu${core}/online 2>/dev/null
+  done
+}
 
 set_cpu_gov() {
   for POLICY in $(ls /sys/devices/system/cpu/cpufreq 2>/dev/null | grep policy[0-9])
@@ -34,6 +68,10 @@ set_amdgpu_perf() {
   do
     echo $1 >${AMDGPU_PERF} 2>/dev/null
   done
+}
+
+onlinecores() {
+  set_online_cores ${1} ${2}
 }
 
 performance() {
