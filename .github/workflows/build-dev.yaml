@@ -26,7 +26,7 @@ jobs:
             if [[ -z "$branch_arg" ]]; then
               branch_arg="$GITHUB_REF_NAME"
             fi
-            echo "name=branch::$branch_arg" >> $GITHUB_OUTPUT
+            echo "branch=$branch_arg" >> $GITHUB_OUTPUT
       - uses: actions/checkout@v3
         name: checkout
         with:
@@ -34,19 +34,19 @@ jobs:
           ref: "${{ steps.branch.outputs.branch }}"
       - name: Get date for artifacts
         id: date
-        run: echo "name=date::$(date +'%Y%m%d%H%M')" >> $GITHUB_OUTPUT
+        run: echo "date=$(date +'%Y%m%d%H%M')" >> $GITHUB_OUTPUT
       - name: Get short SHA for artifacts
         id: sha
-        run: echo "name=sha::$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+        run: echo "sha=$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
       - name: Get dev version
         id: version
         run: |
            set -e
            echo "full name: ${{ github.event.repository.full_name }}"
            if [[ "${{ github.event.client_payload.release_tag }}" != "" ]]; then
-               echo "name=version::${{ github.event.client_payload.release_tag }}" >> $GITHUB_OUTPUT
+               echo "version=${{ github.event.client_payload.release_tag }}" >> $GITHUB_OUTPUT
            else
-               echo "name=version::${{ steps.date.outputs.date }}-${{ steps.sha.outputs.sha }}" >> $GITHUB_OUTPUT
+               echo "version=${{ steps.date.outputs.date }}-${{ steps.sha.outputs.sha }}" >> $GITHUB_OUTPUT
            fi
       - name: Build World
         run: |
