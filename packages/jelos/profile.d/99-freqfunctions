@@ -8,7 +8,7 @@
 set_cpu_gov() {
   for POLICY in $(ls /sys/devices/system/cpu/cpufreq 2>/dev/null | grep policy[0-9])
   do
-    if [ -e "${POLICY}/scaling_governor" ]
+    if [ -e "/sys/devices/system/cpu/cpufreq/${POLICY}/scaling_governor" ]
     then
       echo $1 >/sys/devices/system/cpu/cpufreq/${POLICY}/scaling_governor 2>/dev/null
     fi
