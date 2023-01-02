@@ -10,7 +10,7 @@ set_cpu_gov() {
   do
     if [ -e "${POLICY}/scaling_governor" ]
     then
-      echo $1 >${POLICY}/scaling_governor 2>/dev/null
+      echo $1 >/sys/devices/system/cpu/cpufreq/${POLICY}/scaling_governor 2>/dev/null
     fi
   done
 }
