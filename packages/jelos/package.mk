@@ -136,13 +136,6 @@ EOF
   ### Fix and migrate to autostart package
   enable_service jelos-autostart.service
 
-  if [ -d "${PKG_DIR}/sources/asound/${DEVICE}" ]
-  then
-    cp ${PKG_DIR}/sources/asound/${DEVICE}/* ${INSTALL}/usr/config/
-  fi
-  
-  cp ${PKG_DIR}/sources/asound/asound.conf.bluealsa ${INSTALL}/usr/config/
-
   sed -i "s#@DEVICENAME@#${DEVICE}#g" ${INSTALL}/usr/config/system/configs/system.cfg
 
   if [[ "${DEVICE}" =~ handheld ]]
