@@ -42,7 +42,7 @@ configure_package() {
 
   # Wayland support
   if [ "${DISPLAYSERVER}" = "wl" ]; then
-    PKG_DEPENDS_TARGET+=" wayland"
+    PKG_DEPENDS_TARGET+=" wayland xcb-util xcb-util-image xcb-util-keysyms xcb-util-renderutil xcb-util-wm"
   fi
 }
 
@@ -246,6 +246,8 @@ post_makeinstall_target() {
     cp -PR ${PKG_QT5_SYSROOT_PATH}/lib/libQt5XcbQpa.so*      ${INSTALL}/usr/lib
     cp -PR ${PKG_QT5_SYSROOT_PATH}/plugins/xcbglintegrations ${INSTALL}/usr/plugins
   elif [ ${DISPLAYSERVER} = "wl" ]; then
+    cp -PR ${PKG_QT5_SYSROOT_PATH}/lib/libQt5XcbQpa.so*      ${INSTALL}/usr/lib
+    cp -PR ${PKG_QT5_SYSROOT_PATH}/plugins/xcbglintegrations ${INSTALL}/usr/plugins
     cp -PR ${PKG_QT5_SYSROOT_PATH}/lib/libQt5WaylandClient.so*     ${INSTALL}/usr/lib
     cp -PR ${PKG_QT5_SYSROOT_PATH}/lib/libQt5WaylandCompositor.so* ${INSTALL}/usr/lib
 
