@@ -307,6 +307,13 @@ then
                         RUNTHIS='${TBASH} /usr/bin/start_yuzu.sh "${ROMNAME}"'
                         fi
                 ;;
+                "3ds")
+                        jslisten set "-9 citra"
+                        if [ "$EMU" = "citrasa" ]; then
+                        RUNTHIS='${TBASH} /usr/bin/start_citra.sh "${ROMNAME}"'
+                        fi
+
+                ;;
 		"mplayer")
 			jslisten set "mpv"
 			RUNTHIS='${TBASH} /usr/bin/mpv_video.sh "${ROMNAME}"'
