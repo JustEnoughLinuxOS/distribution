@@ -6,7 +6,7 @@
 
 
 set_cpu_gov() {
-  for POLICY in ${CPU_FREQ[@]}
+  for POLICY in $(ls /sys/devices/system/cpu/cpufreq 2>/dev/null | grep policy[0-9])
   do
     if [ -e "${POLICY}/scaling_governor" ]
     then
@@ -30,10 +30,10 @@ set_gpu_gov() {
 }
 
 set_amdgpu_perf() {
-  if [ -e "${AMDGPU_PERF}" ]
-  then
+  for AMDGPU_PERF_DEVICE in $(find /sys/devices -name power_dpm_force_performance_level 2>/dev/null)
+  do
     echo $1 >${AMDGPU_PERF} 2>/dev/null
-  fi
+  done
 }
 
 performance() {
