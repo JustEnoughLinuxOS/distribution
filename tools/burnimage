@@ -17,9 +17,9 @@ then
   exit 1
 fi
 
-MAXSIZE="192000000"
+MAXSIZE="128000000"
 
-SDDEVICES=($(awk '/sd*[a-z]$/ {print $3":"$4}' /proc/partitions))
+SDDEVICES=($(awk '/sd*[a-z]$/ {print $3":"$4}' /proc/partitions | sort -r))
 
 for SDDEVICE in ${SDDEVICES[@]}
 do
@@ -39,11 +39,9 @@ then
   then
     cd release
     echo "Extracting ${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img"
-    gunzip ${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img.gz 2>/dev/null
-
+    gunzip ${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img.gz 2>/dev/null ||:
     echo "Wiping ${SDDEVICE} partition data"
-    sudo wipefs -a ${SDDEVICE} 2>/dev/null
-
+    sudo wipefs -a ${SDDEVICE} 2>/dev/null ||:
     echo "Writing ${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img to ${SDDEVICE}"
     sudo dd if=${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img of=/dev/${SDDEVICE} bs=1M
     sync
