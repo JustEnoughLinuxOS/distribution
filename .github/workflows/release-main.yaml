@@ -40,7 +40,7 @@ jobs:
         - name: repository full name
           id: full_name
           run: |
-               echo "name=full_name::$(git config --get remote.origin.url | sed 's|^.*github.com/||g' | sed 's/.git$//g')" >> $GITHUB_OUTPUT
+               echo "full_name=$(git config --get remote.origin.url | sed 's|^.*github.com/||g' | sed 's/.git$//g')" >> $GITHUB_OUTPUT
         
         - name: changes
           id: changes
@@ -50,11 +50,11 @@ jobs:
                release_notes="${release_notes//'%'/'%25'}"
                release_notes="${release_notes//$'\n'/'%0A'}"
                release_notes="${release_notes//$'\r'/'%0D'}"
-               echo "name=changes::$(echo ${release_notes} | wc -l)" >> $GITHUB_OUTPUT
-               echo "name=release_notes::${release_notes}" >> $GITHUB_OUTPUT
+               echo "changes=$(echo ${release_notes} | wc -l)" >> $GITHUB_OUTPUT
+               echo "release_notes=${release_notes}" >> $GITHUB_OUTPUT
         - name: Get date for artifacts
           id: date
-          run: echo "name=date::$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
+          run: echo "date=$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
   
         - name: Repository Dispatch
           if: steps.changes.outputs.changes != '0'

@@ -74,6 +74,7 @@ done
 # Default modules need to be updated to use the new stop/start ui function.
 echo "Sync modules (tools)..." >>${LOG}
 rsync -av /usr/config/modules/* /storage/.config/modules/
+rm -f /storage/.config/modules/{"351Files.sh","Start 32bit Retroarch.sh","JelosAddOns.sh","PortMaster.sh","ThemeMaster.sh"} ||:
 
 # Swap es_input back to a writeable file so external controller configuration works properly.
 echo "Make sure es_input isn't a link..." >>${LOG}

@@ -11,4 +11,4 @@ fi
 
 ARG=${1//[\\]/}
 export SDL_AUDIODRIVER=alsa
-${FAST_CORES} x128 -sounddev alsa -sdl2renderer opengles2 "$ARG"
+x128 -sounddev alsa -sdl2renderer opengles2 "$ARG"
