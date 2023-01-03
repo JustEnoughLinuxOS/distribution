@@ -21,13 +21,6 @@ set_online_cores() {
     ;;
   esac
 
-  if (( "${1}" < 2 )) && \
-     [ "${MODE}" = "0" ]
-  then
-    echo "Invalid selection."
-    exit 1
-  fi
-
   if [ "${CORES}" -gt 0 ]
   then
     for core in $(seq 0 1 ${1})

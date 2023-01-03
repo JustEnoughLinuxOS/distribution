@@ -483,7 +483,7 @@ clear_screen
 
 ### Reset the number of cores to use.
 NUMCORES=$(get_setting "system.cores")
-if [ -z "${NUMCORES}" ]
+if [ -n "${NUMCORES}" ]
 then
 	onlinecores ${NUMCORES} 0
 else
