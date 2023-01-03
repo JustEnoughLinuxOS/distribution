@@ -94,7 +94,7 @@ fi
 
 ### Offline all but the number of cores we need for this game if configured.
 NUMCORES=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
-if [ -z "${NUMCORES}" ]
+if [ -n "${NUMCORES}" ]
 then
   onlinecores ${NUMCORES} 0
 fi
