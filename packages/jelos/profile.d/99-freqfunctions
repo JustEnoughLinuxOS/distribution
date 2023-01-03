@@ -28,14 +28,17 @@ set_online_cores() {
     exit 1
   fi
 
-  for core in $(seq 0 1 $(( ${1} - 1 )))
-  do
-    echo 1 >/sys/devices/system/cpu/cpu${core}/online 2>/dev/null
-  done
+  if [ "${CORES}" -gt 0 ]
+  then
+    for core in $(seq 0 1 ${1})
+    do
+      echo 1  | tee /sys/devices/system/cpu/cpu${core}/online >/dev/null 2>&1
+    done
+  fi
 
   for core in $(seq ${CORES} 1 ${AVAILABLE_CPUS})
   do
-    echo ${MODE} >/sys/devices/system/cpu/cpu${core}/online 2>/dev/null
+    echo ${MODE} | tee /sys/devices/system/cpu/cpu${core}/online >/dev/null 2>&1
   done
 }
 
