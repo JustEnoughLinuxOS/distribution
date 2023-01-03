@@ -18,7 +18,7 @@ fi
 
 #Move Nand / Saves to switch roms folder
 if [ ! -d "/storage/roms/switch/yuzu/nand" ]; then
-    mkdir -p "/storage/switch/yuzu/nand"
+    mkdir -p "/storage/roms/switch/yuzu/nand"
 fi
 rm -rf /storage/.config/yuzu/nand
 ln -sf /storage/roms/switch/yuzu/nand /storage/.config/yuzu/nand
