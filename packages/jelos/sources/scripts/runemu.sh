@@ -92,6 +92,13 @@ if [[ "$arguments" == *"--connect"* ]]; then
 	NETPLAY="--connect $NETPLAY --nick"
 fi
 
+### Offline all but the number of cores we need for this game if configured.
+NUMCORES=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
+if [ -z "${NUMCORES}" ]
+then
+  onlinecores ${NUMCORES} 0
+fi
+
 ### Set the performance mode
 PERFORMANCE_MODE=$(get_setting "cpugovernor" "${PLATFORM}" "${ROMNAME##*/}")
 if [ ! "${PERFORMANCE_MODE}" = "auto" ]
@@ -473,6 +480,15 @@ else
 fi
 
 clear_screen
+
+### Reset the number of cores to use.
+NUMCORES=$(get_setting "system.cores")
+if [ -z "${NUMCORES}" ]
+then
+	onlinecores ${NUMCORES} 0
+else
+	onlinecores all 1
+fi
 
 ### Restore the overclock mode
 if [ -e "/usr/bin/overclock" ]
