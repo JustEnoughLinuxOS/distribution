@@ -1,7 +1,7 @@
 diff -rupN linux-6.1.2.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c linux-6.1.2/drivers/gpu/drm/drm_panel_orientation_quirks.c
 --- linux-6.1.2.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c	2022-12-31 16:12:06.802587676 -0500
-+++ linux-6.1.2/drivers/gpu/drm/drm_panel_orientation_quirks.c	2023-01-03 21:31:30.114697316 -0500
-@@ -164,11 +164,22 @@ static const struct dmi_system_id orient
++++ linux-6.1.2/drivers/gpu/drm/drm_panel_orientation_quirks.c	2023-01-03 21:41:26.154076595 -0500
+@@ -164,11 +164,23 @@ static const struct dmi_system_id orient
  		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "T103HAF"),
  		},
  		.driver_data = (void *)&lcd800x1280_rightside_up,
@@ -16,6 +16,7 @@ diff -rupN linux-6.1.2.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c linux
  		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "AYADEVICE"),
  		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "AYA NEO 2021"),
 -		},
++                },
 +                .driver_data = (void *)&lcd800x1280_rightside_up,
 +	}, {    /* AYA NEO 2021 Pro / Pro Retro Power */
 +                .matches = {
