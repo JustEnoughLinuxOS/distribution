@@ -42,16 +42,6 @@ jobs:
           run: |
                echo "full_name=$(git config --get remote.origin.url | sed 's|^.*github.com/||g' | sed 's/.git$//g')" >> $GITHUB_OUTPUT
         
-        - name: changes
-          id: changes
-          run: |
-               prevrelcommit="$(git rev-list --tags --max-count=1)"
-               release_notes="$(git log ${prevrelcommit}..HEAD --pretty=format:"* %h: %s")"
-               release_notes="${release_notes//'%'/'%25'}"
-               release_notes="${release_notes//$'\n'/'%0A'}"
-               release_notes="${release_notes//$'\r'/'%0D'}"
-               echo "changes=$(echo ${release_notes} | wc -l)" >> $GITHUB_OUTPUT
-               echo "release_notes=${release_notes}" >> $GITHUB_OUTPUT
         - name: Get date for artifacts
           id: date
           run: echo "date=$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
@@ -67,6 +57,5 @@ jobs:
                {
                  "branch" : "${{ env.BRANCH }}",
                  "release_tag" : "${{steps.date.outputs.date}}",
-                 "release_notes" : ${{toJSON(steps.changes.outputs.release_notes)}}
                }
             
