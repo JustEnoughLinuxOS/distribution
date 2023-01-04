@@ -35,6 +35,7 @@ ln -sf /storage/roms/bios/yuzu /storage/.config/yuzu/keys
   AF=$(get_setting anisotropic_filtering switch "${GAME}")
   AA=$(get_setting anti_aliasing switch "${GAME}")
   ASPECT=$(get_setting aspect_ratio switch "${GAME}")
+  GACCURACY=$(get_setting gpu_accuracy switch "${GAME}")
   GRENDERER=$(get_setting graphics_backend switch "${GAME}")
   IRES=$(get_setting internal_resolution switch "${GAME}")
   PFILTER=$(get_setting pixel_filter switch "${GAME}")
@@ -78,18 +79,38 @@ ln -sf /storage/roms/bios/yuzu /storage/.config/yuzu/keys
 	then
   		sed -i '/aspect_ratio =/c\aspect_ratio = 0' /storage/.config/yuzu/sdl2-config.ini
 	fi
+
 	if [ "$ASPECT" = "1" ]
 	then
   		sed -i '/aspect_ratio =/c\aspect_ratio = 1' /storage/.config/yuzu/sdl2-config.ini
 	fi
-		if [ "$ASPECT" = "2" ]
+
+	if [ "$ASPECT" = "2" ]
 	then
   		sed -i '/aspect_ratio =/c\aspect_ratio = 2' /storage/.config/yuzu/sdl2-config.ini
 	fi
-		if [ "$ASPECT" = "3" ]
+
+	if [ "$ASPECT" = "3" ]
 	then
   		sed -i '/aspect_ratio =/c\aspect_ratio = 3' /storage/.config/yuzu/sdl2-config.ini
 	fi
+
+  #GPU Accuracy
+        if [ "$GACCURACY" = "0" ]
+        then
+                sed -i '/gpu_accuracy =/c\gpu_accuracy = 0' /storage/.config/yuzu/sdl2-config.ini
+        fi
+
+        if [ "$GACCURACY" = "1" ]
+        then
+                sed -i '/gpu_accuracy =/c\gpu_accuracy = 1' /storage/.config/yuzu/sdl2-config.ini
+        fi
+
+        if [ "$GACCURACY" = "2" ]
+        then
+                sed -i '/gpu_accuracy =/c\gpu_accuracy = 2' /storage/.config/yuzu/sdl2-config.ini
+        fi
+
 
   #Graphics Backend
 	if [ "$GRENDERER" = "0" ]

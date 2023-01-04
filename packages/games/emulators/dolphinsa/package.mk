@@ -10,7 +10,7 @@ case ${DEVICE} in
   handheld)
     PKG_SITE="https://github.com/dolphin-emu/dolphin"
     PKG_URL="${PKG_SITE}.git"
-    PKG_VERSION="f6fbeaf3554b3af06d9e1584189bcf2274838063"
+    PKG_VERSION="e4c007e2e1a442dbab620f91ca5f6b9b2b27dd5b"
     PKG_PATCH_DIRS+=" wayland"
   ;;
   *)
