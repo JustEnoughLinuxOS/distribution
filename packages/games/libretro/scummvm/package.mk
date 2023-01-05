@@ -1,6 +1,7 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2022-present Fewtarius
 #
 #  This Program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,7 +20,7 @@
 ################################################################################
 
 PKG_NAME="scummvm"
-PKG_VERSION="2fb2e4c551c9c1510c56f6e890ee0300b7b3fca3"
+PKG_VERSION="1429134"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
@@ -36,21 +37,11 @@ PKG_TOOLCHAIN="make"
 PKG_AUTORECONF="no"
 PKG_BUILD_FLAGS="-lto"
 
-pre_configure_target() {
-  cd ..
-  rm -rf .$TARGET_NAME
-}
-
-configure_target() {
-  :
-}
-
-make_target() {
-#  sed -i 's/ENABLE_AGS/\/\/ENABLE_AGS/g' backends/platform/libretro/build/config.hd
-  make -C backends/platform/libretro/build CXXFLAGS="$CXXFLAGS -DHAVE_POSIX_MEMALIGN=1"
+pre_make_target() {
+  CXXFLAGS+=" -DHAVE_POSIX_MEMALIGN=1"
 }
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/lib/libretro
-  cp backends/platform/libretro/build/scummvm_libretro.so $INSTALL/usr/lib/libretro/
+  cp scummvm_libretro.so ${INSTALL}/usr/lib/libretro/
 }
