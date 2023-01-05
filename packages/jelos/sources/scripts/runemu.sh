@@ -92,6 +92,14 @@ if [[ "$arguments" == *"--connect"* ]]; then
 	NETPLAY="--connect $NETPLAY --nick"
 fi
 
+### Offline all but the number of cores we need for this game if configured.
+NUMCORES=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
+if [ -n "${NUMCORES}" ] &&
+   [ ! ${NUMCORES} = "default" ]
+then
+  onlinecores ${NUMCORES} 0
+fi
+
 ### Set the performance mode
 PERFORMANCE_MODE=$(get_setting "cpugovernor" "${PLATFORM}" "${ROMNAME##*/}")
 if [ ! "${PERFORMANCE_MODE}" = "auto" ]
@@ -294,6 +302,13 @@ then
                         RUNTHIS='${TBASH} /usr/bin/start_yuzu.sh "${ROMNAME}"'
                         fi
                 ;;
+                "3ds")
+                        jslisten set "-9 citra"
+                        if [ "$EMU" = "citrasa" ]; then
+                        RUNTHIS='${TBASH} /usr/bin/start_citra.sh "${ROMNAME}"'
+                        fi
+
+                ;;
 		"mplayer")
 			jslisten set "mpv"
 			RUNTHIS='${TBASH} /usr/bin/mpv_video.sh "${ROMNAME}"'
@@ -466,6 +481,15 @@ else
 fi
 
 clear_screen
+
+### Reset the number of cores to use.
+NUMCORES=$(get_setting "system.cores")
+if [ -n "${NUMCORES}" ]
+then
+	onlinecores ${NUMCORES} 0
+else
+	onlinecores all 1
+fi
 
 ### Restore the overclock mode
 if [ -e "/usr/bin/overclock" ]

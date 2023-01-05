@@ -25,6 +25,15 @@ ln -sf /tmp/cache /storage/cache/.cores
 ### so we'll reset the mount option to 0.
 set_setting clouddrive.mounted 0
 
+### Enable the desired number of cores.
+NUMCORES=$(get_setting "system.cores")
+if [ -n "${NUMCORES}" ]
+then
+        onlinecores ${NUMCORES} 0
+else
+        onlinecores all 1
+fi
+
 ### If we don't have a default governor set, set it
 ### to schedutil.
 if [ -z "$(get_setting system.cpugovernor)" ]

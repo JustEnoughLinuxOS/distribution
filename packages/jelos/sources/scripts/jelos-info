@@ -42,31 +42,36 @@ do
     fi
 done
 
-declare -a CF MF
 
-CNTR=0
-for CPUFREQ in /sys/devices/system/cpu/cpufreq/*
-do
-  if [[ "${CPUFREQ}" =~ boost ]]
-  then
-    continue
-  fi
-  if [ "${CNTR}" -eq 0 ]
-  then
-    CF+=("CURRENT FREQUENCY:")
-    MF+=("MAXIMUM FREQUENCY:")
-  fi
-  RELCPUS=$(cat ${CPUFREQ}/related_cpus)
-  if [ "${#RELCPUS}" -gt 1 ]
-  then
-    FIELD="$(cat ${CPUFREQ}/related_cpus 2>/dev/null | awk '{print $1"-"$NF}')"
-  else
-    FIELD="$(cat ${CPUFREQ}/related_cpus)"
-  fi
-  CF+=("CORES ${FIELD}: $(( $(cat ${CPUFREQ}/scaling_cur_freq | sort | tail -n 1) / 1000))MHz")
-  MF+=("CORES ${FIELD}: $(( $(cat ${CPUFREQ}/scaling_max_freq | sort | tail -n 1) / 1000))MHz")
-  CNTR=$(( CNTR + 1 ))
-done
+case ${HW_ARCH} in
+  aarch64)
+    declare -a CF MF
+
+    CNTR=0
+    for CPUFREQ in /sys/devices/system/cpu/cpufreq/*
+    do
+      if [[ "${CPUFREQ}" =~ boost ]]
+      then
+        continue
+      fi
+      if [ "${CNTR}" -eq 0 ]
+      then
+        CF+=("CURRENT FREQUENCY:")
+        MF+=("MAXIMUM FREQUENCY:")
+      fi
+      RELCPUS=$(cat ${CPUFREQ}/related_cpus)
+      if [ "${#RELCPUS}" -gt 1 ]
+      then
+        FIELD="$(cat ${CPUFREQ}/related_cpus 2>/dev/null | awk '{print $1"-"$NF}')"
+      else
+        FIELD="$(cat ${CPUFREQ}/related_cpus)"
+      fi
+      CF+=("CORES ${FIELD}: $(( $(cat ${CPUFREQ}/scaling_cur_freq | sort | tail -n 1) / 1000))MHz")
+      MF+=("CORES ${FIELD}: $(( $(cat ${CPUFREQ}/scaling_max_freq | sort | tail -n 1) / 1000))MHz")
+      CNTR=$(( CNTR + 1 ))
+    done
+  ;;
+esac
 
 # temperature
 # Unit: millidegree Celsius
@@ -102,7 +107,7 @@ then
 fi
 if [ "${DEVICE_HAS_FAN}" = "true" ]
 then
-  FANSPEED=$(cat ${DEVICE_PWM_FAN})
+  FANSPEED=$(cat ${DEVICE_PWM_FAN} 2>/dev/null)
   if [ "${FANSPEED}" = "0" ]
   then
     FANSPEED="OFF"
@@ -111,11 +116,15 @@ then
   fi
   echo "CPU FAN: ${FANSPEED}"
 fi
-for C in "${CF[@]}"
-do
-  echo ${C}
-done
-for M in "${MF[@]}"
-do
-  echo ${M}
-done
+case ${HW_ARCH} in
+  aarch64)
+    for C in "${CF[@]}"
+    do
+      echo ${C}
+    done
+    for M in "${MF[@]}"
+    do
+      echo ${M}
+    done
+  ;;
+esac

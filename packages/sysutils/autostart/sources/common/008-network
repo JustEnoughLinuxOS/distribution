@@ -8,12 +8,10 @@ HOSTNAME=$(get_setting system.hostname)
 hostname ${HOSTNAME}
 avahi-set-host-name ${HOSTNAME}
 
-if [ "$(get_setting internal.wifi)" == 0 ] && [ "${DEVICE_INTERNAL_WIFI}" = true ]
+NETCHECK=$(systemctl status connman >/dev/null 2>&1)
+if [ "$?" = "0" ]
 then
-  nohup rmmod ${DEVICE_WIFI_MODULE} &
-  exit 0
-else
-  set_setting internal.wifi 1
+  systemctl restart connman
 fi
 
 if [ "$(get_setting wifi.enabled)" == "0" ] || [ "$1" == "disable" ]
@@ -22,10 +20,4 @@ then
 elif [ "$(get_setting wifi.enabled)" == "1" ] || [ "$1" == "enable" ]
 then
   nohup wifictl enable &
-fi
-
-NETCHECK=$(systemctl status connman >/dev/null 2>&1)
-if [ "$?" = "0" ]
-then
-  systemctl restart connman
 fi

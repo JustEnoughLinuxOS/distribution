@@ -123,9 +123,6 @@ jobs:
             ## Contributing
             * [Developing and Building JELOS](https://github.com/JustEnoughLinuxOS/distribution/blob/dev/BUILDING.md)
 
-            ## Change Log
-            ${{ github.event.client_payload.release_notes }}
-
           artifacts: "release/*"
           prerelease: false
           draft: true
