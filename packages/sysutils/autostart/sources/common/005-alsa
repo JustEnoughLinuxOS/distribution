@@ -29,5 +29,7 @@ then
   alsactl restore -f /storage/.config/asound.state
 fi
 
+amixer -M set Pre-Amp -- 80%
+
 VOL=$(get_setting "audio.volume" 2>/dev/null)
 amixer -M set "${DEVICE_AUDIO_MIXER}" ${VOL}%
