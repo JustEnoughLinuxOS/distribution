@@ -29,6 +29,7 @@ ln -sf /storage/roms/3ds/citrasa/nand /storage/.config/citra-emu/nand
    #Emulation Station Features
    GAME=$(echo "${1}"| sed "s#^/.*/##")
    RES=$(get_setting resolution_scale 3ds "${GAME}")
+   ROTATE=$(get_setting rotate_screen 3ds "${GAME}")
    SLAYOUT=$(get_setting screen_layout 3ds "${GAME}")
 
    #Resolution Scale
@@ -45,32 +46,53 @@ ln -sf /storage/roms/3ds/citrasa/nand /storage/.config/citra-emu/nand
                 sed -i '/resolution_factor =/c\resolution_factor = 2' /storage/.config/citra-emu/sdl2-config.ini
         fi
 
+   #Rotate Screen
+        if [ "$ROTATE" = "0" ]
+        then
+                sed -i '/upright_screen =/c\upright_screen = 0' /storage/.config/citra-emu/sdl2-config.ini
+        fi
+        if [ "$ROTATE" = "1" ]
+        then
+                sed -i '/upright_screen =/c\upright_screen = 1' /storage/.config/citra-emu/sdl2-config.ini
+        fi
+
    #Screen Layout
         if [ "$SLAYOUT" = "0" ]
         then
                 sed -i '/layout_option =/c\layout_option = 0' /storage/.config/citra-emu/sdl2-config.ini
                 sed -i '/swap_screen =/c\swap_screen = 0' /storage/.config/citra-emu/sdl2-config.ini
+                sed -i '/custom_layout =/c\custom_layout = 0' /storage/.config/citra-emu/sdl2-config.ini
         fi
         if [ "$SLAYOUT" = "1a" ]
         then
                 sed -i '/layout_option =/c\layout_option = 1' /storage/.config/citra-emu/sdl2-config.ini
                 sed -i '/swap_screen =/c\swap_screen = 0' /storage/.config/citra-emu/sdl2-config.ini
+                sed -i '/custom_layout =/c\custom_layout = 0' /storage/.config/citra-emu/sdl2-config.ini
         fi
         if [ "$SLAYOUT" = "1b" ]
         then
                 sed -i '/layout_option =/c\layout_option = 1' /storage/.config/citra-emu/sdl2-config.ini
                 sed -i '/swap_screen =/c\swap_screen = 1' /storage/.config/citra-emu/sdl2-config.ini
+                sed -i '/custom_layout =/c\custom_layout = 0' /storage/.config/citra-emu/sdl2-config.ini
         fi
         if [ "$SLAYOUT" = "2" ]
         then
                 sed -i '/layout_option =/c\layout_option = 2' /storage/.config/citra-emu/sdl2-config.ini
                 sed -i '/swap_screen =/c\swap_screen = 0' /storage/.config/citra-emu/sdl2-config.ini
+                sed -i '/custom_layout =/c\custom_layout = 0' /storage/.config/citra-emu/sdl2-config.ini
         fi
         if [ "$SLAYOUT" = "3" ]
         then
                 sed -i '/layout_option =/c\layout_option = 3' /storage/.config/citra-emu/sdl2-config.ini
                 sed -i '/swap_screen =/c\swap_screen = 0' /storage/.config/citra-emu/sdl2-config.ini
+                sed -i '/custom_layout =/c\custom_layout = 0' /storage/.config/citra-emu/sdl2-config.ini
 	fi
+        if [ "$SLAYOUT" = "4" ]
+        then
+                sed -i '/layout_option =/c\layout_option = 0' /storage/.config/citra-emu/sdl2-config.ini
+                sed -i '/swap_screen =/c\swap_screen = 0' /storage/.config/citra-emu/sdl2-config.ini
+                sed -i '/custom_layout =/c\custom_layout = 1' /storage/.config/citra-emu/sdl2-config.ini
+        fi
 
 
 rm -rf /storage/.local/share/citra-emu
