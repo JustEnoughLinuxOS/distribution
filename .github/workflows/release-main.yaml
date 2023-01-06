@@ -56,6 +56,6 @@ jobs:
             client-payload: |
                {
                  "branch" : "${{ env.BRANCH }}",
-                 "release_tag" : "${{steps.date.outputs.date}}",
+                 "release_tag" : "${{steps.date.outputs.date}}"
                }
             
