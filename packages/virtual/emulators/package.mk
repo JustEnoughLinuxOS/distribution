@@ -32,7 +32,7 @@ PKG_DEPENDS_TARGET="${PKG_EMUS} ${PKG_RETROARCH} ${LIBRETRO_CORES}"
 ### Emulators or cores for specific devices
 case "${DEVICE}" in
   handheld)
-    PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa dolphin pcsx2sa lrps2 desmume bsnes citra slang-shaders minivmac minivmacsa play beetle-saturn yuzusa primehack citrasa ppsspp scummvm"
+    PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa dolphin pcsx2sa lrps2 desmume bsnes citra slang-shaders minivmac minivmacsa play beetle-saturn yuzusa primehack citrasa cemu ppsspp scummvm"
   ;;
   RK3588)
     PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa dolphin bsnes slang-shaders beetle-saturn"
