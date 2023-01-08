@@ -21,8 +21,8 @@ LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-
                 mame2010 mame2015 mame melonds meowpc98 mgba mrboom mupen64plus mupen64plus-nx       \
                 neocd_libretro nestopia np2kai nxengine o2em opera parallel-n64                      \
                 picodrive pokemini potator                                              \
-                ppsspp prboom prosystem puae px68k quasi88 quicknes race reminiscence sameboy        \
-                sameduck scummvm smsplus-gx snes9x snes9x2002 snes9x2005_plus snes9x2010 stella      \
+                prboom prosystem puae px68k quasi88 quicknes race reminiscence sameboy        \
+                sameduck smsplus-gx snes9x snes9x2002 snes9x2005_plus snes9x2010 stella      \
                 stella-2014 swanstation TIC-80 tgbdual tyrquake xrick uzem vba-next vbam     \
                 vecx vice yabasanshiro xmil mesen virtualjaguar ecwolf_libretro \
                 bsnes-mercury-performance duckstation fake08"
@@ -32,6 +32,9 @@ PKG_DEPENDS_TARGET="${PKG_EMUS} ${PKG_RETROARCH} ${LIBRETRO_CORES}"
 ### Emulators or cores for specific devices
 case "${DEVICE}" in
   handheld)
-    PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa dolphin pcsx2sa lrps2 desmume bsnes citra slang-shaders minivmac minivmacsa play beetle-saturn yuzusa primehack citrasa"
+    PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa dolphin pcsx2sa lrps2 desmume bsnes citra slang-shaders minivmac minivmacsa play beetle-saturn yuzusa primehack citrasa ppsspp scummvm"
+  ;;
+  RK3588)
+    PKG_DEPENDS_TARGET+=" duckstationsa dolphinsa dolphin bsnes slang-shaders beetle-saturn"
   ;;
 esac

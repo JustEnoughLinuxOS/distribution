@@ -85,12 +85,19 @@ sync
 echo "image: creating part2..."
 STORAGE_PART_START=$(( ${SYSTEM_PART_END} + 1 ))
 STORAGE_PART_END=$(( ${STORAGE_PART_START} + (${STORAGE_SIZE} * 1024 * 1024 / 512) - 1 ))
-if [ "${DISK_LABEL}" = "gpt" ]; then
+if [ "${PARTITION_TABLE}" = "gpt" ]; then
     echo "image: Create storage partition."
     parted -s "${DISK}" -a min unit s mkpart storage ext4 ${STORAGE_PART_START} ${STORAGE_PART_END}
   else
     echo "image: Create primary partition."
     parted -s "${DISK}" -a min unit s mkpart primary ext4 ${STORAGE_PART_START} ${STORAGE_PART_END}
+fi
+sync
+
+# set partition 3 as boot for u-boot.
+if [ "${PARTITION_TABLE}" = "gpt" ]; then
+  echo "image: Set jelos partition as boot"
+  parted -s "${DISK}" set 3 legacy_boot on
 fi
 sync
 

@@ -1,0 +1,154 @@
+################################################################################
+# setup device defaults
+################################################################################
+
+  # The TARGET_CPU variable controls which processor should be targeted for
+  # generated code.
+   case $TARGET_ARCH in
+      aarch64)
+        TARGET_KERNEL_ARCH="arm64"
+        TARGET_PATCH_ARCH="aarch64"
+        TARGET_CPU="cortex-a76.cortex-a55"
+        TARGET_CPU_FLAGS="+crc+crypto"
+        TARGET_FPU="fp-armv8"
+	TARGET_FLOAT="hard"
+        TARGET_FEATURES="64bit"
+        ;;
+      arm)
+        TARGET_KERNEL_ARCH="arm64"
+        TARGET_PATCH_ARCH="aarch64"
+        TARGET_CPU="cortex-a76.cortex-a55"
+        TARGET_CPU_FLAGS="+crc"
+        TARGET_FPU="crypto-neon-fp-armv8"
+	TARGET_FLOAT="hard"
+        TARGET_FEATURES="32bit"
+        ;;
+    esac
+
+  # Kernel target
+    DEVICE_NAME="RK3588"
+    KERNEL_TARGET="Image"
+    BOOTLOADER="u-boot"
+    PARTITION_TABLE="gpt"
+    UBOOT_LABEL="uboot"
+    TRUST_LABEL="trust"
+    DEVICE_DTB=("rk3588s-orangepi-5")
+    UBOOT_DTB="${DEVICE_DTB[0]}"
+    UBOOT_CONFIG="orangepi_5_defconfig"
+    PKG_SOC="rk3588"
+    PKG_DATAFILE="$PKG_RKBIN/bin/rk35/rk3588_ddr_lp4_2112MHz_lp5_2736MHz_v1.08.bin"
+    PKG_LOADER="spl/u-boot-spl.bin"
+    PKG_BL31="$PKG_RKBIN/bin/rk35/rk3588_bl31_v1.28.elf"
+    PKG_LOAD_ADDR="0x00200000"
+    BOOT_INI=false
+
+  # Additional kernel make parameters (for example to specify the u-boot loadaddress)
+    KERNEL_MAKE_EXTRACMD=""
+    KERNEL_MAKE_EXTRACMD+=" rockchip/${DEVICE_DTB[0]}.dtb"
+   
+  # Define the CPU
+    HW_CPU="Rockchip RK3588"
+
+  # Mali GPU family
+    MALI_FAMILY="g610"
+    GRAPHIC_DRIVERS="panfrost"
+
+  # OpenGL(X) implementation to use (mesa / no)
+    OPENGL="mesa"
+
+  # OpenGL-ES implementation to use (mesa / no)
+    OPENGLES="mesa"
+
+  # Displayserver to use (weston / x11 / no)
+    DISPLAYSERVER="wl"
+
+  # Windowmanager to use (fluxbox / weston / no)
+    WINDOWMANAGER="weston"
+  
+  # kernel serial console
+    EXTRA_CMDLINE=""
+
+  # additional packages to install
+    ADDITIONAL_PACKAGES=" emulators gamesupport fileman"
+
+  # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
+  # Space separated list is supported,
+  # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
+    FIRMWARE="misc-firmware wlan-firmware libmali_rk3588"
+
+  # additional drivers to install:
+  # for a list of additional drivers see packages/linux-drivers
+  # Space separated list is supported,
+  # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
+   # ADDITIONAL_DRIVERS="RTL8188FU RTL8812AU RTL8821AU RTL8821CU RTL88x2BU"
+
+  # build and install driver addons (yes / no)
+    DRIVER_ADDONS_SUPPORT="no"
+  
+  # driver addons to install:
+  # for a list of additinoal drivers see packages/linux-driver-addons
+  # Space separated list is supported,
+    DRIVER_ADDONS=""
+
+  # debug tty path
+    DEBUG_TTY="/dev/ttyFIQ0"
+   
+  # build and install PulseAudio support (yes / no)
+    PULSEAUDIO_SUPPORT="yes"
+ 
+  # build and install bluetooth support (yes / no)
+    BLUETOOTH_SUPPORT="no"
+
+  # build and install Avahi (Zeroconf) daemon (yes / no)
+    AVAHI_DAEMON="no"
+
+  # build with NFS support (mounting nfs shares via the OS) (yes / no)
+    NFS_SUPPORT="no"
+
+  # build with Samba Client support (mounting samba shares via the OS) (yes / no)
+    SAMBA_SUPPORT="no"
+
+  # build and install Samba Server (yes / no)
+    SAMBA_SERVER="yes"
+
+  # build and install SFTP Server (yes / no)
+    SFTP_SERVER="yes"
+
+  # build and install OpenVPN support (yes / no)
+    OPENVPN_SUPPORT="no"
+
+  # build and install diskmounter support (udevil)
+  # this service provide auto mounting support for external drives in the
+  # mediacenter also automount internally drives at boottime via udev (yes / no)
+    UDEVIL="yes"
+
+  # build and install exFAT fuse support (yes / no)
+    EXFAT="yes"
+
+  # build and install NTFS-3G fuse support (yes / no)
+    NTFS3G="no"
+
+  # build and install hfs filesystem utilities (yes / no)
+    HFSTOOLS="no"
+
+  # Support for partitioning and formating disks in initramfs (yes / no)
+  # This adds support for parted and mkfs.ext3/4 to initramfs for OEM usage
+    INITRAMFS_PARTED_SUPPORT="no"
+
+  # build with swap support (yes / no)
+    SWAP_SUPPORT="yes"
+
+  # swap support enabled per default (yes / no)
+    SWAP_ENABLED_DEFAULT="yes"
+
+  # swapfile size if SWAP_SUPPORT=yes in MB
+    SWAPFILESIZE="384"
+
+  # cron support (yes / no)
+    CRON_SUPPORT="no"
+
+  # Settings package name - blank if not required
+    DISTRO_PKG_SETTINGS=""
+
+  # htop tool (yes / no)
+    HTOP_TOOL="yes"
