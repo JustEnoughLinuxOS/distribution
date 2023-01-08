@@ -52,6 +52,15 @@ then
   cp -f /usr/config/Cemu/settings.xml /storage/.config/Cemu/settings.xml
 fi
 
+# Make sure the basic controller profiles exist.
+for controller in controller0.xml controller1.xml
+do
+  if [ ! -f /storage/.config/Cemu/controllerProfiles/${controller} ]
+  then
+    cp /usr/config/Cemu/controllerProfiles/${controller} /storage/.config/Cemu/controllerProfiles
+  fi
+done
+
 sed -i "s#<fullscreen>.*</fullscreen>#<fullscreen>true</fullscreen>#g" .config/Cemu/settings.xml
 sed -i "s#<TVDevice>.*</TVDevice>#<TVDevice>$(pactl get-default-sink)</TVDevice>#g" .config/Cemu/settings.xml
 
