@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <emulated_controller>
-	<type>Wii U Pro Controller</type>
+	<type>Wii U GamePad</type>
 	<controller>
 		<api>SDLController</api>
 		<uuid>0_030003f05e0400008e02000010010000</uuid>

@@ -52,8 +52,9 @@ then
   cp -f /usr/config/Cemu/settings.xml /storage/.config/Cemu/settings.xml
 fi
 
+sed -i "s#<fullscreen>.*</fullscreen>#<fullscreen>true</fullscreen>#g" .config/Cemu/settings.xml
 sed -i "s#<TVDevice>.*</TVDevice>#<TVDevice>$(pactl get-default-sink)</TVDevice>#g" .config/Cemu/settings.xml
 
 # Run the emulator
-cemu -g "$@"
+cemu -f -g "$@"
 rr_audio.sh alsa
