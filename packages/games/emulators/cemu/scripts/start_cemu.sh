@@ -6,9 +6,6 @@
 # Source environment variables
 . /etc/profile
 
-# Enable jslisten
-jslisten set "cemu"
-
 # Ensure we're using pulseaudio
 rr_audio.sh pulseaudio
 export SDL_AUDIODRIVER=pulseaudio
