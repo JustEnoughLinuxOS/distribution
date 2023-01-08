@@ -62,5 +62,5 @@ sed -i "s#<fullscreen>.*</fullscreen>#<fullscreen>true</fullscreen>#g" .config/C
 sed -i "s#<TVDevice>.*</TVDevice>#<TVDevice>$(pactl get-default-sink)</TVDevice>#g" .config/Cemu/settings.xml
 
 # Run the emulator
-cemu -f -g "$@"
+cemu -g "$@"
 rr_audio.sh alsa
