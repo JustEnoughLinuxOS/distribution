@@ -1,0 +1,55 @@
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2017-2021 Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2021-present Fewtarius
+
+mkdir -p ${RELEASE_DIR}/3rdparty/bootloader
+if [ -n "${UBOOT_CONFIG}" ]; then
+  BOOTLOADER_DIR=$(get_build_dir ${BOOTLOADER})
+  if [ -f ${BOOTLOADER_DIR}/idbloader.img ]; then
+    cp -a ${BOOTLOADER_DIR}/idbloader.img ${RELEASE_DIR}/3rdparty/bootloader
+  fi
+case "${PKG_SOC}" in
+  rk3588)
+  if [ -f ${BOOTLOADER_DIR}/u-boot.itb ]; then
+    cp -a ${BOOTLOADER_DIR}/u-boot.itb ${RELEASE_DIR}/3rdparty/bootloader
+  fi
+  ;;
+  *)
+  if [ -f ${BOOTLOADER_DIR}/u-boot.img ]; then
+    cp -a ${BOOTLOADER_DIR}/u-boot.img ${RELEASE_DIR}/3rdparty/bootloader
+  fi
+  ;;
+esac
+fi
+case "${PKG_SOC}" in
+  rk3399)
+  if [ -f ${BOOTLOADER_DIR}/trust.img ]; then
+    cp -a ${BOOTLOADER_DIR}/trust.img ${RELEASE_DIR}/3rdparty/bootloader
+  fi
+  if [ -f ${BOOTLOADER_DIR}/resource.img ]; then
+    cp -a ${BOOTLOADER_DIR}/resource.img ${RELEASE_DIR}/3rdparty/bootloader
+  fi
+;;
+esac
+
+if [ -f ${INSTALL}/usr/share/bootloader/logo.bmp ]; then
+  cp -a ${INSTALL}/usr/share/bootloader/logo.bmp ${RELEASE_DIR}/3rdparty/bootloader
+fi
+
+if [ -f ${INSTALL}/usr/share/bootloader/boot.ini ]; then
+  cp -a ${INSTALL}/usr/share/bootloader/boot.ini ${RELEASE_DIR}/3rdparty/bootloader
+fi
+
+LINUX_DTS_DIR=$(get_build_dir linux)/arch/${TARGET_KERNEL_ARCH}/boot/dts/
+for dtb in $(find ${LINUX_DTS_DIR} -name "*.dtb") ; do
+  if [ -f $dtb ]; then
+    cp -a $dtb ${RELEASE_DIR}/3rdparty/bootloader
+  fi
+done
+
+if [ -n "${SD_DTB}" ]; then
+  SD_UBOOT_DTB=$(get_build_dir u-boot)/arch/arm/dts/${SD_DTB}.dtb
+  if [ -f $SD_UBOOT_DTB ]; then
+    cp -a $SD_UBOOT_DTB ${RELEASE_DIR}/3rdparty/bootloader
+  fi
+fi

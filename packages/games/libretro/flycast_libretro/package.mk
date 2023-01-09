@@ -47,6 +47,11 @@ pre_configure_target() {
 
 pre_make_target() {
   export BUILD_SYSROOT=${SYSROOT_PREFIX}
+  case ${DEVICE} in
+    RK3588)
+      PKG_MAKE_OPTS_TARGET+=" platform=${DEVICE}"
+    ;;
+  esac
 }
 
 makeinstall_target() {

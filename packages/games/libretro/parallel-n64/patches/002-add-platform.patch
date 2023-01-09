@@ -1,40 +1,12 @@
-diff --git a/Makefile b/Makefile
-index 8a719d55..bc243d06 100644
---- a/Makefile
-+++ b/Makefile
-@@ -119,7 +119,7 @@ ifneq (,$(findstring unix,$(platform)))
-    endif
-    fpic = -fPIC
- 
--   HAVE_THR_AL=1
-+   HAVE_THR_AL=0
-    LDFLAGS += -lpthread
- 
- 
-@@ -134,6 +134,33 @@ ifneq (,$(findstring unix,$(platform)))
+diff -rupN parallel-n64.orig/Makefile parallel-n64/Makefile
+--- parallel-n64.orig/Makefile	2023-01-08 13:17:14.937637431 +0000
++++ parallel-n64/Makefile	2023-01-08 13:17:57.606530001 +0000
+@@ -134,6 +134,15 @@ ifneq (,$(findstring unix,$(platform)))
        GL_LIB := -lGL
     endif
  
-+   # RK3326
-+   ifneq (,$(findstring RK3326,$(platform)))
-+      TARGET := $(TARGET_NAME)_libretro.so
-+      CPUFLAGS += -DARM_FIX -DCLASSIC
-+      GLES = 1
-+      GL_LIB := -lGLESv2
-+      WITH_DYNAREC = aarch64
-+   endif
-+
-+   # RK3356
-+   ifneq (,$(findstring RK3566,$(platform)))
-+      TARGET := $(TARGET_NAME)_libretro.so
-+      CPUFLAGS += -DARM_FIX -DCLASSIC
-+      GLES = 1
-+      GL_LIB := -lGLESv2
-+      WITH_DYNAREC = aarch64
-+   endif
-+
-+   # RK3399
-+   ifneq (,$(findstring RK3399,$(platform)))
++   # RK3588
++   ifneq (,$(findstring RK3588,$(platform)))
 +      TARGET := $(TARGET_NAME)_libretro.so
 +      CPUFLAGS += -DARM_FIX -DCLASSIC
 +      GLES = 1
@@ -45,10 +17,9 @@ index 8a719d55..bc243d06 100644
     # Raspberry Pi
     ifneq (,$(findstring rpi,$(platform)))
        GLES = 1
-diff --git a/libretro/libretro.c b/libretro/libretro.c
-index eea606f5..f14afdef 100644
---- a/libretro/libretro.c
-+++ b/libretro/libretro.c
+diff -rupN parallel-n64.orig/libretro/libretro.c parallel-n64/libretro/libretro.c
+--- parallel-n64.orig/libretro/libretro.c	2023-01-08 13:17:14.945637598 +0000
++++ parallel-n64/libretro/libretro.c	2023-01-08 13:30:37.562604648 +0000
 @@ -400,7 +400,9 @@ static void setup_variables(void)
  #if defined(HAVE_OPENGL) || defined(HAVE_OPENGLES)
           "|glide64|gln64|rice"
