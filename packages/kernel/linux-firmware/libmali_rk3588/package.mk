@@ -6,12 +6,7 @@ PKG_LICENSE="GPLv3"
 PKG_ARCH="arm aarch64"
 PKG_DEPENDS_TARGET="kernel-firmware"
 PKG_TOOLCHAIN="manual"
-#PKG_TOOLCHAIN="make"
 PKG_LONGDESC="Mali blob needed for RK3588 gpu"
-
-#make_target() {
-#  :
-#}
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/$(get_full_firmware_dir)

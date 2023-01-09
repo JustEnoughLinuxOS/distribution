@@ -3,13 +3,24 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="mesa"
-PKG_VERSION="d5394296becfc97bc992c82d6f5d013b35b5275a"
 PKG_LICENSE="OSS"
-PKG_SITE="https://gitlab.freedesktop.org/mesa/mesa"
-PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain expat libdrm Mako:host"
 PKG_LONGDESC="Mesa is a 3-D graphics library with an API."
 PKG_TOOLCHAIN="meson"
+
+case ${DEVICE} in
+ RK3588)
+        PKG_VERSION="120202c675749c5ef81ae4c8cdc30019b4de08f4"
+        PKG_SITE="https://gitlab.com/panfork/mesa"
+        PKG_URL="${PKG_SITE}.git"
+        PKG_GIT_CLONE_BRANCH="csf"
+  ;;
+  *)
+        PKG_VERSION="d5394296becfc97bc992c82d6f5d013b35b5275a"
+        PKG_SITE="https://gitlab.freedesktop.org/mesa/mesa"
+        PKG_URL="${PKG_SITE}.git"
+  ;;
+esac
 
 get_graphicdrivers
 
