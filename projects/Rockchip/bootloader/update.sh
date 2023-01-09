@@ -84,13 +84,8 @@ fi
 
 MYDEV=$(awk '/^Hardware/ {print $4}' /proc/cpuinfo)
 case ${MYDEV} in
-  OPI5)
-    IDBSEEK="bs=512 seek=64"
-  ;;
-  *)
-    IDBSEEK="bs=32k seek=1"
-  ;;
-esac
+
+IDBSEEK="bs=512 seek=64"
 
   if [ -f $SYSTEM_ROOT/usr/share/bootloader/idbloader.img ]; then
     echo -n "Updating idbloader.img... "
@@ -126,5 +121,5 @@ esac
 # mount $BOOT_ROOT r/o
   sync
   mount -o remount,ro $BOOT_ROOT &>/dev/null
-  
+
 sync

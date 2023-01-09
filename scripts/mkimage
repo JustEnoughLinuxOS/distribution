@@ -95,7 +95,7 @@ fi
 sync
 
 # set partition 3 as boot for u-boot.
-if [ "${PARTITION_TABLE}" = "gpt" ]; then
+if [ "${PARTITION_TABLE}" = "gpt" ] && [ "${BOOTLOADER}" = "u-boot" ]; then
   echo "image: Set jelos partition as boot"
   parted -s "${DISK}" set 3 legacy_boot on
 fi

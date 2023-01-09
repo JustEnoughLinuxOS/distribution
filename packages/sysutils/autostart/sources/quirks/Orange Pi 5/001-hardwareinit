@@ -1,0 +1,8 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2023-present Brooksytech (https://github.com/brooksytech)
+
+. /etc/profile
+
+# Enable verticle USB Port
+echo host > /sys/kernel/debug/usb/fc000000.usb/mode

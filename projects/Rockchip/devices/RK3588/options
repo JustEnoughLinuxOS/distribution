@@ -66,7 +66,7 @@
     WINDOWMANAGER="weston"
   
   # kernel serial console
-    EXTRA_CMDLINE="earlycon=uart8250,mmio32,0xfeb50000 console=ttyFIQ0 irqchip.gicv3_pseudo_nmi=0"
+    EXTRA_CMDLINE="rootwait quiet loglevel=0 console=tty3 console=ttyS2,1500000n8 coherent_pool=2M ssh consoleblank=0 panic=20"
 
   # additional packages to install
     ADDITIONAL_PACKAGES=" emulators gamesupport fileman"
@@ -80,7 +80,6 @@
   # for a list of additional drivers see packages/linux-drivers
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-   # ADDITIONAL_DRIVERS="RTL8188FU RTL8812AU RTL8821AU RTL8821CU RTL88x2BU"
 
   # build and install driver addons (yes / no)
     DRIVER_ADDONS_SUPPORT="no"
