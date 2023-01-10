@@ -2,7 +2,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="vicesa"
-PKG_VERSION="3.6.1"
+PKG_VERSION="3.7.1"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
@@ -13,7 +13,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="emulators"
 PKG_SHORTDESC="Commodore 8-bit Emulator"
 PKG_LONGDESC="Commodore 8-bit Emulator"
-PKG_CONFIGURE_OPTS_TARGET+="--disable-pdf-docs"
+PKG_CONFIGURE_OPTS_TARGET+=" --disable-pdf-docs --enable-gtk3ui=no"
 
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"

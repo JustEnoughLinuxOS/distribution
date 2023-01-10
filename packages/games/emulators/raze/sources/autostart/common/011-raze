@@ -1,9 +1,0 @@
-#!/bin/bash
-
-# SPDX-License-Identifier: GPL-3.0-or-later
-# Copyright (C) 2022-present travis134
-
-if [ ! -e "/storage/roms/build/_Scan Build Engine Games.sh" ]; then
-    cp "/usr/config/game/raze/games/_Scan Build Engine Games.sh" "/storage/roms/build/_Scan Build Engine Games.sh"
-    chmod +x "/storage/roms/build/_Scan Build Engine Games.sh"
-fi

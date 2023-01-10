@@ -8,7 +8,7 @@ PKG_SECTION="virtual"
 PKG_LONGDESC="Emulation metapackage."
 
 PKG_EMUS="hatarisa openbor hypseus-singe moonlight hypseus-singe pico-8 flycastsa   \
-          scummvmsa PPSSPPSDL vicesa lzdoom gzdoom ecwolf raze"
+          scummvmsa PPSSPPSDL vicesa"
 
 PKG_RETROARCH="retroarch retroarch-overlays retroarch-joypads retroarch-assets libretro-database core-info"
 
@@ -24,7 +24,7 @@ LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-
                 prboom prosystem puae px68k quasi88 quicknes race reminiscence sameboy        \
                 sameduck smsplus-gx snes9x snes9x2002 snes9x2005_plus snes9x2010 stella      \
                 stella-2014 swanstation TIC-80 tgbdual tyrquake xrick uzem vba-next vbam     \
-                vecx vice yabasanshiro xmil mesen virtualjaguar ecwolf_libretro \
+                vecx vice yabasanshiro xmil mesen virtualjaguar \
                 bsnes-mercury-performance duckstation fake08"
 
 PKG_DEPENDS_TARGET="${PKG_EMUS} ${PKG_RETROARCH} ${LIBRETRO_CORES}"
