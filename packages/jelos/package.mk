@@ -32,16 +32,16 @@ PKG_SOFTWARE=""
 
 PKG_COMPAT=""
 
-PKG_MULTIMEDIA="ffmpeg mpv vlc"
+PKG_MULTIMEDIA="ffmpeg vlc"
 
-PKG_TOOLS="i2c-tools rclone jslisten evtest tailscale pygobject"
-
-### Tools for mainline devices
+### Splitting out MPV
 case "${DEVICE}" in
   handheld)
-    PKG_TOOLS+=" mesa-demos"
+    PKG_MULTIMEDIA="mpv"
   ;;
 esac
+
+PKG_TOOLS="i2c-tools rclone jslisten evtest tailscale pygobject mesa-demos"
 
 ### Project specific variables
 case "${PROJECT}" in
