@@ -50,13 +50,26 @@ then
 fi
 
 # Make sure the basic controller profiles exist.
-for controller in controller0.xml controller1.xml
-do
-  if [ ! -f /storage/.config/Cemu/controllerProfiles/${controller} ]
-  then
-    cp /usr/config/Cemu/controllerProfiles/${controller} /storage/.config/Cemu/controllerProfiles
-  fi
-done
+if [ ! -f /storage/.config/Cemu/controllerProfiles/controller0.xml ]
+then
+  cp /usr/config/Cemu/controllerProfiles/controller0.xml /storage/.config/Cemu/controllerProfiles
+fi
+
+FILE=$(echo $@ | sed "s#^/.*/##g")
+FPS=$(get_setting show_fps wiiu "${FILE}")
+CON=$(get_setting wiiu_controller_profile wiiu "${FILE}")
+
+if [ -z "${FPS}" ]
+then
+  FPS="0"
+fi
+if [ -z "${CON}" ]
+then
+  CON="Wii U GamePad"
+fi
+
+xmlstarlet ed --inplace -u "//Overlay/Position" -v "${FPS}" /storage/.config/Cemu/settings.xml
+xmlstarlet ed --inplace -u "//emulated_controller/type" -v "${CON}" /storage/.config/Cemu/controllerProfiles/controller0.xml
 
 sed -i "s#<fullscreen>.*</fullscreen>#<fullscreen>true</fullscreen>#g" .config/Cemu/settings.xml
 sed -i "s#<TVDevice>.*</TVDevice>#<TVDevice>$(pactl get-default-sink)</TVDevice>#g" .config/Cemu/settings.xml
