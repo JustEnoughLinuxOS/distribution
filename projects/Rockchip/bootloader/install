@@ -6,6 +6,25 @@ PKG_RKBIN="$(get_build_dir rkbin)"
 PKG_UBOOT="$(get_build_dir u-boot)"
 source ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
 
+SPI_IMAGE=${INSTALL}/usr/share/bootloader/rkspi_loader.img
+
+generate_spi_image() {
+        echo "spi: create rkspi_loader.img..."
+        dd if=/dev/zero of=$SPI_IMAGE bs=1M count=0 seek=16
+        parted -s $SPI_IMAGE mklabel gpt
+        parted -s $SPI_IMAGE unit s mkpart idbloader 64 7167
+        parted -s $SPI_IMAGE unit s mkpart vnvm 7168 7679
+        parted -s $SPI_IMAGE unit s mkpart reserved_space 7680 8063
+        parted -s $SPI_IMAGE unit s mkpart reserved1 8064 8127
+        parted -s $SPI_IMAGE unit s mkpart uboot_env 8128 8191
+        parted -s $SPI_IMAGE unit s mkpart reserved2 8192 16383
+        parted -s $SPI_IMAGE unit s mkpart uboot 16384 32734
+        echo "spi: write idbloader.img to rkspi_loader.img..."
+        dd if=${PKG_BUILD}/idbloader.img of=$SPI_IMAGE seek=64 conv=notrunc
+        echo "spi: write u-boot.itb to rkspi_loader.img..."
+        dd if=${PKG_BUILD}/u-boot.itb of=$SPI_IMAGE seek=16384 conv=notrunc
+}
+
 if [ -n "${PKG_DATAFILE}" -a -n "${PKG_LOADER}" ]; then
   echo "loader: Make idbloader.img from ${PKG_DATAFILE}:${PKG_LOADER}..."
   case "${PKG_SOC}" in
@@ -21,6 +40,7 @@ if [ -n "${PKG_DATAFILE}" -a -n "${PKG_LOADER}" ]; then
   esac
 fi
 
+echo "uboot: copy idbloader.img image to ${INSTALL}/usr/share/bootloader..."
 cp -av idbloader.img ${INSTALL}/usr/share/bootloader
 
 if [ ! -n "${PKG_LOAD_ADDR}" ]; then
@@ -30,7 +50,8 @@ fi
 case "${PKG_SOC}" in
   rk3588)
     echo "uboot: copy u-boot.itb image to ${INSTALL}/usr/share/bootloader..."
-        cp -av u-boot.itb ${INSTALL}/usr/share/bootloader/u-boot.itb
+    cp -av u-boot.itb ${INSTALL}/usr/share/bootloader/u-boot.itb
+    generate_spi_image
   ;;
   *)
     echo "uboot: build loader image uboot.img at ${PKG_LOAD_ADDR}..."

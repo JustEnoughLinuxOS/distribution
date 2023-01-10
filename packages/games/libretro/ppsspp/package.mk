@@ -66,11 +66,8 @@ else
 fi
 
 case ${TARGET_ARCH} in
-  arm)
-    PKG_CMAKE_OPTS_TARGET+=" -DARMV7=ON"
-  ;;
   aarch64)
-    PKG_CMAKE_OPTS_TARGET+=" -DARM64=ON"
+  PKG_CMAKE_OPTS_TARGET+=" -DFORCED_CPU=aarch64"
   ;;
 esac
 

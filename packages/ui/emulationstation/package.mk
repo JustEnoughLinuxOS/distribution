@@ -114,6 +114,10 @@ makeinstall_target() {
 
         cp -rf ${PKG_DIR}/config/common/*.cfg ${INSTALL}/usr/config/emulationstation
 
+        if [ -d "${PKG_DIR}/config/device/${DEVICE}" ]; then
+        cp -rf ${PKG_DIR}/config/device/${DEVICE}/*.cfg ${INSTALL}/usr/config/emulationstation
+        fi
+
 	ln -sf /storage/.cache/system_timezone ${INSTALL}/etc/timezone
 
 }
