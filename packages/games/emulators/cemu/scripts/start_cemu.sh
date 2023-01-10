@@ -16,10 +16,11 @@ cp -rf /usr/share/mime/packages/* /storage/.local/share/mime/packages
 update-mime-database /storage/.local/share/mime
 
 # Set common paths
-CEMU_CACHE_LOG=/storage/.config/Cemu/share/log.txt
-CEMU_VAR_LOG=/var/log/Cemu.log
-CEMU_HOME_CONFIG=/storage/.config/Cemu/share
-CEMU_HOME_LOCAL=/storage/.local/share/Cemu
+CEMU_CONFIG_ROOT="/storage/.config/Cemu"
+CEMU_CACHE_LOG="${CEMU_CONFIG_ROOT}/share/log.txt"
+CEMU_VAR_LOG="/var/log/Cemu.log"
+CEMU_HOME_CONFIG="${CEMU_CONFIG_ROOT}/share"
+CEMU_HOME_LOCAL="/storage/.local/share/Cemu"
 
 # create link to config directory
 if [ ! -d ${CEMU_HOME_CONFIG} ]; then
@@ -44,15 +45,19 @@ if [ ! -L ${CEMU_VAR_LOG} ]; then
 fi
 
 # Make sure CEMU settings exist, and set the audio output.
-if [ ! -f "/storage/.config/Cemu/settings.xml" ]
+if [ ! -f "${CEMU_CONFIG_ROOT}/settings.xml" ]
 then
-  cp -f /usr/config/Cemu/settings.xml /storage/.config/Cemu/settings.xml
+  cp -f /usr/config/Cemu/settings.xml ${CEMU_CONFIG_ROOT}/settings.xml
 fi
 
 # Make sure the basic controller profiles exist.
-if [ ! -f /storage/.config/Cemu/controllerProfiles/controller0.xml ]
+if [ ! -f "${CEMU_CONFIG_ROOT}/controllerProfiles/controller0.xml" ]
 then
-  cp /usr/config/Cemu/controllerProfiles/controller0.xml /storage/.config/Cemu/controllerProfiles
+  if [ ! -d "${CEMU_CONFIG_ROOT}/controllerProfiles" ]
+  then
+    mkdir -p ${CEMU_CONFIG_ROOT}
+  di
+  cp /usr/config/Cemu/controllerProfiles/controller0.xml ${CEMU_CONFIG_ROOT}/controllerProfiles/
 fi
 
 FILE=$(echo $@ | sed "s#^/.*/##g")
@@ -68,11 +73,10 @@ then
   CON="Wii U GamePad"
 fi
 
-xmlstarlet ed --inplace -u "//Overlay/Position" -v "${FPS}" /storage/.config/Cemu/settings.xml
-xmlstarlet ed --inplace -u "//emulated_controller/type" -v "${CON}" /storage/.config/Cemu/controllerProfiles/controller0.xml
-
-sed -i "s#<fullscreen>.*</fullscreen>#<fullscreen>true</fullscreen>#g" .config/Cemu/settings.xml
-sed -i "s#<TVDevice>.*</TVDevice>#<TVDevice>$(pactl get-default-sink)</TVDevice>#g" .config/Cemu/settings.xml
+xmlstarlet ed --inplace -u "//Overlay/Position" -v "${FPS}" ${CEMU_CONFIG_ROOT}/settings.xml
+xmlstarlet ed --inplace -u "//fullscreen" -v "true" ${CEMU_CONFIG_ROOT}/settings.xml
+xmlstarlet ed --inplace -u "//Audio/TVDevice" -v "$(pactl get-default-sink)" ${CEMU_CONFIG_ROOT}/settings.xml
+xmlstarlet ed --inplace -u "//emulated_controller/type" -v "${CON}" ${CEMU_CONFIG_ROOT}/controllerProfiles/controller0.xml
 
 # Run the emulator
 cemu -g "$@"
