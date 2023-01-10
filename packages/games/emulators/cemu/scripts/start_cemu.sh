@@ -56,7 +56,7 @@ then
   if [ ! -d "${CEMU_CONFIG_ROOT}/controllerProfiles" ]
   then
     mkdir -p ${CEMU_CONFIG_ROOT}
-  di
+  fi
   cp /usr/config/Cemu/controllerProfiles/controller0.xml ${CEMU_CONFIG_ROOT}/controllerProfiles/
 fi
 
