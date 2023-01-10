@@ -13,7 +13,7 @@ fi
 if [ ! -e "/storage/.config/modprobe.d/alsa-base.conf" ]
 then
   touch /storage/.config/modprobe.d/alsa-base.conf
-  set-audio set "ROCKCHIP-HDMI (1:0)"
-  set-audio esset "Master"
+  set-audio set "ROCKCHIP-HDMI0 (1:0)"
+  set-audio esset "PCM"
   reboot
 fi
