@@ -1,36 +1,35 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2017-2021 Team LibreELEC (https://libreelec.tv)
 # Copyright (C) 2021-present Fewtarius
+# Copyright (C) 2023-present Brooksytech
 
 PKG_RKBIN="$(get_build_dir rkbin)"
 PKG_UBOOT="$(get_build_dir u-boot)"
 source ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
 
-SPI_IMAGE=${INSTALL}/usr/share/bootloader/rkspi_loader.img
+RKSPI_LOADER=${INSTALL}/usr/share/bootloader/rkspi_loader.img
 
-generate_spi_image() {
+generate_rkspi_loader() {
         echo "spi: create rkspi_loader.img..."
-        dd if=/dev/zero of=$SPI_IMAGE bs=1M count=0 seek=16
-        parted -s $SPI_IMAGE mklabel gpt
-        parted -s $SPI_IMAGE unit s mkpart idbloader 64 7167
-        parted -s $SPI_IMAGE unit s mkpart vnvm 7168 7679
-        parted -s $SPI_IMAGE unit s mkpart reserved_space 7680 8063
-        parted -s $SPI_IMAGE unit s mkpart reserved1 8064 8127
-        parted -s $SPI_IMAGE unit s mkpart uboot_env 8128 8191
-        parted -s $SPI_IMAGE unit s mkpart reserved2 8192 16383
-        parted -s $SPI_IMAGE unit s mkpart uboot 16384 32734
+        dd if=/dev/zero of=$RKSPI_LOADER bs=1M count=0 seek=16
+        parted -s $RKSPI_LOADER mklabel gpt
+        parted -s $RKSPI_LOADER unit s mkpart idbloader 64 7167
+        parted -s $RKSPI_LOADER unit s mkpart vnvm 7168 7679
+        parted -s $RKSPI_LOADER unit s mkpart reserved_space 7680 8063
+        parted -s $RKSPI_LOADER unit s mkpart reserved1 8064 8127
+        parted -s $RKSPI_LOADER unit s mkpart uboot_env 8128 8191
+        parted -s $RKSPI_LOADER unit s mkpart reserved2 8192 16383
+        parted -s $RKSPI_LOADER unit s mkpart uboot 16384 32734
         echo "spi: write idbloader.img to rkspi_loader.img..."
-        dd if=${PKG_BUILD}/idbloader.img of=$SPI_IMAGE seek=64 conv=notrunc
-        echo "spi: write u-boot.itb to rkspi_loader.img..."
-        dd if=${PKG_BUILD}/u-boot.itb of=$SPI_IMAGE seek=16384 conv=notrunc
+        dd if=${PKG_BUILD}/idbloader.img of=$RKSPI_LOADER seek=64 conv=notrunc
+        echo "spi: write uboot.itb to rkspi_loader.img..."
+        dd if=${PKG_BUILD}/u-boot.itb of=$RKSPI_LOADER seek=16384 conv=notrunc
 }
 
 if [ -n "${PKG_DATAFILE}" -a -n "${PKG_LOADER}" ]; then
   echo "loader: Make idbloader.img from ${PKG_DATAFILE}:${PKG_LOADER}..."
   case "${PKG_SOC}" in
     rk3588)
-      export CROSS_COMPILE=aarch64-linux-gnu-
-      make BL31=${PKG_BL31} ${PKG_LOADER} u-boot.dtb u-boot.itb
       tools/mkimage -n ${PKG_SOC} -T rksd -d ${PKG_DATAFILE}:${PKG_LOADER} idbloader.img
     ;;
     *)
@@ -51,7 +50,7 @@ case "${PKG_SOC}" in
   rk3588)
     echo "uboot: copy u-boot.itb image to ${INSTALL}/usr/share/bootloader..."
     cp -av u-boot.itb ${INSTALL}/usr/share/bootloader/u-boot.itb
-    generate_spi_image
+    generate_rkspi_loader
   ;;
   *)
     echo "uboot: build loader image uboot.img at ${PKG_LOAD_ADDR}..."

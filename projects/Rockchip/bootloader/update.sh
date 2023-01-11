@@ -85,11 +85,9 @@ fi
 MYDEV=$(awk '/^Hardware/ {print $4}' /proc/cpuinfo)
 case ${MYDEV} in
 
-IDBSEEK="bs=512 seek=64"
-
   if [ -f $SYSTEM_ROOT/usr/share/bootloader/idbloader.img ]; then
     echo -n "Updating idbloader.img... "
-    dd if=$SYSTEM_ROOT/usr/share/bootloader/idbloader.img of=$BOOT_DISK ${IDBSEEK} conv=fsync &>/dev/null
+    dd if=$SYSTEM_ROOT/usr/share/bootloader/idbloader.img of=$BOOT_DISK bs=512 seek=64 conv=fsync &>/dev/null
     echo "done"
   fi
   if [ -f $SYSTEM_ROOT/usr/share/bootloader/u-boot.img ]; then
