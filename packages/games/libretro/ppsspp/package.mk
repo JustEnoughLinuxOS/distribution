@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="ppsspp"
-PKG_VERSION="40386bca08d33c2d6584d6e7da4efee9bfeb3f96"
+PKG_VERSION="5f10cabe5a0a4442e642d473f360e309288dd5f4"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/hrydgard/ppsspp"
 PKG_URL="https://github.com/hrydgard/ppsspp.git"
@@ -66,11 +66,8 @@ else
 fi
 
 case ${TARGET_ARCH} in
-  arm)
-    PKG_CMAKE_OPTS_TARGET+=" -DARMV7=ON"
-  ;;
   aarch64)
-    PKG_CMAKE_OPTS_TARGET+=" -DARM64=ON"
+  PKG_CMAKE_OPTS_TARGET+=" -DFORCED_CPU=aarch64"
   ;;
 esac
 

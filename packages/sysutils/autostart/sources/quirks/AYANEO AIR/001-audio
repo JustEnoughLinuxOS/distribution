@@ -4,17 +4,6 @@
 
 . /etc/profile
 
-if [ ! -d "/storage/.config/modprobe.d/" ]
-then
-  mkdir -p /storage/.config/modprobe.d
-fi
-
-if [ ! -e "/storage/.config/modprobe.d/alsa-base.conf" ]
-then
-  touch /storage/.config/modprobe.d/alsa-base.conf
-  reboot
-fi
-
 ### Set the audio device.
 set-audio set "ALC269VB (1:0)"
 set-audio esset "Master"

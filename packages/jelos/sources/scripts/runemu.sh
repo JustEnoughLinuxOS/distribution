@@ -296,6 +296,12 @@ then
                         RUNTHIS='${TBASH} /usr/bin/start_primehack.sh "${ROMNAME}"'
                         fi
                 ;;
+                "wiiu")
+                        jslisten set "-9 cemu"
+                        if [ "$EMU" = "cemu" ]; then
+                        RUNTHIS='${TBASH} /usr/bin/start_cemu.sh "${ROMNAME}"'
+                        fi
+                ;;
                 "switch")
                         jslisten set "-9 yuzu-cmd"
                         if [ "$EMU" = "yuzu" ]; then

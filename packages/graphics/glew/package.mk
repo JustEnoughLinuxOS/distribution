@@ -30,8 +30,3 @@ pre_configure_target() {
 				-DGLEW_EGL=ON \
 				-DBUILD_SHARED_LIBS=ON"
 }
-
-makeinstall_target() {
-  mkdir -p ${INSTALL}/usr/lib
-  cp ${PKG_BUILD}/lib/libGLEW* ${INSTALL}/usr/lib/
-}

@@ -30,6 +30,10 @@ x86_64: handheld
 handheld:
 	DEVICE_ROOT=handheld PROJECT=PC DEVICE=handheld ARCH=x86_64 ./scripts/build_distro
 
+RK3588:
+	DEVICE_ROOT=RK3588 PROJECT=Rockchip DEVICE=RK3588 ARCH=arm ./scripts/build_distro
+	DEVICE_ROOT=RK3588 PROJECT=Rockchip DEVICE=RK3588 ARCH=aarch64 ./scripts/build_distro
+
 update:
 	PROJECT=PC DEVICE=handheld ARCH=x86_64 ./scripts/update_packages
 

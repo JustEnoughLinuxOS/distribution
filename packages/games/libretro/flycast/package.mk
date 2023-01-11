@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="flycast"
-PKG_VERSION="b232a10167b3ead55b8755059a0edec53a60463d"
+PKG_VERSION="611946559c12a569af507019694cb369b3587af6"
 PKG_SITE="https://github.com/flyinghead/flycast"
 PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain libzip"
@@ -42,16 +42,5 @@ pre_configure_target() {
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
-  case ${TARGET_ARCH} in
-    aarch64)
-      cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/flycast-*/.install_pkg/usr/lib/libretro/flycast32_libretro.so ${INSTALL}/usr/lib/libretro
-      cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast_libretro.so
-    ;;
-    arm)
-      cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast32_libretro.so
-    ;;
-    *)
-      cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast_libretro.so
-    ;;
-  esac
+  cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast_libretro.so
 }

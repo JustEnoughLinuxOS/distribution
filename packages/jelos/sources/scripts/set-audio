@@ -162,7 +162,19 @@ ctl.!default {
 
 pcm.!default {
 	type plug
-	slave.pcm "dmixer"
+	slave.pcm "softvol"
+}
+
+pcm.softvol {
+    type softvol
+    slave.pcm "dmixer"
+    control {
+        name "Pre-Amp"
+        card ${CARD}
+    }
+    min_dB -5.0
+    max_dB 20.0
+    resolution 6
 }
 
 pcm.dmixer  {
@@ -171,8 +183,8 @@ pcm.dmixer  {
 	slave {
 	    pcm "${HWDEV}"
 	    period_time 0
-	    period_size 1024
-	    buffer_size 8192
+	    period_size 4096
+	    buffer_size 131072
 	    rate 176400
 	}
 	bindings {
@@ -186,8 +198,20 @@ EOF
 pcm.!default {
   type plug
   slave {
-    pcm "${HWDEV}"
+    pcm "softvol"
   }
+}
+
+pcm.softvol {
+    type softvol
+    slave.pcm "dmixer"
+    control {
+        name "Pre-Amp"
+        card ${CARD}
+    }
+    min_dB -5.0
+    max_dB 20.0
+    resolution 6
 }
 
 ctl.!default {

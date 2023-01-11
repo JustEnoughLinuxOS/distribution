@@ -47,7 +47,6 @@ jobs:
           run: echo "date=$(date +'%Y%m%d')" >> $GITHUB_OUTPUT
   
         - name: Repository Dispatch
-          if: steps.changes.outputs.changes != '0'
           uses: peter-evans/repository-dispatch@v2
           with:
             token: ${{ secrets.REPO_ACCESS }}
