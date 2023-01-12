@@ -13,13 +13,14 @@ date 2>&1 >>${BOOTLOG}
 /usr/bin/show_splash intro 2>&1 >>${BOOTLOG}
 
 ### Apply device quirks
-if [ -e "/usr/sbin/dmidecode" ]
+if [ -e "/sys/firmware/devicetree/base/model" ]
 then
-  QUIRK_DEVICE=$(echo "$(dmidecode -s system-manufacturer) $(dmidecode -s system-product-name)")
-else
   QUIRK_DEVICE=$(cat /sys/firmware/devicetree/base/model 2>/dev/null)
+else
+  QUIRK_DEVICE="$(cat /sys/class/dmi/id/sys_vendor 2>/dev/null) $(cat /sys/class/dmi/id/product_name 2>/dev/null)"
 fi
-QUIRK_DEVICE=$(echo ${QUIRK_DEVICE} | sed -e "s#[/]#-#g")
+QUIRK_DEVICE="$(echo ${QUIRK_DEVICE} | sed -e "s#[/]#-#g")"
+
 if [ -d "/usr/lib/autostart/quirks/${QUIRK_DEVICE}" ]
 then
   echo "Executing ${QUIRK_DEVICE} quirks." 2>&1 >>${BOOTLOG}
