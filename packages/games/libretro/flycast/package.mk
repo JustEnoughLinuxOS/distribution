@@ -17,7 +17,7 @@ else
   PKG_CMAKE_OPTS_TARGET+="  USE_OPENGL=OFF"
 fi
 
-if [ "${OPENGLES_SUPPORT}" = yes ]; then
+if [ "${OPENGLES_SUPPORT}" = yes ] | [ ! "${TARGET_ARCH}" = "x86_64"]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
   PKG_CMAKE_OPTS_TARGET+=" -DUSE_GLES=ON"
 else

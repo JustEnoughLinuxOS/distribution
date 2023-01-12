@@ -34,13 +34,23 @@ if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
 fi
 
-if [ "${OPENGLES_SUPPORT}" = yes ]; then
+if [ "${OPENGLES_SUPPORT}" = yes ] | [ ! "${TARGET_ARCH}" = "x86_64"]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
   PKG_MAKE_OPTS_TARGET+=" FORCE_GLES=1"
+else
+  PKG_CMAKE_OPTS_TARGET+=" -DUSE_GLES=OFF"
+fi
+
+if [ "${VULKAN_SUPPORT}" = "yes" ]
+then
+  PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
+  PKG_CMAKE_OPTS_TARGET+=" -DUSE_VULKAN=ON"
+else
+  PKG_CMAKE_OPTS_TARGET+=" -DUSE_VULKAN=OFF"
 fi
 
 pre_configure_target() {
-  sed -i 's/define CORE_OPTION_NAME "reicast"/define CORE_OPTION_NAME "flycast"/g' core/libretro/libretro_core_option_defines.h 
+  sed -i 's/define CORE_OPTION_NAME "reicast"/define CORE_OPTION_NAME "flycast"/g' core/libretro/libretro_core_option_defines.h
   PKG_MAKE_OPTS_TARGET="${PKG_MAKE_OPTS_TARGET} ARCH=${TARGET_ARCH} HAVE_OPENMP=1 GIT_VERSION=${PKG_VERSION:0:7}  HAVE_LTCG=0"
 
 }
