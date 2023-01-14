@@ -1,0 +1,43 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+
+### Set a custom device so we don't clobber it.
+set-audio set "CUSTOM (UNMANAGED)"
+set-audio esset "PCM"
+### Temporary workaround until we can fix it correctly
+cat <<EOF >/storage/.config/asound.conf
+ctl.!default {
+  type hw
+  card 1
+}
+
+pcm.!default {
+	type plug
+	slave.pcm "softvol"
+}
+
+pcm.softvol {
+    type softvol
+    slave.pcm "dmixer"
+    control {
+        name "PCM"
+        card 1
+    }
+}
+
+pcm.dmixer  {
+	type dmix
+	ipc_key 1024
+	slave {
+	    pcm "hw:1,1"
+	    period_time 0
+	    period_size 4096
+	    buffer_size 131072
+	    rate 176400
+	}
+}
+EOF

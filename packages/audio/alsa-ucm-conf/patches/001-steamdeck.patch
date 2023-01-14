@@ -1,6 +1,6 @@
 diff -rupN alsa-ucm-conf.orig/ucm2/AMD/acp5x/acp5x.conf alsa-ucm-conf/ucm2/AMD/acp5x/acp5x.conf
 --- alsa-ucm-conf.orig/ucm2/AMD/acp5x/acp5x.conf	1969-12-31 19:00:00.000000000 -0500
-+++ alsa-ucm-conf/ucm2/AMD/acp5x/acp5x.conf	2023-01-12 18:33:34.943769783 -0500
++++ alsa-ucm-conf/ucm2/AMD/acp5x/acp5x.conf	2023-01-14 09:14:14.639236230 -0500
 @@ -0,0 +1,53 @@
 +Syntax 6
 +
@@ -57,7 +57,7 @@ diff -rupN alsa-ucm-conf.orig/ucm2/AMD/acp5x/acp5x.conf alsa-ucm-conf/ucm2/AMD/a
 +}
 diff -rupN alsa-ucm-conf.orig/ucm2/AMD/acp5x/HiFi.conf alsa-ucm-conf/ucm2/AMD/acp5x/HiFi.conf
 --- alsa-ucm-conf.orig/ucm2/AMD/acp5x/HiFi.conf	1969-12-31 19:00:00.000000000 -0500
-+++ alsa-ucm-conf/ucm2/AMD/acp5x/HiFi.conf	2023-01-12 18:33:34.943769783 -0500
++++ alsa-ucm-conf/ucm2/AMD/acp5x/HiFi.conf	2023-01-14 09:14:38.723138315 -0500
 @@ -0,0 +1,146 @@
 +Macro.apcmremap.CtlRemapMonoToStereoVolSw {
 +	Type Volume
@@ -205,9 +205,9 @@ diff -rupN alsa-ucm-conf.orig/ucm2/AMD/acp5x/HiFi.conf alsa-ucm-conf/ucm2/AMD/ac
 +		JackControl "Headset Mic Jack"
 +	}
 +}
-diff -rupN alsa-ucm-conf.orig/ucm2/conf.d/acp5x/acp5x.conf alsa-ucm-conf/ucm2/conf.d/acp5x/acp5x.conf
---- alsa-ucm-conf.orig/ucm2/conf.d/acp5x/acp5x.conf	1969-12-31 19:00:00.000000000 -0500
-+++ alsa-ucm-conf/ucm2/conf.d/acp5x/acp5x.conf	2023-01-12 18:34:26.387634234 -0500
+diff -rupN alsa-ucm-conf.orig/ucm2/conf.d/acp5x/Valve-Jupiter-1.conf alsa-ucm-conf/ucm2/conf.d/acp5x/Valve-Jupiter-1.conf
+--- alsa-ucm-conf.orig/ucm2/conf.d/acp5x/Valve-Jupiter-1.conf	1969-12-31 19:00:00.000000000 -0500
++++ alsa-ucm-conf/ucm2/conf.d/acp5x/Valve-Jupiter-1.conf	2023-01-14 09:14:14.639236230 -0500
 @@ -0,0 +1,53 @@
 +Syntax 6
 +
