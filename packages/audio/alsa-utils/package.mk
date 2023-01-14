@@ -4,8 +4,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="alsa-utils"
-PKG_VERSION="1.2.6"
-PKG_SHA256="6a1efd8a1f1d9d38e489633eaec1fffa5c315663b316cab804be486887e6145d"
+PKG_VERSION="1.2.8"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.alsa-project.org/"
 #PKG_URL="ftp://ftp.alsa-project.org/pub/utils/alsa-utils-${PKG_VERSION}.tar.bz2"
