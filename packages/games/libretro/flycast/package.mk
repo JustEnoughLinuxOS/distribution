@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="flycast"
-PKG_VERSION="611946559c12a569af507019694cb369b3587af6"
+PKG_VERSION="1e195b7237afceeef725e4f45afd9821e34bf53c"
 PKG_SITE="https://github.com/flyinghead/flycast"
 PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain libzip"
@@ -17,7 +17,7 @@ else
   PKG_CMAKE_OPTS_TARGET+="  USE_OPENGL=OFF"
 fi
 
-if [ "${OPENGLES_SUPPORT}" = yes ]; then
+if [ "${OPENGLES_SUPPORT}" = yes ] | [ ! "${TARGET_ARCH}" = "x86_64" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
   PKG_CMAKE_OPTS_TARGET+=" -DUSE_GLES=ON"
 else
