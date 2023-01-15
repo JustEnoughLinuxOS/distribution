@@ -2,8 +2,11 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
 
+. /etc/profile
+
 sysctl vm.swappiness=1
 sysctl kernel.nmi_watchdog=0
 sysctl vm.laptop_mode=5
 sysctl vm.dirty_writeback_centisecs=1500
 
+toggle-ipv6

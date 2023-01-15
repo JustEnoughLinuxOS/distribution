@@ -139,3 +139,10 @@ then
 CheckAtStartup = false
 EOF
 fi
+
+IPV6=$(get_setting ipv6.enabled)
+if [ -z "${IPV6}" ]
+then
+  echo "Disable ipv6." >>${LOG}
+  set_setting ipv6.enabled 0
+fi
