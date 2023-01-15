@@ -17,7 +17,7 @@ LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-
                 beetle-pcfx bsnes bsnes-mercury-performance beetle-supafaust beetle-supergrafx           \
                 beetle-vb beetle-wswan beetle-saturn bluemsx cannonball cap32 crocods daphne dinothawr   \
                 dolphin dosbox-svn dosbox-pure duckstation easyrpg fake08 fbalpha2012 fbalpha2019        \
-                fbneo fceumm fmsx flycast flycast_libretro freechaf freeintv freej2me fuse-libretro      \
+                fbneo fceumm fmsx flycast freechaf freeintv freej2me fuse-libretro                       \
                 gambatte gearboy gearcoleco gearsystem genesis-plus-gx genesis-plus-gx-wide gme          \
                 gw-libretro handy hatari mame2000 mame2003-plus mame2010 mame2015 mame melonds meowpc98  \
                 mesen mgba mrboom mupen64plus mupen64plus-nx neocd_libretro nestopia np2kai nxengine     \
