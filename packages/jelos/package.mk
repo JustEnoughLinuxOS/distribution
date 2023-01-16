@@ -78,20 +78,6 @@ makeinstall_target() {
   ln -s /storage/roms ${INSTALL}/roms
   ln -sf /storage/roms/opt ${INSTALL}/opt
 
-  ## Temporary - for compatibility
-  if [ -n "${JELOS_SSH_KEYS_FILE}" ] || \
-     [ -n "${JELOS_WIFI_SSID}" ] || \
-     [ -n "${JELOS_WIFI_KEY}" ]
-  then
-    cat <<EOF
-WARNING: JELOS_SSH_KEYS_FILE, JELOS_WIFI_SSID, and JELOS_WIFI_KEY are deprecated!  Switch to LOCAL_SSH_KEYS_FILE, LOCAL_WIFI_SSID, and LOCAL_WIFI_KEY.
-EOF
-    LOCAL_SSH_KEYS_FILE="${JELOS_SSH_KEYS_FILE}"
-    LOCAL_WIFI_SSID="${JELOS_WIFI_SSID}"
-    LOCAL_WIFI_KEY="${JELOS_WIFI_KEY}"
-    sleep 5
-  fi
-
   ### Add some quality of life customizations for hardworking devs.
   if [ -n "${LOCAL_SSH_KEYS_FILE}" ]; then
     mkdir -p ${INSTALL}/usr/config/ssh
