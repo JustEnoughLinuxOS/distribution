@@ -1,264 +1,299 @@
-diff -rupN alsa-ucm-conf.orig/ucm2/AMD/acp5x/acp5x.conf alsa-ucm-conf/ucm2/AMD/acp5x/acp5x.conf
---- alsa-ucm-conf.orig/ucm2/AMD/acp5x/acp5x.conf	1969-12-31 19:00:00.000000000 -0500
-+++ alsa-ucm-conf/ucm2/AMD/acp5x/acp5x.conf	2023-01-14 09:14:14.639236230 -0500
-@@ -0,0 +1,53 @@
-+Syntax 6
+diff -rupN alsa-ucm-conf.orig/ucm2/conf.d/acp5x/acp5x.conf alsa-ucm-conf/ucm2/conf.d/acp5x/acp5x.conf
+--- alsa-ucm-conf.orig/ucm2/conf.d/acp5x/acp5x.conf	1969-12-31 19:00:00.000000000 -0500
++++ alsa-ucm-conf/ucm2/conf.d/acp5x/acp5x.conf	2023-01-15 22:05:57.605619272 -0500
+@@ -0,0 +1,17 @@
++Syntax 2
 +
 +Comment "Vangogh internal card"
 +
-+#
-+# Macro CtlRemapMonoToStereoVolSw - join two mono controls into one stereo
-+#
-+# Arguments:
-+#   Type - Volume or Switch
-+#   Stereo - Name of the stereo control to be created
-+#   MonoL - Name of the mono control to be used as Left channel
-+#   MonoR - Name of the mono control to be used as Right channel
-+#
-+DefineMacro.CtlRemapMonoToStereoVolSw {
-+	LibraryConfig.remap.Config {
-+		ctl.default.map."name='${var:__Stereo} ${var:__Type}'" {
-+			"name='${var:__MonoL} ${var:__Type}'".vindex.0 0
-+			"name='${var:__MonoR} ${var:__Type}'".vindex.1 0
++SectionUseCase."HiFi" {
++	If.upstream {
++		Condition {
++			Type ControlExists
++			Control "name='Left Analog PCM Volume'"
 +		}
++		True.File "HiFi-upstream.conf"
++		False.File "HiFi.conf"
 +	}
++
++	Comment "Default"
 +}
 +
-+#
-+# Currently restricted to Steam Deck hardware.
-+#
-+If.jupiter {
-+	Condition {
-+		Type String
-+		String1 "Jupiter"
-+		String2 "${sys:devices/virtual/dmi/id/product_name}"
-+	}
-+	True {
-+		SectionUseCase."HiFi" {
-+			File "/AMD/acp5x/HiFi.conf"
-+			Comment "Default"
-+		}
-+
-+		BootSequence [
-+			cset "name='Digital Playback Volume' 252"
-+			cset "name='Left Analog PCM Volume' 17"
-+			cset "name='Right Analog PCM Volume' 17"
-+			cset "name='Left Digital PCM Volume' 870"
-+			cset "name='Right Digital PCM Volume' 870"
-+			cset "name='Headphone Volume' 2"
-+			cset "name='Digital Playback Volume' 192"
-+			cset "name='Mic Volume' 252"
-+			cset "name='Frontend PGA Volume' 27"
-+		]
-+
-+		Include.card-init.File "/lib/card-init.conf"
-+		Include.ctl-remap.File "/lib/ctl-remap.conf"
-+	}
-+}
-diff -rupN alsa-ucm-conf.orig/ucm2/AMD/acp5x/HiFi.conf alsa-ucm-conf/ucm2/AMD/acp5x/HiFi.conf
---- alsa-ucm-conf.orig/ucm2/AMD/acp5x/HiFi.conf	1969-12-31 19:00:00.000000000 -0500
-+++ alsa-ucm-conf/ucm2/AMD/acp5x/HiFi.conf	2023-01-14 09:14:38.723138315 -0500
-@@ -0,0 +1,146 @@
-+Macro.apcmremap.CtlRemapMonoToStereoVolSw {
-+	Type Volume
-+	Stereo "Analog PCM"
-+	MonoL "Left Analog PCM"
-+	MonoR "Right Analog PCM"
-+}
-+
-+Macro.dpcmremap.CtlRemapMonoToStereoVolSw {
-+	Type Volume
-+	Stereo "Digital PCM"
-+	MonoL "Left Digital PCM"
-+	MonoR "Right Digital PCM"
-+}
-+
-+Macro.swremap.CtlRemapMonoToStereoVolSw {
-+	Type Switch
-+	Stereo "DSP1 Preload"
-+	MonoL "Left DSP1 Preload"
-+	MonoR "Right DSP1 Preload"
-+}
-+
+diff -rupN alsa-ucm-conf.orig/ucm2/conf.d/acp5x/HiFi.conf alsa-ucm-conf/ucm2/conf.d/acp5x/HiFi.conf
+--- alsa-ucm-conf.orig/ucm2/conf.d/acp5x/HiFi.conf	1969-12-31 19:00:00.000000000 -0500
++++ alsa-ucm-conf/ucm2/conf.d/acp5x/HiFi.conf	2023-01-15 22:05:57.609619224 -0500
+@@ -0,0 +1,140 @@
 +SectionVerb {
++	Value {
++		FullySpecifiedUCM "1"
++	}
 +	EnableSequence [
-+		disdevall ""
-+		cset "name='ADC Phase Switch' 1"
-+		cset "name='Left DSP RX1 Source' ASPRX1"
-+		cset "name='Right DSP RX1 Source' ASPRX2"
-+		cset "name='Left DSP RX2 Source' ASPRX1"
-+		cset "name='Right DSP RX2 Source' ASPRX2"
-+		cset "name='Left PCM Source' DSP"
-+		cset "name='Right PCM Source' DSP"
-+	]
++		cdev "hw:acp5x"
 +
++		exec "echo Main Verb Config EnableSequence"
++
++		cset "name='Left DSP Booted' 0"
++		cset "name='Right DSP Booted' 0"
++		cset "name='Left DSP1 Preload Switch' 0"
++		cset "name='Right DSP1 Preload Switch' 0"
++		cset "name='Headphone Volume' 0"
++		cset "name='Digital Playback Volume' 207"
++		cset "name='Frontend PGA Volume' 27"
++		cset "name='ADC Phase Switch' 1"
++		cset "name='BIQ Coefficients' 0x03,0x5a,0x00,0x06,0xfc,0xac,0x00,0x00,0xfe,0x58,0x00,0x00,0x03,0x50,0x00,0x06,0xfe,0x58,0x00,0x08" 
++		cset "name='Left AMP PCM Gain' 17"
++		cset "name='Right AMP PCM Gain' 17"
++		cset "name='Left Digital PCM Volume' 817"
++		cset "name='Right Digital PCM Volume' 817"
++		cset "name='Left ASPRX1 Slot Position' 0"
++		cset "name='Left ASPRX2 Slot Position' 1"
++		cset "name='Left DSP RX1 Source' ASPRX1"
++		cset "name='Left DSP RX2 Source' ASPRX1"
++		cset "name='Right ASPRX1 Slot Position' 0"
++		cset "name='Right ASPRX2 Slot Position' 1"
++		cset "name='Right DSP RX1 Source' ASPRX2"
++		cset "name='Right DSP RX2 Source' ASPRX2"
++
++		cset "name='Left Boost Converter Enable' 2"
++		cset "name='Right DSP RX1 Source' 2"
++		cset "name='Left DSP RX2 Source' 1"
++	]
 +	DisableSequence [
++		cdev "hw:acp5x"
++
++		exec "echo Main Verb Config DisableSequence"
 +		cset "name='Left DSP Booted' 0"
 +		cset "name='Right DSP Booted' 0"
 +		cset "name='Left DSP1 Preload Switch' 0"
 +		cset "name='Right DSP1 Preload Switch' 0"
 +	]
-+
-+	Value {
-+		TQ "HiFi"
-+	}
 +}
 +
-+SectionDevice."Headphones" {
++SectionDevice."Headphones".0 {
 +	Comment "Headphones"
-+
-+	ConflictingDevice [
-+		"Speaker"
-+	]
-+
-+	EnableSequence [
-+		cset "name='Headphone Switch' on"
-+	]
-+
-+	DisableSequence [
-+		cset "name='Headphone Switch' off"
-+	]
-+
++	
 +	Value {
 +		PlaybackPriority 200
-+		PlaybackPCM "hw:${CardId},0"
-+		JackControl "Headphone Jack"
-+		PlaybackMixerElem "Headphone"
-+		PlaybackMasterElem "Digital Playback"
++		PlaybackPCM "hw:acp5x,0"
++		JackControl "Headphone Jack"		
 +	}
++	ConflictingDevice [
++	]
++	EnableSequence [
++		cdev "hw:acp5x"
++		exec "echo Headphones EnableSequence"
++		cset "name='Headphone Switch' on"		
++	]
++	DisableSequence [
++		cdev "hw:acp5x"
++		exec "echo Headphones DisableSequence"
++		cset "name='Headphone Switch' off"		
++	]
 +}
 +
-+SectionDevice."Speaker" {
++SectionDevice."Speaker".0 {
 +	Comment "Speaker"
-+
-+	ConflictingDevice [
-+		"Headphones"
-+	]
-+
-+	EnableSequence [
-+		cset "name='Left DSP1 Preload Switch' 1"
-+		cset "name='Right DSP1 Preload Switch' 1"
-+	]
-+
-+	DisableSequence [
-+		cset "name='Left DSP1 Preload Switch' 0"
-+		cset "name='Right DSP1 Preload Switch' 0"
-+	]
 +
 +	Value {
 +		PlaybackPriority 100
-+		PlaybackPCM "hw:${CardId},1"
-+		PlaybackMixerElem "Digital PCM"
-+		PlaybackMasterElem "Analog PCM"
-+		PlaybackVolume "Digital PCM Volume"
-+		PlaybackSwitch "DSP1 Preload Switch"
++		PlaybackPCM "hw:acp5x,1"
 +	}
++	ConflictingDevice [
++	]
++	EnableSequence [
++		cdev "hw:acp5x"
++		exec "echo Speaker EnableSequence"
++		cset "name='Left DSP1 Preload Switch' 1"
++		cset "name='Right DSP1 Preload Switch' 1"
++		cset "name='Left AMP Enable Switch' on"
++		cset "name='Right AMP Enable Switch' on"
++		cset "name='Left PCM Source' DSP"
++		cset "name='Right PCM Source' DSP"
++	]
++	DisableSequence [
++		cdev "hw:acp5x"
++		exec "echo Speaker DisableSequence"
++		cset "name='Left AMP Enable Switch' off"
++		cset "name='Right AMP Enable Switch' off"
++	]
 +}
 +
-+SectionDevice."Mic" {
++SectionDevice."Internal Mic".0 {
 +	Comment "Internal Microphone"
-+
++	
++	Value {
++		CapturePriority 200
++		CapturePCM "hw:acp5x,0"
++	}
 +	ConflictingDevice [
 +		"Headset"
 +	]
-+
 +	EnableSequence [
++		cdev "hw:acp5x"
 +		cset "name='Int Mic Switch' on"
 +		cset "name='DMIC Enable Switch' on"
++		cset "name='Mic Volume' 252"
 +	]
-+
 +	DisableSequence [
++		cdev "hw:acp5x"
 +		cset "name='Int Mic Switch' off"
-+		cset "name='DMIC Enable Switch' off"
++		cset "name='DMIC Enable Switch' off"	
 +	]
++}
++
++SectionDevice."Headset" {
++	Comment "Headset Microphone"
++	
++	Value {
++		CapturePriority 300
++		CapturePCM "hw:acp5x,0"
++		JackControl "Headset Mic Jack"
++	}
++	ConflictingDevice [
++		"Internal Mic"
++	]
++	EnableSequence [
++		cdev "hw:acp5x"
++		cset "name='Headset Mic Switch' on"
++		cset "name='Mic Volume' 200"
++	]
++	DisableSequence [
++		cdev "hw:acp5x"
++		cset "name='Headset Mic Switch' off"
++	]
++}
++
+diff -rupN alsa-ucm-conf.orig/ucm2/conf.d/acp5x/HiFi-upstream.conf alsa-ucm-conf/ucm2/conf.d/acp5x/HiFi-upstream.conf
+--- alsa-ucm-conf.orig/ucm2/conf.d/acp5x/HiFi-upstream.conf	1969-12-31 19:00:00.000000000 -0500
++++ alsa-ucm-conf/ucm2/conf.d/acp5x/HiFi-upstream.conf	2023-01-15 22:05:57.609619224 -0500
+@@ -0,0 +1,130 @@
++SectionVerb {
++	Value {
++		FullySpecifiedUCM "1"
++	}
++	EnableSequence [
++		cdev "hw:acp5x"
++
++		exec "echo Main Verb Config EnableSequence"
++
++		cset "name='Left DSP1 Preload Switch' 0"
++		cset "name='Right DSP1 Preload Switch' 0"
++		cset "name='Digital Playback Volume' 207"
++		cset "name='Headphone Volume' 0"
++		cset "name='Frontend PGA Volume' 27"
++		cset "name='ADC Phase Switch' 1"
++		cset "name='BIQ Coefficients' 0x03,0x5a,0x00,0x06,0xfc,0xac,0x00,0x00,0xfe,0x58,0x00,0x00,0x03,0x50,0x00,0x06,0xfe,0x58,0x00,0x08"
++		cset "name='Left Analog PCM Volume' 17"
++		cset "name='Right Analog PCM Volume' 17"
++		cset "name='Left Digital PCM Volume' 817"
++		cset "name='Right Digital PCM Volume' 817"
++		cset "name='Left DSP RX1 Source' ASPRX1"
++		cset "name='Left DSP RX2 Source' ASPRX1"
++		cset "name='Right DSP RX1 Source' ASPRX2"
++		cset "name='Right DSP RX2 Source' ASPRX2"
++
++		cset "name='Right DSP RX1 Source' 2"
++		cset "name='Left DSP RX2 Source' 1"
++	]
++	DisableSequence [
++		cdev "hw:acp5x"
++
++		exec "echo Main Verb Config DisableSequence"
++		cset "name='Left DSP Booted' 0"
++		cset "name='Right DSP Booted' 0"
++		cset "name='Left DSP1 Preload Switch' 0"
++		cset "name='Right DSP1 Preload Switch' 0"
++	]
++}
++
++SectionDevice."Headphones".0 {
++	Comment "Headphones"
++
++	Value {
++		PlaybackPriority 200
++		PlaybackPCM "hw:acp5x,0"
++		JackControl "Headphone Jack"
++	}
++	ConflictingDevice [
++	]
++	EnableSequence [
++		cdev "hw:acp5x"
++		exec "echo Headphones EnableSequence"
++		cset "name='Headphone Switch' on"
++	]
++	DisableSequence [
++		cdev "hw:acp5x"
++		exec "echo Headphones DisableSequence"
++		cset "name='Headphone Switch' off"
++	]
++}
++
++SectionDevice."Speaker".0 {
++	Comment "Speaker"
++
++	Value {
++		PlaybackPriority 100
++		PlaybackPCM "hw:acp5x,1"
++	}
++	ConflictingDevice [
++	]
++	EnableSequence [
++		cdev "hw:acp5x"
++		exec "echo Speaker EnableSequence"
++		cset "name='Left DSP1 Preload Switch' 1"
++		cset "name='Right DSP1 Preload Switch' 1"
++		cset "name='Left PCM Source' DSP"
++		cset "name='Right PCM Source' DSP"
++	]
++	DisableSequence [
++		cdev "hw:acp5x"
++		exec "echo Speaker DisableSequence"
++		cset "name='Left AMP Enable Switch' off"
++		cset "name='Right AMP Enable Switch' off"
++	]
++}
++
++SectionDevice."Internal Mic".0 {
++	Comment "Internal Microphone"
 +
 +	Value {
 +		CapturePriority 200
-+		CapturePCM "hw:${CardId},0"
-+		CaptureMixerElem "Int Mic"
-+		CaptureVolume "Mic Volume"
-+		CaptureSwitch "Int Mic Switch"
++		CapturePCM "hw:acp5x,0"
 +	}
++	ConflictingDevice [
++		"Headset"
++	]
++	EnableSequence [
++		cdev "hw:acp5x"
++		cset "name='Int Mic Switch' on"
++		cset "name='DMIC Enable Switch' on"
++		cset "name='Mic Volume' 252"
++	]
++	DisableSequence [
++		cdev "hw:acp5x"
++		cset "name='Int Mic Switch' off"
++		cset "name='DMIC Enable Switch' off"
++	]
 +}
 +
 +SectionDevice."Headset" {
 +	Comment "Headset Microphone"
 +
-+	ConflictingDevice [
-+		"Mic"
-+	]
-+
-+	EnableSequence [
-+		cset "name='Headset Mic Switch' on"
-+	]
-+
-+	DisableSequence [
-+		cset "name='Headset Mic Switch' off"
-+	]
-+
 +	Value {
 +		CapturePriority 300
-+		CapturePCM "hw:${CardId},0"
-+		CaptureMixerElem "Headset Mic"
-+		CaptureVolume "Mic Volume"
-+		CaptureSwitch "Headset Mic Switch"
++		CapturePCM "hw:acp5x,0"
 +		JackControl "Headset Mic Jack"
 +	}
-+}
-diff -rupN alsa-ucm-conf.orig/ucm2/conf.d/acp5x/Valve-Jupiter-1.conf alsa-ucm-conf/ucm2/conf.d/acp5x/Valve-Jupiter-1.conf
---- alsa-ucm-conf.orig/ucm2/conf.d/acp5x/Valve-Jupiter-1.conf	1969-12-31 19:00:00.000000000 -0500
-+++ alsa-ucm-conf/ucm2/conf.d/acp5x/Valve-Jupiter-1.conf	2023-01-14 09:14:14.639236230 -0500
-@@ -0,0 +1,53 @@
-+Syntax 6
-+
-+Comment "Vangogh internal card"
-+
-+#
-+# Macro CtlRemapMonoToStereoVolSw - join two mono controls into one stereo
-+#
-+# Arguments:
-+#   Type - Volume or Switch
-+#   Stereo - Name of the stereo control to be created
-+#   MonoL - Name of the mono control to be used as Left channel
-+#   MonoR - Name of the mono control to be used as Right channel
-+#
-+DefineMacro.CtlRemapMonoToStereoVolSw {
-+	LibraryConfig.remap.Config {
-+		ctl.default.map."name='${var:__Stereo} ${var:__Type}'" {
-+			"name='${var:__MonoL} ${var:__Type}'".vindex.0 0
-+			"name='${var:__MonoR} ${var:__Type}'".vindex.1 0
-+		}
-+	}
-+}
-+
-+#
-+# Currently restricted to Steam Deck hardware.
-+#
-+If.jupiter {
-+	Condition {
-+		Type String
-+		String1 "Jupiter"
-+		String2 "${sys:devices/virtual/dmi/id/product_name}"
-+	}
-+	True {
-+		SectionUseCase."HiFi" {
-+			File "/AMD/acp5x/HiFi.conf"
-+			Comment "Default"
-+		}
-+
-+		BootSequence [
-+			cset "name='Digital Playback Volume' 252"
-+			cset "name='Left Analog PCM Volume' 17"
-+			cset "name='Right Analog PCM Volume' 17"
-+			cset "name='Left Digital PCM Volume' 870"
-+			cset "name='Right Digital PCM Volume' 870"
-+			cset "name='Headphone Volume' 2"
-+			cset "name='Digital Playback Volume' 192"
-+			cset "name='Mic Volume' 252"
-+			cset "name='Frontend PGA Volume' 27"
-+		]
-+
-+		Include.card-init.File "/lib/card-init.conf"
-+		Include.ctl-remap.File "/lib/ctl-remap.conf"
-+	}
++	ConflictingDevice [
++		"Internal Mic"
++	]
++	EnableSequence [
++		cdev "hw:acp5x"
++		cset "name='Headset Mic Switch' on"
++		cset "name='Mic Volume' 200"
++	]
++	DisableSequence [
++		cdev "hw:acp5x"
++		cset "name='Headset Mic Switch' off"
++	]
 +}
