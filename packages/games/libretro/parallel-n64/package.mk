@@ -3,7 +3,7 @@
 
 PKG_NAME="parallel-n64"
 PKG_VERSION="a03fdcba6b2e9993f050b50112f597ce2f44fa2c"
-PKG_ARCH="x86_64"
+PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/parallel-n64"
 PKG_URL="${PKG_SITE}.git"
@@ -23,7 +23,7 @@ fi
 
 case ${DEVICE} in
   RK3588)
-    PKG_MAKE_OPTS_TARGET=" platform=unix_RK3588"
+    PKG_MAKE_OPTS_TARGET=" platform=RK3588"
   ;;
 esac
 
