@@ -27,7 +27,7 @@ configure_target() {
 }
 
 make_target() {
-  ${GOLANG} build -a -ldflags "${LDFLAGS}" -o bin/syncthing -v ./cmd/syncthing
+  HOME=${ROOT} ${GOLANG} build -a -ldflags "${LDFLAGS}" -o bin/syncthing -v ./cmd/syncthing
 }
 
 addon() {
