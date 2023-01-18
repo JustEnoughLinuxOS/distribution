@@ -13,6 +13,7 @@ PKG_LONGDESC="An programming language that makes it easy to build simple, reliab
 PKG_TOOLCHAIN="manual"
 
 configure_host() {
+  export HOME=${ROOT}
   export GOOS=linux
   export GOROOT_FINAL=${TOOLCHAIN}/lib/golang
   if [ -x /usr/lib/go/bin/go ]; then
@@ -41,7 +42,7 @@ EOF
 
 make_host() {
   cd ${PKG_BUILD}/src
-  HOME=${ROOT} bash make.bash --no-banner
+  bash make.bash --no-banner
 }
 
 pre_makeinstall_host() {
