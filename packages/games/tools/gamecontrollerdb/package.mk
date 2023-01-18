@@ -2,11 +2,11 @@
 # Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
 
 PKG_NAME="gamecontrollerdb"
-PKG_VERSION="b681748d6dbf2f735f94bd798b8e42042f211f56"
+PKG_VERSION="e3f82eb"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_DEPENDS_TARGET="toolchain SDL2"
-PKG_SITE="https://github.com/JustEnoughLinuxOS/SDL_GameControllerDB"
+PKG_SITE="https://github.com/gabomdq/SDL_GameControllerDB"
 PKG_URL="${PKG_SITE}.git"
 PKG_SECTION="tools"
 PKG_SHORTDESC="SDL Game Controller DB"

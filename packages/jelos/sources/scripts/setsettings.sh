@@ -641,6 +641,21 @@ get_game_setting "parallel_n64_gfx_accuracy"
                 sed -i '/parallel-n64-gfxplugin-accuracy = /c\parallel-n64-gfxplugin-accuracy = "veryhigh"' "/storage/.config/retroarch/config/ParaLLEl N64/ParaLLEl N64.opt"
         fi
 
+get_game_setting "parallel_n64_controller_pak"
+
+        if [ "${EES}" == "none" ]
+        then
+                sed -i '/parallel-n64-pak1 = /c\parallel-n64-pak1 = "none"' "/storage/.config/retroarch/config/ParaLLEl N64/ParaLLEl N64.opt"
+        fi
+        if [ "${EES}" == "memory" ]
+        then
+                sed -i '/parallel-n64-pak1 = /c\parallel-n64-pak1 = "memory"' "/storage/.config/retroarch/config/ParaLLEl N64/ParaLLEl N64.opt"
+        fi
+        if [ "${EES}" == "rumble" ]
+        then
+                sed -i '/parallel-n64-pak1 = /c\parallel-n64-pak1 = "rumble"' "/storage/.config/retroarch/config/ParaLLEl N64/ParaLLEl N64.opt"
+        fi
+
 ##
 ## Settings for special cores
 ##
