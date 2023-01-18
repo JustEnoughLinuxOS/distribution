@@ -20,7 +20,11 @@ configure_host() {
   else
     export GOROOT_BOOTSTRAP=/usr/lib/golang
   fi
-  export GOARCH=amd64
+  case ${TARGET_ARCH} in
+    aarch64|arm)
+      export GOARCH=amd64
+    ;;
+  esac
 
   if [ ! -d ${GOROOT_BOOTSTRAP} ]; then
     cat <<EOF
@@ -37,7 +41,7 @@ EOF
 
 make_host() {
   cd ${PKG_BUILD}/src
-  bash make.bash --no-banner
+  HOME=${ROOT} bash make.bash --no-banner
 }
 
 pre_makeinstall_host() {
