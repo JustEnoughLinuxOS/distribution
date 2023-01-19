@@ -100,7 +100,7 @@ do
         then
           audio_powersave 1
           perftune battery
-          performance_level low
+          performance_level auto
           power_dpm_state battery
           pcie_aspm_policy powersave
           device_powersave 1
