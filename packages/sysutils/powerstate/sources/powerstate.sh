@@ -63,6 +63,28 @@ perftune() {
   fi
 }
 
+audio_powersave() {
+  if [ -e "/sys/module/snd_hda_intel/parameters/power_save" ]
+  then
+    echo ${1} >/sys/module/snd_hda_intel/parameters/power_save 2>/dev/null
+  fi
+}
+
+device_powersave() {
+  case ${1} in
+    1)
+      PSMODE=auto
+    ;;
+    *)
+      PSMODE=on
+    ;;
+  esac
+  for DEVICE in $(find /sys/devices -name control 2>/dev/null)
+  do
+    echo ${PSMODE} >${DEVICE} 2>/dev/null
+  done
+}
+
 while true
 do
   STATUS="$(cat /sys/class/power_supply/{BAT*,bat*}/status 2>/dev/null)"
@@ -75,20 +97,24 @@ do
         /usr/bin/logger -t user.notice "Switching to battery mode."
         if [ "$(get_setting gpu.powersave)" = 1 ]
         then
-          performance_level battery
-          power_dpm_state low
-          pcie_aspm_policy powersave
+          audio_powersave 1
           perftune battery
+          performance_level low
+          power_dpm_state battery
+          pcie_aspm_policy powersave
+          device_powersave 1
         fi
       ;;
       *)
         /usr/bin/logger -t user.notice "Switching to performance mode."
         if [ "$(get_setting gpu.powersave)" = 1 ]
         then
-          performance_level auto
+          audio_powersave 0
+          perftune performance
+          performance_level profile_peak
           power_dpm_state performance
           pcie_aspm_policy default
-          perftune performance
+          device_powersave 0
         fi
       ;;
     esac

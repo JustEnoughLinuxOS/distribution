@@ -71,6 +71,7 @@ set_wifi() {
     "enable")
       check_wifi
       set_setting wifi.enabled 1
+      rfkill unblock wifi 2>/dev/null
       # Create the WIFI config.
       cat > "${WIFICFG}" <<EOF
 [global]
@@ -95,6 +96,7 @@ EOF
       connmanctl disable wifi 2>/dev/null
       rm -f "${WIFICFG}" 2>/dev/null
       set_setting wifi.enabled 0
+      rfkill block wifi 2>/dev/null
     ;;
     "reconnect")
       /usr/bin/wifictl disable
