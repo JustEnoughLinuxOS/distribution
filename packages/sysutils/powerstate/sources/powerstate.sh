@@ -79,9 +79,10 @@ device_powersave() {
       PSMODE=on
     ;;
   esac
-  for DEVICE in $(find /sys/devices -name control 2>/dev/null)
+  find /sys/devices -name control -print0 | \
+  while read -r -d '' DEVICE
   do
-    echo ${PSMODE} >${DEVICE} 2>/dev/null
+    echo ${PSMODE} >"${DEVICE}" 2>/dev/null
   done
 }
 
