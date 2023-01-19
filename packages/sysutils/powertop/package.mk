@@ -3,6 +3,7 @@
 
 PKG_NAME="powertop"
 PKG_VERSION="d51ad39"
+PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/fenrus75/powertop"
 PKG_URL="${PKG_SITE}.git"
