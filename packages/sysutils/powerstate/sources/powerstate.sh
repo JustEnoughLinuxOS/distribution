@@ -95,7 +95,7 @@ do
     case ${STATUS} in
       Disch*)
         /usr/bin/logger -t user.notice "Switching to battery mode."
-        if [ "$(get_setting gpu.powersave)" = 1 ]
+        if [ "$(get_setting system.powersave)" = 1 ]
         then
           audio_powersave 1
           perftune battery
@@ -107,7 +107,7 @@ do
       ;;
       *)
         /usr/bin/logger -t user.notice "Switching to performance mode."
-        if [ "$(get_setting gpu.powersave)" = 1 ]
+        if [ "$(get_setting system.powersave)" = 1 ]
         then
           audio_powersave 0
           perftune performance
