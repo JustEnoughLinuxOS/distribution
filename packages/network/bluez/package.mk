@@ -77,6 +77,6 @@ post_makeinstall_target() {
 
 post_install() {
   enable_service bluetooth-defaults.service
-  enable_service bluetooth.service
+  #enable_service bluetooth.service
   enable_service obex.service
 }
