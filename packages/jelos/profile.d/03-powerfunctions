@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2022-present Fewtarius (https://github.com/fewtarius)
 
-performance_level() {
-  for card in /sys/class/drm/card*/device/power_dpm_force_performance_level
+gpu_power_profile() {
+  for card in /sys/class/drm/card*/device/pp_power_profile_mode
   do
     if [ -e "${card}" ]
     then
@@ -12,8 +12,8 @@ performance_level() {
   done
 }
 
-power_dpm_state() {
-  for card in /sys/class/drm/card*/device/power_dpm_state
+gpu_performance_level() {
+  for card in /sys/class/drm/card*/device/power_dpm_force_performance_level
   do
     if [ -e "${card}" ]
     then
@@ -29,7 +29,7 @@ pcie_aspm_policy() {
   fi
 }
 
-perftune() {
+cpu_perftune() {
   CPU="$(awk '/vendor_id/ {print $3;exit}' /proc/cpuinfo)"
   if [ "${CPU}" = "AuthenticAMD" ]
   then

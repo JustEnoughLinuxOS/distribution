@@ -23,9 +23,9 @@ do
         if [ "$(get_setting system.powersave)" = 1 ]
         then
           audio_powersave 1
-          perftune battery
-          performance_level auto
-          power_dpm_state battery
+          cpu_perftune battery
+          gpu_performance_level auto
+          gpu_power_profile 1
           pcie_aspm_policy powersave
           device_powersave 1
         fi
@@ -35,9 +35,9 @@ do
         if [ "$(get_setting system.powersave)" = 1 ]
         then
           audio_powersave 0
-          perftune performance
-          performance_level profile_peak
-          power_dpm_state performance
+          cpu_perftune performance
+          gpu_performance_level profile_standard
+          gpu_power_profile 1
           pcie_aspm_policy default
           device_powersave 0
         fi
