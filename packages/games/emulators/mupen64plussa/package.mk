@@ -4,7 +4,6 @@
 
 PKG_NAME="mupen64plussa"
 PKG_VERSION="61bf24c41bc837e7a3c43cd53c1a2af9042543ff"
-PKG_SHA256=""
 PKG_LICENSE="GPL"
 PKG_SITE="https://mupen64plus.org/"
 PKG_URL=""

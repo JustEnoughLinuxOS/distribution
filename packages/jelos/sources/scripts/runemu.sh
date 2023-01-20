@@ -176,12 +176,12 @@ USING APPENDCONFIG : ${RAAPPENDCONF}
 
 EOF
 	else
-		log "Emulation Run Log - Started at $(date)"
+		log $0 "Emulation Run Log - Started at $(date)"
 	fi
 }
 
 function quit() {
-	$VERBOSE && log "Cleaning up and exiting"
+	$VERBOSE && log $0 "Cleaning up and exiting"
 	bluetooth enable
 	jslisten stop
 	clear_screen
@@ -192,14 +192,14 @@ function quit() {
 }
 
 function clear_screen() {
-	$VERBOSE && log "Clearing screen"
+	$VERBOSE && log $0 "Clearing screen"
 	clear
 }
 
 function bluetooth() {
 	if [ "$1" == "disable" ]
 	then
-		$VERBOSE && log "Disabling BT"
+		$VERBOSE && log $0 "Disabling BT"
 		if [[ "$BTENABLED" == "1" ]]
 		then
 			NPID=$(pgrep -f batocera-bluetooth-agent)
@@ -209,7 +209,7 @@ function bluetooth() {
 		fi
 	elif [ "$1" == "enable" ]
 	then
-		$VERBOSE && log "Enabling BT"
+		$VERBOSE && log $0 "Enabling BT"
 		if [[ "$BTENABLED" == "1" ]]
 		then
 			systemd-run batocera-bluetooth-agent
@@ -227,7 +227,7 @@ jslisten stop
 ### Per emulator/core configurations
 if [ -z ${RETROARCH} ]
 then
-	$VERBOSE && log "Configuring for a non-libretro emulator"
+	$VERBOSE && log $0 "Configuring for a non-libretro emulator"
 	case ${PLATFORM} in
 		"setup")
 				RUNTHIS='${TBASH} "${ROMNAME}"'
@@ -327,7 +327,7 @@ then
 			RUNTHIS='${TBASH} "start_${CORE}.sh" "${ROMNAME}"'
 		esac
 else
-	$VERBOSE && log "Configuring for a libretro core"
+	$VERBOSE && log $0 "Configuring for a libretro core"
 
 	### Set jslisten to kill the appropriate retroarch
 	jslisten set "retroarch retroarch32"
@@ -465,7 +465,7 @@ if [ -e "${SHADERTMP}" ]
 then
 	SHADERSET=$(cat ${SHADERTMP})
 	rm -f ${SHADERTMP}
-	$VERBOSE && log "Shader set to ${SHADERSET}"
+	$VERBOSE && log $0 "Shader set to ${SHADERSET}"
 fi
 
 if [[ ${SHADERSET} != 0 ]]; then
@@ -473,15 +473,15 @@ if [[ ${SHADERSET} != 0 ]]; then
 fi
 
 clear_screen
-$VERBOSE && log "executing game: ${ROMNAME}"
-$VERBOSE && log "script to execute: ${RUNTHIS}"
+$VERBOSE && log $0 "executing game: ${ROMNAME}"
+$VERBOSE && log $0 "script to execute: ${RUNTHIS}"
 # If the rom is a shell script just execute it, useful for DOSBOX and ScummVM scan scripts
 if [[ "${ROMNAME}" == *".sh" ]]; then
-	$VERBOSE && log "Executing shell script ${ROMNAME}"
+	$VERBOSE && log $0 "Executing shell script ${ROMNAME}"
 	"${ROMNAME}" &>>${OUTPUT_LOG}
         ret_error=$?
 else
-	$VERBOSE && log "Executing $(eval echo ${RUNTHIS})"
+	$VERBOSE && log $0 "Executing $(eval echo ${RUNTHIS})"
 	eval ${RUNTHIS} &>>${OUTPUT_LOG}
 	ret_error=$?
 fi
@@ -519,17 +519,17 @@ then
   INETUP=$(/usr/bin/amionline >/dev/null 2>&1)
   if [ $? == 0 ]
   then
-    log "backup saves to the cloud."
+    log $0 "backup saves to the cloud."
     run /usr/bin/cloud_backup
   fi
 fi
 
-$VERBOSE && log "Checking errors: ${ret_error} "
+$VERBOSE && log $0 "Checking errors: ${ret_error} "
 if [ "${ret_error}" == "0" ]
 then
 	quit 0
 else
-	log "exiting with $ret_error"
+	log $0 "exiting with $ret_error"
 	quit 1
 fi
 

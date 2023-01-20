@@ -43,9 +43,11 @@ set_powersave() {
   ENABLED=$(get_setting wifi.powersave)
   if [ "${ENABLED}" = "1" ]
   then
-    iw wlan0 set power_save on
+    log $0 "Enabling WIFI power saving."
+    iw wlan0 set power_save on 2>/dev/null
   else
-    iw wlan0 set power_save off
+    log $0 "Disabling WIFI power saving."
+    iw wlan0 set power_save off 2>/dev/null
   fi
 }
 
@@ -71,7 +73,6 @@ set_wifi() {
     "enable")
       check_wifi
       set_setting wifi.enabled 1
-      rfkill unblock wifi 2>/dev/null
       # Create the WIFI config.
       cat > "${WIFICFG}" <<EOF
 [global]
@@ -81,9 +82,9 @@ Name=${OS_NAME}
 Type = wifi
 Name = ${SSID}
 Passphrase = ${PSK}
-AutoConnect = true
 EOF
 
+      rfkill unblock wifi 2>/dev/null
       STATE=$(get_wifi_state)
       if [ ! "${STATE}" = "online" ]
       then
@@ -93,10 +94,10 @@ EOF
       nohup connmanctl connect $(get_wifi_service "${SSID}") 2>/dev/null &
     ;;
     "disable")
+      rfkill block wifi 2>/dev/null
       connmanctl disable wifi 2>/dev/null
       rm -f "${WIFICFG}" 2>/dev/null
       set_setting wifi.enabled 0
-      rfkill block wifi 2>/dev/null
     ;;
     "reconnect")
       /usr/bin/wifictl disable

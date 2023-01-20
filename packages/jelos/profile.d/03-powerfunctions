@@ -1,0 +1,80 @@
+#!/bin/bash
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2022-present Fewtarius (https://github.com/fewtarius)
+
+performance_level() {
+  for card in /sys/class/drm/card*/device/power_dpm_force_performance_level
+  do
+    if [ -e "${card}" ]
+    then
+      echo ${1} >${card} 2>/dev/null
+    fi
+  done
+}
+
+power_dpm_state() {
+  for card in /sys/class/drm/card*/device/power_dpm_state
+  do
+    if [ -e "${card}" ]
+    then
+      echo ${1} >${card} 2>/dev/null
+    fi
+  done
+}
+
+pcie_aspm_policy() {
+  if [ -e "/sys/module/pcie_aspm/parameters/policy" ]
+  then
+    echo ${1} >/sys/module/pcie_aspm/parameters/policy 2>/dev/null
+  fi
+}
+
+perftune() {
+  CPU="$(awk '/vendor_id/ {print $3;exit}' /proc/cpuinfo)"
+  if [ "${CPU}" = "AuthenticAMD" ]
+  then
+    if [ "${1}" = "battery" ]
+    then
+      ryzenadj --power-saving >/dev/null 2>&1
+    else
+      ryzenadj --max-performance >/dev/null 2>&1
+    fi
+  elif [ "${CPU}" = "GenuineIntel" ]
+  then
+    for policy in $(find /sys/devices/system/cpu/cpufreq/policy*/ -name energy_performance_preference)
+    do
+      if [ "${1}" = "battery" ]
+      then
+        echo power >${policy} >/dev/null 2>&1
+      else
+        echo performance >${policy} >/dev/null 2>&1
+      fi
+    done
+  fi
+}
+
+audio_powersave() {
+  for MODULE in snd_hda_intel snd_ac97_codec
+  do
+    if [ -e "/sys/module/${MODULE}/parameters/power_save" ]
+    then
+      echo ${1} >/sys/module/${MODULE}/parameters/power_save 2>/dev/null
+    fi
+  done
+}
+
+device_powersave() {
+  case ${1} in
+    1)
+      PSMODE=auto
+    ;;
+    *)
+      PSMODE=on
+    ;;
+  esac
+  find /sys/devices -name control -print0 | \
+  while read -r -d '' DEVICE
+  do
+    echo ${PSMODE} >"${DEVICE}" 2>/dev/null
+  done
+}

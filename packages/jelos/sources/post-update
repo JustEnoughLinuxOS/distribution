@@ -140,9 +140,20 @@ CheckAtStartup = false
 EOF
 fi
 
+# the controller profile has been renamed.
+if [ -e "/storage/.config/profile.d/99-controller" ]
+then
+  rm -f /storage/.config/profile.d/99-controller
+  mkcontroller
+fi
+
+# Disable IPv6 by default
 IPV6=$(get_setting ipv6.enabled)
 if [ -z "${IPV6}" ]
 then
   echo "Disable ipv6." >>${LOG}
   set_setting ipv6.enabled 0
 fi
+
+### Force everyone to the stable repo
+set_setting updates.branch stable

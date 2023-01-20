@@ -23,7 +23,7 @@ mount_games() {
          [ -e "${1}" ] && \
          [ ! -e "/storage/.please_resize_me" ]
       then
-        echo "Mounting ${1} on /storage/roms"
+        log $0 "Mounting ${1} on /storage/roms"
         mount ${1} /storage/roms >/dev/null 2>&1
         /usr/bin/systemd-tmpfiles --create /usr/lib/tmpfiles.d/jelos-dirs.conf >/dev/null 2>&1
       fi
@@ -42,13 +42,13 @@ find_games() {
       SIZE=$(awk '/'${ROOTDEV}'$/ {print $3}' /proc/partitions)
       if (( ${SIZE} <= 8388608 ))
       then
-        echo "Device ${ROOTDEV} is too small, ignoring."
+        log $0 "Device ${ROOTDEV} is too small, ignoring."
         # We don't want to mount partitions smaller than ~8GB.
         continue
       fi
       if [ -L "/sys/class/block/${ROOTDEV}boot0" ]
       then
-        echo "Device ${ROOTDEV} might be Android, ignoring."
+        log $0 "Device ${ROOTDEV} might be Android, ignoring."
         # Assume this is an android boot device and ignore it.
         continue
       fi
