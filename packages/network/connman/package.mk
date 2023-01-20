@@ -88,7 +88,4 @@ post_install() {
   add_group system 430
 
   enable_service connman.service
-  if [ "$WIREGUARD_SUPPORT" = "yes" ]; then
-    enable_service connman-vpn.service
-  fi
 }
