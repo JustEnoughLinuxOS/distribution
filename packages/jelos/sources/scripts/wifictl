@@ -5,7 +5,10 @@
 
 . /etc/profile
 
-COMMAND="$1"
+if [ ! -d "" ]
+then
+  mkdir -p "/storage/.cache/connman"
+fi
 
 ### ES won't save the configuration in time
 ### for it to be useable by the script, so
@@ -68,13 +71,19 @@ check_wifi() {
   fi
 }
 
-set_wifi() {
-  case "${1}" in
-    "enable")
-      check_wifi
-      set_setting wifi.enabled 1
-      # Create the WIFI config.
-      cat > "${WIFICFG}" <<EOF
+connect_wifi() {
+  STATE=$(get_wifi_state)
+  if [ ! "${STATE}" = "online" ]
+  then
+    connmanctl enable wifi 2>/dev/null
+  fi
+  rfkill unblock wifi 2>/dev/null
+  connmanctl connect $(get_wifi_service "${SSID}")
+  set_powersave 2>/dev/null
+}
+
+set_profile() {
+  cat > "${WIFICFG}" <<EOF
 [global]
 Name=${OS_NAME}
 
@@ -83,49 +92,44 @@ Type = wifi
 Name = ${SSID}
 Passphrase = ${PSK}
 EOF
-
-      rfkill unblock wifi 2>/dev/null
-      STATE=$(get_wifi_state)
-      if [ ! "${STATE}" = "online" ]
-      then
-        connmanctl enable wifi 2>/dev/null
-      fi
-      set_powersave 2>/dev/null
-      nohup connmanctl connect $(get_wifi_service "${SSID}") 2>/dev/null &
-    ;;
-    "disable")
-      rfkill block wifi 2>/dev/null
-      connmanctl disable wifi 2>/dev/null
-      rm -f "${WIFICFG}" 2>/dev/null
-      set_setting wifi.enabled 0
-    ;;
-    "reconnect")
-      /usr/bin/wifictl disable
-      /usr/bin/wifictl enable
-    ;;
-    "list")
-      #connmanctl services | cut -b 5- | awk '/wifi/ {sub(/\s+wifi_.*$/,"",$0);print}' | sort | uniq
-      list_wifi | awk '{sub(/\S+=/,"",$0);print}'
-    ;;
-    "scan")
-      connmanctl scan wifi 2>/dev/null
-    ;;
-    "scanlist")
-      set_wifi scan 2>/dev/null
-      list_wifi | awk '{sub(/\S+=/,"",$0);print}'
-    ;;
-    "service")
-       get_wifi_service "${SSID}"
-    ;;
-    "setpowersave")
-      set_powersave 2>/dev/null
-    ;;
-  esac
 }
 
-if [ ! -d "" ]
-then
-  mkdir -p "/storage/.cache/connman"
-fi
+case "${1}" in
+  enable)
+    check_wifi
+    set_setting wifi.enabled 1
+    set_profile
+    connect_wifi 
+  ;;
+  disable)
+    rfkill block wifi
+    connmanctl disable wifi
+    rm -f "${WIFICFG}" 2>/dev/null
+    set_setting wifi.enabled 0
+  ;;
+  reconnect)
+    /usr/bin/wifictl disable
+    /usr/bin/wifictl enable
+  ;;
+  list)
+    #connmanctl services | cut -b 5- | awk '/wifi/ {sub(/\s+wifi_.*$/,"",$0);print}' | sort | uniq
+    list_wifi | awk '{sub(/\S+=/,"",$0);print}'
+  ;;
+  scan)
+    connmanctl scan wifi 2>/dev/null
+  ;;
+  scanlist)
+    set_wifi scan 2>/dev/null
+    list_wifi | awk '{sub(/\S+=/,"",$0);print}'
+  ;;
+  service)
+     get_wifi_service "${SSID}"
+  ;;
+  setpowersave)
+    set_powersave
+  ;;
+  setprofile)
+    set_profile
+  ;;
+esac
 
-set_wifi ${COMMAND}
