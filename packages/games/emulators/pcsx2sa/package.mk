@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="pcsx2sa"
-PKG_VERSION="v1.7.3674"
+PKG_VERSION="v1.7.3921"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/pcsx2/pcsx2"

@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="flycast"
-PKG_VERSION="1e195b7237afceeef725e4f45afd9821e34bf53c"
+PKG_VERSION="cca7ed6bf7a04fb79f13fb3881220f226f0b512f"
 PKG_SITE="https://github.com/flyinghead/flycast"
 PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain libzip"

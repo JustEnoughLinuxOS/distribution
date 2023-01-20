@@ -57,7 +57,7 @@ source /tmp/${OUTFILE}
 
 echo "${CONTROLLER}" >/storage/.controller
 
-cat <<EOF >/storage/.config/profile.d/99-controller
+cat <<EOF >/storage/.config/profile.d/98-controller
 DEVICE_BTN_SOUTH="${b}"
 DEVICE_BTN_EAST="${a}"
 DEVICE_BTN_NORTH="${x}"
@@ -76,6 +76,7 @@ DEVICE_BTN_DPAD_DOWN="${down}"
 DEVICE_BTN_DPAD_LEFT="${left}"
 DEVICE_BTN_DPAD_RIGHT="${right}"
 EOF
+ln -sf /etc/profile.d/98-jslisten 99-jslisten
 
 rm /tmp/${OUTFILE}
 

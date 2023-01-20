@@ -63,3 +63,9 @@ get_es_setting() {
   echo $(sed -n "s|\s*<${1} name=\"${2}\" value=\"\(.*\)\" />|\1|p" ${ES_CONF})
 }
 
+log() {
+  SOURCE=${1//\/*\//}
+  MESSAGE=${*#${1}}
+  MESSAGE=${MESSAGE# }
+  logger -t ${SOURCE}.notice "${MESSAGE}"
+}

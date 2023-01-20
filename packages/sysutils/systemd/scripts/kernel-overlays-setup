@@ -34,52 +34,52 @@ apply_overlay() {
     GOT_MODULE_OVERLAY="yes"
 
     if cp -rfs "${modules_overlay_dir}"/* "${MODULES_DIR}" ; then
-      log "added modules from $modules_overlay_dir"
+      log $0 "added modules from $modules_overlay_dir"
     else
-      log "failed to add modules from $modules_overlay_dir"
+      log $0 "failed to add modules from $modules_overlay_dir"
     fi
   fi
 
   if [ -d "${firmware_overlay_dir}" ] ; then
     if cp -rfs "${firmware_overlay_dir}"/* "${FIRMWARE_DIR}" ; then
-      log "added firmware from $firmware_overlay_dir"
+      log $0 "added firmware from $firmware_overlay_dir"
     else
-      log "failed to add firmware from $firmware_overlay_dir"
+      log $0 "failed to add firmware from $firmware_overlay_dir"
     fi
   fi
 }
 
 # setup system base modules
 
-log "setup base modules"
+log $0 "setup base modules"
 apply_overlay base
 
 # apply user-configured module overlays
 
 if [ -d "${OVERLAY_CONFIG_DIR}" ] ; then
-  log "adding overlays from ${OVERLAY_CONFIG_DIR}"
+  log $0 "adding overlays from ${OVERLAY_CONFIG_DIR}"
   GOT_MODULE_OVERLAY="no"
 
   for conf in "${OVERLAY_CONFIG_DIR}/"*.conf ; do
     if [ -e "$conf" ] ; then
-      log "processing conf $conf"
+      log $0 "processing conf $conf"
       overlay=$(cat "$conf")
       [ -n "$overlay" ] && apply_overlay "$overlay"
     fi
   done
 
   if [ "yes" = "$GOT_MODULE_OVERLAY" ] ; then
-    log "running depmod"
+    log $0 "running depmod"
     /usr/sbin/depmod -a
   fi
 fi
 
 if [ -d "${USER_FIRMWARE_DIR}" ] && [ -n "$(ls ${USER_FIRMWARE_DIR})" ] ; then
   if cp -rfs "${USER_FIRMWARE_DIR}"/* "${FIRMWARE_DIR}" ; then
-    log "added firmware from ${USER_FIRMWARE_DIR}"
+    log $0 "added firmware from ${USER_FIRMWARE_DIR}"
   else
-    log "failed to add firmware from ${USER_FIRMWARE_DIR}"
+    log $0 "failed to add firmware from ${USER_FIRMWARE_DIR}"
   fi
 fi
 
-log "done"
+log $0 "done"

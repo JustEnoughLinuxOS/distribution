@@ -3,7 +3,6 @@
 
 PKG_NAME="libdvbpsi"
 PKG_VERSION="1.3.3"
-#PKG_SHA256=""
 PKG_REV="2"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

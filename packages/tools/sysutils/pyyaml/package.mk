@@ -3,7 +3,6 @@
 
 PKG_NAME="pyyaml"
 PKG_VERSION="8cdff2c"
-PKG_SHA256=""
 PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/yaml/pyyaml"
 PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"

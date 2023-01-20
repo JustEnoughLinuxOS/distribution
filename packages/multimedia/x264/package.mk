@@ -4,7 +4,6 @@
 
 PKG_NAME="x264"
 PKG_VERSION="bfc87b7a330f75f5c9a21e56081e4b20344f139e"
-#PKG_SHA256=""
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.videolan.org/developers/x264.html"
 PKG_URL="https://code.videolan.org/videolan/x264/-/archive/${PKG_VERSION}.tar.gz"
