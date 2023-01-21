@@ -67,5 +67,5 @@ log() {
   SOURCE=${1//\/*\//}
   MESSAGE=${*#${1}}
   MESSAGE=${MESSAGE# }
-  logger -t ${SOURCE}.notice "${MESSAGE}"
+  logger -t ${SOURCE} "${MESSAGE}"
 }
