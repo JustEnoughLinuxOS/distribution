@@ -13,10 +13,8 @@
 while true
 do
   STATUS="$(cat /sys/class/power_supply/{BAT*,bat*}/status 2>/dev/null)"
-  ${DEBUG} && echo "Status: ${STATUS}"
   if [ ! "${STATUS}" = "${CURRENT_MODE}" ]
   then
-    ${DEBUG} && echo "Status changed."
     case ${STATUS} in
       Disch*)
         log $0 "Switching to battery mode."
@@ -45,6 +43,5 @@ do
     esac
   fi
   CURRENT_MODE="${STATUS}"
-  ${DEBUG} && echo "Current Mode: ${CURRENT_MODE}"
   sleep 2
 done
