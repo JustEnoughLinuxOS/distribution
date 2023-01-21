@@ -147,6 +147,14 @@ then
   mkcontroller
 fi
 
+# Set a default for the audio preamp
+PREAMP=$(get_setting audio.preamp)
+if [ -z "${PREAMP}" ]
+then
+  echo "Set default preamp." >>${LOG}
+  set_setting audio.preamp 50
+fi
+
 # Disable IPv6 by default
 IPV6=$(get_setting ipv6.enabled)
 if [ -z "${IPV6}" ]
