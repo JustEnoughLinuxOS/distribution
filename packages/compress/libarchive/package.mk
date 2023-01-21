@@ -2,8 +2,8 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libarchive"
-PKG_VERSION="3.5.1"
-PKG_SHA256="0e17d3a8d0b206018693b27f08029b598f6ef03600c2b5d10c94ce58692e299b"
+PKG_VERSION="3.6.2"
+PKG_SHA256="9e2c1b80d5fbe59b61308fdfab6c79b5021d7ff4ff2489fb12daf0a96a83551d"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.libarchive.org"
 PKG_URL="https://www.libarchive.org/downloads/${PKG_NAME}-${PKG_VERSION}.tar.xz"
@@ -23,6 +23,6 @@ PKG_CMAKE_OPTS_TARGET="-DCMAKE_POSITION_INDEPENDENT_CODE=1 \
 post_makeinstall_target() {
   rm -rf ${INSTALL}
 
-  # delete the shared library as we only want static
-  rm ${SYSROOT_PREFIX}/usr/lib/libarchive.so*
+  mkdir -p ${INSTALL}/usr/lib
+  cp -rf ${PKG_BUILD}/.${TARGET_NAME}/libarchive/libarchive.so* ${INSTALL}/usr/lib
 }

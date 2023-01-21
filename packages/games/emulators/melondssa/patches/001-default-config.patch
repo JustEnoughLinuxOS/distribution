@@ -1,0 +1,14 @@
+diff --git a/src/frontend/qt_sdl/Config.cpp b/src/frontend/qt_sdl/Config.cpp
+index 7a0ec698ba..0b06f8f120 100644
+--- a/src/frontend/qt_sdl/Config.cpp
++++ b/src/frontend/qt_sdl/Config.cpp
+@@ -143,8 +143,7 @@ bool DSiBatteryCharging;
+ CameraConfig Camera[2];
+ 
+ 
+-const char* kConfigFile = "melonDS.ini";
+-const char* kUniqueConfigFile = "melonDS.%d.ini";
++const char* kConfigFile = "/storage/.config/melonDS/melonDS.ini";
+ 
+ ConfigEntry ConfigFile[] =
+ { 
