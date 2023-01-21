@@ -1,0 +1,140 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
+
+diff -rupN melonDS.orig/src/frontend/qt_sdl/Config.cpp melonDS/src/frontend/qt_sdl/Config.cpp
+--- melonDS.orig/src/frontend/qt_sdl/Config.cpp	2023-01-20 17:14:09.563747030 -0800
++++ melonDS/src/frontend/qt_sdl/Config.cpp	2023-01-20 17:14:32.191906162 -0800
+@@ -26,8 +26,8 @@
+ namespace Config
+ {
+ 
+-int KeyMapping[12];
+-int JoyMapping[12];
++int KeyMapping[14];
++int JoyMapping[14];
+ 
+ int HKKeyMapping[HK_MAX];
+ int HKJoyMapping[HK_MAX];
+@@ -185,6 +185,8 @@ ConfigEntry ConfigFile[] =
+     {"HKKey_SolarSensorDecrease", 0, &HKKeyMapping[HK_SolarSensorDecrease], -1, true},
+     {"HKKey_SolarSensorIncrease", 0, &HKKeyMapping[HK_SolarSensorIncrease], -1, true},
+     {"HKKey_FrameStep",           0, &HKKeyMapping[HK_FrameStep],           -1, true},
++    {"HKKey_SaveState",           0, &HKKeyMapping[HK_SaveState],           -1, true},
++    {"HKKey_LoadState",           0, &HKKeyMapping[HK_LoadState],           -1, true},
+ 
+     {"HKJoy_Lid",                 0, &HKJoyMapping[HK_Lid],                 -1, true},
+     {"HKJoy_Mic",                 0, &HKJoyMapping[HK_Mic],                 -1, true},
+@@ -197,6 +199,8 @@ ConfigEntry ConfigFile[] =
+     {"HKJoy_SolarSensorDecrease", 0, &HKJoyMapping[HK_SolarSensorDecrease], -1, true},
+     {"HKJoy_SolarSensorIncrease", 0, &HKJoyMapping[HK_SolarSensorIncrease], -1, true},
+     {"HKJoy_FrameStep",           0, &HKJoyMapping[HK_FrameStep],           -1, true},
++    {"HKJoy_SaveState",           0, &HKJoyMapping[HK_SaveState],           -1, true},
++    {"HKJoy_LoadState",           0, &HKJoyMapping[HK_LoadState],           -1, true},
+ 
+     {"JoystickID", 0, &JoystickID, 0, true},
+ 
+diff -rupN melonDS.orig/src/frontend/qt_sdl/Config.h melonDS/src/frontend/qt_sdl/Config.h
+--- melonDS.orig/src/frontend/qt_sdl/Config.h	2023-01-20 17:14:09.563747030 -0800
++++ melonDS/src/frontend/qt_sdl/Config.h	2023-01-20 17:14:32.191906162 -0800
+@@ -35,6 +35,8 @@ enum
+     HK_SolarSensorDecrease,
+     HK_SolarSensorIncrease,
+     HK_FrameStep,
++    HK_SaveState,
++    HK_LoadState,
+     HK_MAX
+ };
+ 
+@@ -70,8 +72,8 @@ struct CameraConfig
+ };
+ 
+ 
+-extern int KeyMapping[12];
+-extern int JoyMapping[12];
++extern int KeyMapping[14];
++extern int JoyMapping[14];
+ 
+ extern int HKKeyMapping[HK_MAX];
+ extern int HKJoyMapping[HK_MAX];
+diff -rupN melonDS.orig/src/frontend/qt_sdl/InputConfig/InputConfigDialog.cpp melonDS/src/frontend/qt_sdl/InputConfig/InputConfigDialog.cpp
+--- melonDS.orig/src/frontend/qt_sdl/InputConfig/InputConfigDialog.cpp	2023-01-20 17:14:09.563747030 -0800
++++ melonDS/src/frontend/qt_sdl/InputConfig/InputConfigDialog.cpp	2023-01-20 17:14:32.195906190 -0800
+@@ -60,7 +60,9 @@ const int hk_general[] =
+     HK_FullscreenToggle,
+     HK_Lid,
+     HK_Mic,
+-    HK_SwapScreens
++    HK_SwapScreens,
++    HK_SaveState,
++    HK_LoadState
+ };
+ 
+ const char* hk_general_labels[] =
+@@ -73,12 +75,14 @@ const char* hk_general_labels[] =
+     "Toggle fullscreen",
+     "Close/open lid",
+     "Microphone",
+-    "Swap screens"
++    "Swap screens",
++    "Save State",
++    "Load State"
+ };
+ 
+ const int keypad_num = 12;
+ const int hk_addons_num = 2;
+-const int hk_general_num = 9;
++const int hk_general_num = 11;
+ 
+ 
+ InputConfigDialog::InputConfigDialog(QWidget* parent) : QDialog(parent), ui(new Ui::InputConfigDialog)
+diff -rupN melonDS.orig/src/frontend/qt_sdl/InputConfig/InputConfigDialog.h melonDS/src/frontend/qt_sdl/InputConfig/InputConfigDialog.h
+--- melonDS.orig/src/frontend/qt_sdl/InputConfig/InputConfigDialog.h	2023-01-20 17:14:09.563747030 -0800
++++ melonDS/src/frontend/qt_sdl/InputConfig/InputConfigDialog.h	2023-01-20 17:14:32.195906190 -0800
+@@ -67,7 +67,7 @@ private:
+ 
+     int keypadKeyMap[12],   keypadJoyMap[12];
+     int addonsKeyMap[2],    addonsJoyMap[2];
+-    int hkGeneralKeyMap[9], hkGeneralJoyMap[9];
++    int hkGeneralKeyMap[11], hkGeneralJoyMap[11];
+ };
+ 
+ 
+diff -rupN melonDS.orig/src/frontend/qt_sdl/main.cpp melonDS/src/frontend/qt_sdl/main.cpp
+--- melonDS.orig/src/frontend/qt_sdl/main.cpp	2023-01-20 17:14:09.567747058 -0800
++++ melonDS/src/frontend/qt_sdl/main.cpp	2023-01-20 17:14:32.199906218 -0800
+@@ -426,7 +426,9 @@ EmuThread::EmuThread(QObject* parent) :
+     connect(this, SIGNAL(screenLayoutChange()), mainWindow->panelWidget, SLOT(onScreenLayoutChanged()));
+     connect(this, SIGNAL(windowFullscreenToggle()), mainWindow, SLOT(onFullscreenToggled()));
+     connect(this, SIGNAL(swapScreensToggle()), mainWindow->actScreenSwap, SLOT(trigger()));
+-
++    connect(this, SIGNAL(hkSaveState()), mainWindow->actSaveState[1], SLOT(trigger()));
++    connect(this, SIGNAL(hkLoadState()), mainWindow->actLoadState[1], SLOT(trigger()));
++
+     static_cast<ScreenPanelGL*>(mainWindow->panel)->transferLayout(this);
+ }
+ 
+@@ -596,7 +598,10 @@ void EmuThread::run()
+         if (Input::HotkeyPressed(HK_FullscreenToggle)) emit windowFullscreenToggle();
+ 
+         if (Input::HotkeyPressed(HK_SwapScreens)) emit swapScreensToggle();
+-
++
++        if (Input::HotkeyPressed(HK_SaveState)) emit hkSaveState();
++        if (Input::HotkeyPressed(HK_LoadState)) emit hkLoadState();
++
+         if (Input::HotkeyPressed(HK_SolarSensorDecrease))
+         {
+             int level = GBACart::SetInput(GBACart::Input_SolarSensorDown, true);
+diff -rupN melonDS.orig/src/frontend/qt_sdl/main.h melonDS/src/frontend/qt_sdl/main.h
+--- melonDS.orig/src/frontend/qt_sdl/main.h	2023-01-20 17:14:09.567747058 -0800
++++ melonDS/src/frontend/qt_sdl/main.h	2023-01-20 17:14:32.199906218 -0800
+@@ -85,6 +85,9 @@ signals:
+     void windowFullscreenToggle();
+ 
+     void swapScreensToggle();
++
++    void hkSaveState();
++    void hkLoadState();
+ 
+ private:
+     void drawScreenGL();

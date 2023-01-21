@@ -31,8 +31,8 @@ PKG_DEPENDS_TARGET="${PKG_EMUS} ${PKG_RETROARCH} ${LIBRETRO_CORES}"
 ### Emulators or cores for specific devices
 case "${DEVICE}" in
   handheld)
-    PKG_DEPENDS_TARGET+=" dolphinsa cemu citra citrasa desmume lrps2 minivmac minivmacsa pcsx2sa play   \
-                        primehack yuzusa"
+    PKG_DEPENDS_TARGET+=" dolphinsa cemu citra citrasa desmume lrps2 melondssa minivmac minivmacsa       \
+                        pcsx2sa play primehack yuzusa"
   ;;
   RK3588)
     PKG_DEPENDS_TARGET+=""
