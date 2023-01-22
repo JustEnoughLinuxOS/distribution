@@ -38,9 +38,7 @@ limitations under the License.
 * Write the image to an SDCARD using an imaging tool.  Common imaging tools include [Balena Etcher](https://www.balena.
 io/etcher/), [Raspberry Pi Imager](https://www.raspberrypi.com/software/), and [Win32 Disk Imager](https://sourceforge.net/projects/win32diskimager/).  If you're skilled with the command line, dd works fine too.
 
-> This repository hosts stable versions of JELOS.  If you would like to install the unstable development version, please visit the [development build repository](https://github.com/JustEnoughLinuxOS/distribution-dev).
-
- ## Installation
+## Installation
 * JELOS includes an installation tool.  The installation tool can be found in the tools menu.
 
 ## Upgrading

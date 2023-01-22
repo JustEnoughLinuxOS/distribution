@@ -8,9 +8,9 @@ DEBUG=false
 COOLING_PROFILE=$(get_setting "cooling.profile")
 FAN_PWM="${DEVICE_PWM_FAN}"
 
-$DEBUG && echo "Setting profile to ${COOLING_PROFILE}"
+log $0 "Setting profile to ${COOLING_PROFILE}"
 
-$DEBUG && echo "Enabling fan control."
+log $0 "Enabling fan control."
 if [ -e "${DEVICE_PWM_FAN}_enable" ]
 then
   echo 1 >${DEVICE_PWM_FAN}_enable
@@ -18,13 +18,12 @@ fi
 
 if [ -e "/storage/.config/fancontrol.conf" ] && [ "${COOLING_PROFILE}" = "custom" ]
 then
-  $DEBUG && echo "Loading configuration file" 2>/dev/null
+  log $0 "Loading configuration file" 2>/dev/null
   source /storage/.config/fancontrol.conf
   if [ ! $? = 0 ]
   then
     WARN="Custom fan profile could not be loaded, defaulting to quiet."
-    $DEBUG && echo "${WARN}"
-    logger -t fancontrol "${WARN}"
+    log $0 "${WARN}"
     COOLING_PROFILE="quiet"
     set_setting cooling.profile quiet
   fi
@@ -52,25 +51,24 @@ while true
 do
   INDEX=0
   CPU_TEMP=$(printf "%.0f" $(cat ${DEVICE_TEMP_SENSOR} | awk '{ total += $1; count++ } END { print total/count }'))
-  $DEBUG && echo "CPU TEMP: ${CPU_TEMP}" 2>/dev/null
+  $DEBUG && log $0 "CPU TEMP: ${CPU_TEMP}" 2>/dev/null
   for TEMP in "${TEMPS[@]}"
   do
-    $DEBUG && echo "INDEX: ${INDEX}" 2>/dev/null
-    $DEBUG && echo "CHK: ${TEMP}" 2>/dev/null
+    $DEBUG && log $0 "INDEX: ${INDEX}" 2>/dev/null
+    $DEBUG && log $0 "CHK: ${TEMP}" 2>/dev/null
     if (( "${CPU_TEMP}" > "${TEMP}" ))
     then
-      $DEBUG && echo "Setting PWM FAN to ${SPEEDS[${INDEX}]} (${TEMP})" 2>/dev/null
+      $DEBUG && log $0 "Setting PWM FAN to ${SPEEDS[${INDEX}]} (${TEMP})" 2>/dev/null
       echo ${SPEEDS[${INDEX}]} >${FAN_PWM}
       break
     fi
     INDEX=$(( $INDEX + 1 ))
   done
   sleep 2
-  $DEBUG && echo "Loop" 2>/dev/null
 done
 
-$DEBUG && echo "Disabling fan control."
 if [ -e "${DEVICE_PWM_FAN}_enable" ]
 then
+  log $0 "Disabling fan control."
   echo 0 >${DEVICE_PWM_FAN}_enable
 fi

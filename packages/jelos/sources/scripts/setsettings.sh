@@ -63,7 +63,7 @@ echo -n > "${RAAPPENDCONF}"
 ### Move operations to /tmp so we're not writing to the microSD slowing us down.
 ### Also test the file to ensure it's not 0 bytes which can happen if someone presses reset.
 if [ ! -s ${RACONF} ]; then
-	log "Fix broken RA conf"
+	log $0 "Fix broken RA conf"
 	cp -f "${SOURCERACONF}" "${RACONF}"
 fi
 
@@ -72,14 +72,14 @@ if [ ! -d "${SNAPSHOTS}/${PLATFORM}" ]; then
 fi
 
 function doexit() {
-	log "Exiting.."
+	log $0 "Exiting.."
 	sync
 	exit 0
 }
 
 ## This needs to be killed with fire.
 function get_game_setting() {
-	log "Get Settings function (${1})"
+	log $0 "Get Settings function (${1})"
 	#We look for the setting on the ROM first, if not found we search for platform and lastly we search globally
 	escaped_rom_name=$(echo "${ROM}" | sed -E 's|([][])|\\\1|g')
 	PAT="s|^${PLATFORM}\[\"${escaped_rom_name}\"\][\.-]${1}=\(.*\)|\1|p"
@@ -113,10 +113,10 @@ function array_contains () {
 }
 
 ## Logging
-log "setsettings.sh"
-log "Platform: ${PLATFORM}"
-log "ROM: ${ROM}"
-log "Core: ${CORE}"
+log $0 "setsettings.sh"
+log $0 "Platform: ${PLATFORM}"
+log $0 "ROM: ${ROM}"
+log $0 "Core: ${CORE}"
 
 ##
 ## Global Setting that have to stay in retroarch.cfg
@@ -662,7 +662,7 @@ get_game_setting "parallel_n64_controller_pak"
 
 ## atari800 core needs other settings when emulation atari5200
 if [ "${CORE}" == "atari800" ]; then
-	log "Atari 800 section"
+	log $0 "Atari 800 section"
 	ATARICONF="/storage/.config/system/configs/atari800.cfg"
 	ATARI800CONF="/storage/.config/retroarch/config/Atari800/Atari800.opt"
 	[[ ! -f "$ATARI800CONF" ]] && touch "$ATARI800CONF"
@@ -690,7 +690,7 @@ fi
 
 ## Gambatte
 if [ "${CORE}" == "gambatte" ]; then
-	log "Gambatte section"
+	log $0 "Gambatte section"
 	GAMBATTECONF="/storage/.config/retroarch/config/Gambatte/Gambatte.opt"
 	if [ ! -f "$GAMBATTECONF" ]; then
 		# set some defaults
@@ -718,7 +718,7 @@ CONTROLLERS="$@"
 CONTROLLERS="${CONTROLLERS#*--controllers=*}"
 
 for i in 1 2 3 4 5; do
-log "Controller section (${1})"
+log $0 "Controller section (${1})"
 if [[ "$CONTROLLERS" == *p${i}* ]]; then
 PINDEX="${CONTROLLERS#*-p${i}index }"
 PINDEX="${PINDEX%% -p${i}guid*}"

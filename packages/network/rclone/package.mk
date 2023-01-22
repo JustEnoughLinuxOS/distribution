@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="rclone"
-PKG_VERSION="1.60.0"
+PKG_VERSION="1.61.1"
 PKG_DEPENDS_TARGET="toolchain fuse rsync"
 PKG_SECTION="tools"
 PKG_SHORTDESC="rsync for cloud storage"

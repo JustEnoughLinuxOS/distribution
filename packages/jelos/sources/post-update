@@ -98,12 +98,12 @@ then
   cp -f /usr/config/smb.conf /storage/.config
 fi
 
-# Set GPU power saving by default
-GPUPOWER=$(get_setting gpu.powersave)
-if [ -z "${GPUPOWER}" ]
+# Set enhanced power saving off by default
+ENHPOWER=$(get_setting system.powersave)
+if [ -z "${ENHPOWER}" ]
 then
-  echo "Set up GPU power saving..." >>${LOG}
-  set_setting gpu.powersave 0
+  echo "Set up enhanced power saving..." >>${LOG}
+  set_setting system.powersave 0
 fi
 
 # Set automatic hotkey management by default.
@@ -140,9 +140,28 @@ CheckAtStartup = false
 EOF
 fi
 
+# the controller profile has been renamed.
+if [ -e "/storage/.config/profile.d/99-controller" ]
+then
+  rm -f /storage/.config/profile.d/99-controller
+  mkcontroller
+fi
+
+# Set a default for the audio preamp
+PREAMP=$(get_setting audio.preamp)
+if [ -z "${PREAMP}" ]
+then
+  echo "Set default preamp." >>${LOG}
+  set_setting audio.preamp 50
+fi
+
+# Disable IPv6 by default
 IPV6=$(get_setting ipv6.enabled)
 if [ -z "${IPV6}" ]
 then
   echo "Disable ipv6." >>${LOG}
   set_setting ipv6.enabled 0
 fi
+
+### Force everyone to the stable repo
+set_setting updates.branch stable

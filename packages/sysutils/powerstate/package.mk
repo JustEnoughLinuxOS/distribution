@@ -3,7 +3,6 @@
 
 PKG_NAME="powerstate"
 PKG_VERSION=""
-PKG_SHA256=""
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_DEPENDS_TARGET="systemd"

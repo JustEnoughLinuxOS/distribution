@@ -20,7 +20,7 @@ case ${DEVICE} in
         PKG_URL="${PKG_SITE}.git"
   ;;
   *)
-	PKG_VERSION="555a5d45f71cde6dfcb017168b7f68f93372a4f0"
+	PKG_VERSION="ece6edfe83db1cc45fce5f760db9104440465b8a"
 	PKG_SITE="https://github.com/hrydgard/ppsspp"
         PKG_URL="${PKG_SITE}.git"
   ;;
