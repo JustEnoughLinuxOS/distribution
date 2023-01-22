@@ -143,6 +143,7 @@ pre_configure_target() {
   if [ ${ARCH} = "x86_64" ]; then
     PKG_CONFIGURE_OPTS_TARGET+=" -reduce-relocations"
   fi
+  export LDFLAGS="${LDFLAGS} -ljpeg"
 }
 
 configure_target() {
