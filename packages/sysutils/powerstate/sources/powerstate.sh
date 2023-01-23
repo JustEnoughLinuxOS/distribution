@@ -12,36 +12,44 @@
 
 while true
 do
-  STATUS="$(cat /sys/class/power_supply/{BAT*,bat*}/status 2>/dev/null)"
-  if [ ! "${STATUS}" = "${CURRENT_MODE}" ]
+  if [ "$(get_setting system.powersave)" = 1 ]
   then
-    case ${STATUS} in
-      Disch*)
-        log $0 "Switching to battery mode."
-        if [ "$(get_setting system.powersave)" = 1 ]
-        then
+    STATUS="$(cat /sys/class/power_supply/{BAT*,bat*}/status 2>/dev/null)"
+    if [ ! "${STATUS}" = "${CURRENT_MODE}" ]
+    then
+      case ${STATUS} in
+        Disch*)
+          log $0 "Switching to battery mode."
+          if [ -e "/tmp/.gpuperf" ]
+          then
+            GPUMODE=$(cat /tmp/.gpuperf)
+          else
+            GPUMODE=$(get_setting system.gpuperf)
+            if [ -z "${GPUMODE}" ]
+            then
+              GPUMODE=auto
+              set_setting system.gpuperf auto
+            fi
+          fi
           audio_powersave 1
           cpu_perftune battery
-          gpu_performance_level auto
+          gpu_performance_level ${GPUMODE}
           gpu_power_profile 1
           pcie_aspm_policy powersave
           device_powersave 1
-        fi
-      ;;
-      *)
-        log $0 "Switching to performance mode."
-        if [ "$(get_setting system.powersave)" = 1 ]
-        then
+        ;;
+        *)
+          log $0 "Switching to performance mode."
           audio_powersave 0
           cpu_perftune performance
           gpu_performance_level profile_standard
           gpu_power_profile 1
           pcie_aspm_policy default
           device_powersave 0
-        fi
-      ;;
-    esac
+        ;;
+      esac
+    fi
+    CURRENT_MODE="${STATUS}"
   fi
-  CURRENT_MODE="${STATUS}"
   sleep 2
 done
