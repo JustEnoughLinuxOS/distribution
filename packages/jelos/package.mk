@@ -152,5 +152,4 @@ EOF
     sed -i "s#ssh.enabled=0#ssh.enabled=1#g" ${INSTALL}/usr/config/system/configs/system.cfg
   fi
 
-  enable_service bluetooth-agent.service
 }
