@@ -6,7 +6,7 @@ PKG_VERSION="00edeb3c3c053bc2b3c9ac83e33688626498f2cc"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/melonDS-emu/melonDS"
 PKG_URL="${PKG_SITE}.git"
-PKG_DEPENDS_TARGET="SDL2 qt5 libslirp libepoxy libarchive ecm"
+PKG_DEPENDS_TARGET="SDL2 qt5 libslirp libepoxy libarchive ecm libpcap"
 PKG_LONGDESC="DS emulator, sorta. The goal is to do things right and fast"
 PKG_TOOLCHAIN="cmake"
 

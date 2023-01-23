@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="dolphinsa"
-PKG_VERSION="10fd76889854e2367c39d902d70abf70e1d920f6"
+PKG_VERSION="8d477c65c9a72020a5839299c0dcf130304cb2e6"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/dolphin-emu/dolphin"
 PKG_URL="${PKG_SITE}.git"
