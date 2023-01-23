@@ -147,6 +147,14 @@ then
   mkcontroller
 fi
 
+# Set a default GPU power savings mode
+GPUMODE=$(get_setting system.gpuperf)
+if [ -z "${GPUMODE}" ]
+then
+  echo "Set a default GPU power savings mode." >>${LOG}
+  set_setting system.gpuperf auto
+fi
+
 # Set a default for the audio preamp
 PREAMP=$(get_setting audio.preamp)
 if [ -z "${PREAMP}" ]
