@@ -127,8 +127,11 @@ GPUPERF=$(get_setting "gpuperf" "${PLATFORM}" "${ROMNAME##*/}")
 if [ ! "${GPUPERF}" = "system" ] && \
    [ ! -z "${GPUPERF}" ]
 then
-  echo "${GPUPERF}" >/tmp/.gpuperf
-  systemctl restart powerstate
+  if [ ! "${GPUPERF}" = "default" ]
+  then
+    echo "${GPUPERF}" >/tmp/.gpuperf
+    systemctl restart powerstate
+  fi
 fi
 
 if [ "${DEVICE_HAS_FAN}" = "true" ]
