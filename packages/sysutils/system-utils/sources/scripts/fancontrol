@@ -42,24 +42,24 @@ then
     TEMPS=(65000 55000 45000 0)
   else
     # Quiet.
-    SPEEDS=(255 192 128 96 64 48)
-    TEMPS=(70000 60000 55000 50000 47000 0)
+    SPEEDS=(255 192 128 96 64 48 32)
+    TEMPS=(70000 60000 55000 50000 49000 47000 0)
   fi
 fi
 
 while true
 do
   INDEX=0
-  CPU_TEMP=$(printf "%.0f" $(cat ${DEVICE_TEMP_SENSOR} | awk '{ total += $1; count++ } END { print total/count }'))
+  CPU_TEMP=$(printf "%.0f" $(awk '{ total += $1; count++ } END { print total/count }' ${DEVICE_TEMP_SENSOR}))
   $DEBUG && log $0 "CPU TEMP: ${CPU_TEMP}" 2>/dev/null
   for TEMP in "${TEMPS[@]}"
   do
-    $DEBUG && log $0 "INDEX: ${INDEX}" 2>/dev/null
-    $DEBUG && log $0 "CHK: ${TEMP}" 2>/dev/null
-    if (( "${CPU_TEMP}" > "${TEMP}" ))
+    if (( "${CPU_TEMP}" > "${TEMP}" )) && \
+       [ ! "${LASTSPEED}" = "${SPEEDS[${INDEX}]}" ]
     then
       $DEBUG && log $0 "Setting PWM FAN to ${SPEEDS[${INDEX}]} (${TEMP})" 2>/dev/null
       echo ${SPEEDS[${INDEX}]} >${FAN_PWM}
+      LASTSPEED=${SPEEDS[${INDEX}]}
       break
     fi
     INDEX=$(( $INDEX + 1 ))

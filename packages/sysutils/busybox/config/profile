@@ -1,47 +1,23 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2014 Stephan Raue (stephan@openelec.tv)
+# Copyright (C) 2021-present Fewtarius
 
-# parse command line arguments
-  for arg in $(cat /proc/cmdline); do
-    case $arg in
-      debugging)
-        export DEBUG=yes
-        ;;
-      progress)
-        PROGRESS=yes
-        ;;
-    esac
-  done
-
-  if [ -e /storage/.cache/debug.libreelec ] ; then
-    export DEBUG=yes
+# Read config files
+for CONFIG in /etc/profile.d/*; do
+  if [ -f "${CONFIG}" ] ; then
+    . ${CONFIG}
   fi
+done
 
-# functions
-  progress() {
-    if test "$PROGRESS" = yes; then
-      logger -s -t Boot "### $1 ###"
-    else
-      logger -t Boot "### $1 ###"
-    fi
-  }
+# Create user profile directory if it does not exist.
+if [ ! -d "/storage/.config/profile.d" ]
+then
+  mkdir -p /storage/.config/profile.d
+fi
 
-# read config files
-  for config in /etc/profile.d/*; do
-    if [ -f "$config" ] ; then
-      . $config
-    fi
-  done
-
-# read user config files
-
-  if [ ! -d "/storage/.config/profile.d" ]
-  then
-   mkdir -p /storage/.config/profile.d
+# Read user config files
+for CONFIG in /storage/.config/profile.d/*; do
+  if [ -f "${CONFIG}" ] ; then
+    . ${CONFIG}
   fi
-
-  for config in /storage/.config/profile.d/*; do
-    if [ -f "$config" ] ; then
-      . $config
-    fi
-  done
+done
