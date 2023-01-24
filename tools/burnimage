@@ -2,13 +2,13 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
 
-. config/options
+. config/options ''
 
 if [ -z "$1" ]
 then
-  export OS_VERSION=$(date +%Y%m%d)
+  export BURN_VERSION=$(date +%Y%m%d)
 else
-  OS_VERSION=$1
+  BURN_VERSION=$1
 fi
 
 if [ -z "${DISTRO}" ] || [ -z "${DEVICE}" ] || [ -z "${ARCH}" ]
@@ -17,9 +17,14 @@ then
   exit 1
 fi
 
-MAXSIZE="128000000"
+MAXSIZE="512000000"
 
-SDDEVICES=($(awk '/sd*[a-z]$/ {print $3":"$4}' /proc/partitions | sort -r))
+
+SDDEVICES=($(awk '/mmcblk[0-9]$/ {print $3":"$4}' /proc/partitions | sort -r))
+if [ -z "${SDDEVICES}" ]
+then
+  SDDEVICES=($(awk '/sd*[b-z]$/ {print $3":"$4}' /proc/partitions | sort -r))
+fi
 
 for SDDEVICE in ${SDDEVICES[@]}
 do
@@ -35,18 +40,18 @@ done
 
 if [ ! -z "${SDDEVICE}" ]
 then
-  if [ -e "release/${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img" ] || [ -e "release/${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img.gz" ]
+  if [ -e "release/${DISTRO}-${DEVICE}.${ARCH}-${BURN_VERSION}.img" ] || [ -e "release/${DISTRO}-${DEVICE}.${ARCH}-${BURN_VERSION}.img.gz" ]
   then
     cd release
-    echo "Extracting ${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img"
-    gunzip ${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img.gz 2>/dev/null ||:
+    echo "Extracting ${DISTRO}-${DEVICE}.${ARCH}-${BURN_VERSION}.img"
+    gunzip ${DISTRO}-${DEVICE}.${ARCH}-${BURN_VERSION}.img.gz 2>/dev/null ||:
     echo "Wiping ${SDDEVICE} partition data"
     sudo wipefs -a ${SDDEVICE} 2>/dev/null ||:
-    echo "Writing ${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img to ${SDDEVICE}"
-    sudo dd if=${DISTRO}-${DEVICE}.${ARCH}-${OS_VERSION}.img of=/dev/${SDDEVICE} bs=1M
+    echo "Writing ${DISTRO}-${DEVICE}.${ARCH}-${BURN_VERSION}.img to ${SDDEVICE}"
+    sudo dd if=${DISTRO}-${DEVICE}.${ARCH}-${BURN_VERSION}.img of=/dev/${SDDEVICE} bs=1M
     sync
   else
-    echo "Release not found, aborting."
+    echo "Release not found (${DISTRO}-${DEVICE}.${ARCH}-${BURN_VERSION}.img), aborting."
     exit 1
   fi
 else
