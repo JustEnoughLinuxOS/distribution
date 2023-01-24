@@ -123,6 +123,17 @@ then
   fi
 fi
 
+GPUPERF=$(get_setting "gpuperf" "${PLATFORM}" "${ROMNAME##*/}")
+if [ ! "${GPUPERF}" = "system" ] && \
+   [ ! -z "${GPUPERF}" ]
+then
+  if [ ! "${GPUPERF}" = "default" ]
+  then
+    echo "${GPUPERF}" >/tmp/.gpuperf
+    systemctl restart powerstate
+  fi
+fi
+
 if [ "${DEVICE_HAS_FAN}" = "true" ]
 then
   ### Set any custom fan profile (make this better!)
@@ -512,6 +523,13 @@ then
 			systemctl restart fancontrol
 		fi
 	fi
+fi
+
+### Remove GPU performance helper
+if [ -e "/tmp/.gpuperf" ]
+then
+  rm -f /tmp/.gpuperf
+  systemctl restart powerstate
 fi
 
 ### Backup save games

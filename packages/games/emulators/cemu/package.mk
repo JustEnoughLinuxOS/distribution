@@ -3,11 +3,11 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="cemu"
-PKG_VERSION="33bd10b" #v2.0-25
+PKG_VERSION="9d55f46"
 PKG_ARCH="x86_64"
 PKG_LICENSE="MPL-2.0"
 PKG_SITE="https://github.com/cemu-project/Cemu"
-PKG_URL="https://github.com/cemu-project/Cemu.git"
+PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain libzip glslang glm curl rapidjson openssl boost libfmt pugixml libpng gtk3 wxwidgets"
 PKG_LONGDESC="Cemu is a Wii U emulator that is able to run most Wii U games and homebrew in a playable state"
 PKG_GIT_CLONE_BRANCH="main"
