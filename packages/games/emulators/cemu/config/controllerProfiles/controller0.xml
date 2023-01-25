@@ -25,11 +25,11 @@
 			</entry>
 			<entry>
 				<mapping>13</mapping>
-				<button>13</button>
+				<button>12</button>
 			</entry>
 			<entry>
 				<mapping>12</mapping>
-				<button>47</button>
+				<button>11</button>
 			</entry>
 			<entry>
 				<mapping>11</mapping>
@@ -97,15 +97,15 @@
 			</entry>
 			<entry>
 				<mapping>17</mapping>
-				<button>45</button>
-			</entry>
-			<entry>
-				<mapping>16</mapping>
 				<button>8</button>
 			</entry>
 			<entry>
-				<mapping>15</mapping>
+				<mapping>16</mapping>
 				<button>7</button>
+			</entry>
+			<entry>
+				<mapping>15</mapping>
+				<button>14</button>
 			</entry>
 			<entry>
 				<mapping>2</mapping>
@@ -113,7 +113,7 @@
 			</entry>
 			<entry>
 				<mapping>14</mapping>
-				<button>14</button>
+				<button>13</button>
 			</entry>
 			<entry>
 				<mapping>1</mapping>
