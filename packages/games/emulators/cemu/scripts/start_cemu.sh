@@ -53,10 +53,10 @@ fi
 # Make sure the basic controller profiles exist.
 if [ ! -d "${CEMU_CONFIG_ROOT}/controllerProfiles" ]
 then
-  mkdir -p ${CEMU_CONFIG_ROOT}
+  mkdir -p ${CEMU_CONFIG_ROOT}/controllerProfiles
 fi
 
-if [ ! -f "${CEMU_CONFIG_ROOT}/controllerProfiles/controller0.xml" ]
+if [ ! -e "${CEMU_CONFIG_ROOT}/controllerProfiles/controller0.xml" ]
 then
   cp /usr/config/Cemu/controllerProfiles/controller0.xml ${CEMU_CONFIG_ROOT}/controllerProfiles/
 fi
@@ -74,10 +74,15 @@ then
   CON="Wii U GamePad"
 fi
 
+UUID0="0_$(control-gen | awk 'BEGIN {FS="\""} /^DEVICE/ {print $2;exit}')"
+CONTROLLER0=$(cat /storage/.controller)
+
 xmlstarlet ed --inplace -u "//Overlay/Position" -v "${FPS}" ${CEMU_CONFIG_ROOT}/settings.xml
 xmlstarlet ed --inplace -u "//fullscreen" -v "true" ${CEMU_CONFIG_ROOT}/settings.xml
 xmlstarlet ed --inplace -u "//Audio/TVDevice" -v "$(pactl get-default-sink)" ${CEMU_CONFIG_ROOT}/settings.xml
 xmlstarlet ed --inplace -u "//emulated_controller/type" -v "${CON}" ${CEMU_CONFIG_ROOT}/controllerProfiles/controller0.xml
+xmlstarlet ed --inplace -u "//emulated_controller/controller/uuid" -v "${UUID0}" ${CEMU_CONFIG_ROOT}/controllerProfiles/controller0.xml
+xmlstarlet ed --inplace -u "//emulated_controller/controller/display_name" -v "${CONTROLLER0}" ${CEMU_CONFIG_ROOT}/controllerProfiles/controller0.xml
 
 # Run the emulator
 cemu -g "$@"

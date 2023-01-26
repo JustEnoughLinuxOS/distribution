@@ -4,8 +4,16 @@
 
 . /etc/os-release
 
-set_online_cores() {
-  AVAILABLE_CPUS=$(($(ls /sys/devices/system/cpu | grep cpu[0-9] | wc -l) - 1))
+get_threads() {
+  for THREAD in $(seq 1 1 $(find /sys/devices/system/cpu -name online | wc -l))
+  do
+    echo ${THREAD}
+  done
+  echo all
+}
+
+set_online_threads() {
+  AVAILABLE_THREADS=$(($(find /sys/devices/system/cpu -name online | wc -l) - 1))
   MODE=${2}
   if [ -z "${MODE}" ]
   then
@@ -13,25 +21,25 @@ set_online_cores() {
   fi
   case ${1} in
     all)
-      CORES=0
+      THREADS=0
       MODE="1"
     ;;
+    0)
+      THREADS=1
+    ;;
     *)
-      CORES=${1}
+      THREADS=${1}
     ;;
   esac
 
-  if [ "${CORES}" -gt 0 ]
-  then
-    for core in $(seq 0 1 ${1})
-    do
-      echo 1  | tee /sys/devices/system/cpu/cpu${core}/online >/dev/null 2>&1
-    done
-  fi
-
-  for core in $(seq ${CORES} 1 ${AVAILABLE_CPUS})
+  for thread in $(seq 0 1 ${THREADS})
   do
-    echo ${MODE} | tee /sys/devices/system/cpu/cpu${core}/online >/dev/null 2>&1
+    echo 1  | tee /sys/devices/system/cpu/cpu${thread}/online >/dev/null 2>&1
+  done
+
+  for thread in $(seq ${THREADS} 1 ${AVAILABLE_THREADS})
+  do
+    echo ${MODE} | tee /sys/devices/system/cpu/cpu${thread}/online >/dev/null 2>&1
   done
 }
 
@@ -66,8 +74,8 @@ set_amdgpu_perf() {
   done
 }
 
-onlinecores() {
-  set_online_cores ${1} ${2}
+onlinethreads() {
+  set_online_threads ${1} ${2}
 }
 
 performance() {
