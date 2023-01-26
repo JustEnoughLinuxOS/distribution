@@ -93,11 +93,11 @@ if [[ "$arguments" == *"--connect"* ]]; then
 fi
 
 ### Offline all but the number of cores we need for this game if configured.
-NUMCORES=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
-if [ -n "${NUMCORES}" ] &&
-   [ ! ${NUMCORES} = "default" ]
+NUMTHREADS=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
+if [ -n "${NUMTHREADS}" ] &&
+   [ ! ${NUMTHREADS} = "default" ]
 then
-  onlinecores ${NUMCORES} 0
+  onlinethreads ${NUMTHREADS} 0
 fi
 
 ### Set the performance mode
@@ -287,7 +287,7 @@ then
         		fi
                 ;;
                 "ps2")
-                        jslisten set "-9 pcsx2"
+                        jslisten set "-9 pcsx2-qt"
                         if [ "$EMU" = "pcsx2sa" ]; then
                         RUNTHIS='${TBASH} /usr/bin/start_pcsx2.sh "${ROMNAME}"'
                         fi
@@ -502,12 +502,12 @@ fi
 clear_screen
 
 ### Reset the number of cores to use.
-NUMCORES=$(get_setting "system.cores")
-if [ -n "${NUMCORES}" ]
+NUMTHREADS=$(get_setting "system.threads")
+if [ -n "${NUMTHREADS}" ]
 then
-	onlinecores ${NUMCORES} 0
+	onlinethreads ${NUMTHREADS} 0
 else
-	onlinecores all 1
+	onlinethreads all 1
 fi
 
 ### Restore the overclock mode

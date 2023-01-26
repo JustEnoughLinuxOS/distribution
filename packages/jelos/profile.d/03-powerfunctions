@@ -2,6 +2,14 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2022-present Fewtarius (https://github.com/fewtarius)
 
+get_threads() {
+  echo all
+  for thread in $(seq 1 1 $(find /sys/devices/system/cpu -name online | wc -l))
+  do
+    echo ${thread}
+  done
+}
+
 gpu_power_profile() {
   for card in /sys/class/drm/card*/device/pp_power_profile_mode
   do
