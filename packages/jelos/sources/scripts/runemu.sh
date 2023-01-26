@@ -93,7 +93,7 @@ if [[ "$arguments" == *"--connect"* ]]; then
 fi
 
 ### Offline all but the number of cores we need for this game if configured.
-NUMTHREADS=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
+NUMTHREADS=$(get_setting "threads" "${PLATFORM}" "${ROMNAME##*/}")
 if [ -n "${NUMTHREADS}" ] &&
    [ ! ${NUMTHREADS} = "default" ]
 then
