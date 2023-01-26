@@ -5,11 +5,11 @@
 . /etc/os-release
 
 get_threads() {
-  echo all
   for THREAD in $(seq 1 1 $(find /sys/devices/system/cpu -name online | wc -l))
   do
     echo ${THREAD}
   done
+  echo all
 }
 
 set_online_threads() {
@@ -24,18 +24,18 @@ set_online_threads() {
       THREADS=0
       MODE="1"
     ;;
+    0)
+      THREADS=1
+    ;;
     *)
       THREADS=${1}
     ;;
   esac
 
-  if [ "${THREADS}" -gt 0 ]
-  then
-    for thread in $(seq 0 1 ${1})
-    do
-      echo 1  | tee /sys/devices/system/cpu/cpu${thread}/online >/dev/null 2>&1
-    done
-  fi
+  for thread in $(seq 0 1 ${THREADS})
+  do
+    echo 1  | tee /sys/devices/system/cpu/cpu${thread}/online >/dev/null 2>&1
+  done
 
   for thread in $(seq ${THREADS} 1 ${AVAILABLE_THREADS})
   do
