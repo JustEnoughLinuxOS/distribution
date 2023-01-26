@@ -4,8 +4,16 @@
 
 . /etc/os-release
 
+get_threads() {
+  echo all
+  for THREAD in $(seq 1 1 $(find /sys/devices/system/cpu -name online | wc -l))
+  do
+    echo ${THREAD}
+  done
+}
+
 set_online_threads() {
-  AVAILABLE_CPUS=$(($(ls /sys/devices/system/cpu | grep cpu[0-9] | wc -l) - 1))
+  AVAILABLE_THREADS=$(($(find /sys/devices/system/cpu -name online | wc -l) - 1))
   MODE=${2}
   if [ -z "${MODE}" ]
   then
@@ -29,7 +37,7 @@ set_online_threads() {
     done
   fi
 
-  for thread in $(seq ${THREADS} 1 ${AVAILABLE_CPUS})
+  for thread in $(seq ${THREADS} 1 ${AVAILABLE_THREADS})
   do
     echo ${MODE} | tee /sys/devices/system/cpu/cpu${thread}/online >/dev/null 2>&1
   done
