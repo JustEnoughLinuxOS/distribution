@@ -53,10 +53,10 @@ fi
 # Make sure the basic controller profiles exist.
 if [ ! -d "${CEMU_CONFIG_ROOT}/controllerProfiles" ]
 then
-  mkdir -p ${CEMU_CONFIG_ROOT}
+  mkdir -p ${CEMU_CONFIG_ROOT}/controllerProfiles
 fi
 
-if [ ! -f "${CEMU_CONFIG_ROOT}/controllerProfiles/controller0.xml" ]
+if [ ! -e "${CEMU_CONFIG_ROOT}/controllerProfiles/controller0.xml" ]
 then
   cp /usr/config/Cemu/controllerProfiles/controller0.xml ${CEMU_CONFIG_ROOT}/controllerProfiles/
 fi
