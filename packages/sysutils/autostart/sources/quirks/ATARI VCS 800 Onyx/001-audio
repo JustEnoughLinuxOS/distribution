@@ -4,5 +4,9 @@
 
 . /etc/profile
 
-### Set the audio device
-set-audio set "HDMI (0:3)"
+MYDEVICE=$(get_setting system.audiodevice)
+if [ -z "${MYDEVICE}" ]
+then
+  ### Set the audio device
+  set-audio set "HDMI (0:3)"
+fi

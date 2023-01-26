@@ -10,6 +10,32 @@
 rr_audio.sh pulseaudio
 export SDL_AUDIODRIVER=pulseaudio
 
+BTTEST=$(amixer -D bluealsa controls >/dev/null 2>&1)
+BTTIMEOUT=10
+BTTESTCOUNT=0
+if [ $? = 0 ]
+then
+  while true
+  do
+    PASINK=$(pactl info | grep 'Default Sink:' | cut -d ' ' -f 3)
+    if [[ "${PASINK}" =~ ^bluez ]]
+    then
+      break
+    elif [ ${BTTESTCOUNT} = ${BTTIMEOUT} ]
+    then
+      unset PASINK
+      break
+    fi
+    sleep .5
+    BTTESTCOUNT=$(( ${BTTESTCOUNT} + 1 ))
+  done
+fi
+
+if [ -z "${PASINK}" ]
+then
+  PASINK=$(pactl info | grep 'Default Sink:' | cut -d ' ' -f 3)
+fi
+
 # Set up mime db
 mkdir -p /storage/.local/share/mime/packages
 cp -rf /usr/share/mime/packages/* /storage/.local/share/mime/packages
@@ -79,7 +105,7 @@ CONTROLLER0=$(cat /storage/.controller)
 
 xmlstarlet ed --inplace -u "//Overlay/Position" -v "${FPS}" ${CEMU_CONFIG_ROOT}/settings.xml
 xmlstarlet ed --inplace -u "//fullscreen" -v "true" ${CEMU_CONFIG_ROOT}/settings.xml
-xmlstarlet ed --inplace -u "//Audio/TVDevice" -v "$(pactl get-default-sink)" ${CEMU_CONFIG_ROOT}/settings.xml
+xmlstarlet ed --inplace -u "//Audio/TVDevice" -v "${PASINK}" ${CEMU_CONFIG_ROOT}/settings.xml
 xmlstarlet ed --inplace -u "//emulated_controller/type" -v "${CON}" ${CEMU_CONFIG_ROOT}/controllerProfiles/controller0.xml
 xmlstarlet ed --inplace -u "//emulated_controller/controller/uuid" -v "${UUID0}" ${CEMU_CONFIG_ROOT}/controllerProfiles/controller0.xml
 xmlstarlet ed --inplace -u "//emulated_controller/controller/display_name" -v "${CONTROLLER0}" ${CEMU_CONFIG_ROOT}/controllerProfiles/controller0.xml
