@@ -5,31 +5,49 @@
 . /etc/profile
 
 ES_SETTINGS="/storage/.config/emulationstation/es_settings.cfg"
-STORED_SETTINGS="/storage/.cache/audio_settings.zip"
+SETTINGS_CACHE="/storage/.cache/audio"
 
 function save_state()
 {
-  ACTIVE_DEVICE=$(get_audio_device)
-  ACTIVE_PATH=$(get_es_path)
-  echo "$ACTIVE_DEVICE" > /tmp/active_device.cfg
-  echo "$ACTIVE_PATH" > /tmp/active_path.cfg
-  cp -f /storage/.config/asound.conf /tmp 
-  cp -f /storage/.config/asound.state /tmp
-  zip -q -j -r ${STORED_SETTINGS} /tmp/active_device.cfg /tmp/active_path.cfg /tmp/asound.*
+  if [ ! -d "${SETTINGS_CACHE}" ]
+  then
+    mkdir -p ${SETTINGS_CACHE}
+  fi
+  get_audio_device >${SETTINGS_CACHE}/active_device
+  get_es_path >${SETTINGS_CACHE}/active_path
+  cp -f /storage/.config/asound.conf ${SETTINGS_CACHE}/asound.conf
+  cp -f /storage/.config/asound.state ${SETTINGS_CACHE}/asound.state
 }
 
 function restore_state()
 {
-  if [ -e ${STORED_SETTINGS} ]
+  if [ -e "${SETTINGS_CACHE}/asound.conf" ]
   then
-    unzip -o -q -d /tmp/ ${STORED_SETTINGS}
-    STORED_DEVICE=$(cat /tmp/active_device.cfg)
-    STORED_PATH=$(cat /tmp/active_path.cfg)
-    mv /tmp/asound.conf /storage/.config/
-    mv /tmp/asound.state /storage/.config/
-    rm -f ${STORED_SETTINGS}
-    set-audio esset "${STORED_PATH}"
-    set-audio set "${STORED_DEVICE}"
+    cp -f ${SETTINGS_CACHE}/asound.conf /storage/.config/
+    cp -f ${SETTINGS_CACHE}/asound.state /storage/.config/
+    set-audio esset "$(cat ${SETTINGS_CACHE}/active_path)"
+    set-audio set "$(cat ${SETTINGS_CACHE}/active_device)"
+    rm -f ${SETTINGS_CACHE}/{asound.conf,asound.state,active_path,active_device}
+  fi
+}
+
+function get_audio_device() {
+  MYAUDIODEVICE=$(get_setting system.audiodevice)
+  if [ ! -z "${MYAUDIODEVICE}" ]
+  then
+    echo ${MYAUDIODEVICE}
+  else
+    echo "DEFAULT (SYSTEM PROVIDED)"
+  fi
+}
+
+function get_es_path() {
+  AUDIODEVICE=$(grep AudioDevice ${ES_SETTINGS} | sed -e 's#^.*="##g' -e 's#"\ .*$##g')
+  if [ -z "${AUDIODEVICE}" ]
+  then
+    echo "DEFAULT (SYSTEM PROVIDED)"
+  else
+    echo "${AUDIODEVICE}"
   fi
 }
 
@@ -50,9 +68,9 @@ function list_audio_controls() {
   ACTIVE_DEVICE=$(get_audio_device)
   if is_bluetooth "${ACTIVE_DEVICE}"
   then
-    CONTROLS=$(amixer -D bluealsa controls | sed -e 's#^.*name=##g' -e "s#'##g")
+    CONTROLS=$(amixer -D bluealsa controls | awk 'BEGIN {FS="'\''"} {print $2}')
   else
-    CONTROLS=$(amixer controls | sed -e 's#^.*name=##g' -e "s#'##g")
+    CONTROLS=$(amixer scontrols | awk 'BEGIN {FS="'\''"} {print $2}')
   fi
   echo "DEFAULT (SYSTEM PROVIDED)"
   echo "CUSTOM (UNMANAGED)"
@@ -70,6 +88,7 @@ function list_audio_controls() {
 function list_audio_devices() {
   echo "DEFAULT (SYSTEM PROVIDED)"
   echo "DEFAULT HDMI"
+  echo "BLUETOOTH DEVICE"
   echo "CUSTOM (UNMANAGED)"
   echo "--------"
   BTACTIVE=$(systemctl is-active bluetooth)
@@ -80,7 +99,6 @@ function list_audio_devices() {
     do
       echo "${BTDEV}"
     done <<< "${BTDEVICES}"
-    echo "--------"
   fi
   for SDEVICE in $(find /proc/asound/card*/pcm*/info)
   do
@@ -117,6 +135,9 @@ function set_audio_device() {
   then
     CARD="0"
     HWDEV="hdmi"
+  elif [ "${SELECTION}" == "BLUETOOTH DEVICE" ]
+  then
+    HWDEV="bluealsa"
   elif [ "${SELECTION}" == "CUSTOM (UNMANAGED)" ]
   then
     exit 0
@@ -128,8 +149,7 @@ function set_audio_device() {
     # bluetoothctl disconnect ${MAC}
     if bluetoothctl connect ${MAC}
     then
-      cp /usr/config/asound.conf.bluealsa /storage/.config/asound.conf
-      set_es_path "DEFAULT (SYSTEM PROVIDED)"
+      HWDEV="bluealsa"
     fi 
     exit 0
   else
@@ -193,6 +213,38 @@ pcm.dmixer  {
 	}
 }
 EOF
+  elif [[ "${HWDEV}" =~ bluealsa ]]
+  then
+cat <<EOF >/storage/.config/asound.conf
+ctl.!default {
+  type hw
+  card 0
+}
+
+pcm.!default {
+        type plug
+        slave.pcm "softvol"
+}
+
+pcm.softvol {
+    type softvol
+    slave.pcm "dmixer"
+    control {
+        name "Pre-Amp"
+        card 0
+    }
+    min_dB -5.0
+    max_dB 20.0
+    resolution 6
+}
+
+pcm.dmixer {
+        type asym
+        capture.pcm cards.pcm.default
+        playback.pcm bluealsa
+        hint.description "Bluetooth Audio Device"
+}
+EOF
   else
     cat <<EOF >/storage/.config/asound.conf
 pcm.!default {
@@ -220,6 +272,7 @@ ctl.!default {
 }
 EOF
   fi
+  set-audio esset $(set-audio firstcontrol)
 }
 
 function set_es_path() {
@@ -246,24 +299,15 @@ function set_es_path() {
   fi
 }
 
-function get_audio_device() {
-  MYAUDIODEVICE=$(get_setting system.audiodevice)
-  if [ ! -z "${MYAUDIODEVICE}" ]
+function assumed_control() {
+  ACTIVE_DEVICE=$(get_audio_device)
+  if is_bluetooth "${ACTIVE_DEVICE}"
   then
-    echo ${MYAUDIODEVICE}
+    ACONTROLS=$(amixer -D bluealsa controls | awk 'BEGIN {FS="'\''"} {print $2}')
   else
-    echo "DEFAULT (SYSTEM PROVIDED)"
+    ACONTROLS=$(amixer scontrols | awk 'BEGIN {FS="'\''"} {print $2}')
   fi
-}
-
-function get_es_path() {
-  AUDIODEVICE=$(grep AudioDevice ${ES_SETTINGS} | sed -e 's#^.*="##g' -e 's#"\ .*$##g')
-  if [ -z "${AUDIODEVICE}" ]
-  then
-    echo "DEFAULT (SYSTEM PROVIDED)"
-  else
-    echo "${AUDIODEVICE}"
-  fi
+  echo ${ACONTROLS} | awk '{print $1}'
 }
 
 case $1 in
@@ -281,6 +325,9 @@ case $1 in
   ;;
   get)
     get_audio_device
+  ;;
+  firstcontrol)
+    assumed_control
   ;;
   esget)
     get_es_path
