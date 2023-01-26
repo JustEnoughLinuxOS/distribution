@@ -66,8 +66,8 @@ case ${HW_ARCH} in
       else
         FIELD="$(cat ${CPUFREQ}/related_cpus)"
       fi
-      CF+=("CORES ${FIELD}: $(( $(cat ${CPUFREQ}/scaling_cur_freq | sort | tail -n 1) / 1000))MHz")
-      MF+=("CORES ${FIELD}: $(( $(cat ${CPUFREQ}/scaling_max_freq | sort | tail -n 1) / 1000))MHz")
+      CF+=("THREADS ${FIELD}: $(( $(cat ${CPUFREQ}/scaling_cur_freq | sort | tail -n 1) / 1000))MHz")
+      MF+=("THREADS ${FIELD}: $(( $(cat ${CPUFREQ}/scaling_max_freq | sort | tail -n 1) / 1000))MHz")
       CNTR=$(( CNTR + 1 ))
     done
   ;;
