@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2020-present Fewtarius
+
+# Source predefined functions and variables
+. /etc/profile
+
+while true
+do
+  if [ "$(bluetoothctl show | awk '/Powered:/ {print $2}' 2>/dev/null})" = "yes" ]
+  then
+    for DEVICE in $(bluetoothctl devices Paired | awk '{print $2}' 2>/dev/null)
+    do
+      CONNECTED=$(bluetoothctl devices Connected | grep ${DEVICE} >/dev/null 2>&1)
+      if [ ! $? = 0 ]
+      then
+        echo "connect ${DEVICE}" | bluetoothctl --timeout 2 >/dev/null 2>&1
+      fi
+      sleep .5
+    done
+  fi
+  sleep 3
+done

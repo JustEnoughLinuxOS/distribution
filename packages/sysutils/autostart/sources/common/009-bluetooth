@@ -6,6 +6,7 @@ if [ "$(get_setting bluetooth.enabled)" == "1" ]
 then
   nohup systemctl start bluetooth &
   nohup systemctl start bluetooth-agent &
+  nohup systemctl start bluetoothsense &
   rfkill unblock bluetooth
 else
   rfkill block bluetooth

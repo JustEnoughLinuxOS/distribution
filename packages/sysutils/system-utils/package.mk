@@ -20,6 +20,7 @@ makeinstall_target() {
   cp ${PKG_DIR}/sources/scripts/headphone_sense ${INSTALL}/usr/bin
   cp ${PKG_DIR}/sources/scripts/system_utils ${INSTALL}/usr/bin
   cp ${PKG_DIR}/sources/scripts/volume_sense ${INSTALL}/usr/bin
+  cp ${PKG_DIR}/sources/scripts/bluetooth_sense ${INSTALL}/usr/bin
   if [ -d "${PKG_DIR}/sources/devices/${DEVICE}" ]
   then
     cp ${PKG_DIR}/sources/devices/${DEVICE}/* ${INSTALL}/usr/bin
@@ -34,4 +35,8 @@ makeinstall_target() {
 
   mkdir -p ${INSTALL}/usr/config
   cp ${PKG_DIR}/sources/config/fancontrol.conf ${INSTALL}/usr/config/fancontrol.conf.sample
+}
+
+post_install() {
+  enable_service volume.service
 }

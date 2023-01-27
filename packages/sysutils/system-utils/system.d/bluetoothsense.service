@@ -1,0 +1,12 @@
+[Unit]
+Description=Bluetooth Sense
+Before=jelos.target
+
+[Service]
+Environment=HOME=/storage
+EnvironmentFile=/etc/profile
+ExecStart=/usr/bin/bluetooth_sense
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
