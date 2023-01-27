@@ -37,6 +37,3 @@ makeinstall_target() {
   cp ${PKG_DIR}/sources/config/fancontrol.conf ${INSTALL}/usr/config/fancontrol.conf.sample
 }
 
-post_install() {
-  enable_service volume.service
-}

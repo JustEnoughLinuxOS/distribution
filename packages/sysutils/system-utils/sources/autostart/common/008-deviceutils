@@ -18,3 +18,10 @@ else
   nohup systemctl stop headphones &
 fi
 
+if [ "${DEVICE_VOLUMECTL}" == "true" ]
+then
+  nohup systemctl start volume &
+else
+  nohup systemctl stop volume &
+fi
+
