@@ -46,8 +46,8 @@ PKG_MESON_OPTS_TARGET="-Ddaemon=true \
                        ${PKG_PULSEAUDIO_AVAHI} \
                        ${PKG_PULSEAUDIO_BLUETOOTH} \
                        -Dbluez5-gstreamer=disabled \
-                       -Dbluez5-native-headset=false \
-                       -Dbluez5-ofono-headset=false \
+                       -Dbluez5-native-headset=true \
+                       -Dbluez5-ofono-headset=true \
                        -Ddbus=enabled \
                        -Delogind=disabled \
                        -Dfftw=disabled \

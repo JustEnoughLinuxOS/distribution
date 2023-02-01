@@ -4,9 +4,14 @@
 
 . /etc/profile
 
-### Set the audio device.
-set-audio set "ALC269VB (1:0)"
-set-audio esset "Master"
+
+MYDEVICE=$(get_setting system.audiodevice)
+if [ -z "${MYDEVICE}" ]
+then
+  ### Set the audio device.
+  set-audio set "ALC269VB (1:0)"
+  set-audio esset "Master"
+fi
 
 ### Disables speaker output when headphones are connected.
 alsactl restore -f /storage/.config/asound.state
