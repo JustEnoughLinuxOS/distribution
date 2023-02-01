@@ -287,9 +287,12 @@ then
         		fi
                 ;;
                 "ps2")
-                        jslisten set "-9 pcsx2-qt"
                         if [ "$EMU" = "pcsx2sa" ]; then
+                        jslisten set "-9 pcsx2-qt"
                         RUNTHIS='${TBASH} /usr/bin/start_pcsx2.sh "${ROMNAME}"'
+			elif [ "$EMU" = "aethersx2" ]; then
+                        jslisten set "-9 aethersx2"
+                        RUNTHIS='${TBASH} /usr/bin/start_aethersx2.sh "${ROMNAME}"'
                         fi
                 ;;
                 "gamecube")
