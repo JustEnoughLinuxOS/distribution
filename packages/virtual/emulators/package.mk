@@ -35,6 +35,6 @@ case "${DEVICE}" in
                         pcsx2sa play primehack yuzusa"
   ;;
   RK3588)
-    PKG_DEPENDS_TARGET+=""
+    PKG_DEPENDS_TARGET+=" aethersx2 dolphinsa"
   ;;
 esac
