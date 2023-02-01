@@ -10,9 +10,9 @@
 rr_audio.sh pulseaudio
 export SDL_AUDIODRIVER=pulseaudio
 
-BTTEST=$(amixer -D bluealsa controls >/dev/null 2>&1)
 BTTIMEOUT=10
 BTTESTCOUNT=0
+BTTEST=$(amixer -D bluealsa controls >/dev/null 2>&1)
 if [ $? = 0 ]
 then
   while true
