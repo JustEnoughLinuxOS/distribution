@@ -10,7 +10,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A simple tool for manipulating the embedded controller."
 
 make_target() {
-  cd ectool
+  cd util/ectool
   make
 }
 
