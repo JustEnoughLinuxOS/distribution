@@ -22,9 +22,10 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
 fi
 
-PKG_BASEOS="plymouth-lite grep wget libjpeg-turbo util-linux xmlstarlet bluetool gnupg gzip patchelf \
-            imagemagick terminus-font vim bash pyudev dialog six git dbus-python coreutils miniupnpc \
-            nss-mdns avahi alsa-ucm-conf MC fbgrab modules system-utils autostart powerstate powertop"
+PKG_BASEOS="	plymouth-lite grep wget libjpeg-turbo util-linux xmlstarlet bluetool gnupg gzip patchelf  \
+		imagemagick terminus-font vim bash pyudev dialog six git dbus-python coreutils miniupnpc  \
+		nss-mdns avahi alsa-ucm-conf MC fbgrab modules system-utils autostart powerstate powertop \
+		ectool"
 
 PKG_UI="emulationstation es-themes"
 
