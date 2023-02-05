@@ -12,21 +12,21 @@
 #
 # 0xb1 - Support for 4 zones and RGB color
 #
-# RGB colors:
+#   RGB colors:
 #
-# 1 - Red
-# 2 - Green
-# 3 - Blue
+#   1 - Red
+#   2 - Green
+#   3 - Blue
 #
-# Zones:
+#   Zones:
 #
-# Right (2), Down (5), Left (8) , Up (11)
+#   Right (2), Down (5), Left (8) , Up (11)
 #
-# Note: Set 0xb1 to 02 for off.
+#   Note: Set 0xb1 to 02 for off.
 #
 # 0xb2 - Sets brightness, requires b1 to be set at the same time.
 #
-# 00-ff - brightness from 0-255.  Not noticeable to me above 128.
+#   00-ff - brightness from 0-255.  Not noticeable to me above 128.
 #
 # 0xbf - Set expected mode
 #
