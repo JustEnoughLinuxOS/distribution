@@ -30,11 +30,11 @@
 #
 # 0xbf - Set expected mode
 #
-# 0x10 - Enable
-# 0xe2 - Tint (+ Red for Purple, + Green for Teal)
-# 0xe3-0e5 - Tint + blink (unused)
+#   0x10 - Enable
+#   0xe2 - Tint (+ Red for Purple, + Green for Teal)
+#   0xe3-0e5 - Tint + blink (unused)
 #
-# 0xff - Close channel
+#   0xff - Close channel
 #
 
 . /etc/profile
