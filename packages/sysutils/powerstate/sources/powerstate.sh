@@ -31,6 +31,7 @@ do
               set_setting system.gpuperf auto
             fi
           fi
+          led_mgr
           audio_powersave 1
           cpu_perftune battery
           gpu_performance_level ${GPUMODE}
@@ -40,6 +41,7 @@ do
         ;;
         *)
           log $0 "Switching to performance mode."
+          led_mgr
           audio_powersave 0
           cpu_perftune performance
           gpu_performance_level profile_standard
