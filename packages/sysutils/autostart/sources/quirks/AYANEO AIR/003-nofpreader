@@ -1,0 +1,8 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+FPDEVICE=$(lsusb | awk '/2541:0236/ {print sprintf("%1d-", $2) sprintf("%1d",substr($4, 1, length($4)-1))}')
+echo "${FPDEVICE}" >/sys/bus/usb/drivers/usb/unbind
