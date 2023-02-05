@@ -12,6 +12,7 @@ PKG_LONGDESC="A simple tool for manipulating the embedded controller."
 
 make_target() {
   cd util/ectool
+  export PREFIX=/usr
   make
 }
 

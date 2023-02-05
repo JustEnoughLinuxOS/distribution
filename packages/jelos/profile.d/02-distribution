@@ -39,10 +39,17 @@ get_setting() {
   fi
 }
 
-set_setting() {
+del_setting() {
   if [[ "${1}" =~ ^[[:alnum:]] ]]
   then
     sed -i "/^${1}=/d" "${J_CONF}"
+  fi
+}
+
+set_setting() {
+  if [[ "${1}" =~ ^[[:alnum:]] ]]
+  then
+    del_setting "${1}"
     echo "${1}=${2}" >> "${J_CONF}"
   fi
 }

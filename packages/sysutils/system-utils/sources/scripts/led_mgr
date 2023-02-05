@@ -1,0 +1,145 @@
+#!/bin/sh
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2020-present Fewtarius
+
+#
+# A simple tool to manipulate the joystick LEDs using ectool, thanks to
+# Maya (https://github.com/Maccraft123) for reverse engineering.
+#
+# Schema:
+#
+# 0x6d - LED PWM control (0x03)
+#
+# 0xb1 - Support for 4 zones and RGB color
+#
+# RGB colors:
+#
+# 1 - Red
+# 2 - Green
+# 3 - Blue
+#
+# Zones:
+#
+# Right (2), Down (5), Left (8) , Up (11)
+#
+# Note: Set 0xb1 to 02 for off.
+#
+# 0xbf - Set expected mode
+#
+# 0x10 - Enable
+# 0xe2 - Tint (+ Red for Purple, + Green for Teal)
+# 0xe3-0e5 - Tint + blink (unused)
+#
+# 0xff - Close channel
+#
+
+. /etc/profile
+
+ECTOOL="/usr/sbin/ectool"
+DEBUG=false
+
+function debug_out() {
+  $DEBUG && echo "led_mgr: $*"
+}
+
+function ec_writecmd() {
+  ${ECTOOL} -w 0x6d -z 0x03 >/dev/null 2>&1
+}
+
+function mode() {
+  debug_out "Set mode ${1}"
+  ${ECTOOL} -w 0xbf -z ${1} >/dev/null 2>&1
+  ${ECTOOL} -w 0xbf -z ff >/dev/null 2>&1
+}
+
+function off() {
+  ec_writecmd
+  for twice in 1 2
+  do
+    ### RGB off command
+    ${ECTOOL} -w 0xb1 -z 0x02 >/dev/null 2>&1
+    mode 0x10
+  done
+}
+
+function brightness() {
+  debug_out "Set brightness ${1}"
+  ${ECTOOL} -w 0xb2 -z 0x${1}  >/dev/null 2>&1
+  mode 0x10
+  set_setting led.brightness ${1}
+}
+
+function color() {
+  ## Writing twice seems more reliable than inserting a delay.
+  for twice in 1 2
+  do
+    for zone in 2 5 8 11
+    do
+      zone=$(( ${zone} + ${1} ))
+      zone=$(printf '%02x' ${zone})
+      debug_out "Set color 0x${zone}"
+      ${ECTOOL} -w 0xb1 -z 0x${zone} >/dev/null 2>&1
+      brightness ${2}
+    done
+  done
+}
+
+if [ "${2}" ]
+then
+  LEDBRIGHTNESS=${2}
+else
+  LEDBRIGHTNESS=$(get_setting led.brightness)
+  if [ -z "${LEDBRIGHTNESS}" ]
+  then
+    LEDBRIGHTNESS=ff
+  fi
+fi
+debug_out "led brightness: ${LEDBRIGHTNESS}"
+
+case $1 in
+  red)
+    off
+    color 1 ${LEDBRIGHTNESS}
+    set_setting led.color red
+  ;;
+  green)
+    off
+    color 2 ${LEDBRIGHTNESS}
+    set_setting led.color green
+  ;;
+  blue)
+    off
+    color 3 ${LEDBRIGHTNESS}
+    set_setting led.color blue
+  ;;
+  teal)
+    off
+    mode 0xe2
+    color 2 ${LEDBRIGHTNESS}
+    set_setting led.color teal
+  ;;
+  purple)
+    off
+    mode 0xe2
+    color 1 ${LEDBRIGHTNESS}
+    set_setting led.color purple
+  ;;
+  off)
+    off
+    set_setting led.color off
+  ;;
+  default)
+    del_setting led.color
+    del_setting led.brightness
+  ;;
+  *)
+    COLOR=$(get_setting led.color)
+    LEDBRIGHTNESS=$(get_setting led.brightness)
+    if [ ! -z "${COLOR}" ]
+    then
+      off
+      led_mgr ${COLOR} ${LEDBRIGHTNESS}
+    fi
+  ;;
+esac
+
