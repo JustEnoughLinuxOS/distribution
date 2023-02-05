@@ -19,13 +19,9 @@ pre_configure_target() {
                          -Ddoc=disabled \
                          -Dnls=disabled"
 
-  # Fix undefined symbol glPointSizePointerOES
-  if [ "${OPENGLES}" = "bcm2835-driver" ]; then
-    TARGET_LDFLAGS+=" -lEGL -lGLESv2"
-  fi
   # Fix missing dispmanx
-  if [ "${DEVICE}" = "RPi4" -o "${DEVICE}" = "RPi3" ]; then
-    PKG_MESON_OPTS_TARGET+=" -Dgl_winsys="egl""
+  if [ "${DEVICE}" = "RK3588" ]; then
+    PKG_MESON_OPTS_TARGET+=" -Dgl-graphene=disabled"
   fi
 }
 
