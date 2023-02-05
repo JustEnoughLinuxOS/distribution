@@ -1,9 +1,9 @@
 #!/bin/sh
 # SPDX-License-Identifier: Apache-2.0
-# Copyright (C) 2020-present Fewtarius
+# Copyright (C) 2023-present Fewtarius
 
 #
-# A simple tool to manipulate the joystick LEDs using ectool, thanks to
+# A simple tool to manipulate the controller LEDs using ectool, thanks to
 # Maya (https://github.com/Maccraft123) for reverse engineering.
 #
 # Schema:
