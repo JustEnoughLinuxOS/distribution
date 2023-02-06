@@ -4,4 +4,4 @@
 
 . /etc/profile
 
-/usr/bin/led_mgr
+/usr/bin/ledcontrol
