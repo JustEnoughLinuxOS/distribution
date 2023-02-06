@@ -97,7 +97,7 @@ case $1 in
     touch /run/.last_sleep_time
   ;;
   post)
-    led_mgr
+    ledcontrol
     alsastate restore
     modules start
     powerstate start
