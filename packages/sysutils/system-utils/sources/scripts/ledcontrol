@@ -96,10 +96,10 @@ case ${LEDBRIGHTNESS} in
     LEDBRIGHTNESS=ff
   ;;
   mid)
-    LEDBRIGHTNESS=80
+    LEDBRIGHTNESS=a8
   ;;
   low)
-    LEDBRIGHTNESS=40
+    LEDBRIGHTNESS=54
   ;;
   *)
     LEDBRIGHTNESS=$(get_setting led.brightness)
