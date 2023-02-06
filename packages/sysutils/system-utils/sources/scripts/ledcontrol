@@ -71,7 +71,6 @@ function brightness() {
   debug_out "Set brightness ${1}"
   ${ECTOOL} -w 0xb2 -z 0x${1}  >/dev/null 2>&1
   mode 0x10
-  set_setting led.brightness ${1}
 }
 
 function color() {
@@ -89,26 +88,33 @@ function color() {
   done
 }
 
+GETBRIGHTNESS=$(get_setting led.brightness)
+if [ ! -z "${2}" ]
+then
+  LEDBRIGHTNESS=${2}
+  debug_out "Arg[2]: ${2}"
+elif [ ! -z "${GETBRIGHTNESS}" ]
+then
+  LEDBRIGHTNESS=${GETBRIGHTNESS}
+  debug_out "GETBRIGHTESS: ${GETBRIGHTNESS}"
+else
+  debug_out "NO SETTING: max"
+  LEDBRIGHTNESS=max
+  set_setting led.brightness max
+fi
 
-LEDBRIGHTNESS=${2}
 case ${LEDBRIGHTNESS} in
   max)
     LEDBRIGHTNESS=ff
+    set_setting led.brightness max
   ;;
   mid)
     LEDBRIGHTNESS=a8
+    set_setting led.brightness mid
   ;;
-  low)
+  min)
     LEDBRIGHTNESS=54
-  ;;
-  *)
-    LEDBRIGHTNESS=$(get_setting led.brightness)
-    if [ -z "${LEDBRIGHTNESS}" ]
-    then
-      LEDBRIGHTNESS=ff
-    else
-      LEDBRIGHTNESS=${2}
-    fi
+    set_setting led.brightness min
   ;;
 esac
 
@@ -160,7 +166,6 @@ case $1 in
   ;;
   *)
     COLOR=$(get_setting led.color)
-    LEDBRIGHTNESS=$(get_setting led.brightness)
     if [ ! -z "${COLOR}" ]
     then
       off
