@@ -51,10 +51,6 @@ then
   # If DEVICE_ROOT is defined, take additional clean steps to ensure everything is built
   # properly for all devices including the root device.
 
-  PKG_CLEAN="${PKG_CLEAN} mupen64plus-nx mupen64plus flycast_libretro dosbox-pure \
-             gpsp PPSSPPSDL mupen64plussa-core mupen64plussa-input-sdl gamecontrollerdb
-             duckstationsa moonlight"
-
 fi
 
 # Clean OS specific packages.
