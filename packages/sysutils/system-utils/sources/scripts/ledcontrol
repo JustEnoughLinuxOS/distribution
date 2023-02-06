@@ -62,6 +62,7 @@ function off() {
   do
     ### RGB off command
     ${ECTOOL} -w 0xb1 -z 0x02 >/dev/null 2>&1
+    ${ECTOOL} -w 0xb2 -z 0xc0 >/dev/null 2>&1
     mode 0x10
   done
 }
@@ -88,16 +89,29 @@ function color() {
   done
 }
 
-if [ "${2}" ]
-then
-  LEDBRIGHTNESS=${2}
-else
-  LEDBRIGHTNESS=$(get_setting led.brightness)
-  if [ -z "${LEDBRIGHTNESS}" ]
-  then
+
+LEDBRIGHTNESS=${2}
+case ${LEDBRIGHTNESS} in
+  max)
     LEDBRIGHTNESS=ff
-  fi
-fi
+  ;;
+  mid)
+    LEDBRIGHTNESS=80
+  ;;
+  low)
+    LEDBRIGHTNESS=40
+  ;;
+  *)
+    LEDBRIGHTNESS=$(get_setting led.brightness)
+    if [ -z "${LEDBRIGHTNESS}" ]
+    then
+      LEDBRIGHTNESS=ff
+    else
+      LEDBRIGHTNESS=${2}
+    fi
+  ;;
+esac
+
 debug_out "led brightness: ${LEDBRIGHTNESS}"
 
 case $1 in
@@ -135,6 +149,14 @@ case $1 in
   default)
     del_setting led.color
     del_setting led.brightness
+  ;;
+  brightness)
+    COLOR=$(get_setting led.color)
+    if [ ! -z "${COLOR}" ]
+    then
+      off
+      led_mgr ${COLOR} ${LEDBRIGHTNESS}
+    fi
   ;;
   *)
     COLOR=$(get_setting led.color)
