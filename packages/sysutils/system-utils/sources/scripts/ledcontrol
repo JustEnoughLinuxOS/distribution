@@ -43,7 +43,7 @@ ECTOOL="/usr/sbin/ectool"
 DEBUG=false
 
 function debug_out() {
-  $DEBUG && echo "led_mgr: $*"
+  $DEBUG && echo "ledcontrol: $*"
 }
 
 function ec_writecmd() {
@@ -155,7 +155,7 @@ case $1 in
     if [ ! -z "${COLOR}" ]
     then
       off
-      led_mgr ${COLOR} ${LEDBRIGHTNESS}
+      ledcontrol ${COLOR} ${LEDBRIGHTNESS}
     fi
   ;;
   *)
@@ -164,7 +164,7 @@ case $1 in
     if [ ! -z "${COLOR}" ]
     then
       off
-      led_mgr ${COLOR} ${LEDBRIGHTNESS}
+      ledcontrol ${COLOR} ${LEDBRIGHTNESS}
     fi
   ;;
 esac
