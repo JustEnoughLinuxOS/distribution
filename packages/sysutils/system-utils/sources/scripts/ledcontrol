@@ -1,9 +1,9 @@
 #!/bin/sh
 # SPDX-License-Identifier: Apache-2.0
-# Copyright (C) 2020-present Fewtarius
+# Copyright (C) 2023-present Fewtarius
 
 #
-# A simple tool to manipulate the joystick LEDs using ectool, thanks to
+# A simple tool to manipulate the controller LEDs using ectool, thanks to
 # Maya (https://github.com/Maccraft123) for reverse engineering.
 #
 # Schema:
@@ -30,11 +30,11 @@
 #
 # 0xbf - Set expected mode
 #
-# 0x10 - Enable
-# 0xe2 - Tint (+ Red for Purple, + Green for Teal)
-# 0xe3-0e5 - Tint + blink (unused)
+#   0x10 - Enable
+#   0xe2 - Tint (+ Red for Purple, + Green for Teal)
+#   0xe3-0e5 - Tint + blink (unused)
 #
-# 0xff - Close channel
+#   0xff - Close channel
 #
 
 . /etc/profile
@@ -43,7 +43,7 @@ ECTOOL="/usr/sbin/ectool"
 DEBUG=false
 
 function debug_out() {
-  $DEBUG && echo "led_mgr: $*"
+  $DEBUG && echo "ledcontrol: $*"
 }
 
 function ec_writecmd() {
@@ -62,6 +62,7 @@ function off() {
   do
     ### RGB off command
     ${ECTOOL} -w 0xb1 -z 0x02 >/dev/null 2>&1
+    ${ECTOOL} -w 0xb2 -z 0xc0 >/dev/null 2>&1
     mode 0x10
   done
 }
@@ -70,7 +71,6 @@ function brightness() {
   debug_out "Set brightness ${1}"
   ${ECTOOL} -w 0xb2 -z 0x${1}  >/dev/null 2>&1
   mode 0x10
-  set_setting led.brightness ${1}
 }
 
 function color() {
@@ -88,16 +88,36 @@ function color() {
   done
 }
 
-if [ "${2}" ]
+GETBRIGHTNESS=$(get_setting led.brightness)
+if [ ! -z "${2}" ]
 then
   LEDBRIGHTNESS=${2}
+  debug_out "Arg[2]: ${2}"
+elif [ ! -z "${GETBRIGHTNESS}" ]
+then
+  LEDBRIGHTNESS=${GETBRIGHTNESS}
+  debug_out "GETBRIGHTESS: ${GETBRIGHTNESS}"
 else
-  LEDBRIGHTNESS=$(get_setting led.brightness)
-  if [ -z "${LEDBRIGHTNESS}" ]
-  then
-    LEDBRIGHTNESS=ff
-  fi
+  debug_out "NO SETTING: max"
+  LEDBRIGHTNESS=max
+  set_setting led.brightness max
 fi
+
+case ${LEDBRIGHTNESS} in
+  max)
+    LEDBRIGHTNESS=ff
+    set_setting led.brightness max
+  ;;
+  mid)
+    LEDBRIGHTNESS=a8
+    set_setting led.brightness mid
+  ;;
+  min)
+    LEDBRIGHTNESS=54
+    set_setting led.brightness min
+  ;;
+esac
+
 debug_out "led brightness: ${LEDBRIGHTNESS}"
 
 case $1 in
@@ -136,13 +156,20 @@ case $1 in
     del_setting led.color
     del_setting led.brightness
   ;;
-  *)
+  brightness)
     COLOR=$(get_setting led.color)
-    LEDBRIGHTNESS=$(get_setting led.brightness)
     if [ ! -z "${COLOR}" ]
     then
       off
-      led_mgr ${COLOR} ${LEDBRIGHTNESS}
+      ledcontrol ${COLOR} ${LEDBRIGHTNESS}
+    fi
+  ;;
+  *)
+    COLOR=$(get_setting led.color)
+    if [ ! -z "${COLOR}" ]
+    then
+      off
+      ledcontrol ${COLOR} ${LEDBRIGHTNESS}
     fi
   ;;
 esac

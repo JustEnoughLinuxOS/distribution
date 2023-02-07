@@ -50,16 +50,6 @@ io/etcher/), [Raspberry Pi Imager](https://www.raspberrypi.com/software/), and [
 ## Network Access
 * External services are disabled by default in stable builds.  When enabled, the username for ssh and samba access is "root".  The root password is generated during every boot, it can be found in the System Settings menu.
 
-## RetroArch Hotkeys
-* Hotkey Enable: Select (Hold)
-  * Exit: Start (Press Twice)
-  * Menu: X
-  * Show/Hide FPS: Y
-  * Save State: R1
-  * Load State: L1
-  * Rewind: L2
-  * Fast-Forward Toggle: R2
-
 ## Documentation
 * [Home](https://github.com/JustEnoughLinuxOS/distribution/wiki)
 * [Donating to JELOS](https://github.com/JustEnoughLinuxOS/distribution/wiki/Donating-to-JELOS)
@@ -67,7 +57,9 @@ io/etcher/), [Raspberry Pi Imager](https://www.raspberrypi.com/software/), and [
 * [HotKeys](https://github.com/JustEnoughLinuxOS/distribution/wiki/Hotkeys)
 * [Emulators and Game Engines](https://github.com/JustEnoughLinuxOS/distribution/wiki/JELOS-emulators-and-game-engines)
 * [Moonlight Game Streaming](https://github.com/JustEnoughLinuxOS/distribution/wiki/Moonlight-Game-Streaming)
+* [Performance and Battery Life Optimizations](https://github.com/JustEnoughLinuxOS/distribution/wiki/Performance-and-Battery-Life-Optimizations)
 * [Using Cloud Drives](https://github.com/JustEnoughLinuxOS/distribution/wiki/Using-Cloud-Drives)
+* [Tailscale VPN](https://github.com/JustEnoughLinuxOS/distribution/wiki/Tailscale-VPN)
 * [Wireguard VPN](https://github.com/JustEnoughLinuxOS/distribution/wiki/WireGuard-VPN)
 
 ## Contributing
