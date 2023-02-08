@@ -1,0 +1,78 @@
+From c4936e08b7553f565f4ec3c1b097de411a0b6b5c Mon Sep 17 00:00:00 2001
+From: Gyusun Yeom <omniavinco@gmail.com>
+Date: Thu, 4 Feb 2021 22:10:43 +0900
+Subject: [PATCH 1/2] Install libGLEW symbolic links
+
+---
+ CMakeLists.txt | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 5bfdcb2e..03a025fc 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -97,8 +97,12 @@ if(glew-cmake_BUILD_STATIC)
+ 		OUTPUT_NAME "glew"
+ 		DEBUG_POSTFIX d)
+ 
+-		target_compile_definitions(libglew_static PUBLIC GLEW_STATIC)
++	target_compile_definitions(libglew_static PUBLIC GLEW_STATIC)
+ 	list(APPEND GLEW_TARGETS libglew_static)
++	if(NOT WIN32)
++		file(CREATE_LINK "libglew.a" "${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}/libGLEW.a" SYMBOLIC)
++		install(FILES ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}/libGLEW.a TYPE LIB)
++	endif()
+ endif()
+ 
+ if(glew-cmake_BUILD_SHARED)
+@@ -112,6 +116,10 @@ if(glew-cmake_BUILD_SHARED)
+ 		set_target_properties(libglew_shared PROPERTIES
+ 			OUTPUT_NAME "glew"
+ 			DEBUG_POSTFIX d)
++		if(NOT WIN32)
++			file(CREATE_LINK "libglew.so" "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}libGLEW.so" SYMBOLIC)
++			install(FILES ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libGLEW.so TYPE LIB)
++		endif()
+ 	endif()
+ 
+ 	target_compile_definitions(libglew_shared PRIVATE GLEW_BUILD)
+
+From 81b97ab31e789d02e488d18dac5889d9399de813 Mon Sep 17 00:00:00 2001
+From: Gyusun Yeom <omniavinco@gmail.com>
+Date: Sat, 6 Feb 2021 16:04:38 +0900
+Subject: [PATCH 2/2] Use POST_BUILD script
+
+---
+ CMakeLists.txt | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 03a025fc..3d28ad7b 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -100,7 +100,11 @@ if(glew-cmake_BUILD_STATIC)
+ 	target_compile_definitions(libglew_static PUBLIC GLEW_STATIC)
+ 	list(APPEND GLEW_TARGETS libglew_static)
+ 	if(NOT WIN32)
+-		file(CREATE_LINK "libglew.a" "${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}/libGLEW.a" SYMBOLIC)
++		add_custom_command(TARGET libglew_static POST_BUILD
++			COMMAND ${CMAKE_COMMAND} ARGS -E create_symlink libglew.a libGLEW.a
++			WORKING_DIRECTORY ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}
++			BYPRODUCTS ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}/libGLEW.a
++			COMMENT "create libGLEW symbolic link")
+ 		install(FILES ${CMAKE_ARCHIVE_OUTPUT_DIRECTORY}/libGLEW.a TYPE LIB)
+ 	endif()
+ endif()
+@@ -117,7 +121,11 @@ if(glew-cmake_BUILD_SHARED)
+ 			OUTPUT_NAME "glew"
+ 			DEBUG_POSTFIX d)
+ 		if(NOT WIN32)
+-			file(CREATE_LINK "libglew.so" "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}libGLEW.so" SYMBOLIC)
++			add_custom_command(TARGET libglew_shared POST_BUILD
++				COMMAND ${CMAKE_COMMAND} ARGS -E create_symlink libglew.so libGLEW.so
++				WORKING_DIRECTORY ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
++				BYPRODUCTS ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libGLEW.so
++				COMMENT "create libGLEW symbolic link")
+ 			install(FILES ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libGLEW.so TYPE LIB)
+ 		endif()
+ 	endif()
