@@ -32,7 +32,7 @@ PKG_DEPENDS_TARGET="${PKG_EMUS} ${PKG_RETROARCH} ${LIBRETRO_CORES}"
 case "${DEVICE}" in
   handheld)
     PKG_DEPENDS_TARGET+=" dolphinsa cemu citra citrasa desmume lrps2 melondssa minivmac minivmacsa       \
-                        pcsx2sa play primehack yuzusa"
+                        pcsx2sa play primehack rpcs3sa yuzusa"
   ;;
   RK3588)
     PKG_DEPENDS_TARGET+=" aethersx2"

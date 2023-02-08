@@ -36,8 +36,8 @@ pre_configure_target() {
                              -DBUILD_WSI_XLIB_SUPPORT=ON \
                              -DBUILD_WSI_WAYLAND_SUPPORT=OFF"
   elif [ "${DISPLAYSERVER}" = "wl" ]; then
-    PKG_CMAKE_OPTS_TARGET+=" -DBUILD_WSI_XCB_SUPPORT=OFF \
-                             -DBUILD_WSI_XLIB_SUPPORT=OFF \
+    PKG_CMAKE_OPTS_TARGET+=" -DBUILD_WSI_XCB_SUPPORT=ON \
+                             -DBUILD_WSI_XLIB_SUPPORT=ON \
                              -DBUILD_WSI_WAYLAND_SUPPORT=ON"
   else
     PKG_CMAKE_OPTS_TARGET+=" -DBUILD_WSI_XCB_SUPPORT=OFF \

@@ -295,6 +295,12 @@ then
                         RUNTHIS='${TBASH} /usr/bin/start_aethersx2.sh "${ROMNAME}"'
                         fi
                 ;;
+                "ps3")
+                        jslisten set "-9 rpcs3"
+                        if [ "$EMU" = "rpcs3sa" ]; then
+                        RUNTHIS='${TBASH} /usr/bin/start_rpcs3sa.sh "${ROMNAME}"'
+                        fi
+                ;;
                 "gamecube")
                         jslisten set "-9 dolphin-emu-nogui"
                         if [ "$EMU" = "dolphinsa-gc" ]; then
