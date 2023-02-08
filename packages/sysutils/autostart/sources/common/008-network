@@ -8,12 +8,6 @@ HOSTNAME=$(get_setting system.hostname)
 hostname ${HOSTNAME}
 avahi-set-host-name ${HOSTNAME}
 
-NETCHECK=$(systemctl status connman >/dev/null 2>&1)
-if [ "$?" = "0" ]
-then
-  systemctl restart connman
-fi
-
 if [ "$(get_setting wifi.enabled)" == "0" ] || [ "$1" == "disable" ]
 then
   nohup wifictl disable &
