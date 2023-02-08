@@ -84,9 +84,6 @@ connect_wifi() {
 
 set_profile() {
   cat > "${WIFICFG}" <<EOF
-[global]
-Name=${OS_NAME}
-
 [service_${OS_NAME}_default]
 Type = wifi
 Name = ${SSID}
