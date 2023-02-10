@@ -1,0 +1,10 @@
+[Unit]
+Description=Start SyncThing
+After=jelos.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/start_syncthing.sh
+
+[Install]
+WantedBy=jelos.service
