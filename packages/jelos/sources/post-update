@@ -171,5 +171,12 @@ then
   set_setting ipv6.enabled 0
 fi
 
+SYNCTHING=$(get_setting syncthing.enabled)
+if [ -z "${SYNCTHING}" ]
+then
+  echo "Set syncthing default" >>${LOG}
+  set_setting syncthing.enabled=0
+fi
+
 ### Force everyone to the stable repo
 set_setting updates.branch stable
