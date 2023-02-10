@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="lrps2"
-PKG_VERSION="1f88fb5e663ff8b516dbca00f81fac271333b4aa"
+PKG_VERSION="f3c8743d6a42fe429f703b476fecfdb5655a98a9"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_DEPENDS_TARGET="toolchain alsa-lib freetype zlib libpng libaio libsamplerate libfmt libpcap soundtouch yamlcpp wxwidgets"
