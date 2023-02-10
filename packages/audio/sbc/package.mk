@@ -3,8 +3,7 @@
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="sbc"
-PKG_VERSION="1.5"
-PKG_SHA256="51d4e385237e9d4780c7b20e660e30fb6a7a6d75ca069f1ed630fa6105232aba"
+PKG_VERSION="2.0"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.bluez.org/"
 PKG_URL="http://www.kernel.org/pub/linux/bluetooth/sbc-${PKG_VERSION}.tar.gz"

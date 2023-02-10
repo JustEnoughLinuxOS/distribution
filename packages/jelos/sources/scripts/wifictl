@@ -72,6 +72,11 @@ check_wifi() {
 }
 
 connect_wifi() {
+  NETCHECK=$(systemctl status connman >/dev/null 2>&1)
+  if [ ! "$?" = "0" ]
+  then
+    systemctl start connman
+  fi
   STATE=$(get_wifi_state)
   if [ ! "${STATE}" = "online" ]
   then
@@ -84,9 +89,6 @@ connect_wifi() {
 
 set_profile() {
   cat > "${WIFICFG}" <<EOF
-[global]
-Name=${OS_NAME}
-
 [service_${OS_NAME}_default]
 Type = wifi
 Name = ${SSID}

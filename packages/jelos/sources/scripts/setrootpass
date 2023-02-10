@@ -18,5 +18,8 @@ sed -i "s#root:${CURRENT}:${LPC}::::::#root:${NEW}:${LPC}::::::#g" /storage/.cac
 # Create a root user and set the password.
 echo -ne "${ROOTPASS}\n${ROOTPASS}\n" | smbpasswd -sa root 2>/dev/null
 
+# Set the root user and password for SyncThing
+syncthing generate --gui-user "root" --gui-password "${ROOTPASS}"
+
 # Save the password so we can display it in ES
 set_setting root.password "${ROOTPASS}"

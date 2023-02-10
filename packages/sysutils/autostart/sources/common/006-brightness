@@ -17,4 +17,8 @@ then
   BRIGHTNESS=3
 fi
 
-printf "%.0f" $(echo "${BRIGHTNESS}") > /sys/class/backlight/$(brightness device)/brightness
+BRIGHTNESS_DEVICE="$(brightness device)"
+if [ -e "/sys/class/backlight/${BRIGHTNESS_DEVICE}/brightness" ]
+then
+  printf "%.0f" $(echo "${BRIGHTNESS}") > /sys/class/backlight/${BRIGHTNESS_DEVICE}/brightness
+fi

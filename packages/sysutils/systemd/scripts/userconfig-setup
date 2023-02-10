@@ -6,47 +6,42 @@
 
 . /etc/profile
 
-# Remove those sample files that we manage
-for sample in $(find /storage/.config -name '*.sample' 2>/dev/null); do
-  [ -f /usr/config/${sample:16} ] && rm -f ${sample}
-done
-
 if [ ! -e "/storage/.configured" ]
 then
   # Copy config files, but don't overwrite.  Only run if /storage is fresh
   ## cp -iRp /usr/config/* /storage/.config/ &>/dev/null
   ## ignore es_systems.cfg and switch to rsync
-  rsync -a --ignore-existing --exclude=es_systems.cfg /usr/config/* /storage/.config/
-  mkdir -p /storage/.config/emulationstation/themes
-  ln -s /usr/share/themes/es-theme-art-book-next /storage/.config/emulationstation/themes/system-theme
-  ln -s /usr/share/themes/es-theme-minielec /storage/.config/emulationstation/themes/es-theme-minielec
-  ln -s /usr/share/themes/es-theme-minimal /storage/.config/emulationstation/themes/es-theme-minimal
+  rsync -a --ignore-existing --exclude=es_systems.cfg /usr/config/* /storage/.config/ 2>&1 >/var/log/configure.log
+  mkdir -p /storage/.config/emulationstation/themes 2>&1 >>/var/log/configure.log
+  ln -s /usr/share/themes/es-theme-art-book-next /storage/.config/emulationstation/themes/system-theme 2>&1 >>/var/log/configure.log
+  ln -s /usr/share/themes/es-theme-minielec /storage/.config/emulationstation/themes/es-theme-minielec 2>&1 >>/var/log/configure.log
+  ln -s /usr/share/themes/es-theme-minimal /storage/.config/emulationstation/themes/es-theme-minimal 2>&1 >>/var/log/configure.log
 
   ### Link the game controller database so it is managed with OS updates.
-  rm -f /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt
-  ln -s /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt
+  rm -f /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt 2>&1 >>/var/log/configure.log
+  ln -s /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt 2>&1 >>/var/log/configure.log
 
   ### Remove and link es configs so they are managed with OS updates.
   for es_cfg in es_features.cfg es_systems.cfg
   do
-    ln -s /usr/config/emulationstation/${es_cfg} /storage/.config/emulationstation/${es_cfg}
+    ln -s /usr/config/emulationstation/${es_cfg} /storage/.config/emulationstation/${es_cfg} 2>&1 >>/var/log/configure.log
   done
 
   ### Link the ES splash to the distribution splash
-  rm -f /storage/.config/emulationstation/resources/logo.png
-  ln -sf /usr/config/splash/splash.png /storage/.config/emulationstation/resources/logo.png
+  rm -f /storage/.config/emulationstation/resources/logo.png 2>&1 >>/var/log/configure.log
+  ln -sf /usr/config/splash/splash.png /storage/.config/emulationstation/resources/logo.png 2>&1 >>/var/log/configure.log
 
-  mkdir -p /storage/.config/modprobe.d
-  touch /storage/.configured
+  mkdir -p /storage/.config/modprobe.d 2>&1 >>/var/log/configure.log
+  touch /storage/.configured 2>&1 >>/var/log/configure.log
 fi
 
 if [ ! -e "/storage/.cache/ld.so.cache" ]
 then
   ### Create library cache
-  ldconfig -X 
+  ldconfig -X 2>&1 >>/var/log/configure.log
 fi
 
-if [ ! -d "/storage/.config/emulationstation/locale/" ]
+if [ ! -d "/storage/.config/emulationstation/locale" ]
 then
-  rsync -a --delete /usr/config/locale/ /storage/.config/emulationstation/locale/
+  rsync -a --delete /usr/config/locale/ /storage/.config/emulationstation/locale/ 2>&1 >>/var/log/configure.log
 fi
