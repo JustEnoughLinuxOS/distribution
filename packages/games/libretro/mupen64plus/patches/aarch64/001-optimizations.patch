@@ -6,14 +6,14 @@ diff -rupN mupen64plus.orig/Makefile mupen64plus/Makefile
     COREFLAGS += -DOS_LINUX
     ASFLAGS = -f elf -d ELF_TYPE
 +
-+# Rockchip RK3566 / RK3588
++# Rockchip @DEVICE@
 +else ifneq (,$(findstring RK,$(platform)))
 +   TARGET := $(TARGET_NAME)_libretro.so
 +   LDFLAGS += -shared -Wl,--version-script=$(LIBRETRO_DIR)/link.T -Wl,--no-undefined -ldl
 +
-+   ifneq (,$(findstring RK3588,$(platform)))
-+      ifneq (,$(findstring RK3588,$(platform)))
-+         CPUFLAGS += -march=armv8-a -mtune=cortex-a76.cortex-a55
++   ifneq (,$(findstring @DEVICE@,$(platform)))
++      ifneq (,$(findstring @DEVICE@,$(platform)))
++         CPUFLAGS += -march=armv8-a -mtune=@TARGET_CPU@
 +      else ifneq (,$(findstring RK3566,$(platform)))
 +         CPUFLAGS += -march=armv8-a -mtune=cortex-a55
 +         GLES = 1

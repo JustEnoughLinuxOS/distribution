@@ -184,7 +184,7 @@ if [ -d "${SOURCES}/${PKG_NAME}" -o -d "${PKG_DIR}/sources" ] || pkg_call_exists
         if grep -qE '^GIT binary patch$|^rename from|^rename to' ${i}; then
           cat ${i} | git apply --directory=$(echo "${PKG_BUILD}" | cut -f1 -d\ ) -p1 --verbose --whitespace=nowarn --unsafe-paths >&${VERBOSE_OUT}
         else
-          cat ${i} | patch -d $(echo "${PKG_BUILD}" | cut -f1 -d\ ) -p1 >&${VERBOSE_OUT}
+          cat ${i} | sed -s -e "s#@TARGET_CPU@#${TARGET_CPU}#g" -e "s#@DEVICE@#${DEVICE}#g" | patch -d $(echo "${PKG_BUILD}" | cut -f1 -d\ ) -p1 >&${VERBOSE_OUT}
         fi
       fi
     done

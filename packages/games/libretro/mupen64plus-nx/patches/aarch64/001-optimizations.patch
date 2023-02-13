@@ -22,8 +22,8 @@ diff -rupN mupen64plus.orig/Makefile mupen64plus/Makefile
 -         CPUFLAGS += -mtune=cortex-a53
 -         GLES = 1
 +         CPUFLAGS += -march=armv8-a -mtune=cortex-a72.cortex-a53
-+      else ifneq (,$(findstring RK3588,$(platform)))
-+         CPUFLAGS += -march=armv8-a -mtune=cortex-a76.cortex-a55
++      else ifneq (,$(findstring @DEVICE@,$(platform)))
++         CPUFLAGS += -march=armv8-a -mtune=@TARGET_CPU@
        endif
     else ifneq (,$(findstring RK3288,$(platform)))
        CPUFLAGS += -march=armv7ve -mtune=cortex-a17 -mfloat-abi=hard -mfpu=neon-vfpv4
