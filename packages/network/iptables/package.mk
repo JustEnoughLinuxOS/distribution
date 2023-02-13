@@ -12,6 +12,12 @@ PKG_TOOLCHAIN="autotools"
 
 
 case ${DEVICE} in
+  RG*)
+    PKG_VERSION="1.8.3"
+    PKG_PATCH_DIRS+="4.x"
+    PKG_CONFIGURE_OPTS_TARGET="--with-kernel=$(kernel_path)
+    CPPFLAGS=-I${SYSROOT_PREFIX}/usr/include"
+  ;;
   *)
     PKG_VERSION="1.8.8"
     PKG_PATCH_DIRS+="5.x"
