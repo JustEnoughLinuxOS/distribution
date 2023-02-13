@@ -49,7 +49,9 @@ repo
 local.conf
 sx05re-kodi*.log
 
-packages/sx05re/experimental/
+projects/Anbernic
+RG353P
+RG503
 
 release/
 
