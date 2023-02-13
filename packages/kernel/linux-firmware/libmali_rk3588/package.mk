@@ -2,6 +2,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="libmali_rk3588"
+PKG_VERSION="1.0"
 PKG_LICENSE="GPLv3"
 PKG_ARCH="arm aarch64"
 PKG_DEPENDS_TARGET="kernel-firmware"
