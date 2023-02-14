@@ -14,14 +14,6 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_TOOLCHAIN="make"
 
-if [ ! "${OPENGL}" = "no" ]; then
-  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
-fi
-
-if [ "${OPENGLES_SUPPORT}" = yes ]; then
-  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-fi
-
 PKG_BASEOS="plymouth-lite grep wget libjpeg-turbo util-linux xmlstarlet bluetool gnupg gzip patchelf  \
             imagemagick terminus-font vim bash pyudev dialog six git dbus-python coreutils miniupnpc  \
             nss-mdns avahi alsa-ucm-conf MC fbgrab modules system-utils autostart powerstate powertop \
@@ -42,7 +34,7 @@ case "${DEVICE}" in
   ;;
 esac
 
-PKG_TOOLS="i2c-tools synctools jslisten evtest tailscale pygobject mesa-demos"
+PKG_TOOLS="i2c-tools synctools jslisten evtest tailscale pygobject"
 
 ### Project specific variables
 case "${PROJECT}" in
@@ -54,6 +46,10 @@ case "${PROJECT}" in
     PKG_BASEOS+=" installer"
   ;;
 esac
+
+if [ ! "${OPENGL}" = "no" ]; then
+  PKG_DEPENDS_TARGET+=" mesa-demos"
+fi
 
 if [ ! -z "${BASE_ONLY}" ]
 then
