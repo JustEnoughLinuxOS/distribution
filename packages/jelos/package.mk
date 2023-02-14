@@ -38,12 +38,12 @@ PKG_TOOLS="i2c-tools synctools jslisten evtest tailscale pygobject"
 
 ### Project specific variables
 case "${PROJECT}" in
-  Rockchip)
-    PKG_EMUS+=" retropie-shaders"
-    PKG_COMPAT+=" lib32"
-  ;;
   PC)
     PKG_BASEOS+=" installer"
+  ;;
+  *)
+    PKG_EMUS+=" retropie-shaders"
+    PKG_COMPAT+=" lib32"
   ;;
 esac
 
