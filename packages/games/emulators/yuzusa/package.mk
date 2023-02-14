@@ -2,12 +2,12 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="yuzusa"
-PKG_VERSION="c5743d5499db336718b93a6954ec1168c660fbec"
+PKG_VERSION="5f5a6e4b2e541e86c0bfdb99e3acfbbebe89a5d3"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/yuzu-emu/yuzu"
 PKG_URL="$PKG_SITE.git"
-PKG_DEPENDS_TARGET="toolchain libfmt boost ffmpeg zstd zlib libzip lz4 opus libusb nlohmann-json"
+PKG_DEPENDS_TARGET="toolchain libfmt boost ffmpeg zstd zlib libzip lz4 opus libusb nlohmann-json qt5"
 PKG_SHORTDESC="Nintendo Switch emulator"
 PKG_TOOLCHAIN="cmake"
 GET_HANDLER_SUPPORT="git"
@@ -30,7 +30,7 @@ then
   PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
 fi
 
-PKG_CMAKE_OPTS_TARGET+="        -DENABLE_QT=OFF \
+PKG_CMAKE_OPTS_TARGET+="        -DENABLE_QT=ON \
                                 -DCMAKE_BUILD_TYPE=Release \
                                 -DYUZU_USE_BUNDLED_SDL2=OFF \
                                 -DYUZU_USE_BUNDLED_QT=OFF \
