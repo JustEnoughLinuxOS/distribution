@@ -6,6 +6,7 @@
 PKG_NAME="u-boot"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPL"
+PKG_SITE="https://github.com/JustEnoughLinuxOS"
 PKG_DEPENDS_TARGET="toolchain swig:host rkbin"
 PKG_LONGDESC="Rockchip U-Boot is a bootloader for embedded systems."
 GET_HANDLER_SUPPORT="git"
@@ -13,7 +14,7 @@ PKG_PATCH_DIRS+="${DEVICE}"
 
 case ${DEVICE} in
  RK3588)
-    PKG_URL="https://github.com/orangepi-xunlong/u-boot-orangepi.git"
+    PKG_URL="${PKG_SITE}/rk35xx-uboot.git"
     PKG_VERSION="6534133f97a8e4fb6db83e58dbde23aec6041ec2"
     PKG_GIT_CLONE_BRANCH="v2017.09-rk3588"
   ;;
@@ -47,7 +48,7 @@ make_target() {
     fi
     [ "${BUILD_WITH_DEBUG}" = "yes" ] && PKG_DEBUG=1 || PKG_DEBUG=0
       DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 make mrproper
-      DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 make ${UBOOT_CONFIG} BL31=$(get_build_dir rkbin)/${PKG_BL31} ${PKG_LOADER} u-boot.dtb u-boot.itb
+      DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 make ${UBOOT_CONFIG} BL31=$(get_build_dir rkbin)/${PKG_BL31} $(get_build_dir rkbin)/${PKG_LOADER} u-boot.dtb u-boot.itb
       DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 _python_sysroot="${TOOLCHAIN}" _python_prefix=/ _python_exec_prefix=/ make HOSTCC="$HOST_CC" HOSTLDFLAGS="-L${TOOLCHAIN}/lib" HOSTSTRIP="true" CONFIG_MKIMAGE_DTC_PATH="scripts/dtc/dtc"
   fi
 }
