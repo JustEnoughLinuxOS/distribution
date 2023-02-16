@@ -1,0 +1,91 @@
+diff --git a/RKBOOT/RK3566MINIALL.ini b/RKBOOT/RK3566MINIALL.ini
+index c89f78e..a40530e 100755
+--- a/RKBOOT/RK3566MINIALL.ini
++++ b/RKBOOT/RK3566MINIALL.ini
+@@ -18,8 +18,3 @@ FlashData=bin/rk35/rk3566_ddr_1056MHz_v1.10.bin
+ FlashBoot=bin/rk35/rk356x_spl_v1.11.bin
+ [OUTPUT]
+ PATH=rk356x_spl_loader_v1.10.111.bin
+-[SYSTEM]
+-NEWIDB=true
+-[FLAG]
+-471_RC4_OFF=true
+-RC4_OFF=true
+diff --git a/RKBOOT/RK3566MINIALL_NAND.ini b/RKBOOT/RK3566MINIALL_NAND.ini
+index 448ad59..de0fb28 100755
+--- a/RKBOOT/RK3566MINIALL_NAND.ini
++++ b/RKBOOT/RK3566MINIALL_NAND.ini
+@@ -18,8 +18,3 @@ FlashData=bin/rk35/rk3566_ddr_1056MHz_v1.10.bin
+ FlashBoot=bin/rk35/rk356x_spl_nand_v1.07.bin
+ [OUTPUT]
+ PATH=rk3566_spl_loader_nand_v1.10.107.bin
+-[SYSTEM]
+-NEWIDB=true
+-[FLAG]
+-471_RC4_OFF=true
+-RC4_OFF=true
+diff --git a/RKBOOT/RK3566MINIALL_ULTRA.ini b/RKBOOT/RK3566MINIALL_ULTRA.ini
+index 374d131..832698f 100755
+--- a/RKBOOT/RK3566MINIALL_ULTRA.ini
++++ b/RKBOOT/RK3566MINIALL_ULTRA.ini
+@@ -18,8 +18,3 @@ FlashData=bin/rk35/rk3566_ddr_528MHz_ultra_v1.08.bin
+ FlashBoot=bin/rk35/rk356x_spl_v1.11.bin
+ [OUTPUT]
+ PATH=rk356x_spl_loader_v1.07.111.bin
+-[SYSTEM]
+-NEWIDB=true
+-[FLAG]
+-471_RC4_OFF=true
+-RC4_OFF=true
+diff --git a/RKBOOT/RK3568MINIALL.ini b/RKBOOT/RK3568MINIALL.ini
+index b15f0e9..17ca7ae 100755
+--- a/RKBOOT/RK3568MINIALL.ini
++++ b/RKBOOT/RK3568MINIALL.ini
+@@ -18,8 +18,3 @@ FlashData=bin/rk35/rk3568_ddr_1560MHz_v1.10.bin
+ FlashBoot=bin/rk35/rk356x_spl_v1.11.bin
+ [OUTPUT]
+ PATH=rk356x_spl_loader_v1.10.111.bin
+-[SYSTEM]
+-NEWIDB=true
+-[FLAG]
+-471_RC4_OFF=true
+-RC4_OFF=true
+diff --git a/RKBOOT/RK3568MINIALL_NAND.ini b/RKBOOT/RK3568MINIALL_NAND.ini
+index e07031b..b872e2c 100755
+--- a/RKBOOT/RK3568MINIALL_NAND.ini
++++ b/RKBOOT/RK3568MINIALL_NAND.ini
+@@ -18,8 +18,3 @@ FlashData=bin/rk35/rk3568_ddr_1056MHz_v1.10.bin
+ FlashBoot=bin/rk35/rk356x_spl_nand_v1.07.bin
+ [OUTPUT]
+ PATH=rk356x_spl_loader_nand_v1.10.107.bin
+-[SYSTEM]
+-NEWIDB=true
+-[FLAG]
+-471_RC4_OFF=true
+-RC4_OFF=true
+diff --git a/RKBOOT/RK3568MINIALL_RAMBOOT.ini b/RKBOOT/RK3568MINIALL_RAMBOOT.ini
+index 96d3ced..970a677 100755
+--- a/RKBOOT/RK3568MINIALL_RAMBOOT.ini
++++ b/RKBOOT/RK3568MINIALL_RAMBOOT.ini
+@@ -18,8 +18,3 @@ FlashData=bin/rk35/rk3568_ramboot_null0.bin
+ FlashBoot=bin/rk35/rk3568_ramboot_null1.bin
+ [OUTPUT]
+ PATH=rk356x_ramboot_loader_v1.10.108.bin
+-[SYSTEM]
+-NEWIDB=true
+-[FLAG]
+-471_RC4_OFF=true
+-RC4_OFF=true
+diff --git a/RKBOOT/RK3568MINIALL_SPI_NAND.ini b/RKBOOT/RK3568MINIALL_SPI_NAND.ini
+index c119971..96dcdbe 100755
+--- a/RKBOOT/RK3568MINIALL_SPI_NAND.ini
++++ b/RKBOOT/RK3568MINIALL_SPI_NAND.ini
+@@ -18,8 +18,3 @@ FlashData=bin/rk35/rk3568_ddr_1332MHz_v1.10.bin
+ FlashBoot=bin/rk35/rk3568_miniloader_spinand_v1.12.bin
+ [OUTPUT]
+ PATH=rk3568_loader_spinand_v1.10.112.bin
+-[SYSTEM]
+-NEWIDB=true
+-[FLAG]
+-471_RC4_OFF=true
+-RC4_OFF=true

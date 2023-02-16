@@ -105,7 +105,7 @@ case $1 in
     volumectl start
     bluetooth start
 
-    if [ "$(get_setting wifi.enabled)" == "1" ]
+    if [ "$(get_setting network.enabled)" == "1" ]
     then
       log $0 "Connecting WIFI."
       nohup wifictl enable >/dev/null 2>&1

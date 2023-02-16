@@ -4,30 +4,20 @@
 
 source ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
 
-IDBSEEK="bs=512 seek=64"
-
 if [ -f "${RELEASE_DIR}/3rdparty/bootloader/idbloader.img" ]; then
-  echo "image: burn idbloader.img to image... (${PKG_SOC},${IDBSEEK})"
+  echo "image: burn idbloader.img to image... (${PKG_SOC})"
   dd if="${RELEASE_DIR}/3rdparty/bootloader/idbloader.img" of="${DISK}" bs=512 seek=64 conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
 fi
 
 case "${PKG_SOC}" in
-  rk3588)
+  rk35*)
 	if [ -f "${RELEASE_DIR}/3rdparty/bootloader/u-boot.itb" ]; then
 	  echo "image: burn uboot.itb to image... (${PKG_SOC})"
 	  dd if="${RELEASE_DIR}/3rdparty/bootloader/u-boot.itb" of="${DISK}" bs=512 seek=16384 conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
 	fi
-	;;
-  *)
-	if [ -f "${RELEASE_DIR}/3rdparty/bootloader/u-boot.img" ]; then
-	  echo "image: burn uboot.img to image... (${PKG_SOC})"
-	  dd if="${RELEASE_DIR}/3rdparty/bootloader/u-boot.img" of="${DISK}" bs=512 seek=16384 conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
-	fi
-
 	if [ -f "${RELEASE_DIR}/3rdparty/bootloader/trust.img" ]; then
 	  echo "image: burn trust.img to image..."
 	  dd if="${RELEASE_DIR}/3rdparty/bootloader/trust.img" of="${DISK}" bs=512 seek=24576 conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
-
 	elif [ -f "${RELEASE_DIR}/3rdparty/bootloader/resource.img" ]; then
 	  echo "image: burn resource.img to image..."
 	  dd if="${RELEASE_DIR}/3rdparty/bootloader/resource.img" of="${DISK}" bs=512 seek=24576 conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
@@ -56,7 +46,7 @@ mkdir -p "${LE_TMP}/extlinux"
 cat << EOF > "${LE_TMP}/extlinux/extlinux.conf"
 LABEL ${DISTRO}
   LINUX /${KERNEL_NAME}
-  FDT /${DEVICE_DTB[0]}.dtb
+  FDTDIR /
   APPEND boot=UUID=${UUID_SYSTEM} disk=UUID=${UUID_STORAGE} ${EXTRA_CMDLINE}
 EOF
 

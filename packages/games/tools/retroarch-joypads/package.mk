@@ -21,9 +21,9 @@ makeinstall_target() {
   do
     cp ${PKG_BUILD}/${JOYDIR}/*cfg ${INSTALLDIR}
   done
-  if [ -d "${PKG_DIR}/gamepads/device/${DEVICE}" ]
+  if [ -d "${PKG_DIR}/gamepads" ]
   then
-    cp -r ${PKG_DIR}/gamepads/device/${DEVICE}/* ${INSTALLDIR} ||:
+    cp -r ${PKG_DIR}/gamepads/* ${INSTALLDIR} ||:
   fi
 }
 

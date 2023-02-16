@@ -12,7 +12,7 @@ PKG_TOOLCHAIN="autotools"
 
 
 case ${DEVICE} in
-  RG*)
+  RK3566)
     PKG_VERSION="1.8.3"
     PKG_PATCH_DIRS+="4.x"
     PKG_CONFIGURE_OPTS_TARGET="--with-kernel=$(kernel_path)

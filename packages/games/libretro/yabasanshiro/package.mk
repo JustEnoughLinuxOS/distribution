@@ -46,7 +46,7 @@ fi
 
 pre_configure_target() {
   case ${DEVICE} in
-    RK3588)
+    RK35*)
       PKG_MAKE_OPTS_TARGET+=" -C yabause/src/libretro platform=rockpro64 HAVE_NEON=0 FORCE_GLES=1"
     ;;
     *)

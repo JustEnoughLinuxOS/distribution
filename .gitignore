@@ -49,10 +49,6 @@ repo
 local.conf
 sx05re-kodi*.log
 
-projects/Anbernic
-RG353P
-RG503
-
 release/
 
 .lastbuild
