@@ -6,7 +6,7 @@ index 8a719d55..0872e619 100644
     override platform += unix
  else ifneq (,$(findstring odroid,$(platform)))
     override platform += unix
-+else ifneq (,$(findstring RK3588,$(platform)))
++else ifneq (,$(findstring @DEVICE@,$(platform)))
 +   override platform += unix
  endif
  
@@ -15,10 +15,10 @@ index 8a719d55..0872e619 100644
  
     endif
     
-+  #RK3588
-+  ifneq (,$(findstring RK3588,$(platform)))
++  #@DEVICE@
++  ifneq (,$(findstring @DEVICE@,$(platform)))
 +    TARGET := $(TARGET_NAME)_libretro.so
-+    CPUFLAGS += -march=armv8-a+crc+simd -mtune=cortex-a76 -DARM_FIX -DCLASSIC -DARM64
++    CPUFLAGS += -march=armv8-a+crc+simd -mtune=@TARGET_CPU@ -DARM_FIX -DCLASSIC -DARM64
 +    WITH_DYNAREC = aarch64
 +    GLES = 1
 +    GL_LIB := -lGLESv2

@@ -20,9 +20,11 @@ pre_configure_target() {
                          -Dnls=disabled"
 
   # Fix missing dispmanx
-  if [ "${DEVICE}" = "RK3588" ]; then
-    PKG_MESON_OPTS_TARGET+=" -Dgl-graphene=disabled"
-  fi
+  case ${DEVICE} in
+    RK35*)
+      PKG_MESON_OPTS_TARGET+=" -Dgl-graphene=disabled"
+    ;;
+  esac
 }
 
 post_makeinstall_target() {

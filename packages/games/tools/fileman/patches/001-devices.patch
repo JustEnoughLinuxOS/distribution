@@ -1,0 +1,164 @@
+diff --git a/Makefile b/Makefile
+index a7a9d61..64e5ab6 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,13 +1,8 @@
+ TARGET = fileman 
+ 
+ # DEVICE ?= HANDHELD
+-# DEVICE ?= RG353P
+-# DEVICE ?= RG503
+-# DEVICE ?= RG351P
+-# DEVICE ?= RG351V
+-# DEVICE ?= RG351MP
+-# DEVICE ?= RGB10
+-# DEVICE ?= RK2020
++# DEVICE ?= RK3566
++# DEVICE ?= RK3588
+ # DEVICE ?= CHI
+ DEVICE ?= PC
+ 
+diff --git a/src/def.h b/src/def.h
+index ddf4aa4..2ec33c4 100644
+--- a/src/def.h
++++ b/src/def.h
+@@ -10,56 +10,8 @@
+ 
+ #define APP_NAME "fileman"
+ 
+-// Parameters for RG353P
+-#elif defined(DEVICE_RG353P)
+-   #define SCREEN_WIDTH             640
+-   #define SCREEN_HEIGHT            480
+-   #define HARDWARE_ACCELERATION    0
+-   #define FULLSCREEN               1
+-   #define FONT_NAME                "NotoSans-Regular.ttf"
+-   #define FONT_NAME_MONO           "NotoSansMono-Regular.ttf"
+-   #define FONT_SIZE                20
+-   #define LINE_HEIGHT              32
+-   #define ICON_SIZE                24
+-   #define MARGIN_X                 10
+-   #define KEYBOARD_MARGIN          8
+-   #define KEYBOARD_KEY_SPACING     4
+-   #define KEYBOARD_SYMBOL_SIZE     24
+-
+-// Parameters for RG503
+-#elif defined(DEVICE_RG503)
+-   #define SCREEN_WIDTH             960
+-   #define SCREEN_HEIGHT            544
+-   #define HARDWARE_ACCELERATION    0
+-   #define FULLSCREEN               1
+-   #define FONT_NAME                "NotoSans-Regular.ttf"
+-   #define FONT_NAME_MONO           "NotoSansMono-Regular.ttf"
+-   #define FONT_SIZE                24
+-   #define LINE_HEIGHT              36
+-   #define ICON_SIZE                32
+-   #define MARGIN_X                 12
+-   #define KEYBOARD_MARGIN          10
+-   #define KEYBOARD_KEY_SPACING     5
+-   #define KEYBOARD_SYMBOL_SIZE     29
+-
+-// Parameters for RG351P
+-#if defined(DEVICE_RG351P)
+-   #define SCREEN_WIDTH             480
+-   #define SCREEN_HEIGHT            320
+-   #define HARDWARE_ACCELERATION    0
+-   #define FULLSCREEN               1
+-   #define FONT_NAME                "NotoSans-Regular.ttf"
+-   #define FONT_NAME_MONO           "NotoSansMono-Regular.ttf"
+-   #define FONT_SIZE                14
+-   #define LINE_HEIGHT              24
+-   #define ICON_SIZE                24
+-   #define MARGIN_X                 8
+-   #define KEYBOARD_MARGIN          3
+-   #define KEYBOARD_KEY_SPACING     3
+-   #define KEYBOARD_SYMBOL_SIZE     24
+-
+-// Parameters for RG351V
+-#elif defined(DEVICE_RG351V)
++// Parameters for rk3566
++#if defined(DEVICE_RK3566)
+    #define SCREEN_WIDTH             640
+    #define SCREEN_HEIGHT            480
+    #define HARDWARE_ACCELERATION    0
+@@ -74,69 +26,21 @@
+    #define KEYBOARD_KEY_SPACING     4
+    #define KEYBOARD_SYMBOL_SIZE     24
+ 
+-// Parameters for RG351MP
+-#elif defined(DEVICE_RG351MP)
+-   #define SCREEN_WIDTH             640
+-   #define SCREEN_HEIGHT            480
+-   #define HARDWARE_ACCELERATION    0
+-   #define FULLSCREEN               1
+-   #define FONT_NAME                "NotoSans-Regular.ttf"
+-   #define FONT_NAME_MONO           "NotoSansMono-Regular.ttf"
+-   #define FONT_SIZE                20
+-   #define LINE_HEIGHT              32
+-   #define ICON_SIZE                24
+-   #define MARGIN_X                 10
+-   #define KEYBOARD_MARGIN          8
+-   #define KEYBOARD_KEY_SPACING     4
+-   #define KEYBOARD_SYMBOL_SIZE     24
+-
+-// Parameters for RGB10
+-#elif defined(DEVICE_RGB10)
+-   #define SCREEN_WIDTH             480
+-   #define SCREEN_HEIGHT            320
+-   #define HARDWARE_ACCELERATION    0
+-   #define FULLSCREEN               1
+-   #define FONT_NAME                "NotoSans-Regular.ttf"
+-   #define FONT_NAME_MONO           "NotoSansMono-Regular.ttf"
+-   #define FONT_SIZE                14
+-   #define LINE_HEIGHT              24
+-   #define ICON_SIZE                24
+-   #define MARGIN_X                 8
+-   #define KEYBOARD_MARGIN          3
+-   #define KEYBOARD_KEY_SPACING     3
+-   #define KEYBOARD_SYMBOL_SIZE     24
+-
+-// Parameters for RK2020
+-#elif defined(DEVICE_RK2020)
+-   #define SCREEN_WIDTH             480
+-   #define SCREEN_HEIGHT            320
+-   #define HARDWARE_ACCELERATION    0
+-   #define FULLSCREEN               1
+-   #define FONT_NAME                "NotoSans-Regular.ttf"
+-   #define FONT_NAME_MONO           "NotoSansMono-Regular.ttf"
+-   #define FONT_SIZE                14
+-   #define LINE_HEIGHT              24
+-   #define ICON_SIZE                24
+-   #define MARGIN_X                 8
+-   #define KEYBOARD_MARGIN          3
+-   #define KEYBOARD_KEY_SPACING     3
+-   #define KEYBOARD_SYMBOL_SIZE     24
+-
+-// Parameters for CHI
+-#elif defined(DEVICE_CHI)
+-   #define SCREEN_WIDTH             640
+-   #define SCREEN_HEIGHT            480
++// Parameters for rk3588
++#elif defined(DEVICE_RK3588)
++   #define SCREEN_WIDTH             1280
++   #define SCREEN_HEIGHT            720
+    #define HARDWARE_ACCELERATION    0
+    #define FULLSCREEN               1
+    #define FONT_NAME                "NotoSans-Regular.ttf"
+    #define FONT_NAME_MONO           "NotoSansMono-Regular.ttf"
+-   #define FONT_SIZE                20
+-   #define LINE_HEIGHT              32
+-   #define ICON_SIZE                24
+-   #define MARGIN_X                 10
+-   #define KEYBOARD_MARGIN          8
+-   #define KEYBOARD_KEY_SPACING     4
+-   #define KEYBOARD_SYMBOL_SIZE     24
++   #define FONT_SIZE                48
++   #define LINE_HEIGHT              72
++   #define ICON_SIZE                58
++   #define MARGIN_X                 24
++   #define KEYBOARD_MARGIN          19
++   #define KEYBOARD_KEY_SPACING     10
++   #define KEYBOARD_SYMBOL_SIZE     58
+ 
+ // Parameters for handheld
+ #elif defined(DEVICE_HANDHELD)

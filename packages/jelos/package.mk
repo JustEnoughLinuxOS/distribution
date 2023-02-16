@@ -82,7 +82,7 @@ makeinstall_target() {
   fi
 
   if [ -n "${LOCAL_WIFI_SSID}" ]; then
-    sed -i "s#wifi.enabled=0#wifi.enabled=1#g" ${INSTALL}/usr/config/system/configs/system.cfg
+    sed -i "s#network.enabled=0#network.enabled=1#g" ${INSTALL}/usr/config/system/configs/system.cfg
     cat <<EOF >> ${INSTALL}/usr/config/system/configs/system.cfg
 wifi.ssid=${LOCAL_WIFI_SSID}
 wifi.key=${LOCAL_WIFI_KEY}

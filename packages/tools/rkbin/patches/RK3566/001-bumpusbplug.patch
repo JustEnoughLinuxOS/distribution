@@ -1,0 +1,13 @@
+diff --git a/RKBOOT/RK3566MINIALL.ini b/RKBOOT/RK3566MINIALL.ini
+index c89f78e..e09b93d 100755
+--- a/RKBOOT/RK3566MINIALL.ini
++++ b/RKBOOT/RK3566MINIALL.ini
+@@ -9,7 +9,7 @@ Path1=bin/rk35/rk3566_ddr_1056MHz_v1.10.bin
+ Sleep=1
+ [CODE472_OPTION]
+ NUM=1
+-Path1=bin/rk35/rk356x_usbplug_v1.12.bin
++Path1=bin/rk35/rk356x_usbplug_v1.14.bin
+ [LOADER_OPTION]
+ NUM=2
+ LOADER1=FlashData

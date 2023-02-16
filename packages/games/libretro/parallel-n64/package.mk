@@ -22,8 +22,8 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
 fi
 
 case ${DEVICE} in
-  RK3588)
-    PKG_MAKE_OPTS_TARGET=" platform=RK3588"
+  RK35*)
+    PKG_MAKE_OPTS_TARGET=" platform=${DEVICE}"
   ;;
 esac
 

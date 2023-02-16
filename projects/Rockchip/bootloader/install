@@ -29,10 +29,10 @@ generate_rkspi_loader() {
 if [ -n "${PKG_DATAFILE}" -a -n "${PKG_LOADER}" ]; then
   echo "loader: Make idbloader.img from ${PKG_DATAFILE}:${PKG_LOADER}..."
   case "${PKG_SOC}" in
-    rk3588)
-      tools/mkimage -n ${PKG_SOC} -T rksd -d ${PKG_DATAFILE}:${PKG_LOADER} idbloader.img
+    rk35*)
+      tools/mkimage -n ${PKG_SOC} -T rksd -d ${PKG_DATAFILE}:${PKG_LOADER} -C bzip2 idbloader.img
     ;;
-    *)
+    xxxx)
       tools/mkimage -n ${PKG_SOC} -T rksd -d "${PKG_DATAFILE}" -C bzip2 idbloader.img
       cat "${PKG_LOADER}" >> idbloader.img
     ;;
@@ -47,12 +47,12 @@ if [ ! -n "${PKG_LOAD_ADDR}" ]; then
 fi
 
 case "${PKG_SOC}" in
-  rk3588)
+  rk35*)
     echo "uboot: copy u-boot.itb image to ${INSTALL}/usr/share/bootloader..."
     cp -av u-boot.itb ${INSTALL}/usr/share/bootloader/u-boot.itb
     generate_rkspi_loader
   ;;
-  *)
+  xxxx)
     echo "uboot: build loader image uboot.img at ${PKG_LOAD_ADDR}..."
     ${PKG_UBOOT}/tools/loaderimage --pack --uboot u-boot-dtb.bin uboot.img ${PKG_LOAD_ADDR} ||:
     cp -av uboot.img ${INSTALL}/usr/share/bootloader
@@ -108,6 +108,6 @@ mkdir -p "${INSTALL}/usr/share/bootloader/extlinux"
 cat << EOF > "${INSTALL}/usr/share/bootloader/extlinux/extlinux.conf"
 LABEL ${DISTRO}
   LINUX /${KERNEL_NAME}
-  FDT /${DEVICE_DTB}.dtb
+  FDTDIR /
   APPEND boot=UUID=@BOOT_UUID@ disk=UUID=@DISK_UUID@ ${EXTRA_CMDLINE}
 EOF
