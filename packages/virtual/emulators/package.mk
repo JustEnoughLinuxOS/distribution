@@ -37,7 +37,7 @@ case "${DEVICE}" in
   ;;
   RK3566)
     PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders"
-    PKG_EMUS="moonlight openbor pico-8 PPSSPPSDL vicesa"
+    PKG_EMUS="moonlight openbor pico-8 PPSSPPSDL vicesa dolphinsa"
   ;;
 esac
 
