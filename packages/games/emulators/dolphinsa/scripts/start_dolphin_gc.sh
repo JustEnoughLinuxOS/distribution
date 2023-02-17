@@ -142,4 +142,4 @@ rm -rf /storage/.local/share/dolphin-emu
 ln -sf /storage/.config/dolphin-emu /storage/.local/share/dolphin-emu
 
 #Run Dolphin emulator
-/usr/bin/dolphin-emu-nogui -p wayland -a HLE -e "${1}"
+/usr/bin/dolphin-emu-nogui -p @DOLPHIN_PLATFORM@ -a HLE -e "${1}"
