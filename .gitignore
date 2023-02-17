@@ -15,11 +15,8 @@
 # prebuild target binarys to provide
 /target/
 
-# mkpkg temp
-mkpkg-temp
-
 # options
-/.libreelec
+.jelos
 
 # private working directory
 /.work/
@@ -31,11 +28,12 @@ mkpkg-temp
 /sources*
 /.work
 
-# ccache
-/.ccache/
+# Go cache
+/.cache
 
 # backup files
 *.orig
+*.rej
 
 # vim swap files
 *.swp
@@ -44,14 +42,5 @@ mkpkg-temp
 .DS_Store
 .directory
 
-repo/
-repo
-local.conf
-sx05re-kodi*.log
-
+# release images
 release/
-
-.lastbuild
-.jelos
-
-SOURCES
