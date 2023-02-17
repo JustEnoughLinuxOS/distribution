@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="bsnes"
-PKG_VERSION="dabf6679024124b2f819c79f279dbb85a5263255"
+PKG_VERSION="eeb14cfc7abd75a01202d5dafb23fc4dcef96a4f"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/bsnes-libretro"
 PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
