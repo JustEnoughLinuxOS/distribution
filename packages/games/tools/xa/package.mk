@@ -2,8 +2,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="xa"
-PKG_VERSION="2.3.13"
-PKG_REV="1"
+PKG_VERSION="2.3.14"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.floodgap.com/retrotech/xa/"
