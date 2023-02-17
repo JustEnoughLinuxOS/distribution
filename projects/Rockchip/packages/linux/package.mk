@@ -20,7 +20,7 @@ PKG_PATCH_DIRS+="${DEVICE}"
 case ${DEVICE} in
   RK3588)
     PKG_VERSION="161606b049488da100e5d7ec95c8997d3b59b20d"
-    PKG_URL="${PKG_SITE}/rk35xx-uboot.git"
+    PKG_URL="${PKG_SITE}/rk35xx-kernel.git"
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="orange-pi-5.10-rk3588"
   ;;
