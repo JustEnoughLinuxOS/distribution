@@ -32,7 +32,7 @@
     PARTITION_TABLE="gpt"
     UBOOT_LABEL="uboot"
     TRUST_LABEL="resource"
-    DEVICE_DTB=("rk3566-rg353p-linux" "rk3566-rg353v-linux" "rk3566-rg503-linux")
+    DEVICE_DTB=("rk3566-rg353p-linux" "rk3566-rg353v-linux" "rk3566-rg353m-linux" "rk3566-rg503-linux")
     UBOOT_DTB="rk3566"
     UBOOT_CONFIG="rk3568_defconfig"
     PKG_SOC="rk356x"
