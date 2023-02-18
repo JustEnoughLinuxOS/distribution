@@ -104,9 +104,11 @@ git checkout dev
 ### Building with Docker
 Building JELOS is easy, the fastest and most recommended method is to instruct the build to use Docker, this is only known to work on a Linux system.  To build JELOS with Docker use the table below.
 
-| Device | Dependency | Docker Command |
+| Devices | Dependency | Docker Command |
 | ---- | ---- | ---- |
 |handheld||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-handheld```|
+|RK3588||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RK3588```|
+|RK3566||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-RK3566```|
 |ALL DEVICES||```PYTHON_EGG_CACHE="`pwd`/.egg_cache" make docker-world```|
 
 > Devices that list a dependency require the dependency to be built first as that build will be used as the root of the device you are building.  This will be done automatically by the build tooling when you start a build for your device.
