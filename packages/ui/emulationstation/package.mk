@@ -3,7 +3,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="emulationstation"
-PKG_VERSION="f8ad59d"
+PKG_VERSION="182c86c"
 PKG_GIT_CLONE_BRANCH="main"
 PKG_REV="1"
 PKG_ARCH="any"
@@ -24,7 +24,7 @@ fi
 
 if [ ! "${OPENGLES_SUPPORT}" = no ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-  PKG_CMAKE_OPTS_TARGET+=" -DGLES2=1 -DGL=0"
+  PKG_CMAKE_OPTS_TARGET+=" -DGLES2=1"
 fi
 
 if [ ! "${ENABLE_UPDATES}" = "no" ]; then

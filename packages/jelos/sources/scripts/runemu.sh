@@ -325,7 +325,7 @@ then
                         fi
                 ;;
                 "switch")
-                        jslisten set "-9 yuzu-cmd"
+                        jslisten set "-9 yuzu"
                         if [ "$EMU" = "yuzu" ]; then
                         RUNTHIS='${TBASH} /usr/bin/start_yuzu.sh "${ROMNAME}"'
                         fi

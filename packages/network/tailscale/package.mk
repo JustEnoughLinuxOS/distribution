@@ -10,6 +10,12 @@ PKG_DEPENDS_TARGET="toolchain wireguard-tools"
 PKG_SHORTDESC="Zero config VPN. Installs on any device in minutes, manages firewall rules for you, and works from anywhere."
 PKG_TOOLCHAIN="manual"
 
+case ${DEVICE} in
+  RK3566)
+    PKG_DEPENDS_TARGET+=" wireguard-linux-compat"
+  ;;
+esac
+
 pre_unpack() {
   mkdir -p ${PKG_BUILD}
   tar --strip-components=1 -xf $SOURCES/${PKG_NAME}/${PKG_NAME}-${PKG_VERSION}.tgz -C ${PKG_BUILD} tailscale_${PKG_VERSION}_arm64

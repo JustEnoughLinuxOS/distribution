@@ -1,0 +1,14 @@
+diff -rupN syncthing.orig/lib/syncthing/syncthing.go syncthing/lib/syncthing/syncthing.go
+--- syncthing.orig/lib/syncthing/syncthing.go	2023-02-17 05:51:10.194433291 -0500
++++ syncthing/lib/syncthing/syncthing.go	2023-02-17 05:51:41.894163734 -0500
+@@ -319,10 +319,6 @@ func (a *App) startup() error {
+ 		}
+ 	}
+ 
+-	if isSuperUser() {
+-		l.Warnln("Syncthing should not run as a privileged or system user. Please consider using a normal user account.")
+-	}
+-
+ 	a.evLogger.Log(events.StartupComplete, map[string]string{
+ 		"myID": a.myID.String(),
+ 	})

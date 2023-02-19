@@ -19,11 +19,11 @@
 ################################################################################
 
 PKG_NAME="opusfile"
-PKG_VERSION="58b229a"
+PKG_VERSION="a55c164"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/xiph/opusfile"
-PKG_URL="$PKG_SITE.git"
+PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain opus"
 PKG_PRIORITY="optional"
 PKG_SHORTDESC="Stand-alone decoder library for .opus streams"

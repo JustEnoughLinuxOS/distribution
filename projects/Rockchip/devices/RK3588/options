@@ -36,15 +36,14 @@
     UBOOT_DTB="${DEVICE_DTB[0]}"
     UBOOT_CONFIG="orangepi_5_defconfig"
     PKG_SOC="rk3588"
-    PKG_DATAFILE="$PKG_RKBIN/bin/rk35/rk3588_ddr_lp4_2112MHz_lp5_2736MHz_v1.08.bin"
+    PKG_DATAFILE="${PKG_RKBIN}/bin/rk35/rk3588_ddr_lp4_2112MHz_lp5_2736MHz_v1.08.bin"
     PKG_LOADER="spl/u-boot-spl.bin"
-    PKG_BL31="$PKG_RKBIN/bin/rk35/rk3588_bl31_v1.28.elf"
+    PKG_BL31="${PKG_RKBIN}/bin/rk35/rk3588_bl31_v1.28.elf"
     PKG_LOAD_ADDR="0x00200000"
     BOOT_INI=false
 
   # Additional kernel make parameters (for example to specify the u-boot loadaddress)
-    KERNEL_MAKE_EXTRACMD=""
-    KERNEL_MAKE_EXTRACMD+=" rockchip/${DEVICE_DTB[0]}.dtb"
+    KERNEL_MAKE_EXTRACMD=" $(for DTB in "${DEVICE_DTB[@]}"; do echo -n "rockchip/${DTB}.dtb "; done)"
    
   # Define the CPU
     HW_CPU="Rockchip RK3588"

@@ -9,7 +9,7 @@ PKG_LONGDESC="Mesa is a 3-D graphics library with an API."
 PKG_TOOLCHAIN="meson"
 
 case ${DEVICE} in
- RK3588)
+ RK35*)
         PKG_VERSION="120202c675749c5ef81ae4c8cdc30019b4de08f4"
         PKG_SITE="https://gitlab.com/panfork/mesa"
         PKG_URL="${PKG_SITE}.git"
