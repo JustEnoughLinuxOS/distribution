@@ -12,9 +12,3 @@ PKG_TOOLCHAIN="configure"
 
 PKG_CONFIGURE_OPTS_TARGET=" --disable-dict --disable-doxygen-doc"
 
-pre_configure_target() {
-cd ${PKG_BUILD}
-  ./configure --disable-dict --disable-doxygen-doc
-}
-
-
