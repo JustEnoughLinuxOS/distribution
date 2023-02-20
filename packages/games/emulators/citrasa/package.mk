@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="citrasa"
-PKG_VERSION="030ecaa83c825bf4c91915d629adca2dadb9aaac"
+PKG_VERSION="84e54a52a6402928f0cda4bbce24d930546f9842"
 PKG_LICENSE="MPLv2"
 PKG_SITE="https://github.com/GPUCode/citra"
 PKG_URL="${PKG_SITE}.git"

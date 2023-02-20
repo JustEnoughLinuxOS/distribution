@@ -330,6 +330,12 @@ then
                         RUNTHIS='${TBASH} /usr/bin/start_yuzu.sh "${ROMNAME}"'
                         fi
                 ;;
+                "xbox")
+                        jslisten set "-9 xemu"
+                        if [ "$EMU" = "xemu" ]; then
+                        RUNTHIS='${TBASH} /usr/bin/start_xemu.sh "${ROMNAME}"'
+                        fi
+                ;;
                 "3ds")
                         jslisten set "-9 citra"
                         if [ "$EMU" = "citrasa" ]; then
