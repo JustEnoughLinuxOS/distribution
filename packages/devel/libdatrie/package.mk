@@ -10,7 +10,3 @@ PKG_DEPENDS_TARGET="toolchain libtool"
 PKG_BUILD_FLAGS="+pic"
 PKG_TOOLCHAIN="configure"
 
-pre_configure_target() {
-  cd ${PKG_BUILD}
-  ./configure
-}
