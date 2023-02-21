@@ -33,10 +33,10 @@ case "${DEVICE}" in
                         pcsx2sa play primehack rpcs3sa xemu yuzusa"
   ;;
   RK3588)
-    PKG_DEPENDS_TARGET+=" dolphin dolphinsa aethersx2 mame"
+    PKG_DEPENDS_TARGET+=" dolphin dolphinsa aethersx2 mame pcsx_rearmed"
   ;;
   RK3566)
-    PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders"
+    PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders pcsx_rearmed"
     PKG_EMUS="moonlight openbor pico-8 PPSSPPSDL vicesa dolphinsa"
   ;;
 esac
