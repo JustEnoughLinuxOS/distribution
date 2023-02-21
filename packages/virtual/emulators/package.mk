@@ -16,13 +16,13 @@ PKG_RETROARCH="core-info libretro-database retroarch retroarch-assets retroarch-
 LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-pce beetle-pce-fast      \
                 beetle-pcfx bsnes bsnes-mercury-performance beetle-supafaust beetle-supergrafx           \
                 beetle-vb beetle-wswan beetle-saturn bluemsx cannonball cap32 crocods daphne dinothawr   \
-                dosbox-svn dosbox-pure duckstation easyrpg fake08 fbalpha2012 fbalpha2019        \
-                fbneo fceumm fmsx flycast freechaf freeintv freej2me fuse-libretro                       \
-                gambatte gearboy gearcoleco gearsystem genesis-plus-gx genesis-plus-gx-wide gme          \
-                gw-libretro handy hatari mame2000 mame2003-plus mame2010 mame2015 melonds meowpc98  \
-                mesen mgba mrboom mupen64plus mupen64plus-nx neocd_libretro nestopia np2kai nxengine     \
-                o2em opera parallel-n64 picodrive pokemini potator prboom prosystem ppsspp puae px68k    \
-                quasi88 quicknes race reminiscence sameboy sameduck scummvm smsplus-gx snes9x snes9x2002 \
+                dosbox-svn dosbox-pure duckstation easyrpg fake08 fbalpha2012 fbalpha2019                \
+                fbneo fceumm fmsx flycast freechaf freeintv freej2me fuse-libretro gambatte gearboy      \
+                gearcoleco gearsystem genesis-plus-gx genesis-plus-gx-wide gme gw-libretro handy hatari  \
+                mame2000 mame2003-plus mame2010 mame2015 melonds meowpc98 mesen mgba mrboom mupen64plus  \
+                mupen64plus-nx neocd_libretro nestopia np2kai nxengine o2em opera parallel-n64           \
+                pcsx_rearmed picodrive pokemini potator prboom prosystem ppsspp puae px68k quasi88       \
+                quicknes race reminiscence sameboy sameduck scummvm smsplus-gx snes9x snes9x2002         \
                 snes9x2005_plus snes9x2010 stella stella-2014 swanstation TIC-80 tgbdual tyrquake uzem   \
                 vba-next vbam vecx vice yabasanshiro virtualjaguar xmil xrick"
 
