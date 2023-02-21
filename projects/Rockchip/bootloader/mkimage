@@ -43,10 +43,17 @@ done
 
 mkdir -p "${LE_TMP}/extlinux"
 
+if [ "${TRUST_LABEL}" = "resource" ]
+then
+  FDTMODE="FDTDIR /"
+else
+  FDTMODE="FDT /${DEVICE_DTB}.dtb"
+fi
+
 cat << EOF > "${LE_TMP}/extlinux/extlinux.conf"
 LABEL ${DISTRO}
   LINUX /${KERNEL_NAME}
-  FDTDIR /
+  ${FDTMODE}
   APPEND boot=UUID=${UUID_SYSTEM} disk=UUID=${UUID_STORAGE} ${EXTRA_CMDLINE}
 EOF
 
