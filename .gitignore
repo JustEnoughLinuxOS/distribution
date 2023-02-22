@@ -7,6 +7,7 @@
 /.egg_cache
 /.ccache-*
 /.env
+/.ant
 
 # automatically downloaded source files
 /sources/
