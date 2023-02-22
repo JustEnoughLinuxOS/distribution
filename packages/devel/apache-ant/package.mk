@@ -16,7 +16,7 @@ make_host() {
   export JAVA_HOME=$(get_build_dir jdk-zulu)
 
    ### Work around for down/missing ftp server.
-   TMPCACHE="${HOME}/.ant/tempcache"
+   TMPCACHE="${ROOT}/.ant/tempcache"
    if [ ! -d "${TMPCACHE}" ]
    then
      mkdir -p ${TMPCACHE}
@@ -24,11 +24,11 @@ make_host() {
 
    if [ ! -e "${TMPCACHE}/NetRexx.zip" ]
    then
-     curl -Lo ${TMPCACHE}/NetRexx.zip https://public.dhe.ibm.com/software/awdtools/netrexx/
+     curl -Lo ${TMPCACHE}/NetRexx.zip https://public.dhe.ibm.com/software/awdtools/netrexx/NetRexx.zip
    fi
 
   ./bootstrap.sh
-  ./bootstrap/bin/ant -f fetch.xml -Ddest=optional
+  ./bootstrap/bin/ant -f fetch.xml -Ddest=optional -Dtemp.dir=${TMPCACHE}
   ./build.sh -Ddist.dir=${PKG_BUILD}/binary dist
   )
 }
