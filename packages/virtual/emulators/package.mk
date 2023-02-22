@@ -34,10 +34,11 @@ case "${DEVICE}" in
   ;;
   RK3588)
     PKG_DEPENDS_TARGET+=" dolphin dolphinsa aethersx2 mame pcsx_rearmed"
+    PKG_EMUS+=" yabasanshiroSA"
   ;;
   RK3566)
     PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders pcsx_rearmed"
-    PKG_EMUS="moonlight openbor pico-8 PPSSPPSDL vicesa dolphinsa"
+    PKG_EMUS="moonlight openbor pico-8 PPSSPPSDL vicesa dolphinsa yabasanshiroSA"
   ;;
 esac
 

@@ -20,7 +20,7 @@ case ${DEVICE} in
         PKG_URL="${PKG_SITE}.git"
   ;;
   *)
-	PKG_VERSION="cd53526"
+	PKG_VERSION="febba18"
 	PKG_SITE="https://github.com/hrydgard/ppsspp"
         PKG_URL="${PKG_SITE}.git"
   ;;
@@ -76,7 +76,8 @@ PKG_CMAKE_OPTS_TARGET+="${PKG_CMAKE_OPTS_TARGET} \
 			-DUSE_DISCORD=OFF"
 
 pre_configure_target() {
-  sed -i "s|include_directories(/usr/include/drm)|include_directories(${SYSROOT_PREFIX}/usr/include/drm)|" $PKG_BUILD/CMakeLists.txt
+  sed -i 's/\-O[23]//g' ${PKG_BUILD}/CMakeLists.txt
+  sed -i "s|include_directories(/usr/include/drm)|include_directories(${SYSROOT_PREFIX}/usr/include/drm)|" ${PKG_BUILD}/CMakeLists.txt
 }
 
 pre_make_target() {
