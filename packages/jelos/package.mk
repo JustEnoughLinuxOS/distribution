@@ -34,7 +34,7 @@ case "${DEVICE}" in
   ;;
 esac
 
-PKG_TOOLS="i2c-tools synctools jslisten evtest tailscale pygobject"
+PKG_TOOLS="i2c-tools synctools jslisten evtest tailscale pygobject fileman"
 
 ### Project specific variables
 case "${PROJECT}" in
