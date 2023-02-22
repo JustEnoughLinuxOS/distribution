@@ -1,3 +1,8 @@
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2022-present Shanti Gilbert (https://github.com/shantigilbert)
+# Copyright (C) 2022-present 351ELEC
+# Copyright (C) 2022-present Fewtarius
+
 PKG_NAME="yabasanshiroSA"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/devmiyax/yabause"
