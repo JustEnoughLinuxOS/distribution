@@ -18,7 +18,6 @@ case ${DEVICE} in
         PKG_VERSION="40386bca08d33c2d6584d6e7da4efee9bfeb3f96"
 	PKG_SITE="https://github.com/hrydgard/ppsspp"
         PKG_URL="${PKG_SITE}.git"
-        PKG_CMAKE_OPTS_TARGET+=" -DMOBILE_DEVICE=ON"
   ;;
   *)
 	PKG_VERSION="febba18"
