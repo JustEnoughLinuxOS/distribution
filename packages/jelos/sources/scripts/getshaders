@@ -10,7 +10,7 @@ if [[ "${UI_SERVICE}" =~ ^weston ]]
 then
   SHADERS='*.slang*'
 else
-  SHADERS='*.glsl*'
+  SHADERS='*.glslp*'
 fi
 
 for dir in /tmp/shaders
