@@ -18,9 +18,18 @@ fi
 rm -rf /storage/.config/rpcs3/dev_flash
 ln -sf /storage/roms/bios/rpcs3/dev_flash /storage/.config/rpcs3/dev_flash
 
-#Set QT enviornment to xwayland
-export QT_QPA_PLATFORM=xcb
-rr_audio.sh pulseaudio
-export SDL_AUDIODRIVER=pulseaudio
+#Emulation Station Features
+  GAME=$(echo "${1}"| sed "s#^/.*/##")
+  SUI=$(get_setting start_ui ps3 "${GAME}")
 
-rpcs3 --no-gui "${1}"
+#Run Rpcs3 emulator
+  if [ "$SUI" = "1" ]
+  then
+	export QT_QPA_PLATFORM=wayland
+	/usr/bin/rpcs3
+  else
+	export QT_QPA_PLATFORM=xcb
+	rr_audio.sh pulseaudio
+	export SDL_AUDIODRIVER=pulseaudio
+	/usr/bin/rpcs3 --no-gui "${1}"
+  fi
