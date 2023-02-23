@@ -75,7 +75,10 @@ esac
 
 # temperature
 # Unit: millidegree Celsius
-TEMPE=$(cat ${DEVICE_TEMP_SENSOR} 2>/dev/null | sort -rn | head -1 | sed -e s+"[0-9][0-9][0-9]$"++)
+if [ -e "${DEVICE_TEMP_SENSOR}" ]
+then
+  TEMPE=$(cat ${DEVICE_TEMP_SENSOR} 2>/dev/null | sort -rn | head -1 | sed -e s+"[0-9][0-9][0-9]$"++)
+fi
 echo "SYSTEM INFORMATION:"
 echo "OPERATING SYSTEM: ${OS_NAME}"
 echo "VERSION: ${OS_VERSION}"

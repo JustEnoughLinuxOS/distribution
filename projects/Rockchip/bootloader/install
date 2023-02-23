@@ -105,9 +105,17 @@ fi
 
 echo "boot: create extlinux.conf..."
 mkdir -p "${INSTALL}/usr/share/bootloader/extlinux"
+
+if [ "${TRUST_LABEL}" = "resource" ]
+then
+  FDTMODE="FDTDIR /"
+else
+  FDTMODE="FDT /${DEVICE_DTB}.dtb"
+fi
+
 cat << EOF > "${INSTALL}/usr/share/bootloader/extlinux/extlinux.conf"
 LABEL ${DISTRO}
   LINUX /${KERNEL_NAME}
-  FDTDIR /
+  ${FDTMODE}
   APPEND boot=UUID=@BOOT_UUID@ disk=UUID=@DISK_UUID@ ${EXTRA_CMDLINE}
 EOF

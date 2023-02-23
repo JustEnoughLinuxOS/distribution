@@ -68,7 +68,7 @@
     EXTRA_CMDLINE="rootwait quiet loglevel=0 console=tty3 console=ttyS2,1500000n8 coherent_pool=2M ssh consoleblank=0 panic=20"
 
   # additional packages to install
-    ADDITIONAL_PACKAGES=" emulators gamesupport fileman"
+    ADDITIONAL_PACKAGES=" emulators gamesupport"
 
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,

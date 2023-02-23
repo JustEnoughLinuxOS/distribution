@@ -1,0 +1,21 @@
+From 335788a932b56149a3204aeda6c885c9136ea4aa Mon Sep 17 00:00:00 2001
+From: "Unknown W. Brackets" <checkins@unknownbrackets.org>
+Date: Thu, 16 Feb 2023 19:34:44 -0800
+Subject: [PATCH] Vulkan: Remove logspam.
+
+---
+ Common/GPU/Vulkan/VulkanContext.cpp | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/Common/GPU/Vulkan/VulkanContext.cpp b/Common/GPU/Vulkan/VulkanContext.cpp
+index 23b0f8adb036..676860285219 100644
+--- a/Common/GPU/Vulkan/VulkanContext.cpp
++++ b/Common/GPU/Vulkan/VulkanContext.cpp
+@@ -1663,7 +1663,6 @@ void VulkanDeleteList::PerformDeletes(VulkanContext *vulkan, VmaAllocator alloca
+ 	}
+ 	imagesWithAllocs_.clear();
+ 	for (auto &imageView : imageViews_) {
+-		INFO_LOG(G3D, "deleting imageview %p", imageView);
+ 		vkDestroyImageView(device, imageView, nullptr);
+ 	}
+ 	imageViews_.clear();
