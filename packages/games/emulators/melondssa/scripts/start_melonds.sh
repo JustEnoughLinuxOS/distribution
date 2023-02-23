@@ -43,7 +43,7 @@ fi
 #Set QT Platform to Wayland
   export QT_QPA_PLATFORM=wayland
 
-#Run Yuzu emulator
+#Run MelonDS emulator
 	if [ "$SUI" = "1" ]
 	then
 		/usr/bin/melonDS
