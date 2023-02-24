@@ -28,6 +28,7 @@ ln -sf /storage/roms/3ds/citrasa/nand /storage/.config/citra-emu/nand
 
    #Emulation Station Features
    GAME=$(echo "${1}"| sed "s#^/.*/##")
+   RENDERER=$(get_setting graphics_backend 3ds "${GAME}")
    RES=$(get_setting resolution_scale 3ds "${GAME}")
    ROTATE=$(get_setting rotate_screen 3ds "${GAME}")
    SLAYOUT=$(get_setting screen_layout 3ds "${GAME}")
@@ -94,9 +95,18 @@ ln -sf /storage/roms/3ds/citrasa/nand /storage/.config/citra-emu/nand
                 sed -i '/custom_layout =/c\custom_layout = 1' /storage/.config/citra-emu/sdl2-config.ini
         fi
 
+  #Video Backend
+        if [ "$RENDERER" = "1" ]
+        then
+		cp -r /usr/bin/citra-vulkan /storage/.config/citra-emu/citra
+	else
+		cp -r /usr/bin/citra-gl /storage/.config/citra-emu/citra
+	fi
+		chmod +x /storage/.config/citra-emu/citra
 
 rm -rf /storage/.local/share/citra-emu
 
 ln -sfv /storage/.config/citra-emu /storage/.local/share/citra-emu
 
-/usr/bin/citra "${1}"
+#Run Citra Emulator
+  /storage/.config/citra-emu/citra "${1}"

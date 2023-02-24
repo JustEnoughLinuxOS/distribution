@@ -9,7 +9,6 @@ PKG_DEPENDS_TARGET="toolchain ffmpeg libzip SDL2 zlib zip"
 PKG_SHORTDESC="PPSSPPDL"
 PKG_LONGDESC="PPSSPP Standalone"
 GET_HANDLER_SUPPORT="git"
-PKG_BUILD_FLAGS="+lto"
 
 PKG_PATCH_DIRS+="${DEVICE}"
 
@@ -20,11 +19,25 @@ case ${DEVICE} in
         PKG_URL="${PKG_SITE}.git"
   ;;
   *)
-	PKG_VERSION="cd53526"
+	PKG_VERSION="be83355"
 	PKG_SITE="https://github.com/hrydgard/ppsspp"
         PKG_URL="${PKG_SITE}.git"
   ;;
 esac
+
+PKG_CMAKE_OPTS_TARGET=" -DUSE_SYSTEM_FFMPEG=OFF \
+                        -DCMAKE_BUILD_TYPE=Release \
+                        -DCMAKE_SYSTEM_NAME=Linux \
+                        -DBUILD_SHARED_LIBS=OFF \
+                        -DANDROID=OFF \
+                        -DWIN32=OFF \
+                        -DAPPLE=OFF \
+                        -DCMAKE_CROSSCOMPILING=ON \
+                        -DUSING_QT_UI=OFF \
+                        -DUNITTEST=OFF \
+                        -DSIMULATOR=OFF \
+                        -DHEADLESS=OFF \
+                        -DUSE_DISCORD=OFF"
 
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd glew"
@@ -60,23 +73,9 @@ else
   PKG_CMAKE_OPTS_TARGET+=" -DUSE_WAYLAND_WSI=OFF"
 fi
 
-PKG_CMAKE_OPTS_TARGET+="${PKG_CMAKE_OPTS_TARGET} \
-			-DUSE_SYSTEM_FFMPEG=OFF \
-			-DCMAKE_BUILD_TYPE=Release \
-			-DCMAKE_SYSTEM_NAME=Linux \
-			-DBUILD_SHARED_LIBS=OFF \
-			-DANDROID=OFF \
-			-DWIN32=OFF \
-			-DAPPLE=OFF \
-			-DCMAKE_CROSSCOMPILING=ON \
-			-DUSING_QT_UI=OFF \
-			-DUNITTEST=OFF \
-			-DSIMULATOR=OFF \
-			-DHEADLESS=OFF \
-			-DUSE_DISCORD=OFF"
-
 pre_configure_target() {
-  sed -i "s|include_directories(/usr/include/drm)|include_directories(${SYSROOT_PREFIX}/usr/include/drm)|" $PKG_BUILD/CMakeLists.txt
+  sed -i 's/\-O[23]//g' ${PKG_BUILD}/CMakeLists.txt
+  sed -i "s|include_directories(/usr/include/drm)|include_directories(${SYSROOT_PREFIX}/usr/include/drm)|" ${PKG_BUILD}/CMakeLists.txt
 }
 
 pre_make_target() {
