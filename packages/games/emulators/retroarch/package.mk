@@ -75,9 +75,9 @@ pre_configure_target() {
 make_target() {
   make HAVE_UPDATE_ASSETS=0 HAVE_LIBRETRODB=1 HAVE_BLUETOOTH=0 HAVE_NETWORKING=1 HAVE_ZARCH=1 HAVE_QT=0 HAVE_LANGEXTRA=1
   [ $? -eq 0 ] && echo "(retroarch ok)" || { echo "(retroarch failed)" ; exit 1 ; }
-  make -C gfx/video_filters compiler=$CC extra_flags="$CFLAGS"
+  make -C gfx/video_filters compiler=${CC} extra_flags="${CFLAGS}"
   [ $? -eq 0 ] && echo "(video filters ok)" || { echo "(video filters failed)" ; exit 1 ; }
-  make -C libretro-common/audio/dsp_filters compiler=$CC extra_flags="$CFLAGS"
+  make -C libretro-common/audio/dsp_filters compiler=${CC} extra_flags="${CFLAGS}"
   [ $? -eq 0 ] && echo "(audio filters ok)" || { echo "(audio filters failed)" ; exit 1 ; }
 }
 

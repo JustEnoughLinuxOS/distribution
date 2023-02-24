@@ -39,19 +39,19 @@ To control the build behaviour of your package, use variables in the top-down or
 #### Meson Options
 | Variable    | Default | Required |Description |
 |-------------|---------|----------|------------|
-| PKG_MESON_SCRIPT | $PKG_BUILD/meson.build | no | Meson build file to use |
+| PKG_MESON_SCRIPT | ${PKG_BUILD}/meson.build | no | Meson build file to use |
 | PKG_MESON_OPTS_TARGET | - | no   | Options directly passed to meson |
 
 #### CMAKE Options
 | Variable    | Default | Required |Description |
 |-------------|---------|----------|------------|
-| PKG_CMAKE_SCRIPT | $PKG_BUILD/CMakeLists.txt | no | CMake build file to use |
+| PKG_CMAKE_SCRIPT | ${PKG_BUILD}/CMakeLists.txt | no | CMake build file to use |
 | PKG_CMAKE_OPTS_HOST<br>PKG_CMAKE_OPTS_TARGET | - | no | Options directly passed to cmake |
 
 #### Configure Options
 | Variable    | Default | Required |Description |
 |-------------|---------|----------|------------|
-| PKG_CONFIGURE_SCRIPT | $PKG_BUILD/configure | no | configure script to use |
+| PKG_CONFIGURE_SCRIPT | ${PKG_BUILD}/configure | no | configure script to use |
 | PKG_CONFIGURE_OPTS<br>PKG_CONFIGURE_OPTS_BOOTSTRAP<br>PKG_CONFIGURE_OPTS_HOST<br>PKG_CONFIGURE_OPTS_INIT<br>PKG_CONFIGURE_OPTS_TARGET | - | no | Options directly passed to configure |
 
 #### Make Options
@@ -226,12 +226,12 @@ post_patch() {
 
 pre_configure_target() {
   # add extra flag to toolchain default
-  CFLAGS="$CFLAGS -DEXTRA_FLAG=yeah"
+  CFLAGS="${CFLAGS} -DEXTRA_FLAG=yeah"
 }
 
 post_makeinstall_target() {
   # remove unused executable, install what remains
-  rm $INSTALL/usr/bin/bigexecutable
+  rm ${INSTALL}/usr/bin/bigexecutable
 }
 ```
 

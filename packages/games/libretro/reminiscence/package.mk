@@ -22,7 +22,7 @@ PKG_NAME="reminiscence"
 PKG_VERSION="c2624c7565bbae441835db80f24902fc40f83dd1"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/libretro/REminiscence"
-PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
+PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
@@ -38,11 +38,11 @@ configure_target () {
 }
 
 make_target() {
-  cd $PKG_BUILD
+  cd ${PKG_BUILD}
   make
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp reminiscence_libretro.so $INSTALL/usr/lib/libretro/
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  cp reminiscence_libretro.so ${INSTALL}/usr/lib/libretro/
 }

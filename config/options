@@ -86,7 +86,7 @@ VERBOSE="${VERBOSE:-yes}"
 # directory.
 CCACHE_CACHE_SIZE="20G"
 
-# read local persistent options from $ROOT if available
+# read local persistent options from ${ROOT} if available
 if [ -f "${ROOT}/.jelos/options" ]; then
   . "${ROOT}/.jelos/options"
 fi

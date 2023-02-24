@@ -6,7 +6,7 @@ PKG_VERSION="1.6"
 PKG_SHA256="5de8c8e29aaa3fb9cc6b47bb27299f271354ebb72514e3accadc7d38b5bbaa72"
 PKG_LICENSE="MIT"
 PKG_SITE="http://stedolan.github.io/jq/"
-PKG_URL="https://github.com/stedolan/jq/releases/download/$PKG_NAME-$PKG_VERSION/$PKG_NAME-$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/stedolan/jq/releases/download/${PKG_NAME}-${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain oniguruma"
 PKG_LONGDESC="A like sed for JSON data."
 
@@ -17,7 +17,7 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-shared \
                            --disable-valgrind"
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/bin
-  cp jq $INSTALL/usr/bin/
+  mkdir -p ${INSTALL}/usr/bin
+  cp jq ${INSTALL}/usr/bin/
 }
 

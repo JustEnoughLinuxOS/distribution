@@ -24,7 +24,7 @@ PKG_VERSION="0581797db6fdffd826086b053ced4b6b29bb6678"
 PKG_ARCH="any"
 PKG_LICENSE="Non-commercial"
 PKG_SITE="https://github.com/libretro/fbalpha"
-PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
+PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
@@ -39,7 +39,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp $PKG_DIR/fbalpha2019_libretro.info $INSTALL/usr/lib/libretro/
-  cp fbalpha_libretro.so $INSTALL/usr/lib/libretro/fbalpha2019_libretro.so
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  cp ${PKG_DIR}/fbalpha2019_libretro.info ${INSTALL}/usr/lib/libretro/
+  cp fbalpha_libretro.so ${INSTALL}/usr/lib/libretro/fbalpha2019_libretro.so
 }

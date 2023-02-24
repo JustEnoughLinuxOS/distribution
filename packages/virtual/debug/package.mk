@@ -14,13 +14,13 @@ PKG_LONGDESC="debug is a Metapackage for installing debugging tools"
   get_graphicdrivers
 
 if [ "$VDPAU_SUPPORT" = "yes" -a "$DISPLAYSERVER" = "x11" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET vdpauinfo"
+  PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} vdpauinfo"
 fi
 
 if [ "$VAAPI_SUPPORT" = "yes" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET libva-utils"
+  PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} libva-utils"
 fi
 
 if build_with_debug && [ "$VALGRIND" = "yes" ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET valgrind"
+  PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} valgrind"
 fi

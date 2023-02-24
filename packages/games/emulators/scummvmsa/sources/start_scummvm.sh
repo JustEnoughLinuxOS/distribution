@@ -39,9 +39,9 @@ create_svm(){
   done
 }
 
-if [ ! -d "$CONFIG_DIR" ]; then
- mkdir -p $CONFIG_DIR
- cp -rf /usr/config/scummvm/* $CONFIG_DIR/
+if [ ! -d "${CONFIG_DIR}" ]; then
+ mkdir -p ${CONFIG_DIR}
+ cp -rf /usr/config/scummvm/* ${CONFIG_DIR}/
 fi
 
 case $1 in
@@ -54,7 +54,7 @@ case $1 in
   "add")
     /usr/bin/scummvm --add --path="${ROMSPATH}/scummvm" --recursive
     mkdir -p ${BIOSPATH}
-    cp $CONFIG_DIR/scummvm.ini ${BIOSPATH}/scummvm.ini
+    cp ${CONFIG_DIR}/scummvm.ini ${BIOSPATH}/scummvm.ini
   ;;
 
   "create")

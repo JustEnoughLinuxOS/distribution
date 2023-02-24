@@ -11,7 +11,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="Shows the scancode of the pressed or released key."
 
 pre_configure_target() {
-  PKG_MAKE_OPTS_TARGET="CC=$CC"
+  PKG_MAKE_OPTS_TARGET="CC=${CC}"
 }
 
 makeinstall_target() {

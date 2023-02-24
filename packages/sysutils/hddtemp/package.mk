@@ -13,7 +13,7 @@ PKG_LONGDESC="A utility that gives you the temperature of your hard drive by rea
 PKG_CONFIGURE_OPTS_TARGET="--with-db-path=/storage/.kodi/addons/virtual.system-tools/data/hddtemp.db"
 
 post_unpack() {
-  cp $PKG_DIR/db/* $PKG_BUILD
+  cp ${PKG_DIR}/db/* ${PKG_BUILD}
 }
 
 makeinstall_target() {

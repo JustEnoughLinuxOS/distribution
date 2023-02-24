@@ -7,7 +7,7 @@ PKG_SHA256="bafcac133ff37fb3adeafd9960427e3314e682caf22d455395855d64553d46fe"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/mame2016-libretro"
-PKG_URL="https://github.com/libretro/mame2016-libretro/archive/$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/libretro/mame2016-libretro/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="escalade"
 PKG_SHORTDESC="MAME (0.174-ish) for libretro"
@@ -17,9 +17,9 @@ PKG_BUILD_FLAGS="-lto"
 PTR64="0"
 NOASM="0"
 
-if [ "$ARCH" == "arm" ]; then
+if [ "${ARCH}" == "arm" ]; then
   NOASM="1"
-elif [ "$ARCH" == "x86_64" ]; then
+elif [ "${ARCH}" == "x86_64" ]; then
   PTR64="1"
 fi
 
@@ -35,8 +35,8 @@ PKG_MAKE_OPTS_TARGET="REGENIE=1 \
 		      PYTHON_EXECUTABLE=python2 \
 		      CONFIG=libretro \
 		      LIBRETRO_OS=unix \
-		      LIBRETRO_CPU=$ARCH \
-		      PLATFORM=$ARCH \
+		      LIBRETRO_CPU=${ARCH} \
+		      PLATFORM=${ARCH} \
 		      ARCH= \
 		      TARGET=mame \
 		      SUBTARGET=arcade \
@@ -48,14 +48,14 @@ PKG_MAKE_OPTS_TARGET="REGENIE=1 \
 
 make_target() {
   unset DISTRO
-  make $PKG_MAKE_OPTS_TARGET OVERRIDE_CC=$CC OVERRIDE_CXX=$CXX OVERRIDE_LD=$LD AR=$AR $MAKEFLAGS
+  make ${PKG_MAKE_OPTS_TARGET} OVERRIDE_CC=${CC} OVERRIDE_CXX=${CXX} OVERRIDE_LD=$LD AR=$AR $MAKEFLAGS
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/bin
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp *.so $INSTALL/usr/lib/libretro/mame2016_libretro.so
-  mkdir -p $INSTALL/usr/config/retroarch/savefiles/mame2016/hi
-  cp metadata/hiscore.dat $INSTALL/usr/config/retroarch/savefiles/mame2016/hi
+  mkdir -p ${INSTALL}/usr/bin
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  cp *.so ${INSTALL}/usr/lib/libretro/mame2016_libretro.so
+  mkdir -p ${INSTALL}/usr/config/retroarch/savefiles/mame2016/hi
+  cp metadata/hiscore.dat ${INSTALL}/usr/config/retroarch/savefiles/mame2016/hi
 }
 

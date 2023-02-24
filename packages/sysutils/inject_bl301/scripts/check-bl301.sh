@@ -27,10 +27,10 @@ if [ -e /usr/sbin/inject_bl301 ]; then
 fi
 
 if [ "$VERBOSE" = 1 ]; then
-  if [ "$INSTALLED" = 1 ]; then
+  if [ "${INSTALLED}" = 1 ]; then
     echo "CoreELEC BL301 Installed"
   else
     echo "CoreELEC BL301 Not found"
   fi
 fi
-exit $INSTALLED
+exit ${INSTALLED}

@@ -24,30 +24,30 @@ fi
 if [ -e /usr/lib/coreelec/check-bl301 ]; then
   /usr/lib/coreelec/check-bl301
   INSTALLED=${?}
-  if [ "$INSTALLED" = 1 ]; then
+  if [ "${INSTALLED}" = 1 ]; then
     touch /run/bl301_injected
   fi
 fi
 
-if [ -e /usr/sbin/inject_bl301 ] && [ "$INSTALLED" = 1 ]; then
+if [ -e /usr/sbin/inject_bl301 ] && [ "${INSTALLED}" = 1 ]; then
   inject_bl301 -Y > /storage/update-bl301.log
   UPDATE=${?}
 fi
 
 if [ "$VERBOSE" = 1 ]; then
-  if [ "$INSTALLED" = 1 ] && [ "$UPDATE" = 0 ]; then
+  if [ "${INSTALLED}" = 1 ] && [ "$UPDATE" = 0 ]; then
     echo "CoreELEC BL301 got updated"
-  elif [ "$INSTALLED" = 1 ] && [ "$UPDATE" = 1 ]; then
+  elif [ "${INSTALLED}" = 1 ] && [ "$UPDATE" = 1 ]; then
     echo "CoreELEC BL301 installed but no update needed"
-  elif [ "$INSTALLED" = 1 ]; then
+  elif [ "${INSTALLED}" = 1 ]; then
     echo "CoreELEC BL301 installed but error on update: " $UPDATE
     RET=$UPDATE
-  elif [ "$INSTALLED" = 0 ]; then
+  elif [ "${INSTALLED}" = 0 ]; then
     echo "CoreELEC BL301 not installed"
   fi
 fi
 
-if [ "$INSTALLED" = 1 ] && [ "$UPDATE" = 0 ]; then
+if [ "${INSTALLED}" = 1 ] && [ "$UPDATE" = 0 ]; then
   sync && reboot
 fi
 

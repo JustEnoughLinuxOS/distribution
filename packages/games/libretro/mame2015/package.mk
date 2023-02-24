@@ -23,7 +23,7 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/mame2015-libretro"
-PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
+PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="Late 2014/Early 2015 version of MAME (0.160-ish) for libretro. Compatible with MAME 0.160 romsets."
@@ -31,9 +31,9 @@ PKG_TOOLCHAIN="make"
 PKG_BUILD_FLAGS="-lto"
 
 pre_make_target() {
-  export REALCC=$CC
-  export CC=$CXX
-  export LD=$CXX
+  export REALCC=${CC}
+  export CC=${CXX}
+  export LD=${CXX}
 }
 
 pre_configure_target() {
@@ -52,6 +52,6 @@ makeinstall_target() {
       aarch64-linux-gnu-strip -s *.so
     ;;
   esac
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp mame*_libretro.so $INSTALL/usr/lib/libretro/
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  cp mame*_libretro.so ${INSTALL}/usr/lib/libretro/
 }

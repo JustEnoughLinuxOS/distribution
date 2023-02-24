@@ -24,7 +24,7 @@ configure_target() {
       ;;
   esac
 
-  $PKG_CONFIGURE_SCRIPT --prefix=/usr \
+  ${PKG_CONFIGURE_SCRIPT} --prefix=/usr \
                         --extra-cflags="${CFLAGS}" \
                         --as=nasm \
                         --target=${PKG_TARGET_NAME_LIBVPX} \

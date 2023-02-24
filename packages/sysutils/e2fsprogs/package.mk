@@ -41,7 +41,7 @@ PKG_CONFIGURE_OPTS_HOST="--prefix=${TOOLCHAIN}/ \
                          --with-gnu-ld"
 
 pre_configure() {
-  PKG_CONFIGURE_OPTS_INIT="BUILD_CC=$HOST_CC \
+  PKG_CONFIGURE_OPTS_INIT="BUILD_CC=${HOST_CC} \
                            --with-udev-rules-dir=no \
                            --with-crond-dir=no \
                            --with-systemd-unit-dir=no \
@@ -69,7 +69,7 @@ pre_configure() {
                            --disable-fuse2fs \
                            --with-gnu-ld"
 
-  PKG_CONFIGURE_OPTS_TARGET="$PKG_CONFIGURE_OPTS_INIT --enable-shared --disable-static"
+  PKG_CONFIGURE_OPTS_TARGET="${PKG_CONFIGURE_OPTS_INIT} --enable-shared --disable-static"
 }
 
 post_makeinstall_target() {
