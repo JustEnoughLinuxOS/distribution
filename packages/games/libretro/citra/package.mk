@@ -5,7 +5,7 @@ PKG_NAME="citra"
 PKG_VERSION="f0b09a5c0cb3767d43f5f8ca12a783012298fd44"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/libretro/citra"
-PKG_URL="$PKG_SITE.git"
+PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain boost"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="Citra - Nintendo 3DS emulator for libretro"
@@ -29,6 +29,6 @@ pre_make_target() {
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp citra_libretro.so $INSTALL/usr/lib/libretro/
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  cp citra_libretro.so ${INSTALL}/usr/lib/libretro/
 }

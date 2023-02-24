@@ -25,7 +25,7 @@ PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/supafaust"
-PKG_URL="$PKG_SITE.git"
+PKG_URL="${PKG_SITE}.git"
 #PKG_GIT_CLONE_BRANCH="hd"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SHORTDESC="Super Nintendo (Super Famicom) emulator"
@@ -36,6 +36,6 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp $PKG_BUILD/mednafen_supafaust_libretro.so $INSTALL/usr/lib/libretro/beetle_supafaust_libretro.so
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  cp ${PKG_BUILD}/mednafen_supafaust_libretro.so ${INSTALL}/usr/lib/libretro/beetle_supafaust_libretro.so
 }

@@ -6,7 +6,7 @@ PKG_VERSION="v5.84.0"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/KDE/extra-cmake-modules"
-PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
+PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
 PKG_SHORTDESC="KDE Extra CMake Modules"
 PKG_TOOLCHAIN="cmake"
 

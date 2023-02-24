@@ -11,11 +11,11 @@ GET_HANDLER_SUPPORT="git"
 PKG_GIT_CLONE_BRANCH="master"
 
 make_target() {
-  echo "$CC $CFLAGS -Wall $LDFLAGS -lm -o edid-decode edid-decode.c"
-  $CC $CFLAGS -Wall $LDFLAGS -lm -o edid-decode edid-decode.c
+  echo "${CC} ${CFLAGS} -Wall ${LDFLAGS} -lm -o edid-decode edid-decode.c"
+  ${CC} ${CFLAGS} -Wall ${LDFLAGS} -lm -o edid-decode edid-decode.c
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/bin
-    cp edid-decode $INSTALL/usr/bin
+  mkdir -p ${INSTALL}/usr/bin
+    cp edid-decode ${INSTALL}/usr/bin
 }

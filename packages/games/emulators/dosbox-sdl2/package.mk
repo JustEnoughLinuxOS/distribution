@@ -14,10 +14,10 @@ PKG_BUILD_FLAGS="+lto"
 
 pre_configure_target() {
 
-if [ $ARCH == "arm" ]; then 
+if [ ${ARCH} == "arm" ]; then 
 	EE_ARCH="armv7l"
 else
-	EE_ARCH=$ARCH
+	EE_ARCH=${ARCH}
 fi
 
   # Clean up build directory

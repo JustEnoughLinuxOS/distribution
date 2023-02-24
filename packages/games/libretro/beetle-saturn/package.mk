@@ -5,7 +5,7 @@ PKG_NAME="beetle-saturn"
 PKG_VERSION="c81603e585ae5c8591603facf9b0dba99032f8c9"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/beetle-saturn-libretro"
-PKG_URL="$PKG_SITE.git"
+PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="Beetle Saturn libretro, a fork from mednafen"
@@ -20,14 +20,14 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
 fi
 
 make_target() {
-  if [ "$ARCH" == "i386" -o "$ARCH" == "x86_64" ]; then
-    make platform=unix CC=$CC CXX=$CXX AR=$AR
+  if [ "${ARCH}" == "i386" -o "${ARCH}" == "x86_64" ]; then
+    make platform=unix CC=${CC} CXX=${CXX} AR=$AR
   else
-    make platform=armv CC=$CC CXX=$CXX AR=$AR
+    make platform=armv CC=${CC} CXX=${CXX} AR=$AR
   fi
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp mednafen_saturn_libretro.so $INSTALL/usr/lib/libretro/beetle_saturn_libretro.so
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  cp mednafen_saturn_libretro.so ${INSTALL}/usr/lib/libretro/beetle_saturn_libretro.so
 }

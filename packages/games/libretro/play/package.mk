@@ -37,5 +37,5 @@ pre_make_target() {
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
-     cp $PKG_BUILD/.$TARGET_NAME/Source/ui_libretro/play_libretro.so $INSTALL/usr/lib/libretro/
+     cp ${PKG_BUILD}/.${TARGET_NAME}/Source/ui_libretro/play_libretro.so ${INSTALL}/usr/lib/libretro/
 }

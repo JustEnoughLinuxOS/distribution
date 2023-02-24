@@ -84,15 +84,15 @@ get_device_unmount() {
   DEVICES=$(parted -s -m -l 2>/dev/null | grep -E '^/dev/sd|^/dev/mmcblk|^/dev/nvme' | grep -E -v '.?rpmb|.?boot?' | cut -f1 -d ":")
 
   for i in $(cat /proc/mounts | grep -E '^/dev/sd' | cut -f1 -d " " | sed "s/[0-9].*$//"); do
-    DEVICES=$(echo $DEVICES | sed -e "s|$i||")
+    DEVICES=$(echo ${DEVICES} | sed -e "s|$i||")
   done
 
   for i in $(cat /proc/mounts | grep -E '^/dev/mmcblk' | cut -f1 -d " " | sed "s/p.*$//"); do
-    DEVICES=$(echo $DEVICES | sed -e "s|$i||")
+    DEVICES=$(echo ${DEVICES} | sed -e "s|$i||")
   done
 
   for i in $(cat /proc/mounts | grep -E '^/dev/nvme' | cut -f1 -d " " | sed "s/p.*$//"); do
-    DEVICES=$(echo $DEVICES | sed -e "s|$i||")
+    DEVICES=$(echo ${DEVICES} | sed -e "s|$i||")
   done
 }
 
@@ -119,16 +119,16 @@ create_device_list() {
 
   get_device_unmount
 
-  if [ "$DEVICES" = "" ]; then
+  if [ "${DEVICES}" = "" ]; then
     msg_no_device
     return 1
   fi
 
-  for i in $DEVICES; do
+  for i in ${DEVICES}; do
     DEVICE_MODEL=$(parted -s $i -m print | grep ^$i | cut -f7 -d ":" | sed "s/;//")
     DEVICE_SIZE=$(parted -s $i -m print | grep ^$i | cut -f2 -d ":")
-    DEVICE_NAME=$(echo $DEVICE_MODEL ${DEVICE_SIZE} | sed 's/ /_/g')
-    DEVICE_LIST="$DEVICE_LIST $i $DEVICE_NAME"
+    DEVICE_NAME=$(echo ${DEVICE_MODEL} ${DEVICE_SIZE} | sed 's/ /_/g')
+    DEVICE_LIST="${DEVICE_LIST} $i ${DEVICE_NAME}"
   done
   return 0
 }
@@ -143,14 +143,14 @@ do_install_quick() {
 
   whiptail --backtitle "$BACKTITLE" --cancel-button "$MSG_CANCEL" \
     $DIALOG_OPTIONS --title "$MSG_TITLE" --menu "$MSG_MENU" 20 50 5 \
-    $DEVICE_LIST 2> $TMPDIR/device_for_install
+    ${DEVICE_LIST} 2> $TMPDIR/device_for_install
   [ $? -ne 0 ] && return
 
   # now we must do everything
   INSTALL_DEVICE=$(cat "$TMPDIR/device_for_install")
-  INSTALL_DEVICE_FULL=$(echo $DEVICE_LIST | sed "s|.*$INSTALL_DEVICE \([^ ]*\).*|$INSTALL_DEVICE \1|")
+  INSTALL_DEVICE_FULL=$(echo ${DEVICE_LIST} | sed "s|.*${INSTALL_DEVICE} \([^ ]*\).*|${INSTALL_DEVICE} \1|")
 
-  case $INSTALL_DEVICE in
+  case ${INSTALL_DEVICE} in
     "/dev/mmcblk"*|"/dev/nvme"*)
       PART1="p1"
       PART2="p2"
@@ -166,14 +166,14 @@ do_install_quick() {
 
   # check for confirmation (twice!)
   MSG_TITLE="Confirmation before installing"
-  MSG_DETAIL="\nIf you continue the contents of the target disk will be wiped out:\n\n$INSTALL_DEVICE_FULL\n\n"
+  MSG_DETAIL="\nIf you continue the contents of the target disk will be wiped out:\n\n${INSTALL_DEVICE_FULL}\n\n"
   DIALOG_OPTIONS="--defaultno"
   whiptail --backtitle "$BACKTITLE" --title "$MSG_TITLE" \
     $DIALOG_OPTIONS --yesno "$MSG_DETAIL" 0 0
   [ $? -ne 0 ] && return
 
   MSG_TITLE="Confirmation before installing"
-  MSG_DETAIL="\nThis is last chance to abort the installation!\n\nIf you continue the target disk will be wiped out:\n\n$INSTALL_DEVICE_FULL\n\n\n"
+  MSG_DETAIL="\nThis is last chance to abort the installation!\n\nIf you continue the target disk will be wiped out:\n\n${INSTALL_DEVICE_FULL}\n\n\n"
   DIALOG_OPTIONS="--defaultno"
   whiptail --backtitle "$BACKTITLE" --title "$MSG_TITLE" \
     $DIALOG_OPTIONS --yesno "$MSG_DETAIL" 0 0
@@ -182,25 +182,25 @@ do_install_quick() {
   # start the progress bar (whiptail --gauge)
   {
     # remove all partitions
-    msg_progress_install "1" "Get all partitions $INSTALL_DEVICE"
-    get_partition $INSTALL_DEVICE 2>>$LOGFILE
+    msg_progress_install "1" "Get all partitions ${INSTALL_DEVICE}"
+    get_partition ${INSTALL_DEVICE} 2>>$LOGFILE
 
-    msg_progress_install "5" "Wiping disk $INSTALL_DEVICE"
-    dd if=/dev/zero of=$INSTALL_DEVICE bs=4096 count=1024 2>>$LOGFILE
+    msg_progress_install "5" "Wiping disk ${INSTALL_DEVICE}"
+    dd if=/dev/zero of=${INSTALL_DEVICE} bs=4096 count=1024 2>>$LOGFILE
 
     # create 2 new partitions (first $PARTSIZE_SYSTEM, second rest)
-    msg_progress_install "7"  "Creating label on $INSTALL_DEVICE"
+    msg_progress_install "7"  "Creating label on ${INSTALL_DEVICE}"
     if [ "$GPT" = "1" ]; then
-      parted -s $INSTALL_DEVICE mklabel gpt >> $LOGFILE 2>&1
+      parted -s ${INSTALL_DEVICE} mklabel gpt >> $LOGFILE 2>&1
     else
-      parted -s $INSTALL_DEVICE mklabel msdos >> $LOGFILE 2>&1
+      parted -s ${INSTALL_DEVICE} mklabel msdos >> $LOGFILE 2>&1
     fi
 
-    msg_progress_install "9" "Writing Master Boot Record on $INSTALL_DEVICE"
+    msg_progress_install "9" "Writing Master Boot Record on ${INSTALL_DEVICE}"
     if [ "$GPT" = "1" ]; then
-      cat /usr/share/syslinux/gptmbr.bin > $INSTALL_DEVICE
+      cat /usr/share/syslinux/gptmbr.bin > ${INSTALL_DEVICE}
     else
-      cat /usr/share/syslinux/mbr.bin > $INSTALL_DEVICE
+      cat /usr/share/syslinux/mbr.bin > ${INSTALL_DEVICE}
     fi
 
     partsize_system_start=$PARTSIZE_SYSTEM_OFFSET
@@ -208,28 +208,28 @@ do_install_quick() {
     partsize_storage_start=$((partsize_system_end + 1))
     partsize_storage_end=-1024
 
-    msg_progress_install "10" "Creating partition on $INSTALL_DEVICE"
+    msg_progress_install "10" "Creating partition on ${INSTALL_DEVICE}"
     if [ "$GPT" = "1" ]; then
-      parted -s $INSTALL_DEVICE unit s mkpart $DISKLABEL_SYSTEM fat16 -- $partsize_system_start $partsize_system_end >> $LOGFILE 2>&1
+      parted -s ${INSTALL_DEVICE} unit s mkpart $DISKLABEL_SYSTEM fat16 -- $partsize_system_start $partsize_system_end >> $LOGFILE 2>&1
     else
-      parted -s $INSTALL_DEVICE unit s mkpart primary fat16 -- $partsize_system_start $partsize_system_end >> $LOGFILE 2>&1
+      parted -s ${INSTALL_DEVICE} unit s mkpart primary fat16 -- $partsize_system_start $partsize_system_end >> $LOGFILE 2>&1
     fi
 
-    msg_progress_install "13" "Creating partition on $INSTALL_DEVICE"
+    msg_progress_install "13" "Creating partition on ${INSTALL_DEVICE}"
     if [ "$GPT" = "1" ]; then
-      parted -s $INSTALL_DEVICE unit s mkpart $DISKLABEL_STORAGE ext4 -- $partsize_storage_start $partsize_storage_end >> $LOGFILE 2>&1
+      parted -s ${INSTALL_DEVICE} unit s mkpart $DISKLABEL_STORAGE ext4 -- $partsize_storage_start $partsize_storage_end >> $LOGFILE 2>&1
     else
-      parted -s $INSTALL_DEVICE unit s mkpart primary ext4 -- $partsize_storage_start $partsize_storage_end >> $LOGFILE 2>&1
+      parted -s ${INSTALL_DEVICE} unit s mkpart primary ext4 -- $partsize_storage_start $partsize_storage_end >> $LOGFILE 2>&1
     fi
 
-    msg_progress_install "16" "Setup bootflag on partition 1 of $INSTALL_DEVICE"
-    parted -s $INSTALL_DEVICE set 1 boot on >> $LOGFILE 2>&1
+    msg_progress_install "16" "Setup bootflag on partition 1 of ${INSTALL_DEVICE}"
+    parted -s ${INSTALL_DEVICE} set 1 boot on >> $LOGFILE 2>&1
     if [ "$GPT" = "1" ]; then
-      parted -s $INSTALL_DEVICE set 1 legacy_boot on >> $LOGFILE 2>&1
+      parted -s ${INSTALL_DEVICE} set 1 legacy_boot on >> $LOGFILE 2>&1
     fi
 
-    msg_progress_install "20" "Tell the kernel we have a new partition table on $INSTALL_DEVICE"
-    partprobe $INSTALL_DEVICE >> $LOGFILE 2>&1
+    msg_progress_install "20" "Tell the kernel we have a new partition table on ${INSTALL_DEVICE}"
+    partprobe ${INSTALL_DEVICE} >> $LOGFILE 2>&1
 
     # create filesystem
     msg_progress_install "23" "Creating filesystem on ${INSTALL_DEVICE}1"
@@ -358,7 +358,7 @@ prompt_gpt() {
   # Get size in GB.
   # 2^41 bytes is the DOS limit (2199023255552 bytes, 2.2TB). Use GUID Partition Table.>= 2200GB
   INSTALL_DEVICE_SIZE=$(($(cat /sys/block/${INSTALL_DEVICE#/dev/}/size)*512/1000/1000/1000))
-  if [ "$INSTALL_DEVICE_SIZE" -ge 2200 ] 2>/dev/null; then
+  if [ "${INSTALL_DEVICE_SIZE}" -ge 2200 ] 2>/dev/null; then
     GPT="1"
   fi
   # force gpt + uefi in uefi boot mode

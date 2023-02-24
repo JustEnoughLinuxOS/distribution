@@ -397,7 +397,7 @@ d       Run gdb for current file
 + f \.c$ | f \.cc$
 c       Compile, link and run the current .c file
         export CFLAGS="-g -Wall -O2"
-        make || make %n || cc $CFLAGS -o %n %f
+        make || make %n || cc ${CFLAGS} -o %n %f
         [ -r "%n" ] && (echo "*** press any key for run... ***"; read)
         [ -x "%n" ] && ./%n
         (echo -ne "\n--- Press any key for return to edit. ---"; read)

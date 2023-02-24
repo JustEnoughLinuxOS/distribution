@@ -6,7 +6,7 @@ PKG_VERSION="f7761a9902d59030882c58d4482446196e748c50"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/mame"
-PKG_URL="https://github.com/libretro/mame/archive/$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/libretro/mame/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain zlib flac sqlite expat"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="MAME - Multiple Arcade Machine Emulator"
@@ -60,12 +60,12 @@ make_target() {
   then
     export ARCHOPTS="-D__aarch64__ -DASMJIT_BUILD_X86"
   fi
-  make $PKG_MAKE_OPTS_TARGET OVERRIDE_CC=$CC OVERRIDE_CXX=$CXX OVERRIDE_LD=$LD AR=$AR $MAKEFLAGS
+  make ${PKG_MAKE_OPTS_TARGET} OVERRIDE_CC=${CC} OVERRIDE_CXX=${CXX} OVERRIDE_LD=$LD AR=$AR $MAKEFLAGS
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp *.so $INSTALL/usr/lib/libretro/mame_libretro.so
-  mkdir -p $INSTALL/usr/config/retroarch/savefiles/mame/hi
-  cp plugins/hiscore/hiscore.dat $INSTALL/usr/config/retroarch/savefiles/mame/hi
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  cp *.so ${INSTALL}/usr/lib/libretro/mame_libretro.so
+  mkdir -p ${INSTALL}/usr/config/retroarch/savefiles/mame/hi
+  cp plugins/hiscore/hiscore.dat ${INSTALL}/usr/config/retroarch/savefiles/mame/hi
 }

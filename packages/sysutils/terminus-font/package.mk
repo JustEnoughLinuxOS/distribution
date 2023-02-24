@@ -14,12 +14,12 @@ PKG_LONGDESC="This package contains the Terminus Font"
 PKG_TOOLCHAIN="manual"
 
 pre_configure_init() {
-  cd $PKG_BUILD
+  cd ${PKG_BUILD}
   rm -rf .${TARGET_NAME}-${TARGET}
 }
 
 pre_configure_target() {
-  cd $PKG_BUILD
+  cd ${PKG_BUILD}
   rm -rf .${TARGET_NAME}-${TARGET}
 }
 

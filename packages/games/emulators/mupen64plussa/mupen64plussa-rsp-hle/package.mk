@@ -44,7 +44,7 @@ makeinstall_target() {
   UPLUGINDIR=${ULIBDIR}/mupen64plus
   mkdir -p ${UPLUGINDIR}
   cp ${PKG_BUILD}/projects/unix/mupen64plus-rsp-hle.so ${UPLUGINDIR}
-  #$STRIP ${UPLUGINDIR}/mupen64plus-rsp-hle.so
+  #${STRIP} ${UPLUGINDIR}/mupen64plus-rsp-hle.so
   chmod 0644 ${UPLUGINDIR}/mupen64plus-rsp-hle.so
 }
 

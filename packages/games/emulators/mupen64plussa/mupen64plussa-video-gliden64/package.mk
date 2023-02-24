@@ -47,7 +47,7 @@ makeinstall_target() {
   UPLUGINDIR=${ULIBDIR}/mupen64plus
   mkdir -p ${UPLUGINDIR}
   cp ${PKG_BUILD}/projects/cmake/plugin/Release/mupen64plus-video-GLideN64.so ${UPLUGINDIR} 
-  #$STRIP ${UPLUGINDIR}/mupen64plus-video-GLideN64.so
+  #${STRIP} ${UPLUGINDIR}/mupen64plus-video-GLideN64.so
   chmod 0644 ${UPLUGINDIR}/mupen64plus-video-GLideN64.so
   mkdir -p ${USHAREDIR}
   cp ${PKG_BUILD}/ini/GLideN64.ini ${USHAREDIR}

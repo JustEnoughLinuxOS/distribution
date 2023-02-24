@@ -45,7 +45,7 @@ makeinstall_target() {
   UPLUGINDIR=${ULIBDIR}/mupen64plus
   mkdir -p ${UPLUGINDIR}
   cp ${PKG_BUILD}/projects/unix/mupen64plus-input-sdl.so ${UPLUGINDIR}
-  #$STRIP ${UPLUGINDIR}/mupen64plus-input-sdl.so
+  #${STRIP} ${UPLUGINDIR}/mupen64plus-input-sdl.so
   chmod 0644 ${UPLUGINDIR}/mupen64plus-input-sdl.so
   mkdir -p ${USHAREDIR}
   cp ${PKG_DIR}/config/${DEVICE}/* ${USHAREDIR}

@@ -24,7 +24,7 @@ pre_configure_target() {
   cp -R $(get_build_dir capsimg)/.install_pkg/usr/lib/libcapsimage.so.5.1 ${PKG_BUILD}/
 
   # add library search path for loading libcapsimage library
-  LDFLAGS="$LDFLAGS -Wl,-rpath='${PKG_BUILD}'"
+  LDFLAGS="${LDFLAGS} -Wl,-rpath='${PKG_BUILD}'"
 }
 
 makeinstall_target() {
