@@ -1514,15 +1514,6 @@ pkg_lock() {
   if [ -f "${THREAD_CONTROL}/locks/${pkg}.${task}.failed" ]; then
     fail_seq="$(< "${THREAD_CONTROL}/locks/${pkg}.${task}.failed")"
     print_color CLR_ERROR "FAILURE: ${pkg}.${task}.failed exists, a previous dependency process has failed (seq: ${fail_seq})\n"
-    if [ -d "${THREAD_CONTROL}/logs" ]; then
-cat <<EOF
-
-The following logs for this failure are available:
-  stdout: ${THREAD_CONTROL}/logs/${fail_seq}/stdout
-  stderr: ${THREAD_CONTROL}/logs/${fail_seq}/stderr
-
-EOF
-    fi
     return 1
   fi
 

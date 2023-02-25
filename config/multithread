@@ -70,11 +70,7 @@ package_worker() {
     fi
 
     if [ ${result} -ne 0 ]; then
-      if [ -d "${THREAD_CONTROL}/logs" ]; then
-        echo "${PKG_NAME} ${THREAD_CONTROL}/logs/${job}/stdout" >>"${THREAD_CONTROL}/addons.failed"
-      else
-        echo "${PKG_NAME}" >>"${THREAD_CONTROL}/addons.failed"
-      fi
+      echo "${PKG_NAME}" >>"${THREAD_CONTROL}/addons.failed"
     fi
   fi
 
@@ -94,16 +90,6 @@ package_worker() {
     pkg_lock_status "FAILED" "${pkgname}" "${task}"
 
     print_color CLR_ERROR "FAILURE: ${SCRIPTS}/${task} ${pkgname} has failed!\n"
-
-    if [ -d "${THREAD_CONTROL}/logs" ]; then
-      cat >&2 <<EOF
-
-The following logs for this failure are available:
-  stdout: ${THREAD_CONTROL}/logs/${job}/stdout
-  stderr: ${THREAD_CONTROL}/logs/${job}/stderr
-
-EOF
-    fi
   fi
 
   return ${result}
@@ -134,8 +120,7 @@ start_multithread_build() {
   if [ "${singlethread}" = "yes" -a "${ONELOG,,}" != "no" ] || [ "${ONELOG,,}" = "yes" ]; then
     buildopts+=" --ungroup"
   else
-    mkdir -p "${THREAD_CONTROL}/logs"
-    buildopts+=" --group --results ${THREAD_CONTROL}/logs/{#}/"
+    buildopts+=" --group"
   fi
 
   # When building addons, don't halt on error - keep building all packages/addons
