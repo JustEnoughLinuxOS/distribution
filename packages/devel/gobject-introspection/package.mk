@@ -5,11 +5,10 @@
 
 PKG_NAME="gobject-introspection"
 PKG_VERSION="1.75.4"
-PKG_SHA256="5356640b5941368fe8abfa7810fd8b5e07160038a177dcf4b683efb840932b5b"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.gtk.org/"
-PKG_URL="https://github.com/GNOME/${PKG_NAME}/archive/${PKG_VERSION}.tar.gz"
+PKG_URL="https://github.com/GNOME/$PKG_NAME/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain libffi glib Python3 qemu:host gobject-introspection:host"
 PKG_DEPENDS_HOST="libffi:host glib:host"
 PKG_SECTION="devel"
@@ -18,7 +17,9 @@ PKG_LONGDESC="GLib is a library which includes support routines for C such as li
 PKG_TOOLCHAIN="meson"
 
 pre_configure_host() {
-  PKG_MESON_OPTS_HOST="-Ddoctool=disabled"
+  PKG_MESON_OPTS_HOST=" \
+    -Ddoctool=disabled \
+    -Dbuild_introspection_data=false"
 
   # prevent g-ir-scanner from writing cache data to $HOME
   export GI_SCANNER_DISABLE_CACHE="1"
@@ -37,8 +38,8 @@ pre_configure_target() {
   AR="${TARGET_AR}"
   CPP="${TARGET_PREFIX}cpp"
   CPPFLAGS="${TARGET_CPPFLAGS}"
-  CFLAGS="${TARGET_CFLAGS}"
-  LDFLAGS="${TARGET_LDFLAGS}"
+  CFLAGS="${TARGET_CFLAGS} -fPIC"
+  LDFLAGS="${TARGET_LDFLAGS} -Wl,--dynamic-linker=${GLIBC_DYNAMIC_LINKER}"
 
   PKG_MESON_OPTS_TARGET=" \
     -Ddoctool=disabled \
@@ -73,8 +74,3 @@ EOF
   chmod +x ${TOOLCHAIN}/bin/g-ir-scanner-*-wrapper
 }
 
-post_makeinstall_target() {
-  rm -rf ${INSTALL}/usr/bin
-  rm -rf ${INSTALL}/usr/lib/gobject-introspection
-  rm -rf ${INSTALL}/usr/share
-}
