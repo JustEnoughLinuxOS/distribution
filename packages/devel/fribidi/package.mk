@@ -14,7 +14,7 @@ PKG_BUILD_FLAGS="+pic"
 
 PKG_MESON_OPTS_TARGET="-Ddeprecated=false \
                        -Ddocs=false \
-                       -Ddefault_library=shared"
+                       -Ddefault_library=static"
 
 post_makeinstall_target() {
   mkdir -p ${SYSROOT_PREFIX}/usr/bin

@@ -23,6 +23,6 @@ PKG_CMAKE_OPTS_TARGET="-DCMAKE_POSITION_INDEPENDENT_CODE=1 \
 post_makeinstall_target() {
   rm -rf ${INSTALL}
 
-  mkdir -p ${INSTALL}/usr/lib
-  cp -rf ${PKG_BUILD}/.${TARGET_NAME}/libarchive/libarchive.so* ${INSTALL}/usr/lib
+  # delete the shared library as we only want static
+  rm ${SYSROOT_PREFIX}/usr/lib/libarchive.so*
 }
