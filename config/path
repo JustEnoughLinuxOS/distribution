@@ -83,6 +83,11 @@ if [ -z "${LOCAL_CCACHE_DIR}" ]; then
   export LOCAL_CCACHE_DIR="${BUILD}/.ccache-local"
 fi
 
+# Corrects a missing cache directory when building with Docker.
+if [ -z "${PYTHON_EGG_CACHE}" ]; then
+  PYTHON_EGG_CACHE="${BUILD}/.egg_cache"
+fi
+
 if [[ -z "$PATH" || ( "$PATH" != "${TOOLCHAIN}/bin:${TOOLCHAIN}/sbin" && "$PATH" = "${PATH#${TOOLCHAIN}/bin:${TOOLCHAIN}/sbin:}" ) ]]; then
   export PATH="${TOOLCHAIN}/bin:${TOOLCHAIN}/sbin${PATH:+":$PATH"}"
 fi
