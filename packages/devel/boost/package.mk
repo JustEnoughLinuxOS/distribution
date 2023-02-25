@@ -3,9 +3,10 @@
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="boost"
-PKG_VERSION="1.80.0"
+PKG_VERSION="1.81.0"
+PKG_SHA256="71feeed900fbccca04a3b4f2f84a7c217186f28a940ed8b7ed4725986baf99fa"
 PKG_LICENSE="OSS"
-PKG_SITE="http://www.boost.org/"
+PKG_SITE="https://www.boost.org/"
 PKG_URL="https://boostorg.jfrog.io/artifactory/main/release/${PKG_VERSION}/source/${PKG_NAME}_${PKG_VERSION//./_}.tar.bz2"
 PKG_DEPENDS_HOST="toolchain:host"
 PKG_DEPENDS_TARGET="toolchain boost:host Python3 zlib bzip2"
@@ -41,24 +42,19 @@ configure_target() {
 }
 
 makeinstall_target() {
-  ln -sf ${TOOLCHAIN}/bin/b2 ${TOOLCHAIN}/bin/bjam
-  ${TOOLCHAIN}/bin/bjam -d2 --ignore-site-config \
-                          --layout=system \
-                          --prefix=${SYSROOT_PREFIX}/usr \
-                          --toolset=gcc link=static \
-                          --with-chrono \
-                          --with-date_time \
-                          --with-filesystem \
-                          --with-iostreams \
-                          --with-program_options \
-                          --with-python \
-                          --with-locale \
-                          --with-random \
-                          --with-regex -sICU_PATH="${SYSROOT_PREFIX}/usr" \
-                          --with-serialization \
-                          --with-system \
-                          --with-thread \
-                          --with-nowide \
-			  --with-context \
-                          install
+  ${TOOLCHAIN}/bin/b2 -d2 --ignore-site-config \
+                      --layout=system \
+                      --prefix=${SYSROOT_PREFIX}/usr \
+                      --toolset=gcc link=static \
+                      --with-chrono \
+                      --with-date_time \
+                      --with-filesystem \
+                      --with-iostreams \
+                      --with-python \
+                      --with-random \
+                      --with-regex -sICU_PATH="${SYSROOT_PREFIX}/usr" \
+                      --with-serialization \
+                      --with-system \
+                      --with-thread \
+                      install
 }

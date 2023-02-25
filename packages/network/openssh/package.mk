@@ -3,10 +3,11 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="openssh"
-PKG_VERSION="9.1p1"
+PKG_VERSION="9.2p1"
+PKG_SHA256="3f66dbf1655fb45f50e1c56da62ab01218c228807b21338d634ebcdf9d71cf46"
 PKG_LICENSE="OSS"
 PKG_SITE="https://www.openssh.com/"
-PKG_URL="https://ftp.openbsd.org/pub/OpenBSD/OpenSSH/portable/${PKG_NAME}-${PKG_VERSION}.tar.gz"
+PKG_URL="https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain openssl zlib"
 PKG_LONGDESC="An open re-implementation of the SSH package."
 PKG_TOOLCHAIN="autotools"
@@ -39,7 +40,7 @@ pre_configure_target() {
 post_makeinstall_target() {
   rm -rf ${INSTALL}/usr/lib/openssh/ssh-keysign
   rm -rf ${INSTALL}/usr/lib/openssh/ssh-pkcs11-helper
-  if [ ! $SFTP_SERVER = "yes" ]; then
+  if [ ! ${SFTP_SERVER} = "yes" ]; then
     rm -rf ${INSTALL}/usr/lib/openssh/sftp-server
   fi
   rm -rf ${INSTALL}/usr/bin/ssh-add

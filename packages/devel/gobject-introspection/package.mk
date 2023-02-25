@@ -4,8 +4,8 @@
 # Copyright (C) 2020-present Team CoreELEC (https://coreelec.org)
 
 PKG_NAME="gobject-introspection"
-PKG_VERSION="1.74.0"
-PKG_SHA256="79ed5d764d288f046b027ff064be174d7904904565de150a94841740a2a0455d"
+PKG_VERSION="1.75.4"
+PKG_SHA256="5356640b5941368fe8abfa7810fd8b5e07160038a177dcf4b683efb840932b5b"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.gtk.org/"
@@ -18,9 +18,7 @@ PKG_LONGDESC="GLib is a library which includes support routines for C such as li
 PKG_TOOLCHAIN="meson"
 
 pre_configure_host() {
-  PKG_MESON_OPTS_HOST=" \
-    -Ddoctool=disabled \
-    -Dbuild_introspection_data=false"
+  PKG_MESON_OPTS_HOST="-Ddoctool=disabled"
 
   # prevent g-ir-scanner from writing cache data to $HOME
   export GI_SCANNER_DISABLE_CACHE="1"
@@ -39,8 +37,8 @@ pre_configure_target() {
   AR="${TARGET_AR}"
   CPP="${TARGET_PREFIX}cpp"
   CPPFLAGS="${TARGET_CPPFLAGS}"
-  CFLAGS="${TARGET_CFLAGS} -fPIC"
-  LDFLAGS="${TARGET_LDFLAGS} -Wl,--dynamic-linker=${GLIBC_DYNAMIC_LINKER}"
+  CFLAGS="${TARGET_CFLAGS}"
+  LDFLAGS="${TARGET_LDFLAGS}"
 
   PKG_MESON_OPTS_TARGET=" \
     -Ddoctool=disabled \
@@ -75,3 +73,8 @@ EOF
   chmod +x ${TOOLCHAIN}/bin/g-ir-scanner-*-wrapper
 }
 
+post_makeinstall_target() {
+  rm -rf ${INSTALL}/usr/bin
+  rm -rf ${INSTALL}/usr/lib/gobject-introspection
+  rm -rf ${INSTALL}/usr/share
+}
