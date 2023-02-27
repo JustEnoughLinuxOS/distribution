@@ -6,4 +6,4 @@
 
 ARG=${1//[\\]/}
 export SDL_AUDIODRIVER=alsa          
-PPSSPPSDL "$ARG"
+PPSSPPSDL "${ARG}"

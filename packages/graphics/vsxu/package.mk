@@ -9,7 +9,7 @@ PKG_ARCH="i386 x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.vsxu.com"
 # repackaged from https://github.com/vovoid/vsxu/archive/${PKG_VERSION}.tar.gz
-PKG_URL="$DISTRO_SRC/${PKG_NAME}-${PKG_VERSION}.tar.gz"
+PKG_URL="${DISTRO}_SRC/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain $OPENGL libX11 glew glfw zlib libpng libjpeg-turbo freetype"
 PKG_LONGDESC="an OpenGL-based programming environment to visualize music and create graphic effects"
 

@@ -241,6 +241,7 @@ EOF
   export CXX=$(pwd)/libreelec-local-cxx
 fi
 
+
 # configure
 if [ -n "${PKG_DEPENDS_CONFIG}" -a -n "${PKG_INSTALL}" ]; then
   for pkg in ${PKG_DEPENDS_CONFIG}; do

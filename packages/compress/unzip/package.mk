@@ -12,7 +12,7 @@ PKG_LONGDESC="UnZip is an extraction utility for archives compressed in .zip for
 PKG_TOOLCHAIN="manual"
 
 make_target() {
-    make CC=${CC} RANLIB=$RANLIB AR=$AR STRIP=${STRIP} \
+    make CC=${CC} RANLIB=$RANLIB AR=${AR} STRIP=${STRIP} \
          -f unix/Makefile generic LOCAL_UNZIP="${CFLAGS}"
 }
 

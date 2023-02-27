@@ -21,9 +21,9 @@ fi
 
 make_target() {
   if [ "${ARCH}" == "i386" -o "${ARCH}" == "x86_64" ]; then
-    make platform=unix CC=${CC} CXX=${CXX} AR=$AR
+    make platform=unix CC=${CC} CXX=${CXX} AR=${AR}
   else
-    make platform=armv CC=${CC} CXX=${CXX} AR=$AR
+    make platform=armv CC=${CC} CXX=${CXX} AR=${AR}
   fi
 }
 

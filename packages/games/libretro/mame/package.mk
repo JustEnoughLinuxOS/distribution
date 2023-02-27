@@ -60,7 +60,7 @@ make_target() {
   then
     export ARCHOPTS="-D__aarch64__ -DASMJIT_BUILD_X86"
   fi
-  make ${PKG_MAKE_OPTS_TARGET} OVERRIDE_CC=${CC} OVERRIDE_CXX=${CXX} OVERRIDE_LD=$LD AR=$AR $MAKEFLAGS
+  make ${PKG_MAKE_OPTS_TARGET} OVERRIDE_CC=${CC} OVERRIDE_CXX=${CXX} OVERRIDE_LD=$LD AR=${AR} ${MAKEFLAGS}
 }
 
 makeinstall_target() {

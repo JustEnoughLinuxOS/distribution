@@ -22,5 +22,5 @@ make_target() {
   esac
   CFLAGS="${CFLAGS} -g -O3 -Wall -D JFS -D GETUSER -D LARGEMEM"
   LDFLAGS="${LDFLAGS} -lncurses -lm -g"
-  ${CC} -o nmon lmon*.c ${CFLAGS} ${LDFLAGS} -D $arch -D KERNEL_2_6_18
+  ${CC} -o nmon lmon*.c ${CFLAGS} ${LDFLAGS} -D ${arch} -D KERNEL_2_6_18
 }

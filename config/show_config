@@ -3,19 +3,19 @@ show_config() {
     get_graphicdrivers
 
   dashes="==========================="
-  config_message="${config_message}\n $dashes$dashes$dashes"
-  config_message="${config_message}\n Configuration for $DISTRONAME ($([ "$OFFICIAL" = "yes" ] && echo "official" || echo "community"))"
-  config_message="${config_message}\n $dashes$dashes$dashes"
+  config_message="${config_message}\n ${dashes}${dashes}${dashes}"
+  config_message="${config_message}\n Configuration for ${DISTRO}NAME ($([ "$OFFICIAL" = "yes" ] && echo "official" || echo "community"))"
+  config_message="${config_message}\n ${dashes}${dashes}${dashes}"
 
   # Build options
 
   config_message="${config_message}\n\n Buildoptions:"
-  config_message="${config_message}\n $dashes$dashes"
+  config_message="${config_message}\n ${dashes}${dashes}"
 
-  config_message="${config_message}\n - CPU (ARCH):\t\t\t\t $TARGET_CPU (${TARGET_ARCH})"
+  config_message="${config_message}\n - CPU (ARCH):\t\t\t\t ${TARGET_CPU} (${TARGET_ARCH})"
   config_message="${config_message}\n - FLOAT:\t\t\t\t ${TARGET_FLOAT}"
   config_message="${config_message}\n - FPU:\t\t\t\t\t ${TARGET_FPU}"
-  config_message="${config_message}\n - CPU features:\t\t\t $TARGET_FEATURES"
+  config_message="${config_message}\n - CPU features:\t\t\t ${TARGET_FEATURES}"
   config_message="${config_message}\n - LTO (Link Time Optimization) support: $LTO_SUPPORT"
   config_message="${config_message}\n - GOLD (Google Linker) Support:\t ${GOLD_SUPPORT}"
   config_message="${config_message}\n - LLVM support:\t\t\t $LLVM_SUPPORT"
@@ -56,12 +56,12 @@ show_config() {
   # Input device configuration
 
   config_message="${config_message}\n\n Input device configuration:"
-  config_message="${config_message}\n $dashes$dashes"
+  config_message="${config_message}\n ${dashes}${dashes}"
 
   # Misc. hardware configuration
 
   config_message="${config_message}\n\n Misc. hardware configuration:"
-  config_message="${config_message}\n $dashes$dashes"
+  config_message="${config_message}\n ${dashes}${dashes}"
 
   config_message="${config_message}\n - ALSA support:\t\t\t $ALSA_SUPPORT"
   config_message="${config_message}\n - Pulseaudio support:\t\t\t $PULSEAUDIO_SUPPORT"
@@ -88,7 +88,7 @@ show_config() {
   # Network service configuration
 
   config_message="${config_message}\n\n Network service configuration:"
-  config_message="${config_message}\n $dashes$dashes"
+  config_message="${config_message}\n ${dashes}${dashes}"
 
   config_message="${config_message}\n - Avahi (Zeroconf) support:\t\t $AVAHI_DAEMON"
   config_message="${config_message}\n - NFS mounting support:\t\t $NFS_SUPPORT"
@@ -101,7 +101,7 @@ show_config() {
   # OS configuration
 
   config_message="${config_message}\n\n OS configuration:"
-  config_message="${config_message}\n $dashes$dashes"
+  config_message="${config_message}\n ${dashes}${dashes}"
 
   config_message="${config_message}\n - OEM Support:\t\t\t\t $OEM_SUPPORT"
   config_message="${config_message}\n - Default ROOT Password:\t\t ${ROOT_PASSWORD}"
@@ -115,7 +115,7 @@ show_config() {
   # Misc. Filesystems
 
   config_message="${config_message}\n\n Misc. Filesystems:"
-  config_message="${config_message}\n $dashes$dashes"
+  config_message="${config_message}\n ${dashes}${dashes}"
 
   config_message="${config_message}\n - Swap Support:\t\t\t $SWAP_SUPPORT"
   if [ "$SWAP_SUPPORT" = "yes" ]; then
@@ -130,9 +130,9 @@ show_config() {
   fi
 
   config_message="${config_message}\n"
-  config_message="${config_message}\n $dashes$dashes$dashes"
-  config_message="${config_message}\n End Configuration for $DISTRONAME"
-  config_message="${config_message}\n $dashes$dashes$dashes"
+  config_message="${config_message}\n ${dashes}${dashes}${dashes}"
+  config_message="${config_message}\n End Configuration for ${DISTRO}NAME"
+  config_message="${config_message}\n ${dashes}${dashes}${dashes}"
   config_message="${config_message}\n\n\n"
 
   echo -e "${config_message}"

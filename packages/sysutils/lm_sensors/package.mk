@@ -13,7 +13,7 @@ PKG_LONGDESC="Provides user-space support for the hardware monitoring drivers."
 PKG_MAKEINSTALL_OPTS_TARGET="PREFIX=/usr"
 
 pre_make_target() {
-  PKG_MAKE_OPTS_TARGET="PREFIX=/usr CC=${CC} AR=$AR"
+  PKG_MAKE_OPTS_TARGET="PREFIX=/usr CC=${CC} AR=${AR}"
 
   export CFLAGS="${TARGET_CFLAGS}"
   export CPPFLAGS="${TARGET_CPPFLAGS}"

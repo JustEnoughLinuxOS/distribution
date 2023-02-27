@@ -108,7 +108,7 @@ shell_patterns=0    # expression type
 + y Perl\ Program | f \.pl$
 9       opendir ()
         cat <<EOF > %b
-        %iopendir(DIR, \$dir) || die("\$0: can't open \$dir\n");
+        %iopendir(DIR, \${dir}) || die("\$0: can't open \${dir}\n");
         EOF
 
 + y Perl\ Program | f \.pl$
