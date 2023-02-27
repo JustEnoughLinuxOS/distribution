@@ -34,7 +34,7 @@ PKG_TOOLCHAIN="make"
 
 
 make_target() {
-  make CC=${CC} CXX=${CXX} AR=$AR
+  make CC=${CC} CXX=${CXX} AR=${AR}
 }
 
 makeinstall_target() {

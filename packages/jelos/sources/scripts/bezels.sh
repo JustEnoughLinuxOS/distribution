@@ -68,7 +68,7 @@ clear_bezel() {
 
 set_bezel() {
 # $OPACITY: input_overlay_opacity
-# $AR_INDEX: aspect_ratio_index
+# ${AR}_INDEX: aspect_ratio_index
 # $1: custom_viewport_width 
 # $2: custom_viewport_height
 # $3: ustom_viewport_x
@@ -79,7 +79,7 @@ set_bezel() {
         clear_bezel
         sed -i '/input_overlay_opacity = "/d' $RACONFIG
         sed -i "1i input_overlay_opacity = \"$OPACITY\"" $RACONFIG
-		sed -i "2i aspect_ratio_index = \"$AR_INDEX\"" $RACONFIG
+		sed -i "2i aspect_ratio_index = \"${AR}_INDEX\"" $RACONFIG
 		sed -i "3i custom_viewport_width = \"$1\"" $RACONFIG
 		sed -i "4i custom_viewport_height = \"$2\"" $RACONFIG
 		sed -i "5i custom_viewport_x = \"$3\"" $RACONFIG
