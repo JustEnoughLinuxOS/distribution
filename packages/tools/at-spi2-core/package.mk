@@ -16,5 +16,5 @@ PKG_MESON_OPTS_TARGET="-Ddocs=false \
                        -Ddbus_daemon=/usr/bin/dbus-daemon"
 
 pre_configure_target() {
-  LDFLAGS="${LDFLAGS} -lXi -lXext"
+  TARGET_LDFLAGS="${TARGET_LDFLAGS} -lXi -lXext"
 }

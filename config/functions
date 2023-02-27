@@ -194,52 +194,117 @@ setup_pkg_config_host() {
   unset PKG_CONFIG_ALLOW_SYSTEM_LIBS
 }
 
+# args: linker, default availability yes/no
+linker_allowed() {
+  if flag_enabled "$1" "$2"; then
+    # bfd is always available, others need to be enabled with <LINKER>_SUPPORT="yes"
+    local linker_support="${1^^}_SUPPORT"
+    if [ "$1" = "bfd" ] || [ "${!linker_support}" = "yes" ]; then
+      return 0
+    fi
+  fi
+  return 1
+}
+
+# return target linker to use for a package
+get_target_linker() {
+  # all known linkers, in descending order of priority
+  # those are candidates for explicit opt-in via PKG_BUILD_FLAGS
+  local all_linkers="mold gold bfd"
+
+  # linkers to choose from unless disabled via PKG_BUILD_FLAGS
+  local linker_candidates="${DEFAULT_LINKER:-bfd} ${all_linkers}"
+
+  local linker
+
+  # check if package prefers a specific linker
+  for linker in ${all_linkers}; do
+    if linker_allowed "${linker}" "no"; then
+      echo "${linker}"
+      return
+    fi
+  done
+
+  # select linker which isn't disabled by PKG_BUILD_FLAGS
+  for linker in ${linker_candidates}; do
+    if linker_allowed "${linker}" "yes"; then
+      echo "${linker}"
+      return
+    fi
+  done
+
+  # none of our linkers matched, use the compiler's default linker
+  echo "compiler_default"
+}
+
 setup_toolchain() {
   if [ "$LTO_SUPPORT" = "yes" ]; then
     if flag_enabled "lto-parallel" "no"; then
-      TARGET_CFLAGS+=" ${FLAGS_OPTIM_LTO_PARALLEL} ${FLAGS_OPTIM_LTO_NO_FAT}"
-      TARGET_CXXFLAGS+=" ${FLAGS_OPTIM_LTO_PARALLEL} ${FLAGS_OPTIM_LTO_NO_FAT}"
-      TARGET_LDFLAGS+=" ${LDFLAGS_OPTIM_LTO_COMMON} ${FLAGS_OPTIM_LTO_PARALLEL}"
+      TARGET_CFLAGS+=" $FLAGS_OPTIM_LTO_PARALLEL $FLAGS_OPTIM_LTO_NO_FAT"
+      TARGET_CXXFLAGS+=" $FLAGS_OPTIM_LTO_PARALLEL $FLAGS_OPTIM_LTO_NO_FAT"
+      TARGET_LDFLAGS+=" $LDFLAGS_OPTIM_LTO_COMMON $FLAGS_OPTIM_LTO_PARALLEL"
     elif flag_enabled "lto-fat" "no"; then
-      TARGET_CFLAGS+=" ${FLAGS_OPTIM_LTO_NO_PARALLEL} ${FLAGS_OPTIM_LTO_FAT}"
-      TARGET_CXXFLAGS+=" ${FLAGS_OPTIM_LTO_NO_PARALLEL} ${FLAGS_OPTIM_LTO_FAT}"
-      TARGET_LDFLAGS+=" ${LDFLAGS_OPTIM_LTO_COMMON} ${FLAGS_OPTIM_LTO_NO_PARALLEL}"
+      TARGET_CFLAGS+=" $FLAGS_OPTIM_LTO_NO_PARALLEL $FLAGS_OPTIM_LTO_FAT"
+      TARGET_CXXFLAGS+=" $FLAGS_OPTIM_LTO_NO_PARALLEL $FLAGS_OPTIM_LTO_FAT"
+      TARGET_LDFLAGS+=" $LDFLAGS_OPTIM_LTO_COMMON $FLAGS_OPTIM_LTO_NO_PARALLEL"
     elif flag_enabled "lto" "no"; then
-      TARGET_CFLAGS+=" ${FLAGS_OPTIM_LTO_NO_PARALLEL} ${FLAGS_OPTIM_LTO_NO_FAT}"
-      TARGET_CXXFLAGS+=" ${FLAGS_OPTIM_LTO_NO_PARALLEL} ${FLAGS_OPTIM_LTO_NO_FAT}"
-      TARGET_LDFLAGS+=" ${LDFLAGS_OPTIM_LTO_COMMON} ${FLAGS_OPTIM_LTO_NO_PARALLEL}"
+      TARGET_CFLAGS+=" $FLAGS_OPTIM_LTO_NO_PARALLEL $FLAGS_OPTIM_LTO_NO_FAT"
+      TARGET_CXXFLAGS+=" $FLAGS_OPTIM_LTO_NO_PARALLEL $FLAGS_OPTIM_LTO_NO_FAT"
+      TARGET_LDFLAGS+=" $LDFLAGS_OPTIM_LTO_COMMON $FLAGS_OPTIM_LTO_NO_PARALLEL"
     fi
   fi
 
   if flag_enabled "lto-off" "no"; then
-    TARGET_CFLAGS+=" ${FLAGS_OPTIM_LTO_OFF}"
-    TARGET_CXXFLAGS+=" ${FLAGS_OPTIM_LTO_OFF}"
-    TARGET_LDFLAGS+=" ${FLAGS_OPTIM_LTO_OFF}"
+    TARGET_CFLAGS+=" $FLAGS_OPTIM_LTO_OFF"
+    TARGET_CXXFLAGS+=" $FLAGS_OPTIM_LTO_OFF"
+    TARGET_LDFLAGS+=" $FLAGS_OPTIM_LTO_OFF"
   fi
 
-  # gold flag
-  if flag_enabled "gold" "${GOLD_SUPPORT}" "only-disable"; then
-    TARGET_LDFLAGS+=" ${LDFLAGS_OPTIM_GOLD}"
+  local linker="$(get_target_linker)"
+  local linker_opts="LDFLAGS_OPTIM_LINKER_${linker^^}"
+
+  TARGET_LDFLAGS+=" ${!linker_opts}"
+
+  # compiler optimization, descending priority: speed, size, default
+  if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
+    if [ "${SPLIT_DEBUG_INFO}" = "yes" -a "${linker}" = "gold" ]; then
+      TARGET_CFLAGS+=" $CFLAGS_OPTIM_DEBUG_SPLIT"
+      TARGET_CXXFLAGS+=" $CXXFLAGS_OPTIM_DEBUG_SPLIT"
+      TARGET_LDFLAGS+=" $LDFLAGS_OPTIM_DEBUG_SPLIT"
+    else
+      TARGET_CFLAGS+=" $CFLAGS_OPTIM_DEBUG"
+      TARGET_CXXFLAGS+=" $CXXFLAGS_OPTIM_DEBUG"
+      TARGET_LDFLAGS+=" $LDFLAGS_OPTIM_DEBUG"
+    fi
+  elif flag_enabled "speed" "no"; then
+    TARGET_CFLAGS+=" $CFLAGS_OPTIM_SPEED"
+    TARGET_CXXFLAGS+=" $CXXFLAGS_OPTIM_SPEED"
+  elif flag_enabled "size" "no"; then
+    TARGET_CFLAGS+=" $CFLAGS_OPTIM_SIZE"
+    TARGET_CXXFLAGS+=" $CXXFLAGS_OPTIM_SIZE"
+  else
+    TARGET_CFLAGS+=" $CFLAGS_OPTIM_DEFAULT"
+    TARGET_CXXFLAGS+=" $CXXFLAGS_OPTIM_DEFAULT"
   fi
 
   # position-independent code
   if flag_enabled "pic" "no"; then
-    TARGET_CFLAGS+=" ${CFLAGS_OPTIM_PIC}"
-    TARGET_CXXFLAGS+=" ${CXXFLAGS_OPTIM_PIC}"
-    TARGET_LDFLAGS+=" ${LDFLAGS_OPTIM_PIC}"
+    TARGET_CFLAGS+=" $CFLAGS_OPTIM_PIC"
+    TARGET_CXXFLAGS+=" $CXXFLAGS_OPTIM_PIC"
+    TARGET_LDFLAGS+=" $LDFLAGS_OPTIM_PIC"
   fi
   if flag_enabled "pic:host" "no"; then
-    HOST_CFLAGS+=" ${CFLAGS_OPTIM_PIC}"
-    HOST_CXXFLAGS+=" ${CXXFLAGS_OPTIM_PIC}"
-    HOST_LDFLAGS+=" ${LDFLAGS_OPTIM_PIC}"
+    HOST_CFLAGS+=" $CFLAGS_OPTIM_PIC"
+    HOST_CXXFLAGS+=" $CXXFLAGS_OPTIM_PIC"
+    HOST_LDFLAGS+=" $LDFLAGS_OPTIM_PIC"
   fi
 
   # hardening support
-  if flag_enabled "hardening" "${HARDENING_SUPPORT}"; then
-    TARGET_CFLAGS+=" ${CFLAGS_OPTIM_HARDENING}"
-    TARGET_CXXFLAGS+=" ${CXXFLAGS_OPTIM_HARDENING}"
-    TARGET_CFLAGS+=" ${CPPFLAGS_OPTIM_HARDENING}"
-    TARGET_LDFLAGS+=" ${LDFLAGS_OPTIM_HARDENING}"
+  if flag_enabled "hardening" "$HARDENING_SUPPORT"; then
+    TARGET_CFLAGS+=" $CFLAGS_OPTIM_HARDENING"
+    TARGET_CXXFLAGS+=" $CXXFLAGS_OPTIM_HARDENING"
+    TARGET_CFLAGS+=" $CPPFLAGS_OPTIM_HARDENING"
+    TARGET_LDFLAGS+=" $LDFLAGS_OPTIM_HARDENING"
   fi
 
   # parallel
@@ -416,6 +481,7 @@ setup_toolchain() {
       export BUILD_CXX="${CXX}"
       export _python_sysroot="${TOOLCHAIN}"
       export _python_prefix=/
+      export _python_exec_prefix=/
 
       # rust
       case "${MACHINE_HARDWARE_NAME}" in
@@ -437,17 +503,9 @@ setup_toolchain() {
   esac
 }
 
-create_meson_conf() {
-  local endian root properties
-  case "$1" in
-    target|init)    root="${SYSROOT_PREFIX}/usr"
-                    ;;
-    host|bootstrap) root="${TOOLCHAIN}"
-                    ;;
-  esac
-
+create_meson_conf_host() {
+  local properties
   properties="PKG_MESON_PROPERTIES_${1^^}"
-
   cat > $2 <<EOF
 [binaries]
 c = '${CC}'
@@ -463,12 +521,14 @@ cpu_family = '${TARGET_ARCH}'
 cpu = '${TARGET_SUBARCH}'
 endian = 'little'
 
+[built-in options]
+$(python3 -c "import os; print('c_args = {}'.format([x for x in os.getenv('CFLAGS').split()]))")
+$(python3 -c "import os; print('c_link_args = {}'.format([x for x in os.getenv('LDFLAGS').split()]))")
+$(python3 -c "import os; print('cpp_args = {}'.format([x for x in os.getenv('CXXFLAGS').split()]))")
+$(python3 -c "import os; print('cpp_link_args = {}'.format([x for x in os.getenv('LDFLAGS').split()]))")
+
 [properties]
-root = '${root}'
-$(python -c "import os; print('c_args = {}'.format([x for x in os.getenv('CFLAGS').split()]))")
-$(python -c "import os; print('c_link_args = {}'.format([x for x in os.getenv('LDFLAGS').split()]))")
-$(python -c "import os; print('cpp_args = {}'.format([x for x in os.getenv('CXXFLAGS').split()]))")
-$(python -c "import os; print('cpp_link_args = {}'.format([x for x in os.getenv('LDFLAGS').split()]))")
+root = '${TOOLCHAIN}'
 ${!properties}
 EOF
 }
@@ -1033,15 +1093,40 @@ find_dir_path() {
 # p1: name of function to test for
 # return 0 if function exists, 1 if not
 pkg_call_exists() {
-  [ "$(type -t ${1})" = "function" ] && return 0 || return 1
+  PKG_CURRENT_CALL="${1}"
+  if [ "$(type -t ${1})" = "function" ]; then
+    PKG_CURRENT_CALL_TYPE="package.mk"
+    return 0
+  else
+    PKG_CURRENT_CALL_TYPE="default"
+    return 1
+  fi
 }
 
-# p1: name of function to execute unconditionally
+# Optional variant of pkg_call_exists()
+# Clear PKG_CURRENT_CALL when function is not implemented.
+pkg_call_exists_opt() {
+  if pkg_call_exists $1; then
+    return 0
+  else
+    pkg_call_finish
+    return 1
+  fi
+}
+
+# Function to be called is set by pkg_call_exists/pkg_call_exists_opt
+# Args: whatever the called function expects
 # testing the exit code value of this function is likely to break set -e fail-on-error behaviour
 pkg_call() {
-  [ -n "${PKG_NAME}" ] || die "$(print_color CLR_ERROR "FAILURE: Cannot call ${1} package function when package is not known!")"
+  [ -n "${PKG_CURRENT_CALL}" ] || die "$(print_color CLR_ERROR "PKG_CURRENT_CALL is not set!")"
+  [ -n "${PKG_NAME}" ] || die "$(print_color CLR_ERROR "FAILURE: Cannot call ${PKG_CURRENT_CALL} package function when package is not known!")"
 
-  ${1}
+  ${PKG_CURRENT_CALL} "${@}"
+  pkg_call_finish
+}
+
+pkg_call_finish() {
+  PKG_CURRENT_CALL=""
 }
 
 unset_functions() {
