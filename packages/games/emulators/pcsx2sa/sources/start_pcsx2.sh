@@ -10,5 +10,5 @@ if [ ! -d "/storage/.config/PCSX2" ]
 then
   cp -rf /usr/config/PCSX2 /storage/.config
 fi
-@APPIMAGE@ -fastboot -- "${AR}G"
+@APPIMAGE@ -fastboot -- "${ARG}"
 set_audio alsa

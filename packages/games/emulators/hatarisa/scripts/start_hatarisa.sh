@@ -50,7 +50,7 @@ if [ `echo $1 | grep -i .zip | wc -l` -eq 1 ]; then
       ARGS="\nszDiskAFileName = "$FILE""
       ;;
     2)
-      ARGS="${AR}GS\nszDiskBFileName = "$FILE""
+      ARGS="${ARGS}\nszDiskBFileName = "$FILE""
       ;;
     esac
 
@@ -61,8 +61,8 @@ if [ `echo $1 | grep -i .zip | wc -l` -eq 1 ]; then
   done
 
     # Add game files as floppy 1 & 2 to .hatari-temp.cfg & start hatari
-    echo -e ${AR}GS >> "$HATARI_TMP_CONFIG"
-    echo -e "\nAssigned floppy drives:" ${AR}GS "\n" >> "$HATARI_LOG"
+    echo -e ${ARGS} >> "$HATARI_TMP_CONFIG"
+    echo -e "\nAssigned floppy drives:" ${ARGS} "\n" >> "$HATARI_LOG"
     nice -n -19 hatarisa --configfile "$HATARI_TMP_CONFIG" >> $HATARI_LOG 2>&1
 
 # Check for .cfg config file
