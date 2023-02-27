@@ -16,7 +16,7 @@ make_target() {
   make CXX="${CXX}" \
      CXXFLAGS="${TARGET_CXXFLAGS}" \
      RANLIB="$RANLIB" \
-     AR="$AR" \
+     AR="${AR}" \
      STRIP="${STRIP}" \
      -f makefile unrar
 
@@ -25,7 +25,7 @@ make_target() {
   make CXX="${CXX}" \
      CXXFLAGS="${TARGET_CXXFLAGS}" \
      RANLIB="$RANLIB" \
-     AR="$AR" \
+     AR="${AR}" \
      -f makefile lib
 }
 

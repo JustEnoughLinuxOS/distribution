@@ -6,7 +6,7 @@ PKG_VERSION="0.1"
 PKG_SHA256="4c8ed8ae39ecd05d7e3aeebc98cf230912cdcc887fa78d5112f981b6f9358b6e"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/LibreELEC/LibreELEC.tv"
-PKG_URL="$DISTRO_SRC/${PKG_NAME}-${PKG_VERSION}.tar.xz"
+PKG_URL="${DISTRO}_SRC/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain kernel-firmware"
 PKG_LONGDESC="Firmware for brcm bluetooth chips used in some Freescale iMX based devices."
 

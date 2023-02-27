@@ -20,7 +20,7 @@ GET_HANDLER_SUPPORT="git"
 
 make_target() {
 cd ${PKG_BUILD}
-CFLAGS=${CFLAGS} CXXFLAGS="${CXXFLAGS}" CXX="${CXX}" CC="${CC}" LD="$LD" RANLIB="$RANLIB" AR="$AR" make
+CFLAGS=${CFLAGS} CXXFLAGS="${CXXFLAGS}" CXX="${CXX}" CC="${CC}" LD="$LD" RANLIB="$RANLIB" AR="${AR}" make
 }
 
 makeinstall_target() {

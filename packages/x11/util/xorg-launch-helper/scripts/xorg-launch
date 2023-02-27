@@ -7,13 +7,13 @@
 # max 10 seconds
 ARGS_FILE="/run/libreelec/xorg-settings.conf"
 for i in $(seq 1 40) ; do
-  if [ -e "$ARGS_FILE" ] ; then
+  if [ -e "${AR}GS_FILE" ] ; then
     break
   fi
   usleep 250000
 done
 
-if [ -e "$ARGS_FILE" ] ; then
+if [ -e "${AR}GS_FILE" ] ; then
   . /run/libreelec/xorg-settings.conf
   exec xorg-launch-helper $@ $XORG_ARGS
 else
