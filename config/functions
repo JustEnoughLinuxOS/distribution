@@ -194,6 +194,49 @@ setup_pkg_config_host() {
   unset PKG_CONFIG_ALLOW_SYSTEM_LIBS
 }
 
+# args: linker, default availability yes/no
+linker_allowed() {
+  if flag_enabled "$1" "$2"; then
+    # bfd is always available, others need to be enabled with <LINKER>_SUPPORT="yes"
+    local linker_support="${1^^}_SUPPORT"
+    if [ "$1" = "bfd" ] || [ "${!linker_support}" = "yes" ]; then
+      return 0
+    fi
+  fi
+  return 1
+}
+
+# return target linker to use for a package
+get_target_linker() {
+  # all known linkers, in descending order of priority
+  # those are candidates for explicit opt-in via PKG_BUILD_FLAGS
+  local all_linkers="mold gold bfd"
+
+  # linkers to choose from unless disabled via PKG_BUILD_FLAGS
+  local linker_candidates="${DEFAULT_LINKER:-bfd} ${all_linkers}"
+
+  local linker
+
+  # check if package prefers a specific linker
+  for linker in ${all_linkers}; do
+    if linker_allowed "${linker}" "no"; then
+      echo "${linker}"
+      return
+    fi
+  done
+
+  # select linker which isn't disabled by PKG_BUILD_FLAGS
+  for linker in ${linker_candidates}; do
+    if linker_allowed "${linker}" "yes"; then
+      echo "${linker}"
+      return
+    fi
+  done
+
+  # none of our linkers matched, use the compiler's default linker
+  echo "compiler_default"
+}
+
 setup_toolchain() {
   if [ "$LTO_SUPPORT" = "yes" ]; then
     if flag_enabled "lto-parallel" "no"; then
@@ -217,9 +260,31 @@ setup_toolchain() {
     TARGET_LDFLAGS+=" ${FLAGS_OPTIM_LTO_OFF}"
   fi
 
-  # gold flag
-  if flag_enabled "gold" "${GOLD_SUPPORT}" "only-disable"; then
-    TARGET_LDFLAGS+=" ${LDFLAGS_OPTIM_GOLD}"
+  local linker="$(get_target_linker)"
+  local linker_opts="LDFLAGS_OPTIM_LINKER_${linker^^}"
+
+  TARGET_LDFLAGS+=" ${!linker_opts}"
+
+  # compiler optimization, descending priority: speed, size, default
+  if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
+    if [ "${SPLIT_DEBUG_INFO}" = "yes" -a "${linker}" = "gold" ]; then
+      TARGET_CFLAGS+=" ${CFLAGS_OPTIM_DEBUG_SPLIT}"
+      TARGET_CXXFLAGS+=" ${CXXFLAGS_OPTIM_DEBUG_SPLIT}"
+      TARGET_LDFLAGS+=" ${LDFLAGS_OPTIM_DEBUG_SPLIT}"
+    else
+      TARGET_CFLAGS+=" ${CFLAGS_OPTIM_DEBUG}"
+      TARGET_CXXFLAGS+=" ${CXXFLAGS_OPTIM_DEBUG}"
+      TARGET_LDFLAGS+=" ${LDFLAGS_OPTIM_DEBUG}"
+    fi
+  elif flag_enabled "speed" "no"; then
+    TARGET_CFLAGS+=" ${CFLAGS_OPTIM_SPEED}"
+    TARGET_CXXFLAGS+=" ${CXXFLAGS_OPTIM_SPEED}"
+  elif flag_enabled "size" "no"; then
+    TARGET_CFLAGS+=" ${CFLAGS_OPTIM_SIZE}"
+    TARGET_CXXFLAGS+=" ${CXXFLAGS_OPTIM_SIZE}"
+  else
+    TARGET_CFLAGS+=" ${CFLAGS_OPTIM_DEFAULT}"
+    TARGET_CXXFLAGS+=" ${CXXFLAGS_OPTIM_DEFAULT}"
   fi
 
   # position-independent code
@@ -416,6 +481,7 @@ setup_toolchain() {
       export BUILD_CXX="${CXX}"
       export _python_sysroot="${TOOLCHAIN}"
       export _python_prefix=/
+      export _python_exec_prefix=/
 
       # rust
       case "${MACHINE_HARDWARE_NAME}" in
@@ -437,17 +503,9 @@ setup_toolchain() {
   esac
 }
 
-create_meson_conf() {
-  local endian root properties
-  case "$1" in
-    target|init)    root="${SYSROOT_PREFIX}/usr"
-                    ;;
-    host|bootstrap) root="${TOOLCHAIN}"
-                    ;;
-  esac
-
+create_meson_conf_host() {
+  local properties
   properties="PKG_MESON_PROPERTIES_${1^^}"
-
   cat > $2 <<EOF
 [binaries]
 c = '${CC}'
@@ -463,12 +521,14 @@ cpu_family = '${TARGET_ARCH}'
 cpu = '${TARGET_SUBARCH}'
 endian = 'little'
 
+[built-in options]
+$(python3 -c "import os; print('c_args = {}'.format([x for x in os.getenv('CFLAGS').split()]))")
+$(python3 -c "import os; print('c_link_args = {}'.format([x for x in os.getenv('LDFLAGS').split()]))")
+$(python3 -c "import os; print('cpp_args = {}'.format([x for x in os.getenv('CXXFLAGS').split()]))")
+$(python3 -c "import os; print('cpp_link_args = {}'.format([x for x in os.getenv('LDFLAGS').split()]))")
+
 [properties]
-root = '${root}'
-$(python -c "import os; print('c_args = {}'.format([x for x in os.getenv('CFLAGS').split()]))")
-$(python -c "import os; print('c_link_args = {}'.format([x for x in os.getenv('LDFLAGS').split()]))")
-$(python -c "import os; print('cpp_args = {}'.format([x for x in os.getenv('CXXFLAGS').split()]))")
-$(python -c "import os; print('cpp_link_args = {}'.format([x for x in os.getenv('LDFLAGS').split()]))")
+root = '${TOOLCHAIN}'
 ${!properties}
 EOF
 }
@@ -851,7 +911,7 @@ get_pkg_variable() {
 # get package's build dir
 get_build_dir() {
   local _PKG_NAME="${1%:*}" _PKG_VERSION="$(get_pkg_version "$1")"
-  if [ -n "${_PKG_NAME}" -a -n "$_PKG_VERSION" ]; then
+  if [ -n "${_PKG_NAME}" -a -n "${_PKG_VERSION}" ]; then
     echo $BUILD/${_PKG_NAME}-${_PKG_VERSION}
   fi
 }
@@ -1033,15 +1093,40 @@ find_dir_path() {
 # p1: name of function to test for
 # return 0 if function exists, 1 if not
 pkg_call_exists() {
-  [ "$(type -t ${1})" = "function" ] && return 0 || return 1
+  PKG_CURRENT_CALL="${1}"
+  if [ "$(type -t ${1})" = "function" ]; then
+    PKG_CURRENT_CALL_TYPE="package.mk"
+    return 0
+  else
+    PKG_CURRENT_CALL_TYPE="default"
+    return 1
+  fi
 }
 
-# p1: name of function to execute unconditionally
+# Optional variant of pkg_call_exists()
+# Clear PKG_CURRENT_CALL when function is not implemented.
+pkg_call_exists_opt() {
+  if pkg_call_exists $1; then
+    return 0
+  else
+    pkg_call_finish
+    return 1
+  fi
+}
+
+# Function to be called is set by pkg_call_exists/pkg_call_exists_opt
+# Args: whatever the called function expects
 # testing the exit code value of this function is likely to break set -e fail-on-error behaviour
 pkg_call() {
-  [ -n "${PKG_NAME}" ] || die "$(print_color CLR_ERROR "FAILURE: Cannot call ${1} package function when package is not known!")"
+  [ -n "${PKG_CURRENT_CALL}" ] || die "$(print_color CLR_ERROR "PKG_CURRENT_CALL is not set!")"
+  [ -n "${PKG_NAME}" ] || die "$(print_color CLR_ERROR "FAILURE: Cannot call ${PKG_CURRENT_CALL} package function when package is not known!")"
 
-  ${1}
+  ${PKG_CURRENT_CALL} "${@}"
+  pkg_call_finish
+}
+
+pkg_call_finish() {
+  PKG_CURRENT_CALL=""
 }
 
 unset_functions() {
@@ -1205,14 +1290,14 @@ kernel_config_path() {
   config_name="linux.${TARGET_PATCH_ARCH:-${TARGET_ARCH}}.conf"
 
   for cfg in ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/linux/${pkg_linux_version}/${config_name} \
-             ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/linux/$LINUX/${config_name} \
+             ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/linux/${LINUX}/${config_name} \
              ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/linux/${config_name} \
              ${PROJECT_DIR}/${PROJECT}/linux/${pkg_linux_version}/${config_name} \
-             ${PROJECT_DIR}/${PROJECT}/linux/$LINUX/${config_name} \
+             ${PROJECT_DIR}/${PROJECT}/linux/${LINUX}/${config_name} \
              ${PROJECT_DIR}/${PROJECT}/linux/${config_name} \
-             $pkg_linux_dir/config/${pkg_linux_version}/${config_name} \
-             $pkg_linux_dir/config/$LINUX/${config_name} \
-             $pkg_linux_dir/config/${config_name} \
+             ${pkg_linux_dir}/config/${pkg_linux_version}/${config_name} \
+             ${pkg_linux_dir}/config/${LINUX}/${config_name} \
+             ${pkg_linux_dir}/config/${config_name} \
              ; do
     [[ ${cfg} =~ /devices//linux/ ]] && continue
     [ -f "${cfg}" ] && echo "${cfg}" && return
@@ -1286,13 +1371,13 @@ fix_module_depends() {
   local DEPENDS="$2"
   local OLD_DEPENDS=""
   cp ${MODULE} ${MODULE}_orig
-  $OBJDUMP -s -j .modinfo ${MODULE}_orig | awk 'BEGIN{v=0;} /Contents/ {v=1; next;} {if (v==1) print $0;}' >new.modinfo1
+  ${OBJDUMP} -s -j .modinfo ${MODULE}_orig | awk 'BEGIN{v=0;} /Contents/ {v=1; next;} {if (v==1) print $0;}' >new.modinfo1
   cat new.modinfo1 | cut -c7-41 | awk '{printf($0);}' | sed 's/ //g;s/../\\\x&/g;' >new.modinfo2
   /bin/echo -ne `cat new.modinfo2` | tr '\000' '\n' >new.modinfo3
   cat new.modinfo3 | awk '/^depends=/ {next;} {print $0;}' | tr '\n' '\000' >new.modinfo
   OLD_DEPENDS=$(awk '{FS="="} /depends=/ {print $2}' new.modinfo3)
-  [ -n "$OLD_DEPENDS" ] && DEPENDS="$OLD_DEPENDS,$DEPENDS"
-  /bin/echo -ne "depends=$DEPENDS\0" >>new.modinfo
+  [ -n "${OLD_DEPENDS}" ] && DEPENDS="${OLD_DEPENDS},${DEPENDS}"
+  /bin/echo -ne "depends=${DEPENDS}\0" >>new.modinfo
   $OBJCOPY --remove-section=.modinfo --add-section=.modinfo=new.modinfo --set-section-flags .modinfo=contents,alloc,load,readonly,data ${MODULE}_orig ${MODULE}
   rm new.modinfo*
 }

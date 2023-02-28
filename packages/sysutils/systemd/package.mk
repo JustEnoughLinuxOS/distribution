@@ -105,13 +105,14 @@ then
 fi
 
 pre_configure_target() {
-  export CFLAGS=$(echo ${CFLAGS} | sed -e "s|-ffast-math||g")
-  export CFLAGS=$(echo ${CFLAGS} | sed -e "s|-Ofast|-O3|g")
-  export CFLAGS=$(echo ${CFLAGS} | sed -e "s|-O.|-O3|g")
+  export TARGET_CFLAGS=$(echo ${TARGET_CFLAGS} | sed -e "s|-ffast-math||g")
+  export TARGET_CFLAGS=$(echo ${TARGET_CFLAGS} | sed -e "s|-Ofast|-O3|g")
+  export TARGET_CFLAGS=$(echo ${TARGET_CFLAGS} | sed -e "s|-O.|-O3|g")
 
-  export LDFLAGS=$(echo ${LDFLAGS} | sed -e "s|-ffast-math||g")
-  export LDFLAGS=$(echo ${LDFLAGS} | sed -e "s|-Ofast|-O3|g")
-  export LDFLAGS=$(echo ${LDFLAGS} | sed -e "s|-O.|-O3|g")
+  export TARGET_LDFLAGS=$(echo ${TARGET_LDFLAGS} | sed -e "s|-ffast-math||g")
+  export TARGET_LDFLAGS=$(echo ${TARGET_LDFLAGS} | sed -e "s|-Ofast|-O3|g")
+  export TARGET_LDFLAGS=$(echo ${TARGET_LDFLAGS} | sed -e "s|-O.|-O3|g")
+
   export TARGET_CFLAGS="${TARGET_CFLAGS} -fno-schedule-insns -fno-schedule-insns2 -Wno-format-truncation"
   export LC_ALL=en_US.UTF-8
 }
