@@ -240,24 +240,24 @@ get_target_linker() {
 setup_toolchain() {
   if [ "$LTO_SUPPORT" = "yes" ]; then
     if flag_enabled "lto-parallel" "no"; then
-      TARGET_CFLAGS+=" $FLAGS_OPTIM_LTO_PARALLEL $FLAGS_OPTIM_LTO_NO_FAT"
-      TARGET_CXXFLAGS+=" $FLAGS_OPTIM_LTO_PARALLEL $FLAGS_OPTIM_LTO_NO_FAT"
-      TARGET_LDFLAGS+=" $LDFLAGS_OPTIM_LTO_COMMON $FLAGS_OPTIM_LTO_PARALLEL"
+      TARGET_CFLAGS+=" ${FLAGS_OPTIM_LTO_PARALLEL} ${FLAGS_OPTIM_LTO_NO_FAT}"
+      TARGET_CXXFLAGS+=" ${FLAGS_OPTIM_LTO_PARALLEL} ${FLAGS_OPTIM_LTO_NO_FAT}"
+      TARGET_LDFLAGS+=" ${LDFLAGS_OPTIM_LTO_COMMON} ${FLAGS_OPTIM_LTO_PARALLEL}"
     elif flag_enabled "lto-fat" "no"; then
-      TARGET_CFLAGS+=" $FLAGS_OPTIM_LTO_NO_PARALLEL $FLAGS_OPTIM_LTO_FAT"
-      TARGET_CXXFLAGS+=" $FLAGS_OPTIM_LTO_NO_PARALLEL $FLAGS_OPTIM_LTO_FAT"
-      TARGET_LDFLAGS+=" $LDFLAGS_OPTIM_LTO_COMMON $FLAGS_OPTIM_LTO_NO_PARALLEL"
+      TARGET_CFLAGS+=" ${FLAGS_OPTIM_LTO_NO_PARALLEL} ${FLAGS_OPTIM_LTO_FAT}"
+      TARGET_CXXFLAGS+=" ${FLAGS_OPTIM_LTO_NO_PARALLEL} ${FLAGS_OPTIM_LTO_FAT}"
+      TARGET_LDFLAGS+=" ${LDFLAGS_OPTIM_LTO_COMMON} ${FLAGS_OPTIM_LTO_NO_PARALLEL}"
     elif flag_enabled "lto" "no"; then
-      TARGET_CFLAGS+=" $FLAGS_OPTIM_LTO_NO_PARALLEL $FLAGS_OPTIM_LTO_NO_FAT"
-      TARGET_CXXFLAGS+=" $FLAGS_OPTIM_LTO_NO_PARALLEL $FLAGS_OPTIM_LTO_NO_FAT"
-      TARGET_LDFLAGS+=" $LDFLAGS_OPTIM_LTO_COMMON $FLAGS_OPTIM_LTO_NO_PARALLEL"
+      TARGET_CFLAGS+=" ${FLAGS_OPTIM_LTO_NO_PARALLEL} ${FLAGS_OPTIM_LTO_NO_FAT}"
+      TARGET_CXXFLAGS+=" ${FLAGS_OPTIM_LTO_NO_PARALLEL} ${FLAGS_OPTIM_LTO_NO_FAT}"
+      TARGET_LDFLAGS+=" ${LDFLAGS_OPTIM_LTO_COMMON} ${FLAGS_OPTIM_LTO_NO_PARALLEL}"
     fi
   fi
 
   if flag_enabled "lto-off" "no"; then
-    TARGET_CFLAGS+=" $FLAGS_OPTIM_LTO_OFF"
-    TARGET_CXXFLAGS+=" $FLAGS_OPTIM_LTO_OFF"
-    TARGET_LDFLAGS+=" $FLAGS_OPTIM_LTO_OFF"
+    TARGET_CFLAGS+=" ${FLAGS_OPTIM_LTO_OFF}"
+    TARGET_CXXFLAGS+=" ${FLAGS_OPTIM_LTO_OFF}"
+    TARGET_LDFLAGS+=" ${FLAGS_OPTIM_LTO_OFF}"
   fi
 
   local linker="$(get_target_linker)"
@@ -268,43 +268,43 @@ setup_toolchain() {
   # compiler optimization, descending priority: speed, size, default
   if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
     if [ "${SPLIT_DEBUG_INFO}" = "yes" -a "${linker}" = "gold" ]; then
-      TARGET_CFLAGS+=" $CFLAGS_OPTIM_DEBUG_SPLIT"
-      TARGET_CXXFLAGS+=" $CXXFLAGS_OPTIM_DEBUG_SPLIT"
-      TARGET_LDFLAGS+=" $LDFLAGS_OPTIM_DEBUG_SPLIT"
+      TARGET_CFLAGS+=" ${CFLAGS_OPTIM_DEBUG_SPLIT}"
+      TARGET_CXXFLAGS+=" ${CXXFLAGS_OPTIM_DEBUG_SPLIT}"
+      TARGET_LDFLAGS+=" ${LDFLAGS_OPTIM_DEBUG_SPLIT}"
     else
-      TARGET_CFLAGS+=" $CFLAGS_OPTIM_DEBUG"
-      TARGET_CXXFLAGS+=" $CXXFLAGS_OPTIM_DEBUG"
-      TARGET_LDFLAGS+=" $LDFLAGS_OPTIM_DEBUG"
+      TARGET_CFLAGS+=" ${CFLAGS_OPTIM_DEBUG}"
+      TARGET_CXXFLAGS+=" ${CXXFLAGS_OPTIM_DEBUG}"
+      TARGET_LDFLAGS+=" ${LDFLAGS_OPTIM_DEBUG}"
     fi
   elif flag_enabled "speed" "no"; then
-    TARGET_CFLAGS+=" $CFLAGS_OPTIM_SPEED"
-    TARGET_CXXFLAGS+=" $CXXFLAGS_OPTIM_SPEED"
+    TARGET_CFLAGS+=" ${CFLAGS_OPTIM_SPEED}"
+    TARGET_CXXFLAGS+=" ${CXXFLAGS_OPTIM_SPEED}"
   elif flag_enabled "size" "no"; then
-    TARGET_CFLAGS+=" $CFLAGS_OPTIM_SIZE"
-    TARGET_CXXFLAGS+=" $CXXFLAGS_OPTIM_SIZE"
+    TARGET_CFLAGS+=" ${CFLAGS_OPTIM_SIZE}"
+    TARGET_CXXFLAGS+=" ${CXXFLAGS_OPTIM_SIZE}"
   else
-    TARGET_CFLAGS+=" $CFLAGS_OPTIM_DEFAULT"
-    TARGET_CXXFLAGS+=" $CXXFLAGS_OPTIM_DEFAULT"
+    TARGET_CFLAGS+=" ${CFLAGS_OPTIM_DEFAULT}"
+    TARGET_CXXFLAGS+=" ${CXXFLAGS_OPTIM_DEFAULT}"
   fi
 
   # position-independent code
   if flag_enabled "pic" "no"; then
-    TARGET_CFLAGS+=" $CFLAGS_OPTIM_PIC"
-    TARGET_CXXFLAGS+=" $CXXFLAGS_OPTIM_PIC"
-    TARGET_LDFLAGS+=" $LDFLAGS_OPTIM_PIC"
+    TARGET_CFLAGS+=" ${CFLAGS_OPTIM_PIC}"
+    TARGET_CXXFLAGS+=" ${CXXFLAGS_OPTIM_PIC}"
+    TARGET_LDFLAGS+=" ${LDFLAGS_OPTIM_PIC}"
   fi
   if flag_enabled "pic:host" "no"; then
-    HOST_CFLAGS+=" $CFLAGS_OPTIM_PIC"
-    HOST_CXXFLAGS+=" $CXXFLAGS_OPTIM_PIC"
-    HOST_LDFLAGS+=" $LDFLAGS_OPTIM_PIC"
+    HOST_CFLAGS+=" ${CFLAGS_OPTIM_PIC}"
+    HOST_CXXFLAGS+=" ${CXXFLAGS_OPTIM_PIC}"
+    HOST_LDFLAGS+=" ${LDFLAGS_OPTIM_PIC}"
   fi
 
   # hardening support
-  if flag_enabled "hardening" "$HARDENING_SUPPORT"; then
-    TARGET_CFLAGS+=" $CFLAGS_OPTIM_HARDENING"
-    TARGET_CXXFLAGS+=" $CXXFLAGS_OPTIM_HARDENING"
-    TARGET_CFLAGS+=" $CPPFLAGS_OPTIM_HARDENING"
-    TARGET_LDFLAGS+=" $LDFLAGS_OPTIM_HARDENING"
+  if flag_enabled "hardening" "${HARDENING_SUPPORT}"; then
+    TARGET_CFLAGS+=" ${CFLAGS_OPTIM_HARDENING}"
+    TARGET_CXXFLAGS+=" ${CXXFLAGS_OPTIM_HARDENING}"
+    TARGET_CFLAGS+=" ${CPPFLAGS_OPTIM_HARDENING}"
+    TARGET_LDFLAGS+=" ${LDFLAGS_OPTIM_HARDENING}"
   fi
 
   # parallel
@@ -911,7 +911,7 @@ get_pkg_variable() {
 # get package's build dir
 get_build_dir() {
   local _PKG_NAME="${1%:*}" _PKG_VERSION="$(get_pkg_version "$1")"
-  if [ -n "${_PKG_NAME}" -a -n "$_PKG_VERSION" ]; then
+  if [ -n "${_PKG_NAME}" -a -n "${_PKG_VERSION}" ]; then
     echo $BUILD/${_PKG_NAME}-${_PKG_VERSION}
   fi
 }
@@ -1290,14 +1290,14 @@ kernel_config_path() {
   config_name="linux.${TARGET_PATCH_ARCH:-${TARGET_ARCH}}.conf"
 
   for cfg in ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/linux/${pkg_linux_version}/${config_name} \
-             ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/linux/$LINUX/${config_name} \
+             ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/linux/${LINUX}/${config_name} \
              ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/linux/${config_name} \
              ${PROJECT_DIR}/${PROJECT}/linux/${pkg_linux_version}/${config_name} \
-             ${PROJECT_DIR}/${PROJECT}/linux/$LINUX/${config_name} \
+             ${PROJECT_DIR}/${PROJECT}/linux/${LINUX}/${config_name} \
              ${PROJECT_DIR}/${PROJECT}/linux/${config_name} \
-             $pkg_linux_dir/config/${pkg_linux_version}/${config_name} \
-             $pkg_linux_dir/config/$LINUX/${config_name} \
-             $pkg_linux_dir/config/${config_name} \
+             ${pkg_linux_dir}/config/${pkg_linux_version}/${config_name} \
+             ${pkg_linux_dir}/config/${LINUX}/${config_name} \
+             ${pkg_linux_dir}/config/${config_name} \
              ; do
     [[ ${cfg} =~ /devices//linux/ ]] && continue
     [ -f "${cfg}" ] && echo "${cfg}" && return
@@ -1371,13 +1371,13 @@ fix_module_depends() {
   local DEPENDS="$2"
   local OLD_DEPENDS=""
   cp ${MODULE} ${MODULE}_orig
-  $OBJDUMP -s -j .modinfo ${MODULE}_orig | awk 'BEGIN{v=0;} /Contents/ {v=1; next;} {if (v==1) print $0;}' >new.modinfo1
+  ${OBJDUMP} -s -j .modinfo ${MODULE}_orig | awk 'BEGIN{v=0;} /Contents/ {v=1; next;} {if (v==1) print $0;}' >new.modinfo1
   cat new.modinfo1 | cut -c7-41 | awk '{printf($0);}' | sed 's/ //g;s/../\\\x&/g;' >new.modinfo2
   /bin/echo -ne `cat new.modinfo2` | tr '\000' '\n' >new.modinfo3
   cat new.modinfo3 | awk '/^depends=/ {next;} {print $0;}' | tr '\n' '\000' >new.modinfo
   OLD_DEPENDS=$(awk '{FS="="} /depends=/ {print $2}' new.modinfo3)
-  [ -n "$OLD_DEPENDS" ] && DEPENDS="$OLD_DEPENDS,$DEPENDS"
-  /bin/echo -ne "depends=$DEPENDS\0" >>new.modinfo
+  [ -n "${OLD_DEPENDS}" ] && DEPENDS="${OLD_DEPENDS},${DEPENDS}"
+  /bin/echo -ne "depends=${DEPENDS}\0" >>new.modinfo
   $OBJCOPY --remove-section=.modinfo --add-section=.modinfo=new.modinfo --set-section-flags .modinfo=contents,alloc,load,readonly,data ${MODULE}_orig ${MODULE}
   rm new.modinfo*
 }
