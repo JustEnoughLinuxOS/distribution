@@ -7,14 +7,14 @@ PKG_VERSION="3.0.18"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.videolan.org"
-PKG_URL="https://mirror.netcologne.de/videolan.org/${PKG_NAME}/${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.xz"
+PKG_URL="https://mirror.netcologne.de/videolan.org/${PKG_NAME}/${PKG_VERSION}/$PKG_NAME-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libdvbpsi gnutls ffmpeg libmpeg2 zlib flac libvorbis libxml2 pulseaudio SDL2 x264 x265 aom libogg"
 PKG_SHORTDESC="VideoLAN multimedia player and streamer"
 PKG_LONGDESC="VLC is the VideoLAN project's media player. It plays MPEG, MPEG2, MPEG4, DivX, MOV, WMV, QuickTime, mp3, Ogg/Vorbis files, DVDs, VCDs, and multimedia streams from various network sources."
 
 pre_configure_target() {
 
-ENABLED_FEATURES="--enable-silent-rules \
+  ENABLED_FEATURES="--enable-silent-rules \
             --enable-run-as-root \
             --enable-sout \
             --enable-vlm \
@@ -26,22 +26,22 @@ ENABLED_FEATURES="--enable-silent-rules \
             --enable-postproc \
             --enable-aa \
             --enable-libmpeg2 \
-            --enable-shared \
             --enable-png \
             --enable-jpeg \
             --enable-libxml2 \
             --enable-alsa \
             --enable-udev \
             --enable-vlc \
-            --enable-neon \
-            --enable-x264"
+            --enable-x264 \
+            --enable-gles2"
 
-DISABLED_FEATURES="--disable-dependency-tracking \
+  DISABLED_FEATURES="--disable-dependency-tracking \
             --without-contrib \
             --disable-nls \
             --disable-dbus \
             --disable-gprof \
             --disable-cprof \
+            --disable-rpath \
             --disable-debug \
             --disable-coverage \
             --disable-lua \
@@ -179,11 +179,9 @@ DISABLED_FEATURES="--disable-dependency-tracking \
       ENABLED_FEATURES+=" ${OPENGL} glu libglvnd"
   esac
 
-  PKG_CONFIGURE_OPTS_TARGET=" ${ENABLED_FEATURES} ${DISABLED_FEATURES} "
-
-  export TARGET_LDFLAGS="${TARGET_LDFLAGS} -lresolv -fopenmp -Wl,-rpath,${TOOLCHAIN}/lib"
-  export LDFLAGS=${TARGET_LDFLAGS}
-} 
+  PKG_CONFIGURE_OPTS_TARGET="${DISABLED_FEATURES} ${ENABLED_FEATURES}"
+  export LDFLAGS="${LDFLAGS} -lresolv -fopenmp -Wl,-rpath,../src/.libs"
+}
 
 post_makeinstall_target() {
   rm -fr ${INSTALL}/usr/share/applications
