@@ -3,7 +3,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="vlc"
-PKG_VERSION="3.0.17.3"
+PKG_VERSION="3.0.18"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.videolan.org"
@@ -11,9 +11,8 @@ PKG_URL="https://mirror.netcologne.de/videolan.org/${PKG_NAME}/${PKG_VERSION}/${
 PKG_DEPENDS_TARGET="toolchain libdvbpsi gnutls ffmpeg libmpeg2 zlib flac libvorbis libxml2 pulseaudio SDL2 x264 x265 aom libogg"
 PKG_SHORTDESC="VideoLAN multimedia player and streamer"
 PKG_LONGDESC="VLC is the VideoLAN project's media player. It plays MPEG, MPEG2, MPEG4, DivX, MOV, WMV, QuickTime, mp3, Ogg/Vorbis files, DVDs, VCDs, and multimedia streams from various network sources."
-PKG_AUTORECONF="yes"
-PKG_TOOLCHAIN="configure"
-PKG_BUILD_FLAGS="-fpic"
+
+pre_configure_target() {
 
 ENABLED_FEATURES="--enable-silent-rules \
             --enable-run-as-root \
@@ -27,18 +26,19 @@ ENABLED_FEATURES="--enable-silent-rules \
             --enable-postproc \
             --enable-aa \
             --enable-libmpeg2 \
-            --enable-x264 \
+            --enable-shared \
             --enable-png \
             --enable-jpeg \
             --enable-libxml2 \
             --enable-alsa \
             --enable-udev \
-            --enable-vlc"
+            --enable-vlc \
+            --enable-neon \
+            --enable-x264"
 
 DISABLED_FEATURES="--disable-dependency-tracking \
             --without-contrib \
             --disable-nls \
-            --disable-rpath \
             --disable-dbus \
             --disable-gprof \
             --disable-cprof \
@@ -47,7 +47,6 @@ DISABLED_FEATURES="--disable-dependency-tracking \
             --disable-lua \
             --disable-notify \
             --disable-taglib \
-	    --disable-mpg123 \
             --disable-live555 \
             --disable-dc1394 \
             --disable-dvdread \
@@ -58,7 +57,7 @@ DISABLED_FEATURES="--disable-dependency-tracking \
             --disable-vcd \
             --disable-libcddb \
             --disable-dvbpsi \
-              --disable-screen \
+            --disable-screen \
             --disable-ogg \
             --disable-shout\
             --disable-mod \
@@ -104,11 +103,9 @@ DISABLED_FEATURES="--disable-dependency-tracking \
             --disable-skins2 \
             --disable-kai \
             --disable-macosx \
-            --disable-macosx-qtkit \
             --disable-ncurses \
             --disable-goom \
             --disable-projectm \
-            --disable-vsxu \
             --disable-mtp \
             --disable-lirc \
             --disable-libgcrypt \
@@ -120,7 +117,54 @@ DISABLED_FEATURES="--disable-dependency-tracking \
             --disable-crystalhd \
             --disable-dxva2 \
             --disable-dav1d \
-            --disable-qt"
+            --disable-qt \
+            --disable-x26410b \
+            --disable-chromecast \
+            --disable-static \
+            --disable-a52 \
+            --disable-addonmanagermodules \
+            --disable-aom \
+            --disable-aribb25 \
+            --disable-aribsub \
+            --disable-asdcp \
+            --disable-bpg \
+            --disable-caca \
+            --disable-chromaprint \
+            --disable-chromecast \
+            --disable-crystalhd \
+            --disable-dc1394 \
+            --disable-dca \
+            --disable-decklink \
+            --disable-dsm \
+            --disable-dv1394 \
+            --disable-fluidlite \
+            --disable-gme \
+            --disable-goom \
+            --disable-jack \
+            --disable-kai \
+            --disable-kate \
+            --disable-kva \
+            --disable-libplacebo \
+            --disable-linsys \
+            --disable-mfx \
+            --disable-microdns \
+            --disable-mmal \
+            --disable-mtp \
+            --disable-notify \
+            --disable-projectm \
+            --disable-shine \
+            --disable-shout \
+            --disable-sndio \
+            --disable-spatialaudio \
+            --disable-srt \
+            --disable-telx \
+            --disable-tiger \
+            --disable-twolame \
+            --disable-vdpau \
+            --disable-vsxu \
+            --disable-wasapi \
+            --disable-x262 \
+            --disable-zvbi"
 
   case ${ARCH} in
     arm)
@@ -135,11 +179,11 @@ DISABLED_FEATURES="--disable-dependency-tracking \
       ENABLED_FEATURES+=" ${OPENGL} glu libglvnd"
   esac
 
-PKG_CONFIGURE_OPTS_TARGET="${ENABLED_FEATURES} ${DISABLED_FEATURES}"
+  PKG_CONFIGURE_OPTS_TARGET=" ${ENABLED_FEATURES} ${DISABLED_FEATURES} "
 
-pre_configure_target() {
-  export LDFLAGS="${LDFLAGS} -lresolv -fopenmp -lm"
-}
+  export TARGET_LDFLAGS="${TARGET_LDFLAGS} -lresolv -fopenmp -Wl,-rpath,${TOOLCHAIN}/lib"
+  export LDFLAGS=${TARGET_LDFLAGS}
+} 
 
 post_makeinstall_target() {
   rm -fr ${INSTALL}/usr/share/applications
