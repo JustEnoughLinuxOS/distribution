@@ -31,6 +31,8 @@ pre_configure_target() {
   QEMU_BINARY="${TOOLCHAIN}/bin/qemu-${TARGET_ARCH}"
   PKG_CONFIG_PATH="${SYSROOT_PREFIX}/usr/lib/pkgconfig"
 
+  TARGET_LDFLAGS="${TARGET_LDFLAGS} -Wl,--dynamic-linker=${GLIBC_DYNAMIC_LINKER}"
+
   # for gi this variables must be defined for target and not for host
   # because they are used in
   # toolchain/lib/gobject-introspection/giscanner/ccompiler.py
@@ -40,7 +42,7 @@ pre_configure_target() {
   CPP="${TARGET_PREFIX}cpp"
   CPPFLAGS="${TARGET_CPPFLAGS}"
   CFLAGS="${TARGET_CFLAGS} -fPIC"
-  LDFLAGS="${TARGET_LDFLAGS} -Wl,--dynamic-linker=${GLIBC_DYNAMIC_LINKER}"
+  LDFLAGS="${TARGET_LDFLAGS}"
 
   PKG_MESON_OPTS_TARGET=" \
     -Ddoctool=disabled \

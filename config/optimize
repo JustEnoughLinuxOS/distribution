@@ -1,23 +1,10 @@
-GCC_OPTIM="-Ofast"
 # Linker hash-style is set to gnu via gcc default
 LD_OPTIM="-Wl,--as-needed"
 
-if [ "${BUILD_WITH_DEBUG}" = "yes" ]; then
-  TARGET_CFLAGS="${TARGET_CFLAGS} -ggdb"
-  TARGET_CXXFLAGS="${TARGET_CXXFLAGS} -ggdb"
-  TARGET_LDFLAGS="${TARGET_LDFLAGS} -ggdb"
-else
-  TARGET_CFLAGS="${TARGET_CFLAGS} -fomit-frame-pointer"
-  TARGET_CXXFLAGS="${TARGET_CXXFLAGS} -fomit-frame-pointer"
-  TARGET_LDFLAGS="${TARGET_LDFLAGS}"
-fi
-
-NINJA_OPTS=""
-
 TARGET_CPPFLAGS=""
-TARGET_CFLAGS="${TARGET_CFLAGS} -Wall -pipe $GCC_OPTIM ${PROJECT_CFLAGS}"
+TARGET_CFLAGS="${TARGET_CFLAGS} -Wall -pipe ${PROJECT_CFLAGS}"
 TARGET_CXXFLAGS="${TARGET_CFLAGS}"
-TARGET_LDFLAGS="${TARGET_LDFLAGS} $LD_OPTIM"
+TARGET_LDFLAGS="${TARGET_LDFLAGS} ${LD_OPTIM}"
 TARGET_LIBDIR="${SYSROOT_PREFIX}/lib ${SYSROOT_PREFIX}/usr/lib"
 TARGET_INCDIR="${SYSROOT_PREFIX}/include ${SYSROOT_PREFIX}/usr/include"
 
@@ -40,8 +27,29 @@ FLAGS_OPTIM_LTO_FAT="-ffat-lto-objects"
 FLAGS_OPTIM_LTO_OFF="-fno-lto"
 LDFLAGS_OPTIM_LTO_COMMON="-fuse-linker-plugin"
 
-# gold flags
-LDFLAGS_OPTIM_GOLD="-fuse-ld=gold"
+# linker specific flags
+LDFLAGS_OPTIM_LINKER_COMPILER_DEFAULT=""
+LDFLAGS_OPTIM_LINKER_BFD="-fuse-ld=bfd"
+LDFLAGS_OPTIM_LINKER_GOLD="-fuse-ld=gold"
+LDFLAGS_OPTIM_LINKER_MOLD="-fuse-ld=mold"
+
+# default compiler optimization
+CFLAGS_OPTIM_DEFAULT="-Ofast -fomit-frame-pointer -DNDEBUG"
+CXXFLAGS_OPTIM_DEFAULT="${CFLAGS_OPTIM_DEFAULT}"
+# speed flag
+CFLAGS_OPTIM_SPEED="-Ofast -fomit-frame-pointer -DNDEBUG"
+CXXFLAGS_OPTIM_SPEED="${CFLAGS_OPTIM_SPEED}"
+# size flag
+CFLAGS_OPTIM_SIZE="-Os -fomit-frame-pointer -DNDEBUG"
+CXXFLAGS_OPTIM_SIZE="${CFLAGS_OPTIM_SIZE}"
+# debug settings
+CFLAGS_OPTIM_DEBUG="-ggdb -Og"
+CXXFLAGS_OPTIM_DEBUG="${CFLAGS_OPTIM_DEBUG}"
+LDFLAGS_OPTIM_DEBUG="-ggdb"
+# split debug settings (requires gold)
+CFLAGS_OPTIM_DEBUG_SPLIT="-gsplit-dwarf -Og"
+CXXFLAGS_OPTIM_DEBUG_SPLIT="${CFLAGS_OPTIM_DEBUG_SPLIT}"
+LDFLAGS_OPTIM_DEBUG_SPLIT="-Wl,--gdb-index"
 
 # position-independent code
 CFLAGS_OPTIM_PIC="-fPIC -DPIC"
@@ -56,40 +64,41 @@ CPPFLAGS_OPTIM_HARDENING="-D_FORTIFY_SOURCE=2"
 LDFLAGS_OPTIM_HARDENING="-Wl,-z,relro -Wl,-z,now"
 
 # add distro specific library dirs
-if [ -z "$HOST_LIBDIR" ]; then
+if [ -z "${HOST_LIBDIR}" ]; then
   HOST_LIBDIR="${TOOLCHAIN}/lib"
 
   # ubuntu/debian specific "multiarch support"
   export MACHINE_HARDWARE_NAME="$(uname -m)"
-  export MACHINE_HARDWARE_PLATFORM="$(uname -i)"
-  FAMILY_TRIPLET=${HOST_NAME/${MACHINE_HARDWARE_NAME}/${MACHINE_HARDWARE_PLATFORM}}
-  if [ -d /lib/$FAMILY_TRIPLET ]; then
-    HOST_LIBDIR="$HOST_LIBDIR /lib/$FAMILY_TRIPLET"
-  fi
-  if [ -d /usr/lib/$FAMILY_TRIPLET ]; then
-    HOST_LIBDIR="$HOST_LIBDIR /usr/lib/$FAMILY_TRIPLET"
+  FAMILY_TRIPLET=$($LOCAL_CC -print-multiarch)
+  if [ -n "$FAMILY_TRIPLET" ]; then
+    if [ -d /lib/$FAMILY_TRIPLET ]; then
+      HOST_LIBDIR="${HOST_LIBDIR} /lib/$FAMILY_TRIPLET"
+    fi
+    if [ -d /usr/lib/$FAMILY_TRIPLET ]; then
+      HOST_LIBDIR="${HOST_LIBDIR} /usr/lib/$FAMILY_TRIPLET"
+    fi
   fi
 
   # default multiarch support
   case "${MACHINE_HARDWARE_NAME}" in
     i*86)
       if [ -d /lib32 ]; then
-        HOST_LIBDIR="$HOST_LIBDIR /lib32"
+        HOST_LIBDIR="${HOST_LIBDIR} /lib32"
       fi
       if [ -d /usr/lib32 ]; then
-        HOST_LIBDIR="$HOST_LIBDIR /usr/lib32"
+        HOST_LIBDIR="${HOST_LIBDIR} /usr/lib32"
       fi
     ;;
     x86_64)
       if [ -d /lib64 ]; then
-        HOST_LIBDIR="$HOST_LIBDIR /lib64"
+        HOST_LIBDIR="${HOST_LIBDIR} /lib64"
       fi
       if [ -d /usr/lib64 ]; then
-        HOST_LIBDIR="$HOST_LIBDIR /usr/lib64"
+        HOST_LIBDIR="${HOST_LIBDIR} /usr/lib64"
       fi
     ;;
   esac
 
   # default dirs
-  export HOST_LIBDIR="$HOST_LIBDIR /lib /usr/lib"
+  export HOST_LIBDIR="${HOST_LIBDIR} /lib /usr/lib"
 fi
