@@ -18,7 +18,7 @@ set -e
     . config/arch.${TARGET_ARCH}
   fi
 
-[ -z "${HOST_NAME}" ] && export HOST_NAME="$(hostname)"
+[ -z "${HOST_NAME}" ] && export HOST_NAME="$(${LOCAL_CC} -dumpmachine)"
 TARGET_NAME=$TARGET_GCC_ARCH-libreelec-linux-gnu${TARGET_ABI}
 
 BUILD=${BUILD_ROOT}/${BUILD_BASE}.${DISTRONAME}-${DEVICE:-${PROJECT}}.${TARGET_ARCH}
