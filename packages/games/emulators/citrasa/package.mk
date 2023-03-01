@@ -2,11 +2,11 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="citrasa"
-PKG_VERSION="286f750c6c6b70b48e3fb2fb579e5bfafbf51a69"
+PKG_VERSION="8f2a5374c326eb75491eb2ac28add6a71b5b9b69"
 PKG_LICENSE="MPLv2"
 PKG_SITE="https://github.com/citra-emu/citra"
 PKG_URL="${PKG_SITE}.git"
-PKG_DEPENDS_TARGET="toolchain ffmpeg mesa SDL2 boost zlib libusb boost"
+PKG_DEPENDS_TARGET="toolchain ffmpeg mesa SDL2 boost zlib libusb boost zstd"
 PKG_LONGDESC="Citra 3DS emulator"
 PKG_TOOLCHAIN="cmake"
 GET_HANDLER_SUPPORT="git"
