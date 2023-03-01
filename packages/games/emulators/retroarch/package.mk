@@ -2,7 +2,7 @@
 # Copyright (C) 2021-present 351ELEC (https://github.com/351ELEC)
 
 PKG_NAME="retroarch"
-PKG_VERSION="9b2a4e6c88f1e17c9904bc7ffb6bd77059d775fb"
+PKG_VERSION="7a2c6e9e521f60a79a88974f90a9840a46f8c6bc"
 PKG_SITE="https://github.com/libretro/RetroArch"
 PKG_URL="${PKG_SITE}.git"
 PKG_LICENSE="GPLv3"
@@ -75,9 +75,9 @@ pre_configure_target() {
 make_target() {
   make HAVE_UPDATE_ASSETS=0 HAVE_LIBRETRODB=1 HAVE_BLUETOOTH=0 HAVE_NETWORKING=1 HAVE_ZARCH=1 HAVE_QT=0 HAVE_LANGEXTRA=1
   [ $? -eq 0 ] && echo "(retroarch ok)" || { echo "(retroarch failed)" ; exit 1 ; }
-  make -C gfx/video_filters compiler=${CC} extra_flags="${CFLAGS}"
+  make -C gfx/video_filters compiler=$CC extra_flags="$CFLAGS"
   [ $? -eq 0 ] && echo "(video filters ok)" || { echo "(video filters failed)" ; exit 1 ; }
-  make -C libretro-common/audio/dsp_filters compiler=${CC} extra_flags="${CFLAGS}"
+  make -C libretro-common/audio/dsp_filters compiler=$CC extra_flags="$CFLAGS"
   [ $? -eq 0 ] && echo "(audio filters ok)" || { echo "(audio filters failed)" ; exit 1 ; }
 }
 
