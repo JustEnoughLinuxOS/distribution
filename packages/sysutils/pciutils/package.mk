@@ -12,11 +12,7 @@ PKG_DEPENDS_TARGET="toolchain kmod systemd"
 PKG_LONGDESC="Utilities for inspecting devices connected to the PCI bus and the PCI vendor/product ID database."
 PKG_BUILD_FLAGS="+pic"
 
-PKG_MAKE_OPTS="PREFIX=/usr SHARED=no STRIP= IDSDIR=/usr/share"
-
-pre_configure_target() {
-  export LDFLAGS="${LDFLAGS} -ludev"
-}
+PKG_MAKE_OPTS="PREFIX=/usr SHARED=yes STRIP= IDSDIR=/usr/share"
 
 make_target() {
   make OPT="${CFLAGS}" \
