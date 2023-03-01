@@ -10,10 +10,6 @@ PKG_DEPENDS_TARGET="toolchain pciutils systemd"
 PKG_LONGDESC="Adjust power management settings for Ryzen Mobile Processors."
 PKG_BUILD_FLAGS="+pic"
 
-pre_configure_target() {
-  export TARGET_LDFLAGS="${TARGET_LDFLAGS} -ludev"
-}
-
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib
   cp libryzenadj.so ${INSTALL}/usr/lib
