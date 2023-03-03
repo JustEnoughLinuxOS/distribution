@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (C) 2020-present Fewtarius
 
+export BOX86_PREFER_EMULATED=1
 export BOX86_LD_LIBRARY_PATH="/usr/share/box86/lib"
 export BOX86_BASH="/usr/bin/bash-x86"
+alias box86='LD_LIBRARY_PATH=/usr/lib32:${LD_LIBRARY_PATH} box86'
