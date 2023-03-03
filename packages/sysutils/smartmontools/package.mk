@@ -6,7 +6,7 @@ PKG_VERSION="7.0"
 PKG_SHA256="e5e1ac2786bc87fdbd6f92d0ee751b799fbb3e1a09c0a6a379f9eb64b3e8f61c"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.smartmontools.org"
-PKG_URL="https://downloads.sourceforge.net/sourceforge/smartmontools/smartmontools-$PKG_VERSION.tar.gz"
+PKG_URL="https://downloads.sourceforge.net/sourceforge/smartmontools/smartmontools-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="Control and monitor storage systems using S.M.A.R.T."
 

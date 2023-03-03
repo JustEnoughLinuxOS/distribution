@@ -20,12 +20,12 @@
 ################################################################################
 
 PKG_NAME="beetle-ngp"
-PKG_VERSION="b5b67e5172daf1c8a5b15c294b16af6ee6ab3a5f"
+PKG_VERSION="65460e3a9ad529f6901caf669abbda11f437ab55"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/beetle-ngp-libretro"
-PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
+PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
@@ -37,6 +37,6 @@ PKG_TOOLCHAIN="make"
 PKG_AUTORECONF="no"
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp mednafen_ngp_libretro.so $INSTALL/usr/lib/libretro/beetle_ngp_libretro.so
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  cp mednafen_ngp_libretro.so ${INSTALL}/usr/lib/libretro/beetle_ngp_libretro.so
 }

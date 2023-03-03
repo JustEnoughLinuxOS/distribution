@@ -45,7 +45,7 @@ makeinstall_target() {
   UPLUGINDIR=${ULIBDIR}/mupen64plus
   mkdir -p ${UPLUGINDIR}
   cp ${PKG_BUILD}/projects/unix/mupen64plus-video-glide64mk2.so ${UPLUGINDIR}
-  #$STRIP ${UPLUGINDIR}/mupen64plus-video-glide64mk2.so
+  #${STRIP} ${UPLUGINDIR}/mupen64plus-video-glide64mk2.so
   chmod 0644 ${UPLUGINDIR}/mupen64plus-video-glide64mk2.so
   mkdir -p ${USHAREDIR}
   cp ${PKG_BUILD}/data/Glide64mk2.ini ${USHAREDIR}

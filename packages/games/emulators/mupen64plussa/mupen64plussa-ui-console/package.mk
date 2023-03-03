@@ -47,7 +47,7 @@ makeinstall_target() {
   UICONSDIR=${UPREFIX}/share/icons/hicolor
   mkdir -p ${UBINDIR}
   cp ${PKG_BUILD}/projects/unix/mupen64plus ${UBINDIR}
-  #$STRIP ${UBINDIR}/mupen64plus
+  #${STRIP} ${UBINDIR}/mupen64plus
   chmod 0755 ${UBINDIR}/mupen64plus
   mkdir -p ${UMANDIR}/man6
   cp ${PKG_BUILD}/doc/mupen64plus.6 ${UMANDIR}/man6

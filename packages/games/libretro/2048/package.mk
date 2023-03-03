@@ -20,12 +20,12 @@
 ################################################################################
 
 PKG_NAME="2048"
-PKG_VERSION="0edef01f4c2dd2cbd0bb66b888ca4b57fad297d1"
+PKG_VERSION="331c1de588ed8f8c370dcbc488e5434a3c09f0f2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/libretro/libretro-2048"
-PKG_URL="https://github.com/libretro/libretro-2048/archive/$PKG_VERSION.tar.gz"
+PKG_URL="https://github.com/libretro/libretro-2048/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
@@ -37,6 +37,6 @@ PKG_TOOLCHAIN="make"
 PKG_MAKE_OPTS_TARGET="-f Makefile.libretro GIT_VERSION=${PKG_VERSION:0:7}"
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp 2048_libretro.so $INSTALL/usr/lib/libretro/
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  cp 2048_libretro.so ${INSTALL}/usr/lib/libretro/
 }

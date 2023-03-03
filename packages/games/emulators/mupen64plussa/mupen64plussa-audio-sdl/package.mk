@@ -44,7 +44,7 @@ makeinstall_target() {
   UPLUGINDIR=${ULIBDIR}/mupen64plus
   mkdir -p ${UPLUGINDIR}
   cp ${PKG_BUILD}/projects/unix/mupen64plus-audio-sdl.so ${UPLUGINDIR}
-  #$STRIP ${UPLUGINDIR}/mupen64plus-audio-sdl.so
+  #${STRIP} ${UPLUGINDIR}/mupen64plus-audio-sdl.so
   chmod 0644 ${UPLUGINDIR}/mupen64plus-audio-sdl.so
 }
 

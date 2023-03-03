@@ -2,7 +2,7 @@
 # Copyright (C) 2018-present 5schatten (https://github.com/5schatten)
 
 PKG_NAME="hatarisa"
-PKG_VERSION="78d7b27b58a3354578dba27614476678a5f895de"
+PKG_VERSION="7f3f4dbed4e54071176fe37afc1696f3e5431a9f"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/hatari/hatari"
 PKG_URL="https://github.com/hatari/hatari/archive/${PKG_VERSION}.tar.gz"
@@ -24,7 +24,7 @@ pre_configure_target() {
   cp -R $(get_build_dir capsimg)/.install_pkg/usr/lib/libcapsimage.so.5.1 ${PKG_BUILD}/
 
   # add library search path for loading libcapsimage library
-  LDFLAGS="$LDFLAGS -Wl,-rpath='${PKG_BUILD}'"
+  LDFLAGS="${LDFLAGS} -Wl,-rpath='${PKG_BUILD}'"
 }
 
 makeinstall_target() {

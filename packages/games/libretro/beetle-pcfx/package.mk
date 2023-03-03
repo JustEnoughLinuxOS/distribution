@@ -20,12 +20,12 @@
 ################################################################################
 
 PKG_NAME="beetle-pcfx"
-PKG_VERSION="06f7ff996051feaf9e0d928bd2bce3c4c35af45a"
+PKG_VERSION="724bd21b4524f8cf376dbc29c3e5a12cb674c758"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/beetle-pcfx-libretro"
-PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
+PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
@@ -37,14 +37,14 @@ PKG_TOOLCHAIN="make"
 PKG_AUTORECONF="no"
 
 make_target() {
-  if [ "$ARCH" == "i386" -o "$ARCH" == "x86_64" ]; then
-    make platform=unix CC=$CC CXX=$CXX AR=$AR
+  if [ "${ARCH}" == "i386" -o "${ARCH}" == "x86_64" ]; then
+    make platform=unix CC=${CC} CXX=${CXX} AR=${AR}
   else
-    make platform=armv CC=$CC CXX=$CXX AR=$AR
+    make platform=armv CC=${CC} CXX=${CXX} AR=${AR}
   fi
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp mednafen_pcfx_libretro.so $INSTALL/usr/lib/libretro/beetle_pcfx_libretro.so
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  cp mednafen_pcfx_libretro.so ${INSTALL}/usr/lib/libretro/beetle_pcfx_libretro.so
 }

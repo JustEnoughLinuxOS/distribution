@@ -13,6 +13,6 @@ PKG_LONGDESC="AML DTB Tools"
 PKG_MAKE_OPTS_HOST="dtbTool"
 
 makeinstall_host() {
-  mkdir -p $TOOLCHAIN/bin
-    cp dtbTool $TOOLCHAIN/bin
+  mkdir -p ${TOOLCHAIN}/bin
+    cp dtbTool ${TOOLCHAIN}/bin
 }

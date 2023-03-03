@@ -3,15 +3,15 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="openssl"
-PKG_VERSION="1.1.1s"
-PKG_LICENSE="BSD"
+PKG_VERSION="3.0.8"
+PKG_SHA256="6c13d2bf38fdf31eac3ce2a347073673f5d63263398f1f69d0df4a41253e4b3e"
+PKG_LICENSE="Apache-2.0"
 PKG_SITE="https://www.openssl.org"
 PKG_URL="https://www.openssl.org/source/${PKG_NAME}-${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="The Open Source toolkit for Secure Sockets Layer and Transport Layer Security"
 PKG_TOOLCHAIN="configure"
-PKG_BUILD_FLAGS="-parallel"
+PKG_BUILD_FLAGS="+local-cc"
 
 PKG_CONFIGURE_OPTS_SHARED="--libdir=lib \
                            shared \
@@ -45,7 +45,7 @@ pre_configure_host() {
 
 configure_host() {
   cd ${PKG_BUILD}/.${HOST_NAME}
-  ./Configure $PKG_CONFIGURE_OPTS_HOST $PKG_CONFIGURE_OPTS_SHARED linux-${MACHINE_HARDWARE_NAME} ${CFLAGS} ${LDFLAGS}
+  ./Configure ${PKG_CONFIGURE_OPTS_HOST} ${PKG_CONFIGURE_OPTS_SHARED} linux-${MACHINE_HARDWARE_NAME} ${CFLAGS} ${LDFLAGS}
 }
 
 makeinstall_host() {
@@ -72,7 +72,7 @@ pre_configure_target() {
 
 configure_target() {
   cd ${PKG_BUILD}/.${TARGET_NAME}
-  ./Configure $PKG_CONFIGURE_OPTS_TARGET $PKG_CONFIGURE_OPTS_SHARED $PLATFORM_FLAGS $OPENSSL_TARGET ${CFLAGS} ${LDFLAGS}
+  ./Configure ${PKG_CONFIGURE_OPTS_TARGET} ${PKG_CONFIGURE_OPTS_SHARED} ${PLATFORM_FLAGS} ${OPENSSL_TARGET} ${CFLAGS} ${LDFLAGS}
 }
 
 makeinstall_target() {
@@ -101,8 +101,8 @@ post_makeinstall_target() {
     ln -sf /run/libreelec/cacert.pem ${INSTALL}/etc/pki/tls/cacert.pem
   mkdir -p ${INSTALL}/etc/pki/tls/certs
     ln -sf /run/libreelec/cacert.pem ${INSTALL}/etc/pki/tls/certs/ca-bundle.crt
-  mkdir -p ${INSTALL}/usr/lib
-    ln -sf /etc/ssl ${INSTALL}/usr/lib/ssl
+  mkdir -p ${INSTALL}/usr/lib/ssl
+    ln -sf /run/libreelec/cacert.pem ${INSTALL}/usr/lib/ssl/cert.pem
 }
 
 post_install() {

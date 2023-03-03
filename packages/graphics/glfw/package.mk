@@ -8,7 +8,7 @@ PKG_ARCH="any"
 PKG_LICENSE="zlib"
 PKG_DEPENDS_TARGET="toolchain expat libdrm libxkbcommon libXrandr libXinerama libXcursor libXi Mako:host "
 PKG_SITE="https://github.com/glfw/glfw"
-PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
+PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
 PKG_SHORTDESC="GLFW graphics library for wayland & x11"
 PKG_TOOLCHAIN="cmake"
 
@@ -32,7 +32,7 @@ fi
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/
-  cp ${PKG_BUILD}/.${TARGET_NAME}/src/libglfw* $INSTALL/usr/lib/
+  cp ${PKG_BUILD}/.${TARGET_NAME}/src/libglfw* ${INSTALL}/usr/lib/
   cp -rf ${PKG_BUILD}/include/* ${SYSROOT_PREFIX}/usr/include
 }
 

@@ -20,12 +20,12 @@
 ################################################################################
 
 PKG_NAME="beetle-lynx"
-PKG_VERSION="d718564b468590f6ed8abf5de6d2e9dfab64cb53"
+PKG_VERSION="3ca44fda26f27418c92ada1b0f38b948af2151ae"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/beetle-lynx-libretro"
-PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
+PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
@@ -37,6 +37,6 @@ PKG_TOOLCHAIN="make"
 PKG_AUTORECONF="no"
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp mednafen_lynx_libretro.so $INSTALL/usr/lib/libretro/beetle_lynx_libretro.so
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  cp mednafen_lynx_libretro.so ${INSTALL}/usr/lib/libretro/beetle_lynx_libretro.so
 }

@@ -5,7 +5,7 @@ PKG_NAME="desmume"
 PKG_VERSION="fb05195a535c834cbb521337b45eb09262f6fdb2"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://git.libretro.com/libretro/desmume"
-PKG_URL="$PKG_SITE.git"
+PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain libpcap"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
@@ -26,6 +26,6 @@ pre_configure_target() {
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp desmume_libretro.so $INSTALL/usr/lib/libretro/
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  cp desmume_libretro.so ${INSTALL}/usr/lib/libretro/
 }

@@ -50,7 +50,7 @@ pre_build_host() {
 
 pre_build_init() {
   PKG_MAKE_OPTS_INIT="ARCH=${TARGET_ARCH} \
-                      HOSTCC=$HOST_CC \
+                      HOSTCC=${HOST_CC} \
                       CROSS_COMPILE=${TARGET_PREFIX} \
                       KBUILD_VERBOSE=1 \
                       install"

@@ -19,12 +19,12 @@
 ################################################################################
 
 PKG_NAME="snes9x2010"
-PKG_VERSION="e86e54624a7910a64a9a744e3734d4067c48d240"
+PKG_VERSION="d8b10c4cd7606ed58f9c562864c986bc960faaaf"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="Non-commercial"
 PKG_SITE="https://github.com/libretro/snes9x2010"
-PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
+PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
@@ -40,6 +40,6 @@ make_target() {
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp snes9x2010_libretro.so $INSTALL/usr/lib/libretro/
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  cp snes9x2010_libretro.so ${INSTALL}/usr/lib/libretro/
 }

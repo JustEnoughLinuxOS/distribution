@@ -12,4 +12,4 @@ fi
 ARG=${1//[\\]/}
 export SDL_AUDIODRIVER=alsa
 echo "[${ARG}]"
-xplus4 -sounddev alsa -sdl2renderer opengles2 "$ARG"
+xplus4 -sounddev alsa -sdl2renderer opengles2 "${ARG}"

@@ -20,12 +20,12 @@
 ################################################################################
 
 PKG_NAME="beetle-pce"
-PKG_VERSION="f9f63db9c1ee0568400432a4c055a262ae8a0b8a"
+PKG_VERSION="2807a21280061fd590cb22236818e254e7b0cf80"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/beetle-pce-libretro"
-PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
+PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
@@ -37,6 +37,6 @@ PKG_TOOLCHAIN="make"
 PKG_AUTORECONF="no"
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp mednafen_pce_libretro.so $INSTALL/usr/lib/libretro/beetle_pce_libretro.so
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  cp mednafen_pce_libretro.so ${INSTALL}/usr/lib/libretro/beetle_pce_libretro.so
 }

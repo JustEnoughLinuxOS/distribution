@@ -20,12 +20,12 @@
 ################################################################################
 
 PKG_NAME="fceumm"
-PKG_VERSION="729d42572e6b926ec03baf31e3378a7a2ac151ab"
+PKG_VERSION="c795a25647614ee68cc3c8c187566fae3acfde60"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/libretro-fceumm"
-PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
+PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
@@ -41,6 +41,6 @@ make_target() {
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp fceumm_libretro.so $INSTALL/usr/lib/libretro/
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  cp fceumm_libretro.so ${INSTALL}/usr/lib/libretro/
 }

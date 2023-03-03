@@ -20,12 +20,12 @@
 ################################################################################
 
 PKG_NAME="beetle-supergrafx"
-PKG_VERSION="bd50eae63ef38f4ff6d61e8f3a782fdac6a3eeb3"
+PKG_VERSION="454b32eac32e9626ade1631d41b0416777fe3d32"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/beetle-supergrafx-libretro"
-PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
+PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
@@ -37,6 +37,6 @@ PKG_TOOLCHAIN="make"
 PKG_AUTORECONF="no"
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp mednafen_supergrafx_libretro.so $INSTALL/usr/lib/libretro/beetle_supergrafx_libretro.so
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  cp mednafen_supergrafx_libretro.so ${INSTALL}/usr/lib/libretro/beetle_supergrafx_libretro.so
 }

@@ -19,12 +19,12 @@
 ################################################################################
 
 PKG_NAME="o2em"
-PKG_VERSION="3303cc15e4323280084471f694f6d34c78199725"
+PKG_VERSION="a2a12472fde910b6089ac3ca6de805bd58a9c999"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="Artistic License"
 PKG_SITE="https://github.com/libretro/libretro-o2em"
-PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
+PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
@@ -36,6 +36,6 @@ PKG_TOOLCHAIN="make"
 PKG_AUTORECONF="no"
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp o2em_libretro.so $INSTALL/usr/lib/libretro/
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  cp o2em_libretro.so ${INSTALL}/usr/lib/libretro/
 }

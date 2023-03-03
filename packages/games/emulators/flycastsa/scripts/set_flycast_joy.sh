@@ -139,7 +139,7 @@ set_pad() {
   echo "mapping_name = $JOY_NAME" >> ${CONFIG_TMP_E}
   echo "version = 2" >> ${CONFIG_TMP_E}
 
-  local GC_CONFIG=$(cat "$GCDB" | grep "$DEVICE_GUID" | grep "platform:Linux" | head -1)
+  local GC_CONFIG=$(cat "$GCDB" | grep "${DEVICE_GUID}" | grep "platform:Linux" | head -1)
   echo "GC_CONFIG=$GC_CONFIG"
   [[ -z $GC_CONFIG ]] && return
 
@@ -221,7 +221,7 @@ init_config() {
   if [[ ! -f "$EMU_FILE" ]]; then
     echo "[input]" >> "$EMU_FILE"
     echo -e "$SDL_JOYSTICK" >> "$EMU_FILE"
-    echo -e "$DEVICES" >> "$EMU_FILE"
+    echo -e "${DEVICES}" >> "$EMU_FILE"
     return
   fi
 }

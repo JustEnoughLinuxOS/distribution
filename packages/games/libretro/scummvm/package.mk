@@ -20,7 +20,7 @@
 ################################################################################
 
 PKG_NAME="scummvm"
-PKG_VERSION="e7fe82c4886ea4e7a964f9148cb7d76b90fe1edc"
+PKG_VERSION="1f9f2563d3c0d047584d2765838856ac9d4c9000"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
@@ -42,6 +42,6 @@ pre_make_target() {
 }
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
+  mkdir -p ${INSTALL}/usr/lib/libretro
   cp scummvm_libretro.so ${INSTALL}/usr/lib/libretro/
 }

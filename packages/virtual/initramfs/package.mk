@@ -12,16 +12,16 @@ PKG_SECTION="virtual"
 PKG_LONGDESC="debug is a Metapackage for installing initramfs"
 
 if [ "$ISCSI_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET open-iscsi:init"
+  PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} open-iscsi:init"
 fi
 
 if [ "$INITRAMFS_PARTED_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET="$PKG_DEPENDS_TARGET parted:init"
+  PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} parted:init"
 fi
 
 post_install() {
   ( cd $BUILD/initramfs
-    if [ "$TARGET_ARCH" = "x86_64" ]; then
+    if [ "${TARGET_ARCH}" = "x86_64" ]; then
       ln -sfn /usr/lib $BUILD/initramfs/lib64
       mkdir -p $BUILD/initramfs/usr
       ln -sfn /usr/lib $BUILD/initramfs/usr/lib64

@@ -20,12 +20,12 @@
 ################################################################################
 
 PKG_NAME="beetle-vb"
-PKG_VERSION="3e845666d7ce235a071eb306e94074f1a72633bf"
+PKG_VERSION="dd6393f76ff781df0f4e8c953f5b053b1e61b313"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/beetle-vb-libretro"
-PKG_URL="$PKG_SITE/archive/$PKG_VERSION.tar.gz"
+PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
@@ -37,6 +37,6 @@ PKG_TOOLCHAIN="make"
 PKG_AUTORECONF="no"
 
 makeinstall_target() {
-  mkdir -p $INSTALL/usr/lib/libretro
-  cp mednafen_vb_libretro.so $INSTALL/usr/lib/libretro/beetle_vb_libretro.so
+  mkdir -p ${INSTALL}/usr/lib/libretro
+  cp mednafen_vb_libretro.so ${INSTALL}/usr/lib/libretro/beetle_vb_libretro.so
 }
