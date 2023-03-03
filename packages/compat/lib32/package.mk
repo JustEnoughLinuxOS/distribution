@@ -28,4 +28,8 @@ makeinstall_target() {
   then
     echo "/usr/lib32/dri" >"${INSTALL}/etc/ld.so.conf.d/arm-lib32-dri.conf"
   fi
+  if [ -d "${LIBROOT}/usr/lib/gl4es" ]
+  then
+     echo "/usr/lib/gl4es" >"${INSTALL}/etc/ld.so.conf.d/arm-lib32-gl4es.conf"
+  fi
 }
