@@ -82,4 +82,11 @@ post_makeinstall_target() {
     ln -sf lib${f}w.a ${SYSROOT_PREFIX}/usr/lib/lib${f}.a
     ln -sf ${f}w.pc ${SYSROOT_PREFIX}/usr/lib/pkgconfig/${f}.pc
   done
+  cd ${INSTALL}/usr/lib
+  for LIB in *w*.so*
+  do
+    NOWLIB=$(echo ${LIB} | sed "s#w##g")
+    ln -sf ${LIB} ${INSTALL}/usr/lib/${NOWLIB}
+  done
+  cd -
 }

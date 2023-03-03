@@ -7,7 +7,7 @@ PKG_SITE="www.jelos.org"
 PKG_SECTION="virtual"
 PKG_LONGDESC="Emulation metapackage."
 
-PKG_EMUS="duckstationsa flycastsa hatarisa hypseus-singe hypseus-singe moonlight openbor pico-8          \
+PKG_EMUS="flycastsa hatarisa hypseus-singe hypseus-singe moonlight openbor pico-8          \
          PPSSPPSDL scummvmsa vicesa"
 
 PKG_RETROARCH="core-info libretro-database retroarch retroarch-assets retroarch-joypads                  \
@@ -29,18 +29,18 @@ LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-
 ### Emulators or cores for specific devices
 case "${DEVICE}" in
   handheld)
-    PKG_DEPENDS_TARGET+=" dolphin dolphinsa cemu citra citrasa desmume lrps2 mame melondssa minivmac minivmacsa       \
+    PKG_DEPENDS_TARGET+=" duckstationsa dolphin dolphinsa cemu citra citrasa desmume lrps2 mame melondssa minivmac minivmacsa       \
                         pcsx2sa play primehack rpcs3sa xemu yuzusa"
     LIBRETRO_CORES+=" beetle-psx bsnes-hd"
   ;;
   RK3588)
-    PKG_DEPENDS_TARGET+=" dolphin dolphinsa aethersx2 mame pcsx_rearmed box86 box64"
+    PKG_DEPENDS_TARGET+=" duckstationsa dolphin dolphinsa aethersx2 mame pcsx_rearmed box86 box64"
     LIBRETRO_CORES+=" beetle-psx bsnes-hd"
     PKG_EMUS+=" yabasanshiroSA"
   ;;
   RK3566)
     PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders pcsx_rearmed box86 box64"
-    PKG_EMUS="moonlight openbor pico-8 PPSSPPSDL vicesa dolphinsa yabasanshiroSA"
+    PKG_EMUS+=" yabasanshiroSA"
   ;;
 esac
 
