@@ -16,6 +16,7 @@ PKG_CMAKE_OPTS_TARGET+=" -DCMAKE_BUILD_TYPE=Release"
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin
   cp ${PKG_BUILD}/.${TARGET_NAME}/box64 ${INSTALL}/usr/bin
+  cp ${PKG_BUILD}/tests/bash ${INSTALL}/usr/bin/bash-x64
 
   mkdir -p ${INSTALL}/etc/binfmt.d
   ln -fs /storage/.config/box64.conf ${INSTALL}/etc/binfmt.d/box64.conf

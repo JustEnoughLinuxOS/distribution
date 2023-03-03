@@ -27,10 +27,12 @@ makeinstall_target() {
     arm)
       mkdir -p ${INSTALL}/usr/bin
       cp ${PKG_BUILD}/.${TARGET_NAME}/box86 ${INSTALL}/usr/bin
+      cp ${PKG_BUILD}/tests/bash ${INSTALL}/usr/bin/bash-x86
     ;;
     aarch64)
       mkdir -p ${INSTALL}/usr/bin
       cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/${PKG_NAME}-*/.install_pkg/usr/bin/* ${INSTALL}/usr/bin
+      cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/${PKG_NAME}-*/tests/bash ${INSTALL}/usr/bin/bash-x86
     ;;
   esac
   mkdir -p ${INSTALL}/etc/binfmt.d
