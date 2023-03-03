@@ -7,7 +7,7 @@ PKG_ARCH="arm aarch64"
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/ptitSeb/box86"
 PKG_URL="${PKG_SITE}.git"
-PKG_DEPENDS_TARGET="toolchain gl4es"
+PKG_DEPENDS_TARGET="toolchain gl4es ncurses"
 PKG_LONGDESC="Box86 lets you run x86 Linux programs (such as games) on non-x86 Linux systems, like ARM."
 PKG_TOOLCHAIN="cmake"
 
@@ -25,18 +25,26 @@ esac
 makeinstall_target() {
   case ${TARGET_ARCH} in
     arm)
+      mkdir -p ${INSTALL}/usr/share/box86/lib
+      cp ${PKG_BUILD}/x86lib/* ${INSTALL}/usr/share/box86/lib
+
       mkdir -p ${INSTALL}/usr/bin
-      cp ${PKG_BUILD}/.${TARGET_NAME}/box86 ${INSTALL}/usr/bin
+      cp ${PKG_BUILD}/.${TARGET_NAME}/box86 ${INSTALL}/usr/bin/
       cp ${PKG_BUILD}/tests/bash ${INSTALL}/usr/bin/bash-x86
     ;;
     aarch64)
+      mkdir -p ${INSTALL}/usr/share/box86/lib
+      cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/${PKG_NAME}-*/.install_pkg/usr/share/box86/lib/* ${INSTALL}/usr/share/box86/lib
+
       mkdir -p ${INSTALL}/usr/bin
       cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/${PKG_NAME}-*/.install_pkg/usr/bin/* ${INSTALL}/usr/bin
       cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/${PKG_NAME}-*/tests/bash ${INSTALL}/usr/bin/bash-x86
     ;;
   esac
+
   mkdir -p ${INSTALL}/etc/binfmt.d
   ln -fs /storage/.config/box86.conf ${INSTALL}/etc/binfmt.d/box86.conf
+
   mkdir ${INSTALL}/usr/config
   touch ${INSTALL}/usr/config/box86.conf
 }

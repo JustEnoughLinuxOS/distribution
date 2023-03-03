@@ -6,7 +6,7 @@
 PKG_NAME="yabasanshiroSA"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/devmiyax/yabause"
-#PKG_ARCH="arm aarch64"
+PKG_ARCH="arm aarch64"
 PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain SDL2 boost openal-soft zlib"
 PKG_LONGDESC="Yabause is a Sega Saturn emulator and took over as Yaba Sanshiro"
