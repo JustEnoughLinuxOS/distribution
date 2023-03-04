@@ -1,16 +1,3 @@
-    case ${TARGET_ARCH} in
-      x86_64)
-        # (AMD CPUs)    k8 k8-sse3 opteron opteron-sse3 athlon64 athlon64-sse3
-        #               athlon-fx amdfam10 barcelona
-        # (Intel CPUs)  atom core2 nocona
-        #
-        TARGET_CPU="x86-64"
-        ;;
-      i686)
-        TARGET_CPU="i686"
-        ;;
-    esac
-
   # kernel command line
     EXTRA_CMDLINE="quiet console=tty0 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20 intel_pstate=disable"
 
