@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (C) 2022 - Fewtarius
 
-PKG_NAME="x86"
+PKG_NAME="arm"
 PKG_LICENSE="Apache-2.0"
 PKG_SITE="www.jelos.org"
 PKG_DEPENDS_TARGET="toolchain squashfs-tools:host dosfstools:host fakeroot:host kmod:host mtools:host populatefs:host libc gcc linux linux-drivers linux-firmware libusb unzip socat p7zip file SDL2 SDL2_gfx SDL2_image SDL2_mixer SDL2_net SDL2_ttf"
@@ -25,3 +25,6 @@ fi
 if [ "${DISPLAYSERVER}" = "wl" ]; then
   PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER}"
 fi
+
+### Emulators and Cores
+PKG_DEPENDS_TARGET+=" retroarch pcsx_rearmed flycast box86"

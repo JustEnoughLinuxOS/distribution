@@ -89,13 +89,13 @@ rm -rf ./build.${DISTRO}-${DEVICE}.${ARCH}/image
 case ${ARCH} in
   arm)
     [ "${BASE_ONLY}" == "true" ] && exit 0
-echo ARM
-    scripts/build_compat arm32
-    scripts/install arm32
+    export PKG_BUILD_PERF=no
+    scripts/build_compat arm
+    scripts/install arm
   ;;
   i686)
     [ "${BASE_ONLY}" == "true" ] && exit 0
-echo i686
+    export PKG_BUILD_PERF=no
     scripts/build_compat x86
     scripts/install x86
   ;;

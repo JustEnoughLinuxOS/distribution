@@ -28,9 +28,9 @@ else
   PKG_CMAKE_OPTS_TARGET+=" -DWITH_SIMD=OFF"
 fi
 
-if [ ${TARGET_ARCH} = "x86_64" ]; then
+if [[ ${TARGET_ARCH} =~ i*86|x86_64 ]]; then
   PKG_DEPENDS_HOST+=" nasm:host"
-  PKG_DEPENDS_TARGET+=" nasm:host"
+  PKG_DEPENDS_TARGET+=" nasm"
 fi
 
 post_makeinstall_target() {
