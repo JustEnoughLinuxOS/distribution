@@ -116,7 +116,7 @@ for directory in etc dev proc run sys tmp usr var flash storage; do
   mkdir -p ${INSTALL}/${directory}
 done
 
-MTADDONBUILD=no start_multithread_build arm32 || die "Parallel build failure - see log for details. Time of failure: $(date)"
+MTADDONBUILD=no start_multithread_build ${1} || die "Parallel build failure - see log for details. Time of failure: $(date)"
 echo "Successful build!  Building compatibility root..." >&2
 exit 0
 
