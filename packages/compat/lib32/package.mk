@@ -3,7 +3,7 @@
 
 PKG_NAME="lib32"
 PKG_VERSION="$(date +%Y%m%d)"
-PKG_ARCH="aarch64"
+PKG_ARCH="aarch64 x86_64"
 PKG_LICENSE="GPLv2"
 PKG_DEPENDS_TARGET="toolchain retroarch SDL2 libsndfile libmodplug"
 PKG_SHORTDESC="ARM 32bit bundle for aarch64"
@@ -11,25 +11,36 @@ PKG_PRIORITY="optional"
 PKG_TOOLCHAIN="manual"
 
 makeinstall_target() {
+
+  case ${TARGET_ARCH} in
+    aarch64)
+      LIBARCH="arm"
+      LDSO="ld-linux-armhf.so.3"
+    ;;
+    x86_64)
+      LIBARCH="x86"
+      LDSO="ld-linux.so.2"
+    ;;
+  esac
+
   cd ${PKG_BUILD}
-  LIBROOT="${ROOT}/build.${DISTRO}-${DEVICE}.arm/image/system/"
-  if [ "${ARCH}" = "aarch64" ]; then
-    mkdir -p ${INSTALL}/usr/lib32
-    rsync -al ${LIBROOT}/usr/lib/* ${INSTALL}/usr/lib32 >/dev/null 2>&1
-    chmod -f +x ${INSTALL}/usr/lib32/* || :
-  fi
+  LIBROOT="${ROOT}/build.${DISTRO}-${DEVICE}.${LIBARCH}/image/system/"
+  mkdir -p ${INSTALL}/usr/lib32
+  rsync -al ${LIBROOT}/usr/lib/* ${INSTALL}/usr/lib32 >/dev/null 2>&1
+  chmod -f 0755 ${INSTALL}/usr/lib32/* || :
   mkdir -p ${INSTALL}/usr/lib
-  ln -s /usr/lib32/ld-linux-armhf.so.3 ${INSTALL}/usr/lib/ld-linux-armhf.so.3
+  ln -s /usr/lib32/${LDSO} ${INSTALL}/usr/lib/${LDSO}
 
   mkdir -p "${INSTALL}/etc/ld.so.conf.d"
-  echo "/usr/lib32" > "${INSTALL}/etc/ld.so.conf.d/arm-lib32.conf"
-  echo "/usr/lib32/pulseaudio" >"${INSTALL}/etc/ld.so.conf.d/arm-lib32-pulseaudio.conf"
+  echo "/usr/lib32" > "${INSTALL}/etc/ld.so.conf.d/${LIBARCH}-lib32.conf"
+  echo "/usr/lib32/pulseaudio" >"${INSTALL}/etc/ld.so.conf.d/${LIBARCH}-lib32-pulseaudio.conf"
+
   if [ -d "${LIBROOT}/usr/lib/dri" ]
   then
-    echo "/usr/lib32/dri" >"${INSTALL}/etc/ld.so.conf.d/arm-lib32-dri.conf"
+    echo "/usr/lib32/dri" >"${INSTALL}/etc/ld.so.conf.d/${LIBARCH}-lib32-dri.conf"
   fi
   if [ -d "${LIBROOT}/usr/lib/gl4es" ]
   then
-     echo "/usr/lib/gl4es" >"${INSTALL}/etc/ld.so.conf.d/arm-lib32-gl4es.conf"
+     echo "/usr/lib/gl4es" >"${INSTALL}/etc/ld.so.conf.d/${LIBARCH}-lib32-gl4es.conf"
   fi
 }

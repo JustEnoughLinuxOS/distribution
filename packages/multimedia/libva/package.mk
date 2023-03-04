@@ -5,7 +5,7 @@
 PKG_NAME="libva"
 PKG_VERSION="2.16.0"
 PKG_SHA256="766edf51fd86efe9e836a4467d4ec7c3af690a3c601b3c717237cee856302279"
-PKG_ARCH="x86_64"
+PKG_ARCH="x86_64 i686"
 PKG_LICENSE="GPL"
 PKG_SITE="https://01.org/linuxmedia"
 PKG_URL="https://github.com/intel/libva/archive/${PKG_VERSION}.tar.gz"

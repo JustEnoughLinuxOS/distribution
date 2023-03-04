@@ -40,7 +40,7 @@ pre_configure_target() {
                          -DUSE_OPENMP=ON"
 }
 makeinstall_target() {
-mkdir -p ${INSTALL}/usr/lib/libretro
+  mkdir -p ${INSTALL}/usr/lib/libretro
   case ${TARGET_ARCH} in
     aarch64)
       cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/flycast-*/.install_pkg/usr/lib/libretro/flycast32_libretro.so ${INSTALL}/usr/lib/libretro
@@ -49,8 +49,12 @@ mkdir -p ${INSTALL}/usr/lib/libretro
     arm)
       cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast32_libretro.so
     ;;
-    *)
+    x86_64)
+      cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.i686/flycast-*/.install_pkg/usr/lib/libretro/flycast32_libretro.so ${INSTALL}/usr/lib/libretro
       cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast_libretro.so
+    ;;
+    i686)
+      cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast32_libretro.so
     ;;
   esac
 }
