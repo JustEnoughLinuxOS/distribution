@@ -51,10 +51,6 @@ makeinstall_target() {
     ;;
     x86_64)
       cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.i686/flycast-*/.install_pkg/usr/lib/libretro/flycast32_libretro.so ${INSTALL}/usr/lib/libretro
-      cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast_libretro.so
-    ;;
-    i686)
-      cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast32_libretro.so
     ;;
   esac
 }
