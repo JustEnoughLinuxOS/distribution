@@ -22,8 +22,6 @@ makeinstall_target() {
   cp ${PKG_BUILD}/tests/bash ${INSTALL}/usr/bin/bash-x64
 
   mkdir -p ${INSTALL}/etc/binfmt.d
-  ln -fs /storage/.config/box64.conf ${INSTALL}/etc/binfmt.d/box64.conf
-
-  mkdir ${INSTALL}/usr/config
-  touch ${INSTALL}/usr/config/box64.conf
+  cp -f ${PKG_DIR}/config/box64.conf ${INSTALL}/etc/binfmt.d/box64.conf
+  cp -f ${PKG_DIR}/config/box64.box64rc ${INSTALL}/etc/box64.box64rc
 }
