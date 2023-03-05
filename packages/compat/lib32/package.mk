@@ -18,7 +18,7 @@ makeinstall_target() {
       LDSO="ld-linux-armhf.so.3"
     ;;
     x86_64)
-      LIBARCH="x86"
+      LIBARCH="i686"
       LDSO="ld-linux.so.2"
     ;;
   esac
