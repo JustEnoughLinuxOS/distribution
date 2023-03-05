@@ -101,8 +101,6 @@ jobs:
 
             ## Upgrading
             * Download and install the update online via the System Settings menu.
-            ## Upgrading
-            * Download and install the update online via the System Settings menu.
             * If you are unable to update online
               * Download the latest version of JELOS from Github
               * Copy the update to your device over the network to your device's update share.
