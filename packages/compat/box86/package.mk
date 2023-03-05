@@ -43,8 +43,6 @@ makeinstall_target() {
   esac
 
   mkdir -p ${INSTALL}/etc/binfmt.d
-  ln -fs /storage/.config/box86.conf ${INSTALL}/etc/binfmt.d/box86.conf
-
-  mkdir ${INSTALL}/usr/config
-  touch ${INSTALL}/usr/config/box86.conf
+  cp -f ${PKG_DIR}/config/box86.conf ${INSTALL}/etc/binfmt.d/box86.conf
+  cp ${PKG_DIR}/config/box86.box86rc ${INSTALL}/etc/box86.box86rc
 }

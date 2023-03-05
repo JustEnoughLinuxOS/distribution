@@ -7,7 +7,7 @@ PKG_VERSION="252.5"
 PKG_LICENSE="LGPL2.1+"
 PKG_SITE="http://www.freedesktop.org/wiki/Software/systemd"
 PKG_URL="https://github.com/systemd/systemd-stable/archive/v${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux libidn2 wait-time-sync Python3:host jinja2:host"
+PKG_DEPENDS_TARGET="toolchain libcap kmod util-linux libidn2 wait-time-sync Python3:host jinja2:host pcre2"
 PKG_LONGDESC="A system and session manager for Linux, compatible with SysV and LSB init scripts."
 
 PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
@@ -45,7 +45,7 @@ PKG_MESON_OPTS_TARGET="--libdir=/usr/lib \
                        -Dxz=false \
                        -Dlz4=false \
                        -Dxkbcommon=false \
-                       -Dpcre2=false \
+                       -Dpcre2=true \
                        -Dglib=false \
                        -Ddbus=false \
                        -Ddefault-dnssec=no \
