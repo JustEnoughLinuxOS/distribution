@@ -6,9 +6,9 @@
 # Linux process
 #
 
-BOX64_PREFER_EMULATED=1
 BOX64_LD_LIBRARY_PATH="/usr/share/box64/lib"
 BOX64_BASH="/usr/bin/bash-x64"
+BOX64_LOG=0
 
 [3dSen.x86_64]
 BOX64_DYNAREC_BLEEDING_EDGE=0   # avoid the use of STRONGMEM for much better performances

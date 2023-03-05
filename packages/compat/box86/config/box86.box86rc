@@ -7,9 +7,9 @@
 #
 
 
-BOX86_PREFER_EMULATED=1
 BOX86_LD_LIBRARY_PATH="/usr/share/box86/lib"
 BOX86_BASH="/usr/bin/bash-x86"
+BOX86_LOG=0
 
 [7z]
 # Those are safe to use on 7z and give a bit of a boost
