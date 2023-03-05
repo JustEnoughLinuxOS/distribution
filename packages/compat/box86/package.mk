@@ -42,7 +42,12 @@ makeinstall_target() {
     ;;
   esac
 
+  mkdir -p ${INSTALL}/usr/config
+  cp ${PKG_DIR}/config/box86.box86rc ${INSTALL}/usr/config/box86.box86rc
+
+  mkdir -p ${INSTALL}/etc
+  ln -sf /storage/.config/box86.box86rc ${INSTALL}/etc/box86.box86rc
+
   mkdir -p ${INSTALL}/etc/binfmt.d
   cp -f ${PKG_DIR}/config/box86.conf ${INSTALL}/etc/binfmt.d/box86.conf
-  cp ${PKG_DIR}/config/box86.box86rc ${INSTALL}/etc/box86.box86rc
 }
