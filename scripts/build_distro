@@ -86,18 +86,22 @@ rm -f ./release/${DISTRO}-${DEVICE}.${ARCH}-*
 # Remove the image root as it should be regenerated for every build.
 rm -rf ./build.${DISTRO}-${DEVICE}.${ARCH}/image
 
-if [ "${ARCH}" == "arm" ]
-then
-  if [ "${BASE_ONLY}" == true ]
-  then
-    echo "Skipping 32bit."
-    exit 0
-  fi
-  scripts/build_compat
-  scripts/install arm32
-else
-  make image
-fi
+case ${ARCH} in
+  arm)
+    [ "${BASE_ONLY}" == "true" ] && exit 0
+    export PKG_BUILD_PERF=no
+    scripts/build_compat arm
+    scripts/install arm
+  ;;
+  i686)
+    [ "${BASE_ONLY}" == "true" ] && exit 0
+    export PKG_BUILD_PERF=no
+    scripts/build_compat x86
+    scripts/install x86
+  ;;
+  *)
+    make image
+esac
 
 if [ ! $? == 0 ]
 then

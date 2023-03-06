@@ -14,16 +14,15 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_TOOLCHAIN="make"
 
-PKG_BASEOS="plymouth-lite grep wget libjpeg-turbo util-linux xmlstarlet bluetool gnupg gzip patchelf  \
-            imagemagick terminus-font vim bash pyudev dialog six git dbus-python coreutils miniupnpc  \
-            nss-mdns avahi alsa-ucm-conf fbgrab modules system-utils autostart powerstate powertop \
-            ectool"
+PKG_BASEOS="plymouth-lite grep wget util-linux xmlstarlet bluetool gnupg gzip patchelf imagemagick \
+            terminus-font vim bash pyudev dialog six git dbus-python coreutils miniupnpc nss-mdns  \
+            avahi alsa-ucm-conf fbgrab modules system-utils autostart powerstate powertop ectool"
 
 PKG_UI="emulationstation es-themes"
 
 PKG_SOFTWARE=""
 
-PKG_COMPAT=""
+PKG_COMPAT="lib32"
 
 PKG_MULTIMEDIA="ffmpeg vlc"
 
@@ -43,7 +42,6 @@ case "${PROJECT}" in
   ;;
   *)
     PKG_EMUS+=" retropie-shaders"
-    PKG_COMPAT+=" lib32"
   ;;
 esac
 
