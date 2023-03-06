@@ -20,7 +20,7 @@
 ################################################################################
 
 PKG_NAME="TIC-80"
-PKG_VERSION="7be33dc4b5bc54e417639333fbd1c67582aeff21"
+PKG_VERSION="40c5f2d8ef8f221933e9f3fabe3c5e2980e32fee"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
@@ -37,13 +37,18 @@ PKG_BUILD_FLAGS="+pic"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-PKG_CMAKE_OPTS_TARGET="-DBUILD_PLAYER=ON \
+pre_configure_target() {
+
+  PKG_CMAKE_OPTS_TARGET="-DBUILD_PLAYER=ON \
                        -DBUILD_SOKOL=OFF \
                        -DBUILD_SDL=OFF \
                        -DBUILD_DEMO_CARTS=OFF \
                        -DBUILD_LIBRETRO=ON \
 		       -DBUILD_WITH_MRUBY=OFF \
 		       -DCMAKE_BUILD_TYPE=Release"
+
+  sed -i 's#$(CC) $(BOOT_CFLAGS) -o $@ $(JANET_BOOT_OBJECTS) $(CLIBS)#$(HOST_CC) $(BOOT_CFLAGS) -o $@ $(JANET_BOOT_OBJECTS) $(CLIBS)#g' ${PKG_BUILD}/vendor/janet/Makefile
+}
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
