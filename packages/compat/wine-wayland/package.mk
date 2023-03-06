@@ -16,6 +16,7 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin
   mkdir -p ${INSTALL}/usr/config
   mkdir -p ${INSTALL}/usr/lib
+  mkdir -p ${INSTALL}/usr/lib32
 
   #Download Wine Wayland x32 packages
   curl -Lo ${PKG_BUILD}/${PKG_NAME}_X32.tar.zst ${PKG_SITE_X32}
