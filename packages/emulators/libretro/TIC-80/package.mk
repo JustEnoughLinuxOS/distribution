@@ -26,7 +26,8 @@ PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/nesbox/TIC-80"
 PKG_URL="${PKG_SITE}.git"
-PKG_DEPENDS_TARGET="toolchain"
+PKG_DEPENDS_HOST="toolchain"
+PKG_DEPENDS_TARGET="toolchain TIC-80:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="Tic80"
@@ -37,8 +38,18 @@ PKG_BUILD_FLAGS="+pic"
 PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 
-pre_configure_target() {
+pre_configure_host() {
+  PKG_CMAKE_OPTS_HOST="-DBUILD_PLAYER=OFF \
+                       -DBUILD_WITH_JANET=ON \
+                       -DBUILD_SOKOL=OFF \
+                       -DBUILD_SDL=OFF \
+                       -DBUILD_DEMO_CARTS=OFF \
+                       -DBUILD_LIBRETRO=OFF \
+                       -DBUILD_WITH_MRUBY=OFF \
+                       -DCMAKE_BUILD_TYPE=Release"
+}
 
+pre_configure_target() {
   PKG_CMAKE_OPTS_TARGET="-DBUILD_PLAYER=ON \
                        -DBUILD_SOKOL=OFF \
                        -DBUILD_SDL=OFF \
@@ -46,8 +57,6 @@ pre_configure_target() {
                        -DBUILD_LIBRETRO=ON \
 		       -DBUILD_WITH_MRUBY=OFF \
 		       -DCMAKE_BUILD_TYPE=Release"
-
-  sed -i 's#$(CC) $(BOOT_CFLAGS) -o $@ $(JANET_BOOT_OBJECTS) $(CLIBS)#$(HOST_CC) $(BOOT_CFLAGS) -o $@ $(JANET_BOOT_OBJECTS) $(CLIBS)#g' ${PKG_BUILD}/vendor/janet/Makefile
 }
 
 makeinstall_target() {
