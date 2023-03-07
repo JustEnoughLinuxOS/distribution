@@ -4,7 +4,7 @@
 # Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="gl4es"
-PKG_VERSION="c156cc6"
+PKG_VERSION="57240b0f06551a49c94f90abccc54767c738791e"
 PKG_SITE="https://github.com/ptitSeb/gl4es"
 PKG_LICENSE="GPL"
 PKG_URL="${PKG_SITE}.git"
