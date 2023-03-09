@@ -32,7 +32,7 @@
     PARTITION_TABLE="gpt"
     UBOOT_LABEL="uboot"
     TRUST_LABEL="resource"
-    DEVICE_DTB=("rk3588s-orangepi-5" "rk3588-rock-5b" "rk3588s-9tripod-linux")
+    DEVICE_DTB=("rk3588s-orangepi-5" "rk3588-rock-5b" "rk3588s-indiedroid-nova")
     # UBOOT_DTB="$(for DTB in "${DEVICE_DTB[@]}"; do echo -n "${DTB} "; done)"
     UBOOT_DTB="rk3588-evb"
     UBOOT_CONFIG="orangepi_5_defconfig"
