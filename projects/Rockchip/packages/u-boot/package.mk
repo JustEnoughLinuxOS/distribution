@@ -15,7 +15,7 @@ PKG_PATCH_DIRS+="${DEVICE}"
 case ${DEVICE} in
  RK3588)
     PKG_URL="${PKG_SITE}/rk35xx-uboot.git"
-    PKG_VERSION="6534133f97a8e4fb6db83e58dbde23aec6041ec2"
+    PKG_VERSION="d34ff0716"
     PKG_GIT_CLONE_BRANCH="v2017.09-rk3588"
   ;;
   RK3566)

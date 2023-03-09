@@ -9,7 +9,7 @@ PKG_SECTION="virtual"
 PKG_LONGDESC="Root package used to build and create complete image"
 
 # Architecture specific tools
-[ "${ARCH}" = "x86_64" ] && PKG_DEPENDS_TARGET+=" ryzenadj lm_sensors dmidecode"
+[ "${ARCH}" = "x86_64" ] && PKG_DEPENDS_TARGET+=" ryzenadj lm_sensors dmidecode xterm"
 
 # Sound support
 [ "${ALSA_SUPPORT}" = "yes" ] && PKG_DEPENDS_TARGET+=" alsa"
