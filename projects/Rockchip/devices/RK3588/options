@@ -31,10 +31,17 @@
     BOOTLOADER="u-boot"
     PARTITION_TABLE="gpt"
     UBOOT_LABEL="uboot"
-    TRUST_LABEL="resource"
-    DEVICE_DTB=("rk3588s-orangepi-5" "rk3588-rock-5b" "rk3588s-indiedroid-nova")
-    # UBOOT_DTB="$(for DTB in "${DEVICE_DTB[@]}"; do echo -n "${DTB} "; done)"
-    UBOOT_DTB="rk3588-evb"
+
+  # Single dtb settings
+    TRUST_LABEL="trust"
+    DEVICE_DTB=("rk3588s-orangepi-5")
+    UBOOT_DTB="${DEVICE_DTB[0]}"
+    
+  # Multi dtb settings
+    #TRUST_LABEL="resource"
+    #DEVICE_DTB=("rk3588s-orangepi-5" "rk3588-rock-5b" "rk3588s-indiedroid-nova")
+    #UBOOT_DTB="rk3588-evb"
+
     UBOOT_CONFIG="orangepi_5_defconfig"
     PKG_SOC="rk3588"
     PKG_DATAFILE="${PKG_RKBIN}/bin/rk35/rk3588_ddr_lp4_2112MHz_lp5_2736MHz_v1.08.bin"
