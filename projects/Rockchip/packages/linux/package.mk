@@ -229,9 +229,9 @@ make_target() {
 
     KERNEL_TARGET="${KERNEL_UIMAGE_TARGET}"
   fi
-  #if [ "${PKG_SOC}" = "rk356x" ]; then
+  if [ "${TRUST_LABEL}" = "resource" ]; then
       kernel_make ${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD} ARCH=arm64 ${DEVICE_DTB[0]}.img
-  #fi
+  fi
 }
 
 makeinstall_target() {
@@ -243,12 +243,12 @@ makeinstall_target() {
         cp -v ${dtb} ${INSTALL}/usr/share/bootloader
       fi
     done
-    #if [ "${PKG_SOC}" = "rk356x" ]; then
+    if [ "${TRUST_LABEL}" = "resource" ]; then
       ARCH=arm64 scripts/mkimg --dtb ${DEVICE_DTB[0]}.dtb
       ARCH=arm64 scripts/mkmultidtb.py ${PKG_SOC}
       cp -v resource.img ${INSTALL}/usr/share/bootloader
       ARCH=${TARGET_ARCH}
-    #fi
+    fi
   elif [ "${BOOTLOADER}" = "bcm2835-bootloader" ]; then
     mkdir -p ${INSTALL}/usr/share/bootloader/overlays
 
