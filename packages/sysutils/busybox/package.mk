@@ -191,6 +191,8 @@ post_install() {
   enable_service shell.service
   enable_service show-version.service
   enable_service var.mount
+  enable_service proc-sys-fs-binfmt_misc.mount
+
   listcontains "${FIRMWARE}" "rpi-eeprom" && enable_service rpi-flash-firmware.service
 
   # cron support

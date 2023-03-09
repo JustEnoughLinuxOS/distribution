@@ -55,7 +55,7 @@ pre_configure_host() {
     "aarch64")
       LLVM_BUILD_TARGETS="X86;AArch64"
       ;;
-    "x86_64")
+    i*86|x86_64)
       LLVM_BUILD_TARGETS="AMDGPU;X86"
       ;;
   esac
@@ -82,13 +82,13 @@ post_makeinstall_host() {
 
 pre_configure_target() {
   case "${TARGET_ARCH}" in
-    "arm")
+    arm)
       LLVM_BUILD_TARGETS="X86;ARM"
       ;;
-    "aarch64")
+    aarch64)
       LLVM_BUILD_TARGETS="X86;AArch64"
       ;;
-    "x86_64")
+    i*86|x86_64)
       LLVM_BUILD_TARGETS="AMDGPU;X86"
       ;;
   esac

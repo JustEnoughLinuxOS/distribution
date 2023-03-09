@@ -180,3 +180,12 @@ fi
 
 ### Force everyone to the stable repo
 set_setting updates.branch stable
+
+### Configure box86/64 defaulta
+for BOX in box86 box64
+do
+  if [ ! -e "/storage/.config/${BOX}.${BOX}rc" ]
+  then
+    cp -f /usr/config/${BOX}.${BOX}rc /storage/.config/
+  fi
+done
