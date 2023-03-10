@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="mesen"
-PKG_VERSION="c89474c9d87df967d21b7b7d5971dc9475fec028"
+PKG_VERSION="6435516d8f6d11e96eecc6db8da73e86416fd20b"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/libretro/Mesen"
