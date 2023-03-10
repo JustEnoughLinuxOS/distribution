@@ -9,7 +9,7 @@ PKG_NAME="linux"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/JustEnoughLinuxOS"
 PKG_DEPENDS_HOST="ccache:host rsync:host openssl:host"
-PKG_DEPENDS_TARGET="toolchain linux:host cpio:host kmod:host xz:host wireless-regdb keyutils util-linux binutils ncurses openssl:host ${KERNEL_EXTRA_DEPENDS_TARGET} imagemagick"
+PKG_DEPENDS_TARGET="toolchain linux:host cpio:host kmod:host xz:host lz4:host wireless-regdb keyutils util-linux binutils ncurses openssl:host ${KERNEL_EXTRA_DEPENDS_TARGET}"
 PKG_DEPENDS_INIT="toolchain"
 PKG_NEED_UNPACK="${LINUX_DEPENDS} $(get_pkg_directory busybox)"
 PKG_LONGDESC="This package builds the kernel for Rockchip devices"
@@ -26,7 +26,7 @@ case ${DEVICE} in
   ;;
   RK3566)
     PKG_URL="${PKG_SITE}/rk356x-kernel.git"
-    PKG_VERSION="0d81a18e5"
+    PKG_VERSION="9e2bb8a85"
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="main"
   ;;
@@ -228,12 +228,6 @@ make_target() {
                arch/${TARGET_KERNEL_ARCH}/boot/${KERNEL_UIMAGE_TARGET}
 
     KERNEL_TARGET="${KERNEL_UIMAGE_TARGET}"
-  fi
-  if [ "${TRUST_LABEL}" = "resource" ]; then
-      SPLASH="${ROOT}/distributions/${DISTRO}/splash/splash.png"
-      convert ${SPLASH} ${PKG_BUILD}/logo.bmp
-      cp ${PKG_BUILD}/logo.bmp ${PKG_BUILD}/logo_kernel.bmp
-      kernel_make ${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD} ARCH=arm64 ${DEVICE_DTB[0]}.img
   fi
 }
 
