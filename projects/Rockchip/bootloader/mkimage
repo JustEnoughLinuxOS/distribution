@@ -37,6 +37,7 @@ for DTB in ${DEVICE_DTB[@]}
 do
   if [ -e "${DTB}.dtb" ]
   then
+    echo "image: copy device trees to image..."
     mcopy -o "${DTB}.dtb" ::
   fi
 done
@@ -45,11 +46,14 @@ mkdir -p "${LE_TMP}/extlinux"
 
 if [ "${TRUST_LABEL}" = "resource" ]
 then
+  echo "image: Set FDTDIR to /..."
   FDTMODE="FDTDIR /"
 else
+  echo "image: Set FTD to ${DEVICE_DTB}..."
   FDTMODE="FDT /${DEVICE_DTB}.dtb"
 fi
 
+echo "image: Set extlinux.conf..."
 cat << EOF > "${LE_TMP}/extlinux/extlinux.conf"
 LABEL ${DISTRO}
   LINUX /${KERNEL_NAME}
