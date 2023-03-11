@@ -20,7 +20,7 @@
 ################################################################################
 
 PKG_NAME="genesis-plus-gx"
-PKG_VERSION="7146b1aeadd3e3c73d7db3f7ebf10bf154ee6323"
+PKG_VERSION="f6a9bd72a56a11c2068be2d15fa52dda3e1e8027"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="Non-commercial"

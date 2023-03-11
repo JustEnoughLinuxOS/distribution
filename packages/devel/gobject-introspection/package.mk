@@ -4,8 +4,7 @@
 # Copyright (C) 2020-present Team CoreELEC (https://coreelec.org)
 
 PKG_NAME="gobject-introspection"
-PKG_VERSION="1.74.0"
-PKG_SHA256="79ed5d764d288f046b027ff064be174d7904904565de150a94841740a2a0455d"
+PKG_VERSION="1.75.6"
 PKG_ARCH="any"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.gtk.org/"
@@ -19,11 +18,18 @@ PKG_TOOLCHAIN="meson"
 
 pre_configure_host() {
   PKG_MESON_OPTS_HOST=" \
-    -Ddoctool=disabled \
-    -Dbuild_introspection_data=false"
+    -Ddoctool=disabled"
 
   # prevent g-ir-scanner from writing cache data to $HOME
   export GI_SCANNER_DISABLE_CACHE="1"
+
+  CC="${HOST_CC}"
+  CXX="${HOST_CXX}"
+  AR="${HOST_AR}"
+  CPP="${HOST_PREFIX}cpp"
+  CPPFLAGS="${HOST_CPPFLAGS}"
+  CFLAGS="${HOST_CFLAGS} -fPIC"
+  LDFLAGS="${HOST_LDFLAGS}"
 }
 
 pre_configure_target() {
