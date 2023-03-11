@@ -472,7 +472,7 @@ else
                 "scummvm")
 			GAMEDIR=$(cat "${ROMNAME}" | awk 'BEGIN {FS="\""}; {print $2}')
 			cd "${GAMEDIR}"
-			RUNTHIS='${TBASH} /usr/bin/scummvm.start libretro .'
+			RUNTHIS='${TBASH} /usr/bin/start_scummvm.sh libretro .'
                 ;;
         esac
 fi
