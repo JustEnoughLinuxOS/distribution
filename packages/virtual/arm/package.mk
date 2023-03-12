@@ -23,7 +23,7 @@ then
 fi
 
 if [ "${DISPLAYSERVER}" = "wl" ]; then
-  PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER}"
+  PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER} libXtst libXfixes libXi gdk-pixbuf libvdpau"
 fi
 
 ### Emulators and Cores
