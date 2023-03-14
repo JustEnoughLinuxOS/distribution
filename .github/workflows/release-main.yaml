@@ -34,8 +34,8 @@ jobs:
             fetch-depth: 0
             ref: "${{env.BRANCH}}"
 
-        - name: only run if a repo key exists
-          if: ${{ env.repo_access == '' }}
+        - name: only run on the primary repository
+          if: ${{ !startsWith(github.repository_owner, 'JustEnoughLinuxOS') }}
           run: exit 0
 
         - name: repository full name
