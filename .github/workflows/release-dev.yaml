@@ -28,7 +28,7 @@ jobs:
             ref: "${{env.BRANCH}}"
 
         - name: only run if a repo key exists
-          if: ${{ env.repo_access = '' }}
+          if: ${{ env.repo_access == '' }}
           run: exit 0
 
         - name: repository full name
