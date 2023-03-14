@@ -21,6 +21,7 @@ on:
 
 env:
   BRANCH: main
+  repo_access: ${{ secrets.REPO_ACCESS }}
 
 jobs:
   launch-main-release-if-needed:
@@ -36,7 +37,7 @@ jobs:
         - name: only run on the primary repository
           if: ${{ !startsWith(github.repository_owner, 'JustEnoughLinuxOS') }}
           run: exit 0
-            
+
         - name: repository full name
           id: full_name
           run: |
