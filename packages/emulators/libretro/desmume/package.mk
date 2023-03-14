@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="desmume"
-PKG_VERSION="fb05195a535c834cbb521337b45eb09262f6fdb2"
+PKG_VERSION="fbd368c8109f95650e1f81bca1facd6d4d8687d7"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://git.libretro.com/libretro/desmume"
 PKG_URL="${PKG_SITE}.git"

@@ -1,4 +1,6 @@
 np2kai # Last major commit before hiatus is broken
 vicesa # Doesn't support updating with the script.
 duckstationsa # Latest commits break device patching. Need to research.
-PPSSPPSDL # Latest versions have stability issues
+PPSSPPSDL # Build issues that need to be resolved
+melondssa # Needs patch updates
+citrasa-vulkan # Needs build fixes

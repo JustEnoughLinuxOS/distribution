@@ -2,7 +2,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="yamlcpp"
-PKG_VERSION="c73ee34"
+PKG_VERSION="987a60425611bfd02a90bd247d630483bceaaeee"
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/jbeder/yaml-cpp"
 PKG_URL="${PKG_SITE}.git"

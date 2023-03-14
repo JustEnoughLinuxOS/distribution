@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present Marek Moeckel (wansti@discarded-ideas.org)
 
 PKG_NAME="libldac"
-PKG_VERSION="fbffba45d15d959da6ee04eafe14c0d4721f6030"
+PKG_VERSION="af2dd23979453bcd1cad7c4086af5fb421a955c5"
 PKG_LICENSE="Apache2"
 PKG_SITE="https://github.com/EHfive/ldacBT"
 PKG_URL="${PKG_SITE}.git"
