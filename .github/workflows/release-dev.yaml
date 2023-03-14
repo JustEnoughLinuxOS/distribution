@@ -11,6 +11,7 @@ on:
   workflow_dispatch:
 env:
   BRANCH: dev
+  repo_access: ${{ secrets.REPO_ACCESS }}
 
 jobs:
   launch-dev-release:
@@ -27,7 +28,7 @@ jobs:
             ref: "${{env.BRANCH}}"
 
         - name: only run if a repo key exists
-          if: ${{ secrets.REPO_ACCESS = '' }}
+          if: ${{ env.repo_access = '' }}
           run: exit 0
 
         - name: repository full name

@@ -3,7 +3,7 @@
 # Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="syncthing"
-PKG_VERSION="1.23.1"
+PKG_VERSION="1.23.2"
 PKG_ARCH="any"
 PKG_LICENSE="MPLv2"
 PKG_SITE="https://syncthing.net/"

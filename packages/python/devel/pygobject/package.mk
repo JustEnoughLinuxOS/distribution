@@ -13,11 +13,6 @@ PKG_DEPENDS_TARGET="toolchain Python3 glib libffi gobject-introspection pgi"
 PKG_LONGDESC="A convenient wrapper for the GObject+ library for use in Python programs."
 
 pre_configure_target() {
-  export PYTHONXCPREFIX="${SYSROOT_PREFIX}/usr"
-  export LDSHARED="${CC} -shared"
-}
-
-pre_configure_target() {
   PKG_CONFIG_PATH="${SYSROOT_PREFIX}/usr/lib/pkgconfig"
   PKG_MESON_OPTS_TARGET=" \
                          -Dpython=${TOOLCHAIN}/bin/${PKG_PYTHON_VERSION} \
