@@ -3,7 +3,7 @@
 
 PKG_NAME="duckstationsa"
 PKG_LICENSE="GPLv3"
-PKG_VERSION="55e0e7ffbea9143f7809a926cf11c6986971881a"
+PKG_VERSION="51e4c4bfb09f336b5b6ad5b75b3fffe63799b68c"
 PKG_DEPENDS_TARGET="toolchain SDL2 nasm:host pulseaudio openssl libidn2 nghttp2 zlib curl libevdev ecm"
 PKG_SITE="https://github.com/stenzek/duckstation"
 PKG_URL="${PKG_SITE}.git"
