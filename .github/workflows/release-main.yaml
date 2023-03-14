@@ -21,6 +21,7 @@ on:
 
 env:
   BRANCH: main
+  repo_access: ${{ secrets.REPO_ACCESS }}
 
 jobs:
   launch-main-release-if-needed:
@@ -33,10 +34,10 @@ jobs:
             fetch-depth: 0
             ref: "${{env.BRANCH}}"
 
-        - name: only run on the primary repository
-          if: ${{ !startsWith(github.repository_owner, 'JustEnoughLinuxOS') }}
+        - name: only run if a repo key exists
+          if: ${{ env.repo_access = '' }}
           run: exit 0
-            
+
         - name: repository full name
           id: full_name
           run: |
