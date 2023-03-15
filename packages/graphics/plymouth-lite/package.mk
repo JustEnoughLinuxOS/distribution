@@ -2,7 +2,7 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 
 PKG_NAME="plymouth-lite"
-PKG_VERSION="92b3d5b"
+PKG_VERSION="92b3d5ba65b2ca88d02450380cc499014a4325b4"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/JustEnoughLinuxOS/plymouth-lite"
 PKG_URL="${PKG_SITE}.git"

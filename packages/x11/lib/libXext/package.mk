@@ -3,7 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libXext"
-PKG_VERSION="c6eded76e212419518bd955cad58c96b8653840e"
+PKG_VERSION="de2ebd62c1eb8fe16c11aceac4a6981bda124cf4"
 PKG_LICENSE="OSS"
 PKG_SITE="https://gitlab.freedesktop.org/xorg/lib/libxext"
 PKG_URL="${PKG_SITE}.git"

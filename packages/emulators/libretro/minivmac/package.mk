@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="minivmac"
-PKG_VERSION="7a774cd"
+PKG_VERSION="45edc82baae906b90b67cce66761557923a6ba75"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/libretro-minivmac"

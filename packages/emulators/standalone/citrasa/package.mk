@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="citrasa"
-PKG_VERSION="8f2a5374c326eb75491eb2ac28add6a71b5b9b69"
+PKG_VERSION="49acfe428a11e484a79733b7f63a0153424c45ad"
 PKG_LICENSE="MPLv2"
 PKG_SITE="https://github.com/citra-emu/citra"
 PKG_URL="${PKG_SITE}.git"

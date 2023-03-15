@@ -21,7 +21,7 @@ case ${TARGET_ARCH} in
     PKG_GIT_CLONE_BRANCH="pi4-1-9-0"
   ;;
   *)
-    PKG_VERSION="82cb291"
+    PKG_VERSION="82cb29171ebe61cf0129682794af5ceb5acaa0f2"
     PKG_GIT_CLONE_BRANCH="master"
   ;;
 esac

@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="ectool"
-PKG_VERSION="4d661eebe95b06acae7d99777ed36ba56a560112"
+PKG_VERSION="23c77ef0c32f9f03a367c89babb303dde526da85"
 PKG_LICENSE="GPL"
 PKG_SITE="https://review.coreboot.org/coreboot"
 PKG_URL="${PKG_SITE}.git"
