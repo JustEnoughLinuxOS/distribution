@@ -2,7 +2,7 @@
 # Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
 
 PKG_NAME="gamecontrollerdb"
-PKG_VERSION="e3f82eb"
+PKG_VERSION="01cca2e77f9bf9f1432be04f876f287eb78297fe"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_DEPENDS_TARGET="toolchain SDL2"

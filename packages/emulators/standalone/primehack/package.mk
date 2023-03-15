@@ -6,7 +6,7 @@ PKG_LICENSE="GPLv2"
 PKG_DEPENDS_TARGET="toolchain libevdev libdrm ffmpeg zlib libpng lzo libusb zstd ecm"
 PKG_SITE="https://github.com/shiiion/dolphin"
 PKG_URL="${PKG_SITE}.git"
-PKG_VERSION="55330bfebbcde86c169715c25f2b693cbbe55a75"
+PKG_VERSION="7f7af1c5dd9fba54b785add7c6cf532cae9cca63"
 PKG_LONGDESC="PrimeHack – A Dolphin Emulator fork for Metroid Prime Trilogy."
 PKG_PATCH_DIRS+=" wayland"
 

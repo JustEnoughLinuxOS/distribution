@@ -4,7 +4,7 @@
 # Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="SDL_sound"
-PKG_VERSION="ba43565"
+PKG_VERSION="ba43565897dbada7868456cce0a9727271c5d06b"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/icculus/SDL_sound"
 PKG_URL="${PKG_SITE}.git"

@@ -2,7 +2,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="wxwidgets"
-PKG_VERSION="97e99707c5d2271a70cb686720b48dbf34ced496"
+PKG_VERSION="36d359c470b00e12e69feebf153b7549f12e6fc4"
 PKG_LICENSE="wxWindows Library Licence"
 PKG_SITE="https://github.com/wxWidgets/wxWidgets"
 PKG_URL="${PKG_SITE}.git"

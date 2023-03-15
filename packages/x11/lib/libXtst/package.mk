@@ -3,7 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libXtst"
-PKG_VERSION="14a44d0e3e6c3d9e757e2fdd143587efe532f1e9"
+PKG_VERSION="b0d55c9d98269aeefb521f1f2ce464288f176326"
 PKG_LICENSE="OSS"
 PKG_SITE="https://gitlab.freedesktop.org/xorg/lib/libxtst"
 PKG_URL="${PKG_SITE}.git"

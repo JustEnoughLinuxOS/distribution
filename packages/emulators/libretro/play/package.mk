@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="play"
-PKG_VERSION="38d3775a07d3b1041d3732e0bb05627fcb4fe492"
+PKG_VERSION="b33834af08a4954f06be215eee80a72e7a378e91"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/jpd002/Play-"

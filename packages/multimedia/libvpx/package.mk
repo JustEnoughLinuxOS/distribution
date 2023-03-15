@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="libvpx"
-PKG_VERSION="626ff35" # 1.11.0
+PKG_VERSION="d32a410880c6583d49baaac17c84b3d0fead43ba" # 1.11.0
 PKG_LICENSE="BSD"
 PKG_SITE="https://github.com/webmproject/libvpx"
 PKG_URL="${PKG_SITE}.git"

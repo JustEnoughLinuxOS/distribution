@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="bluez-alsa"
-PKG_VERSION="8d2c94d"
+PKG_VERSION="71c9ab4b99c62b49f99f42a15f532fc2cf38e652"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/Arkq/bluez-alsa"
 PKG_URL="${PKG_SITE}.git"
