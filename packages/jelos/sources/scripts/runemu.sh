@@ -331,9 +331,12 @@ then
                         fi
                 ;;
                 "switch")
-                        jslisten set "-9 yuzu"
                         if [ "$EMU" = "yuzu" ]; then
+                        jslisten set "-9 yuzu"
                         RUNTHIS='${TBASH} /usr/bin/start_yuzu.sh "${ROMNAME}"'
+			elif [ "$EMU" = "ryujinx" ]; then
+                        jslisten set "-9 Ryujinx"
+                        RUNTHIS='${TBASH} /usr/bin/start_ryujinx.sh "${ROMNAME}"'
                         fi
                 ;;
                 "xbox")
