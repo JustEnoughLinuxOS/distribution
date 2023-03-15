@@ -40,7 +40,12 @@ ln -sf /storage/roms/bios/ryujinx/keys /storage/.config/Ryujinx/system
 	fi
 
 #Always grab the latest ryujinx bin
-cp -r "/usr/config/Ryujinx/Ryujinx" "/storage/.config/Ryujinx/Ryujinx"
+shasum1=$(sha1sum /usr/config/Ryujinx/Ryujinx | awk '{print $1}')
+shasum2=$(sha1sum /storage/.config/Ryujinx/Ryujinx | awk '{print $1}')
+
+if [ "$shasum1" <> "$shasum2" ]; then
+  cp -r "/usr/config/Ryujinx/Ryujinx" "/storage/.config/Ryujinx/Ryujinx"
+fi
 
 #Run Yuzu emulator
 	if [ "$SUI" = "1" ]
