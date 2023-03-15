@@ -4,7 +4,7 @@
 PKG_NAME="ryujinx"
 PKG_VERSION="1.1.665"
 PKG_ARCH="x86_64"
-PKG_LICENSE="GPLv3"
+PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/Ryujinx"
 PKG_URL="${PKG_SITE}/release-channel-master/releases/download/${PKG_VERSION}/ryujinx-${PKG_VERSION}-linux_x64.tar.gz"
 PKG_DEPENDS_TARGET="toolchain librsvg SDL2 openal-soft"
@@ -21,5 +21,6 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/config/Ryujinx
   cp -rf ${PKG_BUILD}/Ryujinx ${INSTALL}/usr/config/Ryujinx/
   cp -rf ${PKG_BUILD}/mime ${INSTALL}/usr/config/Ryujinx
+  cp -rf ${PKG_BUILD}/LICENSE.txt ${INSTALL}/usr/config/Ryujinx
   cp -rf ${PKG_DIR}/config/* ${INSTALL}/usr/config/Ryujinx
 }
