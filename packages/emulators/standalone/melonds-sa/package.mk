@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
 
-PKG_NAME="melondssa"
+PKG_NAME="melonds-sa"
 PKG_VERSION="00edeb3c3c053bc2b3c9ac83e33688626498f2cc"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/melonDS-emu/melonDS"

@@ -2,14 +2,14 @@
 # Copyright (C) 2019-present Frank Hartung (supervisedthinking (@) gmail.com)
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
-PKG_NAME="rpcs3sa"
-PKG_VERSION="cf5346c263111760752cabb94767c07c501207c4"
+PKG_NAME="rpcs3-sa"
+PKG_VERSION="fe51c7b9605eb8ac8eb94b33f5e540bd75d89443"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL-2.0-or-later"
 PKG_SITE="https://rpcs3.net"
 PKG_URL="https://github.com/RPCS3/rpcs3.git"
 PKG_DEPENDS_HOST="toolchain:host"
-PKG_DEPENDS_TARGET="toolchain linux glibc systemd pulseaudio mesa xorg-server libevdev curl ffmpeg libpng zlib glew-cmake libSM SDL2 enet qt5 rpcs3sa:host vulkan-headers vulkan-loader vulkan-tools libp11-kit yamlcpp openal-soft"
+PKG_DEPENDS_TARGET="toolchain linux glibc systemd pulseaudio mesa xorg-server libevdev curl ffmpeg libpng zlib glew-cmake libSM SDL2 enet qt5 rpcs3-sa:host vulkan-headers vulkan-loader vulkan-tools libp11-kit yamlcpp openal-soft"
 PKG_LONGDESC="RPCS3 is an experimental open-source Sony PlayStation 3 emulator and debugger."
 GET_HANDLER_SUPPORT="git"
 PKG_GIT_CLONE_BRANCH="master"

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
 
-PKG_NAME="aethersx2"
+PKG_NAME="aethersx2-sa"
 PKG_VERSION="v1.5-3606"
 PKG_ARCH="aarch64"
 PKG_LICENSE="LGPL"
