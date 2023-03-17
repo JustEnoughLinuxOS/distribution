@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
-PKG_NAME="xemu"
+PKG_NAME="xemu-sa"
 PKG_VERSION="v0.7.85"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPLv3"

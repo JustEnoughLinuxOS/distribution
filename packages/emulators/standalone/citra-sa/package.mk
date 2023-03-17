@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
-PKG_NAME="citrasa-vulkan"
-PKG_VERSION="030ecaa83c825bf4c91915d629adca2dadb9aaac"
+PKG_NAME="citra-sa"
+PKG_VERSION="49acfe428a11e484a79733b7f63a0153424c45ad"
 PKG_LICENSE="MPLv2"
-PKG_SITE="https://github.com/GPUCode/citra"
+PKG_SITE="https://github.com/citra-emu/citra"
 PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain ffmpeg mesa SDL2 boost zlib libusb boost zstd"
 PKG_LONGDESC="Citra 3DS emulator"
@@ -22,7 +22,7 @@ fi
 
 if [ "${VULKAN_SUPPORT}" = "yes" ]
 then
-  PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
+  PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers citra-sa-vulkan"
 fi
 
 pre_configure_target() {
@@ -35,5 +35,11 @@ PKG_CMAKE_OPTS_TARGET+="        -DENABLE_QT=OFF \
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin
-  cp ${PKG_BUILD}/.${TARGET_NAME}/bin/MinSizeRel/citra ${INSTALL}/usr/bin/citra-vulkan
+  cp ${PKG_BUILD}/.${TARGET_NAME}/bin/MinSizeRel/citra ${INSTALL}/usr/bin/citra-gl
+  cp ${PKG_DIR}/scripts/* ${INSTALL}/usr/bin
+
+  chmod +x ${INSTALL}/usr/bin/start_citra.sh
+
+  mkdir -p ${INSTALL}/usr/config/citra-emu
+  cp -rf ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/config/citra-emu
 }

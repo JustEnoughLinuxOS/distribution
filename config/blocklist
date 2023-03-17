@@ -1,6 +1,6 @@
 np2kai # Last major commit before hiatus is broken
 vicesa # Doesn't support updating with the script.
-duckstationsa # Latest commits break device patching. Need to research.
+dolphin-sa # Wayland patch is now broken upstream
 PPSSPPSDL # Build issues that need to be resolved
-melondssa # Needs patch updates
-citrasa-vulkan # Needs build fixes
+melonds-sa # Needs patch updates
+citra-sa-vulkan # Needs build fixes

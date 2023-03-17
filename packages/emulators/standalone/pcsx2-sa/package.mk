@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2022-present Fewtarius
 
-PKG_NAME="pcsx2sa"
-PKG_VERSION="v1.7.4118"
+PKG_NAME="pcsx2-sa"
+PKG_VERSION="v1.7.4239"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/pcsx2/pcsx2"
