@@ -1,14 +1,14 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 
-PKG_NAME="mupen64plussa-video-glide64mk2"
-PKG_VERSION="a07050d143dddff921180b081164d46aaef2eb29"
+PKG_NAME="mupen64plus-sa-video-rice"
+PKG_VERSION="f443d6c25350b4b39e578e8495ec727ad3ceb900"
 PKG_LICENSE="GPLv2"
-PKG_SITE="https://github.com/mupen64plus/mupen64plus-video-glide64mk2"
-PKG_URL="https://github.com/mupen64plus/mupen64plus-video-glide64mk2/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain boost libpng SDL2 SDL2_net zlib freetype nasm:host mupen64plussa-core"
-PKG_SHORTDESC="mupen64plus-video-glide64mk2"
-PKG_LONGDESC="Mupen64Plus Standalone Glide64 Video Driver"
+PKG_SITE="https://github.com/mupen64plus/mupen64plus-video-rice"
+PKG_URL="https://github.com/mupen64plus/mupen64plus-video-rice/archive/${PKG_VERSION}.tar.gz"
+PKG_DEPENDS_TARGET="toolchain libpng SDL2 SDL2_net zlib freetype nasm:host mupen64plus-sa-core"
+PKG_SHORTDESC="mupen64plus-video-rice"
+PKG_LONGDESC="Mupen64Plus Standalone Rice Video Driver"
 PKG_TOOLCHAIN="manual"
 
 if [ ! "${OPENGL}" = "no" ]; then
@@ -28,7 +28,7 @@ make_target() {
       BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
     ;;
   esac
-  export APIDIR=$(get_build_dir mupen64plussa-core)/.install_pkg/usr/local/include/mupen64plus
+  export APIDIR=$(get_build_dir mupen64plus-sa-core)/.install_pkg/usr/local/include/mupen64plus
   export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -pthread"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
   export CROSS_COMPILE="${TARGET_PREFIX}"
@@ -44,11 +44,11 @@ makeinstall_target() {
   USHAREDIR=${UPREFIX}/share/mupen64plus
   UPLUGINDIR=${ULIBDIR}/mupen64plus
   mkdir -p ${UPLUGINDIR}
-  cp ${PKG_BUILD}/projects/unix/mupen64plus-video-glide64mk2.so ${UPLUGINDIR}
-  #${STRIP} ${UPLUGINDIR}/mupen64plus-video-glide64mk2.so
-  chmod 0644 ${UPLUGINDIR}/mupen64plus-video-glide64mk2.so
+  cp ${PKG_BUILD}/projects/unix/mupen64plus-video-rice.so ${UPLUGINDIR}
+  #${STRIP} ${UPLUGINDIR}/mupen64plus-video-rice.so
+  chmod 0644 ${UPLUGINDIR}/mupen64plus-video-rice.so
   mkdir -p ${USHAREDIR}
-  cp ${PKG_BUILD}/data/Glide64mk2.ini ${USHAREDIR}
-  chmod 0644 ${USHAREDIR}/Glide64mk2.ini
+  cp ${PKG_BUILD}/data/RiceVideoLinux.ini ${USHAREDIR}
+  chmod 0644 ${USHAREDIR}/RiceVideoLinux.ini
 }
 

@@ -30,7 +30,7 @@ LIBRETRO_CORES="2048 81 a5200 atari800 beetle-gba beetle-lynx beetle-ngp beetle-
 case "${DEVICE}" in
   handheld)
     PKG_DEPENDS_TARGET+=" duckstationsa dolphin dolphinsa cemu citra citrasa desmume lrps2 mame melondssa minivmac minivmacsa       \
-                        pcsx2sa play primehack rpcs3sa ryujinx xemu yuzusa"
+                        mupen64plus-sa pcsx2sa play primehack rpcs3sa ryujinx xemu yuzusa"
     LIBRETRO_CORES+=" beetle-psx bsnes-hd"
   ;;
   RK3588)
