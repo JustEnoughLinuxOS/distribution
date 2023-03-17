@@ -54,7 +54,7 @@ then
   CLEAN_OS="system-utils busybox linux grub u-boot SDL2 retroarch mesa"
 
   CLEAN_EMUS="mupen64plus-nx mupen64plus flycast_libretro dosbox-pure \
-             gpsp PPSSPPSDL mupen64plussa-core mupen64plussa-input-sdl \
+             gpsp PPSSPPSDL mupen64plus-sa-core mupen64plus-sa-input-sdl \
              duckstationsa"
   CLEAN_UI="emulationstation"
   CLEAN_TOOLS="gamecontrollerdb moonlight"

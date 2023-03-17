@@ -16,9 +16,9 @@ FPS=$(get_setting show_fps n64 "${GAME}")
 PAK=$(get_setting controller_pak n64 "${GAME}")
 CON=$(get_setting input_configuration n64 "${GAME}")
 SHARE="/usr/local/share/mupen64plus"
-M64PCONF="/storage/.config/game/configs/mupen64plussa/mupen64plus.cfg"
-TMP="/tmp/mupen64plussa"
-GAMEDATA="/storage/.config/game/configs/mupen64plussa"
+M64PCONF="/storage/.config/mupen64plus/mupen64plus.cfg"
+TMP="/tmp/mupen64plus"
+GAMEDATA="/storage/.config/mupen64plus"
 
 RESOLUTION=$(batocera-resolution "currentResolution")
 RESA=${RESOLUTION%x*}
@@ -32,7 +32,7 @@ if [[ ! -f "$GAMEDATA/custominput.ini" ]]; then
 fi
 
 if [[ ! -f "$M64PCONF" ]]; then
-	mkdir -p /storage/.config/game/configs/mupen64plussa
+	mkdir -p /storage/.config/mupen64plus
 	cp $SHARE/mupen64plus.cfg $M64PCONF
 fi
 
@@ -49,7 +49,7 @@ SET_PARAMS="--set Core[SharedDataPath]=$TMP --set Video-Rice[ResolutionWidth]=$S
 	else
 		# TODO: Set aspect ratio to 4:3
 		if [ "{$CORE}" = "m64p_rice" ]; then
-			GAMEWIDTH=$(((SCREENHEIGHT * 4) / 3))			
+			GAMEWIDTH=$(((SCREENHEIGHT * 4) / 3))
 			SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$GAMEWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT"
 		else
 			SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$SCREENWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT --set Video-Glide64mk2[aspect]=0 --set Video-GLideN64[AspectRatio]=1"
@@ -58,33 +58,32 @@ SET_PARAMS="--set Core[SharedDataPath]=$TMP --set Video-Rice[ResolutionWidth]=$S
 
 # Native Res Factor (Upscaling)
 	if [ "{$CORE}" = "m64p_gliden64" ]; then
-		sed -i "/UseNativeResolutionFactor/c\UseNativeResolutionFactor = $IRES" /tmp/mupen64plussa/mupen64plus.cfg
+		sed -i "/UseNativeResolutionFactor/c\UseNativeResolutionFactor = $IRES" $TMP/mupen64plus.cfg
 	fi
 
 
 # Input Config
-	if [ "${CON}" = "zlswap" ]; then
-		cp $SHARE/zlswap.ini $TMP/InputAutoCfg.ini
-	elif [ "${CON}" = "custom" ]; then
+	if [ "${CON}" = "custom" ]; then
 		cp $GAMEDATA/custominput.ini $TMP/InputAutoCfg.ini
+	elif [ "${CON}" = "standard" ]; then
+                cp $SHARE/default.ini $TMP/InputAutoCfg.ini
 	else
-		# Default
 		cp $SHARE/default.ini $TMP/InputAutoCfg.ini
 	fi
 
 # Controller Pak
-	sed -i "0,/plugin =/c\plugin = $PAK" /tmp/mupen64plussa/mupen64plus.cfg
+	sed -i "0,/plugin =/c\plugin = $PAK" $TMP/mupen64plus.cfg
 
 # Show FPS
 # Get configuration from system.cfg
 	if [ "${FPS}" = "true" ]; then
-		sed -i '/ShowFPS = (False|True)/c\ShowFPS = True' /tmp/mupen64plussa/mupen64plus.cfg
-		sed -i '/ShowFPS = [0,1]/c\ShowFPS = 1' /tmp/mupen64plussa/mupen64plus.cfg
-		sed -i '/show_fps/c\show_fps = 1' /tmp/mupen64plussa/mupen64plus.cfg
+		sed -i '/ShowFPS = (False|True)/c\ShowFPS = True' $TMP/mupen64plus.cfg
+		sed -i '/ShowFPS = [0,1]/c\ShowFPS = 1' $TMP/mupen64plus.cfg
+		sed -i '/show_fps/c\show_fps = 1' $TMP/mupen64plus.cfg
 	else
-		sed -i '/ShowFPS = (False|True)/c\ShowFPS = False' /tmp/mupen64plussa/mupen64plus.cfg
-		sed -i '/ShowFPS = [0,1]/c\ShowFPS = 0' /tmp/mupen64plussa/mupen64plus.cfg
-		sed -i '/show_fps/c\show_fps = 0' /tmp/mupen64plussa/mupen64plus.cfg
+		sed -i '/ShowFPS = (False|True)/c\ShowFPS = False' $TMP/mupen64plus.cfg
+		sed -i '/ShowFPS = [0,1]/c\ShowFPS = 0' $TMP/mupen64plus.cfg
+		sed -i '/show_fps/c\show_fps = 0' $TMP/mupen64plus.cfg
 	fi
 
 # RSP

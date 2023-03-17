@@ -53,8 +53,6 @@ GAMEFOLDER="${ROMNAME//${BASEROMNAME}}"
 if [[ $EMULATOR = "retroarch" ]]; then
 	EMU="${CORE}_libretro"
 	RETROARCH="yes"
-elif [[ $EMULATOR = "mupen64plussa" ]]; then
-	EMU="M64P"
 else
 	EMU="${CORE}"
 fi
@@ -257,10 +255,9 @@ then
 			fi
 		;;
 		"n64")
-			jslisten set "mupen64plus"
-			if [ "$EMU" = "M64P" ]
-			then
-				RUNTHIS='${TBASH} /usr/bin/m64p.sh "${CORE}" "${ROMNAME}"'
+			jslisten set "-9 mupen64plus"
+			if [[ "$EMU" =~ "m64p" ]]; then
+				RUNTHIS='${TBASH} /usr/bin/start_mupen64plus.sh "${CORE}" "${ROMNAME}"'
 			fi
 		;;
 		"pc")

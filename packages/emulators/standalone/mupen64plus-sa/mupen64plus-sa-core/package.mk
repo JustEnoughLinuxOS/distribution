@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 
-PKG_NAME="mupen64plussa-core"
-PKG_VERSION="ba9a52483052248b67c324e3fd0e073b807bbea4"
+PKG_NAME="mupen64plus-sa-core"
+PKG_VERSION="d4f3e12db0609158c7b4e0beef2bb950aad0ccb9"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/mupen64plus/mupen64plus-core"
 PKG_URL="https://github.com/mupen64plus/mupen64plus-core/archive/${PKG_VERSION}.tar.gz"
@@ -57,7 +57,7 @@ makeinstall_target() {
   fi
 
   mkdir -p ${INSTALL}/usr/bin
-  cp ${PKG_DIR}/m64p.sh ${INSTALL}/usr/bin
-  chmod 755 ${INSTALL}/usr/bin/m64p.sh
+  cp ${PKG_DIR}/scripts/start_mupen64plus.sh ${INSTALL}/usr/bin
+  chmod 755 ${INSTALL}/usr/bin/start_mupen64plus.sh
 }
 

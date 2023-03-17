@@ -1,9 +1,10 @@
-PKG_NAME="mupen64plussa-rsp-cxd4"
+PKG_NAME="mupen64plus-sa-rsp-cxd4"
 PKG_VERSION="b69e7de60c634619c27aa785e9f59f7b1602818e"
+PKG_ARCH="aarch64"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/mupen64plus/mupen64plus-rsp-cxd4"
 PKG_URL="${PKG_SITE}.git"
-PKG_DEPENDS_TARGET="toolchain libpng SDL2 SDL2_net zlib freetype nasm:host mupen64plussa-core"
+PKG_DEPENDS_TARGET="toolchain libpng SDL2 SDL2_net zlib freetype nasm:host mupen64plus-sa-core"
 PKG_SHORTDESC="mupen64plus-rsp-cxd4"
 PKG_LONGDESC="Mupen64Plus Standalone RSP CXD4"
 PKG_TOOLCHAIN="manual"
@@ -31,7 +32,7 @@ make_target() {
       CPPFLAGS="-DUSE_SSE2NEON"
     ;;
   esac
-  export APIDIR=$(get_build_dir mupen64plussa-core)/.install_pkg/usr/local/include/mupen64plus
+  export APIDIR=$(get_build_dir mupen64plus-sa-core)/.install_pkg/usr/local/include/mupen64plus
   export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -pthread"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
   export CROSS_COMPILE="${TARGET_PREFIX}"
