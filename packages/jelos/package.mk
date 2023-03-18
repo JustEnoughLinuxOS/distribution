@@ -24,14 +24,7 @@ PKG_SOFTWARE=""
 
 PKG_COMPAT="lib32"
 
-PKG_MULTIMEDIA="ffmpeg vlc"
-
-### Splitting out MPV
-case "${DEVICE}" in
-  handheld)
-    PKG_MULTIMEDIA="mpv"
-  ;;
-esac
+PKG_MULTIMEDIA="ffmpeg vlc mpv"
 
 PKG_TOOLS="i2c-tools synctools jslisten evtest tailscale pygobject fileman"
 
