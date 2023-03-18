@@ -24,6 +24,6 @@ makeinstall_target() {
   cp pcsx_rearmed_libretro.so ${INSTALL}/usr/lib/libretro/
   if [ "${TARGET_ARCH}" = "aarch64" ]
   then
-    cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/pcsx_rearmed-*/.install_pkg/usr/lib/libretro/pcsx_rearmed_libretro.so ${INSTALL}/usr/lib/libretro/pcsx_rearmed32_libretro.so
+    cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/pcsx_rearmed-lr-*/.install_pkg/usr/lib/libretro/pcsx_rearmed_libretro.so ${INSTALL}/usr/lib/libretro/pcsx_rearmed32_libretro.so
   fi
 }
