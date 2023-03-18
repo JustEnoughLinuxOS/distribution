@@ -36,11 +36,11 @@ case "${DEVICE}" in
                      play-lr"
   ;;
   RK3588)
-    PKG_EMUS+=" aethersx2-sa duckstation-sa dolphin mame pcsx_rearmed box86 box64 yabasanshiroSA"
-    LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd dolphin-lr"
+    PKG_EMUS+=" aethersx2-sa duckstation-sa pcsx_rearmed-lr box86 box64 yabasanshiroSA"
+    LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr dolphin-lr mame-lr pcsx_rearmed-lr"
   ;;
   RK3566)
-    PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders pcsx_rearmed box86 box64"
+    PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders pcsx_rearmed-lr box86 box64"
     PKG_EMUS+=" yabasanshiroSA"
   ;;
 esac
