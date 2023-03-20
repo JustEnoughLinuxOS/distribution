@@ -39,7 +39,12 @@ for i in ${BUILD}/${PKG_NAME}-*; do
       [ -z "${PKG_DEEPHASH}" ] && PKG_DEEPHASH=$(calculate_stamp)
       if [ ! "${PKG_DEEPHASH}" = "${STAMP_PKG_DEEPHASH}" ] ; then
         ${SCRIPTS}/clean "${PKG_NAME}"
-        [ "${PKG_NAME}" = "linux" -a "${KERNEL_EXTRA_DEPENDS_TARGET}" = "device-trees-amlogic" ] && ${SCRIPTS}/clean "device-trees-amlogic"
+        if [ "${PKG_NAME}" = "linux" ]; then
+          for CLEAN_DEP in ${KERNEL_EXTRA_DEPENDS_TARGET} ${ADDITIONAL_DRIVERS}
+          do
+            ${SCRIPTS}/clean "${CLEAN_DEP}"
+          done
+        fi
       fi
     fi
   fi
