@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present 351ELEC
 # Copyright (C) 2022-present Fewtarius
 
-PKG_NAME="yabasanshiroSA"
+PKG_NAME="yabasanshiro-sa"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/devmiyax/yabause"
 PKG_ARCH="arm aarch64"
@@ -89,14 +89,13 @@ pre_configure_target() {
                            -DLIBPNG_LIB_DIR=${SYSROOT_PREFIX}/usr/lib \
                            -Dpng_STATIC_LIBRARIES=${SYSROOT_PREFIX}/usr/lib/libpng16.so \
                            -DCMAKE_BUILD_TYPE=Release"
-                         
 }
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin
-  cp -a ${PKG_BUILD}/src/retro_arena/yabasanshiro ${INSTALL}/usr/bin/yabasanshiroSA
-  cp -a ${PKG_DIR}/sources/start_yabasanshiroSA.sh ${INSTALL}/usr/bin
-  chmod 0755 ${INSTALL}/usr/bin/start_yabasanshiroSA.sh
-  mkdir -p ${INSTALL}/usr/config/game/yabasanshiro
-  cp ${PKG_DIR}/sources/config ${INSTALL}/usr/config/game/yabasanshiro/.config
-} 
+  cp -a ${PKG_BUILD}/src/retro_arena/yabasanshiro ${INSTALL}/usr/bin/yabasanshiro
+  cp -a ${PKG_DIR}/scripts/start_yabasanshiro.sh ${INSTALL}/usr/bin
+  chmod 0755 ${INSTALL}/usr/bin/start_yabasanshiro.sh
+  mkdir -p ${INSTALL}/usr/config/yabasanshiro
+  cp ${PKG_DIR}/config/config ${INSTALL}/usr/config/yabasanshiro/.config
+}
