@@ -8,8 +8,8 @@
 . /etc/profile
 
 ROM_DIR="/storage/roms/saturn/yabasanshiro"
-CONFIG_DIR="/storage/.config/game/yabasanshiro"
-SOURCE_DIR="/usr/config/game/yabasanshiro"
+CONFIG_DIR="/storage/.config/yabasanshiro"
+SOURCE_DIR="/usr/config/yabasanshiro"
 BIOS_BACKUP="/storage/roms/bios/yabasanshiro"
 
 if [ ! -d "${ROM_DIR}" ]
@@ -64,5 +64,5 @@ then
   cp -f ${SOURCE_DIR}/.config "${CONFIG_DIR}/${GAME}.config"
 fi
 
-echo "Command: yabasanshiroSA -r 2 -i "${1}" ${BIOS}" >/var/log/exec.log 2>&1
-yabasanshiroSA -r 2 -i "${1}" ${BIOS} >>/var/log/exec.log 2>&1 ||:
+echo "Command: yabasanshiro -r 2 -i "${1}" ${BIOS}" >/var/log/exec.log 2>&1
+yabasanshiro -r 2 -i "${1}" ${BIOS} >>/var/log/exec.log 2>&1 ||:

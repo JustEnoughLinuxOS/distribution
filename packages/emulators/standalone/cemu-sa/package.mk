@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present Frank Hartung (supervisedthinking (@) gmail.com)
 # Copyright (C) 2022-present Fewtarius
 
-PKG_NAME="cemu"
+PKG_NAME="cemu-sa"
 PKG_VERSION="9049ad91f9d393e687007d43286ffedf9af40504"
 PKG_ARCH="x86_64"
 PKG_LICENSE="MPL-2.0"

@@ -23,7 +23,17 @@ if [ ! -d "/storage/roms/savestates/ps2" ]; then
     mkdir -p "/storage/roms/savestastes/ps2"
 fi
 
+  #Emulation Station Features
+  GAME=$(echo "${1}"| sed "s#^/.*/##")
+  SUI=$(get_setting start_ui switch "${GAME}")
+
 #Set QT enviornment to wayland
 export QT_QPA_PLATFORM=wayland
 
-@APPIMAGE@ -fullscreen "${1}"
+#Run Aethersx2 emulator
+	if [ "$SUI" = "1" ]
+	then
+		/usr/bin/@APPIMAGE@ -fullscreen
+	else
+		/usr/bin/@APPIMAGE@ -fullscreen "${1}"
+	fi

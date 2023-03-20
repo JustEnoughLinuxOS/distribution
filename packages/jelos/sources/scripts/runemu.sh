@@ -329,7 +329,7 @@ then
                 ;;
                 "wiiu")
                         jslisten set "-9 cemu"
-                        if [ "$EMU" = "cemu" ]; then
+                        if [ "$EMU" = "cemu-sa" ]; then
                         RUNTHIS='${TBASH} /usr/bin/start_cemu.sh "${ROMNAME}"'
                         fi
                 ;;
@@ -353,7 +353,12 @@ then
                         if [ "$EMU" = "citra-sa" ]; then
                         RUNTHIS='${TBASH} /usr/bin/start_citra.sh "${ROMNAME}"'
                         fi
-
+                ;;
+                "saturn")
+                        jslisten set "-9 yabasanshiro"
+                        if [ "$EMU" = "yabasanshiro-sa" ]; then
+                        RUNTHIS='${TBASH} /usr/bin/start_yabasanshiro.sh "${ROMNAME}"'
+                        fi
                 ;;
 		"mplayer")
 			jslisten set "mpv"

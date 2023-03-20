@@ -30,18 +30,18 @@ LIBRETRO_CORES="2048-lr 81-lr a5200-lr atari800-lr beetle-gba-lr beetle-lynx-lr 
 ### Emulators or cores for specific devices
 case "${DEVICE}" in
   handheld)
-    PKG_EMUS+=" duckstation-sa dolphin-sa cemu citra-sa melonds-sa minivmacsa mupen64plus-sa pcsx2-sa          \
+    PKG_EMUS+=" duckstation-sa dolphin-sa cemu-sa citra-sa melonds-sa minivmacsa mupen64plus-sa pcsx2-sa          \
                primehack rpcs3-sa ryujinx-sa xemu-sa yuzu-sa"
     LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr citra-lr desmume-lr dolphin-lr lrps2-lr mame-lr minivmac-lr    \
                      play-lr"
   ;;
   RK3588)
-    PKG_EMUS+=" aethersx2-sa duckstation-sa pcsx_rearmed-lr box86 box64 yabasanshiroSA"
+    PKG_EMUS+=" aethersx2-sa duckstation-sa pcsx_rearmed-lr box86 box64 yabasanshiro-sa"
     LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr dolphin-lr mame-lr pcsx_rearmed-lr"
   ;;
   RK3566)
     PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders pcsx_rearmed-lr box86 box64"
-    PKG_EMUS+=" yabasanshiroSA"
+    PKG_EMUS+=" yabasanshiro-sa"
   ;;
 esac
 
