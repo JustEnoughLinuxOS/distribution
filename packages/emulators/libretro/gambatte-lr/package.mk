@@ -20,7 +20,7 @@
 ################################################################################
 
 PKG_NAME="gambatte-lr"
-PKG_VERSION="ea563fac40e281b29d37f6b56657abef8f1aaf0d"
+PKG_VERSION="9c8ce9555f222910d8a8a2f83c00765d7d22b4f3"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"

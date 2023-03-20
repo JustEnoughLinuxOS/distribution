@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="freej2me-lr"
-PKG_VERSION="8344bcbd957e7055e90e57f1aff14d7d49c081cb"
+PKG_VERSION="e07bd096edb52fc696ba874121d8242f77e6c38f"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/hex007/freej2me"
