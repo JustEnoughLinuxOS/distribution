@@ -4,3 +4,4 @@ dolphin-sa # Wayland patch is now broken upstream
 PPSSPPSDL # Build issues that need to be resolved
 melonds-sa # Needs patch updates
 citra-sa-vulkan # Needs build fixes
+duckstation-lr #Libretro Support gone upstream

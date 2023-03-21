@@ -1,0 +1,22 @@
+--- a/src/gallium/drivers/crocus/crocus_bufmgr.c	2023-03-14 18:16:32.195276836 +0000
++++ b/src/gallium/drivers/crocus/crocus_bufmgr.c	2023-03-14 18:17:32.920657663 +0000
+@@ -878,7 +878,7 @@ crocus_bo_map_cpu(struct util_debug_call
+       bo_wait_with_stall_warning(dbg, bo, "CPU mapping");
+    }
+ 
+-   if (!bo->cache_coherent && !bo->bufmgr->has_llc) {
++   //if (!bo->cache_coherent && !bo->bufmgr->has_llc) {
+       /* If we're reusing an existing CPU mapping, the CPU caches may
+        * contain stale data from the last time we read from that mapping.
+        * (With the BO cache, it might even be data from a previous buffer!)
+@@ -895,8 +895,8 @@ crocus_bo_map_cpu(struct util_debug_call
+        * LLC entirely requiring us to keep dirty pixels for the scanout
+        * out of any cache.)
+        */
+-      intel_invalidate_range(bo->map_cpu, bo->size);
+-   }
++     // intel_invalidate_range(bo->map_cpu, bo->size);
++   //}
+ 
+    return bo->map_cpu;
+ }
