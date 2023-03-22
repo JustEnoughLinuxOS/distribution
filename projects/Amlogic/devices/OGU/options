@@ -1,0 +1,150 @@
+################################################################################
+# setup device defaults
+################################################################################
+
+  # The TARGET_CPU variable controls which processor should be targeted for
+  # generated code.
+   case $TARGET_ARCH in
+      aarch64)
+        TARGET_KERNEL_ARCH="arm64"
+        TARGET_PATCH_ARCH="aarch64"
+        TARGET_CPU="cortex-a73.cortex-a53"
+        TARGET_CPU_FLAGS="+crc+fp+simd"
+        TARGET_FPU="fp-armv8"
+	TARGET_FLOAT="hard"
+        TARGET_FEATURES="64bit"
+        ;;
+      arm)
+        TARGET_KERNEL_ARCH="arm64"
+        TARGET_PATCH_ARCH="aarch64"
+        TARGET_CPU="cortex-a73.cortex-a53"
+        TARGET_CPU_FLAGS="+crc"
+        TARGET_FPU="neon-fp-armv8"
+	TARGET_FLOAT="hard"
+        TARGET_FEATURES="32bit"
+        ;;
+    esac
+
+  # Kernel target
+    DEVICE_NAME="OGU"
+    KERNEL_TARGET="Image"
+    BOOTLOADER="u-boot"
+    PARTITION_TABLE="msdos"
+    DEVICE_DTB=("meson-g12b-odroid-go-ultra")
+    UBOOT_DTB="${DEVICE_DTB[0]}"
+    UBOOT_CONFIG="odroid-go-ultra_defconfig"
+    PKG_SOC="s922x"
+    BOOT_FIP="odroid-go-ultra"
+    BOOT_INI=false
+
+  # Additional kernel make parameters (for example to specify the u-boot loadaddress)
+    KERNEL_MAKE_EXTRACMD+=" amlogic/${DEVICE_DTB[0]}.dtb"
+   
+  # Define the CPU
+    HW_CPU="Amlogic S922x"
+
+  # Display Resolution
+    SPLASH_RESOLUTION="480x854"
+
+  # Mali GPU family
+    MALI_FAMILY="g52"
+    GRAPHIC_DRIVERS="panfrost"
+
+  # OpenGL(X) implementation to use (mesa / no)
+    OPENGL="mesa"
+
+  # OpenGL-ES implementation to use (mesa / no)
+    OPENGLES="mesa"
+
+  # Displayserver to use (weston / x11 / no)
+    DISPLAYSERVER="wl"
+
+  # Windowmanager to use (fluxbox / weston / no)
+    WINDOWMANAGER="weston"
+  
+  # kernel serial console
+    EXTRA_CMDLINE="quiet loglevel=0 console=ttyAML0,115200n8 console=tty3"
+
+  # additional packages to install
+    ADDITIONAL_PACKAGES=" emulators gamesupport"
+
+  # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
+  # Space separated list is supported,
+  # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
+    FIRMWARE="misc-firmware wlan-firmware"
+
+  # additional drivers to install:
+  # for a list of additional drivers see packages/linux-drivers
+  # Space separated list is supported,
+  # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
+
+  # build and install driver addons (yes / no)
+    DRIVER_ADDONS_SUPPORT="no"
+  
+  # driver addons to install:
+  # for a list of additinoal drivers see packages/linux-driver-addons
+  # Space separated list is supported,
+    DRIVER_ADDONS=""
+
+  # debug tty path
+    DEBUG_TTY="/dev/ttyFIQ0"
+   
+  # build and install PulseAudio support (yes / no)
+    PULSEAUDIO_SUPPORT="yes"
+ 
+  # build and install bluetooth support (yes / no)
+    BLUETOOTH_SUPPORT="no"
+
+  # build and install Avahi (Zeroconf) daemon (yes / no)
+    AVAHI_DAEMON="no"
+
+  # build with NFS support (mounting nfs shares via the OS) (yes / no)
+    NFS_SUPPORT="no"
+
+  # build with Samba Client support (mounting samba shares via the OS) (yes / no)
+    SAMBA_SUPPORT="no"
+
+  # build and install Samba Server (yes / no)
+    SAMBA_SERVER="yes"
+
+  # build and install SFTP Server (yes / no)
+    SFTP_SERVER="yes"
+
+  # build and install OpenVPN support (yes / no)
+    OPENVPN_SUPPORT="no"
+
+  # build and install diskmounter support (udevil)
+  # this service provide auto mounting support for external drives in the
+  # mediacenter also automount internally drives at boottime via udev (yes / no)
+    UDEVIL="yes"
+
+  # build and install exFAT fuse support (yes / no)
+    EXFAT="yes"
+
+  # build and install NTFS-3G fuse support (yes / no)
+    NTFS3G="no"
+
+  # build and install hfs filesystem utilities (yes / no)
+    HFSTOOLS="no"
+
+  # Support for partitioning and formating disks in initramfs (yes / no)
+  # This adds support for parted and mkfs.ext3/4 to initramfs for OEM usage
+    INITRAMFS_PARTED_SUPPORT="no"
+
+  # build with swap support (yes / no)
+    SWAP_SUPPORT="yes"
+
+  # swap support enabled per default (yes / no)
+    SWAP_ENABLED_DEFAULT="yes"
+
+  # swapfile size if SWAP_SUPPORT=yes in MB
+    SWAPFILESIZE="384"
+
+  # cron support (yes / no)
+    CRON_SUPPORT="no"
+
+  # Settings package name - blank if not required
+    DISTRO_PKG_SETTINGS=""
+
+  # htop tool (yes / no)
+    HTOP_TOOL="yes"
