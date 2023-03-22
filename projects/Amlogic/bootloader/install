@@ -1,0 +1,30 @@
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
+
+PKG_UBOOT="$(get_build_dir u-boot)"
+source ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
+FIP_DIR="${ROOT}/build.${DISTRO}-${DEVICE}.aarch64/amlogic-boot-fip-"*
+
+echo ${FIP_DIR}
+
+case "${PKG_SOC}" in
+ s922x)
+	echo "uboot: encrypting uboot.bin with fip..."
+	cp -av u-boot.bin ${ROOT}/build.${DISTRO}-${DEVICE}.aarch64/amlogic-boot-fip-e96b6a694380ff07d5a9e4be644ffe254bd18512/u-boot.bin
+#	cp -av u-boot.bin ${FIP_DIR}*/u-boot.bin
+	cd ${FIP_DIR}
+	./build-fip.sh ${BOOT_FIP} u-boot.bin ${INSTALL}/usr/share/bootloader/
+  ;;
+esac
+
+echo "boot: create extlinux.conf..."
+mkdir -p "${INSTALL}/usr/share/bootloader/extlinux"
+
+FDTMODE="FDT /${DEVICE_DTB}.dtb"
+
+cat << EOF > "${INSTALL}/usr/share/bootloader/extlinux/extlinux.conf"
+LABEL ${DISTRO}
+  LINUX /${KERNEL_NAME}
+  ${FDTMODE}
+  APPEND boot=UUID=@BOOT_UUID@ disk=UUID=@DISK_UUID@ ${EXTRA_CMDLINE}
+EOF

@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
+
+source ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
+
+
+if [ -f "${RELEASE_DIR}/3rdparty/bootloader/u-boot.bin" ]; then
+  echo "image: burn uboot.bin to image... (${PKG_SOC})"
+  dd if="${RELEASE_DIR}/3rdparty/bootloader/u-boot.bin" of="${DISK}" conv=fsync,notrunc bs=512 seek=1 >"${SAVE_ERROR}" 2>&1 || show_error
+fi
+
+mkdir -p "${LE_TMP}/extlinux"
+
+# copy device trees to part1
+for DTB in ${DEVICE_DTB[@]}
+do
+  if [ -e "${DTB}.dtb" ]
+  then
+    echo "image: copy device trees to image..."
+    mcopy -o "${DTB}.dtb" ::
+  fi
+done
+
+mkdir -p "${LE_TMP}/extlinux"
+
+  echo "image: Set FTD to ${DEVICE_DTB}..."
+  FDTMODE="FDT /${DEVICE_DTB}.dtb"
+
+echo "image: Set extlinux.conf..."
+cat << EOF > "${LE_TMP}/extlinux/extlinux.conf"
+LABEL ${DISTRO}
+  LINUX /${KERNEL_NAME}
+  ${FDTMODE}
+  APPEND boot=UUID=${UUID_SYSTEM} disk=UUID=${UUID_STORAGE} ${EXTRA_CMDLINE}
+EOF
+
+mcopy -so "${LE_TMP}/extlinux" ::
