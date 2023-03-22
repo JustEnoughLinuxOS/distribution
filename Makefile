@@ -23,9 +23,9 @@ distclean:
 src-pkg:
 	tar cvJf sources.tar.xz sources .stamps
 
-world: x86_64
+world: x86_64 RK3588 RK3566
 
-x86_64: handheld RK3588 RK3566
+x86_64: handheld
 
 handheld:
 	PROJECT=PC DEVICE=handheld ARCH=i686 ./scripts/build_distro
