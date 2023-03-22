@@ -24,14 +24,7 @@ PKG_SOFTWARE=""
 
 PKG_COMPAT="lib32"
 
-PKG_MULTIMEDIA="ffmpeg vlc"
-
-### Splitting out MPV
-case "${DEVICE}" in
-  handheld)
-    PKG_MULTIMEDIA="mpv"
-  ;;
-esac
+PKG_MULTIMEDIA="ffmpeg vlc mpv"
 
 PKG_TOOLS="i2c-tools synctools jslisten evtest tailscale pygobject fileman"
 
@@ -45,7 +38,8 @@ case "${PROJECT}" in
   ;;
 esac
 
-if [ ! "${OPENGL}" = "no" ]; then
+if [ ! "${OPENGL}" = "no" ]
+then
   PKG_DEPENDS_TARGET+=" mesa-demos glmark2"
 fi
 
@@ -69,17 +63,15 @@ makeinstall_target() {
 
   mkdir -p ${INSTALL}/usr/bin/
 
-  ## Compatibility links for ports
-  ln -s /storage/roms ${INSTALL}/roms
-  ln -sf /storage/roms/opt ${INSTALL}/opt
-
   ### Add some quality of life customizations for hardworking devs.
-  if [ -n "${LOCAL_SSH_KEYS_FILE}" ]; then
+  if [ -n "${LOCAL_SSH_KEYS_FILE}" ]
+  then
     mkdir -p ${INSTALL}/usr/config/ssh
     cp ${LOCAL_SSH_KEYS_FILE} ${INSTALL}/usr/config/ssh/authorized_keys
   fi
 
-  if [ -n "${LOCAL_WIFI_SSID}" ]; then
+  if [ -n "${LOCAL_WIFI_SSID}" ]
+  then
     sed -i "s#network.enabled=0#network.enabled=1#g" ${INSTALL}/usr/config/system/configs/system.cfg
     cat <<EOF >> ${INSTALL}/usr/config/system/configs/system.cfg
 wifi.ssid=${LOCAL_WIFI_SSID}

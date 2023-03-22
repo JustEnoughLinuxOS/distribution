@@ -7,6 +7,7 @@ PKG_LICENSE="OSS"
 PKG_DEPENDS_TARGET="toolchain expat libdrm Mako:host"
 PKG_LONGDESC="Mesa is a 3-D graphics library with an API."
 PKG_TOOLCHAIN="meson"
+PKG_PATCH_DIRS+=" ${DEVICE}"
 
 case ${DEVICE} in
  RK35*)
@@ -16,8 +17,8 @@ case ${DEVICE} in
         PKG_GIT_CLONE_BRANCH="csf"
   ;;
   *)
-	PKG_VERSION="22.3.6"
-	PKG_SHA256="4ec8ec65dbdb1ee9444dba72970890128a19543a58cf05931bd6f54f124e117f"
+	PKG_VERSION="23.0.0"
+	PKG_SHA256="01f3cff3763f09e0adabcb8011e4aebc6ad48f6a4dd4bae904fe918707d253e4"
 	PKG_SITE="http://www.mesa3d.org/"
 	PKG_URL="https://mesa.freedesktop.org/archive/mesa-${PKG_VERSION}.tar.xz"
   ;;
