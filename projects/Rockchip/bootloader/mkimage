@@ -49,7 +49,7 @@ then
   echo "image: Set FDTDIR to /..."
   FDTMODE="FDTDIR /"
 else
-  echo "image: Set FTD to ${DEVICE_DTB}..."
+  echo "image: Set FDT to ${DEVICE_DTB}..."
   FDTMODE="FDT /${DEVICE_DTB}.dtb"
 fi
 
