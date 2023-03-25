@@ -3,7 +3,6 @@
 
 PKG_NAME="seatd"
 PKG_VERSION="0.7.0"
-PKG_SHA256="210ddf8efa1149cde4dd35908bef8e9e63c2edaa0cdb5435f2e6db277fafff3c"
 PKG_LICENSE="MIT"
 PKG_SITE="https://git.sr.ht/~kennylevinsen/seatd"
 PKG_URL="https://git.sr.ht/~kennylevinsen/seatd/archive/${PKG_VERSION}.tar.gz"
