@@ -21,7 +21,6 @@ on:
 
 env:
   BRANCH: main
-  repo_access: ${{ secrets.REPO_ACCESS }}
 
 jobs:
   launch-main-release-if-needed:
