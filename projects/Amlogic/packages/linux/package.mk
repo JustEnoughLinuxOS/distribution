@@ -19,11 +19,7 @@ PKG_PATCH_DIRS+="${DEVICE}"
 
 case ${DEVICE} in
   OGU)
-#    PKG_URL="https://github.com/hardkernel/linux.git"
-#    PKG_VERSION="1b16cb2cf08dfb5dd79023eac7f5889dbc6d4897"
-#    GET_HANDLER_SUPPORT="git"
-#    PKG_GIT_CLONE_BRANCH="odroidgoU-4.9.y"
-    PKG_VERSION="06e787bf8c79dbc51b4bda6c84e96746a8c00f03"
+    PKG_VERSION="5cdd0713d8735e16c85d45bce8e77747f8ba5deb"
     PKG_URL="https://github.com/brooksytech/ogu-linux.git"
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="jello"
