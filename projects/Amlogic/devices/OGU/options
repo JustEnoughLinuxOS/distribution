@@ -56,6 +56,12 @@
   # OpenGL-ES implementation to use (mesa / no)
     OPENGLES="mesa"
 
+  # Vulkan implementation to use (vulkan-loader / no)
+    VULKAN="vulkan-loader"
+
+  # VULKAN_SUPPORT
+    VULKAN_SUPPORT="yes"
+
   # Displayserver to use (weston / x11 / no)
     DISPLAYSERVER="wl"
 
@@ -71,7 +77,7 @@
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
   # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
-    FIRMWARE="misc-firmware wlan-firmware"
+    FIRMWARE="misc-firmware wlan-firmware libmali-vulkan"
 
   # additional drivers to install:
   # for a list of additional drivers see packages/linux-drivers
