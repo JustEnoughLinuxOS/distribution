@@ -20,9 +20,9 @@ PKG_PATCH_DIRS+="${DEVICE}"
 case ${DEVICE} in
   OGU)
     PKG_VERSION="5cdd0713d8735e16c85d45bce8e77747f8ba5deb"
-    PKG_URL="https://github.com/brooksytech/ogu-linux.git"
+    PKG_URL="https://github.com/mdrjr/linux.git"
     GET_HANDLER_SUPPORT="git"
-    PKG_GIT_CLONE_BRANCH="jello"
+    PKG_GIT_CLONE_BRANCH="odroidg12-6.1.y"
   ;;
 esac
 
