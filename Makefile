@@ -40,6 +40,7 @@ RK3566:
 	PROJECT=Rockchip DEVICE=RK3566 ARCH=aarch64 ./scripts/build_distro
 
 OGU:
+	PROJECT=Amlogic DEVICE=OGU ARCH=arm ./scripts/build_distro
 	PROJECT=Amlogic DEVICE=OGU ARCH=aarch64 ./scripts/build_distro
 
 update:
