@@ -1,0 +1,1551 @@
+diff --git a/.travis.yml b/.travis.yml
+deleted file mode 100644
+index 4685473481..0000000000
+--- a/.travis.yml
++++ /dev/null
+@@ -1,58 +0,0 @@
+-language: c
+-
+-env:
+-  global:
+-    - TRAVIS_SECURE_ENV_VARS=true
+-    - ARCH=arm64
+-    - CROSS_COMPILE=aarch64-none-elf-
+-
+-matrix:
+-  include:
+-    - env:
+-      - TARGET_BOARD=odroidn2
+-    - env:
+-      - TARGET_BOARD=odroidc4
+-
+-addons:
+-  apt:
+-    packages:
+-
+-git:
+-  depth: 1
+-
+-before_install:
+-  - if [ `uname -m` = x86_64 ]; then sudo apt-get install libc6-i386 lib32stdc++6 lib32z1; fi
+-
+-install:
+-
+-before_script:
+-  - mkdir -p /opt/toolchains
+-  - wget https://releases.linaro.org/archive/13.11/components/toolchain/binaries/gcc-linaro-aarch64-none-elf-4.8-2013.11_linux.tar.xz
+-  - tar xf gcc-linaro-aarch64-none-elf-4.8-2013.11_linux.tar.xz -C /opt/toolchains
+-  - wget https://releases.linaro.org/archive/14.04/components/toolchain/binaries/gcc-linaro-arm-none-eabi-4.8-2014.04_linux.tar.xz
+-  - tar xf gcc-linaro-arm-none-eabi-4.8-2014.04_linux.tar.xz -C /opt/toolchains
+-  - export PATH=/opt/toolchains/gcc-linaro-aarch64-none-elf-4.8-2013.11_linux/bin:/opt/toolchains/gcc-linaro-arm-none-eabi-4.8-2014.04_linux/bin:$PATH
+-
+-script:
+-  - make ${TARGET_BOARD}_defconfig
+-  - make
+-
+-before_deploy:
+-  - export RELEASE_VERSION="${TARGET_BOARD}-${TRAVIS_BUILD_NUMBER}"
+-  - tar czf u-boot-${RELEASE_VERSION}.tar.gz sd_fuse/u-boot.bin sd_fuse/sd_fusing.sh
+-  - git config --global user.name ${GIT_USER_NAME}
+-  - git config --global user.email ${GIT_USER_EMAIL}
+-  - export REMOTE_URL=`git config --get remote.origin.url`
+-  - export GIT_TAG="travis/${RELEASE_VERSION}"
+-  - git tag ${GIT_TAG} -a -m "Tagged by Travis CI"
+-  - git push --quiet https://${PRIVATE_ACCESS_TOKEN}@${REMOTE_URL#$"https://"} ${GIT_TAG}
+-
+-deploy:
+-  provider: releases
+-  api_key: ${PRIVATE_ACCESS_TOKEN}
+-  file_glob: true
+-  file: u-boot-${RELEASE_VERSION}.tar.gz
+-  skip_cleanup: true
+-  on:
+-    tags: false
+-    all_branches: true
+diff --git a/Makefile b/Makefile
+index 730e8d752f..46fb0a0974 100644
+--- a/Makefile
++++ b/Makefile
+@@ -246,7 +246,6 @@ ifeq ($(HOSTARCH),$(ARCH))
+ CROSS_COMPILE ?=
+ endif
+ 
+-export CROSS_COMPILE=aarch64-none-elf-
+ 
+ KCONFIG_CONFIG	?= .config
+ export KCONFIG_CONFIG
+@@ -565,8 +564,6 @@ ifeq ($(shell $(CONFIG_SHELL) $(srctree)/scripts/gcc-stack-usage.sh $(CC)),y)
+ 	KBUILD_CFLAGS += -fstack-usage
+ endif
+ 
+-KBUILD_CFLAGS += $(call cc-option,-Wno-format-nonliteral)
+-
+ # turn jbsr into jsr for m68k
+ ifeq ($(ARCH),m68k)
+ ifeq ($(findstring 3.4,$(shell $(CC) --version)),3.4)
+@@ -589,7 +586,21 @@ include $(srctree)/scripts/Makefile.extrawarn
+ KBUILD_CPPFLAGS += $(KCPPFLAGS)
+ KBUILD_AFLAGS += $(KAFLAGS)
+ KBUILD_CFLAGS += $(KCFLAGS)
+-KBUILD_CFLAGS += -Werror
++# KBUILD_CFLAGS += -Werror
++
++KBUILD_CFLAGS += $(call cc-option,-Wno-format-nonliteral)
++KBUILD_CFLAGS  += $(call cc-disable-warning, format-truncation)
++KBUILD_CFLAGS  += $(call cc-disable-warning, format-overflow)
++KBUILD_CFLAGS  += $(call cc-disable-warning, address-of-packed-member)
++KBUILD_CFLAGS  += $(call cc-disable-warning, unused-label)
++KBUILD_CFLAGS  += $(call cc-disable-warning, unused-variable)
++KBUILD_CFLAGS   += $(call cc-disable-warning, dangling-pointer)
++KBUILD_CFLAGS   += $(call cc-disable-warning, address)
++KBUILD_CFLAGS   += $(call cc-disable-warning, misleading-indentation)
++KBUILD_CFLAGS   += $(call cc-disable-warning, int-conversion)
++KBUILD_CFLAGS   += $(call cc-disable-warning, int-in-bool-context)
++KBUILD_CFLAGS   += $(call cc-disable-warning, array-bounds)
++KBUILD_CFLAGS   += $(call cc-disable-warning, uninitialized)
+ 
+ # Use UBOOTINCLUDE when you must reference the include/ directory.
+ # Needed to be compatible with the O= option
+diff --git a/arch/arm/config.mk b/arch/arm/config.mk
+index 0667984b69..ce0ca6b6e5 100644
+--- a/arch/arm/config.mk
++++ b/arch/arm/config.mk
+@@ -28,7 +28,7 @@ PLATFORM_CPPFLAGS += -D__ARM__
+ ifeq ($(CONFIG_SYS_THUMB_BUILD),y)
+ AFLAGS_IMPLICIT_IT	:= $(call as-option,-Wa$(comma)-mimplicit-it=always)
+ PF_CPPFLAGS_ARM		:= $(AFLAGS_IMPLICIT_IT) \
+-			$(call cc-option, -mthumb -mthumb-interwork,\
++			$(call cc-option,  -interwork,\
+ 			$(call cc-option,-marm,)\
+ 			$(call cc-option,-mno-thumb-interwork,)\
+ 		)
+diff --git a/arch/arm/cpu/armv8/axg/firmware/acs/Makefile b/arch/arm/cpu/armv8/axg/firmware/acs/Makefile
+index 647f1615f8..53a58eb8f0 100644
+--- a/arch/arm/cpu/armv8/axg/firmware/acs/Makefile
++++ b/arch/arm/cpu/armv8/axg/firmware/acs/Makefile
+@@ -176,10 +176,10 @@ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/)
+ 
+ vpath %.c $(VPATH_LIST)
+ 
+-ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,--fatal-warnings	\
++ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,	\
+ 				-mgeneral-regs-only -D__ASSEMBLY__		\
+ 				${DEFINES} ${INCLUDES}
+-CFLAGS			+= 	-nostdinc -pedantic -ffreestanding -Wall	\
++CFLAGS			+= 	-nostdinc  -ffreestanding -Wall	\
+ 				-Werror -mgeneral-regs-only -std=c99 -c -Os	\
+ 				${DEFINES} ${INCLUDES} $(VPATH_LIST:%=-I%)
+ CFLAGS			+=	-ffunction-sections -fdata-sections
+@@ -187,7 +187,7 @@ ASFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	-Wno-unused
+ 
+-LDFLAGS			+=	--fatal-warnings -O1
++LDFLAGS			+=	 -O1
+ LDFLAGS			+=	--gc-sections
+ 
+ CC			:=	${CROSS_COMPILE}gcc
+@@ -426,4 +426,3 @@ help:
+ 	@echo "note: most build targets require PLAT to be set to a specific platform."
+ 	@echo ""
+ 	@echo "example: build all targets for the FVP platform:"
+-	@echo "  CROSS_COMPILE=aarch64-none-elf- make PLAT=fvp all"
+diff --git a/arch/arm/cpu/armv8/axg/firmware/bl21/Makefile b/arch/arm/cpu/armv8/axg/firmware/bl21/Makefile
+index 4dfe4620f4..76da5bf815 100644
+--- a/arch/arm/cpu/armv8/axg/firmware/bl21/Makefile
++++ b/arch/arm/cpu/armv8/axg/firmware/bl21/Makefile
+@@ -178,10 +178,10 @@ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/)
+ 
+ vpath %.c $(VPATH_LIST)
+ 
+-ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,--fatal-warnings	\
++ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,	\
+ 				-mgeneral-regs-only -D__ASSEMBLY__		\
+ 				${DEFINES} ${INCLUDES}
+-CFLAGS			+= 	-nostdinc -pedantic -ffreestanding -Wall	\
++CFLAGS			+= 	-nostdinc  -ffreestanding -Wall	\
+ 				-Werror -mgeneral-regs-only -std=c99 -c -Os	\
+ 				${DEFINES} ${INCLUDES} $(VPATH_LIST:%=-I%)
+ CFLAGS			+=	-ffunction-sections -fdata-sections
+@@ -189,7 +189,7 @@ ASFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	-Wno-unused
+ 
+-LDFLAGS			+=	--fatal-warnings -O1
++LDFLAGS			+=	 -O1
+ LDFLAGS			+=	--gc-sections
+ 
+ CC			:=	${CROSS_COMPILE}gcc
+@@ -428,4 +428,3 @@ help:
+ 	@echo "note: most build targets require PLAT to be set to a specific platform."
+ 	@echo ""
+ 	@echo "example: build all targets for the FVP platform:"
+-	@echo "  CROSS_COMPILE=aarch64-none-elf- make PLAT=fvp all"
+diff --git a/arch/arm/cpu/armv8/axg/firmware/scp_task/Makefile b/arch/arm/cpu/armv8/axg/firmware/scp_task/Makefile
+index 2e1eee819b..50dd4d89bb 100644
+--- a/arch/arm/cpu/armv8/axg/firmware/scp_task/Makefile
++++ b/arch/arm/cpu/armv8/axg/firmware/scp_task/Makefile
+@@ -6,7 +6,6 @@ include $(buildtree)/include/autoconf.mk
+ include $(buildtree)/.config
+ 
+ # Select ARMv7-m bare-metal toolchain
+-CROSS_COMPILE=arm-none-eabi-
+ ASM=$(CROSS_COMPILE)as
+ CC=$(CROSS_COMPILE)gcc
+ CPP=$(CROSS_COMPILE)cpp
+@@ -14,8 +13,6 @@ LD=$(CROSS_COMPILE)ld
+ OBJCOPY=$(CROSS_COMPILE)objcopy
+ OBJDUMP=$(CROSS_COMPILE)objdump
+ 
+-ARM_ARCH=armv7-m
+-ARM_CPU=cortex-m3
+ CFLAGS_WARN=-Wall -Werror -Wundef -Wstrict-prototypes -Wno-trigraphs      \
+             -fno-strict-aliasing -fno-common -fomit-frame-pointer         \
+             -Werror-implicit-function-declaration -Wno-format-security    \
+@@ -24,7 +21,7 @@ CFLAGS_WARN=-Wall -Werror -Wundef -Wstrict-prototypes -Wno-trigraphs      \
+ CFLAGS_DEBUG=-g
+ 
+ # CPU specific compilation flags
+-CFLAGS_CPU=-march=$(ARM_ARCH) -mcpu=$(ARM_CPU) -mthumb -Os -mno-sched-prolog
++CFLAGS_CPU=   -Os 
+ 
+ # FPU compilation flags
+ CFLAGS_FPU-$(CONFIG_FPU)=-mfpu=fpv4-sp-d16 -mfloat-abi=hard
+@@ -42,7 +39,7 @@ VPATH_LIST=     $(buildsrc)/$(BOARDDIR)
+ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/scp_task/)
+ 
+ CFLAGS=$(CFLAGS_CPU) $(CFLAGS_WARN) $(VPATH_LIST:%=-I%) $(CFLAGS_INCLUDE) $(CFLAGS_FPU-y)
+-ASFLAGS= -gdwarf2 -mcpu=$(ARM_CPU)
++ASFLAGS= -gdwarf2 
+ DUMP_FLAGS = -D -x
+ 
+ LDFLAGS=-Bstatic
+diff --git a/arch/arm/cpu/armv8/axg/firmware/scp_task/misc.S b/arch/arm/cpu/armv8/axg/firmware/scp_task/misc.S
+index 9b97da3561..ab4245c4b3 100644
+--- a/arch/arm/cpu/armv8/axg/firmware/scp_task/misc.S
++++ b/arch/arm/cpu/armv8/axg/firmware/scp_task/misc.S
+@@ -1,10 +1,7 @@
+ .text
+ 
+-.syntax unified
+-.code 16
+ 
+ .global bss_init
+-.thumb_func
+ 
+ bss_init:
+ 	mov r0, #0
+diff --git a/arch/arm/cpu/armv8/axg/firmware/scp_task/task_entry.S b/arch/arm/cpu/armv8/axg/firmware/scp_task/task_entry.S
+index dc4b6a3e1d..af015c2412 100644
+--- a/arch/arm/cpu/armv8/axg/firmware/scp_task/task_entry.S
++++ b/arch/arm/cpu/armv8/axg/firmware/scp_task/task_entry.S
+@@ -2,11 +2,8 @@
+ #include "registers.h"
+ 
+ .text
+-.syntax unified
+-.code 16
+ 
+ 	.global task_entry
+-.thumb_func
+ task_entry:
+ 	b secure_task
+ 	b high_task
+diff --git a/arch/arm/cpu/armv8/g12a/firmware/acs/Makefile b/arch/arm/cpu/armv8/g12a/firmware/acs/Makefile
+index 647f1615f8..53a58eb8f0 100644
+--- a/arch/arm/cpu/armv8/g12a/firmware/acs/Makefile
++++ b/arch/arm/cpu/armv8/g12a/firmware/acs/Makefile
+@@ -176,10 +176,10 @@ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/)
+ 
+ vpath %.c $(VPATH_LIST)
+ 
+-ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,--fatal-warnings	\
++ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,	\
+ 				-mgeneral-regs-only -D__ASSEMBLY__		\
+ 				${DEFINES} ${INCLUDES}
+-CFLAGS			+= 	-nostdinc -pedantic -ffreestanding -Wall	\
++CFLAGS			+= 	-nostdinc  -ffreestanding -Wall	\
+ 				-Werror -mgeneral-regs-only -std=c99 -c -Os	\
+ 				${DEFINES} ${INCLUDES} $(VPATH_LIST:%=-I%)
+ CFLAGS			+=	-ffunction-sections -fdata-sections
+@@ -187,7 +187,7 @@ ASFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	-Wno-unused
+ 
+-LDFLAGS			+=	--fatal-warnings -O1
++LDFLAGS			+=	 -O1
+ LDFLAGS			+=	--gc-sections
+ 
+ CC			:=	${CROSS_COMPILE}gcc
+@@ -426,4 +426,3 @@ help:
+ 	@echo "note: most build targets require PLAT to be set to a specific platform."
+ 	@echo ""
+ 	@echo "example: build all targets for the FVP platform:"
+-	@echo "  CROSS_COMPILE=aarch64-none-elf- make PLAT=fvp all"
+diff --git a/arch/arm/cpu/armv8/g12a/firmware/scp_task/Makefile b/arch/arm/cpu/armv8/g12a/firmware/scp_task/Makefile
+index 82f31b88bb..db932d29ee 100644
+--- a/arch/arm/cpu/armv8/g12a/firmware/scp_task/Makefile
++++ b/arch/arm/cpu/armv8/g12a/firmware/scp_task/Makefile
+@@ -6,7 +6,6 @@ include $(buildtree)/include/autoconf.mk
+ include $(buildtree)/.config
+ 
+ # Select ARMv7-m bare-metal toolchain
+-CROSS_COMPILE=arm-none-eabi-
+ ASM=$(CROSS_COMPILE)as
+ CC=$(CROSS_COMPILE)gcc
+ CPP=$(CROSS_COMPILE)cpp
+@@ -14,8 +13,6 @@ LD=$(CROSS_COMPILE)ld
+ OBJCOPY=$(CROSS_COMPILE)objcopy
+ OBJDUMP=$(CROSS_COMPILE)objdump
+ 
+-ARM_ARCH=armv7-m
+-ARM_CPU=cortex-m3
+ CFLAGS_WARN=-Wall -Werror -Wundef -Wstrict-prototypes -Wno-trigraphs      \
+             -fno-strict-aliasing -fno-common -fomit-frame-pointer         \
+             -Werror-implicit-function-declaration -Wno-format-security    \
+@@ -24,7 +21,7 @@ CFLAGS_WARN=-Wall -Werror -Wundef -Wstrict-prototypes -Wno-trigraphs      \
+ CFLAGS_DEBUG=-g
+ 
+ # CPU specific compilation flags
+-CFLAGS_CPU=-march=$(ARM_ARCH) -mcpu=$(ARM_CPU) -mthumb -Os -mno-sched-prolog
++CFLAGS_CPU=   -Os 
+ 
+ # FPU compilation flags
+ CFLAGS_FPU-$(CONFIG_FPU)=-mfpu=fpv4-sp-d16 -mfloat-abi=hard
+@@ -42,7 +39,7 @@ VPATH_LIST=     $(buildsrc)/$(BOARDDIR)
+ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/scp_task/)
+ 
+ CFLAGS=$(CFLAGS_CPU) $(CFLAGS_WARN) $(VPATH_LIST:%=-I%) $(CFLAGS_INCLUDE) $(CFLAGS_FPU-y)
+-ASFLAGS= -gdwarf2 -mcpu=$(ARM_CPU)
++ASFLAGS= -gdwarf2 
+ DUMP_FLAGS = -D -x
+ 
+ ifdef CONFIG_ODROID_COMMON
+diff --git a/arch/arm/cpu/armv8/g12a/firmware/scp_task/misc.S b/arch/arm/cpu/armv8/g12a/firmware/scp_task/misc.S
+index 9b97da3561..ab4245c4b3 100644
+--- a/arch/arm/cpu/armv8/g12a/firmware/scp_task/misc.S
++++ b/arch/arm/cpu/armv8/g12a/firmware/scp_task/misc.S
+@@ -1,10 +1,7 @@
+ .text
+ 
+-.syntax unified
+-.code 16
+ 
+ .global bss_init
+-.thumb_func
+ 
+ bss_init:
+ 	mov r0, #0
+diff --git a/arch/arm/cpu/armv8/g12a/firmware/scp_task/task_entry.S b/arch/arm/cpu/armv8/g12a/firmware/scp_task/task_entry.S
+index dc4b6a3e1d..af015c2412 100644
+--- a/arch/arm/cpu/armv8/g12a/firmware/scp_task/task_entry.S
++++ b/arch/arm/cpu/armv8/g12a/firmware/scp_task/task_entry.S
+@@ -2,11 +2,8 @@
+ #include "registers.h"
+ 
+ .text
+-.syntax unified
+-.code 16
+ 
+ 	.global task_entry
+-.thumb_func
+ task_entry:
+ 	b secure_task
+ 	b high_task
+diff --git a/arch/arm/cpu/armv8/g12b/firmware/acs/Makefile b/arch/arm/cpu/armv8/g12b/firmware/acs/Makefile
+index 647f1615f8..53a58eb8f0 100644
+--- a/arch/arm/cpu/armv8/g12b/firmware/acs/Makefile
++++ b/arch/arm/cpu/armv8/g12b/firmware/acs/Makefile
+@@ -176,10 +176,10 @@ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/)
+ 
+ vpath %.c $(VPATH_LIST)
+ 
+-ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,--fatal-warnings	\
++ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,	\
+ 				-mgeneral-regs-only -D__ASSEMBLY__		\
+ 				${DEFINES} ${INCLUDES}
+-CFLAGS			+= 	-nostdinc -pedantic -ffreestanding -Wall	\
++CFLAGS			+= 	-nostdinc  -ffreestanding -Wall	\
+ 				-Werror -mgeneral-regs-only -std=c99 -c -Os	\
+ 				${DEFINES} ${INCLUDES} $(VPATH_LIST:%=-I%)
+ CFLAGS			+=	-ffunction-sections -fdata-sections
+@@ -187,7 +187,7 @@ ASFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	-Wno-unused
+ 
+-LDFLAGS			+=	--fatal-warnings -O1
++LDFLAGS			+=	 -O1
+ LDFLAGS			+=	--gc-sections
+ 
+ CC			:=	${CROSS_COMPILE}gcc
+@@ -426,4 +426,3 @@ help:
+ 	@echo "note: most build targets require PLAT to be set to a specific platform."
+ 	@echo ""
+ 	@echo "example: build all targets for the FVP platform:"
+-	@echo "  CROSS_COMPILE=aarch64-none-elf- make PLAT=fvp all"
+diff --git a/arch/arm/cpu/armv8/g12b/firmware/scp_task/Makefile b/arch/arm/cpu/armv8/g12b/firmware/scp_task/Makefile
+index 82f31b88bb..db932d29ee 100644
+--- a/arch/arm/cpu/armv8/g12b/firmware/scp_task/Makefile
++++ b/arch/arm/cpu/armv8/g12b/firmware/scp_task/Makefile
+@@ -6,7 +6,6 @@ include $(buildtree)/include/autoconf.mk
+ include $(buildtree)/.config
+ 
+ # Select ARMv7-m bare-metal toolchain
+-CROSS_COMPILE=arm-none-eabi-
+ ASM=$(CROSS_COMPILE)as
+ CC=$(CROSS_COMPILE)gcc
+ CPP=$(CROSS_COMPILE)cpp
+@@ -14,8 +13,6 @@ LD=$(CROSS_COMPILE)ld
+ OBJCOPY=$(CROSS_COMPILE)objcopy
+ OBJDUMP=$(CROSS_COMPILE)objdump
+ 
+-ARM_ARCH=armv7-m
+-ARM_CPU=cortex-m3
+ CFLAGS_WARN=-Wall -Werror -Wundef -Wstrict-prototypes -Wno-trigraphs      \
+             -fno-strict-aliasing -fno-common -fomit-frame-pointer         \
+             -Werror-implicit-function-declaration -Wno-format-security    \
+@@ -24,7 +21,7 @@ CFLAGS_WARN=-Wall -Werror -Wundef -Wstrict-prototypes -Wno-trigraphs      \
+ CFLAGS_DEBUG=-g
+ 
+ # CPU specific compilation flags
+-CFLAGS_CPU=-march=$(ARM_ARCH) -mcpu=$(ARM_CPU) -mthumb -Os -mno-sched-prolog
++CFLAGS_CPU=   -Os 
+ 
+ # FPU compilation flags
+ CFLAGS_FPU-$(CONFIG_FPU)=-mfpu=fpv4-sp-d16 -mfloat-abi=hard
+@@ -42,7 +39,7 @@ VPATH_LIST=     $(buildsrc)/$(BOARDDIR)
+ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/scp_task/)
+ 
+ CFLAGS=$(CFLAGS_CPU) $(CFLAGS_WARN) $(VPATH_LIST:%=-I%) $(CFLAGS_INCLUDE) $(CFLAGS_FPU-y)
+-ASFLAGS= -gdwarf2 -mcpu=$(ARM_CPU)
++ASFLAGS= -gdwarf2 
+ DUMP_FLAGS = -D -x
+ 
+ ifdef CONFIG_ODROID_COMMON
+diff --git a/arch/arm/cpu/armv8/g12b/firmware/scp_task/misc.S b/arch/arm/cpu/armv8/g12b/firmware/scp_task/misc.S
+index 9b97da3561..ab4245c4b3 100644
+--- a/arch/arm/cpu/armv8/g12b/firmware/scp_task/misc.S
++++ b/arch/arm/cpu/armv8/g12b/firmware/scp_task/misc.S
+@@ -1,10 +1,7 @@
+ .text
+ 
+-.syntax unified
+-.code 16
+ 
+ .global bss_init
+-.thumb_func
+ 
+ bss_init:
+ 	mov r0, #0
+diff --git a/arch/arm/cpu/armv8/g12b/firmware/scp_task/task_entry.S b/arch/arm/cpu/armv8/g12b/firmware/scp_task/task_entry.S
+index dc4b6a3e1d..af015c2412 100644
+--- a/arch/arm/cpu/armv8/g12b/firmware/scp_task/task_entry.S
++++ b/arch/arm/cpu/armv8/g12b/firmware/scp_task/task_entry.S
+@@ -2,11 +2,8 @@
+ #include "registers.h"
+ 
+ .text
+-.syntax unified
+-.code 16
+ 
+ 	.global task_entry
+-.thumb_func
+ task_entry:
+ 	b secure_task
+ 	b high_task
+diff --git a/arch/arm/cpu/armv8/gxb/firmware/acs/Makefile b/arch/arm/cpu/armv8/gxb/firmware/acs/Makefile
+index 647f1615f8..53a58eb8f0 100644
+--- a/arch/arm/cpu/armv8/gxb/firmware/acs/Makefile
++++ b/arch/arm/cpu/armv8/gxb/firmware/acs/Makefile
+@@ -176,10 +176,10 @@ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/)
+ 
+ vpath %.c $(VPATH_LIST)
+ 
+-ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,--fatal-warnings	\
++ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,	\
+ 				-mgeneral-regs-only -D__ASSEMBLY__		\
+ 				${DEFINES} ${INCLUDES}
+-CFLAGS			+= 	-nostdinc -pedantic -ffreestanding -Wall	\
++CFLAGS			+= 	-nostdinc  -ffreestanding -Wall	\
+ 				-Werror -mgeneral-regs-only -std=c99 -c -Os	\
+ 				${DEFINES} ${INCLUDES} $(VPATH_LIST:%=-I%)
+ CFLAGS			+=	-ffunction-sections -fdata-sections
+@@ -187,7 +187,7 @@ ASFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	-Wno-unused
+ 
+-LDFLAGS			+=	--fatal-warnings -O1
++LDFLAGS			+=	 -O1
+ LDFLAGS			+=	--gc-sections
+ 
+ CC			:=	${CROSS_COMPILE}gcc
+@@ -426,4 +426,3 @@ help:
+ 	@echo "note: most build targets require PLAT to be set to a specific platform."
+ 	@echo ""
+ 	@echo "example: build all targets for the FVP platform:"
+-	@echo "  CROSS_COMPILE=aarch64-none-elf- make PLAT=fvp all"
+diff --git a/arch/arm/cpu/armv8/gxb/firmware/bl21/Makefile b/arch/arm/cpu/armv8/gxb/firmware/bl21/Makefile
+index 4dfe4620f4..76da5bf815 100644
+--- a/arch/arm/cpu/armv8/gxb/firmware/bl21/Makefile
++++ b/arch/arm/cpu/armv8/gxb/firmware/bl21/Makefile
+@@ -178,10 +178,10 @@ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/)
+ 
+ vpath %.c $(VPATH_LIST)
+ 
+-ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,--fatal-warnings	\
++ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,	\
+ 				-mgeneral-regs-only -D__ASSEMBLY__		\
+ 				${DEFINES} ${INCLUDES}
+-CFLAGS			+= 	-nostdinc -pedantic -ffreestanding -Wall	\
++CFLAGS			+= 	-nostdinc  -ffreestanding -Wall	\
+ 				-Werror -mgeneral-regs-only -std=c99 -c -Os	\
+ 				${DEFINES} ${INCLUDES} $(VPATH_LIST:%=-I%)
+ CFLAGS			+=	-ffunction-sections -fdata-sections
+@@ -189,7 +189,7 @@ ASFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	-Wno-unused
+ 
+-LDFLAGS			+=	--fatal-warnings -O1
++LDFLAGS			+=	 -O1
+ LDFLAGS			+=	--gc-sections
+ 
+ CC			:=	${CROSS_COMPILE}gcc
+@@ -428,4 +428,3 @@ help:
+ 	@echo "note: most build targets require PLAT to be set to a specific platform."
+ 	@echo ""
+ 	@echo "example: build all targets for the FVP platform:"
+-	@echo "  CROSS_COMPILE=aarch64-none-elf- make PLAT=fvp all"
+diff --git a/arch/arm/cpu/armv8/gxb/firmware/scp_task/Makefile b/arch/arm/cpu/armv8/gxb/firmware/scp_task/Makefile
+index 2e1eee819b..50dd4d89bb 100644
+--- a/arch/arm/cpu/armv8/gxb/firmware/scp_task/Makefile
++++ b/arch/arm/cpu/armv8/gxb/firmware/scp_task/Makefile
+@@ -6,7 +6,6 @@ include $(buildtree)/include/autoconf.mk
+ include $(buildtree)/.config
+ 
+ # Select ARMv7-m bare-metal toolchain
+-CROSS_COMPILE=arm-none-eabi-
+ ASM=$(CROSS_COMPILE)as
+ CC=$(CROSS_COMPILE)gcc
+ CPP=$(CROSS_COMPILE)cpp
+@@ -14,8 +13,6 @@ LD=$(CROSS_COMPILE)ld
+ OBJCOPY=$(CROSS_COMPILE)objcopy
+ OBJDUMP=$(CROSS_COMPILE)objdump
+ 
+-ARM_ARCH=armv7-m
+-ARM_CPU=cortex-m3
+ CFLAGS_WARN=-Wall -Werror -Wundef -Wstrict-prototypes -Wno-trigraphs      \
+             -fno-strict-aliasing -fno-common -fomit-frame-pointer         \
+             -Werror-implicit-function-declaration -Wno-format-security    \
+@@ -24,7 +21,7 @@ CFLAGS_WARN=-Wall -Werror -Wundef -Wstrict-prototypes -Wno-trigraphs      \
+ CFLAGS_DEBUG=-g
+ 
+ # CPU specific compilation flags
+-CFLAGS_CPU=-march=$(ARM_ARCH) -mcpu=$(ARM_CPU) -mthumb -Os -mno-sched-prolog
++CFLAGS_CPU=   -Os 
+ 
+ # FPU compilation flags
+ CFLAGS_FPU-$(CONFIG_FPU)=-mfpu=fpv4-sp-d16 -mfloat-abi=hard
+@@ -42,7 +39,7 @@ VPATH_LIST=     $(buildsrc)/$(BOARDDIR)
+ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/scp_task/)
+ 
+ CFLAGS=$(CFLAGS_CPU) $(CFLAGS_WARN) $(VPATH_LIST:%=-I%) $(CFLAGS_INCLUDE) $(CFLAGS_FPU-y)
+-ASFLAGS= -gdwarf2 -mcpu=$(ARM_CPU)
++ASFLAGS= -gdwarf2 
+ DUMP_FLAGS = -D -x
+ 
+ LDFLAGS=-Bstatic
+diff --git a/arch/arm/cpu/armv8/gxb/firmware/scp_task/misc.S b/arch/arm/cpu/armv8/gxb/firmware/scp_task/misc.S
+index 9b97da3561..ab4245c4b3 100644
+--- a/arch/arm/cpu/armv8/gxb/firmware/scp_task/misc.S
++++ b/arch/arm/cpu/armv8/gxb/firmware/scp_task/misc.S
+@@ -1,10 +1,7 @@
+ .text
+ 
+-.syntax unified
+-.code 16
+ 
+ .global bss_init
+-.thumb_func
+ 
+ bss_init:
+ 	mov r0, #0
+diff --git a/arch/arm/cpu/armv8/gxb/firmware/scp_task/task_entry.S b/arch/arm/cpu/armv8/gxb/firmware/scp_task/task_entry.S
+index dc4b6a3e1d..af015c2412 100644
+--- a/arch/arm/cpu/armv8/gxb/firmware/scp_task/task_entry.S
++++ b/arch/arm/cpu/armv8/gxb/firmware/scp_task/task_entry.S
+@@ -2,11 +2,8 @@
+ #include "registers.h"
+ 
+ .text
+-.syntax unified
+-.code 16
+ 
+ 	.global task_entry
+-.thumb_func
+ task_entry:
+ 	b secure_task
+ 	b high_task
+diff --git a/arch/arm/cpu/armv8/gxl/firmware/acs/Makefile b/arch/arm/cpu/armv8/gxl/firmware/acs/Makefile
+index 647f1615f8..53a58eb8f0 100644
+--- a/arch/arm/cpu/armv8/gxl/firmware/acs/Makefile
++++ b/arch/arm/cpu/armv8/gxl/firmware/acs/Makefile
+@@ -176,10 +176,10 @@ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/)
+ 
+ vpath %.c $(VPATH_LIST)
+ 
+-ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,--fatal-warnings	\
++ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,	\
+ 				-mgeneral-regs-only -D__ASSEMBLY__		\
+ 				${DEFINES} ${INCLUDES}
+-CFLAGS			+= 	-nostdinc -pedantic -ffreestanding -Wall	\
++CFLAGS			+= 	-nostdinc  -ffreestanding -Wall	\
+ 				-Werror -mgeneral-regs-only -std=c99 -c -Os	\
+ 				${DEFINES} ${INCLUDES} $(VPATH_LIST:%=-I%)
+ CFLAGS			+=	-ffunction-sections -fdata-sections
+@@ -187,7 +187,7 @@ ASFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	-Wno-unused
+ 
+-LDFLAGS			+=	--fatal-warnings -O1
++LDFLAGS			+=	 -O1
+ LDFLAGS			+=	--gc-sections
+ 
+ CC			:=	${CROSS_COMPILE}gcc
+@@ -426,4 +426,3 @@ help:
+ 	@echo "note: most build targets require PLAT to be set to a specific platform."
+ 	@echo ""
+ 	@echo "example: build all targets for the FVP platform:"
+-	@echo "  CROSS_COMPILE=aarch64-none-elf- make PLAT=fvp all"
+diff --git a/arch/arm/cpu/armv8/gxl/firmware/bl21/Makefile b/arch/arm/cpu/armv8/gxl/firmware/bl21/Makefile
+index da4f354a6a..2fa0f30e2c 100644
+--- a/arch/arm/cpu/armv8/gxl/firmware/bl21/Makefile
++++ b/arch/arm/cpu/armv8/gxl/firmware/bl21/Makefile
+@@ -209,10 +209,10 @@ endif
+ ###########################################
+ # aarch64 compiler
+ ###########################################
+-ASFLAGS_aarch64			+= 	-nostdinc -ffreestanding -Wa,--fatal-warnings	\
++ASFLAGS_aarch64			+= 	-nostdinc -ffreestanding -Wa,	\
+ 				-mgeneral-regs-only -D__ASSEMBLY__		\
+ 				${DEFINES} ${INCLUDES}
+-CFLAGS_aarch64			+= 	-nostdinc -pedantic -ffreestanding -Wall	\
++CFLAGS_aarch64			+= 	-nostdinc  -ffreestanding -Wall	\
+ 				-Werror -mgeneral-regs-only -std=c99 -c -Os	\
+ 				${DEFINES} ${INCLUDES} $(VPATH_LIST:%=-I%)
+ CFLAGS_aarch64			+=	-ffunction-sections -fdata-sections
+@@ -220,23 +220,23 @@ ASFLAGS_aarch64			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS_aarch64			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS_aarch64			+= 	-Wno-unused
+ 
+-LDFLAGS_aarch64			+=	--fatal-warnings -O1
++LDFLAGS_aarch64			+=	 -O1
+ LDFLAGS_aarch64			+=	--gc-sections
+ 
+ ###########################################
+ # aarch32 compiler
+ ###########################################
+-ASFLAGS_aarch32			= 	-nostdinc -ffreestanding -Wa,--fatal-warnings	\
++ASFLAGS_aarch32			= 	-nostdinc -ffreestanding -Wa,	\
+ 				-D__ASSEMBLY__		\
+ 				${DEFINES} ${INCLUDES}
+-CFLAGS_aarch32 		= -g -Os -fno-builtin -ffreestanding -nostdinc -pedantic
+-CFLAGS_aarch32 		+= -pipe -DCONFIG_ARM -D__ARM__ -mthumb -mabi=aapcs-linux -mno-thumb-interwork -mcpu=cortex-a9
++CFLAGS_aarch32 		= -g -Os -fno-builtin -ffreestanding -nostdinc 
++CFLAGS_aarch32 		+= -pipe -DCONFIG_ARM -D__ARM__ -mabi=aapcs-linux -mcpu=cortex-a9
+ CFLAGS_aarch32 		+= -mfpu=neon  -mno-long-calls -fno-stack-protector -MD -Wno-unused-function -mno-long-calls
+ CFLAGS_aarch32 		+= -Wall -Werror -std=c99 -c -Os
+ CFLAGS_aarch32			+= 	${DEFINES} ${INCLUDES} $(VPATH_LIST:%=-I%)
+ #CFLAGS_aarch32			+= 	${FIRMWARE_CPPFLAGS}
+ 
+-LDFLAGS_aarch32			=	--fatal-warnings -O1
++LDFLAGS_aarch32			=	 -O1
+ LDFLAGS_aarch32			+=	--gc-sections
+ 
+ ###########################################
+@@ -482,4 +482,3 @@ help:
+ 	@echo "note: most build targets require PLAT to be set to a specific platform."
+ 	@echo ""
+ 	@echo "example: build all targets for the FVP platform:"
+-	@echo "  CROSS_COMPILE=aarch64-none-elf- make PLAT=fvp all"
+diff --git a/arch/arm/cpu/armv8/gxl/firmware/scp_task/Makefile b/arch/arm/cpu/armv8/gxl/firmware/scp_task/Makefile
+index 2e1eee819b..50dd4d89bb 100644
+--- a/arch/arm/cpu/armv8/gxl/firmware/scp_task/Makefile
++++ b/arch/arm/cpu/armv8/gxl/firmware/scp_task/Makefile
+@@ -6,7 +6,6 @@ include $(buildtree)/include/autoconf.mk
+ include $(buildtree)/.config
+ 
+ # Select ARMv7-m bare-metal toolchain
+-CROSS_COMPILE=arm-none-eabi-
+ ASM=$(CROSS_COMPILE)as
+ CC=$(CROSS_COMPILE)gcc
+ CPP=$(CROSS_COMPILE)cpp
+@@ -14,8 +13,6 @@ LD=$(CROSS_COMPILE)ld
+ OBJCOPY=$(CROSS_COMPILE)objcopy
+ OBJDUMP=$(CROSS_COMPILE)objdump
+ 
+-ARM_ARCH=armv7-m
+-ARM_CPU=cortex-m3
+ CFLAGS_WARN=-Wall -Werror -Wundef -Wstrict-prototypes -Wno-trigraphs      \
+             -fno-strict-aliasing -fno-common -fomit-frame-pointer         \
+             -Werror-implicit-function-declaration -Wno-format-security    \
+@@ -24,7 +21,7 @@ CFLAGS_WARN=-Wall -Werror -Wundef -Wstrict-prototypes -Wno-trigraphs      \
+ CFLAGS_DEBUG=-g
+ 
+ # CPU specific compilation flags
+-CFLAGS_CPU=-march=$(ARM_ARCH) -mcpu=$(ARM_CPU) -mthumb -Os -mno-sched-prolog
++CFLAGS_CPU=   -Os 
+ 
+ # FPU compilation flags
+ CFLAGS_FPU-$(CONFIG_FPU)=-mfpu=fpv4-sp-d16 -mfloat-abi=hard
+@@ -42,7 +39,7 @@ VPATH_LIST=     $(buildsrc)/$(BOARDDIR)
+ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/scp_task/)
+ 
+ CFLAGS=$(CFLAGS_CPU) $(CFLAGS_WARN) $(VPATH_LIST:%=-I%) $(CFLAGS_INCLUDE) $(CFLAGS_FPU-y)
+-ASFLAGS= -gdwarf2 -mcpu=$(ARM_CPU)
++ASFLAGS= -gdwarf2 
+ DUMP_FLAGS = -D -x
+ 
+ LDFLAGS=-Bstatic
+diff --git a/arch/arm/cpu/armv8/gxl/firmware/scp_task/misc.S b/arch/arm/cpu/armv8/gxl/firmware/scp_task/misc.S
+index 9b97da3561..ab4245c4b3 100644
+--- a/arch/arm/cpu/armv8/gxl/firmware/scp_task/misc.S
++++ b/arch/arm/cpu/armv8/gxl/firmware/scp_task/misc.S
+@@ -1,10 +1,7 @@
+ .text
+ 
+-.syntax unified
+-.code 16
+ 
+ .global bss_init
+-.thumb_func
+ 
+ bss_init:
+ 	mov r0, #0
+diff --git a/arch/arm/cpu/armv8/gxl/firmware/scp_task/task_entry.S b/arch/arm/cpu/armv8/gxl/firmware/scp_task/task_entry.S
+index dc4b6a3e1d..af015c2412 100644
+--- a/arch/arm/cpu/armv8/gxl/firmware/scp_task/task_entry.S
++++ b/arch/arm/cpu/armv8/gxl/firmware/scp_task/task_entry.S
+@@ -2,11 +2,8 @@
+ #include "registers.h"
+ 
+ .text
+-.syntax unified
+-.code 16
+ 
+ 	.global task_entry
+-.thumb_func
+ task_entry:
+ 	b secure_task
+ 	b high_task
+diff --git a/arch/arm/cpu/armv8/gxtvbb/firmware/acs/Makefile b/arch/arm/cpu/armv8/gxtvbb/firmware/acs/Makefile
+index 647f1615f8..53a58eb8f0 100644
+--- a/arch/arm/cpu/armv8/gxtvbb/firmware/acs/Makefile
++++ b/arch/arm/cpu/armv8/gxtvbb/firmware/acs/Makefile
+@@ -176,10 +176,10 @@ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/)
+ 
+ vpath %.c $(VPATH_LIST)
+ 
+-ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,--fatal-warnings	\
++ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,	\
+ 				-mgeneral-regs-only -D__ASSEMBLY__		\
+ 				${DEFINES} ${INCLUDES}
+-CFLAGS			+= 	-nostdinc -pedantic -ffreestanding -Wall	\
++CFLAGS			+= 	-nostdinc  -ffreestanding -Wall	\
+ 				-Werror -mgeneral-regs-only -std=c99 -c -Os	\
+ 				${DEFINES} ${INCLUDES} $(VPATH_LIST:%=-I%)
+ CFLAGS			+=	-ffunction-sections -fdata-sections
+@@ -187,7 +187,7 @@ ASFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	-Wno-unused
+ 
+-LDFLAGS			+=	--fatal-warnings -O1
++LDFLAGS			+=	 -O1
+ LDFLAGS			+=	--gc-sections
+ 
+ CC			:=	${CROSS_COMPILE}gcc
+@@ -426,4 +426,3 @@ help:
+ 	@echo "note: most build targets require PLAT to be set to a specific platform."
+ 	@echo ""
+ 	@echo "example: build all targets for the FVP platform:"
+-	@echo "  CROSS_COMPILE=aarch64-none-elf- make PLAT=fvp all"
+diff --git a/arch/arm/cpu/armv8/gxtvbb/firmware/bl21/Makefile b/arch/arm/cpu/armv8/gxtvbb/firmware/bl21/Makefile
+index 4dfe4620f4..76da5bf815 100644
+--- a/arch/arm/cpu/armv8/gxtvbb/firmware/bl21/Makefile
++++ b/arch/arm/cpu/armv8/gxtvbb/firmware/bl21/Makefile
+@@ -178,10 +178,10 @@ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/)
+ 
+ vpath %.c $(VPATH_LIST)
+ 
+-ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,--fatal-warnings	\
++ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,	\
+ 				-mgeneral-regs-only -D__ASSEMBLY__		\
+ 				${DEFINES} ${INCLUDES}
+-CFLAGS			+= 	-nostdinc -pedantic -ffreestanding -Wall	\
++CFLAGS			+= 	-nostdinc  -ffreestanding -Wall	\
+ 				-Werror -mgeneral-regs-only -std=c99 -c -Os	\
+ 				${DEFINES} ${INCLUDES} $(VPATH_LIST:%=-I%)
+ CFLAGS			+=	-ffunction-sections -fdata-sections
+@@ -189,7 +189,7 @@ ASFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	-Wno-unused
+ 
+-LDFLAGS			+=	--fatal-warnings -O1
++LDFLAGS			+=	 -O1
+ LDFLAGS			+=	--gc-sections
+ 
+ CC			:=	${CROSS_COMPILE}gcc
+@@ -428,4 +428,3 @@ help:
+ 	@echo "note: most build targets require PLAT to be set to a specific platform."
+ 	@echo ""
+ 	@echo "example: build all targets for the FVP platform:"
+-	@echo "  CROSS_COMPILE=aarch64-none-elf- make PLAT=fvp all"
+diff --git a/arch/arm/cpu/armv8/gxtvbb/firmware/scp_task/Makefile b/arch/arm/cpu/armv8/gxtvbb/firmware/scp_task/Makefile
+index 2e1eee819b..50dd4d89bb 100644
+--- a/arch/arm/cpu/armv8/gxtvbb/firmware/scp_task/Makefile
++++ b/arch/arm/cpu/armv8/gxtvbb/firmware/scp_task/Makefile
+@@ -6,7 +6,6 @@ include $(buildtree)/include/autoconf.mk
+ include $(buildtree)/.config
+ 
+ # Select ARMv7-m bare-metal toolchain
+-CROSS_COMPILE=arm-none-eabi-
+ ASM=$(CROSS_COMPILE)as
+ CC=$(CROSS_COMPILE)gcc
+ CPP=$(CROSS_COMPILE)cpp
+@@ -14,8 +13,6 @@ LD=$(CROSS_COMPILE)ld
+ OBJCOPY=$(CROSS_COMPILE)objcopy
+ OBJDUMP=$(CROSS_COMPILE)objdump
+ 
+-ARM_ARCH=armv7-m
+-ARM_CPU=cortex-m3
+ CFLAGS_WARN=-Wall -Werror -Wundef -Wstrict-prototypes -Wno-trigraphs      \
+             -fno-strict-aliasing -fno-common -fomit-frame-pointer         \
+             -Werror-implicit-function-declaration -Wno-format-security    \
+@@ -24,7 +21,7 @@ CFLAGS_WARN=-Wall -Werror -Wundef -Wstrict-prototypes -Wno-trigraphs      \
+ CFLAGS_DEBUG=-g
+ 
+ # CPU specific compilation flags
+-CFLAGS_CPU=-march=$(ARM_ARCH) -mcpu=$(ARM_CPU) -mthumb -Os -mno-sched-prolog
++CFLAGS_CPU=   -Os 
+ 
+ # FPU compilation flags
+ CFLAGS_FPU-$(CONFIG_FPU)=-mfpu=fpv4-sp-d16 -mfloat-abi=hard
+@@ -42,7 +39,7 @@ VPATH_LIST=     $(buildsrc)/$(BOARDDIR)
+ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/scp_task/)
+ 
+ CFLAGS=$(CFLAGS_CPU) $(CFLAGS_WARN) $(VPATH_LIST:%=-I%) $(CFLAGS_INCLUDE) $(CFLAGS_FPU-y)
+-ASFLAGS= -gdwarf2 -mcpu=$(ARM_CPU)
++ASFLAGS= -gdwarf2 
+ DUMP_FLAGS = -D -x
+ 
+ LDFLAGS=-Bstatic
+diff --git a/arch/arm/cpu/armv8/gxtvbb/firmware/scp_task/misc.S b/arch/arm/cpu/armv8/gxtvbb/firmware/scp_task/misc.S
+index 9b97da3561..ab4245c4b3 100644
+--- a/arch/arm/cpu/armv8/gxtvbb/firmware/scp_task/misc.S
++++ b/arch/arm/cpu/armv8/gxtvbb/firmware/scp_task/misc.S
+@@ -1,10 +1,7 @@
+ .text
+ 
+-.syntax unified
+-.code 16
+ 
+ .global bss_init
+-.thumb_func
+ 
+ bss_init:
+ 	mov r0, #0
+diff --git a/arch/arm/cpu/armv8/gxtvbb/firmware/scp_task/task_entry.S b/arch/arm/cpu/armv8/gxtvbb/firmware/scp_task/task_entry.S
+index dc4b6a3e1d..af015c2412 100644
+--- a/arch/arm/cpu/armv8/gxtvbb/firmware/scp_task/task_entry.S
++++ b/arch/arm/cpu/armv8/gxtvbb/firmware/scp_task/task_entry.S
+@@ -2,11 +2,8 @@
+ #include "registers.h"
+ 
+ .text
+-.syntax unified
+-.code 16
+ 
+ 	.global task_entry
+-.thumb_func
+ task_entry:
+ 	b secure_task
+ 	b high_task
+diff --git a/arch/arm/cpu/armv8/tl1/firmware/acs/Makefile b/arch/arm/cpu/armv8/tl1/firmware/acs/Makefile
+index 647f1615f8..53a58eb8f0 100644
+--- a/arch/arm/cpu/armv8/tl1/firmware/acs/Makefile
++++ b/arch/arm/cpu/armv8/tl1/firmware/acs/Makefile
+@@ -176,10 +176,10 @@ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/)
+ 
+ vpath %.c $(VPATH_LIST)
+ 
+-ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,--fatal-warnings	\
++ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,	\
+ 				-mgeneral-regs-only -D__ASSEMBLY__		\
+ 				${DEFINES} ${INCLUDES}
+-CFLAGS			+= 	-nostdinc -pedantic -ffreestanding -Wall	\
++CFLAGS			+= 	-nostdinc  -ffreestanding -Wall	\
+ 				-Werror -mgeneral-regs-only -std=c99 -c -Os	\
+ 				${DEFINES} ${INCLUDES} $(VPATH_LIST:%=-I%)
+ CFLAGS			+=	-ffunction-sections -fdata-sections
+@@ -187,7 +187,7 @@ ASFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	-Wno-unused
+ 
+-LDFLAGS			+=	--fatal-warnings -O1
++LDFLAGS			+=	 -O1
+ LDFLAGS			+=	--gc-sections
+ 
+ CC			:=	${CROSS_COMPILE}gcc
+@@ -426,4 +426,3 @@ help:
+ 	@echo "note: most build targets require PLAT to be set to a specific platform."
+ 	@echo ""
+ 	@echo "example: build all targets for the FVP platform:"
+-	@echo "  CROSS_COMPILE=aarch64-none-elf- make PLAT=fvp all"
+diff --git a/arch/arm/cpu/armv8/tl1/firmware/scp_task/Makefile b/arch/arm/cpu/armv8/tl1/firmware/scp_task/Makefile
+index b108bf2062..3eb57d360c 100644
+--- a/arch/arm/cpu/armv8/tl1/firmware/scp_task/Makefile
++++ b/arch/arm/cpu/armv8/tl1/firmware/scp_task/Makefile
+@@ -6,7 +6,6 @@ include $(buildtree)/include/autoconf.mk
+ include $(buildtree)/.config
+ 
+ # Select ARMv7-m bare-metal toolchain
+-CROSS_COMPILE=arm-none-eabi-
+ ASM=$(CROSS_COMPILE)as
+ CC=$(CROSS_COMPILE)gcc
+ CPP=$(CROSS_COMPILE)cpp
+@@ -14,8 +13,6 @@ LD=$(CROSS_COMPILE)ld
+ OBJCOPY=$(CROSS_COMPILE)objcopy
+ OBJDUMP=$(CROSS_COMPILE)objdump
+ 
+-ARM_ARCH=armv7-m
+-ARM_CPU=cortex-m3
+ CFLAGS_WARN=-Wall -Werror -Wundef -Wstrict-prototypes -Wno-trigraphs      \
+             -fno-strict-aliasing -fno-common -fomit-frame-pointer         \
+             -Werror-implicit-function-declaration -Wno-format-security    \
+@@ -24,7 +21,7 @@ CFLAGS_WARN=-Wall -Werror -Wundef -Wstrict-prototypes -Wno-trigraphs      \
+ CFLAGS_DEBUG=-g
+ 
+ # CPU specific compilation flags
+-CFLAGS_CPU=-march=$(ARM_ARCH) -mcpu=$(ARM_CPU) -mthumb -Os -mno-sched-prolog
++CFLAGS_CPU=   -Os 
+ 
+ # FPU compilation flags
+ CFLAGS_FPU-$(CONFIG_FPU)=-mfpu=fpv4-sp-d16 -mfloat-abi=hard
+@@ -42,7 +39,7 @@ VPATH_LIST=     $(buildsrc)/$(BOARDDIR)
+ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/scp_task/)
+ 
+ CFLAGS=$(CFLAGS_CPU) $(CFLAGS_WARN) $(VPATH_LIST:%=-I%) $(CFLAGS_INCLUDE) $(CFLAGS_FPU-y)
+-ASFLAGS= -gdwarf2 -mcpu=$(ARM_CPU)
++ASFLAGS= -gdwarf2 
+ DUMP_FLAGS = -D -x
+ 
+ LDFLAGS=-Bstatic
+diff --git a/arch/arm/cpu/armv8/tl1/firmware/scp_task/misc.S b/arch/arm/cpu/armv8/tl1/firmware/scp_task/misc.S
+index 9b97da3561..ab4245c4b3 100644
+--- a/arch/arm/cpu/armv8/tl1/firmware/scp_task/misc.S
++++ b/arch/arm/cpu/armv8/tl1/firmware/scp_task/misc.S
+@@ -1,10 +1,7 @@
+ .text
+ 
+-.syntax unified
+-.code 16
+ 
+ .global bss_init
+-.thumb_func
+ 
+ bss_init:
+ 	mov r0, #0
+diff --git a/arch/arm/cpu/armv8/tl1/firmware/scp_task/task_entry.S b/arch/arm/cpu/armv8/tl1/firmware/scp_task/task_entry.S
+index dc4b6a3e1d..af015c2412 100644
+--- a/arch/arm/cpu/armv8/tl1/firmware/scp_task/task_entry.S
++++ b/arch/arm/cpu/armv8/tl1/firmware/scp_task/task_entry.S
+@@ -2,11 +2,8 @@
+ #include "registers.h"
+ 
+ .text
+-.syntax unified
+-.code 16
+ 
+ 	.global task_entry
+-.thumb_func
+ task_entry:
+ 	b secure_task
+ 	b high_task
+diff --git a/arch/arm/cpu/armv8/tm2/firmware/acs/Makefile b/arch/arm/cpu/armv8/tm2/firmware/acs/Makefile
+index 647f1615f8..53a58eb8f0 100644
+--- a/arch/arm/cpu/armv8/tm2/firmware/acs/Makefile
++++ b/arch/arm/cpu/armv8/tm2/firmware/acs/Makefile
+@@ -176,10 +176,10 @@ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/)
+ 
+ vpath %.c $(VPATH_LIST)
+ 
+-ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,--fatal-warnings	\
++ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,	\
+ 				-mgeneral-regs-only -D__ASSEMBLY__		\
+ 				${DEFINES} ${INCLUDES}
+-CFLAGS			+= 	-nostdinc -pedantic -ffreestanding -Wall	\
++CFLAGS			+= 	-nostdinc  -ffreestanding -Wall	\
+ 				-Werror -mgeneral-regs-only -std=c99 -c -Os	\
+ 				${DEFINES} ${INCLUDES} $(VPATH_LIST:%=-I%)
+ CFLAGS			+=	-ffunction-sections -fdata-sections
+@@ -187,7 +187,7 @@ ASFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	-Wno-unused
+ 
+-LDFLAGS			+=	--fatal-warnings -O1
++LDFLAGS			+=	 -O1
+ LDFLAGS			+=	--gc-sections
+ 
+ CC			:=	${CROSS_COMPILE}gcc
+@@ -426,4 +426,3 @@ help:
+ 	@echo "note: most build targets require PLAT to be set to a specific platform."
+ 	@echo ""
+ 	@echo "example: build all targets for the FVP platform:"
+-	@echo "  CROSS_COMPILE=aarch64-none-elf- make PLAT=fvp all"
+diff --git a/arch/arm/cpu/armv8/tm2/firmware/scp_task/Makefile b/arch/arm/cpu/armv8/tm2/firmware/scp_task/Makefile
+index 4df8ca2f67..215f10464d 100644
+--- a/arch/arm/cpu/armv8/tm2/firmware/scp_task/Makefile
++++ b/arch/arm/cpu/armv8/tm2/firmware/scp_task/Makefile
+@@ -14,7 +14,6 @@ LD=$(CROSS_COMPILE)ld
+ OBJCOPY=$(CROSS_COMPILE)objcopy
+ OBJDUMP=$(CROSS_COMPILE)objdump
+ 
+-ARM_ARCH=rv32imc
+ 
+ CFLAGS_WARN=-Wall -Werror -Wundef -Wstrict-prototypes -Wno-trigraphs      \
+             -fno-strict-aliasing -fno-common -fomit-frame-pointer         \
+@@ -24,7 +23,7 @@ CFLAGS_WARN=-Wall -Werror -Wundef -Wstrict-prototypes -Wno-trigraphs      \
+ CFLAGS_DEBUG=-g
+ 
+ # CPU specific compilation flags
+-CFLAGS_CPU=-march=$(ARM_ARCH) -mabi=ilp32 -Os -mcmodel=medany --specs=nano.specs --specs=nosys.specs -ffunction-sections -fdata-sections -fno-common -fgnu89-inline
++CFLAGS_CPU= -mabi=ilp32 -Os -mcmodel=medany --specs=nano.specs --specs=nosys.specs -ffunction-sections -fdata-sections -fno-common -fgnu89-inline
+ 
+ # FPU compilation flags
+ CFLAGS_FPU-$(CONFIG_FPU)=-mfpu=fpv4-sp-d16 -mfloat-abi=hard
+diff --git a/arch/arm/cpu/armv8/txhd/firmware/acs/Makefile b/arch/arm/cpu/armv8/txhd/firmware/acs/Makefile
+index 647f1615f8..53a58eb8f0 100644
+--- a/arch/arm/cpu/armv8/txhd/firmware/acs/Makefile
++++ b/arch/arm/cpu/armv8/txhd/firmware/acs/Makefile
+@@ -176,10 +176,10 @@ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/)
+ 
+ vpath %.c $(VPATH_LIST)
+ 
+-ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,--fatal-warnings	\
++ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,	\
+ 				-mgeneral-regs-only -D__ASSEMBLY__		\
+ 				${DEFINES} ${INCLUDES}
+-CFLAGS			+= 	-nostdinc -pedantic -ffreestanding -Wall	\
++CFLAGS			+= 	-nostdinc  -ffreestanding -Wall	\
+ 				-Werror -mgeneral-regs-only -std=c99 -c -Os	\
+ 				${DEFINES} ${INCLUDES} $(VPATH_LIST:%=-I%)
+ CFLAGS			+=	-ffunction-sections -fdata-sections
+@@ -187,7 +187,7 @@ ASFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	-Wno-unused
+ 
+-LDFLAGS			+=	--fatal-warnings -O1
++LDFLAGS			+=	 -O1
+ LDFLAGS			+=	--gc-sections
+ 
+ CC			:=	${CROSS_COMPILE}gcc
+@@ -426,4 +426,3 @@ help:
+ 	@echo "note: most build targets require PLAT to be set to a specific platform."
+ 	@echo ""
+ 	@echo "example: build all targets for the FVP platform:"
+-	@echo "  CROSS_COMPILE=aarch64-none-elf- make PLAT=fvp all"
+diff --git a/arch/arm/cpu/armv8/txhd/firmware/bl21/Makefile b/arch/arm/cpu/armv8/txhd/firmware/bl21/Makefile
+index 4dfe4620f4..76da5bf815 100644
+--- a/arch/arm/cpu/armv8/txhd/firmware/bl21/Makefile
++++ b/arch/arm/cpu/armv8/txhd/firmware/bl21/Makefile
+@@ -178,10 +178,10 @@ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/)
+ 
+ vpath %.c $(VPATH_LIST)
+ 
+-ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,--fatal-warnings	\
++ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,	\
+ 				-mgeneral-regs-only -D__ASSEMBLY__		\
+ 				${DEFINES} ${INCLUDES}
+-CFLAGS			+= 	-nostdinc -pedantic -ffreestanding -Wall	\
++CFLAGS			+= 	-nostdinc  -ffreestanding -Wall	\
+ 				-Werror -mgeneral-regs-only -std=c99 -c -Os	\
+ 				${DEFINES} ${INCLUDES} $(VPATH_LIST:%=-I%)
+ CFLAGS			+=	-ffunction-sections -fdata-sections
+@@ -189,7 +189,7 @@ ASFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	-Wno-unused
+ 
+-LDFLAGS			+=	--fatal-warnings -O1
++LDFLAGS			+=	 -O1
+ LDFLAGS			+=	--gc-sections
+ 
+ CC			:=	${CROSS_COMPILE}gcc
+@@ -428,4 +428,3 @@ help:
+ 	@echo "note: most build targets require PLAT to be set to a specific platform."
+ 	@echo ""
+ 	@echo "example: build all targets for the FVP platform:"
+-	@echo "  CROSS_COMPILE=aarch64-none-elf- make PLAT=fvp all"
+diff --git a/arch/arm/cpu/armv8/txhd/firmware/scp_task/Makefile b/arch/arm/cpu/armv8/txhd/firmware/scp_task/Makefile
+index 2e1eee819b..50dd4d89bb 100644
+--- a/arch/arm/cpu/armv8/txhd/firmware/scp_task/Makefile
++++ b/arch/arm/cpu/armv8/txhd/firmware/scp_task/Makefile
+@@ -6,7 +6,6 @@ include $(buildtree)/include/autoconf.mk
+ include $(buildtree)/.config
+ 
+ # Select ARMv7-m bare-metal toolchain
+-CROSS_COMPILE=arm-none-eabi-
+ ASM=$(CROSS_COMPILE)as
+ CC=$(CROSS_COMPILE)gcc
+ CPP=$(CROSS_COMPILE)cpp
+@@ -14,8 +13,6 @@ LD=$(CROSS_COMPILE)ld
+ OBJCOPY=$(CROSS_COMPILE)objcopy
+ OBJDUMP=$(CROSS_COMPILE)objdump
+ 
+-ARM_ARCH=armv7-m
+-ARM_CPU=cortex-m3
+ CFLAGS_WARN=-Wall -Werror -Wundef -Wstrict-prototypes -Wno-trigraphs      \
+             -fno-strict-aliasing -fno-common -fomit-frame-pointer         \
+             -Werror-implicit-function-declaration -Wno-format-security    \
+@@ -24,7 +21,7 @@ CFLAGS_WARN=-Wall -Werror -Wundef -Wstrict-prototypes -Wno-trigraphs      \
+ CFLAGS_DEBUG=-g
+ 
+ # CPU specific compilation flags
+-CFLAGS_CPU=-march=$(ARM_ARCH) -mcpu=$(ARM_CPU) -mthumb -Os -mno-sched-prolog
++CFLAGS_CPU=   -Os 
+ 
+ # FPU compilation flags
+ CFLAGS_FPU-$(CONFIG_FPU)=-mfpu=fpv4-sp-d16 -mfloat-abi=hard
+@@ -42,7 +39,7 @@ VPATH_LIST=     $(buildsrc)/$(BOARDDIR)
+ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/scp_task/)
+ 
+ CFLAGS=$(CFLAGS_CPU) $(CFLAGS_WARN) $(VPATH_LIST:%=-I%) $(CFLAGS_INCLUDE) $(CFLAGS_FPU-y)
+-ASFLAGS= -gdwarf2 -mcpu=$(ARM_CPU)
++ASFLAGS= -gdwarf2 
+ DUMP_FLAGS = -D -x
+ 
+ LDFLAGS=-Bstatic
+diff --git a/arch/arm/cpu/armv8/txhd/firmware/scp_task/misc.S b/arch/arm/cpu/armv8/txhd/firmware/scp_task/misc.S
+index 9b97da3561..ab4245c4b3 100644
+--- a/arch/arm/cpu/armv8/txhd/firmware/scp_task/misc.S
++++ b/arch/arm/cpu/armv8/txhd/firmware/scp_task/misc.S
+@@ -1,10 +1,7 @@
+ .text
+ 
+-.syntax unified
+-.code 16
+ 
+ .global bss_init
+-.thumb_func
+ 
+ bss_init:
+ 	mov r0, #0
+diff --git a/arch/arm/cpu/armv8/txhd/firmware/scp_task/task_entry.S b/arch/arm/cpu/armv8/txhd/firmware/scp_task/task_entry.S
+index dc4b6a3e1d..af015c2412 100644
+--- a/arch/arm/cpu/armv8/txhd/firmware/scp_task/task_entry.S
++++ b/arch/arm/cpu/armv8/txhd/firmware/scp_task/task_entry.S
+@@ -2,11 +2,8 @@
+ #include "registers.h"
+ 
+ .text
+-.syntax unified
+-.code 16
+ 
+ 	.global task_entry
+-.thumb_func
+ task_entry:
+ 	b secure_task
+ 	b high_task
+diff --git a/arch/arm/cpu/armv8/txl/firmware/acs/Makefile b/arch/arm/cpu/armv8/txl/firmware/acs/Makefile
+index 647f1615f8..53a58eb8f0 100644
+--- a/arch/arm/cpu/armv8/txl/firmware/acs/Makefile
++++ b/arch/arm/cpu/armv8/txl/firmware/acs/Makefile
+@@ -176,10 +176,10 @@ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/)
+ 
+ vpath %.c $(VPATH_LIST)
+ 
+-ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,--fatal-warnings	\
++ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,	\
+ 				-mgeneral-regs-only -D__ASSEMBLY__		\
+ 				${DEFINES} ${INCLUDES}
+-CFLAGS			+= 	-nostdinc -pedantic -ffreestanding -Wall	\
++CFLAGS			+= 	-nostdinc  -ffreestanding -Wall	\
+ 				-Werror -mgeneral-regs-only -std=c99 -c -Os	\
+ 				${DEFINES} ${INCLUDES} $(VPATH_LIST:%=-I%)
+ CFLAGS			+=	-ffunction-sections -fdata-sections
+@@ -187,7 +187,7 @@ ASFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	-Wno-unused
+ 
+-LDFLAGS			+=	--fatal-warnings -O1
++LDFLAGS			+=	 -O1
+ LDFLAGS			+=	--gc-sections
+ 
+ CC			:=	${CROSS_COMPILE}gcc
+@@ -426,4 +426,3 @@ help:
+ 	@echo "note: most build targets require PLAT to be set to a specific platform."
+ 	@echo ""
+ 	@echo "example: build all targets for the FVP platform:"
+-	@echo "  CROSS_COMPILE=aarch64-none-elf- make PLAT=fvp all"
+diff --git a/arch/arm/cpu/armv8/txl/firmware/bl21/Makefile b/arch/arm/cpu/armv8/txl/firmware/bl21/Makefile
+index 4dfe4620f4..76da5bf815 100644
+--- a/arch/arm/cpu/armv8/txl/firmware/bl21/Makefile
++++ b/arch/arm/cpu/armv8/txl/firmware/bl21/Makefile
+@@ -178,10 +178,10 @@ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/)
+ 
+ vpath %.c $(VPATH_LIST)
+ 
+-ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,--fatal-warnings	\
++ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,	\
+ 				-mgeneral-regs-only -D__ASSEMBLY__		\
+ 				${DEFINES} ${INCLUDES}
+-CFLAGS			+= 	-nostdinc -pedantic -ffreestanding -Wall	\
++CFLAGS			+= 	-nostdinc  -ffreestanding -Wall	\
+ 				-Werror -mgeneral-regs-only -std=c99 -c -Os	\
+ 				${DEFINES} ${INCLUDES} $(VPATH_LIST:%=-I%)
+ CFLAGS			+=	-ffunction-sections -fdata-sections
+@@ -189,7 +189,7 @@ ASFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	-Wno-unused
+ 
+-LDFLAGS			+=	--fatal-warnings -O1
++LDFLAGS			+=	 -O1
+ LDFLAGS			+=	--gc-sections
+ 
+ CC			:=	${CROSS_COMPILE}gcc
+@@ -428,4 +428,3 @@ help:
+ 	@echo "note: most build targets require PLAT to be set to a specific platform."
+ 	@echo ""
+ 	@echo "example: build all targets for the FVP platform:"
+-	@echo "  CROSS_COMPILE=aarch64-none-elf- make PLAT=fvp all"
+diff --git a/arch/arm/cpu/armv8/txl/firmware/scp_task/Makefile b/arch/arm/cpu/armv8/txl/firmware/scp_task/Makefile
+index 2e1eee819b..50dd4d89bb 100644
+--- a/arch/arm/cpu/armv8/txl/firmware/scp_task/Makefile
++++ b/arch/arm/cpu/armv8/txl/firmware/scp_task/Makefile
+@@ -6,7 +6,6 @@ include $(buildtree)/include/autoconf.mk
+ include $(buildtree)/.config
+ 
+ # Select ARMv7-m bare-metal toolchain
+-CROSS_COMPILE=arm-none-eabi-
+ ASM=$(CROSS_COMPILE)as
+ CC=$(CROSS_COMPILE)gcc
+ CPP=$(CROSS_COMPILE)cpp
+@@ -14,8 +13,6 @@ LD=$(CROSS_COMPILE)ld
+ OBJCOPY=$(CROSS_COMPILE)objcopy
+ OBJDUMP=$(CROSS_COMPILE)objdump
+ 
+-ARM_ARCH=armv7-m
+-ARM_CPU=cortex-m3
+ CFLAGS_WARN=-Wall -Werror -Wundef -Wstrict-prototypes -Wno-trigraphs      \
+             -fno-strict-aliasing -fno-common -fomit-frame-pointer         \
+             -Werror-implicit-function-declaration -Wno-format-security    \
+@@ -24,7 +21,7 @@ CFLAGS_WARN=-Wall -Werror -Wundef -Wstrict-prototypes -Wno-trigraphs      \
+ CFLAGS_DEBUG=-g
+ 
+ # CPU specific compilation flags
+-CFLAGS_CPU=-march=$(ARM_ARCH) -mcpu=$(ARM_CPU) -mthumb -Os -mno-sched-prolog
++CFLAGS_CPU=   -Os 
+ 
+ # FPU compilation flags
+ CFLAGS_FPU-$(CONFIG_FPU)=-mfpu=fpv4-sp-d16 -mfloat-abi=hard
+@@ -42,7 +39,7 @@ VPATH_LIST=     $(buildsrc)/$(BOARDDIR)
+ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/scp_task/)
+ 
+ CFLAGS=$(CFLAGS_CPU) $(CFLAGS_WARN) $(VPATH_LIST:%=-I%) $(CFLAGS_INCLUDE) $(CFLAGS_FPU-y)
+-ASFLAGS= -gdwarf2 -mcpu=$(ARM_CPU)
++ASFLAGS= -gdwarf2 
+ DUMP_FLAGS = -D -x
+ 
+ LDFLAGS=-Bstatic
+diff --git a/arch/arm/cpu/armv8/txl/firmware/scp_task/misc.S b/arch/arm/cpu/armv8/txl/firmware/scp_task/misc.S
+index 9b97da3561..ab4245c4b3 100644
+--- a/arch/arm/cpu/armv8/txl/firmware/scp_task/misc.S
++++ b/arch/arm/cpu/armv8/txl/firmware/scp_task/misc.S
+@@ -1,10 +1,7 @@
+ .text
+ 
+-.syntax unified
+-.code 16
+ 
+ .global bss_init
+-.thumb_func
+ 
+ bss_init:
+ 	mov r0, #0
+diff --git a/arch/arm/cpu/armv8/txl/firmware/scp_task/task_entry.S b/arch/arm/cpu/armv8/txl/firmware/scp_task/task_entry.S
+index dc4b6a3e1d..af015c2412 100644
+--- a/arch/arm/cpu/armv8/txl/firmware/scp_task/task_entry.S
++++ b/arch/arm/cpu/armv8/txl/firmware/scp_task/task_entry.S
+@@ -2,11 +2,8 @@
+ #include "registers.h"
+ 
+ .text
+-.syntax unified
+-.code 16
+ 
+ 	.global task_entry
+-.thumb_func
+ task_entry:
+ 	b secure_task
+ 	b high_task
+diff --git a/arch/arm/cpu/armv8/txlx/firmware/acs/Makefile b/arch/arm/cpu/armv8/txlx/firmware/acs/Makefile
+index 647f1615f8..53a58eb8f0 100644
+--- a/arch/arm/cpu/armv8/txlx/firmware/acs/Makefile
++++ b/arch/arm/cpu/armv8/txlx/firmware/acs/Makefile
+@@ -176,10 +176,10 @@ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/)
+ 
+ vpath %.c $(VPATH_LIST)
+ 
+-ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,--fatal-warnings	\
++ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,	\
+ 				-mgeneral-regs-only -D__ASSEMBLY__		\
+ 				${DEFINES} ${INCLUDES}
+-CFLAGS			+= 	-nostdinc -pedantic -ffreestanding -Wall	\
++CFLAGS			+= 	-nostdinc  -ffreestanding -Wall	\
+ 				-Werror -mgeneral-regs-only -std=c99 -c -Os	\
+ 				${DEFINES} ${INCLUDES} $(VPATH_LIST:%=-I%)
+ CFLAGS			+=	-ffunction-sections -fdata-sections
+@@ -187,7 +187,7 @@ ASFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	-Wno-unused
+ 
+-LDFLAGS			+=	--fatal-warnings -O1
++LDFLAGS			+=	 -O1
+ LDFLAGS			+=	--gc-sections
+ 
+ CC			:=	${CROSS_COMPILE}gcc
+@@ -426,4 +426,3 @@ help:
+ 	@echo "note: most build targets require PLAT to be set to a specific platform."
+ 	@echo ""
+ 	@echo "example: build all targets for the FVP platform:"
+-	@echo "  CROSS_COMPILE=aarch64-none-elf- make PLAT=fvp all"
+diff --git a/arch/arm/cpu/armv8/txlx/firmware/bl21/Makefile b/arch/arm/cpu/armv8/txlx/firmware/bl21/Makefile
+index 4dfe4620f4..76da5bf815 100644
+--- a/arch/arm/cpu/armv8/txlx/firmware/bl21/Makefile
++++ b/arch/arm/cpu/armv8/txlx/firmware/bl21/Makefile
+@@ -178,10 +178,10 @@ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/)
+ 
+ vpath %.c $(VPATH_LIST)
+ 
+-ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,--fatal-warnings	\
++ASFLAGS			+= 	-nostdinc -ffreestanding -Wa,	\
+ 				-mgeneral-regs-only -D__ASSEMBLY__		\
+ 				${DEFINES} ${INCLUDES}
+-CFLAGS			+= 	-nostdinc -pedantic -ffreestanding -Wall	\
++CFLAGS			+= 	-nostdinc  -ffreestanding -Wall	\
+ 				-Werror -mgeneral-regs-only -std=c99 -c -Os	\
+ 				${DEFINES} ${INCLUDES} $(VPATH_LIST:%=-I%)
+ CFLAGS			+=	-ffunction-sections -fdata-sections
+@@ -189,7 +189,7 @@ ASFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	${FIRMWARE_CPPFLAGS}
+ CFLAGS			+= 	-Wno-unused
+ 
+-LDFLAGS			+=	--fatal-warnings -O1
++LDFLAGS			+=	 -O1
+ LDFLAGS			+=	--gc-sections
+ 
+ CC			:=	${CROSS_COMPILE}gcc
+@@ -428,4 +428,3 @@ help:
+ 	@echo "note: most build targets require PLAT to be set to a specific platform."
+ 	@echo ""
+ 	@echo "example: build all targets for the FVP platform:"
+-	@echo "  CROSS_COMPILE=aarch64-none-elf- make PLAT=fvp all"
+diff --git a/arch/arm/cpu/armv8/txlx/firmware/scp_task/Makefile b/arch/arm/cpu/armv8/txlx/firmware/scp_task/Makefile
+index 2e1eee819b..e70c3b11aa 100644
+--- a/arch/arm/cpu/armv8/txlx/firmware/scp_task/Makefile
++++ b/arch/arm/cpu/armv8/txlx/firmware/scp_task/Makefile
+@@ -6,7 +6,6 @@ include $(buildtree)/include/autoconf.mk
+ include $(buildtree)/.config
+ 
+ # Select ARMv7-m bare-metal toolchain
+-CROSS_COMPILE=arm-none-eabi-
+ ASM=$(CROSS_COMPILE)as
+ CC=$(CROSS_COMPILE)gcc
+ CPP=$(CROSS_COMPILE)cpp
+@@ -14,17 +13,10 @@ LD=$(CROSS_COMPILE)ld
+ OBJCOPY=$(CROSS_COMPILE)objcopy
+ OBJDUMP=$(CROSS_COMPILE)objdump
+ 
+-ARM_ARCH=armv7-m
+-ARM_CPU=cortex-m3
+-CFLAGS_WARN=-Wall -Werror -Wundef -Wstrict-prototypes -Wno-trigraphs      \
+-            -fno-strict-aliasing -fno-common -fomit-frame-pointer         \
+-            -Werror-implicit-function-declaration -Wno-format-security    \
+-            -fno-delete-null-pointer-checks -Wdeclaration-after-statement \
+-            -Wno-pointer-sign -fno-strict-overflow -fconserve-stack
+ CFLAGS_DEBUG=-g
+ 
+ # CPU specific compilation flags
+-CFLAGS_CPU=-march=$(ARM_ARCH) -mcpu=$(ARM_CPU) -mthumb -Os -mno-sched-prolog
++CFLAGS_CPU=   -Os 
+ 
+ # FPU compilation flags
+ CFLAGS_FPU-$(CONFIG_FPU)=-mfpu=fpv4-sp-d16 -mfloat-abi=hard
+@@ -42,7 +34,7 @@ VPATH_LIST=     $(buildsrc)/$(BOARDDIR)
+ VPATH_LIST:=$(VPATH_LIST:%=%/firmware/scp_task/)
+ 
+ CFLAGS=$(CFLAGS_CPU) $(CFLAGS_WARN) $(VPATH_LIST:%=-I%) $(CFLAGS_INCLUDE) $(CFLAGS_FPU-y)
+-ASFLAGS= -gdwarf2 -mcpu=$(ARM_CPU)
++ASFLAGS= -gdwarf2 
+ DUMP_FLAGS = -D -x
+ 
+ LDFLAGS=-Bstatic
+diff --git a/arch/arm/cpu/armv8/txlx/firmware/scp_task/misc.S b/arch/arm/cpu/armv8/txlx/firmware/scp_task/misc.S
+index 9b97da3561..ab4245c4b3 100644
+--- a/arch/arm/cpu/armv8/txlx/firmware/scp_task/misc.S
++++ b/arch/arm/cpu/armv8/txlx/firmware/scp_task/misc.S
+@@ -1,10 +1,7 @@
+ .text
+ 
+-.syntax unified
+-.code 16
+ 
+ .global bss_init
+-.thumb_func
+ 
+ bss_init:
+ 	mov r0, #0
+diff --git a/arch/arm/cpu/armv8/txlx/firmware/scp_task/task_entry.S b/arch/arm/cpu/armv8/txlx/firmware/scp_task/task_entry.S
+index dc4b6a3e1d..af015c2412 100644
+--- a/arch/arm/cpu/armv8/txlx/firmware/scp_task/task_entry.S
++++ b/arch/arm/cpu/armv8/txlx/firmware/scp_task/task_entry.S
+@@ -2,11 +2,8 @@
+ #include "registers.h"
+ 
+ .text
+-.syntax unified
+-.code 16
+ 
+ 	.global task_entry
+-.thumb_func
+ task_entry:
+ 	b secure_task
+ 	b high_task
+diff --git a/arch/arm/lib/memcpy.S b/arch/arm/lib/memcpy.S
+index eeaf003529..aa879753b9 100644
+--- a/arch/arm/lib/memcpy.S
++++ b/arch/arm/lib/memcpy.S
+@@ -61,10 +61,8 @@
+ 	.text
+ 
+ /* Prototype: void *memcpy(void *dest, const void *src, size_t n); */
+-	.syntax unified
+ #ifdef CONFIG_SYS_THUMB_BUILD
+ 	.thumb
+-	.thumb_func
+ #endif
+ ENTRY(memcpy)
+ 		cmp	r0, r1
+diff --git a/arch/arm/lib/memset.S b/arch/arm/lib/memset.S
+index 7208f20dda..aa2650fb3e 100644
+--- a/arch/arm/lib/memset.S
++++ b/arch/arm/lib/memset.S
+@@ -15,10 +15,8 @@
+ 	.text
+ 	.align	5
+ 
+-	.syntax unified
+ #ifdef CONFIG_SYS_THUMB_BUILD
+ 	.thumb
+-	.thumb_func
+ #endif
+ ENTRY(memset)
+ 	ands	r3, r0, #3		@ 1 unaligned?
+diff --git a/include/linux/compiler-gcc.h b/include/linux/compiler-gcc.h
+index e057bd2a84..a8a067df87 100644
+--- a/include/linux/compiler-gcc.h
++++ b/include/linux/compiler-gcc.h
+@@ -109,7 +109,7 @@
+ #define __always_unused			__attribute__((unused))
+ 
+ #define __gcc_header(x) #x
+-#define _gcc_header(x) __gcc_header(linux/compiler-gcc##x.h)
++#define _gcc_header(x) __gcc_header(linux/compiler.h)
+ #define gcc_header(x) _gcc_header(x)
+ #include gcc_header(__GNUC__)
+ 
+diff --git a/tools/Makefile b/tools/Makefile
+index b6d5af2ae0..b4f55beb74 100644
+--- a/tools/Makefile
++++ b/tools/Makefile
+@@ -37,19 +37,19 @@ hostprogs-$(CONFIG_SPL_GENERATE_ATMEL_PMECC_HEADER) += atmel_pmecc_params
+ hostprogs-$(CONFIG_CMD_LICENSE) += bin2header
+ hostprogs-$(CONFIG_LCD_LOGO) += bmp_logo
+ hostprogs-$(CONFIG_VIDEO_LOGO) += bmp_logo
+-HOSTCFLAGS_bmp_logo.o := -pedantic
++HOSTCFLAGS_bmp_logo.o := 
+ 
+ hostprogs-$(CONFIG_BUILD_ENVCRC) += envcrc
+ envcrc-objs := envcrc.o lib/crc32.o common/env_embedded.o lib/sha1.o
+ 
+ hostprogs-$(CONFIG_CMD_NET) += gen_eth_addr
+-HOSTCFLAGS_gen_eth_addr.o := -pedantic
++HOSTCFLAGS_gen_eth_addr.o := 
+ 
+ hostprogs-$(CONFIG_CMD_LOADS) += img2srec
+-HOSTCFLAGS_img2srec.o := -pedantic
++HOSTCFLAGS_img2srec.o := 
+ 
+ hostprogs-$(CONFIG_XWAY_SWAP_BYTES) += xway-swap-bytes
+-HOSTCFLAGS_xway-swap-bytes.o := -pedantic
++HOSTCFLAGS_xway-swap-bytes.o := 
+ 
+ hostprogs-y += mkenvimage
+ mkenvimage-objs := mkenvimage.o os_support.o lib/crc32.o
+@@ -126,14 +126,14 @@ HOSTLOADLIBES_fit_check_sign := $(HOSTLOADLIBES_mkimage)
+ 
+ hostprogs-$(CONFIG_EXYNOS5250) += mkexynosspl
+ hostprogs-$(CONFIG_EXYNOS5420) += mkexynosspl
+-HOSTCFLAGS_mkexynosspl.o := -pedantic
++HOSTCFLAGS_mkexynosspl.o := 
+ 
+ ifdtool-objs := $(LIBFDT_OBJS) ifdtool.o
+ hostprogs-$(CONFIG_X86) += ifdtool
+ 
+ hostprogs-$(CONFIG_MX23) += mxsboot
+ hostprogs-$(CONFIG_MX28) += mxsboot
+-HOSTCFLAGS_mxsboot.o := -pedantic
++HOSTCFLAGS_mxsboot.o := 
+ 
+ hostprogs-$(CONFIG_SUNXI) += mksunxiboot
+ 
+@@ -142,7 +142,7 @@ hostprogs-$(CONFIG_SHA1_CHECK_UB_IMG) += ubsha1
+ 
+ ubsha1-objs := os_support.o ubsha1.o lib/sha1.o
+ 
+-HOSTCFLAGS_ubsha1.o := -pedantic
++HOSTCFLAGS_ubsha1.o := 
+ 
+ hostprogs-$(CONFIG_KIRKWOOD) += kwboot
+ hostprogs-$(CONFIG_ARMADA_XP) += kwboot
+@@ -152,14 +152,14 @@ hostprogs-$(CONFIG_STATIC_RELA) += relocate-rela
+ # We build some files with extra pedantic flags to try to minimize things
+ # that won't build on some weird host compiler -- though there are lots of
+ # exceptions for files that aren't complaint.
+-HOSTCFLAGS_crc32.o := -pedantic
+-HOSTCFLAGS_md5.o := -pedantic
+-HOSTCFLAGS_sha1.o := -pedantic
+-HOSTCFLAGS_sha256.o := -pedantic
++HOSTCFLAGS_crc32.o := 
++HOSTCFLAGS_md5.o := 
++HOSTCFLAGS_sha1.o := 
++HOSTCFLAGS_sha256.o := 
+ 
+ # Don't build by default
+ #hostprogs-$(CONFIG_PPC) += mpc86x_clk
+-#HOSTCFLAGS_mpc86x_clk.o := -pedantic
++#HOSTCFLAGS_mpc86x_clk.o := 
+ 
+ quiet_cmd_wrap = WRAP    $@
+ cmd_wrap = echo "\#include <../$(patsubst $(obj)/%,%,$@)>" >$@
+diff --git a/tools/gdb/Makefile b/tools/gdb/Makefile
+index 451332031e..a440ff1bca 100644
+--- a/tools/gdb/Makefile
++++ b/tools/gdb/Makefile
+@@ -34,7 +34,7 @@ endif
+ #
+ # Use native tools and options
+ #
+-HOST_EXTRACFLAGS := -I$(BFD_ROOT_DIR)/include -pedantic
++HOST_EXTRACFLAGS := -I$(BFD_ROOT_DIR)/include 
+ 
+ hostprogs-y := gdbsend gdbcont
+ 
