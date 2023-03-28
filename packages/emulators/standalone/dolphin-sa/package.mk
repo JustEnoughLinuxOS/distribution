@@ -8,7 +8,7 @@ PKG_LONGDESC="Dolphin is a GameCube / Wii emulator, allowing you to play games f
 PKG_TOOLCHAIN="cmake"
 
 case ${DEVICE} in
-  RK3588|handheld)
+  RK3588|handheld|OGU)
     PKG_SITE="https://github.com/dolphin-emu/dolphin"
     PKG_URL="${PKG_SITE}.git"
     PKG_VERSION="4d164fcb77487b0cb732e0423961fd042c3e7e3b"

@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
+
+diff --git a/drivers/power/supply/rk818_charger.c b/drivers/power/supply/rk818_charger.c
+index cdef0dcd1f8c..e5081332aa4a 100644
+--- a/drivers/power/supply/rk818_charger.c
++++ b/drivers/power/supply/rk818_charger.c
+@@ -275,7 +275,7 @@ static enum power_supply_property rk818_usb_power_props[] = {
+ };
+ 
+ static const struct power_supply_desc rk818_usb_desc = {
+-	.name			= "rk818-usb",
++	.name			= "rk818-usb-charger",
+ 	.type			= POWER_SUPPLY_TYPE_USB,
+ 	.properties		= rk818_usb_power_props,
+ 	.num_properties		= ARRAY_SIZE(rk818_usb_power_props),
+@@ -610,7 +610,7 @@ static enum power_supply_property rk818_charger_props[] = {
+  * but not me, not now. :)
+  */
+ static const struct power_supply_desc rk818_charger_desc = {
+-	.name			= "rk818-battery",
++	.name			= "battery",
+ 	.type			= POWER_SUPPLY_TYPE_BATTERY,
+ 	.properties		= rk818_charger_props,
+ 	.num_properties		= ARRAY_SIZE(rk818_charger_props),
