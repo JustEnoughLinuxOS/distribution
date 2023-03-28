@@ -14,6 +14,29 @@ case "${PKG_SOC}" in
   ;;
 esac
 
+if [ "${BOOT_INI}" == true ]
+then
+  echo "boot: create boot.ini..."
+  cat >${INSTALL}/usr/share/bootloader/boot.ini <<EOF
+ODROIDGOU-UBOOT-CONFIG
+
+setenv dtb_loadaddr "0x10000000"
+setenv loadaddr "0x1B00000"
+
+setenv bootargs "boot=UUID=@BOOT_UUID@ disk=UUID=@DISK_UUID@ ${EXTRA_CMDLINE}"
+
+load mmc \${devno}:1 \${loadaddr} KERNEL
+load mmc \${devno}:1 \${dtb_loadaddr} meson-g12b-odroid-go-ultra.dtb
+
+fdt addr \${dtb_loadaddr}
+
+booti \${loadaddr} - \${dtb_loadaddr}
+
+EOF
+fi
+
+if [ "${EXT_LINUX_CONF}" == true ]
+then
 echo "boot: create extlinux.conf..."
 mkdir -p "${INSTALL}/usr/share/bootloader/extlinux"
 
@@ -25,3 +48,4 @@ LABEL ${DISTRO}
   ${FDTMODE}
   APPEND boot=UUID=@BOOT_UUID@ disk=UUID=@DISK_UUID@ ${EXTRA_CMDLINE}
 EOF
+fi

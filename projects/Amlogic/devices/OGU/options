@@ -35,7 +35,8 @@
     UBOOT_CONFIG="odroid-go-ultra_defconfig"
     PKG_SOC="s922x"
     BOOT_FIP="odroid-go-ultra"
-    BOOT_INI=false
+    BOOT_INI=true
+    EXT_LINUX_CONF=false
 
   # Additional kernel make parameters (for example to specify the u-boot loadaddress)
     KERNEL_MAKE_EXTRACMD+=" amlogic/${DEVICE_DTB[0]}.dtb"
