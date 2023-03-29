@@ -32,7 +32,7 @@
     PARTITION_TABLE="msdos"
     DEVICE_DTB=("meson-g12b-odroid-go-ultra")
     UBOOT_DTB="${DEVICE_DTB[0]}"
-    UBOOT_CONFIG="odroid-go-ultra_defconfig"
+    UBOOT_CONFIG="odroidgou_defconfig"
     PKG_SOC="s922x"
     BOOT_FIP="odroid-go-ultra"
     BOOT_INI=true

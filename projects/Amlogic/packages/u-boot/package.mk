@@ -7,7 +7,7 @@ PKG_ARCH="arm aarch64"
 PKG_SITE="https://github.com/u-boot/u-boot"
 PKG_URL="${PKG_SITE}.git"
 PKG_LICENSE="GPL"
-PKG_DEPENDS_TARGET="toolchain swig:host amlogic-boot-fip"
+PKG_DEPENDS_TARGET="toolchain swig:host amlogic-boot-fip bl301"
 PKG_LONGDESC="U-Boot is a bootloader for embedded systems."
 
 

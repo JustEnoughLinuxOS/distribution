@@ -8,7 +8,7 @@ FIP_DIR="${ROOT}/build.${DISTRO}-${DEVICE}.aarch64/amlogic-boot-fip-*"
 case "${PKG_SOC}" in
  s922x)
 	echo "uboot: encrypting u-boot.bin with fip..."
-	cp -av u-boot.bin ${FIP_DIR}/
+	cp -av build/u-boot.bin ${FIP_DIR}/
 	cd ${FIP_DIR}
 	./build-fip.sh ${BOOT_FIP} u-boot.bin ${INSTALL}/usr/share/bootloader/
   ;;

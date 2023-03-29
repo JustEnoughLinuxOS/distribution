@@ -1,3 +1,39 @@
+diff --git a/Makefile b/Makefile
+index 730e8d752f..ad9f8ab12e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -763,7 +763,7 @@ ifneq ($(CONFIG_BUILD_TARGET),)
+ ALL-y += $(CONFIG_BUILD_TARGET:"%"=%)
+ endif
+ 
+-ALL-$(CONFIG_ODROID_COMMON) += bootimage
++#ALL-$(CONFIG_ODROID_COMMON) += bootimage
+ 
+ LDFLAGS_u-boot += $(LDFLAGS_FINAL)
+ ifneq ($(CONFIG_SYS_TEXT_BASE),)
+@@ -875,8 +875,8 @@ $(ACS_BINARY): tools prepare u-boot.bin
+ bl21.bin: tools prepare u-boot.bin acs.bin
+ 	$(Q)$(MAKE) -C $(srctree)/$(CPUDIR)/${SOC}/firmware/bl21 all FIRMWARE=$@
+ 
+-.PHONY : fip.bin bootimage
+-fip.bin bootimage: $(ACS_BINARY) $(BL301_BINARY)
++.PHONY : fip.bin bootimage $(BL301_BINARY)
++fip.bin bootimage: $(ACS_BINARY)
+ 	$(Q)$(MAKE) -C $(srctree)/fip $@
+ 
+ #
+diff --git a/fip/Makefile b/fip/Makefile
+index 8c45e9763d..61eaf01832 100644
+--- a/fip/Makefile
++++ b/fip/Makefile
+@@ -79,7 +79,6 @@ $(buildtree)/fip/fip.bin: FORCE
+ 		$(buildsrc)/fip/$(SOC)/bl30.bin, \
+ 		$(buildtree)/fip/zero_tmp, \
+ 		$(buildtree)/fip/bl30_zero.bin, \
+-		$(buildtree)/scp_task/bl301.bin, \
+ 		$(buildtree)/fip/bl301_zero.bin, \
+ 		$(buildtree)/fip/bl30_new.bin, \
+ 		bl30)
 diff --git a/include/configs/odroidgou.h b/include/configs/odroidgou.h
 index 33351524e3..24bfae3304 100755
 --- a/include/configs/odroidgou.h
