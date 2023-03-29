@@ -298,6 +298,11 @@ if [ "${PROJECT}" = "Generic" ]; then
   [ -n "${SUDO_USER}" ] && chown "${SUDO_USER}:" "${DISK_BASENAME}.ova"
 fi
 
+if [ "${DEVICE}" = "OGU" ]; then
+  echo "image: write u-boot.bin to disk..."
+  dd if="${RELEASE_DIR}/3rdparty/bootloader/u-boot.bin" of="${DISK}" conv=fsync,notrunc bs=512 seek=1 >"${SAVE_ERROR}" 2>&1 || show_error
+fi
+
 # gzip
 echo "image: compressing..."
 pigz --best --force "${DISK}"
