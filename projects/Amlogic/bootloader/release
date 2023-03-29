@@ -6,18 +6,14 @@ if [ -n "${UBOOT_CONFIG}" ]; then
   BOOTLOADER_DIR=$(get_build_dir ${BOOTLOADER})
   KERNEL_DIR=$(get_build_dir linux)
 
-#  case "${PKG_SOC}" in
-#    s922x)
-#      if [ -f ${BOOTLOADER_DIR}/u-boot.bin ]; then
-#        cp -a ${BOOTLOADER_DIR}/u-boot.bin ${RELEASE_DIR}/3rdparty/bootloader
-#      fi
-#    ;;
-#  esac
+  case "${PKG_SOC}" in
+    s922x) 
+      if [ -f ${INSTALL}/usr/share/bootloader/u-boot.bin ]; then
+        cp -a ${INSTALL}/usr/share/bootloader/u-boot.bin ${RELEASE_DIR}/3rdparty/bootloader
+      fi
+    ;;
+  esac
 fi
-
-#if [ -f ${INSTALL}/usr/share/bootloader/boot.ini ]; then
-#  cp -a ${INSTALL}/usr/share/bootloader/boot.ini ${RELEASE_DIR}/3rdparty/bootloader
-#fi
 
 LINUX_DTS_DIR=$(get_build_dir linux)/arch/${TARGET_KERNEL_ARCH}/boot/dts/
 for dtb in $(find ${LINUX_DTS_DIR} -name "*.dtb") ; do
