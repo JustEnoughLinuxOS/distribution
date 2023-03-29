@@ -4,14 +4,35 @@
 source ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
 
 
-if [ -f "${RELEASE_DIR}/3rdparty/bootloader/u-boot.bin" ]; then
-  echo "image: burn uboot.bin to image... (${PKG_SOC})"
-  dd if="${RELEASE_DIR}/3rdparty/bootloader/u-boot.bin" of="${DISK}" conv=fsync,notrunc bs=512 seek=1 >"${SAVE_ERROR}" 2>&1 || show_error
+#if [ -f "${RELEASE_DIR}/3rdparty/bootloader/u-boot.bin" ]; then
+#  echo "image: burn uboot.bin to image... (${PKG_SOC})"
+#  dd if="${RELEASE_DIR}/3rdparty/bootloader/u-boot.bin" of="${DISK}" conv=fsync,notrunc bs=512 seek=1 >"${SAVE_ERROR}" 2>&1 || show_error
+#fi
+
+# Create boot.ini
+if [ "${BOOT_INI}" == true ]
+then
+  echo "image: create boot.ini..."
+  cat >"${LE_TMP}/boot.ini" <<EOF
+ODROIDGOU-UBOOT-CONFIG
+
+setenv dtb_loadaddr "0x10000000"
+setenv loadaddr "0x1B00000"
+
+setenv bootargs "boot=UUID=${UUID_SYSTEM} disk=UUID=${UUID_STORAGE} ${EXTRA_CMDLINE}"
+
+load mmc \${devno}:1 \${loadaddr} KERNEL
+load mmc \${devno}:1 \${dtb_loadaddr} meson-g12b-odroid-go-ultra.dtb
+
+fdt addr \${dtb_loadaddr}
+
+booti \${loadaddr} - \${dtb_loadaddr}
+
+EOF
+mcopy -so "${LE_TMP}/boot.ini" ::
 fi
 
-mkdir -p "${LE_TMP}/extlinux"
-
-# copy device trees to part1
+#Copy device trees to part1
 for DTB in ${DEVICE_DTB[@]}
 do
   if [ -e "${DTB}.dtb" ]
@@ -20,6 +41,10 @@ do
     mcopy -o "${DTB}.dtb" ::
   fi
 done
+
+#Create extlinux.conf
+if [ "${EXT_LINUX_CONF}" == true ]
+then
 
 mkdir -p "${LE_TMP}/extlinux"
 
@@ -35,3 +60,5 @@ LABEL ${DISTRO}
 EOF
 
 mcopy -so "${LE_TMP}/extlinux" ::
+
+fi

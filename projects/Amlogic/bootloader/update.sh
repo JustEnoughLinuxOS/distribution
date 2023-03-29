@@ -68,6 +68,9 @@ done
 if [ -f $SYSTEM_ROOT/usr/share/bootloader/boot.ini ]; then
   echo "Updating boot.ini..."
   cp -p $SYSTEM_ROOT/usr/share/bootloader/boot.ini $BOOT_ROOT/boot.ini &>/dev/null
+    sed -e "s/@BOOT_UUID@/$BOOT_UUID/" \
+      -e "s/@DISK_UUID@/$DISK_UUID/" \
+      -i $BOOT_ROOT/boot.ini
 fi
 
 # update device tree
@@ -85,13 +88,7 @@ case ${MYDEV} in
 
   if [ -f $SYSTEM_ROOT/usr/share/bootloader/u-boot.bin ]; then
     echo -n "Updating uboot.bin... "
-    dd if=$SYSTEM_ROOT/usr/share/bootloader/u-boot.bin of=$BOOT_DISK bs=512 seek=16384 conv=fsync &>/dev/null
-    echo "done"
-  fi
-
-  if [ -f $SYSTEM_ROOT/usr/share/bootloader/logo.bmp ]; then
-    echo -n "Updating uboot logo... "
-    cp -p $SYSTEM_ROOT/usr/share/bootloader/logo.bmp $BOOT_ROOT &>/dev/null
+    dd if=$SYSTEM_ROOT/usr/share/bootloader/u-boot.bin of=$BOOT_DISK conv=fsync,notrunc bs=512 seek=1 &>/dev/null
     echo "done"
   fi
 
