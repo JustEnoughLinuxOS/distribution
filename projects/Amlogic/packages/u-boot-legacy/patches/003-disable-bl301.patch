@@ -1,0 +1,20 @@
+diff --git a/include/configs/odroidgou.h b/include/configs/odroidgou.h
+index 33351524e3..24bfae3304 100755
+--- a/include/configs/odroidgou.h
++++ b/include/configs/odroidgou.h
+@@ -452,7 +452,7 @@
+ #define CONFIG_LZMA				1
+ 
+ /* other functions */
+-#define CONFIG_NEED_BL301			1
++#define CONFIG_NEED_BL301			0
+ #define CONFIG_NEED_BL32			1
+ #define CONFIG_CMD_RSVMEM			1
+ #define CONFIG_FIP_IMG_SUPPORT			1
+@@ -516,4 +516,4 @@
+ 
+ #define CONFIG_ZERO_BOOTDELAY_CHECK	/* check for keypress on bootdelay==0 */
+ 
+-#endif
+\ No newline at end of file
++#endif
