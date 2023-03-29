@@ -15,6 +15,7 @@ make_target() {
 }
 
 makeinstall_target() {
+  mkdir -p ${INSTALL}/usr/bin
   cp -v $(get_build_dir linux)/wifibt/rtk_hciattach ${INSTALL}/usr/bin
   cp -v $(get_build_dir linux)/wifibt/rtl8821c_fw ${INSTALL}/$(get_full_firmware_dir)
   cp -v $(get_build_dir linux)/wifibt/rtl8821cs_config ${INSTALL}/$(get_full_firmware_dir)/rtl8821c_config
