@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2023-present Fewtarius
+
+diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+index 3659f0465a72..b2b9b60a45eb 100644
+--- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
++++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+@@ -429,7 +429,7 @@ EXPORT_SYMBOL(drm_get_panel_orientation_quirk);
+ /* There are no quirks for non x86 devices yet */
+ int drm_get_panel_orientation_quirk(int width, int height)
+ {
+-	return DRM_MODE_PANEL_ORIENTATION_UNKNOWN;
++	return DRM_MODE_PANEL_ORIENTATION_LEFT_UP;
+ }
+ EXPORT_SYMBOL(drm_get_panel_orientation_quirk);
+ 
