@@ -70,7 +70,7 @@
     WINDOWMANAGER="weston"
   
   # kernel serial console
-    EXTRA_CMDLINE="rootwait rw console=ttyAML0,115200n8 no_console_suspend fsck.repair=yes net.ifnames=0 consoleblank=0 fbcon=rotate:3"
+    EXTRA_CMDLINE="rootwait quiet console=ttyAML0,115200n8 console=tty0 no_console_suspend fsck.repair=yes net.ifnames=0 consoleblank=0 fbcon=rotate:3"
 
   # additional packages to install
     ADDITIONAL_PACKAGES=" emulators gamesupport"
