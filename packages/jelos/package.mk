@@ -14,11 +14,13 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_TOOLCHAIN="make"
 
-PKG_BASEOS="plymouth-lite grep wget util-linux xmlstarlet bluetool gnupg gzip patchelf imagemagick \
-            terminus-font vim bash pyudev dialog six git dbus-python coreutils miniupnpc nss-mdns  \
-            avahi alsa-ucm-conf fbgrab modules system-utils autostart powerstate powertop ectool"
+PKG_BASEOS="plymouth-lite grep wget util-linux xmlstarlet gnupg gzip patchelf imagemagick \
+            terminus-font vim bash pyudev dialog six git dbus-python coreutils \
+            alsa-ucm-conf fbgrab modules system-utils autostart powerstate powertop ectool"
 
 PKG_UI="emulationstation es-themes"
+
+PKG_UI_TOOLS="fileman"
 
 PKG_SOFTWARE=""
 
@@ -26,7 +28,9 @@ PKG_COMPAT="lib32"
 
 PKG_MULTIMEDIA="ffmpeg vlc mpv"
 
-PKG_TOOLS="i2c-tools synctools jslisten evtest tailscale pygobject fileman"
+PKG_NETWORK="network synctools pygobject"
+
+PKG_TOOLS="i2c-tools evtest jslisten"
 
 ### Project specific variables
 case "${PROJECT}" in
@@ -47,7 +51,7 @@ if [ ! -z "${BASE_ONLY}" ]
 then
   PKG_DEPENDS_TARGET+=" ${PKG_BASEOS} ${PKG_TOOLS} ${PKG_UI}"
 else
-  PKG_DEPENDS_TARGET+=" ${PKG_BASEOS} ${PKG_TOOLS} ${PKG_UI} ${PKG_COMPAT} ${PKG_MULTIMEDIA} ${PKG_SOFTWARE}"
+  PKG_DEPENDS_TARGET+=" ${PKG_BASEOS} ${PKG_NETWORK} ${PKG_TOOLS} ${PKG_UI} ${PKG_UI_TOOLS} ${PKG_COMPAT} ${PKG_MULTIMEDIA} ${PKG_SOFTWARE}"
 fi
 
 make_target() {
