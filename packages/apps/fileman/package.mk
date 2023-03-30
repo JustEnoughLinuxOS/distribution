@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="fileman"
-PKG_VERSION="c201a81f23af0449c2a7a55533604e12401bc84d"
+PKG_VERSION="b5d97989dd70e4f043501249845478a14d769aed"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/JustEnoughLinuxOS/fileman"
