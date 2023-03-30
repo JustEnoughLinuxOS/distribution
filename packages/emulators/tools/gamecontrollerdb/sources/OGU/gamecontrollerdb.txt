@@ -1,0 +1,1 @@
+03001354474f2d556c74726120476100,GO-Ultra Gamepad,platform:Linux,x:b2,a:b1,b:b0,y:b3,back:b12,start:b17,dpleft:b10,dpdown:b9,dpright:b11,dpup:b8,leftshoulder:b4,lefttrigger:b6,rightshoulder:b5,righttrigger:b7,leftstick:b14,rightstick:b15,leftx:a0,lefty:a1,rightx:a2,righty:a3,
