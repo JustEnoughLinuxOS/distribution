@@ -10,9 +10,12 @@ case "${PKG_SOC}" in
 	echo "uboot: encrypting u-boot.bin with fip..."
 	cp -av build/u-boot.bin ${FIP_DIR}/
 	cd ${FIP_DIR}
-	./build-fip.sh ${BOOT_FIP} u-boot.bin ${INSTALL}/usr/share/bootloader/
+	./build-fip.sh ${BOOT_FIP} u-boot.bin ${INSTALL}/usr/share/bootloader/fip
   ;;
 esac
+
+#Install a precombiled u-boot.bin until we can fix buildroot. 
+cp -rf ${PKG_DIR}/bin/u-boot.bin ${INSTALL}/usr/share/bootloader/
 
 if [ "${BOOT_INI}" == true ]
 then
