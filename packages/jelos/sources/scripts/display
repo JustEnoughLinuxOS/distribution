@@ -1,0 +1,103 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2023-present Fewtarius
+
+. /etc/profile
+
+# ARGS:
+#
+# 1 - property to adjust (contrast/saturation/hue)
+# 2 - up/down or a defined value
+
+PROPERTY=${1}
+NEWVAL=${2}
+
+# Command usage:
+# drm_tool set /dev/dri/card0 133 saturation value
+
+# Define the basics
+MIN=1
+MAX=100
+STEP=1
+DEFAULTVAL=50
+
+if [ ! -e /dev/dri/card0 ]
+then
+  echo "ERROR: No display found."
+  exit 1
+fi
+
+log() {
+  $DEBUG && echo "Info: ${*}"
+}
+
+getValue() {
+  MYVAL=$(get_setting system.${1})
+  if [ -n "${MYVAL}" ]
+  then
+    if [ "${MYVAL}" > "${MAX}" ]
+    then
+      MYVAL=${MAX}
+    elif [ "${MYVAL}" < "${MIN}" ]
+    then
+      MYVAL=${MIN}
+    fi
+    echo ${MYVAL}
+  else
+    echo ${DEFAULTVAL}
+  fi
+}
+
+setValue() {
+  log "Set (${2})"
+  drm_tool set /dev/dri/card0 133 ${1} ${2}
+  if [ $? = 0 ]
+  then
+    set_setting system.${1} ${2}
+  fi
+}
+
+stepUp() {
+  LASTVAL=$(getValue)
+  NEWVAL=$(expr ${LASTVAL} + 1)
+  log "Step up (${NEWVAL})"
+  setValue ${PROPERTY} ${NEWVAL}
+}
+
+stepDown() {
+  LASTVAL=$(getValue)
+  NEWVAL=$(expr ${LASTVAL} - 1)
+  log "Step down (${NEWVAL})"
+  setValue ${PROPERTY} ${NEWVAL}
+}
+
+restoreSettings() {
+  for PROPERTY in contrast saturation hue
+  do
+    RESTVAL=$(getValue)
+    setValue ${PROPERTY} $(RESTVAL)
+  done
+}
+
+case ${NEWVAL} in
+  "up")
+    stepUp
+  ;;
+  "down")
+    stepDown
+  ;;
+  "restore")
+    restoreSettings
+  ;;
+  *)
+    if [[ "${NEWVAL}" =~ ^[0-9] ]] && \
+       [ "${NEWVAL}" -le "${MAX}" ] && \
+       [ "${NEWVAL}" -ge "${MIN}" ]
+    then
+      setValue ${PROPERTY} ${NEWVAL}
+    else
+      echo "Error: Invalid value."
+      exit 1
+    fi
+  ;;
+esac
