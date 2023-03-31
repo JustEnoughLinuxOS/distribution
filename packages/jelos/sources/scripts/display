@@ -58,14 +58,14 @@ setValue() {
 }
 
 stepUp() {
-  LASTVAL=$(getValue)
+  LASTVAL=$(getValue ${PROPERTY})
   NEWVAL=$(expr ${LASTVAL} + 1)
   log "Step up (${NEWVAL})"
   setValue ${PROPERTY} ${NEWVAL}
 }
 
 stepDown() {
-  LASTVAL=$(getValue)
+  LASTVAL=$(getValue ${PROPERTY})
   NEWVAL=$(expr ${LASTVAL} - 1)
   log "Step down (${NEWVAL})"
   setValue ${PROPERTY} ${NEWVAL}
@@ -74,8 +74,8 @@ stepDown() {
 restoreSettings() {
   for PROPERTY in contrast saturation hue
   do
-    RESTVAL=$(getValue)
-    setValue ${PROPERTY} $(RESTVAL)
+    RESTVAL=$(getValue ${PROPERTY})
+    setValue ${PROPERTY} ${RESTVAL}
   done
 }
 
