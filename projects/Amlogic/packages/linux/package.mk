@@ -19,10 +19,8 @@ PKG_PATCH_DIRS+="${DEVICE}"
 
 case ${DEVICE} in
   OGU)
-    PKG_VERSION="ebbf6b19d27cd2a11be22c0282a7bbfdab64bbe3"
-    PKG_URL="https://github.com/mdrjr/linux.git"
-    GET_HANDLER_SUPPORT="git"
-    PKG_GIT_CLONE_BRANCH="odroidg12-6.1.y"
+    PKG_VERSION="6.1.21"
+    PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
   ;;
 esac
 
