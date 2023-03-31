@@ -7,6 +7,8 @@ PKG_VERSION="96ecc776167a15cc7df4efc4f721ba5784c55c85"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/lwfinger/rtl8188eu"
 PKG_URL="https://github.com/lwfinger/rtl8188eu/archive/${PKG_VERSION}.tar.gz"
+PKG_DEPENDS_TARGET="toolchain linux kernel-firmware"
+PKG_NEED_UNPACK="${LINUX_DEPENDS}"
 PKG_LONGDESC="Realtek RTL81xxEU Linux 3.x driver"
 PKG_IS_KERNEL_PKG="yes"
 
