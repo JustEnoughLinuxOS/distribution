@@ -49,4 +49,9 @@ listcontains "${GRAPHIC_DRIVERS}" "etnaviv" &&
 post_makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin
     cp -a ${PKG_BUILD}/.${TARGET_NAME}/tests/modetest/modetest ${INSTALL}/usr/bin/
+    for header in xf86drm.h xf86drmMode.h
+    do
+      sed -i "s#<drm.h>#<drm/drm.h>#g" ${SYSROOT_PREFIX}/usr/include/${header}
+      sed -i "s#<drm_mode.h#<drm/drm_mode.h>#g" ${SYSROOT_PREFIX}/usr/include/${header}
+    done
 }

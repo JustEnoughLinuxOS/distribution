@@ -22,3 +22,4 @@ if [ -e "/sys/class/backlight/${BRIGHTNESS_DEVICE}/brightness" ]
 then
   printf "%.0f" $(echo "${BRIGHTNESS}") > /sys/class/backlight/${BRIGHTNESS_DEVICE}/brightness
 fi
+

@@ -29,6 +29,7 @@ PKG_CMAKE_OPTS_TARGET=" -DUSE_SYSTEM_FFMPEG=OFF \
                         -DCMAKE_BUILD_TYPE=Release \
                         -DCMAKE_SYSTEM_NAME=Linux \
                         -DBUILD_SHARED_LIBS=OFF \
+                        -DUSE_SYSTEM_LIBPNG=OFF \
                         -DANDROID=OFF \
                         -DWIN32=OFF \
                         -DAPPLE=OFF \

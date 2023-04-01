@@ -2,3 +2,12 @@ STATE=$(get_setting ssh.enabled)
 SVC="sshd"
 CONF="sshd.conf"
 DAEMONS=("sshd")
+
+# Prepare authorized keys if they exist
+if [ ! -e "/storage/.ssh/authorized_keys" ] && \
+   [ -e "/usr/config/ssh/authorized_keys" ]
+then
+  mkdir -p /storage/.ssh/
+  cp /usr/config/ssh/authorized_keys /storage/.ssh/authorized_keys
+  chmod 0610 /storage/.ssh/authorized_keys
+fi
