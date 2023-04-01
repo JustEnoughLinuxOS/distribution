@@ -30,7 +30,3 @@ if [ "${DISPLAYSERVER}" != "x11" ] && \
    [ "${DISPLAYSERVER}" != "wl" ]; then
   PKG_CONFIGURE_OPTS_TARGET="--disable-glx"
 fi
-
-if [ "${PROJECT}" == "Amlogic" -o "${PROJECT}" == "Amlogic-ng" ]; then
-  PKG_CONFIGURE_OPTS_TARGET+=" --disable-egl"
-fi

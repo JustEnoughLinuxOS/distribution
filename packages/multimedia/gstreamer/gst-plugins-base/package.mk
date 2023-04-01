@@ -21,7 +21,7 @@ pre_configure_target() {
 
   # Fix missing dispmanx
   case ${DEVICE} in
-    RK35*)
+    RK35*|OGU)
       PKG_MESON_OPTS_TARGET+=" -Dgl-graphene=disabled"
     ;;
   esac

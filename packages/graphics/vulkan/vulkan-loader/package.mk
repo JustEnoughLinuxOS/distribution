@@ -8,17 +8,8 @@ PKG_SHA256="dcdbe3f5362035ecc5ffce2140393de377038c44e00dfb8bae43816eec57dfc6"
 PKG_LICENSE="Apache-2.0"
 PKG_SITE="https://github.com/KhronosGroup/Vulkan-Loader"
 PKG_URL="https://github.com/KhronosGroup/Vulkan-Loader/archive/v${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain Python3:host vulkan-headers"
+PKG_DEPENDS_TARGET="toolchain Python3:host vulkan-headers libxcb libX11 libXrandr wayland"
 PKG_LONGDESC="Vulkan Installable Client Driver (ICD) Loader."
-
-configure_package() {
-  # Displayserver Support
-  if [ "${DISPLAYSERVER}" = "x11" ]; then
-    PKG_DEPENDS_TARGET+=" libxcb libX11 libXrandr"
-  elif [ "${DISPLAYSERVER}" = "wl" ]; then
-    PKG_DEPENDS_TARGET+=" wayland"
-  fi
-}
 
 pre_configure_target() {
   PKG_CMAKE_OPTS_TARGET="-DBUILD_TESTS=OFF"
