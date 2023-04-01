@@ -16,7 +16,7 @@ PKG_TOOLCHAIN="make"
 
 PKG_BASEOS="plymouth-lite grep wget util-linux xmlstarlet gnupg gzip patchelf imagemagick \
             terminus-font vim bash pyudev dialog six git dbus-python coreutils \
-            alsa-ucm-conf fbgrab modules system-utils autostart powerstate powertop ectool"
+            alsa-ucm-conf fbgrab modules system-utils autostart quirks powerstate powertop ectool"
 
 PKG_UI="emulationstation es-themes"
 
