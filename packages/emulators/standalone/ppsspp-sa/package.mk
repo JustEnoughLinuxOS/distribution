@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 # Copyright (C) 2022-present Fewtarius
-PKG_NAME="PPSSPPSDL"
+PKG_NAME="ppsspp-sa"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
@@ -90,8 +90,8 @@ pre_make_target() {
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin
-  cp ${PKG_DIR}/sources/start_PPSSPPSDL.sh ${INSTALL}/usr/bin
-  cp `find . -name "PPSSPPSDL" | xargs echo` ${INSTALL}/usr/bin/PPSSPPSDL
+  cp ${PKG_DIR}/sources/start_ppsspp.sh ${INSTALL}/usr/bin
+  cp PPSSPPSDL ${INSTALL}/usr/bin/ppsspp
   chmod 0755 ${INSTALL}/usr/bin/*
   ln -sf /storage/.config/ppsspp/assets ${INSTALL}/usr/bin/assets
   mkdir -p ${INSTALL}/usr/config/ppsspp/PSP/SYSTEM

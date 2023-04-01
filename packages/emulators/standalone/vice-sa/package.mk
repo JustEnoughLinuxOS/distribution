@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2020-present Fewtarius
 
-PKG_NAME="vicesa"
+PKG_NAME="vice-sa"
 PKG_VERSION="3.7.1"
 PKG_REV="1"
 PKG_ARCH="any"
