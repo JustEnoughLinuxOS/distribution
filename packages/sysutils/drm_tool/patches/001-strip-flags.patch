@@ -1,0 +1,20 @@
+diff --git a/Makefile b/Makefile
+index 310b5dc..ceba9df 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,5 +1,3 @@
+-CC=gcc
+-LD=gcc
+ RM=rm
+ INSTALL=install
+ 
+@@ -10,9 +8,6 @@ OBJECTS=$(SRC_PATH)/drm_tool.o
+ 
+ SRC_PATH=src
+ 
+-CFLAGS=-Wall -D_FILE_OFFSET_BITS=64 `pkg-config --cflags libdrm` 
+-LDFLAGS=`pkg-config --libs libdrm`
+-
+ .PHONY: all
+ 
+ all: $(OUTPUT)
