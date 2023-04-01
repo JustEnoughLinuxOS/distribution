@@ -15,6 +15,6 @@ PKG_TOOLCHAIN="manual"
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/autostart/quirks
-  cp -r ${PKG_DIR}/sources/quirks/* ${INSTALL}/usr/lib/autostart/quirks
+  cp -r ${PKG_DIR}/devices/* ${INSTALL}/usr/lib/autostart/quirks
   chmod -R 0755 ${INSTALL}/usr/lib/autostart/quirks
 }
