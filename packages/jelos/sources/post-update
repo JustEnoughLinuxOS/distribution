@@ -190,14 +190,3 @@ do
   fi
 done
 
-# Configure default contrast saturation and hue values
-for PROPERTY in brightness contrast saturation hue
-do
-  MYVAL=$(get_setting display.${PROPERTY})
-  if [ -z "${MYVAL}" ]
-  then
-    DEFVAL=$(drm_tool list | sed -n '/Connector: 133/,$p' | awk '/'${PROPERTY}'/ {print $5}')
-    echo "Set default for ${PROPERTY}" >>${LOG}
-    set_setting display.${PROPERTY} ${DEFVAL}
-  fi
-done
