@@ -47,11 +47,6 @@ pre_configure_target() {
 }
 
 makeinstall_target() {
-  case ${ARCH} in
-    arm|aarch64)
-      aarch64-linux-gnu-strip -s *.so
-    ;;
-  esac
   mkdir -p ${INSTALL}/usr/lib/libretro
   cp mame*_libretro.so ${INSTALL}/usr/lib/libretro/
 }
