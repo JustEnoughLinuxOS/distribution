@@ -1,6 +1,7 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2023-present Fewtarius
 #
 #  This Program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -19,11 +20,11 @@
 ################################################################################
 
 PKG_NAME="dosbox-svn-lr"
-PKG_VERSION="c23be7769518d753378307996de35e204d188c63"
+PKG_VERSION="1b34215"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
-PKG_SITE="https://github.com/libretro/dosbox-svn"
+PKG_SITE="https://github.com/JustEnoughLinuxOS/dosbox-svn"
 PKG_URL="${PKG_SITE}.git"
 PKG_GIT_CLONE_BRANCH="libretro"
 PKG_DEPENDS_TARGET="toolchain SDL SDL_net retroarch"
