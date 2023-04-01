@@ -80,6 +80,16 @@ if [ "${TARGET}" = "target" ] ; then
       cp ${PKG_TMP_DIR}/tmpfiles.d/* ${INSTALL}/usr/lib/tmpfiles.d
     fi
 
+    if [ -d ${PKG_TMP_DIR}/autostart ]; then
+      mkdir -p ${INSTALL}/usr/lib/autostart/common
+      cp ${PKG_TMP_DIR}/autostart/* ${INSTALL}/usr/lib/autostart/common
+    fi
+
+    if [ -d ${PKG_TMP_DIR}/daemons ]; then
+      mkdir -p ${INSTALL}/usr/lib/autostart/daemons
+      cp ${PKG_TMP_DIR}/daemons/* ${INSTALL}/usr/lib/autostart/daemons
+    fi
+
     if [ -d ${PKG_TMP_DIR}/system.d ]; then
       mkdir -p ${INSTALL}/usr/lib/systemd/system
       cp -Pr ${PKG_TMP_DIR}/system.d/*.* ${INSTALL}/usr/lib/systemd/system
