@@ -6,7 +6,7 @@
 
 # ARGS:
 #
-# 1 - property to adjust (contrast/saturation/hue)
+# 1 - property to adjust (gamma (brightness)/contrast/saturation/hue)
 # 2 - up/down or a defined value
 
 PROPERTY=${1}
@@ -19,7 +19,6 @@ NEWVAL=${2}
 MIN=1
 MAX=100
 STEP=1
-DEFAULTVAL=50
 
 if [ ! -e /dev/dri/card0 ]
 then
@@ -28,11 +27,11 @@ then
 fi
 
 log() {
-  $DEBUG && echo "Info: ${*}"
+  $DEBUG && echo "Info: ${*}" >>/var/log/display.log
 }
 
 getValue() {
-  MYVAL=$(get_setting system.${1})
+  MYVAL=$(get_setting display.${1})
   if [ -n "${MYVAL}" ]
   then
     if [ "${MYVAL}" > "${MAX}" ]
@@ -44,35 +43,35 @@ getValue() {
     fi
     echo ${MYVAL}
   else
-    echo ${DEFAULTVAL}
+    echo $(drm_tool list 2>/dev/null | sed -n '/Connector: 133/,$p' | awk '/'${1}'/ {print $5}')
   fi
 }
 
 setValue() {
-  log "Set (${2})"
-  drm_tool set /dev/dri/card0 133 ${1} ${2}
+  log "Set (${1}: ${2})"
+  drm_tool set /dev/dri/card0 133 ${1} ${2} 2>/dev/null
   if [ $? = 0 ]
   then
-    set_setting system.${1} ${2}
+    set_setting display.${1} ${2}
   fi
 }
 
 stepUp() {
   LASTVAL=$(getValue ${PROPERTY})
   NEWVAL=$(expr ${LASTVAL} + 1)
-  log "Step up (${NEWVAL})"
+  log "Step up (${PROPERTY}: ${NEWVAL})"
   setValue ${PROPERTY} ${NEWVAL}
 }
 
 stepDown() {
   LASTVAL=$(getValue ${PROPERTY})
   NEWVAL=$(expr ${LASTVAL} - 1)
-  log "Step down (${NEWVAL})"
+  log "Step down (${PROPERTY}: ${NEWVAL})"
   setValue ${PROPERTY} ${NEWVAL}
 }
 
 restoreSettings() {
-  for PROPERTY in contrast saturation hue
+  for PROPERTY in brightness contrast saturation hue
   do
     RESTVAL=$(getValue ${PROPERTY})
     setValue ${PROPERTY} ${RESTVAL}

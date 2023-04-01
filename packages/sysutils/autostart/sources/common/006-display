@@ -22,3 +22,14 @@ if [ -e "/sys/class/backlight/${BRIGHTNESS_DEVICE}/brightness" ]
 then
   printf "%.0f" $(echo "${BRIGHTNESS}") > /sys/class/backlight/${BRIGHTNESS_DEVICE}/brightness
 fi
+
+# Configure default contrast saturation and hue values
+for PROPERTY in brightness contrast saturation hue
+do
+  MYVAL=$(get_setting display.${PROPERTY})
+  if [ -z "${MYVAL}" ]
+  then
+    MYVAL=$(drm_tool list | sed -n '/Connector: 133/,$p' | awk '/'${PROPERTY}'/ {print $5}')
+  fi
+  display ${PROPERTY} ${MYVAL}
+done
