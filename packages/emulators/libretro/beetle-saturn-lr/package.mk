@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="beetle-saturn-lr"
-PKG_VERSION="493421d190ba749d2b8d453d194f4cea6eab2e95"
+PKG_VERSION="6625d33005fa9aebd7f13883a6a3a16118a467cc"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/beetle-saturn-libretro"
 PKG_URL="${PKG_SITE}.git"
