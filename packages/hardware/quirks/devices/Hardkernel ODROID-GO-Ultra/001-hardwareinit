@@ -4,8 +4,10 @@
 
 . /etc/profile
 
+### Sleep is currently broken, so we'll disable it.
+
 cat <<EOF >/storage/.config/sleep.conf.d/sleep.conf
 [Sleep]
-AllowSuspend=yes
+AllowSuspend=no
 SuspendState=freeze
 EOF
