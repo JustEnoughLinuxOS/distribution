@@ -19,7 +19,7 @@
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
-PKG_NAME="TIC-80-lr"
+PKG_NAME="tic80-lr"
 PKG_VERSION="40c5f2d8ef8f221933e9f3fabe3c5e2980e32fee"
 PKG_REV="1"
 PKG_ARCH="any"
@@ -27,7 +27,7 @@ PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/nesbox/TIC-80"
 PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_HOST="toolchain"
-PKG_DEPENDS_TARGET="toolchain TIC-80-lr:host"
+PKG_DEPENDS_TARGET="toolchain tic80-lr:host"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="Tic80"

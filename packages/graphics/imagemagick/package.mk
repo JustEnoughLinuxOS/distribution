@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="imagemagick"
-PKG_VERSION="2129847cd6b8f79ba10d2560a36b76de3311d5e6"
+PKG_VERSION="2d24be5"
 PKG_LICENSE="http://www.imagemagick.org/script/license.php"
 PKG_SITE="https://github.com/ImageMagick/ImageMagick"
 PKG_URL="${PKG_SITE}.git"
