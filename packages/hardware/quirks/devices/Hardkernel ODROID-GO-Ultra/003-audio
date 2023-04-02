@@ -1,0 +1,317 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+### Set a custom device so we don't clobber it.
+set-audio set "(0:0)"
+set-audio esset "Master"
+
+cat <<EOF >/storage/.config/asound.conf
+ctl.!default {
+  type hw
+  card 0
+}
+
+pcm.!default {
+	type plug
+	slave.pcm "softvol"
+}
+
+pcm.softvol {
+    type softvol
+    slave.pcm "dmixer"
+    control {
+        name "Pre-Amp"
+        card 0
+    }
+    min_dB -5.0
+    max_dB 20.0
+    resolution 6
+}
+
+pcm.dmixer  {
+	type dmix
+	ipc_key 1024
+	slave {
+	    pcm "hw:0,0"
+	    period_time 0
+	    period_size 4096
+	    buffer_size 131072
+	    rate 176400
+	}
+	bindings {
+	    0 0
+	    1 1
+	}
+}
+EOF
+
+if [ ! -e "/storage/.config/asound.state" ]
+then
+  cat <<EOF >/storage/.config/asound.state
+state.Ultra {
+	control.1 {
+		iface MIXER
+		name 'Master Playback Volume'
+		value.0 0
+		value.1 0
+		comment {
+			access 'read write'
+			type INTEGER
+			count 2
+			range '0 - 255'
+			dbmin -9500
+			dbmax 0
+			dbvalue.0 -9500
+			dbvalue.1 -9500
+		}
+	}
+	control.2 {
+		iface MIXER
+		name 'Master Capture Volume'
+		value.0 0
+		value.1 0
+		comment {
+			access 'read write'
+			type INTEGER
+			count 2
+			range '0 - 255'
+			dbmin -9500
+			dbmax 0
+			dbvalue.0 -9500
+			dbvalue.1 -9500
+		}
+	}
+	control.3 {
+		iface MIXER
+		name 'Mic Capture Gain'
+		value.0 6
+		value.1 6
+		comment {
+			access 'read write'
+			type INTEGER
+			count 2
+			range '0 - 15'
+			dbmin -1800
+			dbmax 2700
+			dbvalue.0 0
+			dbvalue.1 0
+		}
+	}
+	control.4 {
+		iface MIXER
+		name 'TDMOUT_B Lane 0 Volume'
+		value.0 0
+		value.1 0
+		comment {
+			access 'read write'
+			type INTEGER
+			count 2
+			range '0 - 255'
+		}
+	}
+	control.5 {
+		iface MIXER
+		name 'TDMOUT_B Lane 1 Volume'
+		value.0 0
+		value.1 0
+		comment {
+			access 'read write'
+			type INTEGER
+			count 2
+			range '0 - 255'
+		}
+	}
+	control.6 {
+		iface MIXER
+		name 'TDMOUT_B Lane 2 Volume'
+		value.0 6
+		value.1 6
+		comment {
+			access 'read write'
+			type INTEGER
+			count 2
+			range '0 - 255'
+		}
+	}
+	control.7 {
+		iface MIXER
+		name 'TDMOUT_B Lane 3 Volume'
+		value.0 0
+		value.1 0
+		comment {
+			access 'read write'
+			type INTEGER
+			count 2
+			range '0 - 255'
+		}
+	}
+	control.8 {
+		iface MIXER
+		name 'TDMOUT_B Gain Enable Switch'
+		value false
+		comment {
+			access 'read write'
+			type BOOLEAN
+			count 1
+		}
+	}
+	control.9 {
+		iface MIXER
+		name 'FRDDR_A SRC 1 EN Switch'
+		value true
+		comment {
+			access 'read write'
+			type BOOLEAN
+			count 1
+		}
+	}
+	control.10 {
+		iface MIXER
+		name 'FRDDR_A SRC 2 EN Switch'
+		value false
+		comment {
+			access 'read write'
+			type BOOLEAN
+			count 1
+		}
+	}
+	control.11 {
+		iface MIXER
+		name 'FRDDR_A SRC 3 EN Switch'
+		value false
+		comment {
+			access 'read write'
+			type BOOLEAN
+			count 1
+		}
+	}
+	control.12 {
+		iface MIXER
+		name 'FRDDR_A SINK 1 SEL'
+		value 'OUT 2'
+		comment {
+			access 'read write'
+			type ENUMERATED
+			count 1
+			item.0 'OUT 0'
+			item.1 'OUT 1'
+			item.2 'OUT 2'
+			item.3 'OUT 3'
+			item.4 'OUT 4'
+			item.5 'OUT 5'
+			item.6 'OUT 6'
+			item.7 'OUT 7'
+		}
+	}
+	control.13 {
+		iface MIXER
+		name 'FRDDR_A SINK 2 SEL'
+		value 'OUT 0'
+		comment {
+			access 'read write'
+			type ENUMERATED
+			count 1
+			item.0 'OUT 0'
+			item.1 'OUT 1'
+			item.2 'OUT 2'
+			item.3 'OUT 3'
+			item.4 'OUT 4'
+			item.5 'OUT 5'
+			item.6 'OUT 6'
+			item.7 'OUT 7'
+		}
+	}
+	control.14 {
+		iface MIXER
+		name 'FRDDR_A SINK 3 SEL'
+		value 'OUT 0'
+		comment {
+			access 'read write'
+			type ENUMERATED
+			count 1
+			item.0 'OUT 0'
+			item.1 'OUT 1'
+			item.2 'OUT 2'
+			item.3 'OUT 3'
+			item.4 'OUT 4'
+			item.5 'OUT 5'
+			item.6 'OUT 6'
+			item.7 'OUT 7'
+		}
+	}
+	control.15 {
+		iface MIXER
+		name 'TODDR_A SRC SEL'
+		value 'IN 0'
+		comment {
+			access 'read write'
+			type ENUMERATED
+			count 1
+			item.0 'IN 0'
+			item.1 'IN 1'
+			item.2 'IN 2'
+			item.3 'IN 3'
+			item.4 'IN 4'
+			item.5 'IN 5'
+			item.6 'IN 6'
+			item.7 'IN 7'
+		}
+	}
+	control.16 {
+		iface MIXER
+		name 'Playback Mux'
+		value HP
+		comment {
+			access 'read write'
+			type ENUMERATED
+			count 1
+			item.0 HP
+			item.1 SPK
+		}
+	}
+	control.17 {
+		iface MIXER
+		name 'TDMIN_B SRC SEL'
+		value 'IN 0'
+		comment {
+			access 'read write'
+			type ENUMERATED
+			count 1
+			item.0 'IN 0'
+			item.1 'IN 1'
+			item.2 'IN 2'
+			item.3 'IN 3'
+			item.4 'IN 4'
+			item.5 'IN 5'
+			item.6 'IN 6'
+			item.7 'IN 7'
+			item.8 'IN 8'
+			item.9 'IN 9'
+			item.10 'IN 10'
+			item.11 'IN 11'
+			item.12 'IN 12'
+			item.13 'IN 13'
+			item.14 'IN 14'
+			item.15 'IN 15'
+		}
+	}
+	control.18 {
+		iface MIXER
+		name 'TDMOUT_B SRC SEL'
+		value 'IN 0'
+		comment {
+			access 'read write'
+			type ENUMERATED
+			count 1
+			item.0 'IN 0'
+			item.1 'IN 1'
+			item.2 'IN 2'
+		}
+	}
+}
+EOF
+  alsactl --file /storage/.config/asound.state restore
+fi
