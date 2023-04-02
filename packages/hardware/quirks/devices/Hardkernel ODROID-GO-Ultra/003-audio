@@ -5,7 +5,7 @@
 . /etc/profile
 
 ### Set a custom device so we don't clobber it.
-set-audio set "(0:0)"
+set-audio set "CUSTOM (UNMANAGED)"
 set-audio esset "Master"
 
 cat <<EOF >/storage/.config/asound.conf
@@ -55,8 +55,8 @@ state.Ultra {
 	control.1 {
 		iface MIXER
 		name 'Master Playback Volume'
-		value.0 0
-		value.1 0
+		value.0 255
+		value.1 255
 		comment {
 			access 'read write'
 			type INTEGER
@@ -64,15 +64,15 @@ state.Ultra {
 			range '0 - 255'
 			dbmin -9500
 			dbmax 0
-			dbvalue.0 -9500
-			dbvalue.1 -9500
+			dbvalue.0 0
+			dbvalue.1 0
 		}
 	}
 	control.2 {
 		iface MIXER
 		name 'Master Capture Volume'
-		value.0 0
-		value.1 0
+		value.0 255
+		value.1 255
 		comment {
 			access 'read write'
 			type INTEGER
@@ -80,15 +80,15 @@ state.Ultra {
 			range '0 - 255'
 			dbmin -9500
 			dbmax 0
-			dbvalue.0 -9500
-			dbvalue.1 -9500
+			dbvalue.0 0
+			dbvalue.1 0
 		}
 	}
 	control.3 {
 		iface MIXER
 		name 'Mic Capture Gain'
-		value.0 6
-		value.1 6
+		value.0 15
+		value.1 15
 		comment {
 			access 'read write'
 			type INTEGER
@@ -96,8 +96,8 @@ state.Ultra {
 			range '0 - 15'
 			dbmin -1800
 			dbmax 2700
-			dbvalue.0 0
-			dbvalue.1 0
+			dbvalue.0 2700
+			dbvalue.1 2700
 		}
 	}
 	control.4 {
@@ -127,8 +127,8 @@ state.Ultra {
 	control.6 {
 		iface MIXER
 		name 'TDMOUT_B Lane 2 Volume'
-		value.0 6
-		value.1 6
+		value.0 0
+		value.1 0
 		comment {
 			access 'read write'
 			type INTEGER
@@ -191,7 +191,7 @@ state.Ultra {
 	control.12 {
 		iface MIXER
 		name 'FRDDR_A SINK 1 SEL'
-		value 'OUT 2'
+		value 'OUT 1'
 		comment {
 			access 'read write'
 			type ENUMERATED
@@ -263,7 +263,7 @@ state.Ultra {
 	control.16 {
 		iface MIXER
 		name 'Playback Mux'
-		value HP
+		value SPK
 		comment {
 			access 'read write'
 			type ENUMERATED
@@ -309,6 +309,23 @@ state.Ultra {
 			item.0 'IN 0'
 			item.1 'IN 1'
 			item.2 'IN 2'
+		}
+	}
+	control.19 {
+		iface MIXER
+		name Pre-Amp
+		value.0 1
+		value.1 1
+		comment {
+			access 'read write user'
+			type INTEGER
+			count 2
+			range '0 - 5'
+			tlv '0000000100000008fffffe0c000001f4'
+			dbmin -500
+			dbmax 2000
+			dbvalue.0 0
+			dbvalue.1 0
 		}
 	}
 }
