@@ -43,7 +43,7 @@ case "${DEVICE}" in
     PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders pcsx_rearmed-lr box86 box64"
     PKG_EMUS+=" yabasanshiro-sa"
   ;;
-  OGU)
+  S922X)
     PKG_EMUS+=" aethersx2-sa dolphin-sa duckstation-sa mupen64plus-sa yabasanshiro-sa box86 box64"
     LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr dolphin-lr pcsx_rearmed-lr yabasanshiro-sa"
 esac

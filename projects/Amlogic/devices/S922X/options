@@ -26,7 +26,7 @@
     esac
 
   # Kernel target
-    DEVICE_NAME="OGU"
+    DEVICE_NAME="S922X"
     KERNEL_TARGET="Image"
     BOOTLOADER="u-boot"
     PARTITION_TABLE="msdos"
