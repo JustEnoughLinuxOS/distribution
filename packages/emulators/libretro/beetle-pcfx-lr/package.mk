@@ -20,7 +20,7 @@
 ################################################################################
 
 PKG_NAME="beetle-pcfx-lr"
-PKG_VERSION="724bd21b4524f8cf376dbc29c3e5a12cb674c758"
+PKG_VERSION="7bbe18c328be977b6d00102a0a08966acb8f536d"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
