@@ -15,7 +15,7 @@ SPLASH_LOADER="plymouth"
 UI_SERVICE="weston.service"
 
 # GPIOS
-DEVICE_TEMP_SENSOR="/sys/devices/virtual/thermal/thermal_zone*/temp"
+DEVICE_TEMP_SENSOR=("/sys/class/hwmon/hwmon0/temp1_input")
 
 # FREQ Governors
 CPU_FREQ=("/sys/devices/system/cpu/cpufreq/policy0" "/sys/devices/system/cpu/cpufreq/policy2")

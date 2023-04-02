@@ -5,7 +5,7 @@ source ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
 
 #Write u-boot.bin to image
 case "${DEVICE}" in
-  OGU)
+  S922X)
     if [ -f "${RELEASE_DIR}/3rdparty/bootloader/u-boot.bin" ]; then
       echo "image: burn uboot.itb to image... (${PKG_SOC})"
       dd if="${RELEASE_DIR}/3rdparty/bootloader/u-boot.bin" of="${DISK}" bs=512 seek=1 conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
