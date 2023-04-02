@@ -19,7 +19,7 @@ DEVICE_TEMP_SENSOR="/sys/devices/virtual/thermal/thermal_zone*/temp"
 
 # FREQ Governors
 CPU_FREQ=("/sys/devices/system/cpu/cpufreq/policy0" "/sys/devices/system/cpu/cpufreq/policy2")
-GPU_FREQ=("/sys/devices/platform/soc/ffe40000.gpu/devfreq/ffe40000.gpu/governor")
+GPU_FREQ=("/sys/devices/platform/soc/ffe40000.gpu/devfreq/ffe40000.gpu")
 
 # Volume Keys
 DEVICE_KEY_VOLUMEDOWN=114
