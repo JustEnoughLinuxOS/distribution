@@ -16,7 +16,7 @@ makeinstall_target() {
   export STRIP=true
   mkdir -p ${INSTALL}/usr/bin
   cp ${PKG_BUILD}/${PKG_NAME}-${PKG_VERSION}.AppImage ${INSTALL}/usr/bin/${PKG_NAME}
-  cp -rf ${PKG_DIR}/scripts/${DEVICE}/start_aethersx2.sh ${INSTALL}/usr/bin
+  cp -rf ${PKG_DIR}/scripts/start_aethersx2.sh ${INSTALL}/usr/bin
   sed -e "s/@APPIMAGE@/${PKG_NAME}/g" -i ${INSTALL}/usr/bin/start_aethersx2.sh
   chmod 755 ${INSTALL}/usr/bin/*
   mkdir -p ${INSTALL}/usr/config
