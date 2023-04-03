@@ -1,0 +1,13 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+### Sleep is currently broken, so we'll disable it.
+
+cat <<EOF >/storage/.config/sleep.conf.d/sleep.conf
+[Sleep]
+AllowSuspend=no
+SuspendState=freeze
+EOF

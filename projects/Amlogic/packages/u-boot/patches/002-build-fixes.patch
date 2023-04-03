@@ -1,0 +1,398 @@
+diff --git a/arch/arm/cpu/armv8/axg/firmware/scp_task/lib/string.c b/arch/arm/cpu/armv8/axg/firmware/scp_task/lib/string.c
+index 2e551f465c..ba29abe09d 100644
+--- a/arch/arm/cpu/armv8/axg/firmware/scp_task/lib/string.c
++++ b/arch/arm/cpu/armv8/axg/firmware/scp_task/lib/string.c
+@@ -19,7 +19,7 @@
+  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+ 
+-void *memcpy(void *dest, const void *src, unsigned int count)
++void *memcpy(void *dest, const void *src, unsigned long int count)
+ {
+ 	char *tmp = dest;
+ 	const char *s = src;
+@@ -28,7 +28,7 @@ void *memcpy(void *dest, const void *src, unsigned int count)
+ 		*tmp++ = *s++;
+ 	return dest;
+ }
+-void *memset(void *s, int c, unsigned int count)
++void *memset(void *s, int c, unsigned long int count)
+ {
+ 	char *xs = s;
+ 
+diff --git a/arch/arm/cpu/armv8/axg/firmware/scp_task/task_apis.h b/arch/arm/cpu/armv8/axg/firmware/scp_task/task_apis.h
+index 31ab63f795..c7b55bab98 100644
+--- a/arch/arm/cpu/armv8/axg/firmware/scp_task/task_apis.h
++++ b/arch/arm/cpu/armv8/axg/firmware/scp_task/task_apis.h
+@@ -46,8 +46,8 @@ void enter_suspend(unsigned int suspend_from);
+ void get_dvfs_info(unsigned int domain,
+ 		unsigned char *info_out, unsigned int *size_out);
+ void set_dvfs(unsigned int domain, unsigned int index);
+-void *memcpy(void *dest, const void *src, unsigned int count);
+-void *memset(void *s, int c, unsigned int count);
++void *memcpy(void *dest, const void *src, unsigned long int count);
++void *memset(void *s, int c, unsigned long int count);
+ void _udelay(unsigned int us);
+ unsigned int get_time(void);
+ 
+diff --git a/arch/arm/cpu/armv8/g12a/firmware/scp_task/lib/string.c b/arch/arm/cpu/armv8/g12a/firmware/scp_task/lib/string.c
+index 2e551f465c..ba29abe09d 100644
+--- a/arch/arm/cpu/armv8/g12a/firmware/scp_task/lib/string.c
++++ b/arch/arm/cpu/armv8/g12a/firmware/scp_task/lib/string.c
+@@ -19,7 +19,7 @@
+  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+ 
+-void *memcpy(void *dest, const void *src, unsigned int count)
++void *memcpy(void *dest, const void *src, unsigned long int count)
+ {
+ 	char *tmp = dest;
+ 	const char *s = src;
+@@ -28,7 +28,7 @@ void *memcpy(void *dest, const void *src, unsigned int count)
+ 		*tmp++ = *s++;
+ 	return dest;
+ }
+-void *memset(void *s, int c, unsigned int count)
++void *memset(void *s, int c, unsigned long int count)
+ {
+ 	char *xs = s;
+ 
+diff --git a/arch/arm/cpu/armv8/g12a/firmware/scp_task/task_apis.h b/arch/arm/cpu/armv8/g12a/firmware/scp_task/task_apis.h
+index 31ab63f795..c7b55bab98 100644
+--- a/arch/arm/cpu/armv8/g12a/firmware/scp_task/task_apis.h
++++ b/arch/arm/cpu/armv8/g12a/firmware/scp_task/task_apis.h
+@@ -46,8 +46,8 @@ void enter_suspend(unsigned int suspend_from);
+ void get_dvfs_info(unsigned int domain,
+ 		unsigned char *info_out, unsigned int *size_out);
+ void set_dvfs(unsigned int domain, unsigned int index);
+-void *memcpy(void *dest, const void *src, unsigned int count);
+-void *memset(void *s, int c, unsigned int count);
++void *memcpy(void *dest, const void *src, unsigned long int count);
++void *memset(void *s, int c, unsigned long int count);
+ void _udelay(unsigned int us);
+ unsigned int get_time(void);
+ 
+diff --git a/arch/arm/cpu/armv8/g12b/firmware/scp_task/lib/string.c b/arch/arm/cpu/armv8/g12b/firmware/scp_task/lib/string.c
+index 2e551f465c..ba29abe09d 100644
+--- a/arch/arm/cpu/armv8/g12b/firmware/scp_task/lib/string.c
++++ b/arch/arm/cpu/armv8/g12b/firmware/scp_task/lib/string.c
+@@ -19,7 +19,7 @@
+  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+ 
+-void *memcpy(void *dest, const void *src, unsigned int count)
++void *memcpy(void *dest, const void *src, unsigned long int count)
+ {
+ 	char *tmp = dest;
+ 	const char *s = src;
+@@ -28,7 +28,7 @@ void *memcpy(void *dest, const void *src, unsigned int count)
+ 		*tmp++ = *s++;
+ 	return dest;
+ }
+-void *memset(void *s, int c, unsigned int count)
++void *memset(void *s, int c, unsigned long int count)
+ {
+ 	char *xs = s;
+ 
+diff --git a/arch/arm/cpu/armv8/g12b/firmware/scp_task/task_apis.h b/arch/arm/cpu/armv8/g12b/firmware/scp_task/task_apis.h
+index 31ab63f795..c7b55bab98 100644
+--- a/arch/arm/cpu/armv8/g12b/firmware/scp_task/task_apis.h
++++ b/arch/arm/cpu/armv8/g12b/firmware/scp_task/task_apis.h
+@@ -46,8 +46,8 @@ void enter_suspend(unsigned int suspend_from);
+ void get_dvfs_info(unsigned int domain,
+ 		unsigned char *info_out, unsigned int *size_out);
+ void set_dvfs(unsigned int domain, unsigned int index);
+-void *memcpy(void *dest, const void *src, unsigned int count);
+-void *memset(void *s, int c, unsigned int count);
++void *memcpy(void *dest, const void *src, unsigned long int count);
++void *memset(void *s, int c, unsigned long int count);
+ void _udelay(unsigned int us);
+ unsigned int get_time(void);
+ 
+diff --git a/arch/arm/cpu/armv8/gxb/firmware/scp_task/lib/string.c b/arch/arm/cpu/armv8/gxb/firmware/scp_task/lib/string.c
+index a517cc4f34..1d5665bc98 100644
+--- a/arch/arm/cpu/armv8/gxb/firmware/scp_task/lib/string.c
++++ b/arch/arm/cpu/armv8/gxb/firmware/scp_task/lib/string.c
+@@ -1,4 +1,4 @@
+-void *memcpy(void *dest, const void *src, unsigned int count)
++void *memcpy(void *dest, const void *src, unsigned long int count)
+ {
+ 	char *tmp = dest;
+ 	const char *s = src;
+@@ -7,7 +7,7 @@ void *memcpy(void *dest, const void *src, unsigned int count)
+ 		*tmp++ = *s++;
+ 	return dest;
+ }
+-void *memset(void *s, int c, unsigned int count)
++void *memset(void *s, int c, unsigned long int count)
+ {
+ 	char *xs = s;
+ 
+diff --git a/arch/arm/cpu/armv8/gxb/firmware/scp_task/task_apis.h b/arch/arm/cpu/armv8/gxb/firmware/scp_task/task_apis.h
+index 839ff09ed4..d9f18c3dd7 100644
+--- a/arch/arm/cpu/armv8/gxb/firmware/scp_task/task_apis.h
++++ b/arch/arm/cpu/armv8/gxb/firmware/scp_task/task_apis.h
+@@ -25,8 +25,8 @@ void enter_suspend(unsigned int suspend_from);
+ void get_dvfs_info(unsigned int domain,
+ 		unsigned char *info_out, unsigned int *size_out);
+ void set_dvfs(unsigned int domain, unsigned int index);
+-void *memcpy(void *dest, const void *src, unsigned int count);
+-void *memset(void *s, int c, unsigned int count);
++void *memcpy(void *dest, const void *src, unsigned long int count);
++void *memset(void *s, int c, unsigned long int count);
+ void _udelay(unsigned int us);
+ unsigned int get_time(void);
+ 
+diff --git a/arch/arm/cpu/armv8/gxl/firmware/scp_task/lib/string.c b/arch/arm/cpu/armv8/gxl/firmware/scp_task/lib/string.c
+index a517cc4f34..1d5665bc98 100644
+--- a/arch/arm/cpu/armv8/gxl/firmware/scp_task/lib/string.c
++++ b/arch/arm/cpu/armv8/gxl/firmware/scp_task/lib/string.c
+@@ -1,4 +1,4 @@
+-void *memcpy(void *dest, const void *src, unsigned int count)
++void *memcpy(void *dest, const void *src, unsigned long int count)
+ {
+ 	char *tmp = dest;
+ 	const char *s = src;
+@@ -7,7 +7,7 @@ void *memcpy(void *dest, const void *src, unsigned int count)
+ 		*tmp++ = *s++;
+ 	return dest;
+ }
+-void *memset(void *s, int c, unsigned int count)
++void *memset(void *s, int c, unsigned long int count)
+ {
+ 	char *xs = s;
+ 
+diff --git a/arch/arm/cpu/armv8/gxl/firmware/scp_task/task_apis.h b/arch/arm/cpu/armv8/gxl/firmware/scp_task/task_apis.h
+index 839ff09ed4..d9f18c3dd7 100644
+--- a/arch/arm/cpu/armv8/gxl/firmware/scp_task/task_apis.h
++++ b/arch/arm/cpu/armv8/gxl/firmware/scp_task/task_apis.h
+@@ -25,8 +25,8 @@ void enter_suspend(unsigned int suspend_from);
+ void get_dvfs_info(unsigned int domain,
+ 		unsigned char *info_out, unsigned int *size_out);
+ void set_dvfs(unsigned int domain, unsigned int index);
+-void *memcpy(void *dest, const void *src, unsigned int count);
+-void *memset(void *s, int c, unsigned int count);
++void *memcpy(void *dest, const void *src, unsigned long int count);
++void *memset(void *s, int c, unsigned long int count);
+ void _udelay(unsigned int us);
+ unsigned int get_time(void);
+ 
+diff --git a/arch/arm/cpu/armv8/gxtvbb/firmware/scp_task/lib/string.c b/arch/arm/cpu/armv8/gxtvbb/firmware/scp_task/lib/string.c
+index a517cc4f34..1d5665bc98 100644
+--- a/arch/arm/cpu/armv8/gxtvbb/firmware/scp_task/lib/string.c
++++ b/arch/arm/cpu/armv8/gxtvbb/firmware/scp_task/lib/string.c
+@@ -1,4 +1,4 @@
+-void *memcpy(void *dest, const void *src, unsigned int count)
++void *memcpy(void *dest, const void *src, unsigned long int count)
+ {
+ 	char *tmp = dest;
+ 	const char *s = src;
+@@ -7,7 +7,7 @@ void *memcpy(void *dest, const void *src, unsigned int count)
+ 		*tmp++ = *s++;
+ 	return dest;
+ }
+-void *memset(void *s, int c, unsigned int count)
++void *memset(void *s, int c, unsigned long int count)
+ {
+ 	char *xs = s;
+ 
+diff --git a/arch/arm/cpu/armv8/gxtvbb/firmware/scp_task/task_apis.h b/arch/arm/cpu/armv8/gxtvbb/firmware/scp_task/task_apis.h
+index f6239d4d22..729eec43b3 100644
+--- a/arch/arm/cpu/armv8/gxtvbb/firmware/scp_task/task_apis.h
++++ b/arch/arm/cpu/armv8/gxtvbb/firmware/scp_task/task_apis.h
+@@ -25,8 +25,8 @@ void enter_suspend(unsigned int suspend_from);
+ void get_dvfs_info(unsigned int domain,
+ 		unsigned char *info_out, unsigned int *size_out);
+ void set_dvfs(unsigned int domain, unsigned int index);
+-void *memcpy(void *dest, const void *src, unsigned int count);
+-void *memset(void *s, int c, unsigned int count);
++void *memcpy(void *dest, const void *src, unsigned long int count);
++void *memset(void *s, int c, unsigned long int count);
+ void _udelay(unsigned int us);
+ unsigned int get_time(void);
+ 
+diff --git a/arch/arm/cpu/armv8/tl1/firmware/scp_task/lib/string.c b/arch/arm/cpu/armv8/tl1/firmware/scp_task/lib/string.c
+index 2e551f465c..ba29abe09d 100644
+--- a/arch/arm/cpu/armv8/tl1/firmware/scp_task/lib/string.c
++++ b/arch/arm/cpu/armv8/tl1/firmware/scp_task/lib/string.c
+@@ -19,7 +19,7 @@
+  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+ 
+-void *memcpy(void *dest, const void *src, unsigned int count)
++void *memcpy(void *dest, const void *src, unsigned long int count)
+ {
+ 	char *tmp = dest;
+ 	const char *s = src;
+@@ -28,7 +28,7 @@ void *memcpy(void *dest, const void *src, unsigned int count)
+ 		*tmp++ = *s++;
+ 	return dest;
+ }
+-void *memset(void *s, int c, unsigned int count)
++void *memset(void *s, int c, unsigned long int count)
+ {
+ 	char *xs = s;
+ 
+diff --git a/arch/arm/cpu/armv8/tl1/firmware/scp_task/task_apis.h b/arch/arm/cpu/armv8/tl1/firmware/scp_task/task_apis.h
+index 31ab63f795..c7b55bab98 100644
+--- a/arch/arm/cpu/armv8/tl1/firmware/scp_task/task_apis.h
++++ b/arch/arm/cpu/armv8/tl1/firmware/scp_task/task_apis.h
+@@ -46,8 +46,8 @@ void enter_suspend(unsigned int suspend_from);
+ void get_dvfs_info(unsigned int domain,
+ 		unsigned char *info_out, unsigned int *size_out);
+ void set_dvfs(unsigned int domain, unsigned int index);
+-void *memcpy(void *dest, const void *src, unsigned int count);
+-void *memset(void *s, int c, unsigned int count);
++void *memcpy(void *dest, const void *src, unsigned long int count);
++void *memset(void *s, int c, unsigned long int count);
+ void _udelay(unsigned int us);
+ unsigned int get_time(void);
+ 
+diff --git a/arch/arm/cpu/armv8/tm2/firmware/scp_task/lib/string.c b/arch/arm/cpu/armv8/tm2/firmware/scp_task/lib/string.c
+index 2e551f465c..ba29abe09d 100644
+--- a/arch/arm/cpu/armv8/tm2/firmware/scp_task/lib/string.c
++++ b/arch/arm/cpu/armv8/tm2/firmware/scp_task/lib/string.c
+@@ -19,7 +19,7 @@
+  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+ 
+-void *memcpy(void *dest, const void *src, unsigned int count)
++void *memcpy(void *dest, const void *src, unsigned long int count)
+ {
+ 	char *tmp = dest;
+ 	const char *s = src;
+@@ -28,7 +28,7 @@ void *memcpy(void *dest, const void *src, unsigned int count)
+ 		*tmp++ = *s++;
+ 	return dest;
+ }
+-void *memset(void *s, int c, unsigned int count)
++void *memset(void *s, int c, unsigned long int count)
+ {
+ 	char *xs = s;
+ 
+diff --git a/arch/arm/cpu/armv8/tm2/firmware/scp_task/task_apis.h b/arch/arm/cpu/armv8/tm2/firmware/scp_task/task_apis.h
+index 31ab63f795..c7b55bab98 100644
+--- a/arch/arm/cpu/armv8/tm2/firmware/scp_task/task_apis.h
++++ b/arch/arm/cpu/armv8/tm2/firmware/scp_task/task_apis.h
+@@ -46,8 +46,8 @@ void enter_suspend(unsigned int suspend_from);
+ void get_dvfs_info(unsigned int domain,
+ 		unsigned char *info_out, unsigned int *size_out);
+ void set_dvfs(unsigned int domain, unsigned int index);
+-void *memcpy(void *dest, const void *src, unsigned int count);
+-void *memset(void *s, int c, unsigned int count);
++void *memcpy(void *dest, const void *src, unsigned long int count);
++void *memset(void *s, int c, unsigned long int count);
+ void _udelay(unsigned int us);
+ unsigned int get_time(void);
+ 
+diff --git a/arch/arm/cpu/armv8/txhd/firmware/scp_task/lib/string.c b/arch/arm/cpu/armv8/txhd/firmware/scp_task/lib/string.c
+index 7331c3a74d..675b63cb77 100644
+--- a/arch/arm/cpu/armv8/txhd/firmware/scp_task/lib/string.c
++++ b/arch/arm/cpu/armv8/txhd/firmware/scp_task/lib/string.c
+@@ -13,7 +13,7 @@
+  *
+  */
+ 
+-void *memcpy(void *dest, const void *src, unsigned int count)
++void *memcpy(void *dest, const void *src, unsigned long int count)
+ {
+ 	char *tmp = dest;
+ 	const char *s = src;
+@@ -22,7 +22,7 @@ void *memcpy(void *dest, const void *src, unsigned int count)
+ 		*tmp++ = *s++;
+ 	return dest;
+ }
+-void *memset(void *s, int c, unsigned int count)
++void *memset(void *s, int c, unsigned long int count)
+ {
+ 	char *xs = s;
+ 
+diff --git a/arch/arm/cpu/armv8/txhd/firmware/scp_task/task_apis.h b/arch/arm/cpu/armv8/txhd/firmware/scp_task/task_apis.h
+index 5c33a06641..9b0af54f67 100644
+--- a/arch/arm/cpu/armv8/txhd/firmware/scp_task/task_apis.h
++++ b/arch/arm/cpu/armv8/txhd/firmware/scp_task/task_apis.h
+@@ -40,8 +40,8 @@ void enter_suspend(unsigned int suspend_from);
+ void get_dvfs_info(unsigned int domain,
+ 		unsigned char *info_out, unsigned int *size_out);
+ void set_dvfs(unsigned int domain, unsigned int index);
+-void *memcpy(void *dest, const void *src, unsigned int count);
+-void *memset(void *s, int c, unsigned int count);
++void *memcpy(void *dest, const void *src, unsigned long int count);
++void *memset(void *s, int c, unsigned long int count);
+ void _udelay(unsigned int us);
+ unsigned int get_time(void);
+ 
+diff --git a/arch/arm/cpu/armv8/txl/firmware/scp_task/lib/string.c b/arch/arm/cpu/armv8/txl/firmware/scp_task/lib/string.c
+index 2e551f465c..ba29abe09d 100644
+--- a/arch/arm/cpu/armv8/txl/firmware/scp_task/lib/string.c
++++ b/arch/arm/cpu/armv8/txl/firmware/scp_task/lib/string.c
+@@ -19,7 +19,7 @@
+  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+ 
+-void *memcpy(void *dest, const void *src, unsigned int count)
++void *memcpy(void *dest, const void *src, unsigned long int count)
+ {
+ 	char *tmp = dest;
+ 	const char *s = src;
+@@ -28,7 +28,7 @@ void *memcpy(void *dest, const void *src, unsigned int count)
+ 		*tmp++ = *s++;
+ 	return dest;
+ }
+-void *memset(void *s, int c, unsigned int count)
++void *memset(void *s, int c, unsigned long int count)
+ {
+ 	char *xs = s;
+ 
+diff --git a/arch/arm/cpu/armv8/txl/firmware/scp_task/task_apis.h b/arch/arm/cpu/armv8/txl/firmware/scp_task/task_apis.h
+index fa1350d4ed..9f5a56b1d6 100644
+--- a/arch/arm/cpu/armv8/txl/firmware/scp_task/task_apis.h
++++ b/arch/arm/cpu/armv8/txl/firmware/scp_task/task_apis.h
+@@ -46,8 +46,8 @@ void enter_suspend(unsigned int suspend_from);
+ void get_dvfs_info(unsigned int domain,
+ 		unsigned char *info_out, unsigned int *size_out);
+ void set_dvfs(unsigned int domain, unsigned int index);
+-void *memcpy(void *dest, const void *src, unsigned int count);
+-void *memset(void *s, int c, unsigned int count);
++void *memcpy(void *dest, const void *src, unsigned long int count);
++void *memset(void *s, int c, unsigned long int count);
+ void _udelay(unsigned int us);
+ unsigned int get_time(void);
+ 
+diff --git a/arch/arm/cpu/armv8/txlx/firmware/scp_task/lib/string.c b/arch/arm/cpu/armv8/txlx/firmware/scp_task/lib/string.c
+index 2e551f465c..ba29abe09d 100644
+--- a/arch/arm/cpu/armv8/txlx/firmware/scp_task/lib/string.c
++++ b/arch/arm/cpu/armv8/txlx/firmware/scp_task/lib/string.c
+@@ -19,7 +19,7 @@
+  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+ 
+-void *memcpy(void *dest, const void *src, unsigned int count)
++void *memcpy(void *dest, const void *src, unsigned long int count)
+ {
+ 	char *tmp = dest;
+ 	const char *s = src;
+@@ -28,7 +28,7 @@ void *memcpy(void *dest, const void *src, unsigned int count)
+ 		*tmp++ = *s++;
+ 	return dest;
+ }
+-void *memset(void *s, int c, unsigned int count)
++void *memset(void *s, int c, unsigned long int count)
+ {
+ 	char *xs = s;
+ 
+diff --git a/arch/arm/cpu/armv8/txlx/firmware/scp_task/task_apis.h b/arch/arm/cpu/armv8/txlx/firmware/scp_task/task_apis.h
+index 89242ab5fb..2ce7d7dd5f 100644
+--- a/arch/arm/cpu/armv8/txlx/firmware/scp_task/task_apis.h
++++ b/arch/arm/cpu/armv8/txlx/firmware/scp_task/task_apis.h
+@@ -46,8 +46,8 @@ void enter_suspend(unsigned int suspend_from);
+ void get_dvfs_info(unsigned int domain,
+ 		unsigned char *info_out, unsigned int *size_out);
+ void set_dvfs(unsigned int domain, unsigned int index);
+-void *memcpy(void *dest, const void *src, unsigned int count);
+-void *memset(void *s, int c, unsigned int count);
++void *memcpy(void *dest, const void *src, unsigned long int count);
++void *memset(void *s, int c, unsigned long int count);
+ void _udelay(unsigned int us);
+ unsigned int get_time(void);
+ 

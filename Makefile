@@ -39,6 +39,10 @@ RK3566:
 	PROJECT=Rockchip DEVICE=RK3566 ARCH=arm ./scripts/build_distro
 	PROJECT=Rockchip DEVICE=RK3566 ARCH=aarch64 ./scripts/build_distro
 
+S922X:
+	PROJECT=Amlogic DEVICE=S922X ARCH=arm ./scripts/build_distro
+	PROJECT=Amlogic DEVICE=S922X ARCH=aarch64 ./scripts/build_distro
+
 update:
 	PROJECT=PC DEVICE=handheld ARCH=x86_64 ./scripts/update_packages
 
