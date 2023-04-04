@@ -1,0 +1,54 @@
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
+
+PKG_UBOOT="$(get_build_dir u-boot)"
+source ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
+FIP_DIR="${ROOT}/build.${DISTRO}-${DEVICE}.aarch64/amlogic-boot-fip-*"
+
+case "${PKG_SOC}" in
+ s922x)
+	echo "uboot: encrypting u-boot.bin with fip..."
+	cp -av build/u-boot.bin ${FIP_DIR}/
+	cd ${FIP_DIR}
+	./build-fip.sh ${BOOT_FIP} u-boot.bin ${INSTALL}/usr/share/bootloader/fip
+  ;;
+esac
+
+#Install a precombiled u-boot.bin until we can fix buildroot. 
+cp -rf ${PKG_DIR}/bin/u-boot.bin ${INSTALL}/usr/share/bootloader/
+
+if [ "${BOOT_INI}" == true ]
+then
+  echo "boot: create boot.ini..."
+  cat >${INSTALL}/usr/share/bootloader/boot.ini <<EOF
+ODROIDGOU-UBOOT-CONFIG
+
+setenv dtb_loadaddr "0x10000000"
+setenv loadaddr "0x1B00000"
+
+setenv bootargs "boot=UUID=@BOOT_UUID@ disk=UUID=@DISK_UUID@ ${EXTRA_CMDLINE}"
+
+load mmc \${devno}:1 \${loadaddr} KERNEL
+load mmc \${devno}:1 \${dtb_loadaddr} meson-g12b-odroid-go-ultra.dtb
+
+fdt addr \${dtb_loadaddr}
+
+booti \${loadaddr} - \${dtb_loadaddr}
+
+EOF
+fi
+
+if [ "${EXT_LINUX_CONF}" == true ]
+then
+echo "boot: create extlinux.conf..."
+mkdir -p "${INSTALL}/usr/share/bootloader/extlinux"
+
+FDTMODE="FDT /${DEVICE_DTB}.dtb"
+
+cat << EOF > "${INSTALL}/usr/share/bootloader/extlinux/extlinux.conf"
+LABEL ${DISTRO}
+  LINUX /${KERNEL_NAME}
+  ${FDTMODE}
+  APPEND boot=UUID=@BOOT_UUID@ disk=UUID=@DISK_UUID@ ${EXTRA_CMDLINE}
+EOF
+fi

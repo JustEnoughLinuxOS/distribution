@@ -20,5 +20,5 @@ makeinstall_target() {
   sed -e "s/@APPIMAGE@/${PKG_NAME}/g" -i ${INSTALL}/usr/bin/start_aethersx2.sh
   chmod 755 ${INSTALL}/usr/bin/*
   mkdir -p ${INSTALL}/usr/config
-  cp -rf ${PKG_DIR}/config/aethersx2 ${INSTALL}/usr/config
+  cp -rf ${PKG_DIR}/config/${DEVICE}/aethersx2 ${INSTALL}/usr/config
 }
