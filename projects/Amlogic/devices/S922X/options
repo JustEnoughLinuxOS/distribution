@@ -96,6 +96,9 @@
 
   # debug tty path
     DEBUG_TTY="/dev/ttyFIQ0"
+
+  # Disable 32BIT support
+    ENABLE_32BIT="false"
    
   # build and install PulseAudio support (yes / no)
     PULSEAUDIO_SUPPORT="yes"

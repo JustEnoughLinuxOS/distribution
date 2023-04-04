@@ -30,8 +30,17 @@ PROJECT="${PROJECT:-PC}"
 ARCH="${ARCH:-x86_64}"
 TARGET_ARCH="${ARCH}"
 
+# determine if we are building 32bit support
+ENABLE_32BIT="${ENABLE_32BIT-true}"
+
 # determines the default device, if not forced by user
 DEVICE="${DEVICE:-handheld}"
+
+# the version is the date
+OS_VERSION=$(date +%Y%m%d)
+
+# defines the born on date of a build
+BUILD_DATE=$(date)
 
 # include helper functions
 . config/functions

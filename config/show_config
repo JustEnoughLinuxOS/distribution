@@ -4,7 +4,7 @@ show_config() {
 
   dashes="==========================="
   config_message="${config_message}\n ${dashes}${dashes}${dashes}"
-  config_message="${config_message}\n Configuration for ${DISTRONAME}"
+  config_message="${config_message}\n Configuration for ${DISTRONAME} v${OS_VERSION}"
   config_message="${config_message}\n ${dashes}${dashes}${dashes}"
 
   # Build options
