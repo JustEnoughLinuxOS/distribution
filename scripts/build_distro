@@ -12,11 +12,8 @@ then
   exit 1
 fi
 
-### Remember to make this more dynamic.
-export DISTRO="JELOS"
-
-export OS_VERSION=$(date +%Y%m%d)
-export BUILD_DATE=$(date)
+. config/options ""
+. projects/${PROJECT}/devices/${DEVICE}/options
 
 echo "Building ${DISTRO} for ${DEVICE}"
 
@@ -88,13 +85,13 @@ rm -rf ./build.${DISTRO}-${DEVICE}.${ARCH}/image
 
 case ${ARCH} in
   arm)
-    [ "${BASE_ONLY}" == "true" ] && exit 0
+    [ "${BASE_ONLY}" == "true" ] || [ ! "${ENABLE_32BIT}" == "true" ] && exit 0
     export PKG_BUILD_PERF=no
     scripts/build_compat arm
     scripts/install arm
   ;;
   i686)
-    [ "${BASE_ONLY}" == "true" ] && exit 0
+    [ "${BASE_ONLY}" == "true" ] || [ ! "${ENABLE_32BIT}" == "true" ] && exit 0
     export PKG_BUILD_PERF=no
     scripts/build_compat x86
     scripts/install x86
