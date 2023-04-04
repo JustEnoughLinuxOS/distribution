@@ -24,11 +24,8 @@ PKG_UI_TOOLS="fileman"
 
 PKG_SOFTWARE=""
 
-case "${DEVICE}" in
-  S922X)
-    #aarch64 ONLY
-  ;;
-  *)
+case "${ENABLE_32BIT}" in
+  true)
     PKG_COMPAT="lib32"
   ;;
 esac
