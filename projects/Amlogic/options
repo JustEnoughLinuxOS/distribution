@@ -1,0 +1,70 @@
+################################################################################
+# setup system defaults
+################################################################################
+
+  # Bootloader to use (syslinux / u-boot / bcm2835-bootloader)
+    BOOTLOADER="u-boot"
+
+  # Kernel extra targets to build
+    KERNEL_UBOOT_EXTRA_TARGET=""
+
+  # Kernel to use. values can be:
+  # default:  default mainline kernel
+    LINUX=""
+
+################################################################################
+# setup build defaults
+################################################################################
+
+  # Project FLAGS
+    PROJECT_CFLAGS=""
+
+  # SquashFS compression method (gzip / lzo / xz)
+    SQUASHFS_COMPRESSION="lzo"
+
+################################################################################
+# setup project defaults
+################################################################################
+
+  # build and install ALSA Audio support (yes / no)
+    ALSA_SUPPORT="yes"
+
+  # OpenGL(X) implementation to use (no / mesa)
+    OPENGL="mesa"
+
+  # OpenGL-ES implementation to use (no / bcm2835-driver / gpu-viv-bin-mx6q)
+    OPENGLES="mesa"
+
+  # Displayserver to use (weston / no)
+    DISPLAYSERVER="wl"
+
+  # Windowmanager to use (fluxbox / none)
+    WINDOWMANAGER="weston"
+
+  # Xorg Graphic drivers to use (all / i915,i965,r200,r300,r600,nvidia)
+  # Space separated list is supported,
+  # e.g. GRAPHIC_DRIVERS="i915 i965 r300 r600 radeonsi nvidia"
+    GRAPHIC_DRIVERS=""
+
+  # Modules to install in initramfs for early boot
+    INITRAMFS_MODULES=""
+
+  # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
+  # Space separated list is supported,
+  # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
+    FIRMWARE="misc-firmware wlan-firmware"
+
+  # additional packages to install
+    ADDITIONAL_PACKAGES=""
+
+  # build and install CEC framework support (yes / no)
+    CEC_FRAMEWORK_SUPPORT="yes"
+
+  # build with installer (yes / no)
+    INSTALLER_SUPPORT="no"
+
+  # build and install driver addons (yes / no)
+    DRIVER_ADDONS_SUPPORT="no"
+
+  # debug tty path
+    DEBUG_TTY="/dev/ttyS2"

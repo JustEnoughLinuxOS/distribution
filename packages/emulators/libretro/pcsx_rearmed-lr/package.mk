@@ -22,7 +22,7 @@ makeinstall_target() {
   ## Install the 64bit core.
   mkdir -p ${INSTALL}/usr/lib/libretro
   cp pcsx_rearmed_libretro.so ${INSTALL}/usr/lib/libretro/
-  if [ "${TARGET_ARCH}" = "aarch64" ]
+  if [ "${TARGET_ARCH}" = "aarch64" ] && [ ! ${DEVICE} = 'S922X' ]
   then
     cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/pcsx_rearmed-lr-*/.install_pkg/usr/lib/libretro/pcsx_rearmed_libretro.so ${INSTALL}/usr/lib/libretro/pcsx_rearmed32_libretro.so
   fi

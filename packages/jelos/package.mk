@@ -24,7 +24,14 @@ PKG_UI_TOOLS="fileman"
 
 PKG_SOFTWARE=""
 
-PKG_COMPAT="lib32"
+case "${DEVICE}" in
+  S922X)
+    #aarch64 ONLY
+  ;;
+  *)
+    PKG_COMPAT="lib32"
+  ;;
+esac
 
 PKG_MULTIMEDIA="ffmpeg vlc mpv"
 
