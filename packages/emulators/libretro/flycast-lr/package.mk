@@ -43,7 +43,9 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
   case ${TARGET_ARCH} in
     aarch64)
-      cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/flycast-lr-*/.install_pkg/usr/lib/libretro/flycast32_libretro.so ${INSTALL}/usr/lib/libretro
+      if [ -f ${ROOT}/build.${DISTRO}-${DEVICE}.arm/flycast-lr-*/.install_pkg/usr/lib/libretro/flycast32_libretro.so ]; then
+        cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/flycast-lr-*/.install_pkg/usr/lib/libretro/flycast32_libretro.so ${INSTALL}/usr/lib/libretro
+      fi
       cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast_libretro.so
     ;;
     arm)
