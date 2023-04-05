@@ -39,20 +39,26 @@ pre_configure_target() {
                          -DWITH_SYSTEM_ZLIB=ON \
                          -DUSE_OPENMP=ON"
 }
+
+makeinstall_target32() {
+  case ${ARCH} in
+    aarch64)
+      if [ "${ENABLE_32BIT}" == "true" ]
+      then
+        cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/${PKG_NAME}-*/.install_pkg/usr/lib/libretro/${1}_libretro.so ${INSTALL}/usr/lib/libretro/${1}32_libretro.so
+      fi
+    ;;
+  esac
+}
+
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
   case ${TARGET_ARCH} in
     aarch64)
-      if [ -f ${ROOT}/build.${DISTRO}-${DEVICE}.arm/flycast-lr-*/.install_pkg/usr/lib/libretro/flycast32_libretro.so ]
-      then
-        cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/flycast-lr-*/.install_pkg/usr/lib/libretro/flycast32_libretro.so ${INSTALL}/usr/lib/libretro
-      fi
       cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast_libretro.so
+      makeinstall_target32 flycast
     ;;
-    arm)
-      cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast32_libretro.so
-    ;;
-    x86_64)
+    *)
       cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast_libretro.so
     ;;
   esac
