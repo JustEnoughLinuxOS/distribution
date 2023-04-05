@@ -311,24 +311,8 @@ state.Ultra {
 			item.2 'IN 2'
 		}
 	}
-	control.19 {
-		iface MIXER
-		name Pre-Amp
-		value.0 1
-		value.1 1
-		comment {
-			access 'read write user'
-			type INTEGER
-			count 2
-			range '0 - 5'
-			tlv '0000000100000008fffffe0c000001f4'
-			dbmin -500
-			dbmax 2000
-			dbvalue.0 0
-			dbvalue.1 0
-		}
-	}
 }
+
 EOF
-  alsactl --file /storage/.config/asound.state restore && alsactl init
+  alsactl init && alsactl --file /storage/.config/asound.state restore
 fi
