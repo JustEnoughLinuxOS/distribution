@@ -18,13 +18,19 @@ make_target() {
   make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=${DEVICE}
 }
 
+makeinstall_target32() {
+  case ${ARCH} in
+    aarch64)
+      if [ "${ENABLE_32BIT}" == "true" ]
+      then
+        cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/${PKG_NAME}-*/.install_pkg/usr/lib/libretro/${1}_libretro.so ${INSTALL}/usr/lib/libretro/${1}32_libretro.so
+      fi
+    ;;
+  esac
+}
+
 makeinstall_target() {
-  ## Install the 64bit core.
   mkdir -p ${INSTALL}/usr/lib/libretro
   cp pcsx_rearmed_libretro.so ${INSTALL}/usr/lib/libretro/
-  if [ -f "${ROOT}/build.${DISTRO}-${DEVICE}.arm/pcsx_rearmed-lr-*/.install_pkg/usr/lib/libretro/pcsx_rearmed_libretro.so" ] && \
-     [ "${TARGET_ARCH}" = "aarch64" ]
-  then
-    cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/pcsx_rearmed-lr-*/.install_pkg/usr/lib/libretro/pcsx_rearmed_libretro.so ${INSTALL}/usr/lib/libretro/pcsx_rearmed32_libretro.so
-  fi
+  makeinstall_target32 pcsx_rearmed
 }
