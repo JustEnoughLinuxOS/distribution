@@ -20,7 +20,7 @@
 ################################################################################
 
 PKG_NAME="tic80-lr"
-PKG_VERSION="40c5f2d8ef8f221933e9f3fabe3c5e2980e32fee"
+PKG_VERSION="31ea041978b63869589c1e49b6ee83e4e8ebdc54"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
