@@ -3,8 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="RTL8192EU"
-PKG_VERSION="e39c4e7a66b05fab6eceb2bb251d399c003fb544"
-PKG_SHA256="7e16b1d7970a2d9d2c3af8d423cbb7fe522c4329088825ea5e9d2a3ec23e2a49"
+PKG_VERSION="528ae31705764d78cc117abd604d9b799bd52543"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/Mange/rtl8192eu-linux-driver"
 PKG_URL="https://github.com/Mange/rtl8192eu-linux-driver/archive/${PKG_VERSION}.tar.gz"
