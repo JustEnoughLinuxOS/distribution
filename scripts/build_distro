@@ -58,7 +58,7 @@ then
 fi
 
 # Clean necessary packages.
-PKG_CLEAN+=" lib32 initramfs modules autostart splash jelos"
+PKG_CLEAN+=" ${CLEAN_OS_BASE}"
 
 if [ ! -n "${DIRTY}" ]
 then
