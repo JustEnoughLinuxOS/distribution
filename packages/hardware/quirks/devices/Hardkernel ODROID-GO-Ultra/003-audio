@@ -314,5 +314,5 @@ state.Ultra {
 }
 
 EOF
-  alsactl init && alsactl --file /storage/.config/asound.state restore
+  alsactl init && alsactl -U --file /storage/.config/asound.state restore
 fi
