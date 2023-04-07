@@ -43,7 +43,7 @@
 # Define package sets to clean based on the type of build being executed.
 # This should be updated to be more dynamic in the future.
   CLEAN_OS_DEEP="system-utils busybox linux grub u-boot SDL2 retroarch mesa"
-  CLEAN_OS_BASE="initramfs modules autostart splash jelos"
+  CLEAN_OS_BASE="initramfs modules quirks autostart splash jelos"
   CLEAN_EMU_TOOLS="gamecontrollerdb"
   CLEAN_EMU_32BIT="lib32 box86 flycast-lr pcsx_rearmed-lr"
 
