@@ -101,12 +101,6 @@ makeinstall_target() {
 	cp ${PKG_BUILD}/start_es.sh ${INSTALL}/usr/bin
 	chmod 0755 ${INSTALL}/usr/bin/start_es.sh
 
-        case ${DEVICE} in
-	  S922X)
-	    sed -i '/^emulationstation --log-path \/var\/log/c\emulationstation --ignore-gamelist --log-path \/var\/log' ${INSTALL}/usr/bin/start_es.sh
-	  ;;
-	esac
-
 	mkdir -p ${INSTALL}/usr/lib/${PKG_PYTHON_VERSION}
 	cp -rf ${PKG_DIR}/bluez/* ${INSTALL}/usr/lib/${PKG_PYTHON_VERSION}
 

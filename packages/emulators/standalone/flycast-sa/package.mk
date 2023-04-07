@@ -45,7 +45,7 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/config/flycast
   cp ${PKG_BUILD}/.${TARGET_NAME}/flycast ${INSTALL}/usr/bin/flycast
   cp ${PKG_DIR}/scripts/* ${INSTALL}/usr/bin
-  cp ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/config/flycast
+  cp -r ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/config/flycast
 
   chmod +x ${INSTALL}/usr/bin/start_flycastsa.sh
 }
