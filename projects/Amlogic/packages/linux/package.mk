@@ -19,7 +19,7 @@ PKG_PATCH_DIRS+="${DEVICE}"
 
 case ${DEVICE} in
   S922X)
-    PKG_VERSION="6.1.22"
+    PKG_VERSION="6.1.23"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
   ;;
 esac

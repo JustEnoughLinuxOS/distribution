@@ -49,7 +49,7 @@ case "${DEVICE}" in
   S922X)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
     PKG_EMUS+=" aethersx2-sa dolphin-sa duckstation-sa mupen64plus-sa yabasanshiro-sa box64"
-    LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr dolphin-lr yabasanshiro-sa"
+    LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr flycast-lr dolphin-lr yabasanshiro-sa"
 esac
 
 PKG_DEPENDS_TARGET+=" ${PKG_EMUS} ${EMUS_32BIT} ${PKG_RETROARCH} ${LIBRETRO_CORES}"
