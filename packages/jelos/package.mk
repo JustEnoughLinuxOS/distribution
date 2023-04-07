@@ -24,7 +24,11 @@ PKG_UI_TOOLS="fileman"
 
 PKG_SOFTWARE=""
 
-PKG_COMPAT="lib32"
+case "${ENABLE_32BIT}" in
+  true)
+    PKG_COMPAT="lib32"
+  ;;
+esac
 
 PKG_MULTIMEDIA="ffmpeg vlc mpv"
 

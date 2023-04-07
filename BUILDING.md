@@ -109,6 +109,7 @@ Building JELOS is easy, the fastest and most recommended method is to instruct t
 |handheld||```make docker-handheld```|
 |RK3588||```make docker-RK3588```|
 |RK3566||```make docker-RK3566```|
+|S922X||```make docker-S922X```|
 |ALL DEVICES||```make docker-world```|
 
 > Devices that list a dependency require the dependency to be built first as that build will be used as the root of the device you are building.  This will be done automatically by the build tooling when you start a build for your device.

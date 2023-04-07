@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="flycast-lr"
-PKG_VERSION="e6bc36e1100d610dc08172bded3d5946f21d9f33"
+PKG_VERSION="9d6bfd4786dd81206defd3dfbf1e637ac9ce212c"
 PKG_SITE="https://github.com/flyinghead/flycast"
 PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain libzip"
@@ -39,17 +39,26 @@ pre_configure_target() {
                          -DWITH_SYSTEM_ZLIB=ON \
                          -DUSE_OPENMP=ON"
 }
+
+makeinstall_target32() {
+  case ${ARCH} in
+    aarch64)
+      if [ "${ENABLE_32BIT}" == "true" ]
+      then
+        cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/${PKG_NAME}-*/.install_pkg/usr/lib/libretro/${1}_libretro.so ${INSTALL}/usr/lib/libretro/${1}32_libretro.so
+      fi
+    ;;
+  esac
+}
+
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
   case ${TARGET_ARCH} in
     aarch64)
-      cp -vP ${ROOT}/build.${DISTRO}-${DEVICE}.arm/flycast-lr-*/.install_pkg/usr/lib/libretro/flycast32_libretro.so ${INSTALL}/usr/lib/libretro
       cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast_libretro.so
+      makeinstall_target32 flycast
     ;;
-    arm)
-      cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast32_libretro.so
-    ;;
-    x86_64)
+    *)
       cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast_libretro.so
     ;;
   esac

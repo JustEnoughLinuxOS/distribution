@@ -4,7 +4,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="flycast-sa"
-PKG_VERSION="e6bc36e1100d610dc08172bded3d5946f21d9f33"
+PKG_VERSION="187674ddac84038922bb29a0f89e99ecf3135e52"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/flyinghead/flycast"
 PKG_URL="${PKG_SITE}.git"
@@ -42,9 +42,10 @@ PKG_CMAKE_OPTS_TARGET+=" -DUSE_OPENMP=ON"
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin
+  mkdir -p ${INSTALL}/usr/config/flycast
   cp ${PKG_BUILD}/.${TARGET_NAME}/flycast ${INSTALL}/usr/bin/flycast
   cp ${PKG_DIR}/scripts/* ${INSTALL}/usr/bin
+  cp -r ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/config/flycast
 
-	chmod +x ${INSTALL}/usr/bin/start_flycastsa.sh
-	chmod +x ${INSTALL}/usr/bin/set_flycast_joy.sh
+  chmod +x ${INSTALL}/usr/bin/start_flycastsa.sh
 }
