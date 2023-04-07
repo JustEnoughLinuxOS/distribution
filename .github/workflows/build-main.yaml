@@ -100,9 +100,10 @@ jobs:
             ### Installation Package Downloads
             |**Device/Platform**|**Download Package**|
             |----|----|
-            |**Ayaneo Handhelds, Atari VCS, and other x86_64 devices**|[JELOS-handheld.x86_64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-handheld.x86_64-${{ steps.version.outputs.version }}.img.gz)|
-            |**Orange Pi 5, and Indiedroid Nova**|[JELOS-RK3588.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3588.aarch64-${{ steps.version.outputs.version }}.img.gz)|
             |**Anbernic RG353P/M/V/VS, and RG503**|[JELOS-RK3566.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3566.aarch64-${{ steps.version.outputs.version }}.img.gz)|
+            |**Ayaneo Handhelds, Atari VCS, and other x86_64 devices**|[JELOS-handheld.x86_64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-handheld.x86_64-${{ steps.version.outputs.version }}.img.gz)|
+            |**Hardkernel ODROID Go Ultra**|[JELOS-S922X.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-S922X.aarch64-${{ steps.version.outputs.version }}.img.gz)|
+            |**Orange Pi 5, and Indiedroid Nova**|[JELOS-RK3588.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3588.aarch64-${{ steps.version.outputs.version }}.img.gz)|
 
             ## Upgrading
             * Download and install the update online via the System Settings menu.
@@ -114,9 +115,10 @@ jobs:
             ### Update Package Downloads
             |**Device/Platform**|**Download Package**|
             |----|----|
-            |**Ayaneo Handhelds, Atari VCS, and other x86_64 devices**|[JELOS-handheld.x86_64-${{ steps.version.outputs.version }}.tar](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-handheld.x86_64-${{ steps.version.outputs.version }}.tar)|
-            |**Orange Pi 5, and Indiedroid Nova**|[JELOS-RK3588.aarch64-${{ steps.version.outputs.version }}.tar](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3588.aarch64-${{ steps.version.outputs.version }}.tar)|
             |**Anbernic RG353P/M/V/VS, and RG503**|[JELOS-RK3566.aarch64-${{ steps.version.outputs.version }}.tar](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3566.aarch64-${{ steps.version.outputs.version }}.tar)|
+            |**Ayaneo Handhelds, Atari VCS, and other x86_64 devices**|[JELOS-handheld.x86_64-${{ steps.version.outputs.version }}.tar](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-handheld.x86_64-${{ steps.version.outputs.version }}.tar)|
+            |**Hardkernel ODROID Go Ultra**|[JELOS-S922X.aarch64-${{ steps.version.outputs.version }}.tar](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-S922X.aarch64-${{ steps.version.outputs.version }}.tar)|
+            |**Orange Pi 5, and Indiedroid Nova**|[JELOS-RK3588.aarch64-${{ steps.version.outputs.version }}.tar](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3588.aarch64-${{ steps.version.outputs.version }}.tar)|
 
             ## Documentation
             * [Home](https://github.com/JustEnoughLinuxOS/distribution/wiki)
