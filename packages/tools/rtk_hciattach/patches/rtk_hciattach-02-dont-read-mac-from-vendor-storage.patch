@@ -1,13 +1,18 @@
---- a/rtb_fwc.c
-+++ b/rtb_fwc.c
-@@ -39,8 +39,8 @@
- #define BT_CONFIG_DIRECTORY "/lib/firmware/rtlbt/"
-
- #ifdef USE_CUSTOMER_ADDRESS
--#define BT_ADDR_FROM_VENDOR_STORAGE
--#define BT_ADDR_FILE        "/opt/bdaddr"
-+//#define BT_ADDR_FROM_VENDOR_STORAGE
-+#define BT_ADDR_FILE        "/storage/.config/btaddr"
- static uint8_t customer_bdaddr = 0;
- #endif
-
+diff -rupN rkwifibt.orig/rtb_fwc.c rkwifibt/realtek/rtk_hciattach/rtb_fwc.c
+--- rkwifibt.orig/rtb_fwc.c	2023-04-09 00:03:32.060971449 +0000
++++ rkwifibt/rtb_fwc.c	2023-04-09 00:25:36.490970660 +0000
+@@ -36,10 +36,10 @@
+ 
+ //#define BT_ADDR_FROM_VENDOR_STORAGE
+ 
+-#define FIRMWARE_DIRECTORY	"/lib/firmware/rtlbt/"
+-#define BT_CONFIG_DIRECTORY	"/lib/firmware/rtlbt/"
+-#define EXTRA_CONFIG_FILE	"/opt/rtk_btconfig.txt"
+-#define BT_ADDR_FILE		"/opt/bdaddr"
++#define FIRMWARE_DIRECTORY	"/usr/lib/kernel-overlays/base/lib/firmware/"
++#define BT_CONFIG_DIRECTORY	"/usr/lib/kernel-overlays/base/lib/firmware/"
++#define EXTRA_CONFIG_FILE	"/storage/.config/rtk_btconfig.txt"
++#define BT_ADDR_FILE		"/storage/.config/btaddr"
+ #define BDADDR_STRING_LEN	17
+ 
+ struct list_head {

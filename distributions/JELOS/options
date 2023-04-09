@@ -44,11 +44,9 @@
 # This should be updated to be more dynamic in the future.
   CLEAN_OS_DEEP="system-utils busybox linux grub u-boot SDL2 retroarch mesa"
   CLEAN_OS_BASE="initramfs modules quirks autostart splash jelos"
+  CLEAN_NETWORK="RTL8821CS-firmware"
   CLEAN_EMU_TOOLS="gamecontrollerdb"
   CLEAN_EMU_32BIT="lib32 box86 flycast-lr pcsx_rearmed-lr"
-
-# Clean necessary packages.
-PKG_CLEAN="${CLEAN_OS} ${CLEAN_EMUS} ${CLEAN_UI} ${CLEAN_TOOLS} ${PKG_CLEAN} lib32 initramfs modules autostart splash jelos"
 
 # additional drivers to install:
 # for a list of additional drivers see packages/linux-drivers
