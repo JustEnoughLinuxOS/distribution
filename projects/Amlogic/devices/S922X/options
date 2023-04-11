@@ -36,6 +36,7 @@
     PKG_SOC="s922x"
     BOOT_FIP="odroid-go-ultra"
     BOOT_INI=true
+    BIOS_BIN=true
     EXT_LINUX_CONF=false
 
   # Additional kernel make parameters (for example to specify the u-boot loadaddress)
