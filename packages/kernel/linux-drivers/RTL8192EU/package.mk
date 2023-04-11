@@ -9,6 +9,7 @@ PKG_SITE="https://github.com/Mange/rtl8192eu-linux-driver"
 PKG_URL="https://github.com/Mange/rtl8192eu-linux-driver/archive/${PKG_VERSION}.tar.gz"
 PKG_LONGDESC="Realtek RTL8192EU Linux 3.x driver"
 PKG_IS_KERNEL_PKG="yes"
+PKG_TOOLCHAIN="make"
 
 pre_make_target() {
   unset LDFLAGS
