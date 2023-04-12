@@ -1,0 +1,13 @@
+diff --git a/src/sdlutils.cpp b/src/sdlutils.cpp
+index ba56240..e3b15f2 100644
+--- a/src/sdlutils.cpp
++++ b/src/sdlutils.cpp
+@@ -47,7 +47,7 @@ bool SDLUtils::init()
+ 
+    // Create window
+    #if FULLSCREEN == 1
+-      g_window = SDL_CreateWindow(APP_NAME, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_FULLSCREEN);
++      g_window = SDL_CreateWindow(APP_NAME, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_VULKAN | SDL_WINDOW_FULLSCREEN);
+    #else
+       g_window = SDL_CreateWindow(APP_NAME, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    #endif
