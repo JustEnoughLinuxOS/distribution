@@ -20,7 +20,8 @@ configure_target() {
 }
 
 make_target() {
-  HOME=${ROOT} ${GOLANG} build -a -ldflags "${LDFLAGS}" -o bin/syncthing -v ./cmd/syncthing
+  HOME=${ROOT} GOCACHE=${ROOT}/.cache/go-build \
+       ${GOLANG} build -a -ldflags "${LDFLAGS}" -o bin/syncthing -v ./cmd/syncthing
 }
 
 makeinstall_target() {

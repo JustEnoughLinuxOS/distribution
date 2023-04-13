@@ -81,4 +81,6 @@ fi
   export QT_QPA_PLATFORM=wayland
 
 #Run Aethersx2 emulator
+  set_audio pulseaudio
   /usr/bin/@APPIMAGE@ -fullscreen "${1}"
+  set_audio alsa

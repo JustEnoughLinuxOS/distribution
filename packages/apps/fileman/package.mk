@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="fileman"
-PKG_VERSION="580dddcef2b223360c070642df6801eb4f8520ff"
+PKG_VERSION="8a0b1464f1c30359d0b9856fb6eed1c405219cbf"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/JustEnoughLinuxOS/fileman"
@@ -12,7 +12,6 @@ PKG_DEPENDS_TARGET="toolchain SDL2 SDL2_image SDL2_gfx SDL2_ttf"
 PKG_PRIORITY="optional"
 PKG_SECTION="tools"
 PKG_SHORTDESC="A Single panel file Manager."
-
 PKG_PATCH_DIRS="${DEVICE}"
 
 make_target() {

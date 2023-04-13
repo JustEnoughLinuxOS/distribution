@@ -12,6 +12,15 @@ case "${DEVICE}" in
     fi
 esac
 
+#Copy bios bin
+if [ "${BIOS_BIN}" == true ]; then
+  if [ -f "${RELEASE_DIR}/3rdparty/bootloader/ODROIDBIOS.BIN" ]; then
+    echo "image: copy bios bin image..."
+    cp "${RELEASE_DIR}/3rdparty/bootloader/ODROIDBIOS.BIN" "${LE_TMP}/ODROIDBIOS.BIN"
+    mcopy -so "${LE_TMP}/ODROIDBIOS.BIN" ::
+  fi
+fi
+
 #Create boot.ini
 if [ "${BOOT_INI}" == true ]
 then

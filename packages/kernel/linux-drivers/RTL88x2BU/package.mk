@@ -12,6 +12,7 @@ PKG_DEPENDS_TARGET="toolchain linux"
 PKG_NEED_UNPACK="${LINUX_DEPENDS}"
 PKG_LONGDESC="Realtek 88x2BU driver for 4.4-5.x"
 PKG_IS_KERNEL_PKG="yes"
+PKG_TOOLCHAIN="make"
 
 pre_make_target() {
   unset LDFLAGS

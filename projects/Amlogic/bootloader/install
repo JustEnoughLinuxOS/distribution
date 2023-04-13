@@ -6,13 +6,19 @@ source ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
 FIP_DIR="${ROOT}/build.${DISTRO}-${DEVICE}.aarch64/amlogic-boot-fip-*"
 
 case "${PKG_SOC}" in
- s922x)
+  s922x)
 	echo "uboot: encrypting u-boot.bin with fip..."
 	cp -av build/u-boot.bin ${FIP_DIR}/
 	cd ${FIP_DIR}
 	./build-fip.sh ${BOOT_FIP} u-boot.bin ${INSTALL}/usr/share/bootloader/fip
   ;;
 esac
+
+if [ "${BIOS_BIN}" == true ]
+then
+  echo "uboot: copy bios bin to ${INSTALL}/usr/share/bootloader..."
+  cp -av ${PKG_BUILD}/tools/odroid_resource/ODROIDBIOS.BIN ${INSTALL}/usr/share/bootloader
+fi
 
 #Install a precombiled u-boot.bin until we can fix buildroot. 
 cp -rf ${PKG_DIR}/bin/u-boot.bin ${INSTALL}/usr/share/bootloader/
