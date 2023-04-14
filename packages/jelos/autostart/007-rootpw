@@ -13,6 +13,8 @@ fi
 ROTATION=$(get_setting rotate.root.password)
 if [ "${ROTATION}" == "0" ]
 then
+  ROOTPASS=$(get_setting root.password)
+  setrootpass "${ROOTPASS}"
   exit 0
 fi
 
