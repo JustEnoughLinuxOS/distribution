@@ -1,0 +1,27 @@
+diff --git a/gfx/drivers/vulkan.c b/gfx/drivers/vulkan.c
+index d04a24172c..806e336ba2 100644
+--- a/gfx/drivers/vulkan.c
++++ b/gfx/drivers/vulkan.c
+@@ -3313,14 +3313,14 @@ static uintptr_t vulkan_load_texture(void *video_data, void *data,
+    {
+       /* Create a dummy texture instead. */
+       static const uint32_t checkerboard[] = {
+-         VK_T0, VK_T1, VK_T0, VK_T1, VK_T0, VK_T1, VK_T0, VK_T1,
+-         VK_T1, VK_T0, VK_T1, VK_T0, VK_T1, VK_T0, VK_T1, VK_T0,
+-         VK_T0, VK_T1, VK_T0, VK_T1, VK_T0, VK_T1, VK_T0, VK_T1,
+-         VK_T1, VK_T0, VK_T1, VK_T0, VK_T1, VK_T0, VK_T1, VK_T0,
+-         VK_T0, VK_T1, VK_T0, VK_T1, VK_T0, VK_T1, VK_T0, VK_T1,
+-         VK_T1, VK_T0, VK_T1, VK_T0, VK_T1, VK_T0, VK_T1, VK_T0,
+-         VK_T0, VK_T1, VK_T0, VK_T1, VK_T0, VK_T1, VK_T0, VK_T1,
+-         VK_T1, VK_T0, VK_T1, VK_T0, VK_T1, VK_T0, VK_T1, VK_T0,
++         VK_T0, VK_T0, VK_T0, VK_T0, VK_T0, VK_T0, VK_T0, VK_T0,
++         VK_T0, VK_T0, VK_T0, VK_T0, VK_T0, VK_T0, VK_T0, VK_T0,
++         VK_T0, VK_T0, VK_T0, VK_T0, VK_T0, VK_T0, VK_T0, VK_T0,
++         VK_T0, VK_T0, VK_T0, VK_T0, VK_T0, VK_T0, VK_T0, VK_T0,
++         VK_T0, VK_T0, VK_T0, VK_T0, VK_T0, VK_T0, VK_T0, VK_T0,
++         VK_T0, VK_T0, VK_T0, VK_T0, VK_T0, VK_T0, VK_T0, VK_T0,
++         VK_T0, VK_T0, VK_T0, VK_T0, VK_T0, VK_T0, VK_T0, VK_T0,
++         VK_T0, VK_T0, VK_T0, VK_T0, VK_T0, VK_T0, VK_T0, VK_T0,
+       };
+       *texture                = vulkan_create_texture(vk, NULL,
+             8, 8, VK_FORMAT_B8G8R8A8_UNORM,
