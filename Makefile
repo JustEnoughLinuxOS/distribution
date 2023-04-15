@@ -23,9 +23,7 @@ distclean:
 src-pkg:
 	tar cvJf sources.tar.xz sources .stamps
 
-world: x86_64 RK3588 RK3566 S922X
-
-x86_64: AMD64
+world: AMD64 RK3588 RK3566 S922X
 
 AMD64:
 	PROJECT=PC DEVICE=AMD64 ARCH=i686 ./scripts/build_distro
