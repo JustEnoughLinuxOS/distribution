@@ -150,7 +150,7 @@ case $hdmimode in
 		set_bezel "643" "405" "325" "150" "false"
 		;;
 	*)
-		# delete aspect_ratio_index to make sure video is expanded fullscreen. Only certain handheld platforms need custom_viewport.
+		# delete aspect_ratio_index to make sure video is expanded fullscreen. Only certain AMD64 platforms need custom_viewport.
 		clear_bezel
 		sed -i '/input_overlay_opacity = "/d' $RACONFIG
         sed -i "1i input_overlay_opacity = \"$OPACITY\"" $RACONFIG
@@ -207,7 +207,7 @@ sed -i '/input_overlay = "/d' $RACONFIG
 fi
 
 # Note:
-# 1. Different handheld platforms have different bezels, they may need different viewport value even for same platform.
+# 1. Different AMD64 platforms have different bezels, they may need different viewport value even for same platform.
 #	So, I think this script should be stored in $BEZELDIR/ or some place wich can be modified by users.
 # 2. For Arcade games, I created a bezelmap.cfg in $BEZELDIR/ in order to share bezels between arcade clones and parent. 
 #	In fact, ROMs of other platforms can share certain bezel if you write mapping relationship in bezelmap.cfg.

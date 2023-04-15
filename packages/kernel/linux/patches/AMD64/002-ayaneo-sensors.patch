@@ -72,7 +72,7 @@ Precedence: bulk
 List-ID: <linux-kernel.vger.kernel.org>
 X-Mailing-List: linux-kernel@vger.kernel.org
 
-Add support for the AYANEO AIR and AYANEO AIR Pro models of handheld
+Add support for the AYANEO AIR and AYANEO AIR Pro models of AMD64
 devices. These devices use the same EC registers and logic as the One X
 Player mini AMD. Previous AYANEO models are not supported as they use a
 different EC and do not have the necessary fan speed write enable and
@@ -126,7 +126,7 @@ index 39c588ec5c50..a53c961065b2 100644
  Supported devices
  -----------------
 @@ -22,6 +25,8 @@ Supported devices
- Currently the driver supports the following handhelds:
+ Currently the driver supports the following AMD64s:
  
   - AOK ZOE A1
 + - Aya Neo AIR
@@ -160,11 +160,11 @@ index f84ec8f8eda9..7adc0199ea66 100644
   *
 - * Old boards have the same DMI strings and they are told appart by the
 - * boot cpu vendor (Intel/AMD). Currently only AMD boards are supported
-- * but the code is made to be simple to add other handheld boards in the
+- * but the code is made to be simple to add other AMD64 boards in the
 - * future.
 + * Old OXP boards have the same DMI strings and they are told appart by
 + * the boot cpu vendor (Intel/AMD). Currently only AMD boards are
-+ * supported but the code is made to be simple to add other handheld
++ * supported but the code is made to be simple to add other AMD64
 + * boards in the future.
   * Fan control is provided via pwm interface in the range [0-255].
   * Old AMD boards use [0-100] as range in the EC, the written value is
