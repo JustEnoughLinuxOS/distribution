@@ -29,7 +29,7 @@ LIBRETRO_CORES="2048-lr 81-lr a5200-lr atari800-lr beetle-gba-lr beetle-lynx-lr 
 
 ### Emulators or cores for specific devices
 case "${DEVICE}" in
-  handheld)
+  AMD64)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="lutris-wine"
     PKG_EMUS+=" duckstation-sa dolphin-sa cemu-sa citra-sa melonds-sa minivmacsa mupen64plus-sa pcsx2-sa       \
                primehack rpcs3-sa ryujinx-sa xemu-sa yuzu-sa"

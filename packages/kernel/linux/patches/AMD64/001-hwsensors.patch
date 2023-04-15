@@ -64,7 +64,7 @@ diff -rupN linux-6.1.2.orig/Documentation/hwmon/oxp-sensors.rst linux-6.1.2/Docu
 +Supported devices
 +-----------------
 +
-+Currently the driver supports the following handhelds:
++Currently the driver supports the following AMD64s:
 +
 + - AOK ZOE A1
 + - OneXPlayer AMD
@@ -1420,7 +1420,7 @@ diff -rupN linux-6.1.2.orig/drivers/hwmon/Kconfig linux-6.1.2/drivers/hwmon/Kcon
 +	depends on X86
 +	help
 +		If you say yes here you get support for fan readings and control over
-+		OneXPlayer handheld devices. Only OneXPlayer mini AMD handheld variant
++		OneXPlayer AMD64 devices. Only OneXPlayer mini AMD AMD64 variant
 +		boards are supported.
 +
 +		Can also be built as a module. In that case it will be called oxp-sensors.
@@ -1611,7 +1611,7 @@ diff -rupN linux-6.1.2.orig/drivers/hwmon/oxp-sensors.c linux-6.1.2/drivers/hwmo
 + *
 + * Old boards have the same DMI strings and they are told appart by the
 + * boot cpu vendor (Intel/AMD). Currently only AMD boards are supported
-+ * but the code is made to be simple to add other handheld boards in the
++ * but the code is made to be simple to add other AMD64 boards in the
 + * future.
 + * Fan control is provided via pwm interface in the range [0-255].
 + * Old AMD boards use [0-100] as range in the EC, the written value is

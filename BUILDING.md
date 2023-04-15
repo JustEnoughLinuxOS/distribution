@@ -106,7 +106,7 @@ Building JELOS is easy, the fastest and most recommended method is to instruct t
 
 | Devices | Dependency | Docker Command |
 | ---- | ---- | ---- |
-|handheld||```make docker-handheld```|
+|AMD64||```make docker-AMD64```|
 |RK3588||```make docker-RK3588```|
 |RK3566||```make docker-RK3566```|
 |S922X||```make docker-S922X```|
@@ -131,14 +131,14 @@ sudo apt install gcc make git unzip wget \
 Next, build the version of JELOS for your device.  See the table above for dependencies. 
 
 ```
-make handheld
+make AMD64
 ```
 
 ### Building a single package
 It is also possible to build individual packages.
 ```
-DEVICE=handheld ARCH=x86_64 ./scripts/clean busybox
-DEVICE=handheld ARCH=x86_64 ./scripts/build busybox
+DEVICE=AMD64 ARCH=x86_64 ./scripts/clean busybox
+DEVICE=AMD64 ARCH=x86_64 ./scripts/build busybox
 ```
 
 > Note: Emulation Station package build requires additional steps because its source code located in a separate repository, see instructions inside, [link](https://github.com/JustEnoughLinuxOS/distribution/blob/main/packages/ui/emulationstation/package.mk).
@@ -179,9 +179,9 @@ mv wireguard-linux-compat-v1.0.20211208 wireguard-linux-compat
 cp -rf wireguard-linux-compat wireguard-linux-compat.orig
 
 # Make your changes to wireguard-linux-compat
-mkdir -p ../../packages/network/wireguard-linux-compat/patches/handheld
+mkdir -p ../../packages/network/wireguard-linux-compat/patches/AMD64
 # run from the sources dir
-diff -rupN wireguard-linux-compat wireguard-linux-compat.orig >../../packages/network/wireguard-linux-compat/patches/handheld/mychanges.patch
+diff -rupN wireguard-linux-compat wireguard-linux-compat.orig >../../packages/network/wireguard-linux-compat/patches/AMD64/mychanges.patch
 ```
 
 ### Creating a patch for a package using git
@@ -203,9 +203,9 @@ If you already have a build for your device made using the above process, it's s
 ```
 # Update the package version for a new package, or apply your patch as above.
 vim/emacs/vscode/notepad.exe
-# Export the variables needed to complete your build, we'll assume you are building handheld, update the device to match your configuration.
+# Export the variables needed to complete your build, we'll assume you are building AMD64, update the device to match your configuration.
 export OS_VERSION=$(date +%Y%m%d) BUILD_DATE=$(date)
-export PROJECT=PC ARCH=x86_64 DEVICE=handheld
+export PROJECT=PC ARCH=x86_64 DEVICE=AMD64
 # Clean the package you are building.
 ./scripts/clean emulationstation
 # Build the package.
