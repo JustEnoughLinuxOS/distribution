@@ -3,7 +3,7 @@
 
 PKG_NAME="drastic-sa"
 PKG_VERSION="1.0"
-PKG_LICENSE="Proprietary:LICENSE.txt/LICENSE.pdf"
+PKG_LICENSE="Proprietary:DRASTIC.pdf"
 PKG_ARCH="aarch64"
 PKG_URL="https://github.com/brooksytech/JelosAddOns/raw/main/drastic.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
