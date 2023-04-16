@@ -44,11 +44,11 @@ case "${DEVICE}" in
   RK3566)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
     PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders mupen64plus-sa box64"
-    PKG_EMUS+=" yabasanshiro-sa"
+    PKG_EMUS+=" dolphin-sa drastic-sa yabasanshiro-sa"
   ;;
   S922X)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
-    PKG_EMUS+=" aethersx2-sa dolphin-sa duckstation-sa mupen64plus-sa yabasanshiro-sa box64"
+    PKG_EMUS+=" aethersx2-sa dolphin-sa drastic-sa duckstation-sa mupen64plus-sa yabasanshiro-sa box64"
     LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr flycast-lr dolphin-lr yabasanshiro-sa"
 esac
 
