@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="rpcs3-sa"
-PKG_VERSION="842edbcbe795941981993c667c2d8a866126b5b0"
+PKG_VERSION="7081b89e976ad7f931c926022bd93ddd9778347c"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL-2.0-or-later"
 PKG_SITE="https://rpcs3.net"
