@@ -3,7 +3,7 @@
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="mupen64plus-sa"
-PKG_VERSION="61bf24c41bc837e7a3c43cd53c1a2af9042543ff"
+PKG_VERSION="2af22113c511021c1b746bc31c641730e86d8e40"
 PKG_LICENSE="GPL"
 PKG_SITE="https://mupen64plus.org/"
 PKG_URL=""

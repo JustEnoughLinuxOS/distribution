@@ -21,6 +21,9 @@ if [ ! -d "/storage/roms/savestates/ps2" ]; then
     mkdir -p "/storage/roms/savestastes/ps2"
 fi
 
+#Prep PCSX2.ini for audio
+sed -i '/^BackendName =/c\BackendName =' /storage/.config/aethersx2/inis/PCSX2.ini
+
   #Emulation Station Features
   GAME=$(echo "${1}"| sed "s#^/.*/##")
   ASPECT=$(get_setting aspect_ratio ps2 "${GAME}")

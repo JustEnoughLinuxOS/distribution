@@ -242,9 +242,12 @@ then
 				RUNTHIS='${TBASH} "${ROMNAME}"'
 		;;
 		"nds")
-			jslisten set "-9 melonDS"
 			if [ "$EMU" = "melonds-sa" ]; then
+			jslisten set "-9 melonDS"
 			RUNTHIS='${TBASH} /usr/bin/start_melonds.sh "${ROMNAME}"'
+                        elif [ "$EMU" = "drastic-sa" ]; then
+                        jslisten set "-9 drastic"
+                        RUNTHIS='${TBASH} /usr/bin/start_drastic.sh "${ROMNAME}"'
 			fi
 		;;
 		"solarus")
