@@ -22,14 +22,20 @@ then
   mkdir -p "${BIOS_BACKUP}"
 fi
 
+if [ ! -d "${CONFIG_DIR}" ]
+then
+  mkdir -p "${CONFIG_DIR}"
+fi
+
 if [ ! -e "${CONFIG_DIR}/input.cfg" ]
 then
-  GAMEPAD=$(grep -b4 js0 /proc/bus/input/devices | awk 'BEGIN {FS="\""}; /Name/ {printf $2}')
-  GAMEPADCONFIG=$(xmlstarlet sel -t -c '//inputList/inputConfig[@deviceName="'${GAMEPAD}'"]' -n /storage/.emulationstation/es_input.cfg)
+  rm -f ${CONFIG_DIR}/keymapv2.json
+  GAMEPAD="'$(grep -b4 js0 /proc/bus/input/devices | awk 'BEGIN {FS="\""}; /Name/ {printf $2}')'"
+  GAMEPADCONFIG=$(xmlstarlet sel -t -c "//inputList/inputConfig[@deviceName=${GAMEPAD}]" -n /storage/.emulationstation/es_input.cfg)
 
   if [ ! -z "${GAMEPADCONFIG}" ]
   then
-    cat <<EOF >${ROM_DIR}/input.cfg
+    cat <<EOF >${CONFIG_DIR}/input.cfg
 <?xml version="1.0"?>
 <inputList>
 ${GAMEPADCONFIG}

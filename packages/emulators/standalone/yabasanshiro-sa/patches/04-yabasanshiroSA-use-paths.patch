@@ -5,7 +5,7 @@
    // Inisialize home directory
    std::string home_dir = getenv("HOME");
 -  home_dir += "/.yabasanshiro/";
-+  home_dir = "/storage/.config/game/yabasanshiro/";
++  home_dir = "/storage/.config/yabasanshiro/";
    struct stat st = {0};
    if (stat(home_dir.c_str(), &st) == -1) {
      mkdir(home_dir.c_str(), 0700);
@@ -32,7 +32,7 @@
  
    std::string home_dir = getenv("HOME");
 -  home_dir += "/.yabasanshiro/";
-+  home_dir = "/storage/.config/game/yabasanshiro/";
++  home_dir = "/storage/.config/yabasanshiro/";
  
    this->filename = home_dir + input_trace_filename + ".config";
  
@@ -79,7 +79,7 @@
  {
    std::string path = getenv("HOME");
 -  path += "/.emulationstation/es_temporaryinput.cfg";
-+  path = "/storage/roms/saturn/yabasanshiro/input.cfg";
++  path = "/storage/.config/yabasanshiro/input.cfg";
    return path;
  }
  
