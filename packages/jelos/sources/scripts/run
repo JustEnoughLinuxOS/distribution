@@ -4,6 +4,11 @@
 
 . /etc/profile
 
+ui_state() {
+  clear >/dev/console 2>&1
+  systemctl ${1} ${UI_SERVICE}
+}
+
 if [ "${UI_SERVICE}" = "weston.service" ]
 then
   if [ -f "${*}" ]
@@ -14,12 +19,17 @@ then
     weston-terminal --command="${*}"
   fi
 else
-  systemctl stop ${UI_SERVICE}
+  ui_state stop
   clear >/dev/console 2>&1
-  $* >/dev/console 2>&1 || clear >/dev/console ;"$*" >/dev/console 2>&1
-  clear >/dev/console 2>&1
+  $* >/dev/console 2>&1
+  if [ "$?" == 0 ]
+  then
+    ui_state start
+    exit 0
+  else
+    "$*" >/dev/console 2>&1
+    ui_state start
+    exit 0
+  fi
 fi
-if [ ! "${UI_SERVICE}" = "weston.service" ]
-then
-  systemctl start ${UI_SERVICE}
-fi
+

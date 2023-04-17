@@ -85,7 +85,7 @@ then
 fi
 
 # Disable integer scaling by default on Handheld 
-if [[ "${HW_DEVICE}" =~ handheld ]]
+if [[ "${HW_DEVICE}" =~ AMD64 ]]
 then
   echo "No integer scaling (Handheld only)..." >>${LOG}
   sed -i "s#.integerscale=1#.integerscale=0#g" /storage/.config/system/configs/system.cfg

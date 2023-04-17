@@ -34,7 +34,7 @@ TARGET_ARCH="${ARCH}"
 ENABLE_32BIT="${ENABLE_32BIT-true}"
 
 # determines the default device, if not forced by user
-DEVICE="${DEVICE:-handheld}"
+DEVICE="${DEVICE:-AMD64}"
 
 # the version is the date
 OS_VERSION=$(date +%Y%m%d)
