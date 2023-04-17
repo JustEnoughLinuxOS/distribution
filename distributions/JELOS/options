@@ -29,7 +29,7 @@
   BUG_REPORT_URL="https://www.jelos.org"
 
 # Root password to integrate in the target system
-  ROOT_PASSWORD="system generated"
+  ROOT_PASSWORD="linux"
 
 # Remove kernel and system files from the release directory.
   COREELEC_TARGET_REMOVE="kernel_system"
