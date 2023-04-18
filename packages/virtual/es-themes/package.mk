@@ -4,6 +4,6 @@
 PKG_NAME="es-themes"
 PKG_LICENSE="Apache-2.0"
 PKG_SITE="www.jelos.org"
-PKG_DEPENDS_TARGET="es-theme-art-book-next es-theme-minimal es-theme-minielec"
+PKG_DEPENDS_TARGET="es-theme-art-book-next es-theme-minimal es-theme-minielec es-theme-anbernic-dc"
 PKG_SECTION="virtual"
 PKG_LONGDESC="EmulationStation themes package."
