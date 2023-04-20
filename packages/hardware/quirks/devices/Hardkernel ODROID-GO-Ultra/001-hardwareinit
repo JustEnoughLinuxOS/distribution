@@ -4,6 +4,10 @@
 
 . /etc/profile
 
+### Set GPU Govorner to powersave during boot
+
+echo powersave > /sys/devices/platform/soc/ffe40000.gpu/devfreq/ffe40000.gpu/governor
+
 ### Sleep is currently broken, so we'll disable it.
 
 cat <<EOF >/storage/.config/sleep.conf.d/sleep.conf
