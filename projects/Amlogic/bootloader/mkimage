@@ -4,10 +4,10 @@
 source ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
 
 #Write u-boot.bin to image
-case "${DEVICE}" in
-  S922X)
+case "${PKG_SOC}" in
+  s922x)
     if [ -f "${RELEASE_DIR}/3rdparty/bootloader/u-boot.bin" ]; then
-      echo "image: burn uboot.itb to image... (${PKG_SOC})"
+      echo "image: burn uboot.bin to image... (${PKG_SOC})"
       dd if="${RELEASE_DIR}/3rdparty/bootloader/u-boot.bin" of="${DISK}" bs=512 seek=1 conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
     fi
 esac
@@ -34,7 +34,7 @@ setenv loadaddr "0x1B00000"
 setenv bootargs "boot=UUID=${UUID_SYSTEM} disk=UUID=${UUID_STORAGE} ${EXTRA_CMDLINE}"
 
 load mmc \${devno}:1 \${loadaddr} KERNEL
-load mmc \${devno}:1 \${dtb_loadaddr} meson-g12b-odroid-go-ultra.dtb
+load mmc \${devno}:1 \${dtb_loadaddr} ${DEVICE_DTB[0]}.dtb
 
 fdt addr \${dtb_loadaddr}
 

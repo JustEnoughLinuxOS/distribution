@@ -5,12 +5,15 @@ PKG_UBOOT="$(get_build_dir u-boot)"
 source ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
 FIP_DIR="${ROOT}/build.${DISTRO}-${DEVICE}.aarch64/amlogic-boot-fip-*"
 
-case "${PKG_SOC}" in
-  s922x)
-	echo "uboot: encrypting u-boot.bin with fip..."
-	cp -av build/u-boot.bin ${FIP_DIR}/
-	cd ${FIP_DIR}
-	./build-fip.sh ${BOOT_FIP} u-boot.bin ${INSTALL}/usr/share/bootloader/fip
+case "${DEVICE}" in
+  S922X)
+    cp -rf ${PKG_DIR}/bin/${DEVICE}/u-boot.bin ${INSTALL}/usr/share/bootloader/
+  ;;
+  *)
+    echo "uboot: encrypting u-boot.bin with fip..."
+    cp -av u-boot.bin ${FIP_DIR}/
+    cd ${FIP_DIR}
+    ./build-fip.sh ${BOOT_FIP} u-boot.bin ${INSTALL}/usr/share/bootloader/
   ;;
 esac
 
@@ -19,9 +22,6 @@ then
   echo "uboot: copy bios bin to ${INSTALL}/usr/share/bootloader..."
   cp -av ${PKG_BUILD}/tools/odroid_resource/ODROIDBIOS.BIN ${INSTALL}/usr/share/bootloader
 fi
-
-#Install a precombiled u-boot.bin until we can fix buildroot. 
-cp -rf ${PKG_DIR}/bin/u-boot.bin ${INSTALL}/usr/share/bootloader/
 
 if [ "${BOOT_INI}" == true ]
 then
@@ -35,7 +35,7 @@ setenv loadaddr "0x1B00000"
 setenv bootargs "boot=UUID=@BOOT_UUID@ disk=UUID=@DISK_UUID@ ${EXTRA_CMDLINE}"
 
 load mmc \${devno}:1 \${loadaddr} KERNEL
-load mmc \${devno}:1 \${dtb_loadaddr} meson-g12b-odroid-go-ultra.dtb
+load mmc \${devno}:1 \${dtb_loadaddr} ${DEVICE_DTB[0]}.dtb
 
 fdt addr \${dtb_loadaddr}
 
