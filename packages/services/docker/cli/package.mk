@@ -43,5 +43,7 @@ make_target() {
 }
 
 makeinstall_target() {
-  :
+  mkdir -p ${INSTALL}/usr/bin
+  cp bin/* ${INSTALL}/usr/bin
+  chmod 0755 ${INSTALL}/usr/bin/*
 }

@@ -4,7 +4,8 @@
 
 . /etc/profile
 
-if [ ! -L "/storage/.emulationstation" ]
+if [ ! -L "/storage/.emulationstation" ] && \
+   [ -d /storage/.config/emulationstation ]
 then
   ln -sf /storage/.config/emulationstation /storage/.emulationstation
 fi

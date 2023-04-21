@@ -74,7 +74,7 @@
     EXTRA_CMDLINE="rootwait quiet console=ttyAML0,115200n8 console=tty0 no_console_suspend net.ifnames=0 consoleblank=0 fbcon=rotate:3"
 
   # additional packages to install
-    ADDITIONAL_PACKAGES=" emulators gamesupport"
+  #  ADDITIONAL_PACKAGES=""
 
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
