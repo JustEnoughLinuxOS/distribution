@@ -14,50 +14,6 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_TOOLCHAIN="make"
 
-PKG_BASEOS="plymouth-lite grep wget util-linux xmlstarlet gnupg gzip patchelf imagemagick \
-            terminus-font vim bash pyudev dialog six git dbus-python coreutils \
-            alsa-ucm-conf fbgrab modules system-utils autostart quirks powerstate powertop ectool"
-
-PKG_UI="emulationstation es-themes"
-
-PKG_UI_TOOLS="fileman"
-
-PKG_SOFTWARE=""
-
-case "${ENABLE_32BIT}" in
-  true)
-    PKG_COMPAT="lib32"
-  ;;
-esac
-
-PKG_MULTIMEDIA="ffmpeg vlc mpv"
-
-PKG_NETWORK="network synctools pygobject"
-
-PKG_TOOLS="i2c-tools evtest jslisten"
-
-### Project specific variables
-case "${PROJECT}" in
-  PC)
-    PKG_BASEOS+=" installer"
-  ;;
-  *)
-    PKG_EMUS+=" retropie-shaders"
-  ;;
-esac
-
-if [ ! "${OPENGL}" = "no" ]
-then
-  PKG_DEPENDS_TARGET+=" mesa-demos glmark2"
-fi
-
-if [ ! -z "${BASE_ONLY}" ]
-then
-  PKG_DEPENDS_TARGET+=" ${PKG_BASEOS} ${PKG_NETWORK} ${PKG_TOOLS} ${PKG_UI}"
-else
-  PKG_DEPENDS_TARGET+=" ${PKG_BASEOS} ${PKG_NETWORK} ${PKG_TOOLS} ${PKG_UI} ${PKG_UI_TOOLS} ${PKG_COMPAT} ${PKG_MULTIMEDIA} ${PKG_SOFTWARE}"
-fi
-
 make_target() {
   :
 }

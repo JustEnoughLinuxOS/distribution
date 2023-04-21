@@ -32,3 +32,9 @@ make_target() {
   mkdir -p bin
   ${GOLANG} build -v -o bin/runc -a -tags "cgo static_build" -ldflags "${LDFLAGS}" ./
 }
+
+makeinstall_target() {
+  mkdir -p ${INSTALL}/usr/bin
+  cp bin/* ${INSTALL}/usr/bin
+  chmod 0755 ${INSTALL}/usr/bin/*
+}

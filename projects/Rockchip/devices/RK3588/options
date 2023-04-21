@@ -76,7 +76,7 @@
     EXTRA_CMDLINE="rootwait quiet loglevel=0 console=ttyUSB0,1500000 console=tty0 coherent_pool=2M ssh consoleblank=0 panic=20"
 
   # additional packages to install
-    ADDITIONAL_PACKAGES=" emulators gamesupport"
+  #  ADDITIONAL_PACKAGES=""
 
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
@@ -98,7 +98,7 @@
 
   # debug tty path
     DEBUG_TTY="/dev/ttyFIQ0"
-   
+
   # build and install PulseAudio support (yes / no)
     PULSEAUDIO_SUPPORT="yes"
  

@@ -90,6 +90,12 @@
 # build and install hfs filesystem utilities (yes / no)
   HFSTOOLS="yes"
 
+# Target an emulation device
+  EMULATION_DEVICE="${EMULATION_DEVICE:-yes}"
+
+# Add support for containers
+  CONTAINER_SUPPORT="${CONTAINER_SUPPORT:-no}"
+
 # Windowmanager to use (fluxbox / none)
   WINDOWMANAGER="none"
 

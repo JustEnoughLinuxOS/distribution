@@ -41,7 +41,7 @@
     GRAPHIC_DRIVERS="crocus i915 iris r300 r600 radeonsi vmware virtio"
 
   # additional packages to install
-    ADDITIONAL_PACKAGES=" emulators gamesupport"
+  #  ADDITIONAL_PACKAGES=""
 
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
@@ -53,7 +53,7 @@
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
   #  ADDITIONAL_DRIVERS=""
-  ADDITIONAL_DRIVERS="RTL8812AU RTL8814AU RTL8821AU RTL8821CU RTL88x2BU"
+    ADDITIONAL_DRIVERS="RTL8812AU RTL8814AU RTL8821AU RTL8821CU RTL88x2BU"
 
   # build and install driver addons (yes / no)
     DRIVER_ADDONS_SUPPORT="no"

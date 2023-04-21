@@ -39,3 +39,9 @@ make_target() {
   ${GOLANG} build -v -o bin/containerd-shim         -a -tags "static_build no_btrfs" -ldflags "${LDFLAGS}" ./cmd/containerd-shim
   ${GOLANG} build -v -o bin/containerd-shim-runc-v2 -a -tags "static_build no_btrfs" -ldflags "${LDFLAGS}" ./cmd/containerd-shim-runc-v2
 }
+
+makeinstall_target() {
+  mkdir -p ${INSTALL}/usr/bin
+  cp bin/* ${INSTALL}/usr/bin
+  chmod 0755 ${INSTALL}/usr/bin/*
+}
