@@ -118,6 +118,12 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/config/retroarch/
   if [ -d "${PKG_DIR}/sources/${DEVICE}" ]; then
     cp -rf ${PKG_DIR}/sources/${DEVICE}/* ${INSTALL}/usr/config/retroarch/
+    sed -i \
+        -e 's/menu_driver.*/menu_driver = "ozone"/g' \
+        -e 's/menu_scale_factor.*/menu_scale_factor = "1.250000"/g' \
+        -e 's/ozone_collapse_sidebar.*/ozone_collapse_sidebar = "true"/g' \
+        -e 's/user_language.*/user_language = "10"/g' \
+        ${INSTALL}/usr/config/retroarch/retroarch.cfg
   else
     echo "Configure retroarch for ${DEVICE}"
     exit 1
