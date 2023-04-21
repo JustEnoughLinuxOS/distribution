@@ -83,6 +83,12 @@ pre_configure_target() {
   fi
 }
 
+pre_build_target() {
+  cp -f ./distributions/JELOS/fonts/Pretendard-Regular.ttf ${PKG_BUILD}/resources/
+  sed -e 's/NanumMyeongjo.ttf/Pretendard-Regular.ttf/g' \
+      -i ${PKG_BUILD}/es-core/src/resources/Font.cpp
+}
+
 makeinstall_target() {
 	mkdir -p ${INSTALL}/usr/config/locale
 	cp -rf ${PKG_BUILD}/locale/lang/* ${INSTALL}/usr/config/locale/
