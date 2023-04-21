@@ -118,4 +118,16 @@
 		<image>./downloaded_images/clean.png</image>
 	</game>
 
+	<game>
+		<path>./download_bios.sh</path>
+		<name>바이오스 다운로더</name>
+		<desc>바이오스를 네트워크에서 다운로드합니다</desc>
+		<developer>UzuCore</developer>
+		<publisher>UzuCore</publisher>
+		<rating>1.0</rating>
+		<releasedate>2023</releasedate>
+		<genre>Script</genre>
+		<thumbnail>./downloaded_images/bios-thumb.png</thumbnail>
+		<image>./downloaded_images/bios.png</image>
+	</game>
 </gameList>
