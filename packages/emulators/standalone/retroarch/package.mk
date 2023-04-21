@@ -72,6 +72,13 @@ pre_configure_target() {
   cd ${PKG_BUILD}
 }
 
+pre_build_target() {
+    sed -e 's/RETRO_LANGUAGE_KOREAN/RETRO_LANGUAGE_GREEK/g' \
+        -i ${PKG_BUILD}/menu/drivers/ozone.c
+    sed -e 's/RETRO_LANGUAGE_KOREAN/RETRO_LANGUAGE_GREEK/g' \
+        -i ${PKG_BUILD}/menu/drivers/materialui.c
+}
+
 make_target() {
   make HAVE_UPDATE_ASSETS=0 HAVE_LIBRETRODB=1 HAVE_BLUETOOTH=0 HAVE_NETWORKING=1 HAVE_ZARCH=1 HAVE_QT=0 HAVE_LANGEXTRA=1
   [ $? -eq 0 ] && echo "(retroarch ok)" || { echo "(retroarch failed)" ; exit 1 ; }
