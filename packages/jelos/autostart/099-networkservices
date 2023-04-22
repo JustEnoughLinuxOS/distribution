@@ -4,9 +4,12 @@
 
 . /etc/profile
 
+tocon "Starting services..."
+
 for SERVICE in /usr/lib/autostart/daemons/*
 do
   source ${SERVICE}
+
 
   if [ ! -d "/storage/.cache/services" ]
   then

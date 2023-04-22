@@ -4,8 +4,11 @@
 
 . /etc/profile
 
+tocon "Preparing the user interface..."
+
 UIMODE=$(get_setting desktop.enabled)
-if [ "${UIMODE}" = "1" ]
+if [ "${UIMODE}" = "1" ] || \
+   [ ! -e "/usr/bin/emulationstation" ]
 then
   cp -f /usr/share/weston/weston.ini /storage/.config/weston.ini
 else
@@ -13,7 +16,8 @@ else
 fi
 
 STARTUP=$(get_setting weston.startup)
-if [ -z "${STARTUP}" ]
+if [ -z "${STARTUP}" ] && \
+   [ -e "/usr/bin/emulationstation" ]
 then
   STARTUP="/usr/bin/start_es.sh"
   set_setting weston.startup "${STARTUP}"

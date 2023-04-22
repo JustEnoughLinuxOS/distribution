@@ -8,40 +8,47 @@
 
 if [ ! -e "/storage/.configured" ]
 then
+  tocon "Initializing configuration..."
   # Copy config files, but don't overwrite.  Only run if /storage is fresh
-  ## cp -iRp /usr/config/* /storage/.config/ &>/dev/null
-  ## ignore es_systems.cfg and switch to rsync
   rsync -a --ignore-existing --exclude=es_systems.cfg /usr/config/* /storage/.config/ 2>&1 >/var/log/configure.log
-  mkdir -p /storage/.config/emulationstation/themes 2>&1 >>/var/log/configure.log
-  ln -s /usr/share/themes/es-theme-art-book-next /storage/.config/emulationstation/themes/system-theme 2>&1 >>/var/log/configure.log
-  ln -s /usr/share/themes/es-theme-minielec /storage/.config/emulationstation/themes/es-theme-minielec 2>&1 >>/var/log/configure.log
-  ln -s /usr/share/themes/es-theme-minimal /storage/.config/emulationstation/themes/es-theme-minimal 2>&1 >>/var/log/configure.log
 
-  ### Link the game controller database so it is managed with OS updates.
-  rm -f /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt 2>&1 >>/var/log/configure.log
-  ln -s /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt 2>&1 >>/var/log/configure.log
+  if [ -e "/usr/bin/emulationstation" ]
+  then
+    tocon "Installing themes..."
+    mkdir -p /storage/.config/emulationstation/themes 2>&1 >>/var/log/configure.log
+    ln -s /usr/share/themes/es-theme-art-book-next /storage/.config/emulationstation/themes/system-theme 2>&1 >>/var/log/configure.log
+    ln -s /usr/share/themes/es-theme-minielec /storage/.config/emulationstation/themes/es-theme-minielec 2>&1 >>/var/log/configure.log
+    ln -s /usr/share/themes/es-theme-minimal /storage/.config/emulationstation/themes/es-theme-minimal 2>&1 >>/var/log/configure.log
 
-  ### Remove and link es configs so they are managed with OS updates.
-  for es_cfg in es_features.cfg es_systems.cfg
-  do
-    ln -s /usr/config/emulationstation/${es_cfg} /storage/.config/emulationstation/${es_cfg} 2>&1 >>/var/log/configure.log
-  done
+    ### Link the game controller database so it is managed with OS updates.
+    tocon "Configuring controller database..."
+    rm -f /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt 2>&1 >>/var/log/configure.log
+    ln -s /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt 2>&1 >>/var/log/configure.log
 
-  ### Link the ES splash to the distribution splash
-  rm -f /storage/.config/emulationstation/resources/logo.png 2>&1 >>/var/log/configure.log
-  ln -sf /usr/config/splash/splash.png /storage/.config/emulationstation/resources/logo.png 2>&1 >>/var/log/configure.log
+    ### Remove and link es configs so they are managed with OS updates.
+    for es_cfg in es_features.cfg es_systems.cfg
+    do
+      ln -s /usr/config/emulationstation/${es_cfg} /storage/.config/emulationstation/${es_cfg} 2>&1 >>/var/log/configure.log
+    done
 
+    ### Link the ES splash to the distribution splash
+    rm -f /storage/.config/emulationstation/resources/logo.png 2>&1 >>/var/log/configure.log
+    ln -sf /usr/config/splash/splash.png /storage/.config/emulationstation/resources/logo.png 2>&1 >>/var/log/configure.log
+  fi
   mkdir -p /storage/.config/modprobe.d 2>&1 >>/var/log/configure.log
   touch /storage/.configured 2>&1 >>/var/log/configure.log
 fi
 
 if [ ! -e "/storage/.cache/ld.so.cache" ]
 then
+  tocon "Initializing library cache..."
   ### Create library cache
   ldconfig -X 2>&1 >>/var/log/configure.log
 fi
 
-if [ ! -d "/storage/.config/emulationstation/locale" ]
+if [ ! -d "/storage/.config/emulationstation/locale" ] && \
+   [ -e "/usr/bin/emulationstation" ]
 then
+  tocon "Initializing language support..."
   rsync -a --delete /usr/config/locale/ /storage/.config/emulationstation/locale/ 2>&1 >>/var/log/configure.log
 fi

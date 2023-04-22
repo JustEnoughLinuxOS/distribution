@@ -4,6 +4,8 @@
 
 . /etc/profile
 
+tocon "Configuring network..."
+
 HOSTNAME=$(get_setting system.hostname)
 hostname ${HOSTNAME}
 avahi-set-host-name ${HOSTNAME}

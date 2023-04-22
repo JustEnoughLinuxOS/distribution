@@ -26,6 +26,20 @@ pre_make_target() {
   then
     rm CMakeLists.txt
   fi
+
+  PKG_MAKE_OPTS_TARGET="GIT_REV=${PKG_VERSION:0:7} \
+                        HAVE_FFMPEG_STATIC=1 \
+                        FFMPEG_DISABLE_VDPAU=1 \
+                        HAVE_FFMPEG_CROSSCOMPILE=1 \
+                        FFMPEG_XC_CPU=${TARGET_CPU} \
+                        FFMPEG_XC_ARCH=${TARGET_ARCH} \
+                        FFMPEG_XC_PREFIX=${TARGET_PREFIX} \
+                        FFMPEG_XC_SYSROOT=${SYSROOT_PREFIX} \
+                        FFMPEG_XC_NM=${NM} \
+                        FFMPEG_XC_AR=${AR} \
+                        FFMPEG_XC_AS=${CC} \
+                        FFMPEG_XC_CC=${CC} \
+                        FFMPEG_XC_LD=${CC}"
 }
 
 makeinstall_target() {

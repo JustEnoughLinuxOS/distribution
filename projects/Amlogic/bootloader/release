@@ -14,6 +14,9 @@ if [ -n "${UBOOT_CONFIG}" ]; then
       if [ -f ${INSTALL}/usr/share/bootloader/ODROIDBIOS.BIN ]; then
         cp -a ${INSTALL}/usr/share/bootloader/ODROIDBIOS.BIN ${RELEASE_DIR}/3rdparty/bootloader
       fi
+      if [ -d ${INSTALL}/usr/share/bootloader/res ]; then
+        cp -ra ${INSTALL}/usr/share/bootloader/res ${RELEASE_DIR}/3rdparty/bootloader
+      fi
     ;;
   esac
 fi

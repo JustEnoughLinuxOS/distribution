@@ -24,12 +24,15 @@ QUIRK_DEVICE="$(echo ${QUIRK_DEVICE} | sed -e "s#[/]#-#g")"
 if [ -d "/usr/lib/autostart/quirks/${QUIRK_DEVICE}" ]
 then
   echo "Executing ${QUIRK_DEVICE} quirks." 2>&1 >>${BOOTLOG}
+  tocon "Applying ${QUIRK_DEVICE} quirks..."
   for script in "/usr/lib/autostart/quirks/${QUIRK_DEVICE}"/*
   do
     echo "Executing ${script}" 2>&1 >>${BOOTLOG}
     "${script}" 2>&1 >>${BOOTLOG} &
   done
 fi
+
+wait
 
 ### Lock is a prerequisite for emustation
 rm /var/lock/start.games 2>&1 >>${BOOTLOG}
@@ -43,15 +46,21 @@ do
   ${script} 2>&1 >>${BOOTLOG} &
 done
 
+wait
+
 ### Run custom start scripts
 if [ -d "/storage/.config/autostart" ]
 then
   for script in /storage/.config/autostart/*
   do
     echo "Executing ${script}" 2>&1 >>${BOOTLOG}
-  ${script} 2>&1 >>${BOOTLOG} &
+   ${script} 2>&1 >>${BOOTLOG} &
   done
 fi
+
+wait
+
+tocon "Startup complete..."
 
 clear >/dev/console
 

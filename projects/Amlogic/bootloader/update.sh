@@ -78,6 +78,11 @@ if [ -f $SYSTEM_ROOT/usr/share/bootloader/ODROIDBIOS.BIN ]; then
   cp -p $SYSTEM_ROOT/usr/share/bootloader/ODROIDBIOS.BIN $BOOT_ROOT/ODROIDBIOS.BIN &>/dev/null
 fi
 
+if [ -d $SYSTEM_ROOT/usr/share/bootloader/res ]; then
+  echo "Updating res..."
+  cp -rp $SYSTEM_ROOT/usr/share/bootloader/res $BOOT_ROOT/ &>/dev/null
+fi
+
 # update device tree
   for all_dtb in $SYSTEM_ROOT/usr/share/bootloader/*.dtb; do
     dtb=$(basename $all_dtb)
