@@ -4,6 +4,8 @@
 
 . /etc/profile
 
+tocon "Configuring logging..."
+
 if [ ! -d "/var/log/retroarch" ]
 then
   mkdir /var/log/retroarch

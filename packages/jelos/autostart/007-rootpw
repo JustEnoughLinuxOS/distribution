@@ -4,6 +4,8 @@
 
 . /etc/profile
 
+tocon "Setting root password..."
+
 if [ ! -d "/storage/.cache/samba" ]
 then
   mkdir -p /storage/.cache/samba

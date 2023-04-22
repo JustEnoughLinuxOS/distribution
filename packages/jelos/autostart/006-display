@@ -4,11 +4,18 @@
 
 . /etc/profile
 
+tocon "Configuring backlight..."
+
 ### Variables may need to be device specific here.
 BRIGHTNESS=$(get_setting system.brightness)
 if [[ ! "${BRIGHTNESS}" =~ [0-9] ]]
 then
-  BRIGHTNESS=${DEVICE_BRIGHTNESS}
+  if [ "${DEVICE_BRIGHTNESS}" = "hardware" ]
+  then
+    BRIGHTNESS=$(cat /sys/class/backlight/$(brightness device)/brightness 2>/dev/null)
+  else
+    BRIGHTNESS=${DEVICE_BRIGHTNESS}
+  fi
 fi
 
 # Ensure user doesn't get "locked out" with super low brightness

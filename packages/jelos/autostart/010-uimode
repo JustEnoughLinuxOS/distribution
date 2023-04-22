@@ -4,6 +4,8 @@
 
 . /etc/profile
 
+tocon "Preparing the user interface..."
+
 UIMODE=$(get_setting desktop.enabled)
 if [ "${UIMODE}" = "1" ] || \
    [ ! -e "/usr/bin/emulationstation" ]

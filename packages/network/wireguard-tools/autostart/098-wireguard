@@ -6,5 +6,6 @@
 
 if [ "$(get_setting wireguard.up)" == "1" ]
 then
+  tocon "Enabling wireguard..."
   nohup wg-quick up /storage/.config/wireguard/wg0.conf &
 fi

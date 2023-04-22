@@ -2,11 +2,10 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="weston"
-PKG_VERSION="10.0.1"
-PKG_SHA256="8a9e52506a865a7410981b04f8341b89b84106db8531ab1f9fdd37b5dc034115"
+PKG_VERSION="10.0.3"
 PKG_LICENSE="MIT"
 PKG_SITE="https://wayland.freedesktop.org/"
-PKG_URL="https://gitlab.freedesktop.org/wayland/weston/-/releases/${PKG_VERSION}/downloads/${PKG_NAME}-${PKG_VERSION}.tar.xz"
+PKG_URL="https://gitlab.freedesktop.org/wayland/weston/-/archive/${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain wayland wayland-protocols libdrm libxkbcommon libinput cairo pango libjpeg-turbo dbus seatd glu ${OPENGL} libX11 xorg-server libXcursor xkbcomp setxkbmap cairo xterm"
 PKG_LONGDESC="Reference implementation of a Wayland compositor"
 
@@ -60,4 +59,16 @@ post_makeinstall_target() {
     cp ${PKG_DIR}/config/*ini ${INSTALL}/usr/share/weston
 
   safe_remove ${INSTALL}/usr/share/wayland-sessions
+
+  if [ "${EMULATION_DEVICE}" = "yes" ] && \
+     [ ! "${BASE_ONLY}" == true ]
+  then
+    cat <<EOF >>${INSTALL}/usr/share/weston/weston.ini
+
+[launcher]
+path=/usr/bin/start_es.sh
+icon=/usr/config/emulationstation/resources/window_icon_24.png
+EOF
+  fi
+
 }

@@ -70,6 +70,10 @@ get_es_setting() {
   echo $(sed -n "s|\s*<${1} name=\"${2}\" value=\"\(.*\)\" />|\1|p" ${ES_CONF})
 }
 
+tocon() {
+  echo -ne "\033[1000H\033[2K==> ${*}" >/dev/console
+}
+
 log() {
   SOURCE=${1//\/*\//}
   MESSAGE=${*#${1}}

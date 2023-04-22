@@ -4,6 +4,7 @@
 
 . /etc/profile
 
+tocon "Configuring audio..."
 # Revert to stored setting when bluetooth was still selected at last shutdown.
 # This is a workaround - headsets that auto-connect at boot tend to be
 # unreliable, so for now it's better to force a manual reconnect.
