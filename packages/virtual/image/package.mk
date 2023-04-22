@@ -11,7 +11,7 @@ PKG_LONGDESC="Root package used to build and create complete image"
 PKG_DEPENDS_TARGET="toolchain squashfs-tools:host dosfstools:host fakeroot:host kmod:host \
                     mtools:host populatefs:host libc gcc linux linux-drivers linux-firmware \
                     ${BOOTLOADER} busybox util-linux corefonts misc-packages debug \
-                    usb-modeswitch unzip poppler perl textviewer jq socat p7zip file bluez \
+                    usb-modeswitch unzip poppler textviewer jq socat p7zip file bluez \
                     splash initramfs plymouth-lite grep wget util-linux patchelf imagemagick \
                     terminus-font bash coreutils alsa-ucm-conf modules system-utils \
                     autostart quirks powerstate powertop ectool gnupg gzip six xmlstarlet \

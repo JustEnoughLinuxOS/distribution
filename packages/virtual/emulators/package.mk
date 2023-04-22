@@ -39,7 +39,7 @@ case "${DEVICE}" in
   RK3588)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
     PKG_EMUS+=" aethersx2-sa duckstation-sa pcsx_rearmed-lr box64 yabasanshiro-sa"
-    LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr dolphin-lr mame-lr box64"
+    LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr citra-lr dolphin-lr mame-lr box64"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
   RK3566)
