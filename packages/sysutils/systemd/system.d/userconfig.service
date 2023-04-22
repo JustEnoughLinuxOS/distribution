@@ -7,6 +7,7 @@ After=systemd-tmpfiles-setup.service
 Type=oneshot
 ExecStart=/usr/bin/userconfig-setup
 RemainAfterExit=yes
+StandardOutput=syslog+console
 
 [Install]
 WantedBy=sysinit.target

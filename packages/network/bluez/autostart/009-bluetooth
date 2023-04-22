@@ -4,6 +4,7 @@
 
 if [ "$(get_setting bluetooth.enabled)" == "1" ]
 then
+  tocon "Starting bluetooth..."
   nohup systemctl start bluetooth &
   nohup systemctl start bluetooth-agent &
   nohup systemctl start bluetoothsense &

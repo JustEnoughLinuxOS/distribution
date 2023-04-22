@@ -4,6 +4,7 @@
 
 . /etc/profile
 
+
 if [ ! -L "/storage/.emulationstation" ] && \
    [ -d /storage/.config/emulationstation ]
 then
@@ -27,6 +28,7 @@ ln -sf /tmp/cache /storage/cache/.cores
 set_setting clouddrive.mounted 0
 
 ### Enable the desired number of threads.
+tocon "Restoring cpu threads..."
 NUMTHREADS=$(get_setting "system.threads")
 if [ -n "${NUMTHREADS}" ]
 then
@@ -47,5 +49,6 @@ fi
 /usr/bin/clean_sysconfig
 
 ### Set up our controller variables.
+tocon "Configuring controller..."
 /usr/bin/mkcontroller
 

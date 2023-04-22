@@ -8,6 +8,7 @@ if [[ "$(cat /storage/.config/boot.hint 2>/dev/null)" =~ UPDATE ]] && [ -e "/sto
 then
   if [ -e "/usr/share/post-update" ]
   then
+    tocon "Performing post-update configuration..."
     /usr/share/post-update >/var/log/upgrade.log 2>&1
   fi
   rm /storage/.config/boot.hint
