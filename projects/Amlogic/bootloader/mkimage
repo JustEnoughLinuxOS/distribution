@@ -19,6 +19,10 @@ if [ "${BIOS_BIN}" == true ]; then
     cp "${RELEASE_DIR}/3rdparty/bootloader/ODROIDBIOS.BIN" "${LE_TMP}/ODROIDBIOS.BIN"
     mcopy -so "${LE_TMP}/ODROIDBIOS.BIN" ::
   fi
+  if [ -d "${RELEASE_DIR}/3rdparty/bootloader/res" ]; then
+    cp -r "${RELEASE_DIR}/3rdparty/bootloader/res" "${LE_TMP}/res"
+    mcopy -so "${LE_TMP}/res" ::
+  fi
 fi
 
 #Create boot.ini

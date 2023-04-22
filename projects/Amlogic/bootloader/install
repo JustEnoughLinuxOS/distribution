@@ -20,7 +20,8 @@ esac
 if [ "${BIOS_BIN}" == true ]
 then
   echo "uboot: copy bios bin to ${INSTALL}/usr/share/bootloader..."
-  cp -av ${PKG_BUILD}/tools/odroid_resource/ODROIDBIOS.BIN ${INSTALL}/usr/share/bootloader
+  cp -rav ${PKG_BUILD}/tools/odroid_resource/* ${INSTALL}/usr/share/bootloader
+  convert ${ROOT}/build.${DISTRO}-${DEVICE}.aarch64/splash-*/.install_pkg/usr/config/splash/splash_270.png -type truecolor ${INSTALL}/usr/share/bootloader/res/logo.bmp
 fi
 
 if [ "${BOOT_INI}" == true ]
