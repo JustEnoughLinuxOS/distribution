@@ -5,12 +5,6 @@
 . /etc/profile
 
 
-if [ ! -L "/storage/.emulationstation" ] && \
-   [ -d /storage/.config/emulationstation ]
-then
-  ln -sf /storage/.config/emulationstation /storage/.emulationstation
-fi
-
 if [ -d "/storage/cache/.cores" ]
 then
   rm -rf /storage/cache/.cores
@@ -47,8 +41,4 @@ fi
 ### Test for binary data in system.cfg and clean it
 ### if it exists.
 /usr/bin/clean_sysconfig
-
-### Set up our controller variables.
-tocon "Configuring controller..."
-/usr/bin/mkcontroller
 
