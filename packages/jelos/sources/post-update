@@ -29,11 +29,44 @@ rsync -a --ignore-existing /usr/config/game /storage/.config/
 rsync -a /usr/config/modules /storage/.config/
 
 echo "Update logo..." >>${LOG}
-if [ ! -L "/storage/.config/emulationstation/resources/logo.png" ]
+FBWIDTH=$(fbset | awk '/geometry/ {print $2}')
+FBHEIGHT=$(fbset | awk '/geometry/ {print $3}')
+
+ASPECT=$(printf "%.2f" $(echo "(${FBWIDTH} / ${FBHEIGHT})" | bc -l))
+
+case ${ASPECT} in
+  1.31|0.76)
+   ASPECT="3:2"
+  ;;
+  1.33|0.75)
+   ASPECT="4:3"
+  ;;
+  1.67|0.60)
+   ASPECT="5:3"
+  ;;
+  1.76|0.56)
+   ASPECT="16:9"
+  ;;
+esac
+
+if [ -f "/storage/.config/emulationstation/resources/logo.png" ]
 then
   rm -f /storage/.config/emulationstation/resources/logo.png ||:
-  ln -sf /usr/config/splash/splash.png /storage/.config/emulationstation/resources/logo.png
 fi
+
+convert /usr/config/splash/splash.png \
+        -gravity center \
+        -crop ${ASPECT} +repage \
+        /tmp/.logo.png
+
+convert /tmp/.logo.png \
+        -quality 100 \
+        -resize ${FBWIDTH}x${FBHEIGHT} \
+        -background black \
+        -gravity center \
+        /storage/.config/emulationstation/resources/logo.png
+
+rm -f /tmp/.logo.png
 
 echo "Sync modules..." >>${LOG}
 rsync -a /usr/config/modules/* /storage/.config/modules/
