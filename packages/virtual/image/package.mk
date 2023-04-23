@@ -30,11 +30,14 @@ PKG_SOUND="libao"
 
 PKG_SYNC="synctools"
 
-PKG_TOOLS="patchelf git ectool make i2c-tools evtest powertop debug"
+PKG_TOOLS="patchelf git ectool make i2c-tools evtest powertop"
+
+PKG_DEBUG="debug"
 
 if [ "${BASE_ONLY}" = "true" ]
 then
   EMULATION_DEVICE=false
+  PKG_DEPENDS_TARGET+=" ${PKG_TOOLS} ${PKG_FONTS} ${PKG_DEBUG}"
 else
   PKG_DEPENDS_TARGET+=" ${PKG_TOOLS} ${PKG_FONTS} ${PKG_SOUND} ${PKG_BLUETOOTH} ${PKG_SYNC} ${PKG_UI} ${PKG_UI_TOOLS} ${PKG_MULTIMEDIA} misc-packages"
 
@@ -43,7 +46,6 @@ else
 
   # Sound support
   [ "${ALSA_SUPPORT}" = "yes" ] && PKG_DEPENDS_TARGET+=" alsa"
-
 fi
 
 [ "${DISPLAYSERVER}" = "wl" ] && PKG_DEPENDS_TARGET+=" weston"

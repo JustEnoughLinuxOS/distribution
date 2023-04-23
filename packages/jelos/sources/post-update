@@ -54,3 +54,8 @@ rsync --ignore-existing /usr/config/rsync.conf /storage/.config/
 ### Add items below this line that are safe to remove after a period of time.
 ################################################################################
 
+if [ -e "/usr/bin/docker" ] && \
+   [ ! -d "/storage/.config/docker" ]
+then
+   cp -rf /usr/config/docker /storage/.config
+fi
