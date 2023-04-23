@@ -45,9 +45,6 @@
   # Additional kernel make parameters (for example to specify the u-boot loadaddress)
     KERNEL_MAKE_EXTRACMD=" $(for DTB in "${DEVICE_DTB[@]}"; do echo -n "rockchip/${DTB}.dtb "; done)"
 
-  # Display Resolution
-    SPLASH_RESOLUTION="640x480"
- 
   # Define the CPU
     HW_CPU="Rockchip RK3566"
  
