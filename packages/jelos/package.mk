@@ -86,4 +86,10 @@ EOF
     sed -i "s#network.enabled=0#network.enabled=1#g" ${INSTALL}/usr/config/system/configs/system.cfg
   fi
 
+  ### Disable automount on AMD64
+  if [ "${DEVICE}" = "AMD64" ]
+  then
+    sed -i "s#system.automount=1#system.automount=0#g" ${INSTALL}/usr/config/system/configs/system.cfg
+  fi
+
 }

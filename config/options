@@ -1,5 +1,6 @@
 # Do not build as root. Ever.
-if [[ "${EUID}" -eq 0 ]]; then
+if [[ "${EUID}" -eq 0 ]] && \
+   [ ! -f /.dockerenv ]; then
   echo "Building as the root user is NOT supported. Use a regular user account for the build." 1>&2
   exit 1
 fi

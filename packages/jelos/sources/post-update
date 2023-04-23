@@ -9,6 +9,9 @@ LOG="/var/log/boot.log"
 ### This script contains items that we only want to execute after a JELOS upgrade,
 ### or after a fresh installation.
 
+### Items in this block should always run after updates.
+################################################################################
+
 echo "Rebuild library cache..." >>${LOG}
 ### Rebuild the library cache
 rm -f /storage/.cache/ld.so.cache
@@ -48,3 +51,11 @@ echo "Update rsync configuration files..." >>${LOG}
 rsync --ignore-existing /usr/config/rsync-rules.conf /storage/.config/
 rsync --ignore-existing /usr/config/rsync.conf /storage/.config/
 
+### Add items below this line that are safe to remove after a period of time.
+################################################################################
+
+if [ -e "/usr/bin/docker" ] && \
+   [ ! -d "/storage/.config/docker" ]
+then
+   cp -rf /usr/config/docker /storage/.config
+fi
