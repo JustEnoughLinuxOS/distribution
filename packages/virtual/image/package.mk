@@ -46,6 +46,8 @@ else
 
 fi
 
+[ "${DISPLAYSERVER}" = "wl" ] && PKG_DEPENDS_TARGET+=" weston"
+
 # Device is an emulation focused device
 [ "${EMULATION_DEVICE}" = "yes" ] && PKG_DEPENDS_TARGET+=" emulators gamesupport"
 
