@@ -19,7 +19,7 @@ PKG_UI="emulationstation es-themes jslisten textviewer"
 
 PKG_UI_TOOLS="fileman fbgrab"
 
-PKG_GRAPHICS="imagemagick"
+PKG_GRAPHICS="imagemagick splash"
 
 PKG_FONTS="terminus-font corefonts"
 
