@@ -1,8 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
 
 . /etc/profile
 
-tocon "Configuring LEDs..."
-/usr/bin/ledcontrol
+### Set up our controller variables.
+tocon "Configuring controller..."
+/usr/bin/mkcontroller
+

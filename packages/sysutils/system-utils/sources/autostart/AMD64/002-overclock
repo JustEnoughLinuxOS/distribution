@@ -4,6 +4,8 @@
 
 . /etc/profile
 
+tocon "Configuring system TDP..."
+
 # If there is no defined overclock, make sure it's "off".
 OVERCLOCK=$(get_setting system.overclock)
 if [ -z ${OVERCLOCK} ]

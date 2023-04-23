@@ -93,6 +93,8 @@ makeinstall_target() {
   cp ${PKG_BUILD}/retroarch ${INSTALL}/usr/bin
   mkdir -p ${INSTALL}/usr/share/retroarch/filters
 
+  cp ${PKG_DIR}/scripts/mkcontroller ${INSTALL}/usr/bin
+
   case ${ARCH} in
     aarch64)
       if [ -f ${ROOT}/build.${DISTRO}-${DEVICE}.arm/retroarch-*/.install_pkg/usr/bin/retroarch ]; then

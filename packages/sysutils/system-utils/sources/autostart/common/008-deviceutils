@@ -6,6 +6,7 @@
 
 if [ "${DEVICE_HAS_FAN}" == "true" ]
 then
+  tocon "Enabling fan control..."
   nohup systemctl start fancontrol &
 else
   nohup systemctl stop fancontrol &
@@ -13,6 +14,7 @@ fi
 
 if [ "${DEVICE_FAKE_JACKSENSE}" == "true" ]
 then
+  tocon "Starting headphone service..."
   nohup systemctl start headphones &
 else
   nohup systemctl stop headphones &
@@ -20,6 +22,7 @@ fi
 
 if [ "${DEVICE_VOLUMECTL}" == "true" ]
 then
+  tocon "Starting volume service..."
   nohup systemctl start volume &
 else
   nohup systemctl stop volume &
