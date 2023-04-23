@@ -61,11 +61,12 @@ post_install() {
   chmod 755 ${INSTALL}/usr/share/post-update
 
   # Issue banner
+  BUILD_ID=$(git rev-parse HEAD)
   cp ${PKG_DIR}/sources/issue ${INSTALL}/etc
   ln -s /etc/issue ${INSTALL}/etc/motd
   cat <<EOF >> ${INSTALL}/etc/issue
-==> Build Date: ${BUILD_DATE}
-==> Version: ${OS_VERSION}
+==> Version: ${OS_VERSION} (${BUILD_ID:0:7})
+==> Built: ${BUILD_DATE}
 
 EOF
 
