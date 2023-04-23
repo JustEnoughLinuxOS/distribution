@@ -8,6 +8,10 @@
 
 echo powersave > /sys/devices/platform/soc/ffe40000.gpu/devfreq/ffe40000.gpu/governor
 
+### Disable blue blinking led
+
+echo none > /sys/class/leds/blue\:/trigger
+
 ### Sleep is currently broken, so we'll disable it.
 
 cat <<EOF >/storage/.config/sleep.conf.d/sleep.conf
