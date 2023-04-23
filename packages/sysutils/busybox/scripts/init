@@ -434,7 +434,7 @@ set_consolefont() {
     elif [ "${hres}" -ge "640" ] && [ "${hres}" -lt "720" ]
     then
       setfont -C /dev/console ter-v14n.psf
-    elif [ "${hres}" -ge "720" ] && [ "${hres}" -lt "1080" ]
+    elif [ "${hres}" -ge "856" ] && [ "${hres}" -lt "1080" ]
     then
       setfont -C /dev/console ter-v18n.psf
     else

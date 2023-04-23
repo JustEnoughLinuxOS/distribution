@@ -76,6 +76,9 @@ EOF
   ### Fix and migrate to autostart package
   enable_service jelos-autostart.service
 
+  ### Take a backup of the system configuration on shutdown
+  enable_service save-sysconfig.service
+
   sed -i "s#@DEVICENAME@#${DEVICE}#g" ${INSTALL}/usr/config/system/configs/system.cfg
 
   ### Defaults for non-main builds.

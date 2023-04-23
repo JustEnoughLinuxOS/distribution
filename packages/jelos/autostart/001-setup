@@ -17,6 +17,10 @@ fi
 
 ln -sf /tmp/cache /storage/cache/.cores
 
+### Inspect the system config and revert
+### to last known good state if corrupt.
+/usr/bin/chksysconfig verify
+
 ### We do not want to mount the cloud drive on startup
 ### so we'll reset the mount option to 0.
 set_setting clouddrive.mounted 0
@@ -37,8 +41,4 @@ if [ -z "$(get_setting system.cpugovernor)" ]
 then
   set_setting system.cpugovernor schedutil
 fi
-
-### Test for binary data in system.cfg and clean it
-### if it exists.
-/usr/bin/clean_sysconfig
 
