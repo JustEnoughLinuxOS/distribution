@@ -14,7 +14,6 @@ DEVICE_PLAYBACK_PATH_SPK="SPK"
 DEVICE_PLAYBACK_PATH_HP="HP"
 DEVICE_HEADPHONE_DEV="/dev/input/by-path/platform-rk817-sound-event"
 DEVICE_BRIGHTNESS="70"
-SPLASH_LOADER="imagemagick"
 UI_SERVICE="emustation.service"
 
 # Kernel Modules
