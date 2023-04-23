@@ -11,7 +11,7 @@ PKG_SHORTDESC="Epic Noir"
 PKG_LONGDESC="Anbernic Epic Noir"
 PKG_TOOLCHAIN="manual"
 
-post_makeinstall_target() {
-  mkdir -p ${INSTALL}/storage/.config/emulationstation/themes/${PKG_NAME}
-  cp -rf * ${INSTALL}/storage/.config/emulationstation/themes/${PKG_NAME}
+makeinstall_target() {
+  mkdir -p ${INSTALL}/usr/share/themes/${PKG_NAME}
+  cp -rf * ${INSTALL}/usr/share/themes/${PKG_NAME}
 }
