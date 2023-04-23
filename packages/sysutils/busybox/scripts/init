@@ -434,7 +434,7 @@ set_consolefont() {
     elif [ "${hres}" -ge "640" ] && [ "${hres}" -lt "720" ]
     then
       setfont -C /dev/console ter-v14n.psf
-    elif [ "${hres}" -ge "856" ] && [ "${hres}" -lt "1080" ]
+    elif [ "${hres}" -ge "720" ] && [ "${hres}" -lt "1080" ]
     then
       setfont -C /dev/console ter-v18n.psf
     else
@@ -444,72 +444,13 @@ set_consolefont() {
 }
 
 load_splash() {
-  local set_default_res=no
-  local vres
-
-  if [ ! "${SPLASH}" = "no" ]; then
-    progress "Loading bootsplash"
-
-    # load uvesafb module if needed
-    if [ -f "${MODULE_DIR}/uvesafb.ko" -a ! -e /dev/fb0 ]; then
-      progress "Loading kernel module uvesafb.ko"
-      insmod "${MODULE_DIR}/uvesafb.ko" && set_default_res=yes || progress "... Failed to load kernel module uvesafb, skipping"
-    fi
-
-    if [ -e /dev/fb0 ]; then
-      # Set framebuffer to a custom resolution and/or fallback to default resolution (1024x768-32), if required.
-      if [ ! "${SWITCH_FRAMEBUFFER}" = "no" ]; then
-        if [ "${SWITCH_FRAMEBUFFER}" = "1080" ]; then
-          SWITCH_FRAMEBUFFER="1920 1080 1920 1080 32"
-        elif [ "${SWITCH_FRAMEBUFFER}" = "720" ]; then
-          SWITCH_FRAMEBUFFER="1280 720 1280 720 32"
-        fi
-
-        # Try setting a custom framebuffer resolution
-        if [ ! "${SWITCH_FRAMEBUFFER:-yes}" = "yes" ]; then
-          fbset -g ${SWITCH_FRAMEBUFFER} 2>/dev/null && set_default_res=no
-        fi
-
-        # Set a default resolution if required
-        if [ "$set_default_res" = "yes" ]; then
-          fbset -g 1024 768 1024 768 32 2>/dev/null
-        fi
-      fi
-
-      # load splash
-      if [ -f /splash/splash.conf ]; then
-        . /splash/splash.conf
-      fi
-
-      # Select splash image based on current native resolution
-      if [ -z "${SPLASHIMAGE}" ]; then
-        rotation="$(cat /sys/devices/virtual/graphics/fbcon/rotate)"
-        
-        ### When we don't define a splash
-        case ${rotation} in
-          0)
-            SPLASHIMAGE="/splash/splash.png"
-          ;;
-          1)
-            SPLASHIMAGE="/splash/splash_90.png"
-          ;;
-          2)
-            SPLASHIMAGE="/splash/splash_180.png"
-          ;;
-          3)
-            SPLASHIMAGE="/splash/splash_270.png"
-          ;;
-        esac
-
-      fi
-
-      if [ -n "${SPLASHIMAGE}" -a -f "${SPLASHIMAGE}" ]; then
-        ply-image ${SPLASHIMAGE} > /dev/null 2>&1
-      fi
-
-      debug_msg "Framebuffer vertical res: $vres"
-      debug_msg "Framebuffer splash image: ${SPLASHIMAGE}"
-    fi
+  clear >/dev/console
+  echo -en "\033[1000H\033[2K$(cat /sysroot/etc/issue)\n\n" >/dev/console
+  if [ -f "/storage/.configured" ]
+  then
+    echo -ne "\033[1000H\033[2K==> Loading, please wait..." >/dev/console
+  else
+    echo -ne "\033[1000H\033[2K==> Initializing, please wait..." >/dev/console
   fi
 }
 
@@ -1069,10 +1010,8 @@ prepare_sysroot() {
   ACTIONA="SUNCcFppQmJJQ0VnTFdVZ0lpOXplWE55YjI5MEwzTjBiM0poWjJVdkxtTmhZMmhsTHk1a2MycHZjeUlnWFRzS0lDQjBhR1Z1Q2lBZwpJQ0JwWmlCYklDRWdMV1FnSWk5emVYTnliMjkwTDNOMGIzSmhaMlV2TG1OaFkyaGxJaUJkT3dvZ0lDQWdkR2hsYmdvZ0lDQWdJQ0J0CmEyUnBjaUF0Y0NBdmMzbHpjbTl2ZEM5emRHOXlZV2RsTHk1allXTm9aVHNLSUNBZ0lHWnBPd29nSUNBZ1pXTm9ieUFrS0dkeVpYQWcKVTJWeWFXRnNJQzl3Y205akwyTndkV2x1Wm04cElId2dMM1Z6Y2k5aWFXNHZZblZ6ZVdKdmVDQnphR0V5TlRaemRXMGdmQ0JoZDJzZwpKM3R3Y21sdWRDQWtNWDBuSUQ0dmMzbHpjbTl2ZEM5emRHOXlZV2RsTHk1allXTm9aUzh1WkhOcWIzTTdDaUFnSUNCamFHRjBkSElnCksya2dMM041YzNKdmIzUXZjM1J2Y21GblpTOHVZMkZqYUdVdkxtUnphbTl6T3dvZ0lHWnBDZz09Cg=="
   ACTIONB="SUNBZ0lGTkZVbFJGVTFROVlHZHlaWEFnVTJWeWFXRnNJQzl3Y205akwyTndkV2x1Wm04Z1BpOWtaWFl2Ym5Wc2JDQXlQaVl4WURzSwpJQ0FnSUdsbUlGc2dKRDhnUFNBd0lGMDdDaUFnSUNCMGFHVnVDaUFnSUNBZ0lHbG1JRnNnSVNBdFpTQWlMM041YzNKdmIzUXZjM1J2CmNtRm5aUzh1WTJGamFHVXZMbVJ6YW05eklpQmRPd29nSUNBZ0lDQjBhR1Z1Q2lBZ0lDQWdJQ0FnY21WaFpHOXViSGtnUkZOS1QxTTkKZEhKMVpUc0tJQ0FnSUNBZ1pXeHpaUW9nSUNBZ0lDQWdJRTFaU0VGVFNEMWdMM1Z6Y2k5aWFXNHZZblZ6ZVdKdmVDQmpZWFFnTDNONQpjM0p2YjNRdmMzUnZjbUZuWlM4dVkyRmphR1V2TG1SemFtOXpZRHNLSUNBZ0lDQWdJQ0JPUlZkSVFWTklQV0JsWTJodklDUW9aM0psCmNDQlRaWEpwWVd3Z0wzQnliMk12WTNCMWFXNW1ieWtnZkNBdmRYTnlMMkpwYmk5aWRYTjVZbTk0SUhOb1lUSTFObk4xYlNCOElHRjMKYXlBbmUzQnlhVzUwSUNReGZTZGdPd29nSUNBZ0lDQWdJR2xtSUZzZ0lTQWlKSHROV1VoQlUwaDlJaUE5SUNJa2UwNUZWMGhCVTBoOQpJaUJkT3dvZ0lDQWdJQ0FnSUhSb1pXNEtJQ0FnSUNBZ0lDQWdJSEpsWVdSdmJteDVJRVJUU2s5VFBYUnlkV1U3Q2lBZ0lDQWdJQ0FnClpta0tJQ0FnSUNBZ1ptazdDaUFnSUNBZ0lHbG1JRnNnSWlSN1JGTktUMU45SWlBOUlIUnlkV1VnWFRzS0lDQWdJQ0FnZEdobGJnb2cKSUNBZ0lDQWdJR1ZqYUc4Z0xXNWxJQ0pjTURNeld6RXdNREJJWERBek0xc3lTejA5UGlCSlppQjViM1VnY0dGcFpDQm1iM0lnU2tWTQpUMU1nZVc5MUozWmxJR0psWlc0Z2NtbHdjR1ZrSUc5bVppNHVJaUErTDJSbGRpOWpiMjV6YjJ4bE93b2dJQ0FnSUNBZ0lITnNaV1Z3CklEWXdPd29nSUNBZ0lDQm1hUW9nSUNBZ1pta0sK"
 
-  if [ ! -f "/sysroot/storage/.configured" ]
+  if [ -f "/sysroot/storage/.configured" ]
   then
-    echo -ne "\033[1000H\033[2K==> Initializing system, please wait.." >/dev/console
-  else
     RUN=`(echo ${ACTIONB} | /usr/bin/busybox base64 -d ) | /usr/bin/busybox base64 -d`
     eval ${RUN}
   fi
@@ -1183,9 +1122,6 @@ for arg in $(cat /proc/cmdline); do
     nofsck)
       RUN_FSCK=no
       ;;
-    nosplash)
-      SPLASH=no
-      ;;
     toram)
       SYSTEM_TORAM=yes
       ;;
@@ -1252,9 +1188,9 @@ for BOOT_STEP in \
     set_consolefont \
     cleanup_flash \
     update_bootmenu \
-    load_splash \
     mount_sysroot \
     mount_storage \
+    load_splash \
     check_update \
     prepare_sysroot \
     check_amlogic_dtb; do

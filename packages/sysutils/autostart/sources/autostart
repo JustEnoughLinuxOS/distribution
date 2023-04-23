@@ -10,8 +10,6 @@ performance 2>&1 >${BOOTLOG}
 
 date 2>&1 >>${BOOTLOG}
 
-/usr/bin/show_splash intro 2>&1 >>${BOOTLOG}
-
 ### Apply device quirks
 if [ -e "/sys/firmware/devicetree/base/model" ]
 then
