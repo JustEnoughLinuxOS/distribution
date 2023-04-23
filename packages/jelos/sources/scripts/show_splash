@@ -31,6 +31,16 @@ else
   exit 0
 fi
 
+FBSIZE=$(fbset | awk '/geometry/ {print $2"x"$3}')
+SPSIZE=$(identify -ping -format '%wx%h' "${SPLASH}")
+
+if [ ! "${FBSIZE}" = "${SPSIZE}" ]
+then
+  IMGOPTS="-resize ${FBSIZE} -background black -gravity center"
+else
+  IMGOPTS="-background black -gravity center"
+fi
+
 [[ "${PLATFORM}" != "intro" ]] && VIDEO=0 || VIDEO=$(get_setting bootvideo.enabled)
 
 if [[ -f "/storage/.config/system/configs/novideo" ]] && [[ ${VIDEO} != "1" ]]
@@ -40,7 +50,7 @@ then
     ply-image "${SPLASH}" 2>/dev/null
   elif [ "${SPLASH_LOADER}" = "imagemagick" ]
   then
-    convert "${SPLASH}" -background black -gravity center bgra:/dev/fb0 > /dev/null 2>&1
+    convert "${SPLASH}" ${IMGOPTS} bgra:/dev/fb0 > /dev/null 2>&1
   fi
 else
   # Show intro video

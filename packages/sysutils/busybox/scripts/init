@@ -443,76 +443,6 @@ set_consolefont() {
   fi
 }
 
-load_splash() {
-  local set_default_res=no
-  local vres
-
-  if [ ! "${SPLASH}" = "no" ]; then
-    progress "Loading bootsplash"
-
-    # load uvesafb module if needed
-    if [ -f "${MODULE_DIR}/uvesafb.ko" -a ! -e /dev/fb0 ]; then
-      progress "Loading kernel module uvesafb.ko"
-      insmod "${MODULE_DIR}/uvesafb.ko" && set_default_res=yes || progress "... Failed to load kernel module uvesafb, skipping"
-    fi
-
-    if [ -e /dev/fb0 ]; then
-      # Set framebuffer to a custom resolution and/or fallback to default resolution (1024x768-32), if required.
-      if [ ! "${SWITCH_FRAMEBUFFER}" = "no" ]; then
-        if [ "${SWITCH_FRAMEBUFFER}" = "1080" ]; then
-          SWITCH_FRAMEBUFFER="1920 1080 1920 1080 32"
-        elif [ "${SWITCH_FRAMEBUFFER}" = "720" ]; then
-          SWITCH_FRAMEBUFFER="1280 720 1280 720 32"
-        fi
-
-        # Try setting a custom framebuffer resolution
-        if [ ! "${SWITCH_FRAMEBUFFER:-yes}" = "yes" ]; then
-          fbset -g ${SWITCH_FRAMEBUFFER} 2>/dev/null && set_default_res=no
-        fi
-
-        # Set a default resolution if required
-        if [ "$set_default_res" = "yes" ]; then
-          fbset -g 1024 768 1024 768 32 2>/dev/null
-        fi
-      fi
-
-      # load splash
-      if [ -f /splash/splash.conf ]; then
-        . /splash/splash.conf
-      fi
-
-      # Select splash image based on current native resolution
-      if [ -z "${SPLASHIMAGE}" ]; then
-        rotation="$(cat /sys/devices/virtual/graphics/fbcon/rotate)"
-        
-        ### When we don't define a splash
-        case ${rotation} in
-          0)
-            SPLASHIMAGE="/splash/splash.png"
-          ;;
-          1)
-            SPLASHIMAGE="/splash/splash_90.png"
-          ;;
-          2)
-            SPLASHIMAGE="/splash/splash_180.png"
-          ;;
-          3)
-            SPLASHIMAGE="/splash/splash_270.png"
-          ;;
-        esac
-
-      fi
-
-      if [ -n "${SPLASHIMAGE}" -a -f "${SPLASHIMAGE}" ]; then
-        ply-image ${SPLASHIMAGE} > /dev/null 2>&1
-      fi
-
-      debug_msg "Framebuffer vertical res: $vres"
-      debug_msg "Framebuffer splash image: ${SPLASHIMAGE}"
-    fi
-  fi
-}
-
 do_reboot() {
   echo "System reboots now..."
 
@@ -1252,7 +1182,6 @@ for BOOT_STEP in \
     set_consolefont \
     cleanup_flash \
     update_bootmenu \
-    load_splash \
     mount_sysroot \
     mount_storage \
     check_update \
