@@ -1,4 +1,5 @@
-# Copyright (C) 2023 UzuCore
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2023-present UzuCore
 
 PKG_NAME="es-theme-anbernic-dc"
 PKG_VERSION="faa6e2c5d3987d4f4993a3439a94ea469b312fde"
