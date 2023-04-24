@@ -767,8 +767,6 @@ check_update() {
   mkdir -p ${UPDATE_DIR}/.tmp &>/dev/null
   sync
 
-  echo "UPDATE" > /storage/.config/boot.hint
-
   clear >/dev/console
   echo "UPDATE IN PROGRESS"
   echo ""
@@ -983,6 +981,7 @@ check_update() {
   umount /sysroot &>/dev/null
   update_file "System" "${UPDATE_SYSTEM}" "/flash/${IMAGE_SYSTEM}"
   update_bootloader
+  echo "UPDATE" >/storage/boot.hint
   sync
   StartProgress countdown "Update complete. Reboot in 5s... " 5 "NOW"
   do_cleanup
