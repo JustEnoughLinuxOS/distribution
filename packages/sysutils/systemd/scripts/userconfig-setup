@@ -83,9 +83,14 @@ then
   ldconfig -X >>/var/log/configure.log 2>&1
 fi
 
-if [ ! -d "/storage/.config/emulationstation/locale" ] && \
-   [ -e "/usr/bin/emulationstation" ]
+if [ ! -d "/storage/.config/locale" ]
 then
   tocon "Initializing language support..."
-  rsync -a --delete /usr/config/locale/ /storage/.config/emulationstation/locale/ >>/var/log/configure.log 2>&1
+  rsync -a --delete /usr/config/locale/* /storage/.config/locale/ >>/var/log/configure.log 2>&1
+  if [ ! -L "/storage/.config/emulationstation/locale" ]
+     [ -e "/usr/bin/emulationstation" ]
+  then
+    rm -rf /storage/.config/emulationstation/locale >>/var/log/configure.log 2>&1 ||:
+    ln -sf /usr/share/locale /storage/.config/emulationstation/locale
+  fi
 fi
