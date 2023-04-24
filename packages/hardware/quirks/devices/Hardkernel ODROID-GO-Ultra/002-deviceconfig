@@ -20,6 +20,10 @@ DEVICE_TEMP_SENSOR=("/sys/class/hwmon/hwmon0/temp1_input")
 CPU_FREQ=("/sys/devices/system/cpu/cpufreq/policy0" "/sys/devices/system/cpu/cpufreq/policy2")
 GPU_FREQ=("/sys/devices/platform/soc/ffe40000.gpu/devfreq/ffe40000.gpu")
 
+# Affinity
+SLOW_CORES="taskset -c 0-1"
+FAST_CORES="taskset -c 2-5"
+
 # Volume Keys
 DEVICE_KEY_VOLUMEDOWN=114
 DEVICE_KEY_VOLUMEUP=115

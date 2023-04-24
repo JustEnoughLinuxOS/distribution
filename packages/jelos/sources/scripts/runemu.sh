@@ -105,6 +105,19 @@ then
   ${PERFORMANCE_MODE}
 fi
 
+### Set the cores to use
+CORES=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
+if [ "${CORES}" = "little" ]
+then
+  EMUPERF="${SLOW_CORES}"
+elif [ "${CORES}" = "big" ]
+then
+  EMUPERF="${FAST_CORES}"
+else
+  ### All..
+  unset EMUPERF
+fi
+
 ### We need the original system cooling profile later so get it now!
 COOLINGPROFILE=$(get_setting cooling.profile)
 
@@ -425,7 +438,7 @@ else
 			fi
                 ;;
         esac
-	
+
 	if [[ "${CORE}" =~ "custom" ]] 
 	then
 	RUNTHIS='${EMUPERF} /usr/bin/${RABIN} -L /storage/.config/retroarch/cores/${EMU}.so --config ${RATMPCONF} --appendconfig ${RAAPPENDCONF} "${ROMNAME}"'
