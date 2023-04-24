@@ -123,6 +123,9 @@
 # swapfile size if SWAP_SUPPORT=yes in MB
   SWAPFILESIZE="384"
 
+# Default weston terminal font size
+  WESTONFONTSIZE="14"
+
 # additional packages to install:
 # Space separated list is supported,
 # e.g. ADDITIONAL_PACKAGES="PACKAGE1 PACKAGE2"

@@ -1,0 +1,9 @@
+#!/bin/sh
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2023-present Fewtarius (https://github.com/fewtarius)
+
+FBWIDTH=$(fbset | awk '/geometry/ {print $2}')
+FBHEIGHT=$(fbset | awk '/geometry/ {print $2}')
+
+sed -i "s#@MWIDTH@#${FBWIDTH}#g" /storage/.config/moonlight/moonlight.conf
+sed -i "s#@MHEIGHT@#${FBHEIGHT}#g" /usr/config/moonlight/moonlight.conf
