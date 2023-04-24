@@ -84,11 +84,27 @@ echo "Update rsync configuration files..." >>${LOG}
 rsync --ignore-existing /usr/config/rsync-rules.conf /storage/.config/
 rsync --ignore-existing /usr/config/rsync.conf /storage/.config/
 
+### Sync locale data
+rsync -a --delete /usr/config/locale/* /storage/.config/locale/ >>/var/log/configure.log 2>&1
+rm -rf /storage/.config/emulationstation/locale >>/var/log/configure.log 2>&1 ||:
+ln -sf /usr/share/locale /storage/.config/emulationstation/locale >>/var/log/configure.log 2>&1 ||:
+
 ### Add items below this line that are safe to remove after a period of time.
 ################################################################################
 
+### Fix docker storage path (dev build issue only)
 if [ -e "/usr/bin/docker" ] && \
    [ ! -d "/storage/.config/docker" ]
 then
    cp -rf /usr/config/docker /storage/.config
 fi
+
+### Ensure panel properties exist.
+for DPROP in brightness contrast saturation hue
+do
+  DBRI=$(get_setting display.${DPROP})
+  if [ -z "${DBRI}" ]
+  then
+    set_setting display.${DPROP} 50
+  fi
+done
