@@ -84,23 +84,23 @@ if [ -d $SYSTEM_ROOT/usr/share/bootloader/res ]; then
 fi
 
 # update device tree
-  for all_dtb in $SYSTEM_ROOT/usr/share/bootloader/*.dtb; do
-    dtb=$(basename $all_dtb)
-      echo -n "Updating $dtb... "
-      cp -p $SYSTEM_ROOT/usr/share/bootloader/$dtb $BOOT_ROOT &>/dev/null
-      echo "done"
-  done
+for all_dtb in $SYSTEM_ROOT/usr/share/bootloader/*.dtb; do
+  dtb=$(basename $all_dtb)
+    echo -n "Updating $dtb... "
+    cp -p $SYSTEM_ROOT/usr/share/bootloader/$dtb $BOOT_ROOT &>/dev/null
+    echo "done"
+done
+
+
+echo "UPDATE" > /storage/.config/boot.hint
 
 # update bootloader
 
-MYDEV=$(awk '/^Hardware/ {print $4}' /proc/cpuinfo)
-case ${MYDEV} in
-
-  if [ -f $SYSTEM_ROOT/usr/share/bootloader/u-boot.bin ]; then
-    echo -n "Updating uboot.bin... "
-    dd if=$SYSTEM_ROOT/usr/share/bootloader/u-boot.bin of=$BOOT_DISK conv=fsync,notrunc bs=512 seek=1 &>/dev/null
-    echo "done"
-  fi
+if [ -f $SYSTEM_ROOT/usr/share/bootloader/u-boot.bin ]; then
+  echo -n "Updating uboot.bin... "
+  dd if=$SYSTEM_ROOT/usr/share/bootloader/u-boot.bin of=$BOOT_DISK conv=fsync,notrunc bs=512 seek=1 &>/dev/null
+  echo "done"
+fi
 
 # mount $BOOT_ROOT r/o
   sync
