@@ -39,7 +39,7 @@ if [ "${BASE_ONLY}" = "true" ]
 then
   EMULATION_DEVICE=false
   ENABLE_32BIT=false
-  PKG_DEPENDS_TARGET+=" ${PKG_TOOLS} ${PKG_FONTS} ${PKG_DEBUG}"
+  PKG_DEPENDS_TARGET+=" ${PKG_TOOLS} ${PKG_FONTS}"
 else
   PKG_DEPENDS_TARGET+=" ${PKG_TOOLS} ${PKG_FONTS} ${PKG_SOUND} ${PKG_BLUETOOTH} ${PKG_SYNC} ${PKG_GRAPHICS} ${PKG_UI} ${PKG_UI_TOOLS} ${PKG_MULTIMEDIA} misc-packages"
 
@@ -57,6 +57,8 @@ fi
 
 # Add support for containers
 [ "${CONTAINER_SUPPORT}" = "yes" ] && PKG_DEPENDS_TARGET+=" ${PKG_TOOLS} docker"
+
+[ "${DEBUG_SUPPORT}" = "yes" ] && PKG_DEPENDS_TARGET+=" ${PKG_DEBUG}"
 
 # 32Bit package support
 [ "${ENABLE_32BIT}" == true ] && PKG_DEPENDS_TARGET+=" lib32"
