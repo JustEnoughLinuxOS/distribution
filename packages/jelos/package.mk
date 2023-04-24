@@ -61,11 +61,12 @@ post_install() {
   chmod 755 ${INSTALL}/usr/share/post-update
 
   # Issue banner
+  BUILD_ID=$(git rev-parse HEAD)
   cp ${PKG_DIR}/sources/issue ${INSTALL}/etc
   ln -s /etc/issue ${INSTALL}/etc/motd
   cat <<EOF >> ${INSTALL}/etc/issue
-==> Build Date: ${BUILD_DATE}
-==> Version: ${OS_VERSION}
+==> Version: ${OS_VERSION} (${BUILD_ID:0:7})
+==> Built: ${BUILD_DATE}
 
 EOF
 
@@ -76,6 +77,9 @@ EOF
   ### Fix and migrate to autostart package
   enable_service jelos-autostart.service
 
+  ### Take a backup of the system configuration on shutdown
+  enable_service save-sysconfig.service
+
   sed -i "s#@DEVICENAME@#${DEVICE}#g" ${INSTALL}/usr/config/system/configs/system.cfg
 
   ### Defaults for non-main builds.
@@ -84,6 +88,12 @@ EOF
   then
     sed -i "s#ssh.enabled=0#ssh.enabled=1#g" ${INSTALL}/usr/config/system/configs/system.cfg
     sed -i "s#network.enabled=0#network.enabled=1#g" ${INSTALL}/usr/config/system/configs/system.cfg
+  fi
+
+  ### Disable automount on AMD64
+  if [ "${DEVICE}" = "AMD64" ]
+  then
+    sed -i "s#system.automount=1#system.automount=0#g" ${INSTALL}/usr/config/system/configs/system.cfg
   fi
 
 }

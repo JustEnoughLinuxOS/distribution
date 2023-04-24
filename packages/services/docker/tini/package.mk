@@ -17,6 +17,6 @@ pre_configure_target(){
   sed -i "s|@tini_VERSION_GIT@| - git.${PKG_VERSION}|" ${PKG_BUILD}/src/tiniConfig.h.in
 }
 
-makeinstall_target() {
-  :
+post_makeinstall_target() {
+  ln -sf /usr/bin/tini-static ${INSTALL}/usr/bin/docker-init
 }

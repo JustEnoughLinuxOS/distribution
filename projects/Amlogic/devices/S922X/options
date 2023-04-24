@@ -45,9 +45,6 @@
   # Define the CPU
     HW_CPU="Amlogic S922x"
 
-  # Display Resolution
-    SPLASH_RESOLUTION="480x854"
-
   # Mali GPU family
     MALI_FAMILY="g52"
     GRAPHIC_DRIVERS="panfrost"

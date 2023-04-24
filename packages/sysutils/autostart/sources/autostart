@@ -10,8 +10,6 @@ performance 2>&1 >${BOOTLOG}
 
 date 2>&1 >>${BOOTLOG}
 
-/usr/bin/show_splash intro 2>&1 >>${BOOTLOG}
-
 ### Apply device quirks
 if [ -e "/sys/firmware/devicetree/base/model" ]
 then
@@ -28,25 +26,16 @@ then
   for script in "/usr/lib/autostart/quirks/${QUIRK_DEVICE}"/*
   do
     echo "Executing ${script}" 2>&1 >>${BOOTLOG}
-    "${script}" 2>&1 >>${BOOTLOG} &
+    "${script}" 2>&1 >>${BOOTLOG}
   done
 fi
-
-wait
-
-### Lock is a prerequisite for emustation
-rm /var/lock/start.games 2>&1 >>${BOOTLOG}
-touch /var/lock/start.games 2>&1 >>${BOOTLOG}
-systemctl start ${UI_SERVICE} 2>&1 >>${BOOTLOG} &
 
 ### Run common start scripts
 for script in /usr/lib/autostart/common/*
 do
   echo "Executing ${script}" 2>&1 >>${BOOTLOG}
-  ${script} 2>&1 >>${BOOTLOG} &
+  ${script} 2>&1 >>${BOOTLOG}
 done
-
-wait
 
 ### Run custom start scripts
 if [ -d "/storage/.config/autostart" ]
@@ -54,15 +43,18 @@ then
   for script in /storage/.config/autostart/*
   do
     echo "Executing ${script}" 2>&1 >>${BOOTLOG}
-   ${script} 2>&1 >>${BOOTLOG} &
+   ${script} 2>&1 >>${BOOTLOG}
   done
 fi
-
-wait
 
 tocon "Startup complete..."
 
 clear >/dev/console
+
+### Lock is a prerequisite for emustation
+rm /var/lock/start.games 2>&1 >>${BOOTLOG}
+touch /var/lock/start.games 2>&1 >>${BOOTLOG}
+systemctl start ${UI_SERVICE} 2>&1 >>${BOOTLOG} &
 
 DEVICE_CPU_GOVERNOR=$(get_setting system.cpugovernor)
 ${DEVICE_CPU_GOVERNOR} 2>&1 >>${BOOTLOG}

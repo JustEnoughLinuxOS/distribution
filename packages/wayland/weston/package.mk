@@ -60,6 +60,11 @@ post_makeinstall_target() {
 
   safe_remove ${INSTALL}/usr/share/wayland-sessions
 
+  for configfile in weston.ini kiosk.ini
+  do
+    sed -i -e "s|@WESTONFONTSIZE@|${WESTONFONTSIZE}|g" ${INSTALL}/usr/share/weston/${configfile}
+  done
+
   if [ "${EMULATION_DEVICE}" = "yes" ] && \
      [ ! "${BASE_ONLY}" == true ]
   then
