@@ -117,6 +117,10 @@ makeinstall_target() {
 
 	ln -sf /storage/.cache/system_timezone ${INSTALL}/etc/timezone
 
+}
+
+
+post_install() {
         mkdir -p ${INSTALL}/usr/share
         ln -sf /storage/.config/locale ${INSTALL}/usr/share/locale
 
