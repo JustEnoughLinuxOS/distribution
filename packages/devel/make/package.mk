@@ -15,3 +15,7 @@ PKG_BUILD_FLAGS="+local-cc"
 post_makeinstall_host() {
   ln -sf make ${TOOLCHAIN}/bin/gmake
 }
+
+post_makeinstall_target() {
+  rm -rf ${INSTALL}/usr/share/locale
+}
