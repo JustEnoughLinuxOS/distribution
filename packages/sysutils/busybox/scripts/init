@@ -1016,34 +1016,6 @@ prepare_sysroot() {
   fi
 }
 
-check_amlogic_dtb() {
-  if grep -q "amlogic" /proc/device-tree/compatible 2>/dev/null; then
-    if grep -q "official" /sysroot/etc/os-release 2>/dev/null; then
-      progress "Checking Amlogic DTB"
-      if [ "$(uname -r)" = "3.14.29" ]; then
-        DT_ID=$(cat /proc/device-tree/le-dt-id 2>/dev/null)
-      else
-        DT_ID=$(cat /proc/device-tree/coreelec-dt-id 2>/dev/null)
-      fi
-      DT_FILE=$(ls -1 /sysroot/usr/share/bootloader/device_trees/${DT_ID}.dtb 2>/dev/null | head -n 1)
-
-      if [ -f "/proc/device-tree/coreelec" ] &&
-         [ -n "${DT_ID}" ] &&
-         [ -f "${DT_FILE}" ]; then
-         return 0
-      fi
-
-      echo "WARNING: Your device-tree is out-of-date!"
-      echo ""
-      echo "Please update it to resume normal startup."
-      echo ""
-
-      StartProgress countdown "Normal startup in 30s... " 30 "NOW"
-      echo ""
-    fi
-  fi
-}
-
 # Do init tasks to bring up system
 
 # run platform_init script if exists
@@ -1191,8 +1163,8 @@ for BOOT_STEP in \
     mount_storage \
     load_splash \
     check_update \
-    prepare_sysroot \
-    check_amlogic_dtb; do
+    prepare_sysroot 
+do
   ${BOOT_STEP}
   [ -n "${DEBUG}" ] && break_after ${BOOT_STEP}
 done
