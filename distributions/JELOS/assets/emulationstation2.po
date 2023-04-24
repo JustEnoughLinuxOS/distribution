@@ -4905,3 +4905,6 @@ msgstr "수직 모드 (회전)"
 
 msgid "ENABLE WIFI POWERSAVE"
 msgstr "WIFI 절전 활성화"
+
+msgid "PPSSPP KOREAN FONT"
+msgstr "PPSSPP 한국어 폰트"
