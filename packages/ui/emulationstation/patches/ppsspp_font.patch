@@ -1,0 +1,26 @@
+diff -rupN emulationstation.orig/es-app/src/guis/GuiMenu.cpp emulationstation/es-app/src/guis/GuiMenu.cpp
+--- emulationstation.orig/es-app/src/guis/GuiMenu.cpp	2023-04-26 02:58:50.782955365 +0900
++++ emulationstation/es-app/src/guis/GuiMenu.cpp	2023-04-26 03:18:59.858845024 +0900
+@@ -2594,6 +2594,22 @@ void GuiMenu::openGamesSettings_batocera
+ 		if (SystemData::isNetplayActivated() && ApiSystem::getInstance()->isScriptingSupported(ApiSystem::NETPLAY))
+ 			s->addEntry(_("NETPLAY SETTINGS"), true, [this] { openNetplaySettings(); }, "iconNetplay");
+ 
++		// PPSSPP font change
++		auto pspfont_enabled = std::make_shared<SwitchComponent>(mWindow);
++		bool pfbaseEnabled = SystemConf::getInstance()->get("global.pspfont.enabled") == "1";
++		pspfont_enabled->setState(pfbaseEnabled);
++		s->addWithLabel(_("PPSSPP KOREAN FONT"), pspfont_enabled);
++		s->addSaveFunc([pspfont_enabled] {
++			if (pspfont_enabled->getState() == false) {
++				runSystemCommand("/usr/bin/ppsspp_font.sh", "", nullptr);
++			} else {
++				runSystemCommand("/usr/bin/ppsspp_font.sh enabled", "", nullptr);
++			}
++		bool pspfontenabled = pspfont_enabled->getState();
++		SystemConf::getInstance()->set("global.pspfont.enabled", pspfontenabled ? "1" : "0");
++				SystemConf::getInstance()->saveSystemConf();
++		});
++
+ //		// Missing Bios
+ //		if (ApiSystem::getInstance()->isScriptingSupported(ApiSystem::BIOSINFORMATION))
+ //		{
