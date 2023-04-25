@@ -31,8 +31,8 @@
     BOOTLOADER="u-boot"
     PARTITION_TABLE="gpt"
     UBOOT_LABEL="uboot"
-    TRUST_LABEL="resource"
-    DEVICE_DTB=("rk3566-rg353p-linux" "rk3566-rg353v-linux" "rk3566-rg353m-linux" "rk3566-rg503-linux" "rk3566-rk2023-linux")
+    TRUST_LABEL="trust"
+    DEVICE_DTB=("rk3566-x55-linux")
     UBOOT_DTB="rk3566"
     UBOOT_CONFIG="rk3568_defconfig"
     PKG_SOC="rk356x"
@@ -63,7 +63,7 @@
     WINDOWMANAGER="no"
 
   # kernel serial console
-    EXTRA_CMDLINE="quiet rootwait console=ttyUSB0,1500000 console=tty0 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20 video=HDMI-A-1:1280x720@60"
+    EXTRA_CMDLINE="quiet rootwait console=ttyUSB0,1500000 fbcon=rotate:3 console=tty0 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20 video=HDMI-A-1:1280x720@60"
 
   # additional packages to install
   #  ADDITIONAL_PACKAGES=""

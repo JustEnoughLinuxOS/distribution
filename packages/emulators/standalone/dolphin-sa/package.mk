@@ -75,7 +75,7 @@ makeinstall_target() {
 
 post_install() {
     case ${DEVICE} in
-      RK3566)
+      RK356*)
         DOLPHIN_PLATFORM="drm"
       ;;
       *)

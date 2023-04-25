@@ -36,13 +36,13 @@ case "${DEVICE}" in
     LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr citra-lr desmume-lr dolphin-lr lrps2-lr mame-lr minivmac-lr    \
                      play-lr"
   ;;
-  RK3588)
+  RK358*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
     PKG_EMUS+=" aethersx2-sa duckstation-sa pcsx_rearmed-lr box64 yabasanshiro-sa"
     LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr citra-lr dolphin-lr mame-lr box64"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
-  RK3566)
+  RK356*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
     PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders mupen64plus-sa box64"
     PKG_EMUS+=" dolphin-sa drastic-sa yabasanshiro-sa"

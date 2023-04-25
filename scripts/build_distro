@@ -22,6 +22,36 @@ then
   PKG_CLEAN+=" ${CLEAN_EMU_32BIT}"
 fi
 
+# If DEVICE_ROOT is defined and not the device being built, make sure that the
+# build folder is a link to root rather than a folder.
+
+if [ -n "${DEVICE_ROOT}" ]
+then
+
+  if [ ! "${DEVICE_ROOT}" = "${DEVICE}" ]
+  then
+    # Ensure there isn't a left over build directory.
+    if [ -d "build.${DISTRO}-${DEVICE}.${ARCH}" ]
+    then
+      echo "Removing stale build root."
+      rm -rf build.${DISTRO}-${DEVICE}.${ARCH}
+    fi
+
+    if [ ! -d "build.${DISTRO}-${DEVICE_ROOT}.${ARCH}" ]
+    then
+      echo "Building the device root (${DEVICE_ROOT})."
+      make ${DEVICE_ROOT}
+    fi
+
+    # Link back to the DEVICE_ROOT so we can re-use the build directory to save space.
+    if [ ! -L "build.${DISTRO}-${DEVICE}.${ARCH}" ]
+    then
+      ln -sf build.${DISTRO}-${DEVICE_ROOT}.${ARCH} build.${DISTRO}-${DEVICE}.${ARCH}
+    fi
+  fi
+
+fi
+
 # Clean necessary packages.
 PKG_CLEAN+=" ${CLEAN_NETWORK} ${CLEAN_OS_BASE}"
 
