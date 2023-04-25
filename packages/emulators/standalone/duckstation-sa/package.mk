@@ -3,13 +3,23 @@
 
 PKG_NAME="duckstation-sa"
 PKG_LICENSE="GPLv3"
-PKG_VERSION="5fee6f5abee7f3aad65da5523e57896e10e2a53a"
 PKG_DEPENDS_TARGET="toolchain SDL2 nasm:host pulseaudio openssl libidn2 nghttp2 zlib curl libevdev ecm"
 PKG_SITE="https://github.com/stenzek/duckstation"
 PKG_URL="${PKG_SITE}.git"
 PKG_SHORTDESC="Fast PlayStation 1 emulator for x86-64/AArch32/AArch64 "
 PKG_TOOLCHAIN="cmake"
-PKG_PATCH_DIRS+="wayland"
+
+case ${DEVICE} in
+  RK3566)
+    PKG_VERSION="5ab5070d73f1acc51e064bd96be4ba6ce3c06f5c"
+    PKG_PATCH_DIRS+=" legacy"
+    PKG_CMAKE_OPTS_TARGET+=" -DUSE_DRMKMS=ON -DENABLE_EGL=ON -DUSE_MALI=OFF"
+  ;;
+  *)
+    PKG_VERSION="991f7312b25ee9d3dc98b39d1944314db026f954"
+    PKG_PATCH_DIRS+=" wayland"
+  ;;
+esac
 
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
