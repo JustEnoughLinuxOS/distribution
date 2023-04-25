@@ -19,4 +19,4 @@ fi
 
 ARG=${1//[\\]/}
 export SDL_AUDIODRIVER=alsa          
-ppsspp "${ARG}"
+${EMUPERF} ppsspp "${ARG}"
