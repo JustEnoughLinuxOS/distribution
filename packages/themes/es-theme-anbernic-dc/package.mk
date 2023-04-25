@@ -14,5 +14,5 @@ PKG_TOOLCHAIN="manual"
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/share/themes/${PKG_NAME}
   cp -rf * ${INSTALL}/usr/share/themes/${PKG_NAME}
-  ln -fs /storage/.config/emulationstation/themes/${PKG_NAME} ${INSTALL}/usr/share/themes/${PKG_NAME} /storage/.config/emulationstation/themes/${PKG_NAME}
+  ln -fs /storage/.config/emulationstation/themes/${PKG_NAME} ${INSTALL}/usr/share/themes/${PKG_NAME} /storage/.config/emulationstation/themes/
 }
