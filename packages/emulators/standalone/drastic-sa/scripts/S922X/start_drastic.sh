@@ -24,6 +24,19 @@ ln -sf /storage/roms/savestates/nds /storage/.config/drastic/savestates
 rm -rf /storage/.config/drastic/backup
 ln -sf /storage/roms/nds /storage/.config/drastic/backup
 
+# Set the cores to use
+CORES=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
+if [ "${CORES}" = "little" ]
+then
+  EMUPERF="${SLOW_CORES}"
+elif [ "${CORES}" = "big" ]
+then
+  EMUPERF="${FAST_CORES}"
+else
+  ### All..
+  unset EMUPERF
+fi
+
 cd /storage/.config/drastic/
 
 export SDL_VIDEO_GL_DRIVER=./libs/libGL.so.1
@@ -32,4 +45,4 @@ export LIBGL_ES=2
 export LIBGL_GL=21
 export LIBGL_FB=2
 
-./drastic "$1"
+${EMUPERF} ./drastic "$1"

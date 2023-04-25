@@ -16,10 +16,23 @@ if [ ! -d "/storage/roms/bios/dc" ]; then
     mkdir -p "/storage/roms/bios/dc"
 fi
 
+#Set the cores to use
+CORES=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
+if [ "${CORES}" = "little" ]
+then
+  EMUPERF="${SLOW_CORES}"
+elif [ "${CORES}" = "big" ]
+then
+  EMUPERF="${FAST_CORES}"
+else
+  ### All..
+  unset EMUPERF
+fi
+
 #Link  .config/flycast to .local
 rm -rf "/storage/.local/share/flycast"
 ln -sf "/storage/.config/flycast" "/storage/.local/share/flycast"
 ln -sf "/storage/roms/bios/dc" "/storage/.local/share/flycast"
 
 #Run flycast emulator
-/usr/bin/flycast "${1}"
+${EMUPERF} /usr/bin/flycast "${1}"
