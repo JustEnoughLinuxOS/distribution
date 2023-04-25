@@ -24,6 +24,19 @@ fi
 rm -rf /storage/.config/dolphin-emu/StateSaves
 ln -sf /storage/roms/savestates/gamecube /storage/.config/dolphin-emu/StateSaves
 
+#Set the cores to use
+CORES=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
+if [ "${CORES}" = "little" ]
+then
+  EMUPERF="${SLOW_CORES}"
+elif [ "${CORES}" = "big" ]
+then
+  EMUPERF="${FAST_CORES}"
+else
+  ### All..
+  unset EMUPERF
+fi
+
   #Emulation Station Features
   GAME=$(echo "${1}"| sed "s#^/.*/##")
   AA=$(get_setting anti_aliasing gamecube "${GAME}")
@@ -32,6 +45,7 @@ ln -sf /storage/roms/savestates/gamecube /storage/.config/dolphin-emu/StateSaves
   IRES=$(get_setting internal_resolution gamecube "${GAME}")
   FPS=$(get_setting show_fps gamecube "${GAME}")
   CON=$(get_setting gamecube_controller_profile gamecube "${GAME}")
+  VSYNC=$(get_setting vsync gamecube "${GAME}")
 
   #Anti-Aliasing
 	if [ "$AA" = "0" ]
@@ -137,9 +151,19 @@ ln -sf /storage/roms/savestates/gamecube /storage/.config/dolphin-emu/StateSaves
                 cp -r /storage/.config/dolphin-emu/Custom_GCPadNew.ini /storage/.config/dolphin-emu/GCPadNew.ini
         fi
 
+  #VSYNC
+        if [ "$VSYNC" = "0" ]
+        then
+                sed -i '/VSync =/c\VSync = False' /storage/.config/dolphin-emu/GFX.ini
+        fi
+        if [ "$VSYNC" = "1" ]
+        then
+                sed -i '/VSync =/c\VSync = True' /storage/.config/dolphin-emu/GFX.ini
+        fi
+
 #Link  .config/dolphin-emu to .local
 rm -rf /storage/.local/share/dolphin-emu
 ln -sf /storage/.config/dolphin-emu /storage/.local/share/dolphin-emu
 
 #Run Dolphin emulator
-/usr/bin/dolphin-emu-nogui -p @DOLPHIN_PLATFORM@ -a HLE -e "${1}"
+${EMUPERF} /usr/bin/dolphin-emu-nogui -p @DOLPHIN_PLATFORM@ -a HLE -e "${1}"
