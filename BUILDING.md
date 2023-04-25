@@ -141,6 +141,15 @@ DEVICE=AMD64 ARCH=x86_64 ./scripts/clean busybox
 DEVICE=AMD64 ARCH=x86_64 ./scripts/build busybox
 ```
 
+### Rightsized builds
+JELOS supports various build variables which alter the behavior of the distribution for specific purposes including debugging, or hosting containers.  The options are defined below and are passed on the make command line.  Ex. `BASE_ONLY=true make docker-RK3566`.
+|Build Option|Setting|Function|
+|----|----|
+|EMULATION_DEVICE|true|Builds EmulationStation and all emulators, builds EmulationStation and NO emulators if false.|
+|ENABLE_32BIT|true|Builds a 32bit root and includes it in the image.  Needed for 32bit cores and applications.|
+|BASE_ONLY|false|Builds only the bare minimum packages, includes Weston on supported devices.  Does not build EmulationStation.|
+|CONTAINER_SUPPORT|false|Builds support for running containers on JELOS|
+
 > Note: Emulation Station package build requires additional steps because its source code located in a separate repository, see instructions inside, [link](https://github.com/JustEnoughLinuxOS/distribution/blob/main/packages/ui/emulationstation/package.mk).
 
 ### Special env variables
