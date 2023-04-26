@@ -5,5 +5,7 @@
 . /etc/profile
 
 ### Set the default audio device on startup.
-set-audio set "fe410000.i2s-rk817-hifi (1:0)"
-amixer cset name='Playback Path' SPK
+set-audio set "fe410000.i2s-rk817-hifi (0:0)"
+
+### Enable the speaker
+amixer -c0 cset name='Playback Path' SPK
