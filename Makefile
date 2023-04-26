@@ -40,6 +40,7 @@ RK3566:
 RK3566-X55:
 	PKG_CLEAN="SDL2 retroarch" DEVICE_ROOT=RK3566 PROJECT=Rockchip DEVICE=RK3566-X55 ARCH=arm ./scripts/build_distro
 	PKG_CLEAN="SDL2 retroarch" DEVICE_ROOT=RK3566 PROJECT=Rockchip DEVICE=RK3566-X55 ARCH=aarch64 ./scripts/build_distro
+	unset DEVICE_ROOT
 
 S922X:
 	PROJECT=Amlogic DEVICE=S922X ARCH=arm ./scripts/build_distro
