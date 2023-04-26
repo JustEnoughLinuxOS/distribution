@@ -145,4 +145,6 @@ EOF
   alsactl restore -f /storage/.config/asound.state
 fi
 
+### Set the default output as a workaround until a better solution is found.
+amixer -c0 cset name='Playback Path' SPK
 "/usr/lib/autostart/quirks/Powkiddy\ x55/sleep/post/001-audio"
