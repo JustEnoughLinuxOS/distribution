@@ -30,9 +30,9 @@ case ${DEVICE} in
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="main"
   ;;
-  RK3566-X55)
+  *X55)
     PKG_URL="${PKG_SITE}/rk3566-x55-kernel.git"
-    PKG_VERSION="df3ecc7f0ae1238ff448accf94981c98d78ff5af"
+    PKG_VERSION="fc2d5c925"
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="main"
   ;;
