@@ -48,6 +48,13 @@ then
     then
       ln -sf build.${DISTRO}-${DEVICE_ROOT}.${ARCH} build.${DISTRO}-${DEVICE}.${ARCH}
     fi
+
+    # If sources are split between devices, make sure we link it.
+    if [ -d "sources-${DEVICE_ROOT}" ] && \
+       [ ! -L "sources-${DEVICE}" ]
+    then
+      ln -sf sources-${DEVICE_ROOT} sources-${DEVICE}
+    fi
   fi
 
 fi
