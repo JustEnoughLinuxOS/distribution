@@ -10,7 +10,7 @@ PKG_SHORTDESC="Fast PlayStation 1 emulator for x86-64/AArch32/AArch64 "
 PKG_TOOLCHAIN="cmake"
 
 case ${DEVICE} in
-  RK3566)
+  RK356*)
     PKG_VERSION="5ab5070d73f1acc51e064bd96be4ba6ce3c06f5c"
     PKG_PATCH_DIRS+=" legacy"
     PKG_CMAKE_OPTS_TARGET+=" -DUSE_DRMKMS=ON -DENABLE_EGL=ON -DUSE_MALI=OFF"
