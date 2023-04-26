@@ -3,7 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="xorg-server"
-PKG_VERSION="7b1758936bd644020a560f2739ad7a50fbb87b17"
+PKG_VERSION="26ef545b3502f61ca722a7a3373507e88ef64110"
 PKG_LICENSE="OSS"
 PKG_SITE="https://gitlab.freedesktop.org/xorg/xserver"
 PKG_URL="${PKG_SITE}.git"
