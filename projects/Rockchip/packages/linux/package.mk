@@ -18,7 +18,7 @@ PKG_STAMP="${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD}"
 PKG_PATCH_DIRS+="${DEVICE}"
 
 case ${DEVICE} in
-  RK3588)
+  RK358*)
     PKG_VERSION="9469ea8bd5ed"
     PKG_URL="${PKG_SITE}/rk358x-kernel.git"
     GET_HANDLER_SUPPORT="git"
@@ -27,6 +27,12 @@ case ${DEVICE} in
   RK3566)
     PKG_URL="${PKG_SITE}/rk356x-kernel.git"
     PKG_VERSION="5aef2e6"
+    GET_HANDLER_SUPPORT="git"
+    PKG_GIT_CLONE_BRANCH="main"
+  ;;
+  RK3566-X55)
+    PKG_URL="${PKG_SITE}/rk3566-x55-kernel.git"
+    PKG_VERSION="df3ecc7f0ae1238ff448accf94981c98d78ff5af"
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="main"
   ;;

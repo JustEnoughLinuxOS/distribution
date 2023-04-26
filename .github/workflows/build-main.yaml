@@ -104,6 +104,7 @@ jobs:
             |**Ayaneo Handhelds, Atari VCS, and other x86_64 devices**|[JELOS-AMD64.x86_64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-AMD64.x86_64-${{ steps.version.outputs.version }}.img.gz)|
             |**Hardkernel ODROID Go Ultra**|[JELOS-S922X.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-S922X.aarch64-${{ steps.version.outputs.version }}.img.gz)|
             |**Orange Pi 5, and Indiedroid Nova**|[JELOS-RK3588.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3588.aarch64-${{ steps.version.outputs.version }}.img.gz)|
+            |**Powkiddy x55**|[JELOS-RK3566-X55.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3566-X55.aarch64-${{ steps.version.outputs.version }}.img.gz)|
 
             ## Upgrading
             * Download and install the update online via the System Settings menu.
@@ -119,6 +120,7 @@ jobs:
             |**Ayaneo Handhelds, Atari VCS, and other x86_64 devices**|[JELOS-AMD64.x86_64-${{ steps.version.outputs.version }}.tar](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-AMD64.x86_64-${{ steps.version.outputs.version }}.tar)|
             |**Hardkernel ODROID Go Ultra**|[JELOS-S922X.aarch64-${{ steps.version.outputs.version }}.tar](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-S922X.aarch64-${{ steps.version.outputs.version }}.tar)|
             |**Orange Pi 5, and Indiedroid Nova**|[JELOS-RK3588.aarch64-${{ steps.version.outputs.version }}.tar](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3588.aarch64-${{ steps.version.outputs.version }}.tar)|
+            |**Powkiddy x55**|[JELOS-RK3566-X55.aarch64-${{ steps.version.outputs.version }}.tar](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3566-X55.aarch64-${{ steps.version.outputs.version }}.tar)|
 
             ## Documentation
             * [Home](https://github.com/JustEnoughLinuxOS/distribution/wiki)

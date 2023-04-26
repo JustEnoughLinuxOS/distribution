@@ -13,12 +13,12 @@ GET_HANDLER_SUPPORT="git"
 PKG_PATCH_DIRS+="${DEVICE}"
 
 case ${DEVICE} in
- RK3588)
+ RK358*)
     PKG_URL="${PKG_SITE}/rk35xx-uboot.git"
     PKG_VERSION="d34ff0716"
     PKG_GIT_CLONE_BRANCH="v2017.09-rk3588"
   ;;
-  RK3566)
+  RK356*)
     PKG_URL="${PKG_SITE}/rk356x-uboot.git"
     PKG_VERSION="4dbf6b2"
   ;;
