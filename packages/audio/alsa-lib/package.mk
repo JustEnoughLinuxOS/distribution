@@ -17,7 +17,7 @@ case ${DEVICE} in
     PKG_CONFIGURE_OPTS_TARGET+=" --disable-ucm"
   ;;
   *)
-    PKG_DEPENDS_TARGET+="alsa-ucm-conf"
+    PKG_DEPENDS_TARGET+=" alsa-ucm-conf"
     PKG_CONFIGURE_OPTS_TARGET+=" --enable-ucm"
   ;;
 esac
