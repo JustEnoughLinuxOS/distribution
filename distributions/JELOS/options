@@ -46,6 +46,13 @@
   CLEAN_NETWORK="RTL8821CS-firmware"
   CLEAN_EMU_32BIT="lib32 box86 flycast-lr pcsx_rearmed-lr"
 
+# Make sure we clean a minimal number of packages for devices with
+# a BSP kernel and a rotated display when using DEVICE_ROOT.
+  if [ -n "DEVICE_ROOT" ]
+  then
+    CLEAN_DEVICE_ROOT="SDL2 retroarch"
+  fi
+
 # additional drivers to install:
 # for a list of additional drivers see packages/linux-drivers
 # Space separated list is supported,
