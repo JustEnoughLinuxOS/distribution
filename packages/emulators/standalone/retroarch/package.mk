@@ -33,13 +33,13 @@ pre_configure_target() {
 				--enable-ffmpeg"
 
   case ${DEVICE} in
-      RK3566-X55)
-        PKG_DEPENDS_TARGET+=" librga libgo2"
-        PKG_CONFIGURE_OPTS_TARGET+=" --enable-odroidgo2"
-      ;;
-      *)
-        PKG_CONFIGURE_OPTS_TARGET+=" --disable-odroidgo2"
-      ;;
+    RK3566-X55)
+      PKG_DEPENDS_TARGET+=" librga libgo2"
+      PKG_CONFIGURE_OPTS_TARGET+=" --enable-odroidgo2"
+    ;;
+    *)
+      PKG_CONFIGURE_OPTS_TARGET+=" --disable-odroidgo2"
+    ;;
   esac
 
   case ${ARCH} in
