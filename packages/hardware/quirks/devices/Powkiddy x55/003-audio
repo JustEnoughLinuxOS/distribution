@@ -147,3 +147,6 @@ fi
 
 ### Enable speaker out
 amixer -c0 cset name='Playback Path' SPK
+
+### Store the state
+alsactl store -f /storage/.config/asound.state
