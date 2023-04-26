@@ -19,7 +19,7 @@ echo "Building ${DISTRO} for ${DEVICE}"
 
 if [ "${ENABLE_32BIT}" == "true" ]
 then
-  PKG_CLEAN+=" ${CLEAN_EMU_32BIT}"
+  PKG_CLEAN=" ${PKG_CLEAN} ${CLEAN_EMU_32BIT}"
 fi
 
 # If DEVICE_ROOT is defined and not the device being built, make sure that the
@@ -60,7 +60,7 @@ then
 fi
 
 # Clean necessary packages.
-PKG_CLEAN+=" ${CLEAN_NETWORK} ${CLEAN_OS_BASE}"
+PKG_CLEAN=" ${PKG_CLEAN} ${CLEAN_NETWORK} ${CLEAN_OS_BASE}"
 
 if [ ! -n "${DIRTY}" ]
 then
