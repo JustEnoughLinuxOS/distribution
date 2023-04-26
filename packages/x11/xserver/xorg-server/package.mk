@@ -5,7 +5,7 @@
 PKG_NAME="xorg-server"
 PKG_VERSION="ccdd431cd8f1cabae9d744f0514b6533c438908c"
 PKG_LICENSE="OSS"
-PKG_SITE="https://github.com/freedesktop/xorg-xserver"
+PKG_SITE="https://gitlab.freedesktop.org/xorg/xserver"
 PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain util-macros font-util xorgproto libpciaccess libX11 libXfont2 libXinerama libxcvt libxshmfence libxkbfile libdrm openssl freetype pixman systemd xorg-launch-helper"
 PKG_NEED_UNPACK="$(get_pkg_directory xf86-video-nvidia) $(get_pkg_directory xf86-video-nvidia-legacy)"
