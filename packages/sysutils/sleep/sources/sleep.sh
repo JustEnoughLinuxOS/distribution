@@ -4,6 +4,15 @@
 
 . /etc/profile
 
+if [ -e "/sys/firmware/devicetree/base/model" ]
+then
+  QUIRK_DEVICE=$(cat /sys/firmware/devicetree/base/model 2>/dev/null)
+else
+  QUIRK_DEVICE="$(cat /sys/class/dmi/id/sys_vendor 2>/dev/null) $(cat /sys/class/dmi/id/product_name 2>/dev/null)"
+fi
+QUIRK_DEVICE="$(echo ${QUIRK_DEVICE} | sed -e "s#[/]#-#g")"
+
+
 headphones() {
   if [ "${DEVICE_FAKE_JACKSENSE}" == "true" ]
   then
@@ -85,6 +94,13 @@ modules() {
   esac
 }
 
+quirks() {
+  for QUIRK in /usr/lib/autostart/quirks/"${QUIRK_DEVICE}"/sleep/${1}/*
+  do
+    "${QUIRK}" >/dev/null 2>&1
+  done
+}
+
 case $1 in
   pre)
     alsastate store
@@ -94,6 +110,7 @@ case $1 in
     powerstate stop
     device_powersave stop 
     modules stop 
+    quirks pre
     touch /run/.last_sleep_time
   ;;
   post)
@@ -118,5 +135,6 @@ case $1 in
     BRIGHTNESS=$(get_setting system.brightness)
     log $0 "Restoring brightness to ${BRIGHTNESS}."
     echo ${BRIGHTNESS} >/sys/class/backlight/$(brightness device)/brightness
+    quirks post
   ;;
 esac
