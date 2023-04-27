@@ -18,9 +18,9 @@ make_target() {
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/config/SDL-GameControllerDB
-  if [ -d "${PKG_DIR}/sources/${DEVICE}" ]
+  if [ -f "${PKG_DIR}/sources/gamecontrollerdb.txt" ]
   then
-    cat ${PKG_DIR}/sources/${DEVICE}/gamecontrollerdb.txt >${INSTALL}/usr/config/SDL-GameControllerDB/gamecontrollerdb.txt
+    cat ${PKG_DIR}/sources/gamecontrollerdb.txt >${INSTALL}/usr/config/SDL-GameControllerDB/gamecontrollerdb.txt
   fi
   cat ${PKG_BUILD}/gamecontrollerdb.txt >>${INSTALL}/usr/config/SDL-GameControllerDB/gamecontrollerdb.txt
 }
