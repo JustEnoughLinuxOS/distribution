@@ -50,7 +50,7 @@
 # a BSP kernel and a rotated display when using DEVICE_ROOT.
   if [ -n "DEVICE_ROOT" ]
   then
-    CLEAN_DEVICE_ROOT="SDL2 retroarch"
+    CLEAN_DEVICE_ROOT="linux u-boot SDL2 retroarch flycast-sa duckstation-sa drastic-sa"
   fi
 
 # additional drivers to install:
