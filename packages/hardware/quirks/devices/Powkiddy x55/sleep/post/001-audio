@@ -9,8 +9,6 @@
 DEVICE_HEADPHONE_DEV="/sys/devices/platform/rk-headset/extcon/extcon3/state"
 HEADPHONE_STATE=$(awk 'BEGIN {FS="="} /HEADPHONE/ {print $2}' ${DEVICE_HEADPHONE_DEV})
 
-alsactl init
-
 amixer -c 0 set "MUTE" "MUTE"
 
 amixer -c 0 set "Capture MIC Path" "Main Mic"
@@ -21,7 +19,7 @@ case ${HEADPHONE_STATE} in
     amixer -c 0 set "Playback Path" "${DEVICE_PLAYBACK_PATH_SPK}"
     amixer -c 0 set "Playback Path" "${DEVICE_PLAYBACK_PATH_HP}"
   ;;
-  2)
+  0)
     amixer -c 0 set "Playback Path" "${DEVICE_PLAYBACK_PATH_HP}"
     amixer -c 0 set "Playback Path" "${DEVICE_PLAYBACK_PATH_SPK}"
   ;;
