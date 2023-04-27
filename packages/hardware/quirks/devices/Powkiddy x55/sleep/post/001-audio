@@ -1,0 +1,31 @@
+#!/bin/sh
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2023-present Fewtarius
+
+# Workaround for no audio on wake from sleep.
+
+. /etc/profile
+
+PBDEVICE=$(amixer get "Playback Path" | awk 'BEGIN {FS="'\''"} /Item0/ {print $2}')
+
+alsactl init
+
+amixer -c 0 set "MUTE" "MUTE"
+
+amixer -c 0 set "Capture MIC Path" "Main Mic"
+amixer -c 0 set "Capture MIC Path" "MIC OFF"
+
+echo ${PBDEVICE}
+
+case ${PBDEVICE} in
+  HP)
+    amixer -c 0 set "Playback Path" "${DEVICE_PLAYBACK_PATH_SPK}"
+    amixer -c 0 set "Playback Path" "${DEVICE_PLAYBACK_PATH_HP}"
+  ;;
+  SPK)
+    amixer -c 0 set "Playback Path" "${DEVICE_PLAYBACK_PATH_HP}"
+    amixer -c 0 set "Playback Path" "${DEVICE_PLAYBACK_PATH_SPK}"
+  ;;
+esac
+
+amixer -c 0 set "MUTE" "UNMUTE"
