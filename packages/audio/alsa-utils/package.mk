@@ -21,6 +21,16 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-alsaconf \
                            --disable-rst2man \
                            --disable-xmlto"
 
+case ${DEVICE} in
+  RK356*)
+    PKG_CONFIGURE_OPTS_TARGET+=" --disable-ucm"
+  ;;
+  *)
+    PKG_DEPENDS_TARGET+=" alsa-ucm-conf"
+    PKG_CONFIGURE_OPTS_TARGET+=" --enable-ucm"
+  ;;
+esac
+
 post_makeinstall_target() {
   rm -rf ${INSTALL}/lib ${INSTALL}/var
   rm -rf ${INSTALL}/usr/share/alsa/speaker-test

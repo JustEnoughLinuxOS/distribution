@@ -68,7 +68,7 @@ then
   for package in ${PKG_CLEAN}
   do
     echo "Clean: ${package}"
-    ./scripts/clean ${package}
+    ./scripts/clean ${package} 2>/dev/null ||:
   done
   rm -rf build.${DISTRO}-${DEVICE_ROOT}.${ARCH}/.stamps/initramfs
 fi
