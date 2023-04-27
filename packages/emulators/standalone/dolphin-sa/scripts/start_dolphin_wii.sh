@@ -24,6 +24,19 @@ if [ ! -d "/storage/roms/savestates/wii/" ]; then
     mkdir -p "/storage/roms/savestates/wii/"
 fi
 
+#Set the cores to use
+CORES=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
+if [ "${CORES}" = "little" ]
+then
+  EMUPERF="${SLOW_CORES}"
+elif [ "${CORES}" = "big" ]
+then
+  EMUPERF="${FAST_CORES}"
+else
+  ### All..
+  unset EMUPERF
+fi
+
 rm -rf /storage/.config/dolphin-emu/StateSaves
 ln -sf /storage/roms/savestates/wii /storage/.config/dolphin-emu/StateSaves
 
@@ -35,6 +48,7 @@ ln -sf /storage/roms/savestates/wii /storage/.config/dolphin-emu/StateSaves
   IRES=$(get_setting internal_resolution wii "${GAME}")
   FPS=$(get_setting show_fps wii "${GAME}")
   CON=$(get_setting wii_controller_profile wii "${GAME}")
+  VSYNC=$(get_setting vsync wii "${GAME}")
 
   #Anti-Aliasing
 	if [ "$AA" = "0" ]
@@ -148,9 +162,19 @@ ln -sf /storage/roms/savestates/wii /storage/.config/dolphin-emu/StateSaves
                 cp -r /storage/.config/dolphin-emu/Custom_WiimoteNew.ini /storage/.config/dolphin-emu/WiimoteNew.ini
         fi
 
+  #VSYNC
+        if [ "$VSYNC" = "0" ]
+        then
+                sed -i '/VSync =/c\VSync = False' /storage/.config/dolphin-emu/GFX.ini
+        fi
+        if [ "$VSYNC" = "1" ]
+        then
+                sed -i '/VSync =/c\VSync = True' /storage/.config/dolphin-emu/GFX.ini
+        fi
+
 #Link  .config/dolphin-emu to .local
 rm -rf /storage/.local/share/dolphin-emu
 ln -sf /storage/.config/dolphin-emu /storage/.local/share/dolphin-emu
 
 #Run Dolphin emulator
-/usr/bin/dolphin-emu-nogui -p @DOLPHIN_PLATFORM@ -a HLE -e "${1}"
+${EMUPERF} /usr/bin/dolphin-emu-nogui -p @DOLPHIN_PLATFORM@ -a HLE -e "${1}"

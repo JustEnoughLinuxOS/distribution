@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2020-present Shanti Gilbert (https://github.com/shantigilbert)
+# Copyright (C) 2021-present Fewtarius
+
+# Source predefined functions and variables
+. /etc/profile
+
+DEVICE_HEADPHONE_DEV="/sys/devices/platform/rk-headset/extcon/extcon3/state"
+
+while true
+do
+  HEADPHONE_STATE=$(awk 'BEGIN {FS="="} /HEADPHONE/ {print $2}' ${DEVICE_HEADPHONE_DEV})
+  if [ ! "${HEADPHONE_STATE}" = "${PREV_STATE}" ]
+  then
+    case ${HEADPHONE_STATE} in
+      0)
+        amixer cset name='Playback Path' ${DEVICE_PLAYBACK_PATH_SPK} >/dev/null 2>&1
+        amixer cset name='MUTE' 1 >/dev/null 2>&1
+        amixer cset name='MUTE' 0 >/dev/null 2>&1
+      ;;
+      1)
+        amixer cset name='Playback Path' ${DEVICE_PLAYBACK_PATH_HP} >/dev/null 2>&1
+        amixer cset name='MUTE' 1 >/dev/null 2>&1
+        amixer cset name='MUTE' 0 >/dev/null 2>&1
+      ;;
+    esac
+  fi
+  PREV_STATE=${HEADPHONE_STATE}
+  sleep 1
+done

@@ -23,7 +23,7 @@ distclean:
 src-pkg:
 	tar cvJf sources.tar.xz sources .stamps
 
-world: AMD64 RK3588 RK3566 S922X
+world: AMD64 RK3588 RK3566 RK3566-X55 S922X
 
 AMD64:
 	PROJECT=PC DEVICE=AMD64 ARCH=i686 ./scripts/build_distro
@@ -36,6 +36,11 @@ RK3588:
 RK3566:
 	PROJECT=Rockchip DEVICE=RK3566 ARCH=arm ./scripts/build_distro
 	PROJECT=Rockchip DEVICE=RK3566 ARCH=aarch64 ./scripts/build_distro
+
+RK3566-X55:
+	DEVICE_ROOT=RK3566 PROJECT=Rockchip DEVICE=RK3566-X55 ARCH=arm ./scripts/build_distro
+	DEVICE_ROOT=RK3566 PROJECT=Rockchip DEVICE=RK3566-X55 ARCH=aarch64 ./scripts/build_distro
+	unset DEVICE_ROOT
 
 S922X:
 	PROJECT=Amlogic DEVICE=S922X ARCH=arm ./scripts/build_distro

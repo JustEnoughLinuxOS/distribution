@@ -24,10 +24,25 @@ fi
 #Prep PCSX2.ini for audio
 sed -i '/^BackendName =/c\BackendName =' /storage/.config/aethersx2/inis/PCSX2.ini
 
+#Set the cores to use
+CORES=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
+if [ "${CORES}" = "little" ]
+then
+  EMUPERF="${SLOW_CORES}"
+elif [ "${CORES}" = "big" ]
+then
+  EMUPERF="${FAST_CORES}"
+else
+  #All..
+  unset EMUPERF
+fi
+
   #Emulation Station Features
   GAME=$(echo "${1}"| sed "s#^/.*/##")
   ASPECT=$(get_setting aspect_ratio ps2 "${GAME}")
   FPS=$(get_setting show_fps ps2 "${GAME}")
+  RATE=$(get_setting ee_cycle_rate ps2 "${GAME}")
+  SKIP=$(get_setting ee_cycle_skip ps2 "${GAME}")
   GRENDERER=$(get_setting graphics_backend ps2 "${GAME}")
   VSYNC=$(get_setting vsync ps2 "${GAME}")
 
@@ -49,16 +64,20 @@ sed -i '/^BackendName =/c\BackendName =' /storage/.config/aethersx2/inis/PCSX2.i
   #Graphics Backend
 	if [ "$GRENDERER" = "0" ]
 	then
-  		sed -i '/^Renderer =/c\Renderer = 12' /storage/.config/aethersx2/inis/PCSX2.ini
+  		sed -i '/^Renderer =/c\Renderer = -1' /storage/.config/aethersx2/inis/PCSX2.ini
 	fi
 	if [ "$GRENDERER" = "1" ]
 	then
-  		sed -i '/^Renderer =/c\Renderer = 14' /storage/.config/aethersx2/inis/PCSX2.ini
+  		sed -i '/^Renderer =/c\Renderer = 12' /storage/.config/aethersx2/inis/PCSX2.ini
 	fi
 	if [ "$GRENDERER" = "2" ]
 	then
-  		sed -i '/^Renderer =/c\Renderer = 13' /storage/.config/aethersx2/inis/PCSX2.ini
+  		sed -i '/^Renderer =/c\Renderer = 14' /storage/.config/aethersx2/inis/PCSX2.ini
 	fi
+        if [ "$GRENDERER" = "3" ]
+        then
+                sed -i '/^Renderer =/c\Renderer = 13' /storage/.config/aethersx2/inis/PCSX2.ini
+        fi
 
   #Show FPS
 	if [ "$FPS" = "false" ]
@@ -70,15 +89,55 @@ sed -i '/^BackendName =/c\BackendName =' /storage/.config/aethersx2/inis/PCSX2.i
   		sed -i '/^OsdShowFPS =/c\OsdShowFPS = true' /storage/.config/aethersx2/inis/PCSX2.ini
 	fi
 
-  #Vsync
-	if [ "$VSYNC" = "0" ]
-	then
-  		sed -i '/^VsyncEnable =/c\VsyncEnable = 0' /storage/.config/aethersx2/inis/PCSX2.ini
-	fi
-	if [ "$VSYNC" = "1" ]
-	then
-  		sed -i '/^VsyncEnable =/c\VsyncEnable = 1' /storage/.config/aethersx2/inis/PCSX2.ini
-	fi
+  #EE Cycle Rate
+        sed -i '/^EECycleRate =/c\EECycleRate = 0' /storage/.config/aethersx2/inis/PCSX2.ini
+        if [ "$RATE" = "0" ]
+        then
+                sed -i '/^EECycleRate =/c\EECycleRate = -3' /storage/.config/aethersx2/inis/PCSX2.ini
+        fi
+        if [ "$RATE" = "1" ]
+        then
+                sed -i '/^EECycleRate =/c\EECycleRate = -2' /storage/.config/aethersx2/inis/PCSX2.ini
+        fi
+        if [ "$RATE" = "2" ]
+        then
+                sed -i '/^EECycleRate =/c\EECycleRate = -1' /storage/.config/aethersx2/inis/PCSX2.ini
+        fi
+        if [ "$RATE" = "3" ]
+        then
+                sed -i '/^EECycleRate =/c\EECycleRate = 0' /storage/.config/aethersx2/inis/PCSX2.ini
+        fi
+        if [ "$RATE" = "4" ]
+        then
+                sed -i '/^EECycleRate =/c\EECycleRate = 1' /storage/.config/aethersx2/inis/PCSX2.ini
+        fi
+        if [ "$RATE" = "5" ]
+        then
+                sed -i '/^EECycleRate =/c\EECycleRate = 2' /storage/.config/aethersx2/inis/PCSX2.ini
+        fi
+        if [ "$RATE" = "6" ]
+        then
+                sed -i '/^EECycleRate =/c\EECycleRate = 3' /storage/.config/aethersx2/inis/PCSX2.ini
+        fi
+
+  #EE Cycle Skip
+        sed -i '/^EECycleSkip =/c\EECycleSkip = 0' /storage/.config/aethersx2/inis/PCSX2.ini
+        if [ "$SKIP" = "0" ]
+        then
+                sed -i '/^EECycleSkip =/c\EECycleSkip = 0' /storage/.config/aethersx2/inis/PCSX2.ini
+        fi
+        if [ "$SKIP" = "1" ]
+        then
+                sed -i '/^EECycleSkip =/c\EECycleSkip = 1' /storage/.config/aethersx2/inis/PCSX2.ini
+        fi
+        if [ "$SKIP" = "2" ]
+        then
+                sed -i '/^EECycleSkip =/c\EECycleSkip = 2' /storage/.config/aethersx2/inis/PCSX2.ini
+        fi
+        if [ "$SKIP" = "3" ]
+        then
+                sed -i '/^EECycleSkip =/c\EECycleSkip = 3' /storage/.config/aethersx2/inis/PCSX2.ini
+        fi
 
 #Set OpenGL 3.3 on panfrost
   export PAN_MESA_DEBUG=gl3,gofaster
@@ -88,5 +147,5 @@ sed -i '/^BackendName =/c\BackendName =' /storage/.config/aethersx2/inis/PCSX2.i
 
 #Run Aethersx2 emulator
   set_audio pulseaudio
-  /usr/bin/@APPIMAGE@ -fullscreen "${1}"
+  ${EMUPERF} /usr/bin/@APPIMAGE@ -fullscreen "${1}"
   set_audio alsa

@@ -43,13 +43,13 @@ getValue() {
     fi
     echo ${MYVAL}
   else
-    echo $(drm_tool list 2>/dev/null | sed -n '/Connector: 133/,$p' | awk '/'${1}'/ {print $5}')
+    echo $(drm_tool list 2>/dev/null | sed -n '/Connector: '${CONNECTOR}'/,$p' | awk '/'${1}'/ {print $5}')
   fi
 }
 
 setValue() {
   log "Set (${1}: ${2})"
-  drm_tool set /dev/dri/card0 133 ${1} ${2} 2>/dev/null
+  drm_tool set /dev/dri/card0 ${CONNECTOR} ${1} ${2} 2>/dev/null
   if [ $? = 0 ]
   then
     set_setting display.${1} ${2}
@@ -77,6 +77,8 @@ restoreSettings() {
     setValue ${PROPERTY} ${RESTVAL}
   done
 }
+
+CONNECTOR=$(drm_tool list | grep -B1 "mode.*:" | awk '/Connector/ {print $2}')
 
 case ${NEWVAL} in
   "up")

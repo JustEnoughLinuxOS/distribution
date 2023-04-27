@@ -7,10 +7,20 @@ PKG_VERSION="1.2.8"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.alsa-project.org/"
 PKG_URL="https://www.alsa-project.org/files/pub/lib/alsa-lib-${PKG_VERSION}.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain alsa-ucm-conf alsa-topology-conf"
+PKG_DEPENDS_TARGET="toolchain alsa-topology-conf"
 PKG_LONGDESC="ALSA (Advanced Linux Sound Architecture) is the next generation Linux Sound API."
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="+pic"
+
+case ${DEVICE} in
+  RK356*)
+    PKG_CONFIGURE_OPTS_TARGET+=" --disable-ucm"
+  ;;
+  *)
+    PKG_DEPENDS_TARGET+=" alsa-ucm-conf"
+    PKG_CONFIGURE_OPTS_TARGET+=" --enable-ucm"
+  ;;
+esac
 
 if build_with_debug; then
   PKG_ALSA_DEBUG=--with-debug
@@ -19,7 +29,6 @@ else
 fi
 
 PKG_CONFIGURE_OPTS_TARGET="${PKG_ALSA_DEBUG} \
-                           --enable-ucm \
                            --disable-dependency-tracking \
                            --with-plugindir=/usr/lib/alsa \
                            --disable-python"
