@@ -1,0 +1,37 @@
+diff -rupN flycast2021.orig/core/libretro/libretro.cpp flycast2021/core/libretro/libretro.cpp
+--- flycast2021.orig/core/libretro/libretro.cpp	2023-04-27 14:37:51.342774379 +0900
++++ flycast2021/core/libretro/libretro.cpp	2023-04-27 14:39:40.608973599 +0900
+@@ -3133,10 +3133,29 @@ void UpdateVibration(u32 port, u32 value
+    u8 POW_NEG = (value >> 12) & 0x7;
+    u8 FREQ = (value >> 16) & 0xFF;
+    s16 INC = (value >> 24) & 0xFF;
+-   if (value & 0x8000)			// INH
+-	  INC = -INC;
+-   else if (!(value & 0x0800))	// EXH
+-	  INC = 0;
++   FILE *file;
++   if ((file = fopen("/sys/class/pwm/pwmchip0/pwm0/duty_cycle", "r"))) {
++     if (value <= 1000000){                    // INH
++           system("echo 1000000 > /sys/class/pwm/pwmchip0/pwm0/duty_cycle");
++           INC = -INC;}
++     else {    // EXH
++           system("echo 10 > /sys/class/pwm/pwmchip0/pwm0/duty_cycle && sleep 0.4 && echo 1000000 > /sys/class/pwm/pwmchip0/pwm0/duty_cycle &");
++           INC = 0;}
++     fclose(file);
++   } else if ((file = fopen("/sys/class/pwm/pwmchip1/pwm0/enable", "r"))) {
++     if (value <= 1000000){                    // INH
++           system("echo 1 | sudo tee /sys/class/pwm/pwmchip1/pwm0/enable");
++           INC = -INC;}
++     else {    // EXH
++           system("echo 0 | sudo tee /sys/class/pwm/pwmchip1/pwm0/enable && sleep 0.4 && echo 1 | sudo tee /sys/class/pwm/pwmchip1/pwm0/enable &");
++           INC = 0;}
++     fclose(file);
++   } else {
++     if (value & 0x8000)                       // INH
++           INC = -INC;
++     else if (!(value & 0x0800))       // EXH
++           INC = 0;
++   }
+    bool CNT = value & 1;
+ 
+    double pow         = std::min((POW_POS + POW_NEG) / 7.0, 1.0);
