@@ -87,7 +87,7 @@ if [ ! -d "/storage/.config/locale" ]
 then
   tocon "Initializing language support..."
   rsync -a --delete /usr/config/locale/* /storage/.config/locale/ >/dev/null 2>&1
-  if [ ! -L "/storage/.config/emulationstation/locale" ]
+  if [ ! -L "/storage/.config/emulationstation/locale" ] &&
      [ -e "/usr/bin/emulationstation" ]
   then
     rm -rf /storage/.config/emulationstation/locale >/dev/null 2>&1 ||:
