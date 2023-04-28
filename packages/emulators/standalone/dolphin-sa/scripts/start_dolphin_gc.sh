@@ -41,6 +41,7 @@ fi
   GAME=$(echo "${1}"| sed "s#^/.*/##")
   AA=$(get_setting anti_aliasing gamecube "${GAME}")
   ASPECT=$(get_setting aspect_ratio gamecube "${GAME}")
+  CLOCK=$(get_setting clock_speed gamecube "${GAME}")
   RENDERER=$(get_setting graphics_backend gamecube "${GAME}")
   IRES=$(get_setting internal_resolution gamecube "${GAME}")
   FPS=$(get_setting show_fps gamecube "${GAME}")
@@ -101,6 +102,34 @@ fi
 	then
   		sed -i '/AspectRatio/c\AspectRatio = 3' /storage/.config/dolphin-emu/GFX.ini
 	fi
+
+  #Clock Speed
+	sed -i '/^OverclockEnable =/c\OverclockEnable = False' /storage/.config/dolphin-emu/Dolphin.ini
+        if [ "$CLOCK" = "0" ]
+        then
+                sed -i '/^Overclock =/c\Overclock = 0.5' /storage/.config/dolphin-emu/Dolphin.ini
+                sed -i '/^OverclockEnable =/c\OverclockEnable = True' /storage/.config/dolphin-emu/Dolphin.ini
+        fi
+        if [ "$CLOCK" = "1" ]
+        then
+                sed -i '/^Overclock =/c\Overclock = 0.75' /storage/.config/dolphin-emu/Dolphin.ini
+                sed -i '/^OverclockEnable =/c\OverclockEnable = True' /storage/.config/dolphin-emu/Dolphin.ini
+        fi
+        if [ "$CLOCK" = "2" ]
+        then
+                sed -i '/^Overclock =/c\Overclock = 1.0' /storage/.config/dolphin-emu/Dolphin.ini
+                sed -i '/^OverclockEnable =/c\OverclockEnable = False' /storage/.config/dolphin-emu/Dolphin.ini
+        fi
+        if [ "$CLOCK" = "3" ]
+        then
+                sed -i '/^Overclock =/c\Overclock = 1.25' /storage/.config/dolphin-emu/Dolphin.ini
+                sed -i '/^OverclockEnable =/c\OverclockEnable = True' /storage/.config/dolphin-emu/Dolphin.ini
+        fi
+        if [ "$CLOCK" = "4" ]
+        then
+                sed -i '/^Overclock =/c\Overclock = 1.5' /storage/.config/dolphin-emu/Dolphin.ini
+                sed -i '/^OverclockEnable =/c\OverclockEnable = True' /storage/.config/dolphin-emu/Dolphin.ini
+        fi
 
   #Video Backend
 	if [ "$RENDERER" = "opengl" ]
