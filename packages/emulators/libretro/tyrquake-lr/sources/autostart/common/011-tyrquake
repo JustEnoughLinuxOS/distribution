@@ -1,9 +1,0 @@
-#!/bin/bash
-
-# SPDX-License-Identifier: GPL-3.0-or-later
-# Copyright (C) 2022-present travis134
-
-if [ ! -e "/storage/roms/quake/_Scan Quake Games.sh" ]; then
-    cp "/usr/config/game/tyrquake/games/_Scan Quake Games.sh" "/storage/roms/quake/_Scan Quake Games.sh"
-    chmod +x "/storage/roms/quake/_Scan Quake Games.sh"
-fi
