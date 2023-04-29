@@ -18,6 +18,10 @@ case ${DEVICE} in
     PKG_VERSION="9235942906216dc529c1e96f67dd2364a94d0738"
     PKG_GIT_CLONE_BRANCH="odroidgoU-v2015.01"
   ;;
+  *)
+    PKG_URL="https://github.com/u-boot/u-boot.git"
+    PKG_VERSION="10f8eec3e0f948005b208869a9ec26b1bf896f86"
+  ;;
 esac
 
 PKG_IS_KERNEL_PKG="yes"
