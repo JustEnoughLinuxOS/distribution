@@ -3,7 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="initramfs"
-PKG_VERSION="$(date +%Y%m%d)"
+PKG_VERSION="${AUTO_VERSION}"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.openelec.tv"
 PKG_URL=""
