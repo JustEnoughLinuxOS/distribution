@@ -2,7 +2,7 @@
 # Copyright (C) 2021-present 351ELEC (https://github.com/351ELEC)
 
 PKG_NAME="lib32"
-PKG_VERSION="$(date +%Y%m%d)"
+PKG_VERSION="${AUTO_VERSION}"
 PKG_ARCH="aarch64 x86_64"
 PKG_LICENSE="GPLv2"
 PKG_DEPENDS_TARGET="toolchain retroarch SDL2 libsndfile libmodplug"
