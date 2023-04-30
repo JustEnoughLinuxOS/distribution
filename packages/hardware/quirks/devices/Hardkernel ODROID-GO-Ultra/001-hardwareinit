@@ -4,10 +4,6 @@
 
 . /etc/profile
 
-### Set GPU Govorner to powersave during boot
-
-echo powersave > /sys/devices/platform/soc/ffe40000.gpu/devfreq/ffe40000.gpu/governor
-
 ### Disable blue blinking led
 
 echo none > /sys/class/leds/blue\:/trigger

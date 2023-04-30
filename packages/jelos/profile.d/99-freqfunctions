@@ -88,14 +88,14 @@ performance() {
 ondemand() {
   set_cpu_gov ondemand
   set_amdgpu_perf auto
-  set_gpu_gov ondemand
+  set_gpu_gov simple_ondemand
   set_dmc_gov ondemand
 }
 
 schedutil() {
   set_cpu_gov schedutil
   set_amdgpu_perf auto
-  set_gpu_gov ondemand
+  set_gpu_gov simple_ondemand
   set_dmc_gov ondemand
 }
 

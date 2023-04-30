@@ -40,6 +40,7 @@ fi
   #Emulation Station Features
   GAME=$(echo "${1}"| sed "s#^/.*/##")
   ASPECT=$(get_setting aspect_ratio ps2 "${GAME}")
+  FILTER=$(get_setting bilinear_filtering ps2 "${GAME}")
   FPS=$(get_setting show_fps ps2 "${GAME}")
   RATE=$(get_setting ee_cycle_rate ps2 "${GAME}")
   SKIP=$(get_setting ee_cycle_skip ps2 "${GAME}")
@@ -60,6 +61,24 @@ fi
 	then
   		sed -i '/^AspectRatio =/c\AspectRatio = Stretch' /storage/.config/aethersx2/inis/PCSX2.ini
 	fi
+
+  #Bilinear Filtering
+        if [ "$FILTER" = "0" ]
+        then
+                sed -i '/^filter =/c\filter = 0' /storage/.config/aethersx2/inis/PCSX2.ini
+        fi
+        if [ "$FILTER" = "1" ]
+        then
+                sed -i '/^filter =/c\filter = 1' /storage/.config/aethersx2/inis/PCSX2.ini
+        fi
+        if [ "$FILTER" = "2" ]
+        then
+                sed -i '/^filter =/c\filter = 2' /storage/.config/aethersx2/inis/PCSX2.ini
+        fi
+        if [ "$FILTER" = "3" ]
+        then
+                sed -i '/^filter =/c\filter = 3' /storage/.config/aethersx2/inis/PCSX2.ini
+        fi
 
   #Graphics Backend
 	if [ "$GRENDERER" = "0" ]

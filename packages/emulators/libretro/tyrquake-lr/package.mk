@@ -44,11 +44,5 @@ pre_configure_target() {
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
-  mkdir -p ${INSTALL}/usr/config/game/tyrquake
-  mkdir -p ${INSTALL}/usr/lib/autostart/common
   cp tyrquake_libretro.so ${INSTALL}/usr/lib/libretro/
-  cp -rf ${PKG_DIR}/config/common/* ${INSTALL}/usr/config/game/tyrquake
-  chmod 0755 ${INSTALL}/usr/config/game/tyrquake/games/*sh
-  cp ${PKG_DIR}/sources/autostart/common/* ${INSTALL}/usr/lib/autostart/common
-  chmod 0755 ${INSTALL}/usr/lib/autostart/common/*
 }
