@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="RTL8821CS-firmware"
-PKG_VERSION="$(date +%Y%m%d)"
+PKG_VERSION="${AUTO_VERSION}"
 PKG_LICENSE="Apache-2.0"
 PKG_SITE="www.jelos.org"
 PKG_LONGDESC="Realtek RTL8821CS Linux firmware"

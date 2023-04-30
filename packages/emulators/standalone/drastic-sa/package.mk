@@ -18,8 +18,8 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin
 
   case ${DEVICE} in
-    S922X)
-      cp -rf ${PKG_DIR}/scripts/${DEVICE}/* ${INSTALL}/usr/bin
+    S922X*)
+      cp -rf ${PKG_DIR}/scripts/S922X/* ${INSTALL}/usr/bin
     ;;
     *)
       cp -rf ${PKG_DIR}/scripts/* ${INSTALL}/usr/bin

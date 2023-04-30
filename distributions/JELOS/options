@@ -40,9 +40,12 @@
 # build and install PulseAudio support (yes / no)
   PULSEAUDIO_SUPPORT="yes"
 
+# Fetch seconds since epoch for packages with no external sources.
+  AUTO_VERSION=$(date +%s)
+
 # Define package sets to clean based on the type of build being executed.
 # This should be updated to be more dynamic in the future.
-  CLEAN_OS_BASE="initramfs modules quirks autostart splash jelos"
+  CLEAN_OS_BASE="initramfs system-utils modules quirks autostart splash jelos"
   CLEAN_NETWORK="RTL8821CS-firmware"
   CLEAN_EMU_32BIT="lib32 box86 flycast-lr pcsx_rearmed-lr"
 

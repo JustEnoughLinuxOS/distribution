@@ -28,7 +28,7 @@ else
   PKG_ALSA_DEBUG=--without-debug
 fi
 
-PKG_CONFIGURE_OPTS_TARGET="${PKG_ALSA_DEBUG} \
+PKG_CONFIGURE_OPTS_TARGET+="${PKG_ALSA_DEBUG} \
                            --disable-dependency-tracking \
                            --with-plugindir=/usr/lib/alsa \
                            --disable-python"
