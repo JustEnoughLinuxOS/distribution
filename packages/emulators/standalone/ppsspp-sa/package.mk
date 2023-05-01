@@ -15,15 +15,6 @@ GET_HANDLER_SUPPORT="git"
 
 PKG_PATCH_DIRS+="${DEVICE}"
 
-#case ${DEVICE} in
-# RK35*)
-#        PKG_VERSION="40386bca08d33c2d6584d6e7da4efee9bfeb3f96"
-#  ;;
-#  *)
-#	PKG_VERSION="4a92275"
-#  ;;
-#esac
-
 PKG_CMAKE_OPTS_TARGET=" -DUSE_SYSTEM_FFMPEG=OFF \
                         -DCMAKE_BUILD_TYPE=Release \
                         -DCMAKE_SYSTEM_NAME=Linux \

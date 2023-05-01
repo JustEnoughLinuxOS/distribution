@@ -1,7 +1,7 @@
 # Copyright (C) 2021-present Fewtarius
 
 PKG_NAME="system-utils"
-PKG_VERSION="${AUTO_VERSION}"
+PKG_VERSION=""
 PKG_ARCH="any"
 PKG_LICENSE="mix"
 PKG_DEPENDS_TARGET="toolchain sleep"
