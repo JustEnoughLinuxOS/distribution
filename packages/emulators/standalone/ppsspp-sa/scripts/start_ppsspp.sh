@@ -19,4 +19,4 @@ fi
 
 ARG=${1//[\\]/}
 export SDL_AUDIODRIVER=alsa          
-${EMUPERF} ppsspp "${ARG}"
+${EMUPERF} ppsspp --pause-menu-exit "${ARG}"
