@@ -2,7 +2,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="modules"
-PKG_VERSION="${AUTO_VERSION}"
+PKG_VERSION=""
 PKG_ARCH="any"
 PKG_LICENSE="custom"
 PKG_SITE=""

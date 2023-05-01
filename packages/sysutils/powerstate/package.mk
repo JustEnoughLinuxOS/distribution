@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="powerstate"
-PKG_VERSION="${AUTO_VERSION}"
+PKG_VERSION=""
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_DEPENDS_TARGET="systemd"
