@@ -36,7 +36,7 @@ find_games() {
       /usr/bin/busybox mkdir -p /storage/roms >/dev/null 2>&1
     fi
 
-    for DEV in $(blkid | awk 'BEGIN {FS=":"}; /ext4/ || /fat/ {print $1}' | sort -r)
+    for DEV in $(for dev in mmcblk[0-9] sd[a-z] nvme[0-9]; do blkid | grep ${dev} | awk 'BEGIN {FS=":"}; /ext4/ || /fat/ {print $1}' | sort -r; done)
     do
       ROOTDEV=$(echo ${DEV} | sed -e "s#^/.*/##g" -e "s#p[0-9].*\$##g")
       SIZE=$(awk '/'${ROOTDEV}'$/ {print $3}' /proc/partitions)
