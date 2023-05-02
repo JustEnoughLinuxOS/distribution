@@ -2,7 +2,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="sleep"
-PKG_VERSION="${AUTO_VERSION}"
+PKG_VERSION=""
 PKG_ARCH="any"
 PKG_LICENSE="OSS"
 PKG_DEPENDS_TARGET="systemd"

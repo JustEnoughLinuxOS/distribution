@@ -1,7 +1,7 @@
-diff -rupN linux-6.1.6.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c linux-6.1.6/drivers/gpu/drm/drm_panel_orientation_quirks.c
---- linux-6.1.6.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c	2023-01-19 14:54:26.353935375 -0500
-+++ linux-6.1.6/drivers/gpu/drm/drm_panel_orientation_quirks.c	2023-01-22 06:24:30.604966825 -0500
-@@ -164,12 +164,24 @@ static const struct dmi_system_id orient
+diff -rupN linux-6.1.27.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c linux-6.1.27/drivers/gpu/drm/drm_panel_orientation_quirks.c
+--- linux-6.1.27.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c	2023-05-01 20:39:27.772375276 +0000
++++ linux-6.1.27/drivers/gpu/drm/drm_panel_orientation_quirks.c	2023-05-01 20:49:16.920849540 +0000
+@@ -170,16 +170,28 @@ static const struct dmi_system_id orient
  		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "T103HAF"),
  		},
  		.driver_data = (void *)&lcd800x1280_rightside_up,
@@ -31,7 +31,12 @@ diff -rupN linux-6.1.6.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c linux
  	}, {	/* AYA NEO AIR */
  		.matches = {
  		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "AYANEO"),
-@@ -182,6 +194,12 @@ static const struct dmi_system_id orient
+-		  DMI_MATCH(DMI_BOARD_NAME, "AIR"),
++		  DMI_MATCH(DMI_PRODUCT_NAME, "AIR"),
+ 		},
+ 		.driver_data = (void *)&lcd1080x1920_leftside_up,
+ 	}, {	/* AYA NEO NEXT */
+@@ -188,6 +200,12 @@ static const struct dmi_system_id orient
  		  DMI_MATCH(DMI_BOARD_NAME, "NEXT"),
  		},
  		.driver_data = (void *)&lcd800x1280_rightside_up,

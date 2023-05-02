@@ -1,20 +1,11 @@
-diff -rupN PPSSPPSDL.orig/SDL/SDLMain.cpp PPSSPPSDL/SDL/SDLMain.cpp
---- PPSSPPSDL.orig/SDL/SDLMain.cpp	2022-06-06 07:03:21.558185006 -0400
-+++ PPSSPPSDL/SDL/SDLMain.cpp	2022-06-06 07:29:43.562901323 -0400
-@@ -781,9 +781,7 @@ int main(int argc, char *argv[]) {
- 		printf("Init from thread error: '%s'\n", error_message.c_str());
- 	}
- 
--#ifdef MOBILE_DEVICE
- 	SDL_ShowCursor(SDL_DISABLE);
--#endif
- 
- 	if (!useEmuThread) {
- 		NativeInitGraphics(graphicsContext);
-@@ -874,12 +872,7 @@ int main(int argc, char *argv[]) {
- 						g_Config.iForceFullScreen = -1;
+diff --git a/SDL/SDLMain.cpp b/SDL/SDLMain.cpp
+index d81157d83..3eaf5af42 100644
+--- a/SDL/SDLMain.cpp
++++ b/SDL/SDLMain.cpp
+@@ -996,12 +996,7 @@ int main(int argc, char *argv[]) {
+ 						g_Config.iWindowWidth = new_width;
+ 						g_Config.iWindowHeight = new_height;
  					}
- 
 -					// Hide/Show cursor correctly toggling fullscreen
 -					if (lastUIState == UISTATE_INGAME && fullscreen && !g_Config.bShowTouchControls) {
 -						SDL_ShowCursor(SDL_DISABLE);
@@ -25,7 +16,7 @@ diff -rupN PPSSPPSDL.orig/SDL/SDLMain.cpp PPSSPPSDL/SDL/SDLMain.cpp
  					break;
  				}
  
-@@ -1142,10 +1135,7 @@ int main(int argc, char *argv[]) {
+@@ -1295,10 +1290,7 @@ int main(int argc, char *argv[]) {
  #if !defined(MOBILE_DEVICE)
  		if (lastUIState != GetUIState()) {
  			lastUIState = GetUIState();

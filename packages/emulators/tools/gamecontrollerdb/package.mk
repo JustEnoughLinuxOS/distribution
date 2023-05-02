@@ -2,7 +2,7 @@
 # Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
 
 PKG_NAME="gamecontrollerdb"
-PKG_VERSION="01cca2e77f9bf9f1432be04f876f287eb78297fe"
+PKG_VERSION="38bda816dc786f18493876f7bc30bc12dfd2636a"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_DEPENDS_TARGET="toolchain SDL2"
@@ -18,9 +18,9 @@ make_target() {
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/config/SDL-GameControllerDB
-  if [ -f "${PKG_DIR}/sources/gamecontrollerdb.txt" ]
+  if [ -f "${PKG_DIR}/config/gamecontrollerdb.txt" ]
   then
-    cat ${PKG_DIR}/sources/gamecontrollerdb.txt >${INSTALL}/usr/config/SDL-GameControllerDB/gamecontrollerdb.txt
+    cat ${PKG_DIR}/config/gamecontrollerdb.txt >${INSTALL}/usr/config/SDL-GameControllerDB/gamecontrollerdb.txt
   fi
   cat ${PKG_BUILD}/gamecontrollerdb.txt >>${INSTALL}/usr/config/SDL-GameControllerDB/gamecontrollerdb.txt
 }

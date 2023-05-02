@@ -4,6 +4,9 @@
 PKG_NAME="ppsspp-sa"
 PKG_REV="1"
 PKG_ARCH="any"
+PKG_SITE="https://github.com/hrydgard/ppsspp"
+PKG_URL="${PKG_SITE}.git"
+PKG_VERSION="4a92275"
 PKG_LICENSE="GPLv2"
 PKG_DEPENDS_TARGET="toolchain ffmpeg libzip SDL2 zlib zip"
 PKG_SHORTDESC="PPSSPPDL"
@@ -11,19 +14,6 @@ PKG_LONGDESC="PPSSPP Standalone"
 GET_HANDLER_SUPPORT="git"
 
 PKG_PATCH_DIRS+="${DEVICE}"
-
-case ${DEVICE} in
- RK35*)
-        PKG_VERSION="40386bca08d33c2d6584d6e7da4efee9bfeb3f96"
-	PKG_SITE="https://github.com/hrydgard/ppsspp"
-        PKG_URL="${PKG_SITE}.git"
-  ;;
-  *)
-	PKG_VERSION="be83355"
-	PKG_SITE="https://github.com/hrydgard/ppsspp"
-        PKG_URL="${PKG_SITE}.git"
-  ;;
-esac
 
 PKG_CMAKE_OPTS_TARGET=" -DUSE_SYSTEM_FFMPEG=OFF \
                         -DCMAKE_BUILD_TYPE=Release \
