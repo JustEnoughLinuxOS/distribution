@@ -17,6 +17,17 @@ then
   exit 0
 fi
 
+load_modules() {
+  for MODULE in exfat vfat
+  do
+    lsmod | grep ${MODULE} 2>/dev/null
+    if [ ! $? = 0 ]
+    then
+      modprobe ${MODULE} 2>/dev/null
+    fi
+  done
+}
+
 mount_games() {
       NULL=$(cat /proc/mounts | grep -v -e "/var/media" 2>/dev/null | grep ${1})
       if [ ! "$?" = "0" ] && \
@@ -24,7 +35,7 @@ mount_games() {
          [ ! -e "/storage/.please_resize_me" ]
       then
         log $0 "Mounting ${1} on /storage/roms"
-        mount ${1} /storage/roms >/dev/null 2>&1
+        /usr/bin/busybox mount ${1} /storage/roms >/dev/null 2>&1
         /usr/bin/systemd-tmpfiles --create /usr/lib/tmpfiles.d/jelos-dirs.conf >/dev/null 2>&1
       fi
 }
@@ -65,6 +76,8 @@ find_games() {
     done
   fi
 }
+
+load_modules
 
 if [ -e "${GAMES_DEVICE}" ]
 then

@@ -6,7 +6,9 @@ After=systemd-tmpfiles-setup.service
 [Service]
 Type=oneshot
 Environment=HOME=/storage
-ExecStart=-/bin/sh -c ". /etc/profile; exec /bin/sh /usr/bin/automount; exec systemd-tmpfiles --create"
+EnvironmentFile=/etc/profile
+ExecStart=/usr/bin/automount
+ExecStartPost=systemd-tmpfiles --create /usr/lib/tmpfiles.d/jelos-dirs.conf
 RemainAfterExit=yes
 
 [Install]
