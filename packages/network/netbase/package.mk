@@ -2,8 +2,7 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="netbase"
-PKG_VERSION="5.4"
-PKG_SHA256="66ff73d2d162e2d49db43988d8b8cd328cf7fffca042db73397f14c71825e80d"
+PKG_VERSION="5.6"
 PKG_LICENSE="GPL"
 PKG_SITE="https://anonscm.debian.org/cgit/users/md/netbase.git/"
 PKG_URL="http://ftp.debian.org/debian/pool/main/n/netbase/netbase_${PKG_VERSION}.tar.xz"
