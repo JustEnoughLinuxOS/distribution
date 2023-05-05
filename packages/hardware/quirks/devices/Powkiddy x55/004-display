@@ -10,7 +10,7 @@ do
   MYVAL=$(get_setting display.${PROPERTY})
   if [ -z "${MYVAL}" ]
   then
-    MYVAL=$(drm_tool list | sed -n '/Connector: 133/,$p' | awk '/'${PROPERTY}'/ {print $5}')
+    MYVAL=$(drm_tool list | sed -n '/Connector: 206/,$p' | awk '/'${PROPERTY}'/ {print $5}')
   fi
   display ${PROPERTY} ${MYVAL}
 done
