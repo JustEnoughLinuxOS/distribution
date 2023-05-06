@@ -1,0 +1,31 @@
+This patch reverts IRQ override functionality added for modern Zen systems to enable
+proper IRQ routing on the AYANEO Air Plus and probably other devices.
+
+Reverts:
+https://lore.kernel.org/all/20220712020058.90374-1-gch981213@gmail.com/
+
+Kernel.org Bugzilla:
+https://bugzilla.kernel.org/show_bug.cgi?id=217394
+
+Thanks to @pastaq for the DSDT patch which led to this finding.
+
+diff -rupN linux-6.1.27.orig/drivers/acpi/resource.c linux-6.1.27/drivers/acpi/resource.c
+--- linux-6.1.27.orig/drivers/acpi/resource.c	2023-05-01 20:39:27.376399763 +0000
++++ linux-6.1.27/drivers/acpi/resource.c	2023-05-06 23:13:03.124444529 +0000
+@@ -536,16 +536,6 @@ static bool acpi_dev_irq_override(u32 gs
+ 			return entry->override;
+ 	}
+ 
+-#ifdef CONFIG_X86
+-	/*
+-	 * IRQ override isn't needed on modern AMD Zen systems and
+-	 * this override breaks active low IRQs on AMD Ryzen 6000 and
+-	 * newer systems. Skip it.
+-	 */
+-	if (boot_cpu_has(X86_FEATURE_ZEN))
+-		return false;
+-#endif
+-
+ 	return true;
+ }
+ 
