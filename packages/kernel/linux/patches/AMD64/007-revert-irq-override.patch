@@ -1,6 +1,6 @@
 diff -rupN linux-6.1.27.orig/drivers/acpi/resource.c linux-6.1.27/drivers/acpi/resource.c
 --- linux-6.1.27.orig/drivers/acpi/resource.c	2023-05-01 20:39:27.376399763 +0000
-+++ linux-6.1.27/drivers/acpi/resource.c	2023-05-07 10:44:27.076008126 +0000
++++ linux-6.1.27/drivers/acpi/resource.c	2023-05-07 11:02:03.154416724 +0000
 @@ -36,6 +36,28 @@ static inline bool
  acpi_iospace_resource_valid(struct resource *res) { return true; }
  #endif
@@ -18,8 +18,8 @@ diff -rupN linux-6.1.27.orig/drivers/acpi/resource.c linux-6.1.27/drivers/acpi/r
 +static const struct dmi_system_id resource_quirk_table[] __initconst = {
 +        {
 +                .matches = {
-+                        DMI_MATCH(DMI_SYS_VENDOR, "AYANEO"),
-+                        DMI_MATCH(DMI_PRODUCT_NAME, "AIR Plus"),
++                        DMI_EXACT_MATCH(DMI_SYS_VENDOR, "AYANEO"),
++                        DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "AIR Plus"),
 +                },
 +                .callback = irq_override_fixup,
 +        },
