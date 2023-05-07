@@ -26,9 +26,6 @@
 # exclude mounted partitions
 # for i in `cat /proc/mounts | grep ^/dev/ | cut -f1 -d " " | sed "s/[0-9]//"`; do TEST="$TEST `echo "| grep -v $i"`"; done
 
-# Unmount anything caught by udevil so we can use it.
-umount /var/media/* >/dev/null 2>&1 ||:
-
 # disable Ctrl+C - can be very dangerous
 trap '' 2
 
@@ -74,6 +71,16 @@ log_system_status() {
   echo
 }
 
+unmount_devices() {
+  # Unmount anything we didn't boot from so we can use it.
+  for DEVICE in $(mount | awk '/\/flash |\/storage |\/loop/ {next;} /^\/dev/ {print $1}')
+  do
+    EDEVICE=$(echo ${DEVICE} | sed "s#/#-#g")
+    systemctl stop udevil-mount@${EDEVICE}.service >> $LOGFILE 2>&1
+    umount $(grep "${DEVICE}" /proc/mounts 2>/dev/null | awk '{print $2}') >> $LOGFILE 2>&1
+  done
+}
+
 get_device_unmount() {
   # get all unmounted devices
   # usage: get_devices_unmount
@@ -117,6 +124,7 @@ create_device_list() {
   DEVICE_LIST=""
   DEVICE_NAME=""
 
+  unmount_devices
   get_device_unmount
 
   if [ "${DEVICES}" = "" ]; then
