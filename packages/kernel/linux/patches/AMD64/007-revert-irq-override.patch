@@ -1,10 +1,11 @@
 diff -rupN linux-6.1.27.orig/drivers/acpi/resource.c linux-6.1.27/drivers/acpi/resource.c
 --- linux-6.1.27.orig/drivers/acpi/resource.c	2023-05-01 20:39:27.376399763 +0000
-+++ linux-6.1.27/drivers/acpi/resource.c	2023-05-07 10:11:36.324503603 +0000
-@@ -36,6 +36,26 @@ static inline bool
++++ linux-6.1.27/drivers/acpi/resource.c	2023-05-07 10:44:27.076008126 +0000
+@@ -36,6 +36,28 @@ static inline bool
  acpi_iospace_resource_valid(struct resource *res) { return true; }
  #endif
  
++#ifdef CONFIG_X86
 +/* Enable a quirk to allow override on some AMD 6800 series devices */ 
 +static bool needs_irq_override = false;
 +
@@ -24,11 +25,12 @@ diff -rupN linux-6.1.27.orig/drivers/acpi/resource.c linux-6.1.27/drivers/acpi/r
 +        },
 +        { }
 +};
++#endif
 +
  #if IS_ENABLED(CONFIG_ACPI_GENERIC_GSI)
  static inline bool is_gsi(struct acpi_resource_extended_irq *ext_irq)
  {
-@@ -542,7 +562,9 @@ static bool acpi_dev_irq_override(u32 gs
+@@ -542,7 +564,9 @@ static bool acpi_dev_irq_override(u32 gs
  	 * this override breaks active low IRQs on AMD Ryzen 6000 and
  	 * newer systems. Skip it.
  	 */
@@ -39,7 +41,7 @@ diff -rupN linux-6.1.27.orig/drivers/acpi/resource.c linux-6.1.27/drivers/acpi/r
  		return false;
  #endif
  
-@@ -963,3 +985,4 @@ struct acpi_device *acpi_resource_consum
+@@ -963,3 +987,4 @@ struct acpi_device *acpi_resource_consum
  	acpi_get_devices(NULL, acpi_res_consumer_cb, res, (void **) &consumer);
  	return consumer;
  }
