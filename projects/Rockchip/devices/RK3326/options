@@ -32,6 +32,7 @@
     TRUST_LABEL="trust"
     PARTITION_TABLE="msdos"
     DEVICE_DTB=("rk3326-anbernic-rg351m")
+#    DEVICE_DTB=("rk3326-anbernic-rg351m" "rk3326-odroid-go2" "rk3326-odroid-go2-v11" "rk3326-odroid-go3")
     UBOOT_DTB="${DEVICE_DTB[0]}"
     UBOOT_CONFIG="odroidgoa_defconfig"
     PKG_SOC="px30"
@@ -45,7 +46,8 @@
   # Additional kernel make parameters (for example to specify the u-boot loadaddress)
     KERNEL_MAKE_EXTRACMD=""
     KERNEL_MAKE_EXTRACMD+=" rockchip/${DEVICE_DTB[0]}.dtb"
-   
+#    KERNEL_MAKE_EXTRACMD=" $(for DTB in "${DEVICE_DTB[@]}"; do echo -n "rockchip/${DTB}.dtb "; done)"
+ 
   # Define the CPU
     HW_CPU="Rockchip RK3326"
 
@@ -72,7 +74,7 @@
     EXTRA_CMDLINE="quiet rootwait console=tty0 fbcon=rotate:3 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
 
   # additional packages to install
-  #  ADDITIONAL_PACKAGES=""
+    ADDITIONAL_PACKAGES="qt5"
 
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,

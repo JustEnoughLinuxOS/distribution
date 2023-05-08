@@ -56,9 +56,10 @@ case "${DEVICE}" in
     PKG_RETROARCH+=" retropie-shaders"
   ;;
   RK3326*)
-    [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
-    PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders mupen64plus-sa box64"
+    [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="flycast-lr pcsx_rearmed-lr"
+    PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders mupen64plus-sa"
     PKG_EMUS+=" drastic-sa yabasanshiro-sa"
+    LIBRETRO_CORES+=" flycast-lr"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
 esac
