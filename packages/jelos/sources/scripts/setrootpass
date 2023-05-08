@@ -19,7 +19,14 @@ sed -i "s#root:${CURRENT}:${LPC}::::::#root:${NEW}:${LPC}::::::#g" /storage/.cac
 echo -ne "${ROOTPASS}\n${ROOTPASS}\n" | smbpasswd -sa root 2>/dev/null
 
 # Set the root user and password for SyncThing
-syncthing generate --gui-user "root" --gui-password "${ROOTPASS}"
+syncthing generate --gui-user "root" --gui-password "${ROOTPASS}" >/dev/null 2>&1
 
 # Save the password so we can display it in ES
 set_setting root.password "${ROOTPASS}"
+
+# Restart syncthing if it was enabled.
+SYNCSTATUS=$(get_setting syncthing.enabled)
+if [ "${SYNCSTATUS}" = "1" ]
+then
+  systemctl restart syncthing >/dev/null 2>&1
+fi

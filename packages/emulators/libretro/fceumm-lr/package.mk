@@ -20,7 +20,7 @@
 ################################################################################
 
 PKG_NAME="fceumm-lr"
-PKG_VERSION="93543609cd9e374cf275dfbd94c19c75d7e8d3b0"
+PKG_VERSION="b8131ea0aae5b49a98390e57c07c1e24f13e69b2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
