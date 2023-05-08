@@ -16,7 +16,7 @@ case ${DEVICE} in
     PKG_CMAKE_OPTS_TARGET+=" -DUSE_DRMKMS=ON -DENABLE_EGL=ON -DUSE_MALI=OFF"
   ;;
   *)
-    PKG_VERSION="4cbb6e224787b5ae90b38d3cadffc4ccbe5754f0"
+    PKG_VERSION="eb778943153cee9dcadca227f3b4fdae6f50ab84"
     PKG_PATCH_DIRS+=" wayland"
   ;;
 esac

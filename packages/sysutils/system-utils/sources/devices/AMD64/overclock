@@ -51,6 +51,12 @@ case ${PROFILE} in
   24w)
     WATTS="24000"
   ;;
+  26w)
+    WATTS="26000"
+  ;;
+  28w)
+    WATTS="28000"
+  ;;
 esac
 
 ryzenadj --tctl-temp=97 --stapm-limit=${WATTS} --fast-limit=${WATTS} --stapm-time=500 --slow-limit=${WATTS} --slow-time=30 --vrmmax-current=70000

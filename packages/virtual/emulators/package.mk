@@ -8,7 +8,7 @@ PKG_SECTION="virtual"
 PKG_LONGDESC="Emulation metapackage."
 
 PKG_EMUS="duckstation-sa flycast-sa hatarisa hypseus-singe hypseus-singe moonlight openbor pico-8 ppsspp-sa
-          scummvmsa vice-sa"
+          vice-sa"
 
 PKG_RETROARCH="core-info libretro-database retroarch retroarch-assets retroarch-joypads retroarch-overlays     \
               slang-shaders"
@@ -33,26 +33,26 @@ case "${DEVICE}" in
   AMD64)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="lutris-wine"
     PKG_EMUS+=" dolphin-sa cemu-sa citra-sa melonds-sa minivmacsa mupen64plus-sa pcsx2-sa primehack rpcs3-sa   \
-               ryujinx-sa xemu-sa yuzu-sa"
-    LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr citra-lr desmume-lr dolphin-lr lrps2-lr mame-lr minivmac-lr    \
-                     play-lr"
+               ryujinx-sa scummvmsa xemu-sa yuzu-sa"
+    LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr citra-lr desmume-lr dolphin-lr flycast-lr lrps2-lr mame-lr     \
+                     minivmac-lr play-lr"
   ;;
   RK358*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
-    PKG_EMUS+=" aethersx2-sa pcsx_rearmed-lr box64 yabasanshiro-sa"
+    PKG_EMUS+=" aethersx2-sa pcsx_rearmed-lr box64 scummvmsa yabasanshiro-sa"
     LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr citra-lr dolphin-lr mame-lr box64"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
   RK356*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
-    PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders mupen64plus-sa box64"
+    PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders mupen64plus-sa scummvmsa box64"
     PKG_EMUS+=" dolphin-sa drastic-sa yabasanshiro-sa"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
   S922X*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
-    PKG_EMUS+=" aethersx2-sa dolphin-sa drastic-sa duckstation-sa mupen64plus-sa yabasanshiro-sa box64"
-    LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr flycast-lr dolphin-lr yabasanshiro-sa"
+    PKG_EMUS+=" aethersx2-sa dolphin-sa drastic-sa mupen64plus-sa yabasanshiro-sa box64"
+    LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr dolphin-lr flycast-lr"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
   RK3326*)

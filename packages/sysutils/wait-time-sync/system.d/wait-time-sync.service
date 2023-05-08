@@ -16,7 +16,6 @@ ConditionVirtualization=!container
 DefaultDependencies=no
 Before=time-sync.target shutdown.target
 Wants=time-sync.target
-Conflicts=shutdown.target
 
 [Service]
 Type=oneshot
