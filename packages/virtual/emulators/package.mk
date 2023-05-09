@@ -39,19 +39,19 @@ case "${DEVICE}" in
   ;;
   RK358*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
-    PKG_EMUS+=" aethersx2-sa pcsx_rearmed-lr box64 scummvmsa yabasanshiro-sa"
-    LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr citra-lr dolphin-lr mame-lr box64"
+    PKG_EMUS+=" aethersx2-sa pcsx_rearmed-lr box64 scummvmsa yabasanshiro-sa box64 portmaster"
+    LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr citra-lr dolphin-lr mame-lr"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
   RK356*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
-    PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders mupen64plus-sa scummvmsa box64"
+    PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders mupen64plus-sa scummvmsa box64 portmaster"
     PKG_EMUS+=" dolphin-sa drastic-sa yabasanshiro-sa"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
   S922X*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
-    PKG_EMUS+=" aethersx2-sa dolphin-sa drastic-sa mupen64plus-sa yabasanshiro-sa box64"
+    PKG_EMUS+=" aethersx2-sa dolphin-sa drastic-sa mupen64plus-sa yabasanshiro-sa box64 portmaster"
     LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr dolphin-lr flycast-lr"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
