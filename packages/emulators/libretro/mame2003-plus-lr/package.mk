@@ -2,6 +2,7 @@
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
 #      Copyright (C) 2020      351ELEC team (https://github.com/fewtarius/351ELEC)
+#      Copyright (C) 2023-present Fewtarius
 #
 #  This Program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,7 +21,7 @@
 ################################################################################
 
 PKG_NAME="mame2003-plus-lr"
-PKG_VERSION="bd51a0b1feaaca6a18fae33a71eb83dce57c3662"
+PKG_VERSION="cafc5561fe74499fedc215b2e502ca454a8727fc"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="MAME"

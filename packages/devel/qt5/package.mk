@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2018-present Frank Hartung (supervisedthinking @ gmail.com)
+# Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="qt5"
-PKG_VERSION="8e65ddffeaf77b312c26d3097c26e525b7c5e220" # 5.15.8+r174 (KDE Qt5PatchCollection)
+PKG_VERSION="8e65ddffeaf77b312c26d3097c26e525b7c5e220"
 PKG_LICENSE="GPL"
 PKG_SITE="http://qt-project.org"
 PKG_URL="https://invent.kde.org/qt/qt/qt5.git"

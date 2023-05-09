@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
+# Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="git"
-PKG_VERSION="2.39.1"
+PKG_VERSION="2.39.3"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://git-scm.com/"

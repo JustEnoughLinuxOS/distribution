@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
+# Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="coreutils"
-PKG_VERSION="8.31"
+PKG_VERSION="9.3"
 PKG_LICENSE="GPLv2+"
 PKG_SITE="https://www.gnu.org/software/coreutils/"
 PKG_URL="https://ftp.gnu.org/gnu/coreutils/coreutils-${PKG_VERSION}.tar.xz"
