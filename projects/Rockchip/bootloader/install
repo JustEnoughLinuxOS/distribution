@@ -109,7 +109,7 @@ if [ "${TRUST_LABEL}" = "resource" ]
 then
   FDTMODE="FDTDIR /"
 else
-  FDTMODE="FDT /${DEVICE_DTB}.dtb"
+  FDTMODE="FDT /${DEVICE_DTB[0]}.dtb"
 fi
 
 cat << EOF > "${INSTALL}/usr/share/bootloader/extlinux/extlinux.conf"
