@@ -63,7 +63,7 @@ make_target() {
       then
         PKG_LOADER="$(get_build_dir rkbin)/${PKG_LOADER}"
       fi
-    if [ "${PKG_SOC}" =~ "rk35" ]
+    if [[ "${PKG_SOC}" =~ "rk35" ]]
     then
       DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 make mrproper
       DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 make ${UBOOT_CONFIG} BL31=${PKG_BL31} ${PKG_LOADER} u-boot.dtb u-boot.itb
