@@ -36,6 +36,14 @@ case ${DEVICE} in
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="main"
   ;;
+  RK3326)
+#    PKG_URL="https://github.com/torvalds/linux.git"
+#    PKG_VERSION="7df047b3f0aa0c0ba730b6be9ab35c0053a3d4fd"
+#    GET_HANDLER_SUPPORT="git"
+#    PKG_GIT_CLONE_BRANCH="master"
+    PKG_VERSION="6.1.27"
+    PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
+  ;;
 esac
 
 PKG_KERNEL_CFG_FILE=$(kernel_config_path) || die
