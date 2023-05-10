@@ -4,7 +4,7 @@
 # Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="binutils-aarch64"
-PKG_VERSION=""
+PKG_VERSION="$(get_pkg_version binutils)"
 PKG_LICENSE="GPL"
 PKG_URL=""
 PKG_DEPENDS_HOST="toolchain:host"
