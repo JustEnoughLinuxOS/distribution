@@ -19,20 +19,41 @@
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
-PKG_NAME="core-info"
-PKG_VERSION="b24c27cb675889166ebf4d6c9787d0b5a3e74c5a"
-PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/libretro/libretro-core-info"
-PKG_URL="https://github.com/libretro/libretro-core-info/archive/${PKG_VERSION}.tar.gz"
+PKG_NAME="flycast2021-lr"
+PKG_VERSION="4c293f306bc16a265c2d768af5d0cea138426054"
+PKG_LICENSE="GPLv2"
+PKG_SITE="https://github.com/libretro/flycast"
+PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_LONGDESC="Mirror of libretro's core info files"
-PKG_TOOLCHAIN="manual"
+PKG_LONGDESC="Flycast is a multiplatform Sega Dreamcast emulator "
+PKG_TOOLCHAIN="make"
+PKG_BUILD_FLAGS="-gold"
+PKG_PATCH_DIRS+="${DEVICE}"
+
+if [ ! "${OPENGL}" = "no" ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+fi
+
+if [ "${OPENGLES_SUPPORT}" = yes ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+  PKG_MAKE_OPTS_TARGET+=" FORCE_GLES=1"
+fi
+
+pre_configure_target() {
+  sed -i 's/define CORE_OPTION_NAME "reicast"/define CORE_OPTION_NAME "flycast2021"/g' core/libretro/libretro_core_option_defines.h
+  PKG_MAKE_OPTS_TARGET="${PKG_MAKE_OPTS_TARGET} ARCH=${TARGET_ARCH} HAVE_OPENMP=1 GIT_VERSION=${PKG_VERSION:0:7}  HAVE_LTCG=0"
+}
+
+pre_make_target() {
+  export BUILD_SYSROOT=${SYSROOT_PREFIX}
+  case ${DEVICE} in
+    RK3*|S922X*)
+      PKG_MAKE_OPTS_TARGET+=" platform=${DEVICE}"
+    ;;
+  esac
+}
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
-  ${TOOLCHAIN}/bin/rename -v mednafen beetle ${PKG_BUILD}/*.info
-  cp ${PKG_BUILD}/*.info ${INSTALL}/usr/lib/libretro/
-  cp ${PKG_BUILD}/pcsx_rearmed_libretro.info ${INSTALL}/usr/lib/libretro/pcsx_rearmed32_libretro.info
-  cp ${PKG_BUILD}/flycast_libretro.info ${INSTALL}/usr/lib/libretro/flycast2021_libretro.info
-  cp ${PKG_BUILD}/flycast_libretro.info ${INSTALL}/usr/lib/libretro/flycast32_libretro.info
+  cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast2021_libretro.so
 }
