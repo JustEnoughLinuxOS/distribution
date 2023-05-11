@@ -41,7 +41,7 @@ dialog --clear
 hotkey="Select"
 height="15"
 width="55"
-power="None"
+power='(?<=Title_P=\").*?(?=\")'
 opengl="None"
 
 if [[ "${UI_SERVICE}" =~ weston.service ]]; then
