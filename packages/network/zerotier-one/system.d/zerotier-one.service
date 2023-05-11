@@ -4,7 +4,7 @@ Wants=network-pre.target
 After=network-pre.target
 
 [Service]
-ExecStart=/usr/sbin/zerotier-one
+ExecStart=/usr/sbin/zerotier-one /storage/.config/zerotier/
 Restart=always
 KillMode=process
 Restart=on-failure
