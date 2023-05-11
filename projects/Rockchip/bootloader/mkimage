@@ -4,10 +4,21 @@
 
 source ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
 
+case "${PKG_SOC}" in
+  rk35*)
+    IDBSEEK="bs=512 seek=64"
+  ;;
+  *)
+    IDBSEEK="bs=32k seek=1"
+  ;;
+esac
+
 if [ -f "${RELEASE_DIR}/3rdparty/bootloader/idbloader.img" ]; then
-  echo "image: burn idbloader.img to image... (${PKG_SOC})"
-  dd if="${RELEASE_DIR}/3rdparty/bootloader/idbloader.img" of="${DISK}" bs=512 seek=64 conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
+  echo "image: burn idbloader.img to image... (${PKG_SOC},${IDBSEEK})"
+  dd if="${RELEASE_DIR}/3rdparty/bootloader/idbloader.img" of="$DISK" ${IDBSEEK} conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
 fi
+
+
 
 case "${PKG_SOC}" in
   rk35*)
@@ -22,7 +33,17 @@ case "${PKG_SOC}" in
 	  echo "image: burn resource.img to image..."
 	  dd if="${RELEASE_DIR}/3rdparty/bootloader/resource.img" of="${DISK}" bs=512 seek=24576 conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
 	fi
-	;;
+  ;;
+  *)
+    if [ -f "${RELEASE_DIR}/3rdparty/bootloader/uboot.img" ]; then
+      echo "image: burn uboot.img to image..."
+      dd if="${RELEASE_DIR}/3rdparty/bootloader/uboot.img" of="$DISK" bs=512 seek=16384 conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
+    fi
+    if [ -f "${RELEASE_DIR}/3rdparty/bootloader/trust.img" ]; then
+      echo "image: burn trust.img to image..."
+      dd if="${RELEASE_DIR}/3rdparty/bootloader/trust.img" of="$DISK" bs=512 seek=24576 conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
+    fi
+  ;;
 esac
 
 if [ -f "${RELEASE_DIR}/3rdparty/bootloader/boot.ini" ]; then

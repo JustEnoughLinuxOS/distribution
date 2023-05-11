@@ -27,6 +27,10 @@ if [ "${WIREGUARD_SUPPORT}" = "yes" ]; then
   PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} wireguard-tools"
 fi
 
+if [ "${ZEROTIER_SUPPORT}" = "yes" ]; then
+  PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} zerotier-one"
+fi
+
 # nss needed by inputstream.adaptive, chromium etc.
 if [ "${TARGET_ARCH}" = "x86_64" ] || [ "${TARGET_ARCH}" = "arm" ]; then
   PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} nss"

@@ -1,0 +1,13 @@
+[Unit]
+Description=zerotier-one
+Wants=network-pre.target
+After=network-pre.target
+
+[Service]
+ExecStart=/usr/sbin/zerotier-one
+Restart=always
+KillMode=process
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
