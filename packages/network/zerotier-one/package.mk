@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2022-present kkoshelev (https://github.com/kkoshelev)
 # Copyright (C) 2022-present fewtarius (https://github.com/fewtarius)
+# Copyright (C) 2023-present NeoTheFox (https://github.com/NeoTheFox)
 
 PKG_NAME="zerotier-one"
 PKG_VERSION="1.10.6"
