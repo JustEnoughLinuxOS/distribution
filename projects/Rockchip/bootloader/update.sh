@@ -68,6 +68,10 @@ done
 if [ -f $SYSTEM_ROOT/usr/share/bootloader/boot.ini ]; then
   echo "Updating boot.ini..."
   cp -p $SYSTEM_ROOT/usr/share/bootloader/boot.ini $BOOT_ROOT/boot.ini &>/dev/null
+    sed -e "s/@BOOT_UUID@/$BOOT_UUID/" \
+      -e "s/@DISK_UUID@/$DISK_UUID/" \
+      -i $BOOT_ROOT/boot.ini
+fi
 fi
 
 # update device tree
@@ -82,14 +86,24 @@ echo "UPDATE" > /storage/.config/boot.hint
 
 # update bootloader
 
+MYDEV=$(awk '/^Hardware/ {print $4}' /proc/cpuinfo)
+case ${MYDEV} in
+  RK35*)
+    IDBSEEK="bs=512 seek=64"
+  ;;
+  *)
+    IDBSEEK="bs=32k seek=1"
+  ;;
+esac
+
 if [ -f $SYSTEM_ROOT/usr/share/bootloader/idbloader.img ]; then
   echo -n "Updating idbloader.img... "
-  dd if=$SYSTEM_ROOT/usr/share/bootloader/idbloader.img of=$BOOT_DISK bs=512 seek=64 conv=fsync &>/dev/null
+  dd if=$SYSTEM_ROOT/usr/share/bootloader/idbloader.img of=$BOOT_DISK ${IDBSEEK} conv=fsync &>/dev/null
   echo "done"
 fi
-if [ -f $SYSTEM_ROOT/usr/share/bootloader/u-boot.img ]; then
+if [ -f $SYSTEM_ROOT/usr/share/bootloader/uboot.img ]; then
   echo -n "Updating uboot.img... "
-  dd if=$SYSTEM_ROOT/usr/share/bootloader/u-boot.img of=$BOOT_DISK bs=512 seek=16384 conv=fsync &>/dev/null
+  dd if=$SYSTEM_ROOT/usr/share/bootloader/uboot.img of=$BOOT_DISK bs=512 seek=16384 conv=fsync &>/dev/null
   echo "done"
 fi
 if [ -f $SYSTEM_ROOT/usr/share/bootloader/u-boot.itb ]; then
