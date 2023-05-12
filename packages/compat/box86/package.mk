@@ -2,7 +2,7 @@
 # Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="box86"
-PKG_VERSION="eaa6ecb9cc9d1675cffb1ce8cbf5e3875972a7f0"
+PKG_VERSION="bcb19dbe5dad09f2e4c969794bcb08f3f78929e7"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/ptitSeb/box86"

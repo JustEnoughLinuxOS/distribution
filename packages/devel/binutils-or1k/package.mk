@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="binutils-or1k"
-PKG_VERSION="$(get_pkg_version binutils)"
+PKG_VERSION=""
 PKG_LICENSE="GPL"
 PKG_URL=""
 PKG_DEPENDS_HOST="toolchain:host"

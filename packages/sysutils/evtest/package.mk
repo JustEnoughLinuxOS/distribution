@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="evtest"
-PKG_VERSION="ab140a2dab1547f7deb5233be6d94a388cf08b26"
+PKG_VERSION="da347a8f"
 PKG_LICENSE="GPL"
 PKG_URL="https://gitlab.freedesktop.org/libevdev/evtest.git"
 PKG_DEPENDS_TARGET="toolchain libxml2"

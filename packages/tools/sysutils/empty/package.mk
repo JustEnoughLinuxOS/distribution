@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
+# Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="empty"
-PKG_VERSION="0.6.20b"
-PKG_SHA256="7e6636e400856984c4405ce7bd0843aaa3329fa3efd20c58df8400a9eaa35f09"
+PKG_VERSION="0.6.23c"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="http://empty.sourceforge.net/"

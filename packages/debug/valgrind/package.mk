@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="valgrind"
-PKG_VERSION="3.20.0"
-PKG_SHA256="8536c031dbe078d342f121fa881a9ecd205cb5a78e639005ad570011bdb9f3c6"
+PKG_VERSION="3.21.0"
 PKG_LICENSE="GPL"
 PKG_SITE="https://valgrind.org/"
 PKG_URL="https://sourceware.org/pub/valgrind/${PKG_NAME}-${PKG_VERSION}.tar.bz2"

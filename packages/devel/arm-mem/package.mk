@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="arm-mem"
-PKG_VERSION="b48ea154fd74410022d8189003cd69fad8f3d02c" # Apr 30, 2019
-PKG_SHA256="93240defef3abba7d42a7420e55ae4f8b90cc99ef16044fdfb8b5820a17e766d"
+PKG_VERSION="b48ea154fd74410022d8189003cd69fad8f3d02c"
 PKG_ARCH="arm"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/bavison/arm-mem"
