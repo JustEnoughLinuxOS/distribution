@@ -29,5 +29,7 @@ makeinstall_target() {
 
     mkdir -p ${INSTALL}/usr/lib/systemd/system
     cp -R ${PKG_DIR}/system.d/zerotier-one.service ${INSTALL}/usr/lib/systemd/system/
+	mkdir -p ${INSTALL}/etc/profile.d/
+	cp -R ${PKG_DIR}/profile.d/95-zerotier ${INSTALL}/etc/profile.d/
 }
 
