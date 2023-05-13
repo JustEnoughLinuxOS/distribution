@@ -13,8 +13,8 @@ PKG_TOOLCHAIN="manual"
 
 
 pre_unpack() {
-  mkdir -p ${PKG_BUILD}
-  tar --strip-components=1 -xf $SOURCES/${PKG_NAME}/${PKG_NAME}-${PKG_VERSION}.tar.gz -C ${PKG_BUILD} ZeroTierOne-${PKG_VERSION}
+    mkdir -p ${PKG_BUILD}
+    tar --strip-components=1 -xf $SOURCES/${PKG_NAME}/${PKG_NAME}-${PKG_VERSION}.tar.gz -C ${PKG_BUILD} ZeroTierOne-${PKG_VERSION}
 }
 
 
@@ -27,9 +27,10 @@ makeinstall_target() {
     make DESTDIR=${INSTALL} install
     rm -rf ${INSTALL}/usr/share/man/
 
+    install -Dm755 ${PKG_DIR}/scripts/zerotier-join.sh ${INSTALL}/usr/sbin/
     mkdir -p ${INSTALL}/usr/lib/systemd/system
-    cp -R ${PKG_DIR}/system.d/zerotier-one.service ${INSTALL}/usr/lib/systemd/system/
-	mkdir -p ${INSTALL}/etc/profile.d/
-	cp -R ${PKG_DIR}/profile.d/95-zerotier ${INSTALL}/etc/profile.d/
+    install -Dm644 ${PKG_DIR}/system.d/zerotier-one.service ${INSTALL}/usr/lib/systemd/system/
+    mkdir -p ${INSTALL}/etc/profile.d/
+    install -Dm755 ${PKG_DIR}/profile.d/95-zerotier ${INSTALL}/etc/profile.d/
 }
 
