@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
+
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/Makefile linux/arch/arm64/boot/dts/rockchip/Makefile
 --- linux.orig/arch/arm64/boot/dts/rockchip/Makefile	2023-05-10 16:31:20.675981100 +0000
 +++ linux/arch/arm64/boot/dts/rockchip/Makefile	2023-05-10 16:31:17.899893326 +0000
@@ -14,7 +17,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/Makefile linux/arch/arm64/boo
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3328-nanopi-r2s.dtb
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/boot/dts/rockchip/px30.dtsi
 --- linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi	2023-05-10 16:31:20.675981100 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/px30.dtsi	2023-05-10 19:21:39.956960642 +0000
++++ linux/arch/arm64/boot/dts/rockchip/px30.dtsi	2023-05-12 14:46:18.335273009 +0000
 @@ -114,12 +114,6 @@
  		compatible = "operating-points-v2";
  		opp-shared;
@@ -28,7 +31,74 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/bo
  		opp-816000000 {
  			opp-hz = /bits/ 64 <816000000>;
  			opp-microvolt = <1050000 1050000 1350000>;
-@@ -1039,10 +1033,6 @@
+@@ -210,12 +204,6 @@
+ 					cooling-device = <&cpu0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+ 					contribution = <4096>;
+ 				};
+-
+-				map1 {
+-					trip = <&target>;
+-					cooling-device = <&gpu THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+-					contribution = <4096>;
+-				};
+ 			};
+ 		};
+ 
+@@ -223,6 +211,33 @@
+ 			polling-delay-passive = <100>; /* milliseconds */
+ 			polling-delay = <1000>; /* milliseconds */
+ 			thermal-sensors = <&tsadc 1>;
++
++			trips {
++				gpu_threshold: gpu-threshold {
++					temperature = <70000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				gpu_target: gpu-target {
++					temperature = <85000>;
++					hysteresis = <2000>;
++					type = "passive";
++				};
++
++				gpu_crit: gpu-crit {
++					temperature = <115000>;
++					hysteresis = <2000>;
++					type = "critical";
++				};
++			};
++
++			cooling-maps {
++				map0 {
++					trip = <&gpu_target>;
++					cooling-device = <&gpu THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
++				};
++			};
+ 		};
+ 	};
+ 
+@@ -453,7 +468,7 @@
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+ 
+-				port@0 {
++				lvds_in: port@0 {
+ 					reg = <0>;
+ 					#address-cells = <1>;
+ 					#size-cells = <0>;
+@@ -468,6 +483,10 @@
+ 						remote-endpoint = <&vopl_out_lvds>;
+ 					};
+ 				};
++
++				lvds_out: port@1 {
++					reg = <1>;
++				};
+ 			};
+ 		};
+ 	};
+@@ -1039,10 +1058,6 @@
  	gpu_opp_table: opp-table-1 {
  		compatible = "operating-points-v2";
  
@@ -39,7 +109,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/bo
  		opp-300000000 {
  			opp-hz = /bits/ 64 <300000000>;
  			opp-microvolt = <975000>;
-@@ -1051,8 +1041,8 @@
+@@ -1051,8 +1066,8 @@
  			opp-hz = /bits/ 64 <400000000>;
  			opp-microvolt = <1050000>;
  		};
@@ -50,6 +120,26 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/bo
  			opp-microvolt = <1125000>;
  		};
  	};
+@@ -1113,7 +1128,7 @@
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
+ 
+-			port@0 {
++			dsi_in: port@0 {
+ 				reg = <0>;
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+@@ -1128,6 +1143,10 @@
+ 					remote-endpoint = <&vopl_out_dsi>;
+ 				};
+ 			};
++
++			dsi_out: port@1 {
++				reg = <1>;
++			};
+ 		};
+ 	};
+ 
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351m.dts linux/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351m.dts
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351m.dts	1970-01-01 00:00:00.000000000 +0000
 +++ linux/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351m.dts	2023-05-10 19:47:36.202575152 +0000
@@ -680,8 +770,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go.dtsi linux/a
 +};
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts	2023-05-10 18:02:12.774307422 +0000
-@@ -0,0 +1,292 @@
++++ linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts	2023-05-13 19:33:10.059992302 +0000
+@@ -0,0 +1,299 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2019 Hardkernel Co., Ltd
@@ -698,6 +788,25 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts lin
 +
 +	aliases {
 +		mmc1 = &sdio;
++	};
++
++	gpio_keys: volume-keys {
++		compatible = "gpio-keys-polled";
++		poll-interval = <5>;
++		autorepeat;
++
++		volume-up-button {
++			label = "VOLUME-UP";
++			linux,code = <KEY_VOLUMEUP>;
++			gpios = <&gpio2 RK_PA3 GPIO_ACTIVE_LOW>;
++
++		};
++		volume-down-button {
++			label = "VOLUME-DOWN";
++			linux,code = <KEY_VOLUMEDOWN>;
++			gpios = <&gpio2 RK_PA2 GPIO_ACTIVE_LOW>;
++
++		};
 +	};
 +
 +	joypad: odroidgo2-joypad {
@@ -773,7 +882,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts lin
 +		|     sw2      |    LCD Display    |      sw6    |
 +		|              |                   |             |
 +		|              |-------------------|             |
-+		|         sw9 sw10   sw11 sw12   sw13 sw14       |
++		|         sw9 sw10   vol- vol+   sw13 sw14       |
 +		|------------------------------------------------|
 +		*/
 +                /*
@@ -829,16 +938,6 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts lin
 +                        gpios = <&gpio2 RK_PA1 GPIO_ACTIVE_LOW>;
 +                        label = "GPIO F2";
 +                        linux,code = <BTN_TRIGGER_HAPPY2>; // 0x2c1
-+                };
-+                sw11 {
-+                        gpios = <&gpio2 RK_PA2 GPIO_ACTIVE_LOW>;
-+                        label = "GPIO F3";
-+                        linux,code = <BTN_TRIGGER_HAPPY3>; // 0x2c2
-+                };
-+                sw12 {
-+                        gpios = <&gpio2 RK_PA3 GPIO_ACTIVE_LOW>;
-+                        label = "GPIO F4";
-+                        linux,code = <BTN_TRIGGER_HAPPY4>; // 0x2c3
 +                };
 +                sw13 {
 +                        gpios = <&gpio2 RK_PA4 GPIO_ACTIVE_LOW>;
@@ -956,8 +1055,6 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts lin
 +					<1 RK_PB7 RK_FUNC_GPIO &pcfg_pull_up>,
 +					<2 RK_PA0 RK_FUNC_GPIO &pcfg_pull_up>,
 +					<2 RK_PA1 RK_FUNC_GPIO &pcfg_pull_up>,
-+					<2 RK_PA2 RK_FUNC_GPIO &pcfg_pull_up>,
-+					<2 RK_PA3 RK_FUNC_GPIO &pcfg_pull_up>,
 +					<2 RK_PA4 RK_FUNC_GPIO &pcfg_pull_up>,
 +					<2 RK_PA5 RK_FUNC_GPIO &pcfg_pull_up>,
 +					<2 RK_PA6 RK_FUNC_GPIO &pcfg_pull_up>,
@@ -976,8 +1073,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts lin
 +};
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts	2023-05-10 16:31:20.675981100 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts	2023-05-10 21:00:52.038053260 +0000
-@@ -2,55 +2,176 @@
++++ linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts	2023-05-13 19:35:17.004254690 +0000
+@@ -2,55 +2,185 @@
  /*
   * Copyright (c) 2019 Hardkernel Co., Ltd
   * Copyright (c) 2020 Theobroma Systems Design und Consulting GmbH
@@ -998,12 +1095,28 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts linux/a
 -	aliases {
 -		mmc0 = &sdmmc;
 -	};
++        gpio_keys: volume-keys {
++                compatible = "gpio-keys-polled";
++                poll-interval = <5>;
++                autorepeat;
++
++                volume-up-button {
++                        label = "VOLUME-UP";
++                        linux,code = <KEY_VOLUMEUP>;
++                        gpios = <&gpio2 RK_PA3 GPIO_ACTIVE_LOW>;
++
++                };
++                volume-down-button {
++                        label = "VOLUME-DOWN";
++                        linux,code = <KEY_VOLUMEDOWN>;
++                        gpios = <&gpio2 RK_PA2 GPIO_ACTIVE_LOW>;
++
++                };
++        };
++
 +	joypad: odroidgo2-joypad {
 +                compatible = "odroidgo2-joypad";
- 
--	chosen {
--		stdout-path = "serial2:115200n8";
--	};
++
 +                /*
 +                  - odroidgo2-joypad sysfs list -
 +		   * for poll device interval(ms)
@@ -1026,6 +1139,12 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts linux/a
 +		/* JOY_X, JOY_Y Channel define */
 +		io-channel-names = "joy_x", "joy_y";
 +		io-channels = <&saradc 1>, <&saradc 2>;
+ 
+-	chosen {
+-		stdout-path = "serial2:115200n8";
+-	};
++		/* adc channel count */
++		button-adc-count = <2>;
  
 -	adc-joystick {
 -		compatible = "adc-joystick";
@@ -1050,17 +1169,14 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts linux/a
 -			linux,code = <ABS_Y>;
 -		};
 -	};
-+		/* adc channel count */
-+		button-adc-count = <2>;
++		/* adc calculate scale */
++		button-adc-scale = <2>;
  
 -	backlight: backlight {
 -		compatible = "pwm-backlight";
 -		power-supply = <&vcc_bl>;
 -		pwms = <&pwm1 0 25000 0>;
 -	};
-+		/* adc calculate scale */
-+		button-adc-scale = <2>;
-+
 +		/* adc deadzone range  */
 +		button-adc-deadzone = <20>;
 +
@@ -1101,7 +1217,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts linux/a
 +		|     sw2      |    LCD Display    |      sw6    |
 +		|              |                   |             |
 +		|              |-------------------|             |
-+		|         sw9 sw10   sw11 sw12   sw13 sw14       |
++		|         sw9 sw10   vol- vol+   sw13 sw14       |
 +		|------------------------------------------------|
 +		*/
 +                /*
@@ -1158,16 +1274,6 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts linux/a
 +                        label = "GPIO F2";
 +                        linux,code = <BTN_TRIGGER_HAPPY2>; // 0x2c1
 +                };
-+                sw11 {
-+                        gpios = <&gpio2 RK_PA2 GPIO_ACTIVE_LOW>;
-+                        label = "GPIO F3";
-+                        linux,code = <BTN_TRIGGER_HAPPY3>; // 0x2c2
-+                };
-+                sw12 {
-+                        gpios = <&gpio2 RK_PA3 GPIO_ACTIVE_LOW>;
-+                        label = "GPIO F4";
-+                        linux,code = <BTN_TRIGGER_HAPPY4>; // 0x2c3
-+                };
 +                sw13 {
 +                        gpios = <&gpio2 RK_PA4 GPIO_ACTIVE_LOW>;
 +                        label = "GPIO F5";
@@ -1192,7 +1298,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts linux/a
  
  	battery: battery {
  		compatible = "simple-battery";
-@@ -63,606 +184,21 @@
+@@ -63,606 +193,42 @@
  		voltage-min-design-microvolt = <3500000>;
  
  		ocv-capacity-celsius = <20>;
@@ -1431,17 +1537,13 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts linux/a
 -
 -&dsi_dphy {
 -	status = "okay";
- };
- 
+-};
+-
 -&gpu {
 -	mali-supply = <&vdd_logic>;
 -	status = "okay";
-+&internal_display {
-+	compatible = "elida,kd35t133";
-+	iovcc-supply = <&vcc_lcd>;
-+	vdd-supply = <&vcc_lcd>;
- };
- 
+-};
+-
 -&i2c0 {
 -	clock-frequency = <400000>;
 -	i2c-scl-falling-time-ns = <16>;
@@ -1725,15 +1827,19 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts linux/a
 -
 -&usb20_otg {
 -	status = "okay";
--};
--
+ };
+ 
 -/* EXT Header(P2): 2(RXD:GPIO1.C0),3(TXD:.C1),4(CTS:.C2),5(RTS:.C3) */
 -&uart1 {
 -	pinctrl-names = "default";
 -	pinctrl-0 = <&uart1_xfer &uart1_cts>;
 -	status = "okay";
--};
--
++&internal_display {
++	compatible = "elida,kd35t133";
++	iovcc-supply = <&vcc_lcd>;
++	vdd-supply = <&vcc_lcd>;
+ };
+ 
 -&uart2 {
 -	pinctrl-names = "default";
 -	pinctrl-0 = <&uart2m1_xfer>;
@@ -1746,9 +1852,11 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts linux/a
 -
 -&vopb_mmu {
 -	status = "okay";
--};
--
--&pinctrl {
++&rk817_charger {
++	monitored-battery = <&battery>;
+ };
+ 
+ &pinctrl {
 -	btns {
 -		btn_pins: btn-pins {
 -			rockchip,pins = <1 RK_PA2 RK_FUNC_GPIO &pcfg_pull_up>,
@@ -1803,8 +1911,24 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts linux/a
 -			rockchip,pins = <0 RK_PA4 1 &pcfg_pull_none>;
 -		};
 -	};
-+&rk817_charger {
-+	monitored-battery = <&battery>;
++        btns {
++                btn_pins: btn-pins {
++                        rockchip,pins = <1 RK_PA2 RK_FUNC_GPIO &pcfg_pull_up>,
++                                        <1 RK_PA5 RK_FUNC_GPIO &pcfg_pull_up>,
++                                        <1 RK_PA6 RK_FUNC_GPIO &pcfg_pull_up>,
++                                        <1 RK_PA7 RK_FUNC_GPIO &pcfg_pull_up>,
++                                        <1 RK_PB4 RK_FUNC_GPIO &pcfg_pull_up>,
++                                        <1 RK_PB5 RK_FUNC_GPIO &pcfg_pull_up>,
++                                        <1 RK_PB6 RK_FUNC_GPIO &pcfg_pull_up>,
++                                        <1 RK_PB7 RK_FUNC_GPIO &pcfg_pull_up>,
++                                        <2 RK_PA0 RK_FUNC_GPIO &pcfg_pull_up>,
++                                        <2 RK_PA1 RK_FUNC_GPIO &pcfg_pull_up>,
++                                        <2 RK_PA4 RK_FUNC_GPIO &pcfg_pull_up>,
++                                        <2 RK_PA5 RK_FUNC_GPIO &pcfg_pull_up>,
++                                        <2 RK_PA6 RK_FUNC_GPIO &pcfg_pull_up>,
++                                        <2 RK_PA7 RK_FUNC_GPIO &pcfg_pull_up>;
++                };
++        };
  };
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go3.dts linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go3.dts
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go3.dts	1970-01-01 00:00:00.000000000 +0000
