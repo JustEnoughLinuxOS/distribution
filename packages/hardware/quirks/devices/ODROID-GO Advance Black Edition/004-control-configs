@@ -1,0 +1,23 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
+
+. /etc/profile
+
+#Set mupen64-plus-sa config for OGA
+if [ -f "/storage/.config/mupen64plus/mupen64plus.cfg.oga" ]; then
+  rm /storage/.config/mupen64plus/mupen64plus.cfg
+  mv /storage/.config/mupen64plus/mupen64plus.cfg.oga /storage/.config/mupen64plus/mupen64plus.cfg
+fi
+
+#Set drastic-sa config for OGA
+if [ -f "/storage/.config/drastic/config/drastic.cfg.oga" ]; then
+  rm /storage/.config/drastic/config/drastic.cfg
+  mv /storage/.config/drastic/config/drastic.cfg.oga /storage/.config/drastic/config/drastic.cfg
+fi
+
+#Set duckstation-sa config for OGA
+if [ -f "/storage/.config/duckstation/settings.ini.oga" ]; then
+  rm /storage/.config/duckstation/settings.ini
+  mv /storage/.config/duckstation/settings.ini.oga /storage/.config/duckstation/settings.ini
+fi
