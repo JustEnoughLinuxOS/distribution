@@ -33,7 +33,7 @@ fi
 
 if [[ ! -f "$M64PCONF" ]]; then
 	mkdir -p /storage/.config/mupen64plus
-	cp $SHARE/mupen64plus.cfg $M64PCONF
+	cp $SHARE/mupen64plus.cfg* $M64PCONF
 fi
 
 rm -rf $TMP
