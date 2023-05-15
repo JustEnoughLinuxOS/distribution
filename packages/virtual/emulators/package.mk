@@ -7,7 +7,7 @@ PKG_SITE="www.jelos.org"
 PKG_SECTION="virtual"
 PKG_LONGDESC="Emulation metapackage."
 
-PKG_EMUS="duckstation-sa flycast-sa hatarisa hypseus-singe hypseus-singe moonlight openbor pico-8 ppsspp-sa
+PKG_EMUS="flycast-sa hatarisa hypseus-singe hypseus-singe moonlight openbor pico-8 ppsspp-sa
           vice-sa"
 
 PKG_RETROARCH="core-info libretro-database retroarch retroarch-assets retroarch-joypads retroarch-overlays     \
@@ -32,33 +32,33 @@ LIBRETRO_CORES="2048-lr 81-lr a5200-lr atari800-lr beetle-gba-lr beetle-lynx-lr 
 case "${DEVICE}" in
   AMD64)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="lutris-wine"
-    PKG_EMUS+=" dolphin-sa cemu-sa citra-sa melonds-sa minivmacsa mupen64plus-sa pcsx2-sa primehack rpcs3-sa   \
-               ryujinx-sa scummvmsa xemu-sa yuzu-sa"
+    PKG_EMUS+=" cemu-sa citra-sa dolphin-sa duckstation-sa melonds-sa minivmacsa mupen64plus-sa pcsx2-sa       \
+               primehack rpcs3-sa ryujinx-sa scummvmsa xemu-sa yuzu-sa"
     LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr citra-lr desmume-lr dolphin-lr flycast-lr lrps2-lr mame-lr     \
                      minivmac-lr play-lr"
   ;;
   RK358*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
-    PKG_EMUS+=" aethersx2-sa pcsx_rearmed-lr box64 scummvmsa yabasanshiro-sa box64 portmaster"
+    PKG_EMUS+=" aethersx2-sa duckstation-sa pcsx_rearmed-lr box64 scummvmsa yabasanshiro-sa box64 portmaster"
     LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr citra-lr dolphin-lr mame-lr"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
   RK356*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
-    PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders mupen64plus-sa scummvmsa box64 portmaster"
+    PKG_DEPENDS_TARGET+=" common-shaders duckstation-sa glsl-shaders mupen64plus-sa scummvmsa box64 portmaster"
     PKG_EMUS+=" dolphin-sa drastic-sa yabasanshiro-sa"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
   S922X*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
-    PKG_EMUS+=" aethersx2-sa dolphin-sa drastic-sa mupen64plus-sa yabasanshiro-sa box64 portmaster"
+    PKG_EMUS+=" aethersx2-sa dolphin-sa duckstation-sa drastic-sa mupen64plus-sa yabasanshiro-sa box64 portmaster"
     LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr dolphin-lr flycast-lr"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
   RK3326*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="flycast-lr pcsx_rearmed-lr"
-    PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders mupen64plus-sa portmaster"
-    PKG_EMUS+=" drastic-sa mupen64plus-sa yabasanshiro-sa"
+    PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders"
+    PKG_EMUS+=" drastic-sa mupen64plus-sa scummvmsa yabasanshiro-sa portmaster"
     LIBRETRO_CORES+=" flycast-lr"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
