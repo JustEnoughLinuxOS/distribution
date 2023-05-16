@@ -58,4 +58,4 @@ if [ -e /storage/.please_resize_me ] ; then
     StartProgress countdown "Rebooting in 5s...     " 5 "NOW"
   fi
 fi
-reboot &>/dev/null
+shutdown -r now &>/dev/null
