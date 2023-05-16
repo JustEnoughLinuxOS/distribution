@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="vim"
-PKG_VERSION="8.2.4065"
-PKG_SHA256="afc4a51eeeddf81c810dc29e364e7babe1cfebafcf2fd15547b35f56b7f0cb14"
+PKG_VERSION="9.0.1528"
 PKG_LICENSE="VIM"
 PKG_SITE="http://www.vim.org/"
 PKG_URL="https://github.com/vim/vim/archive/v${PKG_VERSION}.tar.gz"

@@ -2,6 +2,7 @@
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
 #      Copyright (C) 2020      351ELEC team (https://github.com/fewtarius/351ELEC)
+#      Copyright (C) 2023-present Fewtarius
 #
 #  This Program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,7 +21,7 @@
 ################################################################################
 
 PKG_NAME="genesis-plus-gx-lr"
-PKG_VERSION="007440f14c07425f50789d901303e18f09c6f112"
+PKG_VERSION="9745432a9180eca61c747bee5cffd03c20cc90dc"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="Non-commercial"

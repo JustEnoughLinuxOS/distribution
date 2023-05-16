@@ -12,5 +12,5 @@ do
   then
     MYVAL=$(drm_tool list | sed -n '/Connector: 206/,$p' | awk '/'${PROPERTY}'/ {print $5}')
   fi
-  display ${PROPERTY} ${MYVAL}
+  paneladj ${PROPERTY} ${MYVAL}
 done

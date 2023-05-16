@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2021-present 351ELEC (https://github.com/351ELEC)
+# Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="retroarch"
-PKG_VERSION="dfc157d1d0b85f5b94c9e555f849aec8d19ad959"
+PKG_VERSION="994a2ea108c42d8cb1d18dcb1dcf5d095715d3a4"
 PKG_SITE="https://github.com/libretro/RetroArch"
 PKG_URL="${PKG_SITE}.git"
 PKG_LICENSE="GPLv3"

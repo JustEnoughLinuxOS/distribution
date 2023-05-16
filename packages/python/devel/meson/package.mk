@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="meson"
-PKG_VERSION="1.0.1"
+PKG_VERSION="1.1.0"
 PKG_LICENSE="Apache"
 PKG_SITE="http://mesonbuild.com"
 PKG_URL="https://github.com/mesonbuild/meson/releases/download/${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.gz"

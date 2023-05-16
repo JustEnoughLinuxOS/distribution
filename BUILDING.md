@@ -108,7 +108,9 @@ Building JELOS is easy, the fastest and most recommended method is to instruct t
 | ---- | ---- | ---- |
 |AMD64||```make docker-AMD64```|
 |RK3588||```make docker-RK3588```|
+|RK3326||```make docker-RK3326```|
 |RK3566||```make docker-RK3566```|
+|RK3566-X55||```make docker-RK3566-X55```|
 |S922X||```make docker-S922X```|
 |ALL DEVICES||```make docker-world```|
 

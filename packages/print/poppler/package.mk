@@ -4,7 +4,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="poppler"
-PKG_VERSION="12853d2"
+PKG_VERSION="adf710ee"
 PKG_LICENSE="GPL"
 PKG_SITE="https://gitlab.freedesktop.org/poppler/poppler"
 PKG_URL="${PKG_SITE}.git"

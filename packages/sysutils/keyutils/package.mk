@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="keyutils"
-PKG_VERSION="1.6"
-PKG_SHA256="d3aef20cec0005c0fa6b4be40079885567473185b1a57b629b030e67942c7115"
+PKG_VERSION="1.6.1"
 PKG_LICENSE="GPL"
 PKG_SITE="http://people.redhat.com/~dhowells/keyutils/"
 PKG_URL="http://people.redhat.com/~dhowells/keyutils/${PKG_NAME}-${PKG_VERSION}.tar.bz2"

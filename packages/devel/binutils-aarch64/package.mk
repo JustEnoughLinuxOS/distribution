@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="binutils-aarch64"
 PKG_VERSION="$(get_pkg_version binutils)"

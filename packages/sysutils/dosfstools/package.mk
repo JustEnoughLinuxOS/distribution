@@ -1,13 +1,13 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="dosfstools"
-PKG_VERSION="4.1"
-PKG_SHA256="e6b2aca70ccc3fe3687365009dd94a2e18e82b688ed4e260e04b7412471cc173"
+PKG_VERSION="4.2"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/dosfstools/dosfstools"
-PKG_URL="https://github.com/dosfstools/dosfstools/releases/download/v${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.xz"
+PKG_URL="https://github.com/dosfstools/dosfstools/releases/download/v${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST="toolchain:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_DEPENDS_INIT="toolchain dosfstools"

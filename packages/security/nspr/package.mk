@@ -1,9 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="nspr"
-PKG_VERSION="4.34.1"
+PKG_VERSION="4.35"
 PKG_LICENSE="Mozilla Public License"
 PKG_SITE="http://www.linuxfromscratch.org/blfs/view/svn/general/nspr.html"
 PKG_DEPENDS_HOST="ccache:host"

@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present fewtarius (https://github.com/fewtarius)
 
 PKG_NAME="tailscale"
-PKG_VERSION="1.34.2"
+PKG_VERSION="1.40.0"
 PKG_SITE="https://tailscale.com/"
 PKG_URL="https://pkgs.tailscale.com/stable/tailscale_${PKG_VERSION}_arm64.tgz"
 PKG_DEPENDS_TARGET="toolchain wireguard-tools"

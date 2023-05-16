@@ -32,7 +32,7 @@ if [ -n "${PKG_DATAFILE}" -a -n "${PKG_LOADER}" ]; then
     rk35*)
       tools/mkimage -n ${PKG_SOC} -T rksd -d ${PKG_DATAFILE}:${PKG_LOADER} -C bzip2 idbloader.img
     ;;
-    xxxx)
+    *)
       tools/mkimage -n ${PKG_SOC} -T rksd -d "${PKG_DATAFILE}" -C bzip2 idbloader.img
       cat "${PKG_LOADER}" >> idbloader.img
     ;;
@@ -52,25 +52,71 @@ case "${PKG_SOC}" in
     cp -av u-boot.itb ${INSTALL}/usr/share/bootloader/u-boot.itb
     generate_rkspi_loader
   ;;
+  *)
+    echo "uboot: build loader image uboot.img at ${PKG_LOAD_ADDR}..."
+    ${PKG_UBOOT}/tools/loaderimage --pack --uboot u-boot-dtb.bin uboot.img ${PKG_LOAD_ADDR} ||:
+    cp -av uboot.img ${INSTALL}/usr/share/bootloader
+  ;;
 esac
+
+case "${DEVICE}" in
+  RK3326)
+if [ -n "${PKG_BL31}" ]; then
+  echo "trust: create trust.ini..."
+  cat >trust.ini <<EOF
+[BL30_OPTION]
+SEC=0
+[BL31_OPTION]
+SEC=1
+PATH=${PKG_BL31}
+ADDR=0x00010000
+[BL32_OPTION]
+SEC=0
+[BL33_OPTION]
+SEC=0
+[OUTPUT]
+PATH=trust.img
+EOF
+  TROPTS="--verbose"
+  ${PKG_UBOOT}/tools/trust_merger ${TROPTS} trust.ini
+  cp -av trust.img ${INSTALL}/usr/share/bootloader
+fi
+  ;;
+esac
+
 
 if [ "${BOOT_INI}" == true ]
 then
   echo "boot: create boot.ini..."
   cat >${INSTALL}/usr/share/bootloader/boot.ini <<EOF
-odroidgoa-uboot-config
+odroidgoa-uboot-config   
+ 
+setenv bootargs "boot=UUID=@BOOT_UUID@ disk=UUID=@DISK_UUID@ ${EXTRA_CMDLINE}"
 
-setenv fdt_addr_r "0x01f00000"
-setenv dtb_name "${DEVICE_DTB[0]}.dtb"
-setenv loadaddr "${PKG_LOAD_ADDR}"
-setenv scriptaddr "0x00500000"
-setenv kernel_addr_r "0x02008000"
+setenv loadaddr "0x02000000"
+setenv dtb_loadaddr "0x01f00000"
+ 
+load mmc 1:1 \${loadaddr} KERNEL
 
-sysboot mmc ${BOOT_PART} any \${scriptaddr} /extlinux/extlinux.conf
+if test \${hwrev} = 'v11'; then
+  if gpio input c22; then
+    load mmc 1:1 \${dtb_loadaddr} rk3326-odroid-go2-v11.dtb
+  else 
+    load mmc 1:1 \${dtb_loadaddr} rk3326-anbernic-rg351m.dtb
+  fi
+elif test \${hwrev} = 'v10-go3'; then
+  load mmc 1:1 \${dtb_loadaddr} rk3326-odroid-go3.dtb
+elif test \${hwrev} = 'v10'; then
+  load mmc 1:1 \${dtb_loadaddr} rk3326-odroid-go2.dtb
+fi
+
+booti \${loadaddr} - \${dtb_loadaddr}
 
 EOF
 fi
 
+if [ "${EXT_LINUX_CONF}" == true ]
+then
 echo "boot: create extlinux.conf..."
 mkdir -p "${INSTALL}/usr/share/bootloader/extlinux"
 
@@ -78,7 +124,7 @@ if [ "${TRUST_LABEL}" = "resource" ]
 then
   FDTMODE="FDTDIR /"
 else
-  FDTMODE="FDT /${DEVICE_DTB}.dtb"
+  FDTMODE="FDT /${DEVICE_DTB[0]}.dtb"
 fi
 
 cat << EOF > "${INSTALL}/usr/share/bootloader/extlinux/extlinux.conf"
@@ -87,3 +133,4 @@ LABEL ${DISTRO}
   ${FDTMODE}
   APPEND boot=UUID=@BOOT_UUID@ disk=UUID=@DISK_UUID@ ${EXTRA_CMDLINE}
 EOF
+fi

@@ -22,6 +22,11 @@ case ${DEVICE} in
     PKG_URL="${PKG_SITE}/rk356x-uboot.git"
     PKG_VERSION="4dbf6b2"
   ;;
+  RK332*)
+    PKG_URL="https://github.com/hardkernel/u-boot.git"
+    PKG_VERSION="0e26e35cb18a80005b7de45c95858c86a2f7f41e"
+    PKG_GIT_CLONE_BRANCH="odroidgoA-v2017.09"
+  ;;
 esac
 
 PKG_IS_KERNEL_PKG="yes"
@@ -59,9 +64,18 @@ make_target() {
       then
         PKG_LOADER="$(get_build_dir rkbin)/${PKG_LOADER}"
       fi
+    if [[ "${PKG_SOC}" =~ "rk35" ]]
+    then
       DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 make mrproper
       DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 make ${UBOOT_CONFIG} BL31=${PKG_BL31} ${PKG_LOADER} u-boot.dtb u-boot.itb
       DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 _python_sysroot="${TOOLCHAIN}" _python_prefix=/ _python_exec_prefix=/ make HOSTCC="${HOST_CC}" HOSTLDFLAGS="-L${TOOLCHAIN}/lib" HOSTSTRIP="true" CONFIG_MKIMAGE_DTC_PATH="scripts/dtc/dtc"
+    else
+      echo "Building for MBR (${UBOOT_DTB})..."
+      [ -n "${ATF_PLATFORM}" ] &&  cp -av $(get_build_dir atf)/bl31.bin .
+      DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm make mrproper
+      DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm make ${UBOOT_CONFIG}
+      DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm _python_sysroot="${TOOLCHAIN}" _python_prefix=/ _python_exec_prefix=/ make HOSTCC="$HOST_CC" HOSTLDFLAGS="-L${TOOLCHAIN}/lib" HOSTSTRIP="true" CONFIG_MKIMAGE_DTC_PATH="scripts/dtc/dtc"
+    fi
   fi
 }
 

@@ -52,6 +52,19 @@
                 <thumbnail>./downloaded_images/jelos-thumb.png</thumbnail>
                 <image>./downloaded_images/jelos-image.png</image>
         </game>
+
+	<game>
+		<path>./Start PortMaster.sh</path>
+		<name>Start PortMaster</name>
+		<desc>Portmaster</desc>
+		<developer>JELOS</developer>
+		<publisher>JELOS</publisher>
+		<rating>1.0</rating>
+		<releasedate>2023</releasedate>		
+		<genre>Script</genre>
+		<image>./downloaded_images/ports-image.png</image>
+		<thumbnail>./downloaded_images/ports-thumb.png</thumbnail>
+	</game>
 	
 	<game>
 		<path>./Start PPSSPP.sh</path>

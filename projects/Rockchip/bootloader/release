@@ -18,11 +18,14 @@ if [ -n "${UBOOT_CONFIG}" ]; then
         cp -a ${KERNEL_DIR}/resource.img ${RELEASE_DIR}/3rdparty/bootloader
       fi
     ;;
+    *)
+      if [ -f ${BOOTLOADER_DIR}/uboot.img ]; then
+        cp -a ${BOOTLOADER_DIR}/uboot.img ${RELEASE_DIR}/3rdparty/bootloader
+      fi
+      if [ -f ${BOOTLOADER_DIR}/trust.img ]; then
+        cp -a ${BOOTLOADER_DIR}/trust.img ${RELEASE_DIR}/3rdparty/bootloader
+      fi
   esac
-fi
-
-if [ -f ${INSTALL}/usr/share/bootloader/logo.bmp ]; then
-  cp -a ${INSTALL}/usr/share/bootloader/logo.bmp ${RELEASE_DIR}/3rdparty/bootloader
 fi
 
 if [ -f ${INSTALL}/usr/share/bootloader/boot.ini ]; then
