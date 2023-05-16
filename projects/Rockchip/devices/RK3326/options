@@ -31,7 +31,7 @@
     BOOTLOADER="u-boot"
     TRUST_LABEL="trust"
     PARTITION_TABLE="msdos"
-    DEVICE_DTB=("rk3326-anbernic-rg351m" "rk3326-odroid-go2" "rk3326-odroid-go2-v11" "rk3326-odroid-go3")
+    DEVICE_DTB=("rk3326-anbernic-rg351m" "rk3326-anbernic-rg351v"  "rk3326-odroid-go2" "rk3326-odroid-go2-v11" "rk3326-odroid-go3")
     UBOOT_DTB="${DEVICE_DTB[0]}"
     UBOOT_CONFIG="odroidgoa_defconfig"
     PKG_SOC="px30"
@@ -84,7 +84,7 @@
   # for a list of additional drivers see packages/linux-drivers
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-    ADDITIONAL_DRIVERS="RTL8812AU RTL8821CU RTL88x2BU"
+    ADDITIONAL_DRIVERS="RTL8812AU RTL8814AU RTL8821AU RTL8821CU RTL88x2BU"
 
   # build and install driver addons (yes / no)
     DRIVER_ADDONS_SUPPORT="no"

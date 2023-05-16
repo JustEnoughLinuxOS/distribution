@@ -9,7 +9,7 @@ if [ ! -d "/storage/.config/mupen64plus" ]; then
     mkdir -p "/storage/.config/mupen64plus/"
         cp -r /usr/local/share/mupen64plus/mupen64plus.cfg* /storage/.config/mupen64plus/
 fi
-if [ -f "/storage/.config/mupen64plus/mupen64plus.cfg.ogabe" ]; then
+if [ -f "/storage/.config/mupen64plus/mupen64plus.cfg.oga" ]; then
   rm /storage/.config/mupen64plus/mupen64plus.cfg
   mv /storage/.config/mupen64plus/mupen64plus.cfg.oga /storage/.config/mupen64plus/mupen64plus.cfg
 fi
@@ -19,7 +19,7 @@ if [ ! -d "/storage/.config/drastic" ]; then
     mkdir -p "/storage/.config/drastic"
         cp -r "/usr/config/drastic" "/storage/.config/"
 fi
-if [ -f "/storage/.config/drastic/config/drastic.cfg.ogabe" ]; then
+if [ -f "/storage/.config/drastic/config/drastic.cfg.oga" ]; then
   rm /storage/.config/drastic/config/drastic.cfg
   mv /storage/.config/drastic/config/drastic.cfg.oga /storage/.config/drastic/config/drastic.cfg
 fi

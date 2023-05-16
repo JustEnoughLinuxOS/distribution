@@ -1,0 +1,13 @@
+diff --git a/es-app/src/guis/GuiMenu.cpp b/es-app/src/guis/GuiMenu.cpp
+index f25bc41..fdf6c2d 100644
+--- a/es-app/src/guis/GuiMenu.cpp
++++ b/es-app/src/guis/GuiMenu.cpp
+@@ -3985,7 +3985,7 @@ void GuiMenu::openSoundSettings()
+ {
+ 	auto s = new GuiSettings(mWindow, _("SOUND SETTINGS").c_str());
+ 
+-#if defined(S922X)
++#if defined(S922X) || defined(RK3326)
+ 	s->addGroup(_("OUTPUT"));
+ 
+ 	//ogu headphone enable
