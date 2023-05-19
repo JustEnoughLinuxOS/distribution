@@ -19,10 +19,10 @@ makeinstall_target() {
 
   case ${DEVICE} in
     S922X*)
-      cp -rf ${PKG_DIR}/scripts/S922X/* ${INSTALL}/usr/bin
+      cp -rf ${PKG_DIR}/scripts/S922X/start_drastic.sh ${INSTALL}/usr/bin
     ;;
     *)
-      cp -rf ${PKG_DIR}/scripts/* ${INSTALL}/usr/bin
+      cp -rf ${PKG_DIR}/scripts/start_drastic.sh ${INSTALL}/usr/bin
     ;;
   esac
 
