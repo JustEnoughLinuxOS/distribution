@@ -1,0 +1,25 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
+
+. /etc/profile
+
+#Set mupen64-plus-sa config for OGS
+if [ ! -d "/storage/.config/mupen64plus" ]; then
+    mkdir -p "/storage/.config/mupen64plus/"
+        cp -r /usr/local/share/mupen64plus/mupen64plus.cfg* /storage/.config/mupen64plus/
+fi
+if [ -f "/storage/.config/mupen64plus/mupen64plus.cfg.ogs" ]; then
+  rm /storage/.config/mupen64plus/mupen64plus.cfg
+  mv /storage/.config/mupen64plus/mupen64plus.cfg.ogs /storage/.config/mupen64plus/mupen64plus.cfg
+fi
+
+#Set drastic-sa config for OGS
+if [ ! -d "/storage/.config/drastic" ]; then
+    mkdir -p "/storage/.config/drastic"
+        cp -r "/usr/config/drastic" "/storage/.config/"
+fi
+if [ -f "/storage/.config/drastic/config/drastic.cfg.ogs" ]; then
+  rm /storage/.config/drastic/config/drastic.cfg
+  mv /storage/.config/drastic/config/drastic.cfg.ogs /storage/.config/drastic/config/drastic.cfg
+fi
