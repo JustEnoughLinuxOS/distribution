@@ -73,7 +73,7 @@
     EXTRA_CMDLINE="quiet rootwait console=tty0 fbcon=rotate:3 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
 
   # additional packages to install
-    ADDITIONAL_PACKAGES="interception"
+    ADDITIONAL_PACKAGES=""
 
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
