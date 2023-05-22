@@ -72,11 +72,10 @@ if [ -f $SYSTEM_ROOT/usr/share/bootloader/boot.ini ]; then
       -e "s/@DISK_UUID@/$DISK_UUID/" \
       -i $BOOT_ROOT/boot.ini
 fi
-fi
 
 # update device tree
 for all_dtb in $SYSTEM_ROOT/usr/share/bootloader/*.dtb; do
-  dtb=$(basename $all_dtb)
+  dtb="$(basename ${all_dtb})"
     echo -n "Updating $dtb... "
     cp -p $SYSTEM_ROOT/usr/share/bootloader/$dtb $BOOT_ROOT &>/dev/null
     echo "done"
@@ -118,12 +117,6 @@ if [ -f $SYSTEM_ROOT/usr/share/bootloader/trust.img ]; then
 elif [ -f $SYSTEM_ROOT/usr/share/bootloader/resource.img ]; then
   echo -n "Updating resource.img... "
   dd if=$SYSTEM_ROOT/usr/share/bootloader/resource.img of=$BOOT_DISK bs=512 seek=24576 conv=fsync &>/dev/null
-  echo "done"
-fi
-
-if [ -f $SYSTEM_ROOT/usr/share/bootloader/logo.bmp ]; then
-  echo -n "Updating uboot logo... "
-  cp -p $SYSTEM_ROOT/usr/share/bootloader/logo.bmp $BOOT_ROOT &>/dev/null
   echo "done"
 fi
 

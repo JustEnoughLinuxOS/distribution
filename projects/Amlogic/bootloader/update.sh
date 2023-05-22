@@ -85,7 +85,7 @@ fi
 
 # update device tree
 for all_dtb in $SYSTEM_ROOT/usr/share/bootloader/*.dtb; do
-  dtb=$(basename $all_dtb)
+  dtb="$(basename ${all_dtb})"
     echo -n "Updating $dtb... "
     cp -p $SYSTEM_ROOT/usr/share/bootloader/$dtb $BOOT_ROOT &>/dev/null
     echo "done"
