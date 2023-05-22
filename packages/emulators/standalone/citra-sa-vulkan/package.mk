@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="citra-sa-vulkan"
-PKG_VERSION="030ecaa83c825bf4c91915d629adca2dadb9aaac"
+PKG_VERSION="1d65b568190f68fae97fd39f56247b12429a6cb5"
 PKG_LICENSE="MPLv2"
 PKG_SITE="https://github.com/GPUCode/citra"
 PKG_URL="${PKG_SITE}.git"
@@ -10,6 +10,7 @@ PKG_DEPENDS_TARGET="toolchain ffmpeg mesa SDL2 boost zlib libusb boost zstd"
 PKG_LONGDESC="Citra 3DS emulator"
 PKG_TOOLCHAIN="cmake"
 GET_HANDLER_SUPPORT="git"
+PKG_GIT_CLONE_BRANCH="vulkan-but-better"
 PKG_PATCH_DIRS+="${DEVICE}"
 
 if [ ! "${OPENGL}" = "no" ]; then
