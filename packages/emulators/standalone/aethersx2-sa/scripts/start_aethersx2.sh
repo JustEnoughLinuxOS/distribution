@@ -21,9 +21,6 @@ if [ ! -d "/storage/roms/savestates/ps2" ]; then
     mkdir -p "/storage/roms/savestastes/ps2"
 fi
 
-#Prep PCSX2.ini for audio
-sed -i '/^BackendName =/c\BackendName =' /storage/.config/aethersx2/inis/PCSX2.ini
-
 #Set the cores to use
 CORES=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
 if [ "${CORES}" = "little" ]
