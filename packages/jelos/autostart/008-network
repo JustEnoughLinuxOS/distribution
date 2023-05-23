@@ -6,15 +6,6 @@
 
 tocon "Configuring network..."
 
-HOSTNAME=$(get_setting system.hostname)
-hostname ${HOSTNAME}
-avahi-set-host-name ${HOSTNAME}
-
-for service in connman wpa_supplicant
-do
-  systemctl restart ${service}
-done
-
 if [ "$(get_setting network.enabled)" == "0" ] || [ "$1" == "disable" ]
 then
   nohup wifictl disable &
