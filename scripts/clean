@@ -33,8 +33,11 @@ clean_package() {
   done
   for dir in "${STAMPS}/${1}" "${BUILD}/image/.stamps/${1}"
   do
-    rm -rf ${dir}
-    mkdir ${dir}
+    if [ -d "${dir}" ]
+    then
+      rm -rf ${dir}
+      mkdir ${dir}
+    fi
   done
 }
 
