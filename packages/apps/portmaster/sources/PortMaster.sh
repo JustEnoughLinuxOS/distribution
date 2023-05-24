@@ -26,7 +26,7 @@ export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/storage/.config/PortMaster/libs"
 GREP="/storage/.config/PortMaster/grep"
 WGET="/usr/bin/wget"
 LANG=""
-export DIALOGRC=/storage/.config/PortMaster/colorscheme/jelos.dialogrc
+export DIALOGRC=/storage/.config/PortMaster/colorscheme/All_Black.dialogrc
 app_colorscheme="Default"
 mono_version="mono-6.12.0.122-aarch64.squashfs"
 

@@ -3,8 +3,8 @@
 
 	<game>
 		<path>./cloud_backup.sh</path>
-		<name>Cloud Backup</name>
-		<desc>Backup your saves to a cloud drive.</desc>
+		<name>클라우드 백업</name>
+		<desc>클라우드에서 세이브를 백업합니다</desc>
 		<developer>JELOS</developer>
 		<publisher>JELOS</publisher>
 		<rating>1.0</rating>
@@ -16,8 +16,8 @@
 
 	<game>
 		<path>./cloud_restore.sh</path>
-		<name>Cloud Restore</name>
-		<desc>Restores your saves from a cloud drive.</desc>
+		<name>클라우드 복원</name>
+		<desc>클라우드에서 세이브를 복원합니다</desc>
 		<developer>JELOS</developer>
 		<publisher>JELOS</publisher>
 		<rating>1.0</rating>
@@ -29,8 +29,8 @@
 
         <game>
                 <path>./fileman.sh</path>
-                <name>File Manager</name>
-                <desc>Single panel file manager</desc>
+                <name>파일 관리자</name>
+		<desc>단일 패널 파일 관리자</desc>
                 <developer>Tardigrade and JELOS</developer>
                 <publisher>JELOS</publisher>
                 <rating>1.0</rating>
@@ -42,8 +42,8 @@
 
         <game>
                 <path>./Install JELOS.sh</path>
-                <name>Install JELOS</name>
-                <desc>Install JELOS to local storage</desc>
+                <name>JELOS 설치</name>
+                <desc>JELOS를 로컬 스토리지에 설치합니다</desc>
                 <developer>JELOS</developer>
                 <publisher>JELOS</publisher>
                 <rating>1.0</rating>
@@ -55,7 +55,7 @@
 
 	<game>
 		<path>./Start PortMaster.sh</path>
-		<name>Start PortMaster</name>
+		<name>포트마스터 실행</name>
 		<desc>Portmaster</desc>
 		<developer>JELOS</developer>
 		<publisher>JELOS</publisher>
@@ -68,8 +68,8 @@
 	
 	<game>
 		<path>./Start PPSSPP.sh</path>
-		<name>Start PPSSPP</name>
-		<desc>Run the PPSSPP emulator without starting a game.</desc>
+		<name>PPSSPP 실행</name>
+		<desc>게임을 시작하지 않고 PPSSPP 에뮬레이터를 실행합니다</desc>
 		<developer>JELOS</developer>
 		<publisher>JELOS</publisher>
 		<rating>1.0</rating>
@@ -81,8 +81,8 @@
 
 	<game>
 		<path>./Start ScummVM.sh</path>
-		<name>Start ScummVM</name>
-		<desc>Run the ScummVM emulator without starting a game.</desc>
+		<name>ScummVM 실행</name>
+		<desc>게임을 시작하지 않고 ScummVM 에뮬레이터를 실행합니다</desc>
 		<developer>JELOS</developer>
 		<publisher>JELOS</publisher>
 		<rating>1.0</rating>
@@ -94,8 +94,8 @@
 
         <game>
                 <path>./Start 32bit Retroarch.sh</path>
-                <name>Start 32bit RetroArch</name>
-                <desc>Run 32bit RetroArch</desc>
+                <name>RetroArch 32비트 실행</name>
+		<desc>RetroArch 32비트를 실행합니다</desc>
                 <developer>JELOS</developer>
                 <publisher>JELOS</publisher>
                 <rating>1.0</rating>
@@ -107,8 +107,8 @@
 
 	<game>
 		<path>./Start 64bit Retroarch.sh</path>
-		<name>Start 64bit RetroArch</name>
-		<desc>Run 64bit RetroArch</desc>
+		<name>RetroArch 64비트 실행</name>
+		<desc>RetroArch 64비트를 실행합니다</desc>
 		<developer>JELOS</developer>
 		<publisher>JELOS</publisher>
 		<rating>1.0</rating>
@@ -120,8 +120,8 @@
 
 	<game>
 		<path>./Remove ._ Files.sh</path>
-		<name>Run Remove ._ Files</name>
-		<desc>Removes hidden ._ files created by the MacOS filesystem</desc>
+		<name>MacOS ._  파일 제거</name>
+		<desc>MacOS 파일 시스템에서 만든 숨겨진 ._ 파일을 제거합니다</desc>
 		<developer>JELOS</developer>
 		<publisher>JELOS</publisher>
 		<rating>1.0</rating>
@@ -131,4 +131,16 @@
 		<image>./downloaded_images/clean.png</image>
 	</game>
 
+	<game>
+		<path>./download_bios.sh</path>
+		<name>바이오스 다운로더</name>
+		<desc>바이오스를 네트워크에서 다운로드합니다</desc>
+		<developer>UzuCore</developer>
+		<publisher>UzuCore</publisher>
+		<rating>1.0</rating>
+		<releasedate>2023</releasedate>
+		<genre>Script</genre>
+		<thumbnail>./downloaded_images/bios-thumb.png</thumbnail>
+		<image>./downloaded_images/bios.png</image>
+	</game>
 </gameList>

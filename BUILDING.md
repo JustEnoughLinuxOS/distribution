@@ -141,6 +141,8 @@ It is also possible to build individual packages.
 ```
 DEVICE=AMD64 ARCH=x86_64 ./scripts/clean busybox
 DEVICE=AMD64 ARCH=x86_64 ./scripts/build busybox
+PROJECT=Rockchip DEVICE=RK3566 ARCH=aarch64 ./scripts/clean busybox
+PROJECT=Rockchip DEVICE=RK3566 ARCH=aarch64 ./scripts/build busybox
 ```
 > Note: An EmulationStation package standalone build requires additional steps because its source code located in a separate repository, see instructions inside, [link](https://github.com/JustEnoughLinuxOS/distribution/blob/main/packages/ui/emulationstation/package.mk).
 

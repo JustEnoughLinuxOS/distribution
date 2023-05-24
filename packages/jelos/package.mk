@@ -95,5 +95,4 @@ EOF
   then
     sed -i "s#system.automount=1#system.automount=0#g" ${INSTALL}/usr/config/system/configs/system.cfg
   fi
-
 }

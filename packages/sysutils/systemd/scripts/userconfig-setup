@@ -16,9 +16,9 @@ then
   then
     tocon "Installing themes..."
     mkdir -p /storage/.config/emulationstation/themes  >/dev/null
-    ln -s /usr/share/themes/es-theme-art-book-next /storage/.config/emulationstation/themes/system-theme  >/dev/null 2>&1
+    ln -s /usr/share/themes/es-theme-art-book-dc /storage/.config/emulationstation/themes/system-theme  >/dev/null 2>&1
     ln -s /usr/share/themes/es-theme-minielec /storage/.config/emulationstation/themes/es-theme-minielec  >/dev/null 2>&1
-    ln -s /usr/share/themes/es-theme-minimal /storage/.config/emulationstation/themes/es-theme-minimal  >/dev/null 2>&1
+    ln -s /usr/share/themes/es-theme-anbernic-dc /storage/.config/emulationstation/themes/es-theme-anbernic-dc  >/dev/null 2>&1
 
     ### Link the game controller database so it is managed with OS updates.
     tocon "Configuring controller database..."

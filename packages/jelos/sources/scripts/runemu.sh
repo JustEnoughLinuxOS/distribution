@@ -210,8 +210,18 @@ function quit() {
 	DEVICE_CPU_GOVERNOR=$(get_setting system.cpugovernor)
 	${DEVICE_CPU_GOVERNOR}
 	set_audio default
+	stop_rumble
 	exit $1
 }
+
+function stop_rumble() {
+	if [[ "${HW_DEVICE}" == RK3356 ]]
+	then
+		$VERBOSE && log $0 "Stop rumble"
+		echo 1000000 > /sys/class/pwm/pwmchip1/pwm0/duty_cycle
+	fi
+}
+
 
 function clear_screen() {
 	$VERBOSE && log $0 "Clearing screen"
