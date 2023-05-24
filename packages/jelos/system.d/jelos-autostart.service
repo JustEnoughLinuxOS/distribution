@@ -1,7 +1,7 @@
 [Unit]
 Description=JELOS user autostart script
 Before=emulationstation.service
-After=graphical.target
+After=network-base.service graphical.target
 
 [Service]
 Type=oneshot

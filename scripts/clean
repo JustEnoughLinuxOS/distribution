@@ -31,8 +31,14 @@ clean_package() {
       fi
     fi
   done
-  rm -f "${STAMPS}/${1}"/*
-  rm -f "${BUILD}/image/.stamps/${1}"/*
+  for dir in "${STAMPS}/${1}" "${BUILD}/image/.stamps/${1}"
+  do
+    if [ -d "${dir}" ]
+    then
+      rm -rf ${dir}
+      mkdir ${dir}
+    fi
+  done
 }
 
 if [ "${1}" = "--all" -a -n "${2}" ]; then

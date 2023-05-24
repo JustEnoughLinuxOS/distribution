@@ -20,7 +20,7 @@
 ################################################################################
 
 PKG_NAME="beetle-pce-lr"
-PKG_VERSION="7a482ed64267a5cc754357ae003a0eb76623a80c"
+PKG_VERSION="ee884c18fa1980a935707ccc83ff7e06969f8767"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
