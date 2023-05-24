@@ -14,6 +14,9 @@ makeinstall_target() {
   tar -xvf ${PKG_DIR}/sources/${PKG_NAME}.tar.gz -C ${INSTALL}/usr/config/PortMaster
   cp -rf ${PKG_DIR}/sources/PortMaster.sh ${INSTALL}/usr/config/PortMaster
   chmod +x ${INSTALL}/usr/config/PortMaster/PortMaster.sh
+  sed -e "s/jelos.dialogrc/All_Black.dialogrc/g" \
+      -i ${INSTALL}/usr/config/PortMaster/PortMaster.sh
+  cp -rf ${PKG_DIR}/sources/All_Black.dialogrc ${INSTALL}/usr/config/PortMaster/colorscheme
 
   mkdir -p ${INSTALL}/usr/bin
   cp -rf ${PKG_DIR}/scripts/* ${INSTALL}/usr/bin
