@@ -113,7 +113,7 @@ whichsd="storage/roms"
     dialog --clear --backtitle "PortMaster" --title "$1" --clear \
     --yesno "\n$msgtxt \n\nPorted By: $porter\n\nWould you like to continue to install this port?" $height $width 2>&1 > ${CUR_TTY}
   fi
-  
+
   case $? in
      0)
 	    if [ ${needmono,,} == "y" ] && [ $ismonothere == "n" ]; then
@@ -162,7 +162,7 @@ whichsd="storage/roms"
 	      $ESUDO rm -f /dev/shm/portmaster/$installloc
         fi
 	    ;;
-	 *) 
+	 *)
 	    ;;
   esac
 }
@@ -187,7 +187,7 @@ JelosPorts() {
    	--no-collapse \
    	--clear \
 	--cancel-label "Back" \
-    --menu "Available Jelos Add Ons ports for install" $height $width 15)
+    --menu "Available JelosAddOns ports for install" $height $width 15)
 
     choices=$("${selection[@]}" "${options[@]}" 2>&1 > ${CUR_TTY}) || TopLevel
 
@@ -227,7 +227,7 @@ MainMenu() {
 
 MainMenuRTR() {
   dwebsite=$website
-  jport="None" 
+  jport="None"
   local options=(
    $(cat /dev/shm/portmaster/ports.md | $GREP 'runtype="rtr"' | $GREP -oP "(?<=Title=\").*?(?=\")|$power|$opengl|$jport")
   )
@@ -268,8 +268,8 @@ TopLevel() {
     for choice in $topchoices; do
       case $choice in
         1) MainMenu ;;
-		2) MainMenuRTR ;;
-		3) JelosPorts ;;
+	2) MainMenuRTR ;;
+	3) JelosPorts ;;
       esac
     done
   done
