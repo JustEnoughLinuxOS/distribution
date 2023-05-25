@@ -10,7 +10,6 @@ if [ -f "/etc/profile" ]; then
   source /etc/profile
 fi
 
-
 toolsfolderloc="/storage/.config"
 
 isitext=$(df -PTh $toolsfolderloc | awk '{print $2}' | grep ext)
@@ -55,7 +54,7 @@ cp "$toolsfolderloc/PortMaster/gamecontrollerdb.txt" /tmp/gamecontrollerdb.txt
 $toolsfolderloc/PortMaster/mapper.txt "/tmp/gamecontrollerdb.txt" > /dev/null 2>&1
 export SDL_GAMECONTROLLERCONFIG_FILE="/tmp/gamecontrollerdb.txt"
 
-/usr/bin/gptokeyb Portmaster.sh -c "$toolsfolderloc/PortMaster/oga_controls_settings.txt" &
+/usr/bin/gptokeyb PortMaster.sh -c "$toolsfolderloc/PortMaster/portmaster.gptk" &
 
 GW=`ip route | awk '/default/ { print $3 }'`
 if [ -z "$GW" ]; then
@@ -63,17 +62,12 @@ if [ -z "$GW" ]; then
   --msgbox "\n\nYour network connection doesn't seem to be working. \
   \nDid you make sure to configure your wifi connection?" $height $width 2>&1 > ${CUR_TTY}
   $ESUDO kill -9 $(pidof gptokeyb)
-  if [ ! -z "$ESUDO" ]; then
-    $ESUDO systemctl restart oga_events &
-  fi
   exit 0
 fi
 
 website="https://github.com/PortsMaster/PortMaster-Releases/releases/latest/download/"
 jwebsite="https://github.com/brooksytech/JelosAddOns/releases/latest/download/"
 isgithubrelease="true" #Github releases convert space " " ("%20") to "."
-
-ISITCHINA=$(curl -s --connect-timeout 30 -m 60 http://demo.ip-api.com/json | $GREP -Po '"country":.*?[^\\]"')
 
 if [ ! -d "/dev/shm/portmaster" ]; then
   mkdir /dev/shm/portmaster
@@ -89,13 +83,7 @@ PortInfoInstall() {
 local setwebsiteback="N"
 local unzipstatus
 
-  if [ -f "/opt/system/Advanced/Switch to main SD for Roms.sh" ]; then
-    whichsd="roms2"
-  elif [ -f "/storage/.config/.OS_ARCH" ] || [ "${OS_NAME}" == "JELOS" ]; then
-    whichsd="storage/roms"
-  else
-    whichsd="roms"
-  fi
+whichsd="storage/roms"
 
   msgtxt=$(cat /dev/shm/portmaster/ports.md | $GREP "$1" | $GREP -oP '(?<=Desc=").*?(?=")')
   installloc=$(cat /dev/shm/portmaster/ports.md | $GREP "$1" | $GREP -oP '(?<=locat=").*?(?=")')
@@ -180,11 +168,7 @@ local unzipstatus
 }
 
 userExit() {
-  rm -f /dev/shm/portmaster/ports.md
-  rm -f /dev/shm/portmaster/jports.md
-  rm -f /dev/shm/portmaster/pports.md
-  $ESUDO kill -9 $(pidof oga_controls)
-  $ESUDO systemctl restart oga_events &
+  rm -f /dev/shm/portmaster/*ports.md
   dialog --clear
   printf "\033c" > ${CUR_TTY}
   exit 0
@@ -199,11 +183,11 @@ JelosPorts() {
   while true; do
     selection=(dialog \
    	--backtitle "PortMaster" \
-   	--title "[ Jelos Ports]" \
+   	--title "[ JelosAddOns Ports]" \
    	--no-collapse \
    	--clear \
-	--cancel-label "$hotkey + Start to Exit" \
-    --menu "Available ports for install" $height $width 15)
+	--cancel-label "Back" \
+    --menu "Available Jelos Add Ons ports for install" $height $width 15)
 
     choices=$("${selection[@]}" "${options[@]}" 2>&1 > ${CUR_TTY}) || TopLevel
 
@@ -228,7 +212,7 @@ MainMenu() {
    	--title "[ Main Menu of all ports]" \
    	--no-collapse \
    	--clear \
-	--cancel-label "$hotkey + Start to Exit" \
+	--cancel-label "Back" \
     --menu "Available ports for install" $height $width 15)
 
     choices=$("${selection[@]}" "${options[@]}" 2>&1 > ${CUR_TTY}) || TopLevel
@@ -254,7 +238,7 @@ MainMenuRTR() {
    	--title "[ Main Menu for Ready to Run ports ]" \
    	--no-collapse \
    	--clear \
-	--cancel-label "$hotkey + Start to Exit" \
+	--cancel-label "Back" \
     --menu "Available Ready to Run ports for install" $height $width 15)
 
     choices=$("${selection[@]}" "${options[@]}" 2>&1 > ${CUR_TTY}) || TopLevel
@@ -268,7 +252,7 @@ MainMenuRTR() {
 }
 
 TopLevel() {
-  local topoptions=( 1 "All Available Ports" 2 "Ready to Run Ports" 3 "Jelos Ports" )
+  local topoptions=( 1 "All Available Ports" 2 "Ready to Run Ports" 3 "JelosAddOns Ports" )
 
   while true; do
     topselection=(dialog \
@@ -276,7 +260,7 @@ TopLevel() {
    	--title "[ Top Level Menu ]" \
    	--no-collapse \
    	--clear \
-	--cancel-label "$hotkey + Start to Exit" \
+	--cancel-label "Exit" \
     --menu "Please make your selection" $height $width 15)
 
 	topchoices=$("${topselection[@]}" "${topoptions[@]}" 2>&1 > ${CUR_TTY}) || userExit
