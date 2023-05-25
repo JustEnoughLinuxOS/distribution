@@ -125,16 +125,13 @@ ln -sf /storage/roms/3ds/citrasa/nand /storage/.config/citra-emu/nand
   #Video Backend
         if [ "$RENDERER" = "1" ]
         then
-		cp -r /usr/bin/citra-vulkan /storage/.config/citra-emu/citra
-		sed -i '/graphics_api =/c\graphics_api = 2' /storage/.config/citra-emu/sdl2-config.ini
+		sed -i '/graphics_api =/c\graphics_api = 1' /storage/.config/citra-emu/sdl2-config.ini
 	else
-		cp -r /usr/bin/citra-gl /storage/.config/citra-emu/citra
-                sed -i '/graphics_api =/c\graphics_api = 1' /storage/.config/citra-emu/sdl2-config.ini
+                sed -i '/graphics_api =/c\graphics_api = 2' /storage/.config/citra-emu/sdl2-config.ini
 	fi
-		chmod +x /storage/.config/citra-emu/citra
 
 rm -rf /storage/.local/share/citra-emu
 ln -sfv /storage/.config/citra-emu /storage/.local/share/citra-emu
 
 #Run Citra Emulator
-  /storage/.config/citra-emu/citra "${1}"
+  /usr/bin/citra "${1}"
