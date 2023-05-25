@@ -3,10 +3,10 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="flycast-lr"
-PKG_VERSION="9d6bfd4786dd81206defd3dfbf1e637ac9ce212c"
+PKG_VERSION="76af42ae6e1a67ef8e00ca96cf2d226407d2618a"
 PKG_SITE="https://github.com/flyinghead/flycast"
 PKG_URL="${PKG_SITE}.git"
-PKG_DEPENDS_TARGET="toolchain libzip"
+PKG_DEPENDS_TARGET="toolchain zlib libzip"
 PKG_LONGDESC="Flycast is a multi-platform Sega Dreamcast, Naomi and Atomiswave emulator"
 PKG_TOOLCHAIN="cmake"
 
@@ -17,7 +17,9 @@ else
   PKG_CMAKE_OPTS_TARGET+="  USE_OPENGL=OFF"
 fi
 
-if [ "${OPENGLES_SUPPORT}" = yes ] | [ ! "${TARGET_ARCH}" = "x86_64" ]; then
+if [ "${OPENGLES_SUPPORT}" = yes ] && \
+   [ ! "${TARGET_ARCH}" = "x86_64" ]
+then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
   PKG_CMAKE_OPTS_TARGET+=" -DUSE_GLES=ON"
 else
@@ -53,13 +55,10 @@ makeinstall_target32() {
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
+  cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast_libretro.so
   case ${TARGET_ARCH} in
     aarch64)
-      cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast_libretro.so
       makeinstall_target32 flycast
-    ;;
-    *)
-      cp flycast_libretro.so ${INSTALL}/usr/lib/libretro/flycast_libretro.so
     ;;
   esac
 }
