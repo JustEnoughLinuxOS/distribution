@@ -1,9 +1,12 @@
 #!/bin/sh
 
-# setup hostname
-if [ -f /storage/.cache/hostname ]; then
-  cat /storage/.cache/hostname > /proc/sys/kernel/hostname
-fi
+. /etc/profile
+
+# Set hostname
+HOSTNAME=$(get_setting system.hostname)
+echo ${HOSTNAME} >/proc/sys/kernel/hostname
+hostnamectl --transient hostname ${HOSTNAME}
+avahi-set-host-name ${HOSTNAME}
 
 # setup /etc/hosts
 rm -f /run/libreelec/hosts

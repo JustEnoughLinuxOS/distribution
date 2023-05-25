@@ -28,10 +28,37 @@ ln -sf /storage/roms/3ds/citrasa/nand /storage/.config/citra-emu/nand
 
    #Emulation Station Features
    GAME=$(echo "${1}"| sed "s#^/.*/##")
+   CPU=$(get_setting cpu_speed 3ds "${GAME}")
    RENDERER=$(get_setting graphics_backend 3ds "${GAME}")
    RES=$(get_setting resolution_scale 3ds "${GAME}")
    ROTATE=$(get_setting rotate_screen 3ds "${GAME}")
    SLAYOUT=$(get_setting screen_layout 3ds "${GAME}")
+
+   #CPU Underclock
+        if [ "$CPU" = "0" ]
+        then
+                sed -i '/cpu_clock_percentage =/c\cpu_clock_percentage = 100' /storage/.config/citra-emu/sdl2-config.ini
+        fi
+        if [ "$CPU" = "1" ]
+        then
+                sed -i '/cpu_clock_percentage =/c\cpu_clock_percentage = 90' /storage/.config/citra-emu/sdl2-config.ini
+        fi
+	if [ "$CPU" = "2" ]
+        then
+                sed -i '/cpu_clock_percentage =/c\cpu_clock_percentage = 80' /storage/.config/citra-emu/sdl2-config.ini
+        fi
+        if [ "$CPU" = "3" ]
+        then
+                sed -i '/cpu_clock_percentage =/c\cpu_clock_percentage = 70' /storage/.config/citra-emu/sdl2-config.ini
+        fi
+        if [ "$CPU" = "4" ]
+        then
+                sed -i '/cpu_clock_percentage =/c\cpu_clock_percentage = 60' /storage/.config/citra-emu/sdl2-config.ini
+        fi
+        if [ "$CPU" = "5" ]
+        then
+                sed -i '/cpu_clock_percentage =/c\cpu_clock_percentage = 50' /storage/.config/citra-emu/sdl2-config.ini
+        fi
 
    #Resolution Scale
 	if [ "$RES" = "0" ]
@@ -99,13 +126,14 @@ ln -sf /storage/roms/3ds/citrasa/nand /storage/.config/citra-emu/nand
         if [ "$RENDERER" = "1" ]
         then
 		cp -r /usr/bin/citra-vulkan /storage/.config/citra-emu/citra
+		sed -i '/graphics_api =/c\graphics_api = 2' /storage/.config/citra-emu/sdl2-config.ini
 	else
 		cp -r /usr/bin/citra-gl /storage/.config/citra-emu/citra
+                sed -i '/graphics_api =/c\graphics_api = 1' /storage/.config/citra-emu/sdl2-config.ini
 	fi
 		chmod +x /storage/.config/citra-emu/citra
 
 rm -rf /storage/.local/share/citra-emu
-
 ln -sfv /storage/.config/citra-emu /storage/.local/share/citra-emu
 
 #Run Citra Emulator

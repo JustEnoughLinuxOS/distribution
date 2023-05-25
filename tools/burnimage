@@ -17,22 +17,18 @@ then
   exit 1
 fi
 
-MAXSIZE="512000000"
+# Exclude the boot device.
+MYBOOTDEVICE=$(readlink -f /dev/disk/by-partuuid/$(efibootmgr -v | awk 'BEGIN {FS=","} /Boot0000/ {print $3}'))
 
-
-SDDEVICES=($(awk '/mmcblk[0-9]$/ {print $3":"$4}' /proc/partitions | sort -r))
-if [ -z "${SDDEVICES}" ]
-then
-  SDDEVICES=($(awk '/sd*[b-z]$/ {print $3":"$4}' /proc/partitions | sort -r))
-fi
+SDDEVICES=($(awk '/sd*[a-z]$|mmcblk[0-9]$|nvme[0-9]n[0-9]$/ {print $4}' /proc/partitions))
 
 for SDDEVICE in ${SDDEVICES[@]}
 do
-  SIZE=${SDDEVICE%:*}
-  SDDEVICE=${SDDEVICE#*:}
-  if [ "${SIZE}" -le "${MAXSIZE}" ]
+  # Make sure we're not using a device that's mounted.
+  ISMOUNTED=$(grep ${SDDEVICE} /proc/mounts >/dev/null 2>&1 && echo true || echo false)
+  if [[ ! "${MYBOOTDEVICE}" =~ ${SDDEVICE} ]] && \
+     [ "${ISMOUNTED}" = false ]
   then
-    echo "Found SD Card @ ${SDDEVICE}"
     break
   fi
   unset SDDEVICE
@@ -40,10 +36,13 @@ done
 
 if [ ! -z "${SDDEVICE}" ]
 then
+  echo -e "\nWARNING: The burnimage tool will flash ${DISTRO}-${DEVICE}.${ARCH}-${BURN_VERSION}.img to unused device /dev/${SDDEVICE}.\n"
+
+  read -n 1 -s -r -p "PRESS CONTROL-C NOW TO ABORT, OR ANY OTHER KEY TO CONTINUE!"
   if [ -e "release/${DISTRO}-${DEVICE}.${ARCH}-${BURN_VERSION}.img" ] || [ -e "release/${DISTRO}-${DEVICE}.${ARCH}-${BURN_VERSION}.img.gz" ]
   then
     cd release
-    echo "Extracting ${DISTRO}-${DEVICE}.${ARCH}-${BURN_VERSION}.img"
+    echo -e "\n\nExtracting ${DISTRO}-${DEVICE}.${ARCH}-${BURN_VERSION}.img"
     gunzip ${DISTRO}-${DEVICE}.${ARCH}-${BURN_VERSION}.img.gz 2>/dev/null ||:
     echo "Wiping ${SDDEVICE} partition data"
     sudo wipefs -a ${SDDEVICE} 2>/dev/null ||:

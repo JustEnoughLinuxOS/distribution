@@ -2,7 +2,7 @@
 # setup system defaults
 ################################################################################
 
-  # Bootloader to use (syslinux / u-boot / bcm2835-bootloader)
+  # Bootloader to use (syslinux / u-boot)
     BOOTLOADER="u-boot"
 
   # Kernel extra targets to build
@@ -32,16 +32,16 @@
   # OpenGL(X) implementation to use (no / mesa)
     OPENGL="no"
 
-  # OpenGL-ES implementation to use (no / bcm2835-driver / gpu-viv-bin-mx6q)
+  # OpenGL-ES implementation to use (no / libmali / mesa)
     OPENGLES="libmali"
 
   # include uvesafb support (yes / no)
     UVESAFB_SUPPORT="no"
 
-  # Displayserver to use (weston / no)
+  # Displayserver to use (no / wl)
     DISPLAYSERVER="no"
 
-  # Windowmanager to use (fluxbox / none)
+  # Windowmanager to use (none / weston)
     WINDOWMANAGER="none"
 
   # Xorg Graphic drivers to use (all / i915,i965,r200,r300,r600,nvidia)

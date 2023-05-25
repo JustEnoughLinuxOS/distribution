@@ -43,6 +43,7 @@ height="15"
 width="55"
 power='(?<=Title_P=\").*?(?=\")'
 opengl="None"
+jport="None"
 
 if [[ "${UI_SERVICE}" =~ weston.service ]]; then
   opengl='(?<=Title_F=\").*?(?=\")'
@@ -69,6 +70,7 @@ if [ -z "$GW" ]; then
 fi
 
 website="https://github.com/PortsMaster/PortMaster-Releases/releases/latest/download/"
+jwebsite="https://github.com/brooksytech/JelosAddOns/releases/latest/download/"
 isgithubrelease="true" #Github releases convert space " " ("%20") to "."
 
 ISITCHINA=$(curl -s --connect-timeout 30 -m 60 http://demo.ip-api.com/json | $GREP -Po '"country":.*?[^\\]"')
@@ -77,7 +79,10 @@ if [ ! -d "/dev/shm/portmaster" ]; then
   mkdir /dev/shm/portmaster
 fi
 
-$WGET -t 3 -T 60 --no-check-certificate "$website"ports.md -O /dev/shm/portmaster/ports.md
+$WGET -t 3 -T 60 --no-check-certificate "$website"ports.md -O /dev/shm/portmaster/pports.md
+$WGET -t 3 -T 60 --no-check-certificate "$jwebsite"jports.md -O /dev/shm/portmaster/jports.md
+
+cat /dev/shm/portmaster/pports.md /dev/shm/portmaster/jports.md > /dev/shm/portmaster/ports.md
 
 PortInfoInstall() {
 
@@ -91,7 +96,7 @@ local unzipstatus
   else
     whichsd="roms"
   fi
-  
+
   msgtxt=$(cat /dev/shm/portmaster/ports.md | $GREP "$1" | $GREP -oP '(?<=Desc=").*?(?=")')
   installloc=$(cat /dev/shm/portmaster/ports.md | $GREP "$1" | $GREP -oP '(?<=locat=").*?(?=")')
   porter=$(cat /dev/shm/portmaster/ports.md | $GREP "$1" | $GREP -oP '(?<=porter=").*?(?=")')
@@ -134,7 +139,7 @@ local unzipstatus
           and your internet connection is stable and try again." $height $width 2>&1 > ${CUR_TTY}
           $ESUDO rm -f /storage/roms/ports/PortMaster/libs/$mono_version
         else
-	      $WGET -t 3 -T 60 -q --show-progress "$website$installloc" -O \
+	      $WGET -t 3 -T 60 -q --show-progress "$dwebsite$installloc" -O \
 	      /dev/shm/portmaster/$installloc 2>&1 | stdbuf -oL sed -E 's/\.\.+/---/g'| dialog --progressbox \
 	      "Downloading ${1} package..." $height $width > ${CUR_TTY}
 	      unzip -o /dev/shm/portmaster/$installloc -d /$whichsd/ports/ > ${CUR_TTY}
@@ -176,130 +181,45 @@ local unzipstatus
 
 userExit() {
   rm -f /dev/shm/portmaster/ports.md
+  rm -f /dev/shm/portmaster/jports.md
+  rm -f /dev/shm/portmaster/pports.md
   $ESUDO kill -9 $(pidof oga_controls)
   $ESUDO systemctl restart oga_events &
   dialog --clear
   printf "\033c" > ${CUR_TTY}
   exit 0
 }
-SetColorScheme() {
-  if [ "$app_colorscheme" == "Default" ]; then
-	export DIALOGRC=$toolsfolderloc/PortMaster/colorscheme/$app_colorscheme.dialogrc
-    if [[ -e "$toolsfolderloc/PortMaster/PortMaster.sh" ]]; then
-      sed -i "/export DIALOGRC\=\//c\export DIALOGRC\=\/" $toolsfolderloc/PortMaster/PortMaster.sh
-    fi
-    if [[ -e "$toolsfolderloc/PortMaster.sh" ]]; then
-      sed -i "/export DIALOGRC\=\//c\export DIALOGRC\=\/" $toolsfolderloc/PortMaster.sh
-    fi
-  else
-    export DIALOGRC=$toolsfolderloc/PortMaster/colorscheme/$app_colorscheme.dialogrc
-    if [[ -e "$toolsfolderloc/PortMaster/PortMaster.sh" ]]; then
-      sed -i "/export DIALOGRC\=\//c\export DIALOGRC\=$toolsfolderloc\/PortMaster\/colorscheme\/$app_colorscheme.dialogrc" $toolsfolderloc/PortMaster/PortMaster.sh
-    fi
-    if [[ -e "$toolsfolderloc/PortMaster.sh" ]]; then
-      sed -i "/export DIALOGRC\=\//c\export DIALOGRC\=$toolsfolderloc\/PortMaster\/colorscheme\/$app_colorscheme.dialogrc" $toolsfolderloc/PortMaster.sh
-    fi
-  fi
-}
 
-ColorSchemeMenu() {
-  local cmd
-  local options
-  local choice
-  local retval
-  local dialog_config
-  local temp
-
-  dialog_config=(${toolsfolderloc}/PortMaster/colorscheme/*.dialogrc) # This creates an array of the full paths to all .dialogrc files
-  dialog_config=("${dialog_config[@]##*/}") #Remove path prefix
-  dialog_config=("${dialog_config[@]%.*}") #Get filename without extension
-  cmd=(dialog \
-    --clear \
-	--backtitle "PortMaster" \
-	--title " [ Color Scheme Selection ] " \
-	--no-collapse \
-	--cancel-label "Back" \
-	--menu "Select the PortMaster UI color scheme :" $height $width "15")
-
-  options+=(Default ".")
-
-  for temp in "${dialog_config[@]}"; do
-    if [ "$temp" == "Default" ]; then
-      echo "Skip default"
-    else
-      options+=($temp ".")
-    fi
-  done
-
-  choice=$("${cmd[@]}" "${options[@]}" 2>&1 >${CUR_TTY})
-  retval=$?
-
-  case $retval in
-  0)
-    if [ "$choice" != "$app_colorscheme" ]; then
-      app_colorscheme=$choice
-      SetColorScheme
-    fi
-	ColorSchemeMenu
-    ;;
-  1)
-    Settings
-    ;;
-  *)
-    Settings
-    ;;
-  esac
-}
-
-Settings() {
-  if [[ ! -z $(cat $toolsfolderloc/PortMaster/gamecontrollerdb.txt | $GREP 'Default Layout') ]]; then
-    local curctrlcfg="Switch to Xbox 360 Control Layout"
-  else
-    local curctrlcfg="Switch to Default Control Layout"
-  fi
-  
-  local settingsoptions=( 1 "Restore Backup gamecontrollerdb.txt" 2 "$curctrlcfg" 3 "UI Color Scheme" 4 "Go Back" )
-
+JelosPorts() {
+  dwebsite=$jwebsite
+  jport='(?<=Title_J=\").*?(?=\")'
+  local options=(
+   $(cat /dev/shm/portmaster/ports.md | $GREP 'runtype="jp"' | $GREP -oP "(?<=Title=\").*?(?=\")|$power|$opengl|$jport")
+  )
   while true; do
-    settingsselection=(dialog \
+    selection=(dialog \
    	--backtitle "PortMaster" \
-   	--title "[ Settings Menu ]" \
+   	--title "[ Jelos Ports]" \
    	--no-collapse \
    	--clear \
 	--cancel-label "$hotkey + Start to Exit" \
-    --menu "What do you want to do?" $height $width 15)
-	
-	settingschoices=$("${settingsselection[@]}" "${settingsoptions[@]}" 2>&1 > ${CUR_TTY}) || TopLevel
+    --menu "Available ports for install" $height $width 15)
 
-    for choice in $settingschoices; do
+    choices=$("${selection[@]}" "${options[@]}" 2>&1 > ${CUR_TTY}) || TopLevel
+
+    for choice in $choices; do
       case $choice in
-        1) cp -f $toolsfolderloc/PortMaster/.Backup/donottouch.txt $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-		   if [ $? == 0 ]; then
-		     dialog --clear --backtitle "PortMaster" --title "$1" --clear --msgbox "\n\nThe default gamecontrollerdb.txt has been successfully restored." $height $width 2>&1 > ${CUR_TTY}
-		   else
-		     dialog --clear --backtitle "PortMaster" --title "$1" --clear --msgbox "\n\nThe default gamecontrollerdb.txt has failed to be restored.  Is the backup portmaster subfolder or it's contents missing?" $height $width 2>&1 > ${CUR_TTY}
-		   fi
-		   Settings
-        ;;
-		2) if [[ $curctrlcfg == "Switch to Xbox 360 Control Layout" ]]; then
-			 cp -f $toolsfolderloc/PortMaster/.Backup/donottouch_x.txt $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-		   else
-			 cp -f $toolsfolderloc/PortMaster/.Backup/donottouch.txt $toolsfolderloc/PortMaster/gamecontrollerdb.txt
-		   fi
-		   Settings
-		;;
-		3) ColorSchemeMenu
-		;;
-		4) TopLevel
-		;;
+        *) PortInfoInstall $choice ;;
       esac
     done
   done
 }
 
 MainMenu() {
+  dwebsite=$website
+  jport="None"
   local options=(
-   $(cat /dev/shm/portmaster/ports.md | $GREP -oP "(?<=Title=\").*?(?=\")|$power|$opengl")
+   $(cat /dev/shm/portmaster/ports.md | $GREP -oP "(?<=Title=\").*?(?=\")|$power|$opengl|$jport")
   )
 
   while true; do
@@ -322,8 +242,10 @@ MainMenu() {
 }
 
 MainMenuRTR() {
+  dwebsite=$website
+  jport="None" 
   local options=(
-   $(cat /dev/shm/portmaster/ports.md | $GREP 'runtype="rtr"' | $GREP -oP "(?<=Title=\").*?(?=\")|$power|$opengl")
+   $(cat /dev/shm/portmaster/ports.md | $GREP 'runtype="rtr"' | $GREP -oP "(?<=Title=\").*?(?=\")|$power|$opengl|$jport")
   )
 
   while true; do
@@ -346,7 +268,7 @@ MainMenuRTR() {
 }
 
 TopLevel() {
-  local topoptions=( 1 "All Available Ports" 2 "Ready to Run Ports" 3 "Settings" )
+  local topoptions=( 1 "All Available Ports" 2 "Ready to Run Ports" 3 "Jelos Ports" )
 
   while true; do
     topselection=(dialog \
@@ -363,7 +285,7 @@ TopLevel() {
       case $choice in
         1) MainMenu ;;
 		2) MainMenuRTR ;;
-		3) Settings ;;
+		3) JelosPorts ;;
       esac
     done
   done

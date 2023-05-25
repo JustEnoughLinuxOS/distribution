@@ -1,0 +1,8 @@
+- CMD: mux -c oga-control
+- JOB: mux -i oga-control | uinput -c /etc/interception/oga-controls.yaml
+- JOB: intercept -g $DEVNODE | mux -o oga-control
+  DEVICE:
+    LINK: /dev/input/by-path/platform-adc-joystick-event
+- JOB: intercept -g $DEVNODE | mux -o oga-control
+  DEVICE:
+    LINK: /dev/input/by-path/platform-gpio-keys-event-joystick
