@@ -18,15 +18,15 @@ cp /usr/config/PortMaster/PortMaster.sh PortMaster.sh
 
 #Use our gamecontrollerdb.txt
 rm gamecontrollerdb.txt
-ln -sfv /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt gamecontrollerdb.txt
+ln -sf /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt gamecontrollerdb.txt
 
 #Use our gptokeyb
 rm gptokeyb
-ln -sfv /usr/bin/gptokeyb gptokeyb
+ln -sf /usr/bin/gptokeyb gptokeyb
+cp /usr/config/PortMaster/portmaster.gptk portmaster.gptk
 
 #Use our wget
-rm wget
-ln -sfv /usr/bin/wget wget
+ln -sf /usr/bin/wget wget
 
 #Make sure roms/ports/PortMaster folder exists
 if [ ! -d "/storage/roms/ports/PortMaster" ]; then
@@ -42,8 +42,6 @@ fi
 cp /storage/.config/PortMaster/control.txt /storage/roms/ports/PortMaster/control.txt
 cp /storage/.config/PortMaster/gptokeyb /storage/roms/ports/PortMaster/gptokeyb
 cp /storage/.config/PortMaster/gamecontrollerdb.txt /storage/roms/ports/PortMaster/gamecontrollerdb.txt
-cp /storage/.config/PortMaster/mapper.txt /storage/roms/ports/PortMaster/mapper.txt
-cp /storage/.config/PortMaster/oga_controls* /storage/roms/ports/PortMaster/
 
 #Delete and refrence to PortMaster.sh, we only want to use ours.
 find /storage/roms/ports -type f -name "PortMaster.sh" -delete
