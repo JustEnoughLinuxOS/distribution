@@ -14,10 +14,15 @@ PKG_TOOLCHAIN="manual"
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
 fi
-
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
-  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+  if [ "${DEVICE}" = "AMD64" ]; then
+    PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
+  else
+    PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+    PKG_MAKE_OPTS_TARGET+="USE_GLES=1"
+  fi
 fi
+
 
 make_target() {
   case ${ARCH} in
