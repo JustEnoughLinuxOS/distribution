@@ -1,0 +1,55 @@
+diff --git a/arch/arm64/boot/dts/rockchip/rk3568.dtsi b/arch/arm64/boot/dts/rockchip/rk3568.dtsi
+index 3c184f45d..7ae3aa62c 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3568.dtsi
++++ b/arch/arm64/boot/dts/rockchip/rk3568.dtsi
+@@ -3228,7 +3228,7 @@
+ 		clock-names = "saradc", "apb_pclk";
+ 		resets = <&cru SRST_P_SARADC>;
+ 		reset-names = "saradc-apb";
+-		status = "disabled";
++		status = "okay";
+ 	};
+ 
+ 	mailbox: mailbox@fe780000 {
+diff --git a/scripts/mkmultidtb.py b/scripts/mkmultidtb.py
+index 81b814acd..e2733eb0e 100755
+--- a/scripts/mkmultidtb.py
++++ b/scripts/mkmultidtb.py
+@@ -1,7 +1,7 @@
+-#!/usr/bin/env python
++#!/usr/bin/env python3
+ # SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+ # Copyright (c) 2018 Fuzhou Rockchip Electronics Co., Ltd
+-#
++# Copyright (C) 2023 Fewtarius
+ 
+ 
+ """
+@@ -26,10 +26,13 @@ DTBS['RK3308-EVB'] = OrderedDict([('rk3308-evb-dmic-i2s-v10', '#_saradc_ch3=288'
+ 				  ('rk3308-evb-dmic-pdm-v10', '#_saradc_ch3=1024'),
+ 				  ('rk3308-evb-amic-v10', '#_saradc_ch3=407')])
+ 
++DTBS['rk356x'] = OrderedDict([('rk3566-evb2-lp4x-v10-linux', '#_saradc_ch0=511')])
++
++DTBS['rk3588'] = OrderedDict([('rk3588s-orangepi-5', '#_saradc_ch1=001'),
++                              ('rk3588-rock-5b', '#_saradc_ch1=002'),
++			      ('rk3588s-indiedroid-nova', '#_saradc_ch1=4095')])
++
+ def main():
+-    if (len(sys.argv) < 2) or (sys.argv[1] == '-h'):
+-        print __doc__
+-        sys.exit(2)
+ 
+     BOARD = sys.argv[1]
+     TARGET_DTBS = DTBS[BOARD]
+@@ -47,8 +50,8 @@ def main():
+         shutil.copyfile(ori_file, new_file)
+         target_dtb_list += ' ' + new_file
+ 
+-    print target_dtb_list
+-    os.system('scripts/resource_tool logo.bmp logo_kernel.bmp ' + target_dtb_list)
++    print (target_dtb_list)
++    os.system('scripts/resource_tool ' + target_dtb_list)
+     os.system('rm ' + target_dtb_list)
+ 
+ if __name__ == '__main__':
