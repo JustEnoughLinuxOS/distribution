@@ -31,7 +31,7 @@
     BOOTLOADER="u-boot"
     PARTITION_TABLE="gpt"
     UBOOT_LABEL="uboot"
-    TRUST_LABEL="trust"
+    TRUST_LABEL="resource"
     DEVICE_DTB=("rk3566-evb2-lp4x-v10-linux")
     UBOOT_DTB="rk3566"
     UBOOT_CONFIG="rk3568_defconfig"
