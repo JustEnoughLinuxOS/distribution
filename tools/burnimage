@@ -20,7 +20,7 @@ fi
 # Exclude the boot device.
 MYBOOTDEVICE=$(readlink -f /dev/disk/by-partuuid/$(efibootmgr -v | awk 'BEGIN {FS=","} /Boot0000/ {print $3}'))
 
-SDDEVICES=($(awk '/sd*[a-z]$|mmcblk[0-9]$|nvme[0-9]n[0-9]$/ {print $4}' /proc/partitions))
+SDDEVICES=($(awk '/sd*[a-z]$|mmcblk[0-9]$|nvme[0-9]n[0-9]$/ {print $4}' /proc/partitions | sort -r))
 
 for SDDEVICE in ${SDDEVICES[@]}
 do

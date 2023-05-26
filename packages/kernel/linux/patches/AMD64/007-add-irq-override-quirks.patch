@@ -1,7 +1,7 @@
-diff -rupN linux-6.1.27.orig/drivers/acpi/resource.c linux-6.1.27/drivers/acpi/resource.c
---- linux-6.1.27.orig/drivers/acpi/resource.c	2023-05-01 20:39:27.376399763 +0000
-+++ linux-6.1.27/drivers/acpi/resource.c	2023-05-07 11:02:03.154416724 +0000
-@@ -36,6 +36,28 @@ static inline bool
+diff --color -rupN linux.orig/drivers/acpi/resource.c linux/drivers/acpi/resource.c
+--- linux.orig/drivers/acpi/resource.c	2023-05-14 11:15:56.883145312 -0400
++++ linux/drivers/acpi/resource.c	2023-05-14 11:22:05.436042175 -0400
+@@ -36,6 +36,35 @@ static inline bool
  acpi_iospace_resource_valid(struct resource *res) { return true; }
  #endif
  
@@ -23,6 +23,13 @@ diff -rupN linux-6.1.27.orig/drivers/acpi/resource.c linux-6.1.27/drivers/acpi/r
 +                },
 +                .callback = irq_override_fixup,
 +        },
++        {
++                .matches = {
++                        DMI_EXACT_MATCH(DMI_SYS_VENDOR, "GPD"),
++                        DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "G1619-04"),
++                },
++                .callback = irq_override_fixup,
++        },
 +        { }
 +};
 +#endif
@@ -30,7 +37,7 @@ diff -rupN linux-6.1.27.orig/drivers/acpi/resource.c linux-6.1.27/drivers/acpi/r
  #if IS_ENABLED(CONFIG_ACPI_GENERIC_GSI)
  static inline bool is_gsi(struct acpi_resource_extended_irq *ext_irq)
  {
-@@ -542,7 +564,9 @@ static bool acpi_dev_irq_override(u32 gs
+@@ -542,7 +571,9 @@ static bool acpi_dev_irq_override(u32 gs
  	 * this override breaks active low IRQs on AMD Ryzen 6000 and
  	 * newer systems. Skip it.
  	 */
@@ -41,7 +48,7 @@ diff -rupN linux-6.1.27.orig/drivers/acpi/resource.c linux-6.1.27/drivers/acpi/r
  		return false;
  #endif
  
-@@ -963,3 +987,4 @@ struct acpi_device *acpi_resource_consum
+@@ -963,3 +994,4 @@ struct acpi_device *acpi_resource_consum
  	acpi_get_devices(NULL, acpi_res_consumer_cb, res, (void **) &consumer);
  	return consumer;
  }
