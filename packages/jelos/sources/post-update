@@ -24,6 +24,13 @@ then
   EXCLUDE="--exclude=configs"
 fi
 
+### Remove and link es configs so they are managed with OS updates.
+for es_cfg in es_features.cfg es_systems.cfg
+do
+  mv /storage/.config/emulationstation/${es_cfg} /storage/.config/emulationstation/last_${es_cfg} >/dev/null 2>&1
+  ln -s /usr/config/emulationstation/${es_cfg} /storage/.config/emulationstation/${es_cfg}  >/dev/null 2>&1
+done
+
 rsync -a --delete ${EXCLUDE} /usr/config/system/ /storage/.config/system/
 rsync -a --ignore-existing /usr/config/game /storage/.config/
 rsync -a /usr/config/modules /storage/.config/
