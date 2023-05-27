@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="citra-sa-vulkan"
-PKG_VERSION="1d65b568190f68fae97fd39f56247b12429a6cb5"
+PKG_VERSION="c17090e1887844f19e8bb29cdd8110094cc5e890"
 PKG_LICENSE="MPLv2"
 PKG_SITE="https://github.com/GPUCode/citra"
 PKG_URL="${PKG_SITE}.git"
