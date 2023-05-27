@@ -113,10 +113,12 @@ fi
 if [ -f $SYSTEM_ROOT/usr/share/bootloader/trust.img ]; then
   echo -n "Updating trust.img... "
   dd if=$SYSTEM_ROOT/usr/share/bootloader/trust.img of=$BOOT_DISK bs=512 seek=24576 conv=fsync &>/dev/null
+  parted $BOOT_DISK name 2 trust &>/dev/null ||:
   echo "done"
 elif [ -f $SYSTEM_ROOT/usr/share/bootloader/resource.img ]; then
   echo -n "Updating resource.img... "
   dd if=$SYSTEM_ROOT/usr/share/bootloader/resource.img of=$BOOT_DISK bs=512 seek=24576 conv=fsync &>/dev/null
+  parted $BOOT_DISK name 2 resource &>/dev/null ||:
   echo "done"
 fi
 
