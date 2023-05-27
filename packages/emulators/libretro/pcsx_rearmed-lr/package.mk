@@ -32,5 +32,9 @@ makeinstall_target32() {
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
   cp pcsx_rearmed_libretro.so ${INSTALL}/usr/lib/libretro/
-  makeinstall_target32 pcsx_rearmed
+  case ${TARGET_ARCH} in
+    aarch64)
+      makeinstall_target32 pcsx_rearmed
+    ;;
+  esac
 }

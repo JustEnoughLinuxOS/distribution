@@ -2,7 +2,8 @@
 # Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="portmaster"
-PKG_VERSION="1.0"
+PKG_VERSION="b817dcd13c4486284874c13b2732d876a96e70b9"
+PKG_SITE="https://github.com/christianhaitian/PortMaster"
 PKG_LICENSE="MIT"
 PKG_ARCH="arm aarch64"
 PKG_DEPENDS_TARGET="toolchain gptokeyb gamecontrollerdb wget"

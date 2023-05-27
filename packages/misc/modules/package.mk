@@ -35,5 +35,10 @@ post_makeinstall_target() {
       rm -f ${INSTALL}/usr/config/modules/Install*
     ;;
   esac
+  case ${DEVICE} in
+    S922X*)
+      rm -f ${INSTALL}/usr/config/modules/*ScummVM*
+    ;;
+  esac
 }
 

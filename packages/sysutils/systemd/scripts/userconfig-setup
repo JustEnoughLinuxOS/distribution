@@ -10,7 +10,7 @@ if [ ! -e "/storage/.configured" ]
 then
   tocon "Initializing configuration..."
   # Copy config files, but don't overwrite.  Only run if /storage is fresh
-  rsync -a --ignore-existing --exclude=es_systems.cfg /usr/config/* /storage/.config/ >/var/log/configure.log 2>&1
+  rsync -a --ignore-existing --exclude={es_features.cfg,es_systems.cfg} /usr/config/* /storage/.config/ >/var/log/configure.log 2>&1
 
   if [ -e "/usr/bin/emulationstation" ]
   then
