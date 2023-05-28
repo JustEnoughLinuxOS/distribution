@@ -37,7 +37,6 @@ make_target() {
       PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
     ;;
   esac
-
   export APIDIR=$(get_build_dir mupen64plus-sa-core)/.install_pkg/usr/local/include/mupen64plus
   export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -pthread"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
