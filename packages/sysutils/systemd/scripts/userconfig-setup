@@ -10,7 +10,7 @@ if [ ! -e "/storage/.configured" ]
 then
   tocon "Initializing configuration..."
   # Copy config files, but don't overwrite.  Only run if /storage is fresh
-  rsync -a --ignore-existing --exclude=es_systems.cfg /usr/config/* /storage/.config/ >/var/log/configure.log 2>&1
+  rsync -a --ignore-existing --exclude={es_features.cfg,es_systems.cfg} /usr/config/* /storage/.config/ >/var/log/configure.log 2>&1
 
   if [ -e "/usr/bin/emulationstation" ]
   then
@@ -38,7 +38,7 @@ then
     ASPECT=$(printf "%.2f" $(echo "(${FBWIDTH} / ${FBHEIGHT})" | bc -l))
 
     case ${ASPECT} in
-      1.31|0.76)
+      1.50|0.67)
         ASPECT="3:2"
       ;;
       1.33|0.75)
