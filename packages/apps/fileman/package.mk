@@ -15,7 +15,7 @@ PKG_SHORTDESC="A Single panel file Manager."
 PKG_PATCH_DIRS="${DEVICE}"
 
 pre_build_target() {
-   sed -e "/.*define SCREEN_WIDTH.*\n//" -i "${PKG_BUILD}/src/def.h"
+   sed -e "/.*define SCREEN_WIDTH.*//" -i "${PKG_BUILD}/src/def.h"
 
 }
 
