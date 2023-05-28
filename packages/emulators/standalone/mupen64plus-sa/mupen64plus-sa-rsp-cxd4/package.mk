@@ -13,12 +13,7 @@ if [ ! "${OPENGL}" = "no" ]; then
 fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
-  if [ "${DEVICE}" = "AMD64" ]; then
-    PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
-  else
-    PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-    PKG_MAKE_OPTS_TARGET+="USE_GLES=1"
-  fi
+  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
 fi
 
 PKG_MAKE_OPTS_TARGET+="HLEVIDEO=1"
@@ -31,11 +26,17 @@ PKG_MAKE_OPTS_TARGET+="HLEVIDEO=1"
 # fi
 
 make_target() {
+  case ${DEVICE} in
+    AMD64)
+      PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
+    ;;
+  esac
+
   case ${ARCH} in
     arm|aarch64)
       export HOST_CPU=aarch64
-      export USE_GLES=1
       BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
+      export USE_GLES=1
       CPPFLAGS="-DUSE_SSE2NEON"
     ;;
   esac
