@@ -14,6 +14,10 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="A Single panel file Manager."
 PKG_PATCH_DIRS="${DEVICE}"
 
+pre_build_target() {
+   sed -e "/.*define SCREEN_WIDTH.*\n//" -i "${PKG_BUILD}/src/def.h"
+}
+
 make_target() {
   make DEVICE=${DEVICE^^} RES_PATH=/usr/share/fileman/res START_PATH=/storage/roms SDL2_CONFIG=${SYSROOT_PREFIX}/usr/bin/sdl2-config CC=${CXX}
 }
