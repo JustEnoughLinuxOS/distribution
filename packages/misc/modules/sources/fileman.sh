@@ -15,8 +15,9 @@ else
 fi
 QUIRK_DEVICE="$(echo ${QUIRK_DEVICE} | sed -e "s#[/]#-#g")"
 
-if [ ${QUIRK_DEVICE} == "Anbernic RG503" ]
+if [ "${QUIRK_DEVICE}" == "Anbernic RG503" ]
 then
   fileman.rg503
 else
   fileman
+fi
