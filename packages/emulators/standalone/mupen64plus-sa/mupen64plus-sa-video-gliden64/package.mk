@@ -15,16 +15,16 @@ if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
 fi
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
-  if [ "${DEVICE}" = "AMD64" ]; then
-    PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
-  else
-    PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-    PKG_MAKE_OPTS_TARGET+="USE_GLES=1"
-  fi
+  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
 fi
 
-
 make_target() {
+  case ${DEVICE} in
+    AMD64)
+      PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
+    ;;
+  esac
+
   case ${ARCH} in
     arm|aarch64)
       export HOST_CPU=aarch64
