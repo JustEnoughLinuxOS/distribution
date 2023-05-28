@@ -14,6 +14,12 @@ PKG_SECTION="tools"
 PKG_SHORTDESC="A Single panel file Manager."
 PKG_PATCH_DIRS="${DEVICE}"
 
+pre_build_target() {
+  cp -f ./distributions/JELOS/fonts/NanumSquareNeo-bRg.ttf ${PKG_BUILD}/res/
+  sed -e 's/Noto*Regular/NanumSquareNeo-bRg/g' \
+  -i ${PKG_BUILD}/src/def.h
+}
+
 make_target() {
   make DEVICE=${DEVICE^^} RES_PATH=/usr/share/fileman/res START_PATH=/storage/roms SDL2_CONFIG=${SYSROOT_PREFIX}/usr/bin/sdl2-config CC=${CXX}
 }
@@ -23,5 +29,6 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/share/fileman
   cp fileman ${INSTALL}/usr/bin/
   cp -rf res ${INSTALL}/usr/share/fileman/
-  chmod 0755 ${INSTALL}/usr/bin/fileman
+  cp ${PKG_DIR}/sources/fileman.rg503 ${INSTALL}/usr/bin/
+  chmod 0755 ${INSTALL}/usr/bin/fileman*
 }

@@ -84,11 +84,11 @@ pre_configure_target() {
 }
 
 pre_build_target() {
-  cp -f ./distributions/JELOS/fonts/NanumSquareNeo-bRg.ttf ${PKG_BUILD}/resources/
+  cp -f ${ROOT}/distributions/JELOS/fonts/NanumSquareNeo-bRg.ttf ${PKG_BUILD}/resources/
   sed -e 's/NanumMyeongjo.ttf/NanumSquareNeo-bRg.ttf/g' \
       -i ${PKG_BUILD}/es-core/src/resources/Font.cpp
 
-  cp -f ./distributions/JELOS/assets/emulationstation2.po ${PKG_BUILD}/locale/lang/ko/LC_MESSAGES/emulationstation2.po
+  cp -f ${ROOT}/distributions/JELOS/assets/emulationstation2.po ${PKG_BUILD}/locale/lang/ko/LC_MESSAGES/emulationstation2.po
   msgfmt ${PKG_BUILD}/locale/lang/ko/LC_MESSAGES/emulationstation2.po -o ${PKG_BUILD}/locale/lang/ko/LC_MESSAGES/emulationstation2.mo
 }
 

@@ -1,7 +1,7 @@
 diff -rupN fileman.orig/src/def.h fileman/src/def.h
---- fileman.orig/src/def.h	2023-05-23 02:29:52.438910332 +0900
-+++ fileman/src/def.h	2023-05-23 02:37:34.834918364 +0900
-@@ -28,19 +28,19 @@
+--- fileman.orig/src/def.h	2023-05-29 07:19:38.182586845 +0900
++++ fileman/src/def.h	2023-05-29 07:21:45.109240515 +0900
+@@ -28,8 +28,8 @@
  
  // Parameters for rk3566
  #elif defined(DEVICE_RK3566)
@@ -12,21 +12,3 @@ diff -rupN fileman.orig/src/def.h fileman/src/def.h
     #define HARDWARE_ACCELERATION    0
     #define FULLSCREEN               1
     #define FONT_NAME                "NotoSans-Regular.ttf"
-    #define FONT_NAME_MONO           "NotoSansMono-Regular.ttf"
--   #define FONT_SIZE                20
--   #define LINE_HEIGHT              32
--   #define ICON_SIZE                24
--   #define MARGIN_X                 10
--   #define KEYBOARD_MARGIN          8
--   #define KEYBOARD_KEY_SPACING     4
--   #define KEYBOARD_SYMBOL_SIZE     24
-+   #define FONT_SIZE                48
-+   #define LINE_HEIGHT              72
-+   #define ICON_SIZE                58
-+   #define MARGIN_X                 24
-+   #define KEYBOARD_MARGIN          19
-+   #define KEYBOARD_KEY_SPACING     10
-+   #define KEYBOARD_SYMBOL_SIZE     58
- 
- // Parameters for rk3588
- #elif defined(DEVICE_RK3588)
