@@ -33,9 +33,9 @@ pre_configure_target() {
 }
 
 pre_build_target() {
-  cp -f ./distributions/JELOS/fonts/Pretendard-Regular.ttf ${PKG_BUILD}/glui/font.ttf
-  cp -f ./distributions/JELOS/fonts/Pretendard-Regular.ttf ${PKG_BUILD}/ozone/regular.ttf
-  cp -f ./distributions/JELOS/fonts/Pretendard-Bold.ttf ${PKG_BUILD}/ozone/bold.ttf
+  cp -f ./distributions/JELOS/fonts/NanumSquareNeo-bRg.ttf ${PKG_BUILD}/glui/font.ttf
+  cp -f ./distributions/JELOS/fonts/NanumSquareNeo-bRg.ttf ${PKG_BUILD}/ozone/regular.ttf
+  cp -f ./distributions/JELOS/fonts/NanumSquareNeo-cBd.ttf ${PKG_BUILD}/ozone/bold.ttf
   cp -f ./distributions/JELOS/fonts/*.ttf ${PKG_BUILD}/fonts/
 }
 
