@@ -26,18 +26,15 @@ PKG_MAKE_OPTS_TARGET+="HLEVIDEO=1"
 # fi
 
 make_target() {
-  case ${DEVICE} in
-    AMD64)
-      PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
-    ;;
-  esac
-
   case ${ARCH} in
     arm|aarch64)
       export HOST_CPU=aarch64
       BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
       export USE_GLES=1
       CPPFLAGS="-DUSE_SSE2NEON"
+    ;;
+    x86_64)
+      PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
     ;;
   esac
   export APIDIR=$(get_build_dir mupen64plus-sa-core)/.install_pkg/usr/local/include/mupen64plus

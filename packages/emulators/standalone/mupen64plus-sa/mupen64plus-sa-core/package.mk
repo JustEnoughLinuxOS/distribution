@@ -20,17 +20,14 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
 fi
 
 make_target() {
-  case ${DEVICE} in
-    AMD64)
-      PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
-    ;;
-  esac
-
   case ${ARCH} in
     arm|aarch64)
       export HOST_CPU=aarch64
       BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
       export USE_GLES=1
+    ;;
+    x86_64)
+      PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
     ;;
   esac
   export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -pthread"
