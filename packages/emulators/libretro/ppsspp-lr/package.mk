@@ -20,7 +20,7 @@
 ################################################################################
 
 PKG_NAME="ppsspp-lr"
-PKG_VERSION="44513e6eff1813f253bed9a2b17c394e0c33f0f4"
+PKG_VERSION="7912eef0b7d3bba822c8a23fed91b4312d3d5df8"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/hrydgard/ppsspp"
 PKG_URL="https://github.com/hrydgard/ppsspp.git"
