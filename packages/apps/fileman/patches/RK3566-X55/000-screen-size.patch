@@ -109,7 +109,7 @@ diff -rupN fileman.orig/src/def.h fileman/src/def.h
 +#define FONT_NAME_MONO           "NotoSansMono-Regular.ttf"
 +#define FONT_SIZE                30
 +#define LINE_HEIGHT              48
-+#define ICON_SIZE                36
++#define ICON_SIZE                32
 +#define MARGIN_X                 12
 +#define KEYBOARD_MARGIN          18
 +#define KEYBOARD_KEY_SPACING     9
