@@ -1,14 +1,14 @@
 diff -rupN fileman.orig/src/def.h fileman/src/def.h
 --- fileman.orig/src/def.h	2023-05-29 07:19:38.182586845 +0900
-+++ fileman/src/def.h	2023-05-29 07:21:45.109240515 +0900
-@@ -28,8 +28,8 @@
++++ fileman/src/def.h	2023-05-29 13:22:32.257745683 +0900
+@@ -92,8 +92,8 @@
  
- // Parameters for rk3566
- #elif defined(DEVICE_RK3566)
+ // Paramaters for desktop PC
+ #else
 -   #define SCREEN_WIDTH             640
 -   #define SCREEN_HEIGHT            480
 +   #define SCREEN_WIDTH             1280
 +   #define SCREEN_HEIGHT            720
-    #define HARDWARE_ACCELERATION    0
-    #define FULLSCREEN               1
+    #define HARDWARE_ACCELERATION    1
+    #define FULLSCREEN               0
     #define FONT_NAME                "NotoSans-Regular.ttf"
