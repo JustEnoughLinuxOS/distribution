@@ -1,0 +1,119 @@
+diff -rupN fileman.orig/src/def.h fileman/src/def.h
+--- fileman.orig/src/def.h	2023-05-29 20:06:11.402028097 +0900
++++ fileman/src/def.h	2023-05-29 20:06:50.122775912 +0900
+@@ -10,102 +10,19 @@
+ 
+ #define APP_NAME "fileman"
+ 
+-// Parameters for RK3326
+-#if defined(DEVICE_RK3326)
+-   #define SCREEN_WIDTH             480
+-   #define SCREEN_HEIGHT            320
+-   #define HARDWARE_ACCELERATION    0
+-   #define FULLSCREEN               1
+-   #define FONT_NAME                "NotoSans-Regular.ttf"
+-   #define FONT_NAME_MONO           "NotoSansMono-Regular.ttf"
+-   #define FONT_SIZE                14
+-   #define LINE_HEIGHT              24
+-   #define ICON_SIZE                24
+-   #define MARGIN_X                 8
+-   #define KEYBOARD_MARGIN          3
+-   #define KEYBOARD_KEY_SPACING     3
+-   #define KEYBOARD_SYMBOL_SIZE     24
+-
+-// Parameters for rk3566
+-#elif defined(DEVICE_RK3566)
+-   #define SCREEN_WIDTH             640
+-   #define SCREEN_HEIGHT            480
+-   #define HARDWARE_ACCELERATION    0
+-   #define FULLSCREEN               1
+-   #define FONT_NAME                "NotoSans-Regular.ttf"
+-   #define FONT_NAME_MONO           "NotoSansMono-Regular.ttf"
+-   #define FONT_SIZE                20
+-   #define LINE_HEIGHT              32
+-   #define ICON_SIZE                24
+-   #define MARGIN_X                 10
+-   #define KEYBOARD_MARGIN          8
+-   #define KEYBOARD_KEY_SPACING     4
+-   #define KEYBOARD_SYMBOL_SIZE     24
+-
+-// Parameters for rk3588
+-#elif defined(DEVICE_RK3588)
+-   #define SCREEN_WIDTH             1280
+-   #define SCREEN_HEIGHT            720
+-   #define HARDWARE_ACCELERATION    0
+-   #define FULLSCREEN               1
+-   #define FONT_NAME                "NotoSans-Regular.ttf"
+-   #define FONT_NAME_MONO           "NotoSansMono-Regular.ttf"
+-   #define FONT_SIZE                48
+-   #define LINE_HEIGHT              72
+-   #define ICON_SIZE                58
+-   #define MARGIN_X                 24
+-   #define KEYBOARD_MARGIN          19
+-   #define KEYBOARD_KEY_SPACING     10
+-   #define KEYBOARD_SYMBOL_SIZE     58
+-
+-// Parameters for handheld
+-#elif defined(DEVICE_AMD64)
+-   #define SCREEN_WIDTH             1280
+-   #define SCREEN_HEIGHT            720
+-   #define HARDWARE_ACCELERATION    0
+-   #define FULLSCREEN               1
+-   #define FONT_NAME                "NotoSans-Regular.ttf"
+-   #define FONT_NAME_MONO           "NotoSansMono-Regular.ttf"
+-   #define FONT_SIZE                48
+-   #define LINE_HEIGHT              72
+-   #define ICON_SIZE                58
+-   #define MARGIN_X                 24
+-   #define KEYBOARD_MARGIN          19
+-   #define KEYBOARD_KEY_SPACING     10
+-   #define KEYBOARD_SYMBOL_SIZE     58
+-
+-// Parameters for S922X
+-#elif defined(DEVICE_S922X)
+-   #define SCREEN_WIDTH             854
+-   #define SCREEN_HEIGHT            480
+-   #define HARDWARE_ACCELERATION    0
+-   #define FULLSCREEN               1
+-   #define FONT_NAME                "NotoSans-Regular.ttf"
+-   #define FONT_NAME_MONO           "NotoSansMono-Regular.ttf"
+-   #define FONT_SIZE                20
+-   #define LINE_HEIGHT              32
+-   #define ICON_SIZE                24
+-   #define MARGIN_X                 10
+-   #define KEYBOARD_MARGIN          8
+-   #define KEYBOARD_KEY_SPACING     4
+-   #define KEYBOARD_SYMBOL_SIZE     24
+-
+-// Paramaters for desktop PC
+-#else
+-   #define SCREEN_WIDTH             640
+-   #define SCREEN_HEIGHT            480
+-   #define HARDWARE_ACCELERATION    1
+-   #define FULLSCREEN               0
+-   #define FONT_NAME                "NotoSans-Regular.ttf"
+-   #define FONT_NAME_MONO           "NotoSansMono-Regular.ttf"
+-   #define FONT_SIZE                20
+-   #define LINE_HEIGHT              32
+-   #define ICON_SIZE                24
+-   #define MARGIN_X                 10
+-   #define KEYBOARD_MARGIN          8
+-   #define KEYBOARD_KEY_SPACING     4
+-   #define KEYBOARD_SYMBOL_SIZE     24
+-#endif
++#define SCREEN_WIDTH             1280
++#define SCREEN_HEIGHT            720
++#define HARDWARE_ACCELERATION    0
++#define FULLSCREEN               1
++#define FONT_NAME                "NotoSans-Regular.ttf"
++#define FONT_NAME_MONO           "NotoSansMono-Regular.ttf"
++#define FONT_SIZE                48
++#define LINE_HEIGHT              72
++#define ICON_SIZE                58
++#define MARGIN_X                 24
++#define KEYBOARD_MARGIN          19
++#define KEYBOARD_KEY_SPACING     10
++#define KEYBOARD_SYMBOL_SIZE     58
+ 
+ // Colors
+ #define COLOR_TITLE_BG           68,  68,  68
