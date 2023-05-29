@@ -1,0 +1,66 @@
+diff -rupN fileman.orig/src/def.h fileman/src/def.h
+--- fileman.orig/src/def.h	2023-05-30 00:45:08.837147401 +0900
++++ fileman/src/def.h	2023-05-30 00:54:41.476838282 +0900
+@@ -50,13 +50,13 @@
+    #define FULLSCREEN               1
+    #define FONT_NAME                "NotoSans-Regular.ttf"
+    #define FONT_NAME_MONO           "NotoSansMono-Regular.ttf"
+-   #define FONT_SIZE                48
+-   #define LINE_HEIGHT              72
+-   #define ICON_SIZE                58
+-   #define MARGIN_X                 24
+-   #define KEYBOARD_MARGIN          19
+-   #define KEYBOARD_KEY_SPACING     10
+-   #define KEYBOARD_SYMBOL_SIZE     58
++   #define FONT_SIZE                30
++   #define LINE_HEIGHT              48
++   #define ICON_SIZE                32
++   #define MARGIN_X                 12
++   #define KEYBOARD_MARGIN          18
++   #define KEYBOARD_KEY_SPACING     9
++   #define KEYBOARD_SYMBOL_SIZE     54
+ 
+ // Parameters for rk3588
+ #elif defined(DEVICE_RK3588)
+@@ -66,13 +66,13 @@
+    #define FULLSCREEN               1
+    #define FONT_NAME                "NotoSans-Regular.ttf"
+    #define FONT_NAME_MONO           "NotoSansMono-Regular.ttf"
+-   #define FONT_SIZE                48
+-   #define LINE_HEIGHT              72
+-   #define ICON_SIZE                58
+-   #define MARGIN_X                 24
+-   #define KEYBOARD_MARGIN          19
+-   #define KEYBOARD_KEY_SPACING     10
+-   #define KEYBOARD_SYMBOL_SIZE     58
++   #define FONT_SIZE                30
++   #define LINE_HEIGHT              48
++   #define ICON_SIZE                32
++   #define MARGIN_X                 12
++   #define KEYBOARD_MARGIN          18
++   #define KEYBOARD_KEY_SPACING     9
++   #define KEYBOARD_SYMBOL_SIZE     54
+ 
+ // Parameters for handheld
+ #elif defined(DEVICE_AMD64)
+@@ -82,13 +82,13 @@
+    #define FULLSCREEN               1
+    #define FONT_NAME                "NotoSans-Regular.ttf"
+    #define FONT_NAME_MONO           "NotoSansMono-Regular.ttf"
+-   #define FONT_SIZE                48
+-   #define LINE_HEIGHT              72
+-   #define ICON_SIZE                58
+-   #define MARGIN_X                 24
+-   #define KEYBOARD_MARGIN          19
+-   #define KEYBOARD_KEY_SPACING     10
+-   #define KEYBOARD_SYMBOL_SIZE     58
++   #define FONT_SIZE                30
++   #define LINE_HEIGHT              48
++   #define ICON_SIZE                32
++   #define MARGIN_X                 12
++   #define KEYBOARD_MARGIN          18
++   #define KEYBOARD_KEY_SPACING     9
++   #define KEYBOARD_SYMBOL_SIZE     54
+ 
+ // Parameters for S922X
+ #elif defined(DEVICE_S922X)
