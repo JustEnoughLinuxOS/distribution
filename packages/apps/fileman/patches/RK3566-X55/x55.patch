@@ -1,0 +1,32 @@
+diff -rupN fileman.orig/src/def.h fileman/src/def.h
+--- fileman.orig/src/def.h	2023-05-29 07:19:38.182586845 +0900
++++ fileman/src/def.h	2023-05-29 16:17:09.304029048 +0900
+@@ -92,19 +92,19 @@
+ 
+ // Paramaters for desktop PC
+ #else
+-   #define SCREEN_WIDTH             640
+-   #define SCREEN_HEIGHT            480
++   #define SCREEN_WIDTH             1280
++   #define SCREEN_HEIGHT            720
+    #define HARDWARE_ACCELERATION    1
+    #define FULLSCREEN               0
+    #define FONT_NAME                "NotoSans-Regular.ttf"
+    #define FONT_NAME_MONO           "NotoSansMono-Regular.ttf"
+-   #define FONT_SIZE                20
+-   #define LINE_HEIGHT              32
+-   #define ICON_SIZE                24
+-   #define MARGIN_X                 10
+-   #define KEYBOARD_MARGIN          8
+-   #define KEYBOARD_KEY_SPACING     4
+-   #define KEYBOARD_SYMBOL_SIZE     24
++   #define FONT_SIZE                48
++   #define LINE_HEIGHT              72
++   #define ICON_SIZE                58
++   #define MARGIN_X                 24
++   #define KEYBOARD_MARGIN          19
++   #define KEYBOARD_KEY_SPACING     10
++   #define KEYBOARD_SYMBOL_SIZE     58
+ #endif
+ 
+ // Colors
