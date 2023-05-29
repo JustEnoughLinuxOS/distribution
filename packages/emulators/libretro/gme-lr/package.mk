@@ -20,7 +20,7 @@
 ################################################################################
 
 PKG_NAME="gme-lr"
-PKG_VERSION="635b1e9124195eeb44d8a865f258cc2c92846694"
+PKG_VERSION="40d8b3bf4f0bd4f713f65e08c62d30b1ae8b2282"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"

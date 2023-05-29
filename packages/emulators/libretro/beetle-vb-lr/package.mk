@@ -20,7 +20,7 @@
 ################################################################################
 
 PKG_NAME="beetle-vb-lr"
-PKG_VERSION="dd6393f76ff781df0f4e8c953f5b053b1e61b313"
+PKG_VERSION="732a8f701e671bf032165730fdf8bd96fb5ca7bb"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
