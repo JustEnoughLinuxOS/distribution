@@ -16,7 +16,7 @@ PKG_PATCH_DIRS="${DEVICE}"
 
 pre_build_target() {
   cp -f ./distributions/JELOS/fonts/NanumSquareNeo-bRg.ttf ${PKG_BUILD}/res/
-  sed -i "s/Noto*Regular/NanumSquareNeo-bRg/g" ${PKG_BUILD}/src/def.h
+  sed -i "s/Noto.*Regular/NanumSquareNeo-bRg/g" ${PKG_BUILD}/src/def.h
 }
 
 make_target() {
