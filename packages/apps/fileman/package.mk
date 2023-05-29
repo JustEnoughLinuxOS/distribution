@@ -22,6 +22,7 @@ pre_build_target() {
 make_target() {
   MAKEDEVICE=$(echo ${DEVICE^^} | sed "s#-#_##g")
   make DEVICE=${MAKEDEVICE^^} RES_PATH=/usr/share/fileman/res START_PATH=/storage/roms SDL2_CONFIG=${SYSROOT_PREFIX}/usr/bin/sdl2-config CC=${CXX}
+  echo ${MAKEDEVICE^^} > ${ROOT}/test.txt
 }
 
 makeinstall_target() {
