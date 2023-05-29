@@ -110,10 +110,10 @@ diff -rupN fileman.orig/src/def.h fileman/src/def.h
 +#define FONT_SIZE                30
 +#define LINE_HEIGHT              48
 +#define ICON_SIZE                36
-+#define MARGIN_X                 24
-+#define KEYBOARD_MARGIN          8
-+#define KEYBOARD_KEY_SPACING     4
-+#define KEYBOARD_SYMBOL_SIZE     24
++#define MARGIN_X                 12
++#define KEYBOARD_MARGIN          18
++#define KEYBOARD_KEY_SPACING     9
++#define KEYBOARD_SYMBOL_SIZE     54
  
  // Colors
  #define COLOR_TITLE_BG           68,  68,  68
