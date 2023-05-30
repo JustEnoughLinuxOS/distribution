@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
+# Copyright (C) 2023-present RiShooty (https://github.com/rishooty)
 
 PKG_NAME="simple64-sa"
 PKG_VERSION="23107ed09a091b890c008fa71a69fc0a0ccc54cc"
