@@ -30,3 +30,16 @@ diff -rupN fileman.orig/src/mainWindow.cpp fileman/src/mainWindow.cpp
  
     // Dialog 'view as text' / 'edit as text'
     int action = -1;
+diff -rupN fileman.orig/src/mainWindow.h fileman/src/mainWindow.h
+--- fileman.orig/src/mainWindow.h	2023-05-31 02:21:37.650557335 +0900
++++ fileman/src/mainWindow.h	2023-05-31 02:27:24.385129579 +0900
+@@ -20,6 +20,9 @@ class MainWindow : public IWindow
+    // Draw window
+    virtual void render(const bool p_focus);
+ 
++   // Supported extensions
++   static bool extensionIsSupported(const std::string &p_ext);
++
+    private:
+ 
+    // Forbidden
