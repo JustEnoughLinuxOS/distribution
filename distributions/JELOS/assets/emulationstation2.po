@@ -1148,13 +1148,13 @@ msgid "HARDWARE / GPU"
 msgstr "하드웨어 / GPU"
 
 msgid "HARDWARE / WIFI"
-msgstr "HARDWARE / WIFI"
+msgstr "하드웨어 / WIFI"
 
 msgid "ENABLE WIFI POWER SAVING"
 msgstr "WIFI 절전 사용"
 
 msgid "PREFERENCES"
-msgstr "우선권"
+msgstr "우선 설정"
 
 msgid "AUTODETECT GAMES CARD"
 msgstr "게임 카드 자동 감지"
