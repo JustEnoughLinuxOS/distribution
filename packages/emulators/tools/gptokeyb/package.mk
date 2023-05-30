@@ -20,4 +20,7 @@ pre_make_target() {
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin
   cp ${PKG_BUILD}/gptokeyb ${INSTALL}/usr/bin
+
+  mkdir -p ${INSTALL}/usr/config/gptokeyb/
+  cp ${PKG_BUILD}/configs/default.gptk ${INSTALL}/usr/config/gptokeyb/
 }
