@@ -1,0 +1,45 @@
+diff -rupN fileman.orig/src/mainWindow.cpp fileman/src/mainWindow.cpp
+--- fileman.orig/src/mainWindow.cpp	2023-05-31 00:31:22.586118727 +0900
++++ fileman/src/mainWindow.cpp	2023-05-31 00:52:45.098303369 +0900
+@@ -160,6 +160,12 @@ void MainWindow::render(const bool p_foc
+ 
+ }
+ 
++// Supported extensions
++bool MainWindow::extensionIsSupported(const std::string &p_ext)
++{
++   return p_ext == "txt" || p_ext == "xml" || p_ext == "log" || p_ext == "cfg" || p_ext == "conf";
++}
++
+ //------------------------------------------------------------------------------
+ 
+ // Move cursor up / down
+@@ -294,9 +300,12 @@ void MainWindow::openHighlightedFile(voi
+    }
+ 
+    // If the file is binary, do nothing
+-   std::string filePath = m_title + (m_title == "/" ? "" : "/") + m_fileLister[m_cursor].m_name;
+-   if (! (FileUtils::fileIsText(filePath) || m_fileLister[m_cursor].m_size == 0))
+-      return;
++   if (! (MainWindow::extensionIsSupported(m_fileLister[m_cursor].m_ext)))
++   {
++      std::string filePath = m_title + (m_title == "/" ? "" : "/") + m_fileLister[m_cursor].m_name;
++      if (! (FileUtils::fileIsText(filePath) || m_fileLister[m_cursor].m_size == 0))
++         return;
++   }
+ 
+    // Dialog 'view as text' / 'edit as text'
+    int action = -1;
+diff -rupN fileman.orig/src/mainWindow.h fileman/src/mainWindow.h
+--- fileman.orig/src/mainWindow.h	2023-05-31 00:31:22.586118727 +0900
++++ fileman/src/mainWindow.h	2023-05-31 00:52:51.350429473 +0900
+@@ -20,6 +20,9 @@ class MainWindow : public IWindow
+    // Draw window
+    virtual void render(const bool p_focus);
+ 
++   // Supported extensions
++   static bool extensionIsSupported(const std::string &p_ext);
++   
+    private:
+ 
+    // Forbidden
