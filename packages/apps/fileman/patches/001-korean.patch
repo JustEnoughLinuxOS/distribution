@@ -1,0 +1,348 @@
+diff -rupN fileman.orig/src/fileUtils.cpp fileman/src/fileUtils.cpp
+--- fileman.orig/src/fileUtils.cpp	2023-05-30 00:45:08.837147401 +0900
++++ fileman/src/fileUtils.cpp	2023-05-30 13:19:47.728131960 +0900
+@@ -214,20 +214,20 @@ void FileUtils::copyOrMoveFiles(const ch
+       // Check if destination file already exists
+       if (fileExists(l_destFile))
+       {
+-         INHIBIT(std::cout << "File " << l_destFile << " already exists\n";)
++         INHIBIT(std::cout << "'" << l_destFile << "' 파일은 이미 존재합니다\n";)
+          // If 'no to all', go to next file
+          if (l_noToAll)
+             continue;
+          if (!l_yesToAll)
+          {
+             // Ask for confirmation
+-            Dialog l_dialog("Question:");
+-            l_dialog.addLabel("Overwrite " + getFileName(l_destFile) + "?");
+-            l_dialog.addOption("Yes", 0, g_iconSelect);
+-            l_dialog.addOption("Yes to all", 1, g_iconSelect);
+-            l_dialog.addOption("No", 2, g_iconNone);
+-            l_dialog.addOption("No to all", 3, g_iconNone);
+-            l_dialog.addOption("Cancel", 4, g_iconCancel);
++            Dialog l_dialog("질문:");
++            l_dialog.addLabel("'" + getFileName(l_destFile) + "' 파일을 덮어씁니까?");
++            l_dialog.addOption("예", 0, g_iconSelect);
++            l_dialog.addOption("모두 예", 1, g_iconSelect);
++            l_dialog.addOption("아니오", 2, g_iconNone);
++            l_dialog.addOption("모두 아니오", 3, g_iconNone);
++            l_dialog.addOption("취소", 4, g_iconCancel);
+             switch (l_dialog.execute())
+             {
+                // Yes
+@@ -250,11 +250,11 @@ void FileUtils::copyOrMoveFiles(const ch
+          switch(p_action)
+          {
+             case 'c':
+-               INHIBIT(std::cout << "Copy " << *l_it << " to " << l_destFile << "\n";)
++               INHIBIT(std::cout << *l_it << " 에서 " << l_destFile << " 복사\n";)
+                Run("cp", "-r", *l_it, l_destFile);
+                break;
+             case 'm':
+-               INHIBIT(std::cout << "Move " << *l_it << " to " << l_destFile << "\n";)
++               INHIBIT(std::cout << *l_it << " 에서 " << l_destFile << " 이동\n";)
+                Run("mv", *l_it, l_destFile);
+                break;
+             default:
+@@ -272,17 +272,17 @@ void FileUtils::removeFiles(const std::v
+ {
+    // Confirmation
+    std::ostringstream oss;
+-   oss << "Delete " << p_files.size() << " file(s)?";
+-   Dialog l_dialog("Question:");
++   oss << "'" << p_files.size() << "' 파일을 삭제합니까?";
++   Dialog l_dialog("질문:");
+    l_dialog.addLabel(oss.str());
+-   l_dialog.addOption("Yes", 0, g_iconSelect);
+-   l_dialog.addOption("No", 1, g_iconCancel);
++   l_dialog.addOption("예", 0, g_iconSelect);
++   l_dialog.addOption("아니오", 1, g_iconCancel);
+    if (l_dialog.execute() != 0)
+       return;
+    // Delete files
+    for (auto l_it = p_files.begin(); l_it != p_files.end(); ++l_it)
+    {
+-      INHIBIT(std::cout << "Remove " << *l_it << "\n";)
++      INHIBIT(std::cout << "'" << *l_it << "' 파일을 삭제합니다\n";)
+       Run("rm", "-rf", *l_it);
+    }
+ }
+@@ -292,7 +292,7 @@ void FileUtils::removeFiles(const std::v
+ // Create new directory
+ void FileUtils::makeDirectory(const std::string &p_file)
+ {
+-   INHIBIT(std::cout << "Create directory " << p_file << "\n";)
++   INHIBIT(std::cout << "'" << p_file << "' 디렉터리를 생성합니다\n";)
+    Run("mkdir", "-p", p_file);
+    Run("sync", p_file);
+ }
+@@ -305,16 +305,16 @@ void FileUtils::renameFile(const std::st
+    // Check if destination file already exists
+    if (fileExists(p_file2))
+    {
+-      INHIBIT(std::cout << "File " << p_file2 << " already exists => ask for confirmation\n";)
+-      Dialog l_dialog("Question:");
+-      l_dialog.addLabel("Overwrite " + getFileName(p_file2) + "?");
+-      l_dialog.addOption("Yes", 0, g_iconSelect);
+-      l_dialog.addOption("No", 1, g_iconCancel);
++      INHIBIT(std::cout << "'" << p_file2 << "' 파일은 이미 존재합니다\n";)
++      Dialog l_dialog("질문:");
++      l_dialog.addLabel("'" + getFileName(p_file2) + "' 파일을 덮어씁니까?");
++      l_dialog.addOption("예", 0, g_iconSelect);
++      l_dialog.addOption("아니오", 1, g_iconCancel);
+       if (l_dialog.execute() != 0)
+          return;
+    }
+    // Rename file
+-   INHIBIT(std::cout << "Rename file " << p_file1 << " to " << p_file2 << '\n';)
++   INHIBIT(std::cout << p_file1 << " 에서 " << p_file2 << " 이름변경\n";)
+    Run("mv", p_file1, p_file2);
+    Run("sync", p_file2);
+ }
+@@ -331,7 +331,7 @@ unsigned long long int FileUtils::getDir
+    FILE *pipe = popen(line.c_str(), "r");
+    if (pipe == NULL)
+    {
+-      std::cerr << "getDirSize: Error popen\n";
++      std::cerr << "getDirSize: 오류가 발생하였습니다\n";
+       return 0;
+    }
+    while (fgets(buffer, sizeof(buffer), pipe) != NULL);
+@@ -342,7 +342,7 @@ unsigned long long int FileUtils::getDir
+       pipe = popen(line.c_str(), "r");
+       if (pipe == NULL)
+       {
+-         std::cerr << "getDirSize: Error popen\n";
++         std::cerr << "getDirSize: 오류가 발생하였습니다\n";
+          return 0;
+       }
+       while (fgets(buffer, sizeof(buffer), pipe) != NULL);
+@@ -374,7 +374,7 @@ bool FileUtils::fileIsText(const std::st
+    FILE *pipe = popen(line.c_str(), "r");
+    if (pipe == NULL)
+    {
+-      std::cerr << "getDirSize: Error popen\n";
++      std::cerr << "getDirSize: 오류가 발생하였습니다\n";
+       return 0;
+    }
+    while (fgets(buffer, sizeof(buffer), pipe) != NULL);
+diff -rupN fileman.orig/src/mainWindow.cpp fileman/src/mainWindow.cpp
+--- fileman.orig/src/mainWindow.cpp	2023-05-30 00:45:08.837147401 +0900
++++ fileman/src/mainWindow.cpp	2023-05-30 13:19:48.176142519 +0900
+@@ -37,7 +37,7 @@ MainWindow::MainWindow(const std::string
+    m_nbItems = m_fileLister.getNbElements();
+    // Adjust scrollbar
+    adjustScrollbar();
+-   INHIBIT(std::cout << "Path: " << m_title << " (" << m_nbItems << ") items\n";)
++   INHIBIT(std::cout << "경로: " << m_title << " (" << m_nbItems << ") 아이템\n";)
+ }
+ 
+ //------------------------------------------------------------------------------
+@@ -277,7 +277,7 @@ void MainWindow::openHighlightedDir(void
+    adjustScrollbar();
+    // New render
+    g_hasChanged = true;
+-   INHIBIT(std::cout << "Path: " << m_title << " (" << m_nbItems << ") items\n";)
++   INHIBIT(std::cout << "경로: " << m_title << " (" << m_nbItems << ") 아이템\n";)
+ }
+ 
+ //------------------------------------------------------------------------------
+@@ -301,10 +301,10 @@ void MainWindow::openHighlightedFile(voi
+    // Dialog 'view as text' / 'edit as text'
+    int action = -1;
+    {
+-      Dialog l_dialog("Open:");
+-      l_dialog.addOption("View as text", 0, g_iconFileText);
+-      l_dialog.addOption("Edit as text", 1, g_iconEdit);
+-      l_dialog.addOption("Cancel", 2, g_iconCancel);
++      Dialog l_dialog("열기:");
++      l_dialog.addOption("텍스트로 보기", 0, g_iconFileText);
++      l_dialog.addOption("텍스트로 편집", 1, g_iconEdit);
++      l_dialog.addOption("취소", 2, g_iconCancel);
+       action = l_dialog.execute();
+    }
+    if (action != 0 && action != 1)
+@@ -313,10 +313,10 @@ void MainWindow::openHighlightedFile(voi
+    // If the file is > 1M, ask for confirmation
+    if (m_fileLister[m_cursor].m_size > 1024 * 1024)
+    {
+-      Dialog l_dialog("Question:");
+-      l_dialog.addLabel("The file is big. Open anyway?");
+-      l_dialog.addOption("Yes", 0, g_iconSelect);
+-      l_dialog.addOption("No", 1, g_iconCancel);
++      Dialog l_dialog("질문:");
++      l_dialog.addLabel("파일이 큽니다. 여시겠습니까?");
++      l_dialog.addOption("예", 0, g_iconSelect);
++      l_dialog.addOption("아니오", 1, g_iconCancel);
+       if (l_dialog.execute() != 0)
+          return;
+    }
+@@ -370,25 +370,25 @@ void MainWindow::openContextMenu(void)
+    int result = -1;
+    {
+       std::ostringstream oss;
+-      oss << nbSelected << " selected";
++      oss << nbSelected << " 선택";
+       Dialog l_dialog (oss.str());
+       if (nbSelected > 0)
+       {
+-         l_dialog.addOption("Copy", 0, g_iconCopy);
+-         l_dialog.addOption("Cut", 1, g_iconCut);
++         l_dialog.addOption("복사하기", 0, g_iconCopy);
++         l_dialog.addOption("잘라내기", 1, g_iconCut);
+       }
+       if (m_clipboard.size() > 0)
+-         l_dialog.addOption("Paste", 2, g_iconPaste);
++         l_dialog.addOption("붙여넣기", 2, g_iconPaste);
+       if (nbSelected > 0)
+-         l_dialog.addOption("Delete", 3, g_iconTrash);
++         l_dialog.addOption("삭제", 3, g_iconTrash);
+       if (nbSelected == 1)
+-         l_dialog.addOption("Rename", 9, g_iconEdit);
++         l_dialog.addOption("이름변경", 9, g_iconEdit);
+       if (m_fileLister.getNbSelected('d') > 0)
+-         l_dialog.addOption("Size", 4, g_iconDisk);
+-      l_dialog.addOption("Select all", 5, g_iconSelect);
+-      l_dialog.addOption("Select none", 6, g_iconNone);
+-      l_dialog.addOption("New directory", 7, g_iconNewDir);
+-      l_dialog.addOption("Quit", 8, g_iconQuit);
++         l_dialog.addOption("용량표시", 4, g_iconDisk);
++      l_dialog.addOption("전체선택", 5, g_iconSelect);
++      l_dialog.addOption("선택해제", 6, g_iconNone);
++      l_dialog.addOption("새 디렉터리", 7, g_iconNewDir);
++      l_dialog.addOption("나가기", 8, g_iconQuit);
+       result = l_dialog.execute();
+    }
+    switch(result)
+@@ -397,13 +397,13 @@ void MainWindow::openContextMenu(void)
+       case 0:
+          m_fileLister.getSelectList(m_title, m_clipboard);
+          m_clipboardOperation = 'c';
+-         INHIBIT(std::cout << m_clipboard.size() << " added to clipboard for copy\n";)
++         INHIBIT(std::cout << m_clipboard.size() << " 복사를 위해 클립보드에 추가함\n";)
+          break;
+       // Move
+       case 1:
+          m_fileLister.getSelectList(m_title, m_clipboard);
+          m_clipboardOperation = 'm';
+-         INHIBIT(std::cout << m_clipboard.size() << " added to clipboard for move\n";)
++         INHIBIT(std::cout << m_clipboard.size() << " 이동을 위해 클립보드에 추가함\n";)
+          break;
+       // Paste
+       case 2:
+@@ -421,8 +421,8 @@ void MainWindow::openContextMenu(void)
+       case 4:
+       {
+          // Display a "please wait" message
+-         Dialog dialogPleaseWait("Info");
+-         dialogPleaseWait.addLabel("Please wait...");
++         Dialog dialogPleaseWait("정보");
++         dialogPleaseWait.addLabel("기다려주세요...");
+          dialogPleaseWait.render(true);
+          IWindow::renderPresent();
+          m_fileLister.computeSelectedDirSize(m_title);
+@@ -447,7 +447,7 @@ void MainWindow::openContextMenu(void)
+       // New directory
+       case 7:
+       {
+-         TextInput textInput("New directory", g_iconNewDir);
++         TextInput textInput("새 디렉터리", g_iconNewDir);
+          if (textInput.execute() != -2 && ! textInput.getInputText().empty())
+          {
+             FileUtils::makeDirectory(m_title + (m_title == "/" ? "" : "/") + textInput.getInputText());
+@@ -459,7 +459,7 @@ void MainWindow::openContextMenu(void)
+       case 9:
+       {
+          std::string fileSrc = m_fileLister.getSelectFirst();
+-         TextInput textInput("Rename", g_iconEdit, fileSrc);
++         TextInput textInput("이름변경", g_iconEdit, fileSrc);
+          if (textInput.execute() != -2 && ! textInput.getInputText().empty())
+          {
+             FileUtils::renameFile(m_title + (m_title == "/" ? "" : "/") + fileSrc, m_title + (m_title == "/" ? "" : "/") + textInput.getInputText());
+diff -rupN fileman.orig/src/textEditor.cpp fileman/src/textEditor.cpp
+--- fileman.orig/src/textEditor.cpp	2023-05-30 00:45:08.837147401 +0900
++++ fileman/src/textEditor.cpp	2023-05-30 13:19:48.708155049 +0900
+@@ -23,7 +23,7 @@ TextEditor::TextEditor(const std::string
+    std::ifstream ifs(p_title);
+    if (! ifs.is_open())
+    {
+-      std::cerr << "Unable to read file: '" << p_title << "'\n";
++      std::cerr << "읽을 수 없는 파일: '" << p_title << "'\n";
+       return;
+    }
+    while (! ifs.eof())
+@@ -144,18 +144,18 @@ void TextEditor::keyPressed(const SDL_Ev
+       // Reset timer
+       resetTimer();
+       // Open action menu
+-      Dialog dialog("Actions:");
+-      dialog.addOption("Save", 0, g_iconFloppy);
++      Dialog dialog("실행:");
++      dialog.addOption("저장하기", 0, g_iconFloppy);
+       if (m_textSelectionStart.y != -1 && m_textSelectionEnd.y != -1 && (m_textSelectionStart.x != m_textSelectionEnd.x || m_textSelectionStart.y != m_textSelectionEnd.y))
+       {
+-         dialog.addOption("Copy", 4, g_iconCopy);
+-         dialog.addOption("Cut", 5, g_iconCut);
++         dialog.addOption("복사하기", 4, g_iconCopy);
++         dialog.addOption("잘라내기", 5, g_iconCut);
+       }
+       if (! m_clipboard.empty())
+-         dialog.addOption("Paste", 6, g_iconPaste);
+-      dialog.addOption("Delete line", 1, g_iconTrash);
+-      dialog.addOption("Duplicate line", 2, g_iconPlus);
+-      dialog.addOption("Quit", 3, g_iconQuit);
++         dialog.addOption("붙여넣기", 6, g_iconPaste);
++      dialog.addOption("행 삭제", 1, g_iconTrash);
++      dialog.addOption("행 복제", 2, g_iconPlus);
++      dialog.addOption("나가기", 3, g_iconQuit);
+       switch (dialog.execute())
+       {
+          case 0: save(); break;
+@@ -410,14 +410,14 @@ void TextEditor::keyboardMoveRight(void)
+ // Save file
+ void TextEditor::save(void)
+ {
+-   INHIBIT(std::cout << "Saving file '" << m_title << "'...\n";)
++   INHIBIT(std::cout << "'" << m_title << "' 파일을 저장합니다\n";)
+    // Open file
+    std::ofstream ofs(m_title);
+    if (! ofs.is_open())
+    {
+-      Dialog dialog("Error");
+-      dialog.addLabel("Unable to write file.");
+-      dialog.addOption("OK", 0, g_iconSelect);
++      Dialog dialog("에러:");
++      dialog.addLabel("쓰기 권한이 없습니다");
++      dialog.addOption("확인", 0, g_iconSelect);
+       return;
+    }
+    // Write new file
+@@ -438,11 +438,11 @@ void TextEditor::quit(void)
+ {
+    if (m_hasModifications)
+    {
+-      Dialog dialog("Warning:");
+-      dialog.addLabel("The file is not saved.");
+-      dialog.addOption("Save", 0, g_iconFloppy);
+-      dialog.addOption("Don't save", 1, g_iconNone);
+-      dialog.addOption("Cancel", 2, g_iconCancel);
++      Dialog dialog("위험:");
++      dialog.addLabel("이 파일은 저장하지 않았습니다");
++      dialog.addOption("저장하기", 0, g_iconFloppy);
++      dialog.addOption("저장하지 않기", 1, g_iconNone);
++      dialog.addOption("취소", 2, g_iconCancel);
+       switch (dialog.execute())
+       {
+          case 0: save(); break;
+diff -rupN fileman.orig/src/textViewer.cpp fileman/src/textViewer.cpp
+--- fileman.orig/src/textViewer.cpp	2023-05-30 00:45:08.837147401 +0900
++++ fileman/src/textViewer.cpp	2023-05-30 13:19:49.168165887 +0900
+@@ -46,7 +46,7 @@ TextViewer::TextViewer(const std::string
+    std::ifstream ifs(p_title);
+    if (! ifs.is_open())
+    {
+-      std::cerr << "Unable to read file: '" << p_title << "'\n";
++      std::cerr << "읽을 수 없는 파일: '" << p_title << "'\n";
+       return;
+    }
+    while (! ifs.eof())
