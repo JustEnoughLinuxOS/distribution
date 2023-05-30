@@ -15,7 +15,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/Makefile linux/arch/arm64/boo
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3328-nanopi-r2s.dtb
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/boot/dts/rockchip/px30.dtsi
 --- linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi	2023-05-30 16:56:56.022869345 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/px30.dtsi	2023-05-30 17:52:01.798714782 +0000
++++ linux/arch/arm64/boot/dts/rockchip/px30.dtsi	2023-05-30 19:10:46.414821208 +0000
 @@ -114,12 +114,6 @@
  		compatible = "operating-points-v2";
  		opp-shared;
@@ -76,7 +76,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/bo
  		};
  	};
  
-@@ -328,6 +343,40 @@
+@@ -328,6 +343,32 @@
  		};
  	};
  
@@ -100,14 +100,6 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/bo
 +
 +	dmc_opp_table: dmc_opp_table {
 +		compatible = "operating-points-v2";
-+		opp-528000000 {
-+			opp-hz = /bits/ 64 <528000000>;
-+			opp-microvolt = <975000>;
-+		};
-+		opp-666000000 {
-+			opp-hz = /bits/ 64 <666000000>;
-+			opp-microvolt = <1050000>;
-+		};
 +		opp-786000000 {
 +			opp-hz = /bits/ 64 <786000000>;
 +			opp-microvolt = <1100000>;
@@ -117,7 +109,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/bo
  	pmugrf: syscon@ff010000 {
  		compatible = "rockchip,px30-pmugrf", "syscon", "simple-mfd";
  		reg = <0x0 0xff010000 0x0 0x1000>;
-@@ -453,7 +502,7 @@
+@@ -453,7 +494,7 @@
  				#address-cells = <1>;
  				#size-cells = <0>;
  
@@ -126,7 +118,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/bo
  					reg = <0>;
  					#address-cells = <1>;
  					#size-cells = <0>;
-@@ -468,6 +517,10 @@
+@@ -468,6 +509,10 @@
  						remote-endpoint = <&vopl_out_lvds>;
  					};
  				};
@@ -137,7 +129,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/bo
  			};
  		};
  	};
-@@ -1039,10 +1092,6 @@
+@@ -1039,10 +1084,6 @@
  	gpu_opp_table: opp-table-1 {
  		compatible = "operating-points-v2";
  
@@ -148,7 +140,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/bo
  		opp-300000000 {
  			opp-hz = /bits/ 64 <300000000>;
  			opp-microvolt = <975000>;
-@@ -1051,8 +1100,8 @@
+@@ -1051,8 +1092,8 @@
  			opp-hz = /bits/ 64 <400000000>;
  			opp-microvolt = <1050000>;
  		};
@@ -159,7 +151,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/bo
  			opp-microvolt = <1125000>;
  		};
  	};
-@@ -1113,7 +1162,7 @@
+@@ -1113,7 +1154,7 @@
  			#address-cells = <1>;
  			#size-cells = <0>;
  
@@ -168,7 +160,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/bo
  				reg = <0>;
  				#address-cells = <1>;
  				#size-cells = <0>;
-@@ -1128,6 +1177,10 @@
+@@ -1128,6 +1169,10 @@
  					remote-endpoint = <&vopl_out_dsi>;
  				};
  			};
