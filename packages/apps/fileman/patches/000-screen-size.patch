@@ -18,7 +18,7 @@ diff -rupN fileman.orig/src/def.h fileman/src/def.h
 +   #define MARGIN_X                 12
 +   #define KEYBOARD_MARGIN          18
 +   #define KEYBOARD_KEY_SPACING     9
-+   #define KEYBOARD_SYMBOL_SIZE     54
++   #define KEYBOARD_SYMBOL_SIZE     48
  
  // Parameters for rk3588
  #elif defined(DEVICE_RK3588)
@@ -39,7 +39,7 @@ diff -rupN fileman.orig/src/def.h fileman/src/def.h
 +   #define MARGIN_X                 12
 +   #define KEYBOARD_MARGIN          18
 +   #define KEYBOARD_KEY_SPACING     9
-+   #define KEYBOARD_SYMBOL_SIZE     54
++   #define KEYBOARD_SYMBOL_SIZE     48
  
  // Parameters for handheld
  #elif defined(DEVICE_AMD64)
@@ -60,7 +60,7 @@ diff -rupN fileman.orig/src/def.h fileman/src/def.h
 +   #define MARGIN_X                 12
 +   #define KEYBOARD_MARGIN          18
 +   #define KEYBOARD_KEY_SPACING     9
-+   #define KEYBOARD_SYMBOL_SIZE     54
++   #define KEYBOARD_SYMBOL_SIZE     48
  
  // Parameters for S922X
  #elif defined(DEVICE_S922X)

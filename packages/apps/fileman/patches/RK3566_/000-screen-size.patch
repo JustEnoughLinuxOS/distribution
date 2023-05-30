@@ -26,7 +26,7 @@ diff -rupN fileman.orig/src/def.h fileman/src/def.h
 +   #define MARGIN_X                 12
 +   #define KEYBOARD_MARGIN          18
 +   #define KEYBOARD_KEY_SPACING     9
-+   #define KEYBOARD_SYMBOL_SIZE     54
++   #define KEYBOARD_SYMBOL_SIZE     48
  
  // Parameters for rk3566-x55
  #elif defined(DEVICE_RK3566_X55)
