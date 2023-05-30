@@ -171,9 +171,13 @@ fi
 	fi
 
   #GC Controller Profile
-        if [ "$CON" = "gcpad" ]
+        if [ "$CON" = "south" ]
         then
-                cp -r /usr/config/dolphin-emu/GCPadNew.ini /storage/.config/dolphin-emu/GCPadNew.ini
+                cp -r /usr/config/dolphin-emu/GCPadNew.ini.south /storage/.config/dolphin-emu/GCPadNew.ini
+        fi
+        if [ "$CON" = "west" ]
+        then
+                cp -r /usr/config/dolphin-emu/GCPadNew.ini.west /storage/.config/dolphin-emu/GCPadNew.ini
         fi
         if [ "$CON" = "custom" ]
         then
