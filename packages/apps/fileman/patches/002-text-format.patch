@@ -1,6 +1,6 @@
 diff -rupN fileman.orig/src/mainWindow.cpp fileman/src/mainWindow.cpp
 --- fileman.orig/src/mainWindow.cpp	2023-05-31 02:21:54.218866701 +0900
-+++ fileman/src/mainWindow.cpp	2023-05-31 02:22:51.551941522 +0900
++++ fileman/src/mainWindow.cpp	2023-05-31 02:34:25.573288549 +0900
 @@ -160,6 +160,12 @@ void MainWindow::render(const bool p_foc
  
  }
@@ -14,14 +14,12 @@ diff -rupN fileman.orig/src/mainWindow.cpp fileman/src/mainWindow.cpp
  //------------------------------------------------------------------------------
  
  // Move cursor up / down
-@@ -294,9 +300,12 @@ void MainWindow::openHighlightedFile(voi
-    }
+@@ -295,8 +301,11 @@ void MainWindow::openHighlightedFile(voi
  
     // If the file is binary, do nothing
--   std::string filePath = m_title + (m_title == "/" ? "" : "/") + m_fileLister[m_cursor].m_name;
+    std::string filePath = m_title + (m_title == "/" ? "" : "/") + m_fileLister[m_cursor].m_name;
 -   if (! (FileUtils::fileIsText(filePath) || m_fileLister[m_cursor].m_size == 0))
 -      return;
-+   std::string filePath = m_title + (m_title == "/" ? "" : "/") + m_fileLister[m_cursor].m_name;
 +   if (! (MainWindow::extensionIsSupported(m_fileLister[m_cursor].m_ext)))
 +   {
 +      if (! (FileUtils::fileIsText(filePath) || m_fileLister[m_cursor].m_size == 0))
