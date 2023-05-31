@@ -1,0 +1,34 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+tocon "Custom Scripts..."
+
+if [ -e "/sys/firmware/devicetree/base/model" ]
+then
+  QUIRK_DEVICE=$(cat /sys/firmware/devicetree/base/model 2>/dev/null)
+else
+  QUIRK_DEVICE="$(cat /sys/class/dmi/id/sys_vendor 2>/dev/null) $(cat /sys/class/dmi/id/product_name 2>/dev/null)"
+fi
+QUIRK_DEVICE="$(echo ${QUIRK_DEVICE} | sed -e "s#[/]#-#g")"
+
+export HW_MODEL=${QUIRK_DEVICE}
+
+case ${HW_MODEL} in
+  *RG351*|*Advance*)
+    ASPECT="3-2"
+  ;;
+  *RG353*|*RK2023)
+    ASPECT="4-3"
+  ;;
+  *RG503)
+    ASPECT="5-3"
+  ;;
+  *)
+    ASPECT="16-9"
+esac
+
+sed -e 's/name="subset.aspect-ratio" value=".*"/name="subset.aspect-ratio" value="'"$ASPECT"'"/g' \
+    -i /storage/.config/emulationstation/es_settings.cfg
