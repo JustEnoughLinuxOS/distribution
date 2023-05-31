@@ -1677,7 +1677,7 @@ msgid "SYSTEM VOLUME"
 msgstr "시스템 볼륨"
 
 msgid "VOLUME PREAMP"
-msgstr "볼륨 프리앰프"
+msgstr "프리앰프 볼륨"
 
 msgid "MUSIC VOLUME"
 msgstr "음악 볼륨"
