@@ -33,6 +33,6 @@ post_makeinstall_target() {
   rm ${INSTALL}/usr/share/moonlight/gamecontrollerdb.txt 
 
   mkdir -p ${INSTALL}/usr/lib/autostart/common
-  cp ${PKG_DIR}/sources/autostart/* ${INSTALL}/usr/lib/autostart/common
+  cp ${PKG_DIR}/autostart/* ${INSTALL}/usr/lib/autostart/common
   chmod 0755 ${INSTALL}/usr/lib/autostart/common/*
 }
