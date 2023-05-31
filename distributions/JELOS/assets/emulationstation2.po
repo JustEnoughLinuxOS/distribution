@@ -1602,7 +1602,7 @@ msgid "grid"
 msgstr "그리드"
 
 msgid "You are about to set your language to:"
-msgstr "언어를 다음과 같이 설정하려고 합니다."
+msgstr "언어를 다음으로 설정:"
 
 msgid "A REBOOT OF THE SYSTEM IS REQUIRED TO APPLY THE NEW CONFIGURATION"
 msgstr "새로운 구성을 적용하려면 시스템을 다시 시작해야 합니다"
@@ -1747,6 +1747,12 @@ msgstr "WIFI 활성화됨"
 
 msgid "WIFI CONFIGURATION ERROR"
 msgstr "WIFI 구성 오류"
+
+msgid "ADVANCED WIFI SETTINGS"
+msgstr "고급 WIFI 설정"
+
+msgid "DISABLE INTERNAL WIFI"
+msgstr "내부 WIFI 비활성화"
 
 msgid "ENABLE IPV6"
 msgstr "IPV6 활성화"
@@ -3152,6 +3158,12 @@ msgstr "비디오 VRAM 사용 최적화"
 msgid "UPDATES"
 msgstr "업데이트"
 
+msgid "GITHUB ORG"
+msgstr "GITHUB ORG"
+
+msgid "GITHUB REPO"
+msgstr "GITHUB REPO"
+
 msgid "FORCE UPDATES"
 msgstr "강제 업데이트"
 
@@ -3261,7 +3273,10 @@ msgstr ""
 "현재 설정을 백업하고 다시 시작하시겠습니까?"
 
 msgid "You are about to set 351ELEC Language to:"
-msgstr "351 ELEC 언어를 다음과 같이 설정:"
+msgstr "351ELEC 언어를 다음으로 설정:"
+
+msgid "You are about to set AmberELEC Language to:"
+msgstr "AmberELEC 언어를 다음으로 설정:"
 
 msgid "INTEGER SCALE OVERSCALE)"
 msgstr "정수 스케일 오버스케일"
