@@ -28,7 +28,11 @@ fi
 
 post_makeinstall_target() {
   mkdir -p ${INSTALL}/usr/config/moonlight
-    cp -R ${PKG_BUILD}/moonlight.conf ${INSTALL}/usr/config/moonlight
-    rm ${INSTALL}/usr/etc/moonlight.conf 
-    rm ${INSTALL}/usr/share/moonlight/gamecontrollerdb.txt 
+  cp -R ${PKG_BUILD}/moonlight.conf ${INSTALL}/usr/config/moonlight
+  rm ${INSTALL}/usr/etc/moonlight.conf 
+  rm ${INSTALL}/usr/share/moonlight/gamecontrollerdb.txt 
+
+  mkdir -p ${INSTALL}/usr/lib/autostart/common
+  cp ${PKG_DIR}/sources/autostart/* ${INSTALL}/usr/lib/autostart/common
+  chmod 0755 ${INSTALL}/usr/lib/autostart/common/*
 }
