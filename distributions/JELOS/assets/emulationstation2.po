@@ -3234,7 +3234,7 @@ msgid ""
 msgstr ""
 "경고: 에뮬레이션스테이션을 다시 시작합니다!\n"
 "\n"
-"스크립트가 완료되면 /storage/roms/backup/351ELEC_BACKUP.zip 파일을 별도로 복사하십시오.
+"스크립트가 완료되면 /storage/roms/backup/351ELEC_BACKUP.zip 파일을 별도로 복사하십시오."
 "안전한 장소에 보관하지 않으면 다음 재시작 시 삭제됩니다!\n"
 "\n"
 "현재 설정을 백업하고 다시 시작하시겠습니까?"
