@@ -4704,7 +4704,7 @@ msgid ""
 "the user experience in EmulationStation completely."
 msgstr ""
 "게임 정보와 이미지를 가져옵니다."
-스크래퍼는 다른 서버에서 게임에 대한 메타 데이터와 시각 자료를 다운로드하고 에뮬레이션스테이션의 사용자 경험을 향상시킵니다."
+"스크래퍼는 다른 서버에서 게임에 대한 메타 데이터와 시각 자료를 다운로드하고 에뮬레이션스테이션의 사용자 경험을 향상시킵니다."
 
 msgid ""
 "Select a server to scrape from. The SCREENSCRAPER server is recommended "
