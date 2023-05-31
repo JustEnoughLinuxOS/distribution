@@ -1767,7 +1767,7 @@ msgid "CLOUD SERVICES"
 msgstr "클라우드 서비스"
 
 msgid "ENABLE SYNCTHING"
-msgstr "동기화 활성화"
+msgstr "동기화 사용"
 
 msgid "MOUNT CLOUD DRIVE"
 msgstr "클라우드 드라이브 마운트"
