@@ -14,13 +14,13 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 msgid "A NEW UPDATE IS AVAILABLE"
-msgstr "새 업데이트를 사용할 수 있습니다"
+msgstr "새로운 업데이트를 사용할 수 있습니다"
 
 msgid "SCANNING BLUETOOTH"
 msgstr "블루투스 검색"
 
 msgid "Searching for devices..."
-msgstr "컨트롤러를 검색 중입니다..."
+msgstr "장치를 찾는 중..."
 
 msgid "BLUETOOTH SCAN IS ALREADY RUNNING."
 msgstr "블루투스 검색이 이미 실행중입니다."
@@ -35,7 +35,7 @@ msgid "A REBOOT IS REQUIRED TO COMPLETE THE OPERATION"
 msgstr "작업을 완료하려면 시스템 다시 시작이 필요합니다"
 
 msgid "A DRIVE IS ALREADY BEING FORMATTED."
-msgstr "드라이브가 이미 포맷되고 있습니다."
+msgstr "드라이브가 이미 포맷 중입니다."
 
 msgid "Loading..."
 msgstr "불러오는 중..."
@@ -44,19 +44,19 @@ msgid "Loading system config..."
 msgstr "시스템 설정 불러오는 중..."
 
 msgid "QUIT"
-msgstr "종료"
+msgstr "나가기"
 
 msgid "SAVING METADATAS. PLEASE WAIT..."
-msgstr "메타데이터를 저장 중입니다. 잠시만 기다려 주세요..."
+msgstr "메타데이터를 저장합니다. 잠시만 기다려 주세요..."
 
 msgid "Extracting"
 msgstr "추출 중"
 
 msgid "Collections"
-msgstr "컬렉션"
+msgstr "Collections"
 
 msgid "Unknown"
-msgstr "알 수 없음"
+msgstr "미확인"
 
 msgid ""
 "A valid account is required. Please register an account on https://"
@@ -69,28 +69,28 @@ msgid "DOWNLOADING"
 msgstr "다운로드 중"
 
 msgid "THEME INSTALLED SUCCESSFULLY"
-msgstr "테마가 성공적으로 설치됨"
+msgstr "테마가 성공적으로 설치되었습니다"
 
 msgid "AN ERROR OCCURED"
 msgstr "오류가 발생되었습니다"
 
 msgid "THEME UNINSTALLED SUCCESSFULLY"
-msgstr "테마가 성공적으로 제거됨"
+msgstr "테마가 성공적으로 제거되었습니다"
 
 msgid "PACKAGE INSTALLED SUCCESSFULLY"
-msgstr "패키지가 성공적으로 설치됨"
+msgstr "패키지가 성공적으로 설치되었습니다"
 
 msgid "PACKAGE UNINSTALLED SUCCESSFULLY"
-msgstr "패키지가 성공적으로 제거됨"
+msgstr "패키지가 성공적으로 제거되었습니다"
 
 msgid "BEZELS INSTALLED SUCCESSFULLY"
-msgstr "베젤이 성공적으로 설치됨"
+msgstr "베젤이 성공적으로 설치되었습니다"
 
 msgid "BEZELS UNINSTALLED SUCCESSFULLY"
-msgstr "베젤이 성공적으로 제거됨"
+msgstr "베젤이 성공적으로 제거되었습니다"
 
 msgid "PACKAGE REMOVED SUCCESSFULLY"
-msgstr "패키지가 성공적으로 제거됨"
+msgstr "패키지가 성공적으로 제거되었습니다"
 
 msgid "all games"
 msgstr "전체게임"
@@ -203,7 +203,7 @@ msgid "KIDGAME"
 msgstr "아동용게임"
 
 msgid "ALREADY PLAYED"
-msgstr "이미 실행함"
+msgstr "이미 플레이함"
 
 msgid "HAS ACHIEVEMENTS"
 msgstr "도전과제 있음"
@@ -239,7 +239,7 @@ msgid "NO GAMES FOUND - SKIP"
 msgstr "발견된 게임 없음 - 건너뛰기"
 
 msgid "RETRY"
-msgstr "재시도"
+msgstr "다시 시도"
 
 msgid "SKIP"
 msgstr "건너뛰기"
@@ -365,7 +365,7 @@ msgid "SLOT"
 msgstr "슬롯"
 
 msgid "ARE YOU SURE YOU WANT TO DELETE THIS ITEM?"
-msgstr "정말로 현재 아이템을 삭제하시겠습니까?"
+msgstr "정말로 이 항목을 삭제하시겠습니까?"
 
 msgid "BACK"
 msgstr "뒤로"
@@ -1066,40 +1066,40 @@ msgid "CPU Max TDP (AMD Only)"
 msgstr "CPU 최대 TDP (AMD 전용)"
 
 msgid "2w"
-msgstr "2와트"
+msgstr "2w"
 
 msgid "4w"
-msgstr "4와트"
+msgstr "4w"
 
 msgid "6w"
-msgstr "6와트"
+msgstr "6w"
 
 msgid "8w"
-msgstr "8와트"
+msgstr "8w"
 
 msgid "10w"
-msgstr "10와트"
+msgstr "10w"
 
 msgid "12w"
-msgstr "12와트"
+msgstr "12w"
 
 msgid "14w"
-msgstr "14와트"
+msgstr "14w"
 
 msgid "16w"
-msgstr "16와트"
+msgstr "16w"
 
 msgid "18w"
-msgstr "18와트"
+msgstr "18w"
 
 msgid "20w"
-msgstr "20와트"
+msgstr "20w"
 
 msgid "22w"
-msgstr "22와트"
+msgstr "22w"
 
 msgid "24w"
-msgstr "24와트"
+msgstr "24w"
 
 msgid ""
 "WARNING: OVERCLOCKING YOUR DEVICE MAY RESULT IN STABILITY PROBLEMS OR CAUSE "
@@ -1971,7 +1971,7 @@ msgid "CURRENT THEME"
 msgstr "현재 테마"
 
 msgid "QUIT CURRENT GAME"
-msgstr "현재 게임 종료"
+msgstr "현재 게임 나가기"
 
 msgid "UPDATE MOONLIGHT GAMES"
 msgstr "문라이트 게임 업데이트"
@@ -2452,7 +2452,7 @@ msgid "RANDOM"
 msgstr "랜덤"
 
 msgid "Full"
-msgstr "전체"
+msgstr "Full"
 
 msgid "Kiosk"
 msgstr "키오스크"
@@ -5292,9 +5292,3 @@ msgstr "수직 모드 (회전)"
 
 msgid "ENABLE WIFI POWERSAVE"
 msgstr "WIFI 절전 활성화"
-
-msgid "Config"
-msgstr "설정"
-
-msgid "config"
-msgstr "설정"
