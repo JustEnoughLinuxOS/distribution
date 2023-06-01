@@ -2067,7 +2067,7 @@ msgid "START ON SYSTEM"
 msgstr "시스템에서 시작"
 
 msgid "RESTORE LAST SELECTED"
-msgstr "마지막 선택지 복원"
+msgstr "마지막 선택지"
 
 msgid "START ON GAMELIST"
 msgstr "게임 목록에서 시작"
