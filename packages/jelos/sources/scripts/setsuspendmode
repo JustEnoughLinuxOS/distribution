@@ -1,0 +1,10 @@
+#!/bin/bash
+. /etc/profile
+
+cat <<EOF >/storage/.config/sleep.conf.d/sleep.conf
+[Sleep]
+AllowSuspend=yes
+SuspendState=${1}
+EOF
+
+set_setting system.suspendmode ${1}

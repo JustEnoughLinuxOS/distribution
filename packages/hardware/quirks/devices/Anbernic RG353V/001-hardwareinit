@@ -10,8 +10,8 @@ echo 1000000 > /sys/class/pwm/${DEVICE_PWM_MOTOR}/pwm0/period
 echo 1 > /sys/class/pwm/${DEVICE_PWM_MOTOR}/pwm0/enable 
 echo 1000000 > /sys/class/pwm/${DEVICE_PWM_MOTOR}/pwm0/duty_cycle 
 
-cat <<EOF >/storage/.config/sleep.conf.d/sleep.conf
-[Sleep]
-AllowSuspend=yes
-SuspendState=freeze
-EOF
+MYSLEEPMODE=$(get_setting system.suspendmode)
+if [ -z "${MYSLEEPMODE}" ]
+then
+  /usr/bin/setsuspendmode freeze
+fi

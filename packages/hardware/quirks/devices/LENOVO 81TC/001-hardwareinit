@@ -9,3 +9,9 @@ then
   echo 19000 > /sys/class/backlight/$(brightness device)/brightness
   touch /storage/.quirks
 fi
+
+MYSLEEPMODE=$(get_setting system.suspendmode)
+if [ -z "${MYSLEEPMODE}" ]
+then
+  /usr/bin/setsuspendmode mem
+fi
