@@ -117,8 +117,9 @@ Building JELOS is easy, the fastest and most recommended method is to instruct t
 > Devices that list a dependency require the dependency to be built first as that build will be used as the root of the device you are building.  This will be done automatically by the build tooling when you start a build for your device.
 
 ### Building Manually
-To build JELOS manually, you will need several prerequisite packages installed.
+To build JELOS manually, you will need several prerequisite host packages installed.
 
+#### Distribution Packages
 ```
 sudo apt install gcc make git unzip wget \
                 xz-utils libsdl2-dev libsdl2-mixer-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev \
@@ -127,8 +128,23 @@ sudo apt install gcc make git unzip wget \
                 xmlstarlet patchutils gawk gperf xfonts-utils default-jre python-is-python3 xsltproc libjson-perl \
                 lzop libncurses5-dev device-tree-compiler u-boot-tools rsync p7zip libparse-yapp-perl \
                 zip binutils-aarch64-linux-gnu dos2unix p7zip-full libvpx-dev bsdmainutils bc meson p7zip-full \
-                qemu-user-binfmt zstd parted imagemagick docker.io
+                qemu-user-binfmt zstd parted imagemagick qemu-user-static ca-certificates curl gnupg
 ```
+
+### Docker
+```
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+echo \
+  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+> Docker installation reference (source): https://docs.docker.com/engine/install/ubuntu/
 
 Next, build the version of JELOS for your device.  See the table above for dependencies. 
 
