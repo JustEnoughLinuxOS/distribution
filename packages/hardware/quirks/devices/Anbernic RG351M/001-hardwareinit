@@ -10,6 +10,9 @@ echo 1000000 > /sys/class/pwm/${DEVICE_PWM_MOTOR}/pwm0/period
 echo 1 > /sys/class/pwm/${DEVICE_PWM_MOTOR}/pwm0/enable 
 echo 1000000 > /sys/class/pwm/${DEVICE_PWM_MOTOR}/pwm0/duty_cycle 
 
+# GPIOS
+DEVICE_PWM_MOTOR="pwmchip0"
+
 cat <<EOF >/storage/.config/sleep.conf.d/sleep.conf
 [Sleep]
 AllowSuspend=yes
