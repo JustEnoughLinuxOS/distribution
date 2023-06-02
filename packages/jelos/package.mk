@@ -51,7 +51,10 @@ post_install() {
   ln -sf jelos.target ${INSTALL}/usr/lib/systemd/system/default.target
 
   mkdir -p ${INSTALL}/etc/profile.d
-  cp ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/device.config ${INSTALL}/etc/profile.d/01-deviceconfig
+  if [ -e "${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/device.config" ]
+  then
+    cp ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/device.config ${INSTALL}/etc/profile.d/01-deviceconfig
+  fi
 
   if [ ! -d "${INSTALL}/usr/share" ]
   then
