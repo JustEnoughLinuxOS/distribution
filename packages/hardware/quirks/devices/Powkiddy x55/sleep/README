@@ -1,1 +1,0 @@
-Sleep quirks are executed before (pre) and after (post) a sleep event occurs.

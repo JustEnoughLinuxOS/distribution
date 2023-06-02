@@ -1,4 +1,0 @@
-#!/bin/bash
-# Set usbcore.autosuspend to -1
-
-echo -1 > /sys/module/usbcore/parameters/autosuspend
