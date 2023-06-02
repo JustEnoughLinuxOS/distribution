@@ -1,6 +1,6 @@
 diff -rupN dolphin.orig/CMake/FindWaylandProtocols.cmake dolphin/CMake/FindWaylandProtocols.cmake
 --- dolphin.orig/CMake/FindWaylandProtocols.cmake	1970-01-01 00:00:00.000000000 +0000
-+++ dolphin/CMake/FindWaylandProtocols.cmake	2023-06-01 20:10:59.768914411 +0000
++++ dolphin/CMake/FindWaylandProtocols.cmake	2023-06-02 18:37:56.021855425 +0000
 @@ -0,0 +1,28 @@
 +# from https://github.com/glfw/glfw/blob/master/CMake/modules/FindWaylandProtocols.cmake
 +
@@ -32,7 +32,7 @@ diff -rupN dolphin.orig/CMake/FindWaylandProtocols.cmake dolphin/CMake/FindWayla
 +set(WAYLAND_PROTOCOLS_VERSION ${WaylandProtocols_VERSION})
 diff -rupN dolphin.orig/CMake/FindXKBCommon.cmake dolphin/CMake/FindXKBCommon.cmake
 --- dolphin.orig/CMake/FindXKBCommon.cmake	1970-01-01 00:00:00.000000000 +0000
-+++ dolphin/CMake/FindXKBCommon.cmake	2023-06-01 20:10:59.768914411 +0000
++++ dolphin/CMake/FindXKBCommon.cmake	2023-06-02 18:37:56.021855425 +0000
 @@ -0,0 +1,33 @@
 +# - Try to find XKBCommon
 +# Once done, this will define
@@ -69,7 +69,7 @@ diff -rupN dolphin.orig/CMake/FindXKBCommon.cmake dolphin/CMake/FindXKBCommon.cm
 +mark_as_advanced(XKBCOMMON_LIBRARY XKBCOMMON_INCLUDE_DIR)
 diff -rupN dolphin.orig/CMakeLists.txt dolphin/CMakeLists.txt
 --- dolphin.orig/CMakeLists.txt	2023-06-01 19:24:09.874000574 +0000
-+++ dolphin/CMakeLists.txt	2023-06-01 20:10:59.768914411 +0000
++++ dolphin/CMakeLists.txt	2023-06-02 18:37:56.021855425 +0000
 @@ -43,6 +43,7 @@ set(DOLPHIN_DEFAULT_UPDATE_TRACK "" CACH
  
  if(UNIX AND NOT APPLE AND NOT ANDROID)
@@ -98,7 +98,7 @@ diff -rupN dolphin.orig/CMakeLists.txt dolphin/CMakeLists.txt
    if(EGL_FOUND)
 diff -rupN dolphin.orig/Source/Core/Common/CMakeLists.txt dolphin/Source/Core/Common/CMakeLists.txt
 --- dolphin.orig/Source/Core/Common/CMakeLists.txt	2023-06-01 19:24:09.918002004 +0000
-+++ dolphin/Source/Core/Common/CMakeLists.txt	2023-06-01 20:10:59.896918536 +0000
++++ dolphin/Source/Core/Common/CMakeLists.txt	2023-06-02 18:37:56.537871495 +0000
 @@ -255,11 +255,20 @@ if(ENABLE_EGL AND EGL_FOUND)
        GL/GLInterface/EGLAndroid.cpp
        GL/GLInterface/EGLAndroid.h
@@ -127,7 +127,7 @@ diff -rupN dolphin.orig/Source/Core/Common/CMakeLists.txt dolphin/Source/Core/Co
    target_link_libraries(common PUBLIC ${EGL_LIBRARIES})
 diff -rupN dolphin.orig/Source/Core/Common/GL/GLContext.cpp dolphin/Source/Core/Common/GL/GLContext.cpp
 --- dolphin.orig/Source/Core/Common/GL/GLContext.cpp	2023-06-01 19:23:58.513631223 +0000
-+++ dolphin/Source/Core/Common/GL/GLContext.cpp	2023-06-01 20:10:59.896918536 +0000
++++ dolphin/Source/Core/Common/GL/GLContext.cpp	2023-06-02 18:37:56.553871993 +0000
 @@ -25,6 +25,9 @@
  #if defined(ANDROID)
  #include "Common/GL/GLInterface/EGLAndroid.h"
@@ -165,7 +165,7 @@ diff -rupN dolphin.orig/Source/Core/Common/GL/GLContext.cpp dolphin/Source/Core/
      context = std::make_unique<GLContextEGL>();
 diff -rupN dolphin.orig/Source/Core/Common/GL/GLContext.h dolphin/Source/Core/Common/GL/GLContext.h
 --- dolphin.orig/Source/Core/Common/GL/GLContext.h	2023-06-01 19:23:58.513631223 +0000
-+++ dolphin/Source/Core/Common/GL/GLContext.h	2023-06-01 20:10:59.896918536 +0000
++++ dolphin/Source/Core/Common/GL/GLContext.h	2023-06-02 18:37:56.553871993 +0000
 @@ -36,8 +36,8 @@ public:
    virtual bool MakeCurrent();
    virtual bool ClearCurrent();
@@ -179,7 +179,7 @@ diff -rupN dolphin.orig/Source/Core/Common/GL/GLContext.h dolphin/Source/Core/Co
    virtual void SwapInterval(int interval);
 diff -rupN dolphin.orig/Source/Core/Common/GL/GLInterface/AGL.h dolphin/Source/Core/Common/GL/GLInterface/AGL.h
 --- dolphin.orig/Source/Core/Common/GL/GLInterface/AGL.h	2023-06-01 19:23:58.513631223 +0000
-+++ dolphin/Source/Core/Common/GL/GLInterface/AGL.h	2023-06-01 20:10:59.900918665 +0000
++++ dolphin/Source/Core/Common/GL/GLInterface/AGL.h	2023-06-02 18:37:56.557872118 +0000
 @@ -27,6 +27,8 @@ public:
  
    bool MakeCurrent() override;
@@ -191,7 +191,7 @@ diff -rupN dolphin.orig/Source/Core/Common/GL/GLInterface/AGL.h dolphin/Source/C
  
 diff -rupN dolphin.orig/Source/Core/Common/GL/GLInterface/AGL.mm dolphin/Source/Core/Common/GL/GLInterface/AGL.mm
 --- dolphin.orig/Source/Core/Common/GL/GLInterface/AGL.mm	2023-06-01 19:23:58.513631223 +0000
-+++ dolphin/Source/Core/Common/GL/GLInterface/AGL.mm	2023-06-01 20:10:59.900918665 +0000
++++ dolphin/Source/Core/Common/GL/GLInterface/AGL.mm	2023-06-02 18:37:56.557872118 +0000
 @@ -144,7 +144,7 @@ bool GLContextAGL::ClearCurrent()
    return true;
  }
@@ -203,7 +203,7 @@ diff -rupN dolphin.orig/Source/Core/Common/GL/GLInterface/AGL.mm dolphin/Source/
      return;
 diff -rupN dolphin.orig/Source/Core/Common/GL/GLInterface/EGL.cpp dolphin/Source/Core/Common/GL/GLInterface/EGL.cpp
 --- dolphin.orig/Source/Core/Common/GL/GLInterface/EGL.cpp	2023-06-01 19:23:58.513631223 +0000
-+++ dolphin/Source/Core/Common/GL/GLInterface/EGL.cpp	2023-06-01 20:10:59.900918665 +0000
++++ dolphin/Source/Core/Common/GL/GLInterface/EGL.cpp	2023-06-02 18:37:56.557872118 +0000
 @@ -292,8 +292,8 @@ bool GLContextEGL::CreateWindowSurface()
  {
    if (!IsHeadless())
@@ -268,7 +268,7 @@ diff -rupN dolphin.orig/Source/Core/Common/GL/GLInterface/EGL.cpp dolphin/Source
 +}
 diff -rupN dolphin.orig/Source/Core/Common/GL/GLInterface/EGL.h dolphin/Source/Core/Common/GL/GLInterface/EGL.h
 --- dolphin.orig/Source/Core/Common/GL/GLInterface/EGL.h	2023-06-01 19:23:58.513631223 +0000
-+++ dolphin/Source/Core/Common/GL/GLInterface/EGL.h	2023-06-01 20:10:59.900918665 +0000
++++ dolphin/Source/Core/Common/GL/GLInterface/EGL.h	2023-06-02 18:37:56.561872243 +0000
 @@ -22,7 +22,8 @@ public:
    bool MakeCurrent() override;
    bool ClearCurrent() override;
@@ -294,7 +294,7 @@ diff -rupN dolphin.orig/Source/Core/Common/GL/GLInterface/EGL.h dolphin/Source/C
    std::vector<int> m_attribs;
 diff -rupN dolphin.orig/Source/Core/Common/GL/GLInterface/EGLWayland.cpp dolphin/Source/Core/Common/GL/GLInterface/EGLWayland.cpp
 --- dolphin.orig/Source/Core/Common/GL/GLInterface/EGLWayland.cpp	1970-01-01 00:00:00.000000000 +0000
-+++ dolphin/Source/Core/Common/GL/GLInterface/EGLWayland.cpp	2023-06-01 20:10:59.900918665 +0000
++++ dolphin/Source/Core/Common/GL/GLInterface/EGLWayland.cpp	2023-06-02 18:37:56.561872243 +0000
 @@ -0,0 +1,36 @@
 +// Copyright 2019 Dolphin Emulator Project
 +// Licensed under GPLv2+
@@ -334,7 +334,7 @@ diff -rupN dolphin.orig/Source/Core/Common/GL/GLInterface/EGLWayland.cpp dolphin
 +}
 diff -rupN dolphin.orig/Source/Core/Common/GL/GLInterface/EGLWayland.h dolphin/Source/Core/Common/GL/GLInterface/EGLWayland.h
 --- dolphin.orig/Source/Core/Common/GL/GLInterface/EGLWayland.h	1970-01-01 00:00:00.000000000 +0000
-+++ dolphin/Source/Core/Common/GL/GLInterface/EGLWayland.h	2023-06-01 20:10:59.900918665 +0000
++++ dolphin/Source/Core/Common/GL/GLInterface/EGLWayland.h	2023-06-02 18:37:56.561872243 +0000
 @@ -0,0 +1,19 @@
 +// Copyright 2019 Dolphin Emulator Project
 +// Licensed under GPLv2+
@@ -357,7 +357,7 @@ diff -rupN dolphin.orig/Source/Core/Common/GL/GLInterface/EGLWayland.h dolphin/S
 +};
 diff -rupN dolphin.orig/Source/Core/Common/GL/GLInterface/EGLX11.cpp dolphin/Source/Core/Common/GL/GLInterface/EGLX11.cpp
 --- dolphin.orig/Source/Core/Common/GL/GLInterface/EGLX11.cpp	2023-06-01 19:23:58.513631223 +0000
-+++ dolphin/Source/Core/Common/GL/GLInterface/EGLX11.cpp	2023-06-01 20:10:59.900918665 +0000
++++ dolphin/Source/Core/Common/GL/GLInterface/EGLX11.cpp	2023-06-02 18:37:56.561872243 +0000
 @@ -11,7 +11,7 @@ GLContextEGLX11::~GLContextEGLX11()
    m_render_window.reset();
  }
@@ -369,7 +369,7 @@ diff -rupN dolphin.orig/Source/Core/Common/GL/GLInterface/EGLX11.cpp dolphin/Sou
    m_backbuffer_width = m_render_window->GetWidth();
 diff -rupN dolphin.orig/Source/Core/Common/GL/GLInterface/EGLX11.h dolphin/Source/Core/Common/GL/GLInterface/EGLX11.h
 --- dolphin.orig/Source/Core/Common/GL/GLInterface/EGLX11.h	2023-06-01 19:23:58.513631223 +0000
-+++ dolphin/Source/Core/Common/GL/GLInterface/EGLX11.h	2023-06-01 20:10:59.900918665 +0000
++++ dolphin/Source/Core/Common/GL/GLInterface/EGLX11.h	2023-06-02 18:37:56.561872243 +0000
 @@ -13,7 +13,7 @@ class GLContextEGLX11 final : public GLC
  public:
    ~GLContextEGLX11() override;
@@ -381,7 +381,7 @@ diff -rupN dolphin.orig/Source/Core/Common/GL/GLInterface/EGLX11.h dolphin/Sourc
    EGLDisplay OpenEGLDisplay() override;
 diff -rupN dolphin.orig/Source/Core/Common/GL/GLInterface/GLX.cpp dolphin/Source/Core/Common/GL/GLInterface/GLX.cpp
 --- dolphin.orig/Source/Core/Common/GL/GLInterface/GLX.cpp	2023-06-01 19:24:09.918002004 +0000
-+++ dolphin/Source/Core/Common/GL/GLInterface/GLX.cpp	2023-06-01 20:10:59.900918665 +0000
++++ dolphin/Source/Core/Common/GL/GLInterface/GLX.cpp	2023-06-02 18:37:56.561872243 +0000
 @@ -310,7 +310,7 @@ bool GLContextGLX::ClearCurrent()
    return glXMakeCurrent(m_display, None, nullptr);
  }
@@ -393,7 +393,7 @@ diff -rupN dolphin.orig/Source/Core/Common/GL/GLInterface/GLX.cpp dolphin/Source
    m_backbuffer_width = m_render_window->GetWidth();
 diff -rupN dolphin.orig/Source/Core/Common/GL/GLInterface/GLX.h dolphin/Source/Core/Common/GL/GLInterface/GLX.h
 --- dolphin.orig/Source/Core/Common/GL/GLInterface/GLX.h	2023-06-01 19:23:58.513631223 +0000
-+++ dolphin/Source/Core/Common/GL/GLInterface/GLX.h	2023-06-01 20:10:59.900918665 +0000
++++ dolphin/Source/Core/Common/GL/GLInterface/GLX.h	2023-06-02 18:37:56.561872243 +0000
 @@ -24,7 +24,7 @@ public:
    bool MakeCurrent() override;
    bool ClearCurrent() override;
@@ -405,7 +405,7 @@ diff -rupN dolphin.orig/Source/Core/Common/GL/GLInterface/GLX.h dolphin/Source/C
    void Swap() override;
 diff -rupN dolphin.orig/Source/Core/Common/GL/GLInterface/WGL.cpp dolphin/Source/Core/Common/GL/GLInterface/WGL.cpp
 --- dolphin.orig/Source/Core/Common/GL/GLInterface/WGL.cpp	2023-06-01 19:23:58.513631223 +0000
-+++ dolphin/Source/Core/Common/GL/GLInterface/WGL.cpp	2023-06-01 20:10:59.900918665 +0000
++++ dolphin/Source/Core/Common/GL/GLInterface/WGL.cpp	2023-06-02 18:37:56.561872243 +0000
 @@ -480,7 +480,7 @@ bool GLContextWGL::ClearCurrent()
  }
  
@@ -417,7 +417,7 @@ diff -rupN dolphin.orig/Source/Core/Common/GL/GLInterface/WGL.cpp dolphin/Source
    GetClientRect(m_window_handle, &rcWindow);
 diff -rupN dolphin.orig/Source/Core/Common/GL/GLInterface/WGL.h dolphin/Source/Core/Common/GL/GLInterface/WGL.h
 --- dolphin.orig/Source/Core/Common/GL/GLInterface/WGL.h	2023-06-01 19:23:58.513631223 +0000
-+++ dolphin/Source/Core/Common/GL/GLInterface/WGL.h	2023-06-01 20:10:59.900918665 +0000
++++ dolphin/Source/Core/Common/GL/GLInterface/WGL.h	2023-06-02 18:37:56.561872243 +0000
 @@ -19,7 +19,7 @@ public:
    bool MakeCurrent() override;
    bool ClearCurrent() override;
@@ -429,7 +429,7 @@ diff -rupN dolphin.orig/Source/Core/Common/GL/GLInterface/WGL.h dolphin/Source/C
    void SwapInterval(int interval) override;
 diff -rupN dolphin.orig/Source/Core/Common/WindowSystemInfo.h dolphin/Source/Core/Common/WindowSystemInfo.h
 --- dolphin.orig/Source/Core/Common/WindowSystemInfo.h	2023-06-01 19:23:58.517631353 +0000
-+++ dolphin/Source/Core/Common/WindowSystemInfo.h	2023-06-01 20:10:59.896918536 +0000
++++ dolphin/Source/Core/Common/WindowSystemInfo.h	2023-06-02 18:37:56.549871869 +0000
 @@ -40,7 +40,11 @@ struct WindowSystemInfo
    // This is kept seperate as input may require a different handle to rendering, and
    // during video backend startup the surface pointer may change (MoltenVK).
@@ -445,7 +445,7 @@ diff -rupN dolphin.orig/Source/Core/Common/WindowSystemInfo.h dolphin/Source/Cor
  };
 diff -rupN dolphin.orig/Source/Core/Core/Core.cpp dolphin/Source/Core/Core/Core.cpp
 --- dolphin.orig/Source/Core/Core/Core.cpp	2023-06-01 19:24:09.922002134 +0000
-+++ dolphin/Source/Core/Core/Core.cpp	2023-06-01 20:10:59.900918665 +0000
++++ dolphin/Source/Core/Core/Core.cpp	2023-06-02 18:37:56.561872243 +0000
 @@ -478,6 +478,8 @@ static void EmuThread(std::unique_ptr<Bo
    // is relative to the render window, instead of the main window.
    ASSERT(g_controller_interface.IsInit());
@@ -457,7 +457,7 @@ diff -rupN dolphin.orig/Source/Core/Core/Core.cpp dolphin/Source/Core/Core/Core.
    Pad::LoadGBAConfig();
 diff -rupN dolphin.orig/Source/Core/Core/HW/GCPadEmu.cpp dolphin/Source/Core/Core/HW/GCPadEmu.cpp
 --- dolphin.orig/Source/Core/Core/HW/GCPadEmu.cpp	2023-06-01 19:24:09.926002264 +0000
-+++ dolphin/Source/Core/Core/HW/GCPadEmu.cpp	2023-06-01 20:10:59.900918665 +0000
++++ dolphin/Source/Core/Core/HW/GCPadEmu.cpp	2023-06-02 18:37:56.585872990 +0000
 @@ -24,6 +24,7 @@ static const u16 button_bitmasks[] = {
      PAD_BUTTON_X,
      PAD_BUTTON_Y,
@@ -478,7 +478,7 @@ diff -rupN dolphin.orig/Source/Core/Core/HW/GCPadEmu.cpp dolphin/Source/Core/Cor
                            MAIN_STICK_GROUP, _trans("Control Stick"), MAIN_STICK_GATE_RADIUS));
 diff -rupN dolphin.orig/Source/Core/Core/HW/GCPadEmu.h dolphin/Source/Core/Core/HW/GCPadEmu.h
 --- dolphin.orig/Source/Core/Core/HW/GCPadEmu.h	2023-06-01 19:23:58.529631743 +0000
-+++ dolphin/Source/Core/Core/HW/GCPadEmu.h	2023-06-01 20:10:59.900918665 +0000
++++ dolphin/Source/Core/Core/HW/GCPadEmu.h	2023-06-02 18:37:56.585872990 +0000
 @@ -65,6 +65,7 @@ public:
    static constexpr const char* X_BUTTON = "X";
    static constexpr const char* Y_BUTTON = "Y";
@@ -489,7 +489,7 @@ diff -rupN dolphin.orig/Source/Core/Core/HW/GCPadEmu.h dolphin/Source/Core/Core/
    // i18n: The left trigger button (labeled L on real controllers)
 diff -rupN dolphin.orig/Source/Core/DolphinLib.props dolphin/Source/Core/DolphinLib.props
 --- dolphin.orig/Source/Core/DolphinLib.props	2023-06-01 19:24:09.942002785 +0000
-+++ dolphin/Source/Core/DolphinLib.props	2023-06-01 20:10:59.896918536 +0000
++++ dolphin/Source/Core/DolphinLib.props	2023-06-02 18:37:56.533871371 +0000
 @@ -1219,6 +1219,7 @@
      <ClCompile Include="VideoBackends\Vulkan\VKPerfQuery.cpp" />
      <ClCompile Include="VideoBackends\Vulkan\VKPipeline.cpp" />
@@ -500,7 +500,7 @@ diff -rupN dolphin.orig/Source/Core/DolphinLib.props dolphin/Source/Core/Dolphin
      <ClCompile Include="VideoBackends\Vulkan\VKSwapChain.cpp" />
 diff -rupN dolphin.orig/Source/Core/DolphinNoGUI/CMakeLists.txt dolphin/Source/Core/DolphinNoGUI/CMakeLists.txt
 --- dolphin.orig/Source/Core/DolphinNoGUI/CMakeLists.txt	2023-06-01 19:24:09.942002785 +0000
-+++ dolphin/Source/Core/DolphinNoGUI/CMakeLists.txt	2023-06-01 20:10:59.908918923 +0000
++++ dolphin/Source/Core/DolphinNoGUI/CMakeLists.txt	2023-06-02 18:37:56.625874236 +0000
 @@ -17,6 +17,22 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux"
    target_sources(dolphin-nogui PRIVATE PlatformFBDev.cpp)
  endif()
@@ -526,7 +526,7 @@ diff -rupN dolphin.orig/Source/Core/DolphinNoGUI/CMakeLists.txt dolphin/Source/C
  target_link_libraries(dolphin-nogui
 diff -rupN dolphin.orig/Source/Core/DolphinNoGUI/MainNoGUI.cpp dolphin/Source/Core/DolphinNoGUI/MainNoGUI.cpp
 --- dolphin.orig/Source/Core/DolphinNoGUI/MainNoGUI.cpp	2023-06-01 19:24:09.942002785 +0000
-+++ dolphin/Source/Core/DolphinNoGUI/MainNoGUI.cpp	2023-06-01 20:10:59.908918923 +0000
++++ dolphin/Source/Core/DolphinNoGUI/MainNoGUI.cpp	2023-06-02 18:37:56.625874236 +0000
 @@ -155,6 +155,11 @@ static std::unique_ptr<Platform> GetPlat
  {
    std::string platform_name = static_cast<const char*>(options.get("platform"));
@@ -552,7 +552,7 @@ diff -rupN dolphin.orig/Source/Core/DolphinNoGUI/MainNoGUI.cpp dolphin/Source/Co
    optparse::Values& options = CommandLineParse::ParseArguments(parser.get(), argc, argv);
 diff -rupN dolphin.orig/Source/Core/DolphinNoGUI/Platform.h dolphin/Source/Core/DolphinNoGUI/Platform.h
 --- dolphin.orig/Source/Core/DolphinNoGUI/Platform.h	2023-06-01 19:23:58.553632524 +0000
-+++ dolphin/Source/Core/DolphinNoGUI/Platform.h	2023-06-01 20:10:59.908918923 +0000
++++ dolphin/Source/Core/DolphinNoGUI/Platform.h	2023-06-02 18:37:56.625874236 +0000
 @@ -35,6 +35,10 @@ public:
    static std::unique_ptr<Platform> CreateX11Platform();
  #endif
@@ -566,8 +566,8 @@ diff -rupN dolphin.orig/Source/Core/DolphinNoGUI/Platform.h dolphin/Source/Core/
  #endif
 diff -rupN dolphin.orig/Source/Core/DolphinNoGUI/PlatformWayland.cpp dolphin/Source/Core/DolphinNoGUI/PlatformWayland.cpp
 --- dolphin.orig/Source/Core/DolphinNoGUI/PlatformWayland.cpp	1970-01-01 00:00:00.000000000 +0000
-+++ dolphin/Source/Core/DolphinNoGUI/PlatformWayland.cpp	2023-06-01 20:10:59.908918923 +0000
-@@ -0,0 +1,323 @@
++++ dolphin/Source/Core/DolphinNoGUI/PlatformWayland.cpp	2023-06-02 21:15:16.882296450 +0000
+@@ -0,0 +1,348 @@
 +// Copyright 2018 Dolphin Emulator Project
 +// Licensed under GPLv2+
 +// Refer to the license.txt file included.
@@ -586,6 +586,7 @@ diff -rupN dolphin.orig/Source/Core/DolphinNoGUI/PlatformWayland.cpp dolphin/Sou
 +#include <fmt/format.h>
 +#include "Core/Config/GraphicsSettings.h"
 +#include "VideoCommon/VideoConfig.h"
++#include "VideoCommon/OnScreenDisplay.h"
 +
 +#include <climits>
 +#include <cstdio>
@@ -790,6 +791,13 @@ diff -rupN dolphin.orig/Source/Core/DolphinNoGUI/PlatformWayland.cpp dolphin/Sou
 +  xdg_toplevel_set_title(m_xdg_toplevel, string.c_str());
 +}
 +
++auto ShowEmulationSpeed = []() {
++  const float emulation_speed = Config::Get(Config::MAIN_EMULATION_SPEED);
++  OSD::AddMessage(emulation_speed <= 0 ?
++    "Speed Limit: Unlimited" :
++    fmt::format("Speed Limit: {}%", std::lround(emulation_speed * 100.f)));
++};
++
 +void PlatformWayland::MainLoop()
 +{
 +  while (IsRunning())
@@ -798,7 +806,8 @@ diff -rupN dolphin.orig/Source/Core/DolphinNoGUI/PlatformWayland.cpp dolphin/Sou
 +    static int slot = 0;
 +    static int fps = 0;
 +    static int aspect = 0;
-+	
++    static int fforward = 0;
++
 +    UpdateRunningFlag();
 +    Core::HostDispatchJobs();
 +    ProcessEvents();
@@ -862,6 +871,22 @@ diff -rupN dolphin.orig/Source/Core/DolphinNoGUI/PlatformWayland.cpp dolphin/Sou
 +         }
 +         hotkey = 0;
 +       }
++       if( (x.button & PAD_TRIGGER_Z) == PAD_TRIGGER_Z) {
++        if(fforward == 0) {
++          auto speed = Config::Get(Config::MAIN_EMULATION_SPEED) + 1.0;
++          speed = (speed >= 0.95 && speed <= 1.05) ? 1.0 : speed;
++          Config::SetCurrent(Config::MAIN_EMULATION_SPEED, speed);
++          ShowEmulationSpeed();
++          fforward = 1;
++        } else {
++          auto speed = Config::Get(Config::MAIN_EMULATION_SPEED) - 1.0;
++          speed = (speed <= 0 || (speed >= 0.95 && speed <= 1.05)) ? 1.0 : speed;
++          Config::SetCurrent(Config::MAIN_EMULATION_SPEED, speed);
++          ShowEmulationSpeed();
++          fforward = 0;
++        }
++        hotkey = 0;
++       }
 +    }
 +    }
 +
@@ -893,7 +918,7 @@ diff -rupN dolphin.orig/Source/Core/DolphinNoGUI/PlatformWayland.cpp dolphin/Sou
 +}
 diff -rupN dolphin.orig/Source/Core/DolphinNoGUI/PlatformX11.cpp dolphin/Source/Core/DolphinNoGUI/PlatformX11.cpp
 --- dolphin.orig/Source/Core/DolphinNoGUI/PlatformX11.cpp	2023-06-01 19:24:09.942002785 +0000
-+++ dolphin/Source/Core/DolphinNoGUI/PlatformX11.cpp	2023-06-01 20:10:59.908918923 +0000
++++ dolphin/Source/Core/DolphinNoGUI/PlatformX11.cpp	2023-06-02 18:37:56.625874236 +0000
 @@ -57,8 +57,8 @@ private:
  #endif
    int m_window_x = Config::Get(Config::MAIN_RENDER_WINDOW_XPOS);
@@ -940,7 +965,7 @@ diff -rupN dolphin.orig/Source/Core/DolphinNoGUI/PlatformX11.cpp dolphin/Source/
      }
 diff -rupN dolphin.orig/Source/Core/InputCommon/GCPadStatus.h dolphin/Source/Core/InputCommon/GCPadStatus.h
 --- dolphin.orig/Source/Core/InputCommon/GCPadStatus.h	2023-06-01 19:23:58.569633044 +0000
-+++ dolphin/Source/Core/InputCommon/GCPadStatus.h	2023-06-01 20:10:59.916919181 +0000
++++ dolphin/Source/Core/InputCommon/GCPadStatus.h	2023-06-02 18:37:56.653875108 +0000
 @@ -26,6 +26,7 @@ enum PadButton
    PAD_BUTTON_X = 0x0400,
    PAD_BUTTON_Y = 0x0800,
@@ -951,7 +976,7 @@ diff -rupN dolphin.orig/Source/Core/InputCommon/GCPadStatus.h dolphin/Source/Cor
  struct GCPadStatus
 diff -rupN dolphin.orig/Source/Core/VideoBackends/OGL/OGLRender.cpp dolphin/Source/Core/VideoBackends/OGL/OGLRender.cpp
 --- dolphin.orig/Source/Core/VideoBackends/OGL/OGLRender.cpp	2023-06-01 19:24:09.954003175 +0000
-+++ dolphin/Source/Core/VideoBackends/OGL/OGLRender.cpp	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/OGL/OGLRender.cpp	2023-06-02 18:37:56.665875481 +0000
 @@ -1079,7 +1079,7 @@ void Renderer::CheckForSurfaceChange()
    if (!m_surface_changed.TestAndClear())
      return;
@@ -972,7 +997,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/OGL/OGLRender.cpp dolphin/Sour
    m_system_framebuffer->UpdateDimensions(m_backbuffer_width, m_backbuffer_height);
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Software/SWOGLWindow.cpp dolphin/Source/Core/VideoBackends/Software/SWOGLWindow.cpp
 --- dolphin.orig/Source/Core/VideoBackends/Software/SWOGLWindow.cpp	2023-06-01 19:23:58.577633304 +0000
-+++ dolphin/Source/Core/VideoBackends/Software/SWOGLWindow.cpp	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Software/SWOGLWindow.cpp	2023-06-02 18:37:56.665875481 +0000
 @@ -32,6 +32,16 @@ bool SWOGLWindow::IsHeadless() const
    return m_gl_context->IsHeadless();
  }
@@ -1011,7 +1036,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Software/SWOGLWindow.cpp dolph
    GLsizei glHeight = (GLsizei)m_gl_context->GetBackBufferHeight();
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Software/SWOGLWindow.h dolphin/Source/Core/VideoBackends/Software/SWOGLWindow.h
 --- dolphin.orig/Source/Core/VideoBackends/Software/SWOGLWindow.h	2023-06-01 19:23:58.577633304 +0000
-+++ dolphin/Source/Core/VideoBackends/Software/SWOGLWindow.h	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Software/SWOGLWindow.h	2023-06-02 18:37:56.665875481 +0000
 @@ -20,6 +20,10 @@ public:
    GLContext* GetContext() const { return m_gl_context.get(); }
    bool IsHeadless() const;
@@ -1025,7 +1050,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Software/SWOGLWindow.h dolphin
  
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Software/SWRenderer.cpp dolphin/Source/Core/VideoBackends/Software/SWRenderer.cpp
 --- dolphin.orig/Source/Core/VideoBackends/Software/SWRenderer.cpp	2023-06-01 19:24:09.954003175 +0000
-+++ dolphin/Source/Core/VideoBackends/Software/SWRenderer.cpp	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Software/SWRenderer.cpp	2023-06-02 18:37:56.665875481 +0000
 @@ -60,17 +60,17 @@ SWRenderer::CreateFramebuffer(AbstractTe
                                 static_cast<SWTexture*>(depth_attachment));
  }
@@ -1081,7 +1106,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Software/SWRenderer.cpp dolphi
    u32 value = 0;
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Software/SWRenderer.h dolphin/Source/Core/VideoBackends/Software/SWRenderer.h
 --- dolphin.orig/Source/Core/VideoBackends/Software/SWRenderer.h	2023-06-01 19:24:09.954003175 +0000
-+++ dolphin/Source/Core/VideoBackends/Software/SWRenderer.h	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Software/SWRenderer.h	2023-06-02 18:37:56.665875481 +0000
 @@ -29,7 +29,7 @@ public:
    std::unique_ptr<AbstractFramebuffer>
    CreateFramebuffer(AbstractTexture* color_attachment, AbstractTexture* depth_attachment) override;
@@ -1102,7 +1127,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Software/SWRenderer.h dolphin/
  }  // namespace SW
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/CMakeLists.txt dolphin/Source/Core/VideoBackends/Vulkan/CMakeLists.txt
 --- dolphin.orig/Source/Core/VideoBackends/Vulkan/CMakeLists.txt	2023-06-01 19:24:09.954003175 +0000
-+++ dolphin/Source/Core/VideoBackends/Vulkan/CMakeLists.txt	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Vulkan/CMakeLists.txt	2023-06-02 18:37:56.669875606 +0000
 @@ -35,6 +35,8 @@ add_library(videovulkan
    VulkanContext.h
    VulkanLoader.cpp
@@ -1114,7 +1139,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/CMakeLists.txt dolphin/
  target_link_libraries(videovulkan
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/CommandBufferManager.cpp dolphin/Source/Core/VideoBackends/Vulkan/CommandBufferManager.cpp
 --- dolphin.orig/Source/Core/VideoBackends/Vulkan/CommandBufferManager.cpp	2023-06-01 19:24:09.954003175 +0000
-+++ dolphin/Source/Core/VideoBackends/Vulkan/CommandBufferManager.cpp	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Vulkan/CommandBufferManager.cpp	2023-06-02 18:37:56.669875606 +0000
 @@ -10,24 +10,24 @@
  #include "Common/MsgHandler.h"
  #include "Common/Thread.h"
@@ -1515,7 +1540,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/CommandBufferManager.cp
  }  // namespace Vulkan
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/CommandBufferManager.h dolphin/Source/Core/VideoBackends/Vulkan/CommandBufferManager.h
 --- dolphin.orig/Source/Core/VideoBackends/Vulkan/CommandBufferManager.h	2023-06-01 19:24:09.954003175 +0000
-+++ dolphin/Source/Core/VideoBackends/Vulkan/CommandBufferManager.h	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Vulkan/CommandBufferManager.h	2023-06-02 18:37:56.669875606 +0000
 @@ -22,10 +22,12 @@
  
  namespace Vulkan
@@ -1656,7 +1681,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/CommandBufferManager.h 
  }  // namespace Vulkan
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/Constants.h dolphin/Source/Core/VideoBackends/Vulkan/Constants.h
 --- dolphin.orig/Source/Core/VideoBackends/Vulkan/Constants.h	2023-06-01 19:24:09.954003175 +0000
-+++ dolphin/Source/Core/VideoBackends/Vulkan/Constants.h	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Vulkan/Constants.h	2023-06-02 18:37:56.669875606 +0000
 @@ -12,7 +12,7 @@
  namespace Vulkan
  {
@@ -1668,7 +1693,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/Constants.h dolphin/Sou
  constexpr size_t NUM_FRAMES_IN_FLIGHT = 2;
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/ObjectCache.cpp dolphin/Source/Core/VideoBackends/Vulkan/ObjectCache.cpp
 --- dolphin.orig/Source/Core/VideoBackends/Vulkan/ObjectCache.cpp	2023-06-01 19:24:09.954003175 +0000
-+++ dolphin/Source/Core/VideoBackends/Vulkan/ObjectCache.cpp	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Vulkan/ObjectCache.cpp	2023-06-02 18:37:56.669875606 +0000
 @@ -389,6 +389,8 @@ VkSampler ObjectCache::GetSampler(const
  VkRenderPass ObjectCache::GetRenderPass(VkFormat color_format, VkFormat depth_format,
                                          u32 multisamples, VkAttachmentLoadOp load_op)
@@ -1689,7 +1714,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/ObjectCache.cpp dolphin
    m_render_pass_cache.clear();
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/ObjectCache.h dolphin/Source/Core/VideoBackends/Vulkan/ObjectCache.h
 --- dolphin.orig/Source/Core/VideoBackends/Vulkan/ObjectCache.h	2023-06-01 19:23:58.577633304 +0000
-+++ dolphin/Source/Core/VideoBackends/Vulkan/ObjectCache.h	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Vulkan/ObjectCache.h	2023-06-02 18:37:56.669875606 +0000
 @@ -7,6 +7,7 @@
  #include <cstddef>
  #include <map>
@@ -1708,7 +1733,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/ObjectCache.h dolphin/S
  
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/StagingBuffer.cpp dolphin/Source/Core/VideoBackends/Vulkan/StagingBuffer.cpp
 --- dolphin.orig/Source/Core/VideoBackends/Vulkan/StagingBuffer.cpp	2023-06-01 19:23:58.577633304 +0000
-+++ dolphin/Source/Core/VideoBackends/Vulkan/StagingBuffer.cpp	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Vulkan/StagingBuffer.cpp	2023-06-02 18:37:56.669875606 +0000
 @@ -8,6 +8,7 @@
  
  #include "Common/Assert.h"
@@ -1731,7 +1756,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/StagingBuffer.cpp dolph
  void StagingBuffer::BufferMemoryBarrier(VkCommandBuffer command_buffer, VkBuffer buffer,
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/StateTracker.cpp dolphin/Source/Core/VideoBackends/Vulkan/StateTracker.cpp
 --- dolphin.orig/Source/Core/VideoBackends/Vulkan/StateTracker.cpp	2023-06-01 19:24:09.958003305 +0000
-+++ dolphin/Source/Core/VideoBackends/Vulkan/StateTracker.cpp	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Vulkan/StateTracker.cpp	2023-06-02 18:37:56.669875606 +0000
 @@ -16,59 +16,93 @@
  
  namespace Vulkan
@@ -2132,7 +2157,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/StateTracker.cpp dolphi
                              &m_compute_descriptor_set, 1, &m_bindings.utility_ubo_offset);
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/StateTracker.h dolphin/Source/Core/VideoBackends/Vulkan/StateTracker.h
 --- dolphin.orig/Source/Core/VideoBackends/Vulkan/StateTracker.h	2023-06-01 19:24:09.958003305 +0000
-+++ dolphin/Source/Core/VideoBackends/Vulkan/StateTracker.h	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Vulkan/StateTracker.h	2023-06-02 18:37:56.669875606 +0000
 @@ -13,28 +13,24 @@
  
  namespace Vulkan
@@ -2209,7 +2234,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/StateTracker.h dolphin/
  }  // namespace Vulkan
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VKBoundingBox.cpp dolphin/Source/Core/VideoBackends/Vulkan/VKBoundingBox.cpp
 --- dolphin.orig/Source/Core/VideoBackends/Vulkan/VKBoundingBox.cpp	2023-06-01 19:24:09.958003305 +0000
-+++ dolphin/Source/Core/VideoBackends/Vulkan/VKBoundingBox.cpp	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Vulkan/VKBoundingBox.cpp	2023-06-02 18:37:56.669875606 +0000
 @@ -12,6 +12,7 @@
  #include "VideoBackends/Vulkan/StagingBuffer.h"
  #include "VideoBackends/Vulkan/StateTracker.h"
@@ -2348,7 +2373,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VKBoundingBox.cpp dolph
  bool VKBoundingBox::CreateGPUBuffer()
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VKMain.cpp dolphin/Source/Core/VideoBackends/Vulkan/VKMain.cpp
 --- dolphin.orig/Source/Core/VideoBackends/Vulkan/VKMain.cpp	2023-06-01 19:24:09.958003305 +0000
-+++ dolphin/Source/Core/VideoBackends/Vulkan/VKMain.cpp	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Vulkan/VKMain.cpp	2023-06-02 18:37:56.669875606 +0000
 @@ -18,6 +18,7 @@
  #include "VideoBackends/Vulkan/VKVertexManager.h"
  #include "VideoBackends/Vulkan/VulkanContext.h"
@@ -2434,7 +2459,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VKMain.cpp dolphin/Sour
    UnloadVulkanLibrary();
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VKPerfQuery.cpp dolphin/Source/Core/VideoBackends/Vulkan/VKPerfQuery.cpp
 --- dolphin.orig/Source/Core/VideoBackends/Vulkan/VKPerfQuery.cpp	2023-06-01 19:24:09.958003305 +0000
-+++ dolphin/Source/Core/VideoBackends/Vulkan/VKPerfQuery.cpp	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Vulkan/VKPerfQuery.cpp	2023-06-02 18:37:56.669875606 +0000
 @@ -11,6 +11,7 @@
  #include "Common/Logging/Log.h"
  #include "Common/MsgHandler.h"
@@ -2555,7 +2580,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VKPerfQuery.cpp dolphin
    }
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VKRenderer.cpp dolphin/Source/Core/VideoBackends/Vulkan/VKRenderer.cpp
 --- dolphin.orig/Source/Core/VideoBackends/Vulkan/VKRenderer.cpp	2023-06-01 19:24:09.958003305 +0000
-+++ dolphin/Source/Core/VideoBackends/Vulkan/VKRenderer.cpp	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Vulkan/VKRenderer.cpp	2023-06-02 18:37:56.669875606 +0000
 @@ -31,6 +31,7 @@
  #include "VideoBackends/Vulkan/VKVertexFormat.h"
  #include "VideoBackends/Vulkan/VulkanContext.h"
@@ -3277,7 +3302,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VKRenderer.cpp dolphin/
  }  // namespace Vulkan
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VKScheduler.cpp dolphin/Source/Core/VideoBackends/Vulkan/VKScheduler.cpp
 --- dolphin.orig/Source/Core/VideoBackends/Vulkan/VKScheduler.cpp	1970-01-01 00:00:00.000000000 +0000
-+++ dolphin/Source/Core/VideoBackends/Vulkan/VKScheduler.cpp	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Vulkan/VKScheduler.cpp	2023-06-02 18:37:56.669875606 +0000
 @@ -0,0 +1,155 @@
 +// Copyright 2022 Dolphin Emulator Project
 +// SPDX-License-Identifier: GPL-2.0-or-later
@@ -3436,7 +3461,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VKScheduler.cpp dolphin
 +}  // namespace Vulkan
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VKScheduler.h dolphin/Source/Core/VideoBackends/Vulkan/VKScheduler.h
 --- dolphin.orig/Source/Core/VideoBackends/Vulkan/VKScheduler.h	1970-01-01 00:00:00.000000000 +0000
-+++ dolphin/Source/Core/VideoBackends/Vulkan/VKScheduler.h	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Vulkan/VKScheduler.h	2023-06-02 18:37:56.669875606 +0000
 @@ -0,0 +1,160 @@
 +// Copyright 2022 Dolphin Emulator Project
 +// SPDX-License-Identifier: GPL-2.0-or-later
@@ -3600,7 +3625,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VKScheduler.h dolphin/S
 +}  // namespace Vulkan
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VKStreamBuffer.cpp dolphin/Source/Core/VideoBackends/Vulkan/VKStreamBuffer.cpp
 --- dolphin.orig/Source/Core/VideoBackends/Vulkan/VKStreamBuffer.cpp	2023-06-01 19:23:58.577633304 +0000
-+++ dolphin/Source/Core/VideoBackends/Vulkan/VKStreamBuffer.cpp	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Vulkan/VKStreamBuffer.cpp	2023-06-02 18:37:56.669875606 +0000
 @@ -12,6 +12,7 @@
  #include "Common/MsgHandler.h"
  
@@ -3675,7 +3700,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VKStreamBuffer.cpp dolp
    m_current_offset = new_offset;
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VKSwapChain.cpp dolphin/Source/Core/VideoBackends/Vulkan/VKSwapChain.cpp
 --- dolphin.orig/Source/Core/VideoBackends/Vulkan/VKSwapChain.cpp	2023-06-01 19:24:09.958003305 +0000
-+++ dolphin/Source/Core/VideoBackends/Vulkan/VKSwapChain.cpp	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Vulkan/VKSwapChain.cpp	2023-06-02 18:37:56.669875606 +0000
 @@ -13,9 +13,9 @@
  
  #include "VideoBackends/Vulkan/CommandBufferManager.h"
@@ -3841,7 +3866,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VKSwapChain.cpp dolphin
      return false;
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VKSwapChain.h dolphin/Source/Core/VideoBackends/Vulkan/VKSwapChain.h
 --- dolphin.orig/Source/Core/VideoBackends/Vulkan/VKSwapChain.h	2023-06-01 19:23:58.577633304 +0000
-+++ dolphin/Source/Core/VideoBackends/Vulkan/VKSwapChain.h	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Vulkan/VKSwapChain.h	2023-06-02 18:37:56.669875606 +0000
 @@ -3,6 +3,7 @@
  
  #pragma once
@@ -3896,7 +3921,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VKSwapChain.h dolphin/S
    u32 m_layers = 0;
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VKTexture.cpp dolphin/Source/Core/VideoBackends/Vulkan/VKTexture.cpp
 --- dolphin.orig/Source/Core/VideoBackends/Vulkan/VKTexture.cpp	2023-06-01 19:44:08.124503603 +0000
-+++ dolphin/Source/Core/VideoBackends/Vulkan/VKTexture.cpp	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Vulkan/VKTexture.cpp	2023-06-02 18:37:56.669875606 +0000
 @@ -21,6 +21,7 @@
  #include "VideoBackends/Vulkan/VKStreamBuffer.h"
  #include "VideoBackends/Vulkan/VulkanContext.h"
@@ -4405,7 +4430,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VKTexture.cpp dolphin/S
  }  // namespace Vulkan
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VKTexture.h dolphin/Source/Core/VideoBackends/Vulkan/VKTexture.h
 --- dolphin.orig/Source/Core/VideoBackends/Vulkan/VKTexture.h	2023-06-01 19:24:09.958003305 +0000
-+++ dolphin/Source/Core/VideoBackends/Vulkan/VKTexture.h	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Vulkan/VKTexture.h	2023-06-02 18:37:56.669875606 +0000
 @@ -67,8 +67,8 @@ public:
    // irrelevant and will not be loaded.
    void OverrideImageLayout(VkImageLayout new_layout);
@@ -4419,7 +4444,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VKTexture.h dolphin/Sou
    bool CreateView(VkImageViewType type);
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VKVertexManager.cpp dolphin/Source/Core/VideoBackends/Vulkan/VKVertexManager.cpp
 --- dolphin.orig/Source/Core/VideoBackends/Vulkan/VKVertexManager.cpp	2023-06-01 19:24:09.958003305 +0000
-+++ dolphin/Source/Core/VideoBackends/Vulkan/VKVertexManager.cpp	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Vulkan/VKVertexManager.cpp	2023-06-02 18:37:56.669875606 +0000
 @@ -15,6 +15,7 @@
  #include "VideoBackends/Vulkan/CommandBufferManager.h"
  #include "VideoBackends/Vulkan/StateTracker.h"
@@ -4615,7 +4640,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VKVertexManager.cpp dol
  }  // namespace Vulkan
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VulkanContext.cpp dolphin/Source/Core/VideoBackends/Vulkan/VulkanContext.cpp
 --- dolphin.orig/Source/Core/VideoBackends/Vulkan/VulkanContext.cpp	2023-06-01 19:24:09.958003305 +0000
-+++ dolphin/Source/Core/VideoBackends/Vulkan/VulkanContext.cpp	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Vulkan/VulkanContext.cpp	2023-06-02 18:37:56.669875606 +0000
 @@ -274,6 +274,13 @@ bool VulkanContext::SelectInstanceExtens
      return false;
    }
@@ -4632,7 +4657,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VulkanContext.cpp dolph
        !AddExtension(VK_KHR_ANDROID_SURFACE_EXTENSION_NAME, true))
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VulkanEntryPoints.inl dolphin/Source/Core/VideoBackends/Vulkan/VulkanEntryPoints.inl
 --- dolphin.orig/Source/Core/VideoBackends/Vulkan/VulkanEntryPoints.inl	2023-06-01 19:23:58.577633304 +0000
-+++ dolphin/Source/Core/VideoBackends/Vulkan/VulkanEntryPoints.inl	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Vulkan/VulkanEntryPoints.inl	2023-06-02 18:37:56.669875606 +0000
 @@ -49,6 +49,11 @@ VULKAN_INSTANCE_ENTRY_POINT(vkCreateXlib
  VULKAN_INSTANCE_ENTRY_POINT(vkGetPhysicalDeviceXlibPresentationSupportKHR, false)
  #endif
@@ -4647,7 +4672,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VulkanEntryPoints.inl d
  #endif
 diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VulkanLoader.h dolphin/Source/Core/VideoBackends/Vulkan/VulkanLoader.h
 --- dolphin.orig/Source/Core/VideoBackends/Vulkan/VulkanLoader.h	2023-06-01 19:24:09.958003305 +0000
-+++ dolphin/Source/Core/VideoBackends/Vulkan/VulkanLoader.h	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoBackends/Vulkan/VulkanLoader.h	2023-06-02 18:37:56.669875606 +0000
 @@ -13,6 +13,10 @@
  #define VK_USE_PLATFORM_XLIB_KHR
  #endif
@@ -4661,7 +4686,7 @@ diff -rupN dolphin.orig/Source/Core/VideoBackends/Vulkan/VulkanLoader.h dolphin/
  #endif
 diff -rupN dolphin.orig/Source/Core/VideoCommon/RenderBase.cpp dolphin/Source/Core/VideoCommon/RenderBase.cpp
 --- dolphin.orig/Source/Core/VideoCommon/RenderBase.cpp	2023-06-01 19:24:09.958003305 +0000
-+++ dolphin/Source/Core/VideoCommon/RenderBase.cpp	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoCommon/RenderBase.cpp	2023-06-02 18:37:56.677875855 +0000
 @@ -711,16 +711,20 @@ bool Renderer::IsHeadless() const
    return true;
  }
@@ -4687,7 +4712,7 @@ diff -rupN dolphin.orig/Source/Core/VideoCommon/RenderBase.cpp dolphin/Source/Co
  
 diff -rupN dolphin.orig/Source/Core/VideoCommon/RenderBase.h dolphin/Source/Core/VideoCommon/RenderBase.h
 --- dolphin.orig/Source/Core/VideoCommon/RenderBase.h	2023-06-01 19:24:09.958003305 +0000
-+++ dolphin/Source/Core/VideoCommon/RenderBase.h	2023-06-01 20:10:59.920919310 +0000
++++ dolphin/Source/Core/VideoCommon/RenderBase.h	2023-06-02 18:37:56.677875855 +0000
 @@ -246,8 +246,8 @@ public:
    VideoCommon::PostProcessing* GetPostProcessor() const { return m_post_processor.get(); }
    // Final surface changing
