@@ -6,3 +6,9 @@
 
 # Enable verticle USB Port
 echo host > /sys/kernel/debug/usb/fc000000.usb/mode
+
+MYSLEEPMODE=$(get_setting system.suspendmode)
+if [ -z "${MYSLEEPMODE}" ]
+then
+  /usr/bin/setsuspendmode mem
+fi
