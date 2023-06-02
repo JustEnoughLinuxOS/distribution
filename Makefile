@@ -89,9 +89,6 @@ docker-%: DOCKER_CMD:= $(shell if which docker 2>/dev/null 1>/dev/null; then ech
 # Podman requires some extra args (`--userns=keep-id` and `--security-opt=label=disable`).  Set those args if using podman
 docker-%: PODMAN_ARGS:= $(shell if ! which docker 2>/dev/null 1>/dev/null && which podman 2> /dev/null 1> /dev/null; then echo "--userns=keep-id --security-opt=label=disable -v /proc/mounts:/etc/mtab"; fi)
 
-# Use 'sudo' if docker ps doesn't work.  In theory, other things than missing sudo could cause this.  But sudo needed is a common issue and easy to fix.
-docker-%: SUDO := $(shell if which docker 2> /dev/null 1> /dev/null && ! docker ps -q 2> /dev/null 1> /dev/null ; then echo "sudo"; fi)
-
 # Launch docker as interactive if this is an interactive shell (allows ctrl-c for manual and running non-interactive - aka: build server)
 docker-%: INTERACTIVE=$(shell [ -t 0 ] && echo "-it")
 
@@ -104,22 +101,17 @@ docker-%: $(shell env | grep "=" > .env)
 # If the user issues a `make docker-shell` just start up bash as the shell to run commands
 docker-shell: COMMAND=bash
 
-# Command: builds docker image locally from Dockerfile
+# Command: builds and pushes a hybrid docker image to dockerhub
+# You must login with: docker login --username <username> and provide either a password or token (from user settings -> security in dockerhub) before this will work.  The build user must also be a member of the "docker" group.
 docker-image-build:
-	$(SUDO) $(DOCKER_CMD) build . -t $(DOCKER_IMAGE)
+	$(DOCKER_CMD) buildx create --use
+	$(DOCKER_CMD) buildx build --tag $(DOCKER_IMAGE) --platform linux/amd64,linux/arm64 --push .
 
 # Command: pulls latest docker image from dockerhub.  This will *replace* locally built version.
 docker-image-pull:
-	$(SUDO) $(DOCKER_CMD) pull $(DOCKER_IMAGE)
-
-# Command: pushes the latest Docker image to dockerhub.  This is *not* needed to build. It updates the latest build image in dockerhub for everyone.
-# Only JELOS admins in dockerhub can do this.
-#
-# You must login with: docker login --username <username> and provide either a password or token (from user settings -> security in dockerhub) before this will work.
-docker-image-push:
-	$(SUDO) $(DOCKER_CMD) push $(DOCKER_IMAGE)
+	$(DOCKER_CMD) pull $(DOCKER_IMAGE)
 
 # Wire up docker to call equivalent make files using % to match and $* to pass the value matched by %
 docker-%:
-	$(SUDO) BUILD_DIR=$(DOCKER_WORK_DIR) $(DOCKER_CMD) run $(PODMAN_ARGS) $(INTERACTIVE) --init --env-file .env --rm --user $(UID):$(GID) $(DEVELOPER_SETTINGS) -v $(PWD):$(DOCKER_WORK_DIR) -w $(DOCKER_WORK_DIR) $(DOCKER_EXTRA_OPTS) $(DOCKER_IMAGE) $(COMMAND)
+	BUILD_DIR=$(DOCKER_WORK_DIR) $(DOCKER_CMD) run $(PODMAN_ARGS) $(INTERACTIVE) --init --env-file .env --rm --user $(UID):$(GID) $(DEVELOPER_SETTINGS) -v $(PWD):$(DOCKER_WORK_DIR) -w $(DOCKER_WORK_DIR) $(DOCKER_EXTRA_OPTS) $(DOCKER_IMAGE) $(COMMAND)
 
