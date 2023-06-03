@@ -1763,6 +1763,105 @@ exec_thread_safe() {
   return ${result}
 }
 
+add_emu_core() {
+  TMPCACHE="${ROOT}/.es_cache"
+
+  if [ ! -d "${TMPCACHE}" ]
+  then
+    mkdir "${TMPCACHE}"
+  fi
+
+  # Schema: emulator|core|true/false
+  echo "${2}|${3}|${4}" >>${TMPCACHE}/${1}-emulators.tmp
+}
+
+add_es_system() {
+  if [ -e "${ROOT}/config/emulators/${1}.conf" ]
+  then
+    . ${ROOT}/config/emulators/${1}.conf
+  fi
+
+  TMPCACHE="${ROOT}/.es_cache"
+
+  if [ ! -d "${TMPCACHE}" ]
+  then
+    mkdir "${TMPCACHE}"
+  fi
+
+  if [ ! -e "${TMPCACHE}/${SYSTEM_NAME}.tmp" ]
+  then
+    cat <<EOF >${TMPCACHE}/${SYSTEM_NAME}.tmp
+<?xml version="1.0" encoding="UTF-8"?>
+<systemList>
+</systemList>
+EOF
+  fi
+
+  xmlstarlet ed --omit-decl --inplace \
+          -d '//systemList/system' \
+          -s '//systemList' -t elem -n 'system' \
+          -s '//systemList/system' -t elem -n 'name' -v "${SYSTEM_NAME}" \
+          -s '//systemList/system' -t elem -n 'fullname' -v "${SYSTEM_FULLNAME}" \
+          -s '//systemList/system' -t elem -n 'manufacturer' -v "${SYSTEM_MANUFACTURER}" \
+          -s '//systemList/system' -t elem -n 'release' -v "${SYSTEM_RELEASE}" \
+          -s '//systemList/system' -t elem -n 'hardware' -v "${SYSTEM_HARDWARE}" \
+          -s '//systemList/system' -t elem -n 'path' -v "${SYSTEM_PATH}" \
+          -s '//systemList/system' -t elem -n 'extension' -v "${SYSTEM_EXTENSION}" \
+          -s '//systemList/system' -t elem -n 'command' -v "${SYSTEM_COMMAND}" \
+          -s '//systemList/system' -t elem -n 'platform' -v "${SYSTEM_PLATFORM}" \
+          -s '//systemList/system' -t elem -n 'theme' -v "${SYSTEM_THEME}" \
+          -s '//systemList/system' -t elem -n "emulators" -v "" ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+
+  if [ -e "${TMPCACHE}/${SYSTEM_NAME}-emulators.tmp" ]
+  then
+    while read -r line
+    do
+      SYSTEM_EMULATOR=$(echo ${line} | awk 'BEGIN {FS="|"} {print $1}')
+      SYSTEM_CORE=$(echo ${line} | awk 'BEGIN {FS="|"} {print $2}')
+      SYSTEM_DEFAULT=$(echo ${line} | awk 'BEGIN {FS="|"} {print $3}')
+
+      ### Check to see if we've already added an emulator key.
+      EMTEST=$(xmlstarlet sel -t -c "////systemList/system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]" ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>/dev/null ||:)
+      if [ -z "${EMTEST}" ]
+      then
+        ### Add the emulator element
+        xmlstarlet ed --omit-decl --inplace \
+          -s "//systemList/system/emulators" -t elem -n "emulator" -v "" \
+          ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+      fi
+
+      ### Add an attribute defining the emulator's name.
+      xmlstarlet ed --omit-decl --inplace \
+          -s "//systemList/system/emulators/emulator[not(@name)]" -t attr -n "name" -v "${SYSTEM_EMULATOR}" \
+          ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+
+      ### Check to see if we've already added a core element.
+      COTEST=$(xmlstarlet sel -t -c "////systemList/system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]/cores/core" ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>/dev/null ||:)
+      if [ -z "${COTEST}" ]
+      then
+        xmlstarlet ed --omit-decl --inplace \
+            -s "//systemList/system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]" -t elem -n "cores" -v "" \
+            ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+      fi
+
+      ### Add each core.
+      xmlstarlet ed --omit-decl --inplace \
+          -s "//systemList/system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]/cores" -t elem -n "core" -v "${SYSTEM_CORE}" \
+          ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+
+      if [ "${SYSTEM_DEFAULT}" = "true" ]
+      then
+        ### Add an attribute defining the default core
+        xmlstarlet ed --omit-decl --inplace \
+            -i "//systemList/system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]/cores/core" -t attr -n "default" -v "true" \
+            ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+      fi
+    done <${TMPCACHE}/${SYSTEM_NAME}-emulators.tmp
+  fi
+
+  xmlstarlet fo -t ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+}
+
 # Use distribution functions if any
 if [ -f "distributions/${DISTRO}/config/functions" ]; then
   . distributions/${DISTRO}/config/functions
