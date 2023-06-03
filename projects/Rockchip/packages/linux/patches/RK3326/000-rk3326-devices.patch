@@ -1,6 +1,6 @@
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/Makefile linux/arch/arm64/boot/dts/rockchip/Makefile
---- linux.orig/arch/arm64/boot/dts/rockchip/Makefile	2023-05-17 18:06:52.185125611 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/Makefile	2023-05-17 18:07:06.745578077 +0000
+--- linux.orig/arch/arm64/boot/dts/rockchip/Makefile	2023-05-30 16:56:56.010868963 +0000
++++ linux/arch/arm64/boot/dts/rockchip/Makefile	2023-05-30 17:52:01.798714782 +0000
 @@ -7,7 +7,11 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3308-ev
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3308-roc-cc.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3308-rock-pi-s.dtb
@@ -14,8 +14,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/Makefile linux/arch/arm64/boo
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3328-evb.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3328-nanopi-r2s.dtb
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/boot/dts/rockchip/px30.dtsi
---- linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi	2023-05-17 18:06:52.185125611 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/px30.dtsi	2023-05-17 18:07:06.749578201 +0000
+--- linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi	2023-05-30 16:56:56.022869345 +0000
++++ linux/arch/arm64/boot/dts/rockchip/px30.dtsi	2023-05-30 19:10:46.414821208 +0000
 @@ -114,12 +114,6 @@
  		compatible = "operating-points-v2";
  		opp-shared;
@@ -76,7 +76,40 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/bo
  		};
  	};
  
-@@ -453,7 +468,7 @@
+@@ -328,6 +343,32 @@
+ 		};
+ 	};
+ 
++	dfi: dfi@ff610000 {
++		reg = <0x00 0xff610000 0x00 0x400>;
++		compatible = "rockchip,px30-dfi";
++		rockchip,pmu = <&pmugrf>;
++		status = "okay";
++	};
++
++	dmc: dmc {
++		compatible = "rockchip,px30-dmc";
++		devfreq-events = <&dfi>;
++		clocks = <&cru SCLK_DDRCLK>;
++		clock-names = "dmc_clk";
++		operating-points-v2 = <&dmc_opp_table>;
++		uptreshold = <40>;
++		downdifferential = <20>;
++		status = "okay";
++	};
++
++	dmc_opp_table: dmc_opp_table {
++		compatible = "operating-points-v2";
++		opp-786000000 {
++			opp-hz = /bits/ 64 <786000000>;
++			opp-microvolt = <1100000>;
++		};
++	};
++
+ 	pmugrf: syscon@ff010000 {
+ 		compatible = "rockchip,px30-pmugrf", "syscon", "simple-mfd";
+ 		reg = <0x0 0xff010000 0x0 0x1000>;
+@@ -453,7 +494,7 @@
  				#address-cells = <1>;
  				#size-cells = <0>;
  
@@ -85,7 +118,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/bo
  					reg = <0>;
  					#address-cells = <1>;
  					#size-cells = <0>;
-@@ -468,6 +483,10 @@
+@@ -468,6 +509,10 @@
  						remote-endpoint = <&vopl_out_lvds>;
  					};
  				};
@@ -96,7 +129,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/bo
  			};
  		};
  	};
-@@ -1039,10 +1058,6 @@
+@@ -1039,10 +1084,6 @@
  	gpu_opp_table: opp-table-1 {
  		compatible = "operating-points-v2";
  
@@ -107,7 +140,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/bo
  		opp-300000000 {
  			opp-hz = /bits/ 64 <300000000>;
  			opp-microvolt = <975000>;
-@@ -1051,8 +1066,8 @@
+@@ -1051,8 +1092,8 @@
  			opp-hz = /bits/ 64 <400000000>;
  			opp-microvolt = <1050000>;
  		};
@@ -118,7 +151,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/bo
  			opp-microvolt = <1125000>;
  		};
  	};
-@@ -1113,7 +1128,7 @@
+@@ -1113,7 +1154,7 @@
  			#address-cells = <1>;
  			#size-cells = <0>;
  
@@ -127,7 +160,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/bo
  				reg = <0>;
  				#address-cells = <1>;
  				#size-cells = <0>;
-@@ -1128,6 +1143,10 @@
+@@ -1128,6 +1169,10 @@
  					remote-endpoint = <&vopl_out_dsi>;
  				};
  			};
@@ -140,7 +173,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/bo
  
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351m.dts linux/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351m.dts
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351m.dts	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351m.dts	2023-05-19 18:48:05.328825872 +0000
++++ linux/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351m.dts	2023-05-30 17:52:01.798714782 +0000
 @@ -0,0 +1,57 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
@@ -196,12 +229,12 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351m.dts li
 +
 +&rk817_charger {
 +       /* This device does not have a current sense resistor */
-+       rockchip,resistor-sense-micro-ohms = <0>;
++       //rockchip,resistor-sense-micro-ohms = <0>;
 +       monitored-battery = <&battery>;
 +};
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351v.dts linux/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351v.dts
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351v.dts	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351v.dts	2023-05-17 18:48:30.574121993 +0000
++++ linux/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351v.dts	2023-05-30 17:52:01.798714782 +0000
 @@ -0,0 +1,57 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
@@ -262,8 +295,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351v.dts li
 +};
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go.dtsi linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go.dtsi
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go.dtsi	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go.dtsi	2023-05-17 18:07:06.749578201 +0000
-@@ -0,0 +1,563 @@
++++ linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go.dtsi	2023-05-30 17:52:01.798714782 +0000
+@@ -0,0 +1,567 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2019 Hardkernel Co., Ltd
@@ -398,6 +431,10 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go.dtsi linux/a
 +		regulator-boot-on;
 +		vin-supply = <&usb_midu>;
 +	};
++};
++
++&dmc {
++	center-supply = <&vdd_logic>;
 +};
 +
 +&cpu0 {
@@ -829,7 +866,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go.dtsi linux/a
 +};
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts	2023-05-17 18:07:06.749578201 +0000
++++ linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts	2023-05-30 17:52:01.798714782 +0000
 @@ -0,0 +1,299 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
@@ -1131,8 +1168,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts lin
 +	};
 +};
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts
---- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts	2023-05-17 18:06:52.185125611 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts	2023-05-17 18:07:06.749578201 +0000
+--- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts	2023-05-30 16:56:56.022869345 +0000
++++ linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts	2023-05-30 17:52:01.798714782 +0000
 @@ -2,55 +2,185 @@
  /*
   * Copyright (c) 2019 Hardkernel Co., Ltd
@@ -1991,7 +2028,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts linux/a
  };
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go3.dts linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go3.dts
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go3.dts	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go3.dts	2023-05-19 18:46:59.554710893 +0000
++++ linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go3.dts	2023-05-30 17:52:01.798714782 +0000
 @@ -0,0 +1,283 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
@@ -2276,9 +2313,298 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go3.dts linux/a
 +		};
 +	};
 +};
+diff -rupN linux.orig/drivers/devfreq/Kconfig linux/drivers/devfreq/Kconfig
+--- linux.orig/drivers/devfreq/Kconfig	2023-05-30 16:57:00.495011796 +0000
++++ linux/drivers/devfreq/Kconfig	2023-05-30 17:52:02.026721867 +0000
+@@ -142,6 +142,12 @@ config ARM_RK3399_DMC_DEVFREQ
+ 	  It sets the frequency for the memory controller and reads the usage counts
+ 	  from hardware.
+ 
++config ARM_ROCKCHIP_BUS_DEVFREQ
++	tristate "rockchip bus"
++	depends on ARCH_ROCKCHIP
++	help
++	  rk bus driver
++
+ config ARM_SUN8I_A33_MBUS_DEVFREQ
+ 	tristate "sun8i/sun50i MBUS DEVFREQ Driver"
+ 	depends on ARCH_SUNXI || COMPILE_TEST
+diff -rupN linux.orig/drivers/devfreq/Makefile linux/drivers/devfreq/Makefile
+--- linux.orig/drivers/devfreq/Makefile	2023-05-30 16:57:00.495011796 +0000
++++ linux/drivers/devfreq/Makefile	2023-05-30 17:52:02.030721991 +0000
+@@ -13,6 +13,7 @@ obj-$(CONFIG_ARM_IMX_BUS_DEVFREQ)	+= imx
+ obj-$(CONFIG_ARM_IMX8M_DDRC_DEVFREQ)	+= imx8m-ddrc.o
+ obj-$(CONFIG_ARM_MEDIATEK_CCI_DEVFREQ)	+= mtk-cci-devfreq.o
+ obj-$(CONFIG_ARM_RK3399_DMC_DEVFREQ)	+= rk3399_dmc.o
++obj-$(CONFIG_ARM_ROCKCHIP_BUS_DEVFREQ)	+= rockchip_bus.o
+ obj-$(CONFIG_ARM_SUN8I_A33_MBUS_DEVFREQ)	+= sun8i-a33-mbus.o
+ obj-$(CONFIG_ARM_TEGRA_DEVFREQ)		+= tegra30-devfreq.o
+ 
+diff -rupN linux.orig/drivers/devfreq/rockchip_bus.c linux/drivers/devfreq/rockchip_bus.c
+--- linux.orig/drivers/devfreq/rockchip_bus.c	1970-01-01 00:00:00.000000000 +0000
++++ linux/drivers/devfreq/rockchip_bus.c	2023-05-30 17:52:02.030721991 +0000
+@@ -0,0 +1,258 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Copyright (c) 2018, Fuzhou Rockchip Electronics Co., Ltd.
++ * Author: Tony Xie <tony.xie@rock-chips.com>
++ */
++
++#include <linux/arm-smccc.h>
++#include <linux/clk.h>
++#include <linux/cpufreq.h>
++#include <linux/delay.h>
++#include <linux/devfreq.h>
++#include <linux/module.h>
++#include <linux/of.h>
++#include <linux/pm_opp.h>
++#include <linux/platform_device.h>
++#include <linux/regulator/consumer.h>
++#include <linux/slab.h>
++#include <linux/string.h>
++
++#define CLUSTER0	0
++#define CLUSTER1	1
++#define MAX_CLUSTERS	2
++
++#define to_rockchip_bus_clk_nb(nb) \
++	container_of(nb, struct rockchip_bus, clk_nb)
++#define to_rockchip_bus_cpufreq_nb(nb) \
++	container_of(nb, struct rockchip_bus, cpufreq_nb)
++
++struct busfreq_table {
++	unsigned long freq;
++	unsigned long volt;
++};
++
++struct rockchip_bus {
++	struct device *dev;
++	struct regulator *regulator;
++	struct clk *clk;
++	struct notifier_block clk_nb;
++	struct notifier_block cpufreq_nb;
++	struct busfreq_table *freq_table;
++
++	unsigned int max_state;
++
++	unsigned long cur_volt;
++	unsigned long cur_rate;
++
++	/*
++	 * Busfreq-policy-cpufreq:
++	 * If the cpu frequency of two clusters are both less than or equal to
++	 * cpu_high_freq, change bus rate to low_rate, otherwise change it to
++	 * high_rate.
++	 */
++	unsigned long high_rate;
++	unsigned long low_rate;
++	unsigned int cpu_high_freq;
++	unsigned int cpu_freq[MAX_CLUSTERS];
++};
++
++static int rockchip_bus_set_freq_table(struct rockchip_bus *bus)
++{
++	struct device *dev = bus->dev;
++	struct dev_pm_opp *opp;
++	unsigned long freq;
++	int i, count;
++
++	count = dev_pm_opp_get_opp_count(dev);
++	if (count <= 0)
++		return -EINVAL;
++
++	bus->max_state = count;
++	bus->freq_table = devm_kcalloc(dev,
++				       bus->max_state,
++				       sizeof(*bus->freq_table),
++				       GFP_KERNEL);
++	if (!bus->freq_table) {
++		bus->max_state = 0;
++		return -ENOMEM;
++	}
++
++	for (i = 0, freq = 0; i < bus->max_state; i++, freq++) {
++		opp = dev_pm_opp_find_freq_ceil(dev, &freq);
++		if (IS_ERR(opp)) {
++			devm_kfree(dev, bus->freq_table);
++			bus->max_state = 0;
++			return PTR_ERR(opp);
++		}
++		bus->freq_table[i].volt = dev_pm_opp_get_voltage(opp);
++		bus->freq_table[i].freq = freq;
++		dev_pm_opp_put(opp);
++	}
++
++	return 0;
++}
++
++static int rockchip_bus_power_control_init(struct rockchip_bus *bus)
++{
++	struct device *dev = bus->dev;
++	int ret = 0;
++
++	bus->clk = devm_clk_get(dev, "bus");
++	if (IS_ERR(bus->clk)) {
++		dev_err(dev, "failed to get bus clock\n");
++		return PTR_ERR(bus->clk);
++	}
++
++	bus->regulator = devm_regulator_get(dev, "bus");
++	if (IS_ERR(bus->regulator)) {
++		dev_err(dev, "failed to get bus regulator\n");
++		return PTR_ERR(bus->regulator);
++	}
++
++	ret = dev_pm_opp_of_add_table(dev);
++	if (ret < 0) {
++		dev_err(dev, "failed to get OPP table\n");
++		return ret;
++	}
++
++	ret = rockchip_bus_set_freq_table(bus);
++	if (ret < 0) {
++		dev_err(dev, "failed to set bus freq table\n");
++		return ret;
++	}
++
++	return 0;
++}
++
++static int rockchip_bus_clkfreq_target(struct device *dev, unsigned long freq)
++{
++	struct rockchip_bus *bus = dev_get_drvdata(dev);
++	unsigned long target_volt = bus->freq_table[bus->max_state - 1].volt;
++	int i;
++
++	for (i = 0; i < bus->max_state; i++) {
++		if (freq <= bus->freq_table[i].freq) {
++			target_volt = bus->freq_table[i].volt;
++			break;
++		}
++	}
++
++	printk("AAA target_volt: %lu\n", target_volt);
++
++	if (bus->cur_volt != target_volt) {
++		if (regulator_set_voltage(bus->regulator, target_volt,
++					  INT_MAX)) {
++			dev_err(dev, "failed to set voltage %lu uV\n",
++				target_volt);
++			return -EINVAL;
++		}
++		bus->cur_volt = target_volt;
++	}
++
++	return 0;
++}
++
++static int rockchip_bus_clk_notifier(struct notifier_block *nb,
++				     unsigned long event, void *data)
++{
++	struct clk_notifier_data *ndata = data;
++	struct rockchip_bus *bus = to_rockchip_bus_clk_nb(nb);
++	int ret = 0;
++
++	printk("AAA event %lu, old_rate %lu, new_rate: %lu\n",
++		event, ndata->old_rate, ndata->new_rate);
++
++	switch (event) {
++	case PRE_RATE_CHANGE:
++		if (ndata->new_rate > ndata->old_rate)
++			ret = rockchip_bus_clkfreq_target(bus->dev,
++							  ndata->new_rate);
++		break;
++	case POST_RATE_CHANGE:
++		if (ndata->new_rate < ndata->old_rate)
++			ret = rockchip_bus_clkfreq_target(bus->dev,
++							  ndata->new_rate);
++		break;
++	case ABORT_RATE_CHANGE:
++		if (ndata->new_rate > ndata->old_rate)
++			ret = rockchip_bus_clkfreq_target(bus->dev,
++							  ndata->old_rate);
++		break;
++	default:
++		break;
++	}
++
++	return notifier_from_errno(ret);
++}
++
++static int rockchip_bus_clkfreq(struct rockchip_bus *bus)
++{
++	struct device *dev = bus->dev;
++	unsigned long init_rate;
++	int ret = 0;
++
++	ret = rockchip_bus_power_control_init(bus);
++	if (ret) {
++		dev_err(dev, "failed to init power control\n");
++		return ret;
++	}
++
++	init_rate = clk_get_rate(bus->clk);
++	printk("init rate %d", init_rate);
++	ret = rockchip_bus_clkfreq_target(dev, init_rate);
++	if (ret)
++		return ret;
++
++	bus->clk_nb.notifier_call = rockchip_bus_clk_notifier;
++	ret = clk_notifier_register(bus->clk, &bus->clk_nb);
++	if (ret) {
++		dev_err(dev, "failed to register clock notifier\n");
++		return ret;
++	}
++
++	return 0;
++}
++
++static const struct of_device_id rockchip_busfreq_of_match[] = {
++	{ .compatible = "rockchip,px30-bus", },
++	{ .compatible = "rockchip,rk1808-bus", },
++	{ .compatible = "rockchip,rk3288-bus", },
++	{ .compatible = "rockchip,rk3368-bus", },
++	{ .compatible = "rockchip,rk3399-bus", },
++	{ .compatible = "rockchip,rv1126-bus", },
++	{ },
++};
++
++MODULE_DEVICE_TABLE(of, rockchip_busfreq_of_match);
++
++static int rockchip_busfreq_probe(struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	struct device_node *np = dev->of_node;
++	struct rockchip_bus *bus;
++	const char *policy_name;
++	int ret = 0;
++
++	bus = devm_kzalloc(dev, sizeof(*bus), GFP_KERNEL);
++	if (!bus)
++		return -ENOMEM;
++	bus->dev = dev;
++	platform_set_drvdata(pdev, bus);
++
++	printk("asdfsadfsadffasdafsdhjfsdakasdfjfjasdklsfadkljsdfajklfsadjklfasdjklhasfdhjklafsdhkjsfdajkhfasdk");
++	return rockchip_bus_clkfreq(bus);
++}
++
++static struct platform_driver rockchip_busfreq_driver = {
++	.probe	= rockchip_busfreq_probe,
++	.driver = {
++		.name	= "rockchip-busfreq",
++		.of_match_table = rockchip_busfreq_of_match,
++	},
++};
++
++module_platform_driver(rockchip_busfreq_driver);
++
++MODULE_LICENSE("GPL v2");
++MODULE_AUTHOR("Tony Xie <tony.xie@rock-chips.com>");
++MODULE_DESCRIPTION("rockchip busfreq driver with devfreq framework");
 diff -rupN linux.orig/drivers/gpu/drm/panel/Kconfig linux/drivers/gpu/drm/panel/Kconfig
---- linux.orig/drivers/gpu/drm/panel/Kconfig	2023-05-17 18:03:16.054434752 +0000
-+++ linux/drivers/gpu/drm/panel/Kconfig	2023-05-17 18:03:13.102343746 +0000
+--- linux.orig/drivers/gpu/drm/panel/Kconfig	2023-05-30 16:57:09.483298097 +0000
++++ linux/drivers/gpu/drm/panel/Kconfig	2023-05-30 17:52:02.306730568 +0000
 @@ -296,6 +296,15 @@ config DRM_PANEL_NEC_NL8048HL11
  	  panel (found on the Zoom2/3/3630 SDP boards). To compile this driver
  	  as a module, choose M here.
@@ -2296,8 +2622,8 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/Kconfig linux/drivers/gpu/drm/panel/
  	tristate "NewVision NV3052C RGB/SPI panel"
  	depends on OF && SPI
 diff -rupN linux.orig/drivers/gpu/drm/panel/Makefile linux/drivers/gpu/drm/panel/Makefile
---- linux.orig/drivers/gpu/drm/panel/Makefile	2023-05-17 18:03:16.054434752 +0000
-+++ linux/drivers/gpu/drm/panel/Makefile	2023-05-17 18:03:13.102343746 +0000
+--- linux.orig/drivers/gpu/drm/panel/Makefile	2023-05-30 16:57:09.483298097 +0000
++++ linux/drivers/gpu/drm/panel/Makefile	2023-05-30 17:52:02.306730568 +0000
 @@ -27,6 +27,7 @@ obj-$(CONFIG_DRM_PANEL_LEADTEK_LTK500HD1
  obj-$(CONFIG_DRM_PANEL_LG_LB035Q02) += panel-lg-lb035q02.o
  obj-$(CONFIG_DRM_PANEL_LG_LG4573) += panel-lg-lg4573.o
@@ -2307,8 +2633,8 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/Makefile linux/drivers/gpu/drm/panel
  obj-$(CONFIG_DRM_PANEL_NOVATEK_NT35510) += panel-novatek-nt35510.o
  obj-$(CONFIG_DRM_PANEL_NOVATEK_NT35560) += panel-novatek-nt35560.o
 diff -rupN linux.orig/drivers/gpu/drm/panel/panel-elida-kd35t133.c linux/drivers/gpu/drm/panel/panel-elida-kd35t133.c
---- linux.orig/drivers/gpu/drm/panel/panel-elida-kd35t133.c	2023-05-17 18:03:16.054434752 +0000
-+++ linux/drivers/gpu/drm/panel/panel-elida-kd35t133.c	2023-05-17 18:03:13.102343746 +0000
+--- linux.orig/drivers/gpu/drm/panel/panel-elida-kd35t133.c	2023-05-30 16:57:09.503298734 +0000
++++ linux/drivers/gpu/drm/panel/panel-elida-kd35t133.c	2023-05-30 17:52:02.310730693 +0000
 @@ -51,14 +51,6 @@ static inline struct kd35t133 *panel_to_
  	return container_of(panel, struct kd35t133, panel);
  }
@@ -2371,7 +2697,7 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/panel-elida-kd35t133.c linux/drivers
  	dev_dbg(dev, "Panel init sequence done\n");
 diff -rupN linux.orig/drivers/gpu/drm/panel/panel-newvision-nv3051d.c linux/drivers/gpu/drm/panel/panel-newvision-nv3051d.c
 --- linux.orig/drivers/gpu/drm/panel/panel-newvision-nv3051d.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux/drivers/gpu/drm/panel/panel-newvision-nv3051d.c	2023-05-17 18:03:13.102343746 +0000
++++ linux/drivers/gpu/drm/panel/panel-newvision-nv3051d.c	2023-05-30 17:52:02.310730693 +0000
 @@ -0,0 +1,504 @@
 +// SPDX-License-Identifier: GPL-2.0
 +/*
@@ -2878,8 +3204,8 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/panel-newvision-nv3051d.c linux/driv
 +MODULE_DESCRIPTION("DRM driver for Newvision NV3051D based MIPI DSI panels");
 +MODULE_LICENSE("GPL");
 diff -rupN linux.orig/drivers/gpu/drm/panel/panel-sitronix-st7701.c linux/drivers/gpu/drm/panel/panel-sitronix-st7701.c
---- linux.orig/drivers/gpu/drm/panel/panel-sitronix-st7701.c	2023-05-17 18:03:16.054434752 +0000
-+++ linux/drivers/gpu/drm/panel/panel-sitronix-st7701.c	2023-05-17 18:03:13.102343746 +0000
+--- linux.orig/drivers/gpu/drm/panel/panel-sitronix-st7701.c	2023-05-30 16:57:09.583301282 +0000
++++ linux/drivers/gpu/drm/panel/panel-sitronix-st7701.c	2023-05-30 17:52:02.306730568 +0000
 @@ -19,6 +19,9 @@
  
  /* Command2 BKx selection command */
@@ -3195,8 +3521,8 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/panel-sitronix-st7701.c linux/driver
  	{ }
  };
 diff -rupN linux.orig/drivers/input/Kconfig linux/drivers/input/Kconfig
---- linux.orig/drivers/input/Kconfig	2023-05-17 18:03:16.118436725 +0000
-+++ linux/drivers/input/Kconfig	2023-05-17 18:03:13.166345719 +0000
+--- linux.orig/drivers/input/Kconfig	2023-05-30 16:57:14.555459659 +0000
++++ linux/drivers/input/Kconfig	2023-05-30 17:52:02.366732433 +0000
 @@ -51,6 +51,19 @@ config INPUT_FF_MEMLESS
  	  To compile this driver as a module, choose M here: the
  	  module will be called ff-memless.
@@ -3218,8 +3544,8 @@ diff -rupN linux.orig/drivers/input/Kconfig linux/drivers/input/Kconfig
  	tristate "Sparse keymap support library"
  	help
 diff -rupN linux.orig/drivers/input/Makefile linux/drivers/input/Makefile
---- linux.orig/drivers/input/Makefile	2023-05-17 18:03:16.118436725 +0000
-+++ linux/drivers/input/Makefile	2023-05-17 18:03:13.166345719 +0000
+--- linux.orig/drivers/input/Makefile	2023-05-30 16:57:14.559459786 +0000
++++ linux/drivers/input/Makefile	2023-05-30 17:52:02.366732433 +0000
 @@ -10,6 +10,7 @@ input-core-y := input.o input-compat.o i
  input-core-y += touchscreen.o
  
@@ -3230,7 +3556,7 @@ diff -rupN linux.orig/drivers/input/Makefile linux/drivers/input/Makefile
  obj-$(CONFIG_INPUT_VIVALDIFMAP)	+= vivaldi-fmap.o
 diff -rupN linux.orig/drivers/input/input-polldev.c linux/drivers/input/input-polldev.c
 --- linux.orig/drivers/input/input-polldev.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux/drivers/input/input-polldev.c	2023-05-17 18:03:13.178346089 +0000
++++ linux/drivers/input/input-polldev.c	2023-05-30 17:52:02.374732681 +0000
 @@ -0,0 +1,362 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +/*
@@ -3595,8 +3921,8 @@ diff -rupN linux.orig/drivers/input/input-polldev.c linux/drivers/input/input-po
 +}
 +EXPORT_SYMBOL(input_unregister_polled_device);
 diff -rupN linux.orig/drivers/input/joystick/Kconfig linux/drivers/input/joystick/Kconfig
---- linux.orig/drivers/input/joystick/Kconfig	2023-05-17 18:03:16.118436725 +0000
-+++ linux/drivers/input/joystick/Kconfig	2023-05-17 18:03:13.166345719 +0000
+--- linux.orig/drivers/input/joystick/Kconfig	2023-05-30 16:57:14.575460296 +0000
++++ linux/drivers/input/joystick/Kconfig	2023-05-30 17:52:02.366732433 +0000
 @@ -400,6 +400,21 @@ config JOYSTICK_N64
  	  Say Y here if you want enable support for the four
  	  built-in controller ports on the Nintendo 64 console.
@@ -3620,8 +3946,8 @@ diff -rupN linux.orig/drivers/input/joystick/Kconfig linux/drivers/input/joystic
  	tristate "Raspberry Pi Sense HAT joystick"
  	depends on INPUT && I2C
 diff -rupN linux.orig/drivers/input/joystick/Makefile linux/drivers/input/joystick/Makefile
---- linux.orig/drivers/input/joystick/Makefile	2023-05-17 18:03:16.118436725 +0000
-+++ linux/drivers/input/joystick/Makefile	2023-05-17 18:03:13.166345719 +0000
+--- linux.orig/drivers/input/joystick/Makefile	2023-05-30 16:57:14.575460296 +0000
++++ linux/drivers/input/joystick/Makefile	2023-05-30 17:52:02.366732433 +0000
 @@ -25,6 +25,9 @@ obj-$(CONFIG_JOYSTICK_JOYDUMP)		+= joydu
  obj-$(CONFIG_JOYSTICK_MAGELLAN)		+= magellan.o
  obj-$(CONFIG_JOYSTICK_MAPLE)		+= maplecontrol.o
@@ -3634,7 +3960,7 @@ diff -rupN linux.orig/drivers/input/joystick/Makefile linux/drivers/input/joysti
  obj-$(CONFIG_JOYSTICK_QWIIC)		+= qwiic-joystick.o
 diff -rupN linux.orig/drivers/input/joystick/odroidgo2-joypad.c linux/drivers/input/joystick/odroidgo2-joypad.c
 --- linux.orig/drivers/input/joystick/odroidgo2-joypad.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux/drivers/input/joystick/odroidgo2-joypad.c	2023-05-17 18:03:13.170345842 +0000
++++ linux/drivers/input/joystick/odroidgo2-joypad.c	2023-05-30 17:52:02.370732557 +0000
 @@ -0,0 +1,878 @@
 +/*
 + * SARADC joystick & GPIO Button driver for Linux(Hardkernel ODROIDGO2-Advance)
@@ -4516,7 +4842,7 @@ diff -rupN linux.orig/drivers/input/joystick/odroidgo2-joypad.c linux/drivers/in
 +/*----------------------------------------------------------------------------*/
 diff -rupN linux.orig/drivers/input/joystick/odroidgo2-v11-joypad.c linux/drivers/input/joystick/odroidgo2-v11-joypad.c
 --- linux.orig/drivers/input/joystick/odroidgo2-v11-joypad.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux/drivers/input/joystick/odroidgo2-v11-joypad.c	2023-05-17 18:03:13.170345842 +0000
++++ linux/drivers/input/joystick/odroidgo2-v11-joypad.c	2023-05-30 17:52:02.370732557 +0000
 @@ -0,0 +1,878 @@
 +/*
 + * SARADC joystick & GPIO Button driver for Linux(Hardkernel ODROIDGO2-Advance)
@@ -5398,7 +5724,7 @@ diff -rupN linux.orig/drivers/input/joystick/odroidgo2-v11-joypad.c linux/driver
 +/*----------------------------------------------------------------------------*/
 diff -rupN linux.orig/drivers/input/joystick/odroidgo3-joypad.c linux/drivers/input/joystick/odroidgo3-joypad.c
 --- linux.orig/drivers/input/joystick/odroidgo3-joypad.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux/drivers/input/joystick/odroidgo3-joypad.c	2023-05-17 18:03:13.170345842 +0000
++++ linux/drivers/input/joystick/odroidgo3-joypad.c	2023-05-30 17:52:02.370732557 +0000
 @@ -0,0 +1,1086 @@
 +/*
 + * SARADC joystick & GPIO Button driver for Linux(Hardkernel ODROIDGO2-Advance)
@@ -6487,8 +6813,8 @@ diff -rupN linux.orig/drivers/input/joystick/odroidgo3-joypad.c linux/drivers/in
 +
 +/*----------------------------------------------------------------------------*/
 diff -rupN linux.orig/drivers/power/supply/rk817_charger.c linux/drivers/power/supply/rk817_charger.c
---- linux.orig/drivers/power/supply/rk817_charger.c	2023-05-17 18:03:16.458447208 +0000
-+++ linux/drivers/power/supply/rk817_charger.c	2023-05-17 18:03:13.462354844 +0000
+--- linux.orig/drivers/power/supply/rk817_charger.c	2023-05-30 16:57:27.007856300 +0000
++++ linux/drivers/power/supply/rk817_charger.c	2023-05-30 17:52:02.642741010 +0000
 @@ -679,7 +679,7 @@ static enum power_supply_usb_type rk817_
  };
  
@@ -6500,7 +6826,7 @@ diff -rupN linux.orig/drivers/power/supply/rk817_charger.c linux/drivers/power/s
  	.num_properties = ARRAY_SIZE(rk817_bat_props),
 diff -rupN linux.orig/include/linux/input-polldev.h linux/include/linux/input-polldev.h
 --- linux.orig/include/linux/input-polldev.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux/include/linux/input-polldev.h	2023-05-17 18:03:13.714362612 +0000
++++ linux/include/linux/input-polldev.h	2023-05-30 17:52:02.878748343 +0000
 @@ -0,0 +1,58 @@
 +/* SPDX-License-Identifier: GPL-2.0-only */
 +#ifndef _INPUT_POLLDEV_H

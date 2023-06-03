@@ -2,7 +2,7 @@
 # Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="box64"
-PKG_VERSION="1d98aa54d5e462e2d13a2bd6795d587e4c523caf"
+PKG_VERSION="2bdf3088a6b09d2e5212b35e1160863eb64134c7"
 PKG_ARCH="aarch64"
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/ptitSeb/box64"

@@ -20,7 +20,7 @@
 ################################################################################
 
 PKG_NAME="race-lr"
-PKG_VERSION="cb002043c65276dac592ed0214ae8a6bba82e2b1"
+PKG_VERSION="f65011e6639ccbbbb44b6ffa63ca50c070475df4"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"

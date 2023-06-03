@@ -5,7 +5,7 @@
 cat <<EOF >/storage/.config/profile.d/001-deviceconfig
 # Device Features
 DEVICE_HAS_FAN=false
-DEVICE_FAKE_JACKSENSE=false
+DEVICE_FAKE_JACKSENSE=true
 DEVICE_VOLUMECTL=true
 DEVICE_POWER_LED=false
 DEVICE_AUDIO_MIXER="Master"
@@ -34,5 +34,5 @@ DMC_FREQ="/sys/devices/platform/dmc/devfreq/dmc"
 # Volume Keys
 DEVICE_KEY_VOLUMEDOWN=114
 DEVICE_KEY_VOLUMEUP=115
-DEVICE_VOL_MODIFIER="BTN_MODE"
+DEVICE_VOL_MODIFIER="BTN_TR2"
 EOF

@@ -39,6 +39,16 @@ fi
 rm -rf $TMP
 mkdir -p $TMP
 
+# Unzip or copy the rom to the working directory
+if [ $(echo $2 | grep -i .zip | wc -l) -eq 1 ]; then
+	#unpack the zip file
+  	unzip -q -o "$2" -d $TMP
+	ROM=$(unzip -Zl -1 "$2")
+else
+	cp "$2" $TMP
+	ROM="$GAME"
+fi
+
 cp $M64PCONF $TMP
 SET_PARAMS="--set Core[SharedDataPath]=$TMP --set Video-Rice[ResolutionWidth]=$SCREENWIDTH"
 
@@ -110,15 +120,15 @@ echo ${SET_PARAMS}
 
 case $1 in
 	"m64p_gliden64")
-		${EMUPERF} /usr/local/bin/mupen64plus --configdir $TMP --gfx mupen64plus-video-GLideN64 $SET_PARAMS "$2"
+		${EMUPERF} /usr/local/bin/mupen64plus --configdir $TMP --gfx mupen64plus-video-GLideN64 $SET_PARAMS "$TMP/$ROM"
 	;;
 	"m64p_gl64mk2")
-		${EMUPERF} /usr/local/bin/mupen64plus --configdir $TMP --gfx mupen64plus-video-glide64mk2 $SET_PARAMS "$2"
+		${EMUPERF} /usr/local/bin/mupen64plus --configdir $TMP --gfx mupen64plus-video-glide64mk2 $SET_PARAMS "$TMP/$ROM"
 	;;
 	"m64p_rice")
-		${EMUPERF} /usr/local/bin/mupen64plus --configdir $TMP --gfx mupen64plus-video-rice $SET_PARAMS "$2"
+		${EMUPERF} /usr/local/bin/mupen64plus --configdir $TMP --gfx mupen64plus-video-rice $SET_PARAMS "$TMP/$ROM"
 	;;
 	*)
-		${EMUPERF} /usr/local/bin/mupen64plus --configdir $TMP --gfx mupen64plus-video-rice $SET_PARAMS "$2"
+		${EMUPERF} /usr/local/bin/mupen64plus --configdir $TMP --gfx mupen64plus-video-rice $SET_PARAMS "$TMP/$ROM"
 	;;
 esac

@@ -42,3 +42,11 @@ then
   set_setting system.cpugovernor schedutil
 fi
 
+### Configure suspend mode.
+MYSLEEPMODE=$(get_setting system.suspendmode)
+if [ -n "${MYSLEEPMODE}" ]
+then
+  /usr/bin/setsuspendmode ${MYSLEEPMODE}
+else
+  /usr/bin/setsuspendmode mem
+fi

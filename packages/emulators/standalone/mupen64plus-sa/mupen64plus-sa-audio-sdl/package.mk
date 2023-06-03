@@ -17,15 +17,17 @@ fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-  PKG_MAKE_OPTS_TARGET+="USE_GLES=1"
 fi
 
 make_target() {
   case ${ARCH} in
     arm|aarch64)
       export HOST_CPU=aarch64
-      export USE_GLES=1
       BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
+      export USE_GLES=1
+    ;;
+    x86_64)
+      PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
     ;;
   esac
   export APIDIR=$(get_build_dir mupen64plus-sa-core)/.install_pkg/usr/local/include/mupen64plus

@@ -51,6 +51,9 @@ tocon "Startup complete..."
 
 clear >/dev/console
 
+### Re-source the profile so we fetch the correct UI_SERVICE variable.
+. /etc/profile
+
 ### Lock is a prerequisite for emustation
 rm /var/lock/start.games 2>&1 >>${BOOTLOG}
 touch /var/lock/start.games 2>&1 >>${BOOTLOG}

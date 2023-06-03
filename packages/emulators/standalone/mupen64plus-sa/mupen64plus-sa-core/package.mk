@@ -12,7 +12,7 @@ PKG_LONGDESC="Mupen64Plus Standalone"
 PKG_TOOLCHAIN="manual"
 
 if [ ! "${OPENGL}" = "no" ]; then
-  PKG_DEPENDS_TARGET+=" ${OPENGL} glu"
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
 fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
@@ -23,16 +23,18 @@ make_target() {
   case ${ARCH} in
     arm|aarch64)
       export HOST_CPU=aarch64
-      export VC=0
-      export CROSS_COMPILE="${TARGET_PREFIX}"
       BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
       export USE_GLES=1
     ;;
+    x86_64)
+      PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
+    ;;
   esac
-
   export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -pthread"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
+  export CROSS_COMPILE="${TARGET_PREFIX}"
   export V=1
+  export VC=0
   export OSD=0
   make -C projects/unix clean
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}

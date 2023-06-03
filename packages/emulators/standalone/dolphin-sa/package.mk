@@ -11,7 +11,7 @@ case ${DEVICE} in
   RK3588|AMD64|S922X)
     PKG_SITE="https://github.com/dolphin-emu/dolphin"
     PKG_URL="${PKG_SITE}.git"
-    PKG_VERSION="4d164fcb77487b0cb732e0423961fd042c3e7e3b"
+    PKG_VERSION="e6583f8bec814d8f3748f1d7738457600ce0de56"
     PKG_PATCH_DIRS+=" wayland"
   ;;
   *)

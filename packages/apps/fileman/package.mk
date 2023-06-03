@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="fileman"
-PKG_VERSION="3bbc55a40651af7ef559c600ee6159e8f3c57459"
+PKG_VERSION="8c6f35d"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/JustEnoughLinuxOS/fileman"
@@ -15,7 +15,8 @@ PKG_SHORTDESC="A Single panel file Manager."
 PKG_PATCH_DIRS="${DEVICE}"
 
 make_target() {
-  make DEVICE=${DEVICE^^} RES_PATH=/usr/share/fileman/res START_PATH=/storage/roms SDL2_CONFIG=${SYSROOT_PREFIX}/usr/bin/sdl2-config CC=${CXX}
+  MAKEDEVICE=$(echo ${DEVICE^^} | sed "s#-#_##g")
+  make DEVICE=${MAKEDEVICE^^} RES_PATH=/usr/share/fileman/res START_PATH=/storage/roms SDL2_CONFIG=${SYSROOT_PREFIX}/usr/bin/sdl2-config CC=${CXX}
 }
 
 makeinstall_target() {

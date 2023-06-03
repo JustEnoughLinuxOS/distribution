@@ -14,7 +14,6 @@ PKG_TOOLCHAIN="manual"
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
 fi
-
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
 fi
@@ -26,6 +25,9 @@ make_target() {
       BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
       export USE_GLES=1
       PKG_MAKE_OPTS_TARGET+="-DNOHQ=On -DCRC_ARMV8=On -DEGL=On -DNEON_OPT=On"
+    ;;
+    x86_64)
+      PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
     ;;
   esac
   export APIDIR=$(get_build_dir mupen64plus-sa-core)/.install_pkg/usr/local/include/mupen64plus

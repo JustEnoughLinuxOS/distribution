@@ -45,6 +45,15 @@ configure_package() {
   if [ "${DISPLAYSERVER}" = "wl" ]; then
     PKG_DEPENDS_TARGET+=" wayland xcb-util xcb-util-image xcb-util-keysyms xcb-util-renderutil xcb-util-wm"
   fi
+
+  # Vulkan support
+  if [ "${VULKAN_SUPPORT}" = "yes" ]
+  then
+    PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
+  else
+    PKG_CONFIGURE_OPTS_TARGET+=" -no-feature-vulkan"
+  fi
+
 }
 
 pre_configure_target() {
@@ -86,7 +95,6 @@ pre_configure_target() {
                              -no-tiff
                              -no-tslib
                              -no-feature-linuxfb
-                             -no-feature-vulkan
                              -no-feature-openal
                              -no-feature-qml-debug
                              -no-feature-printer

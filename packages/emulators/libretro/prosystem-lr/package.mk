@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="prosystem-lr"
-PKG_VERSION="763ad22c7de51c8f06d6be0d49c554ce6a94a29b"
+PKG_VERSION="3db33d880ba78f3be0178e6ce651623731598137"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
