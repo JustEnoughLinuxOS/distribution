@@ -15,6 +15,9 @@ makeinstall_host() {
   mkdir -p ${TOOLCHAIN}/lib
   cp lib/${PKG_NAME}.a ${TOOLCHAIN}/lib
 
+  mkdir -p ${TOOLCHAIN}/include
+  cp include/traceevent/* ${TOOLCHAIN}/include
+
   mkdir -p ${TOOLCHAIN}/lib/pkgconfig
   cp ${PKG_NAME}.pc ${TOOLCHAIN}/lib/pkgconfig
 }
@@ -22,6 +25,9 @@ makeinstall_host() {
 makeinstall_target() {
   mkdir -p ${SYSROOT_PREFIX}/usr/lib
   cp lib/${PKG_NAME}.a ${SYSROOT_PREFIX}/usr/lib
+
+  mkdir -p ${SYSROOT_PREFIX}/usr/include
+  cp include/traceevent/* ${SYSROOT_PREFIX}/usr/include
 
   mkdir -p ${SYSROOT_PREFIX}/usr/lib/pkgconfig
   cp ${PKG_NAME}.pc ${SYSROOT_PREFIX}/usr/lib/pkgconfig
