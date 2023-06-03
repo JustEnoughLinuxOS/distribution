@@ -8,8 +8,10 @@
 
 echo none > /sys/class/leds/blue\:/trigger
 
-MYSLEEPMODE=$(get_setting system.suspendmode)
-if [ -z "${MYSLEEPMODE}" ]
-then
-  /usr/bin/setsuspendmode freeze
-fi
+### Sleep is currently broken, so we'll disable it.
+
+cat <<EOF >/storage/.config/sleep.conf.d/sleep.conf
+[Sleep]
+AllowSuspend=no
+SuspendState=freeze
+EOF
