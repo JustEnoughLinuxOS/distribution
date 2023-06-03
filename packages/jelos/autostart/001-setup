@@ -1,0 +1,51 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+if [ ! -L "/storage/.emulationstation" ] && \
+   [ -d /storage/.config/emulationstation ]
+then
+  ln -sf /storage/.config/emulationstation /storage/.emulationstation
+fi
+
+if [ -d "/storage/cache/.cores" ]
+then
+  rm -rf /storage/cache/.cores
+fi
+
+if [ ! -d "/tmp/cache" ]
+then
+  mkdir /tmp/cache
+fi
+
+ln -sf /tmp/cache /storage/cache/.cores
+
+### We do not want to mount the cloud drive on startup
+### so we'll reset the mount option to 0.
+set_setting clouddrive.mounted 0
+
+### Enable the desired number of threads.
+NUMTHREADS=$(get_setting "system.threads")
+if [ -n "${NUMTHREADS}" ]
+then
+        onlinethreads ${NUMTHREADS} 0
+else
+        onlinethreads all 1
+fi
+
+### If we don't have a default governor set, set it
+### to schedutil.
+if [ -z "$(get_setting system.cpugovernor)" ]
+then
+  set_setting system.cpugovernor schedutil
+fi
+
+### Test for binary data in system.cfg and clean it
+### if it exists.
+/usr/bin/clean_sysconfig
+
+### Set up our controller variables.
+/usr/bin/mkcontroller
+
