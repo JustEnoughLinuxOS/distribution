@@ -1,0 +1,155 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+### Set a custom device so we don't clobber it.
+set-audio set "CUSTOM (UNMANAGED)"
+set-audio esset "Master"
+
+cat <<EOF >/storage/.config/asound.conf
+pcm.!default {
+        type            plug
+        slave.pcm       "softvol"
+}
+
+ctl.!default {
+        type            hw
+        card            0
+}
+
+pcm.ddmix {
+        ipc_key         1024
+        type            dmix
+        slave {
+                pcm         "hw:0,0"
+                period_time 0
+                period_size 1024
+                buffer_size 4096
+                rate 44100
+        }
+}
+
+pcm.softvol {
+        type            softvol
+        slave.pcm {
+        type asym
+        playback.pcm {
+            type route
+            slave.pcm "ddmix"
+            ttable.0.0 0.96
+            ttable.0.1 0.80
+            ttable.1.0 0.80
+            ttable.1.1 0.96
+        }
+        capture.pcm "hw:0"
+    }
+        control {
+                name        "Master"
+                card        0
+        }
+}
+EOF
+
+if [ ! -e "/storage/.config/asound.state" ]
+then
+  cat <<EOF >/storage/.config/asound.state
+state.rockchiprk817co {
+        control.1 {
+                iface MIXER
+                name 'Playback Path'
+                value HP
+                comment {
+                        access 'read write'
+                        type ENUMERATED
+                        count 1
+                        item.0 OFF
+                        item.1 RCV
+                        item.2 SPK
+                        item.3 HP
+                        item.4 HP_NO_MIC
+                        item.5 BT
+                        item.6 SPK_HP
+                        item.7 RING_SPK
+                        item.8 RING_HP
+                        item.9 RING_HP_NO_MIC
+                        item.10 RING_SPK_HP
+                }
+        }
+        control.2 {
+                iface MIXER
+                name 'Capture MIC Path'
+                value 'MIC OFF'
+                comment {
+                        access 'read write'
+                        type ENUMERATED
+                        count 1
+                        item.0 'MIC OFF'
+                        item.1 'Main Mic'
+                        item.2 'Hands Free Mic'
+                        item.3 'BT Sco Mic'
+                }
+        }
+        control.3 {
+                iface MIXER
+                name Master
+                value.0 109
+                value.1 109
+                comment {
+                        access 'read write user'
+                        type INTEGER
+                        count 2
+                        range '0 - 255'
+                        tlv '0000000100000008ffffec1400000014'
+                        dbmin -5100
+                        dbmax 0
+                        dbvalue.0 -2920
+                        dbvalue.1 -2920
+                }
+        }
+}
+state.rockchiphdmi {
+        control.1 {
+                iface PCM
+                name 'Playback Channel Map'
+                value.0 0
+                value.1 0
+                value.2 0
+                value.3 0
+                value.4 0
+                value.5 0
+                value.6 0
+                value.7 0
+                comment {
+                        access read
+                        type INTEGER
+                        count 8
+                        range '0 - 36'
+                }
+        }
+        control.2 {
+                iface PCM
+                name ELD
+                value '0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+                comment {
+                        access 'read volatile'
+                        type BYTES
+                        count 128
+                }
+        }
+        control.3 {
+                iface PCM
+                name 'AUDIO MODE'
+                value 0
+                comment {
+                        access 'read write volatile'
+                        type INTEGER
+                        count 1
+                        range '0 - 2'
+                }
+        }
+}
+EOF
+  alsactl restore -f /storage/.config/asound.state
+fi

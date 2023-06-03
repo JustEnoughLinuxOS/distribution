@@ -1,0 +1,19 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+
+MYDEVICE=$(get_setting system.audiodevice)
+if [ -z "${MYDEVICE}" ]
+then
+  ### Set the audio device.
+  set-audio set "ALC269VB (1:0)"
+  set-audio esset "Master"
+fi
+
+### Disables speaker output when headphones are connected.
+alsactl restore -f /storage/.config/asound.state
+/usr/bin/amixer -c 1 sset "Auto-Mute Mode" Enabled
+alsactl store -f /storage/.config/asound.state

@@ -1,0 +1,18 @@
+#!/bin/sh
+ID=$(dmesg | grep "panel id:" | sed "s#^.*panel id: ##g")
+case ${ID} in
+  "30 52")
+    ID="v1 (${ID})"
+  ;;
+  "38 21")
+    ID="v2 (${ID})"
+  ;;
+  *)
+    ID="Unknown"
+  ;;
+esac
+
+if [ -n "${ID}" ]
+then
+  echo "PANEL VERSION: ${ID}"
+fi 
