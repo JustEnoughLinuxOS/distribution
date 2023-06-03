@@ -42,10 +42,11 @@ then
   set_setting system.cpugovernor schedutil
 fi
 
-### PortMaster
-if [ ! -d "/storage/roms/ports/PortMaster" ]
+### Configure suspend mode.
+MYSLEEPMODE=$(get_setting system.suspendmode)
+if [ -n "${MYSLEEPMODE}" ]
 then
-  cp -rf /usr/share/portmaster /storage/roms/ports/PortMaster >/var/log/upgrade.log 2>&1
-  chmod -R 755 /storage/roms/ports/PortMaster
+  /usr/bin/setsuspendmode ${MYSLEEPMODE}
+else
+  /usr/bin/setsuspendmode mem
 fi
-
