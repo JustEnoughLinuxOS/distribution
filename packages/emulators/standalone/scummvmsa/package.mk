@@ -14,7 +14,7 @@ PKG_LONGDESC="ScummVM is a program which allows you to run certain classic graph
 
 pre_configure_target() { 
   sed -i "s|sdl-config|sdl2-config|g" ${PKG_BUILD}/configure
-  TARGET_CONFIGURE_OPTS="--host=${TARGET_NAME} --backend=sdl --with-sdl-prefix=${SYSROOT_PREFIX}/usr/bin --disable-debug --enable-release --enable-vkeybd --opengl-mode=gles2"
+  TARGET_CONFIGURE_OPTS="--host=${TARGET_NAME} --backend=sdl --with-sdl-prefix=${SYSROOT_PREFIX}/usr/bin --disable-debug --enable-release --enable-vkeybd --enable-sdl-ts-vmouse --opengl-mode=gles2"
 }
 
 post_makeinstall_target() {
