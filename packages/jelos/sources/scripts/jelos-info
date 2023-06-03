@@ -2,6 +2,22 @@
 
 source /etc/profile
 
+### Load quirks so we can display device specific info when it exists.
+if [ -e "/sys/firmware/devicetree/base/model" ]
+then
+  QUIRK_DEVICE=$(cat /sys/firmware/devicetree/base/model 2>/dev/null)
+else
+  QUIRK_DEVICE="$(cat /sys/class/dmi/id/sys_vendor 2>/dev/null) $(cat /sys/class/dmi/id/product_name 2>/dev/null)"
+fi
+QUIRK_DEVICE="$(echo ${QUIRK_DEVICE} | sed -e "s#[/]#-#g")"
+
+info_quirks() {
+  for QUIRK in /usr/lib/autostart/quirks/"${QUIRK_DEVICE}"/info.d/${1}/*
+  do
+    "${QUIRK}" 2>/dev/null
+  done
+}
+
 ### short version (for osd)
 if test "$1" = "--short"
 then
@@ -131,3 +147,5 @@ case ${HW_ARCH} in
     done
   ;;
 esac
+
+info_quirks
