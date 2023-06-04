@@ -380,7 +380,7 @@ makeinstall_target() {
 
   ### Atari Jaguar
   add_emu_core atarijaguar retroarch virtualjaguar true
-  add_es_system virtualjaguar
+  add_es_system atarijaguar
 
   ### Atari Lynx
   add_emu_core atarilynx retroarch handy true
@@ -450,9 +450,9 @@ makeinstall_target() {
   add_es_system ngp
 
   ### SNK NeoGeo Pocket Color
-  add_emu_core ngc retroarch beetle_ngp true
-  add_emu_core ngc retroarch race false
-  add_es_system ngc
+  add_emu_core ngpc retroarch beetle_ngp true
+  add_emu_core ngpc retroarch race false
+  add_es_system ngpc
 
   ### Nintendo 64
   add_emu_core n64 retroarch mupen64plus_next true
@@ -546,9 +546,9 @@ makeinstall_target() {
   ### Sony Playstation 2
   case ${TARGET_ARCH} in
     x86_64)
-      add_emu_core psx2 retroarch pcsx2 true
-      add_emu_core psx2 pcsx2 pcsx2-sa false
-      add_es_system psx2
+      add_emu_core ps2 retroarch pcsx2 true
+      add_emu_core ps2 pcsx2 pcsx2-sa false
+      add_es_system ps2
     ;;
   esac
 

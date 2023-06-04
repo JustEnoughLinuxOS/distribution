@@ -1782,19 +1782,19 @@ add_emu_core() {
 }
 
 mk_es_systems() {
-  cat <<EOF >${ESTMP}/es_systems.cfg
+  cat <<EOF >${ESTMP}/.es_systems.cfg
 <?xml version="1.0" encoding="UTF-8"?>
 <systemList>
 EOF
   rm -f ${ESTMP}/*-emulators.tmp
   for essystem in $(ls ${ESTMP}/*.tmp | sort)
   do
-    sed -i -e '1,1d' -e '$ d' ${essystem}
-    cat ${essystem} >>${ESTMP}/es_systems.cfg
+    cat ${essystem} >>${ESTMP}/.es_systems.cfg
   done
-  cat <<EOF >>${ESTMP}/es_systems.cfg
+  cat <<EOF >>${ESTMP}/.es_systems.cfg
 </systemList>
 EOF
+xmlstarlet fo -t ${ESTMP}/.es_systems.cfg >${ESTMP}/es_systems.cfg 2>/dev/null
 } 
 
 add_es_system() {
@@ -1811,26 +1811,20 @@ add_es_system() {
   if [ ! -e "${ESTMP}/${SYSTEM_NAME}.tmp" ]
   then
     cat <<EOF >${ESTMP}/${SYSTEM_NAME}.tmp
-<?xml version="1.0" encoding="UTF-8"?>
-<systemList>
-</systemList>
+<system>
+	<name>${SYSTEM_NAME}</name>
+	<fullname>${SYSTEM_FULLNAME}</fullname>
+	<manufacturer>${SYSTEM_MANUFACTURER}</manufacturer>
+	<release>${SYSTEM_RELEASE}</release>
+	<hardware>${SYSTEM_HARDWARE}</hardware>
+	<path>${SYSTEM_PATH}</path>
+	<extension>${SYSTEM_EXTENSION}</extension>
+	<command>${SYSTEM_COMMAND}</command>
+	<platform>${SYSTEM_PLATFORM}</platform>
+	<theme>${SYSTEM_THEME}</theme>
+</system>
 EOF
   fi
-
-  xmlstarlet ed --omit-decl --inplace \
-          -d '//systemList/system' \
-          -s '//systemList' -t elem -n 'system' \
-          -s '//systemList/system' -t elem -n 'name' -v "${SYSTEM_NAME}" \
-          -s '//systemList/system' -t elem -n 'fullname' -v "${SYSTEM_FULLNAME}" \
-          -s '//systemList/system' -t elem -n 'manufacturer' -v "${SYSTEM_MANUFACTURER}" \
-          -s '//systemList/system' -t elem -n 'release' -v "${SYSTEM_RELEASE}" \
-          -s '//systemList/system' -t elem -n 'hardware' -v "${SYSTEM_HARDWARE}" \
-          -s '//systemList/system' -t elem -n 'path' -v "${SYSTEM_PATH}" \
-          -s '//systemList/system' -t elem -n 'extension' -v "${SYSTEM_EXTENSION}" \
-          -s '//systemList/system' -t elem -n 'command' -v "${SYSTEM_COMMAND}" \
-          -s '//systemList/system' -t elem -n 'platform' -v "${SYSTEM_PLATFORM}" \
-          -s '//systemList/system' -t elem -n 'theme' -v "${SYSTEM_THEME}" \
-          -s '//systemList/system' -t elem -n "emulators" -v "" ${ESTMP}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
 
   if [ -e "${ESTMP}/${SYSTEM_NAME}-emulators.tmp" ]
   then
@@ -1841,45 +1835,54 @@ EOF
       SYSTEM_DEFAULT=$(echo ${line} | awk 'BEGIN {FS="|"} {print $3}')
 
       ### Check to see if we've already added an emulator key.
-      EMTEST=$(xmlstarlet sel -t -c "////systemList/system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]" ${ESTMP}/${SYSTEM_NAME}.tmp 2>/dev/null ||:)
+      EMTEST=$(xmlstarlet sel -t -c "//system/emulators" ${ESTMP}/${SYSTEM_NAME}.tmp 2>/dev/null ||:)
       if [ -z "${EMTEST}" ]
       then
         ### Add the emulator element
         xmlstarlet ed --omit-decl --inplace \
-          -s "//systemList/system/emulators" -t elem -n "emulator" -v "" \
+          -s "//system" -t elem -n "emulators" -v "" \
+          ${ESTMP}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+      fi
+
+      ### Check to see if we've already added an emulator key.
+      EETEST=$(xmlstarlet sel -t -c "//system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]" ${ESTMP}/${SYSTEM_NAME}.tmp 2>/dev/null ||:)
+      if [ -z "${EETEST}" ]
+      then
+        ### Add the emulator element
+        xmlstarlet ed --omit-decl --inplace \
+          -s "//system/emulators" -t elem -n "emulator" -v "" \
           ${ESTMP}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
       fi
 
       ### Add an attribute defining the emulator's name.
       xmlstarlet ed --omit-decl --inplace \
-          -s "//systemList/system/emulators/emulator[not(@name)]" -t attr -n "name" -v "${SYSTEM_EMULATOR}" \
+          -s "//system/emulators/emulator[not(@name)]" -t attr -n "name" -v "${SYSTEM_EMULATOR}" \
           ${ESTMP}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
 
       ### Check to see if we've already added a core element.
-      COTEST=$(xmlstarlet sel -t -c "////systemList/system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]/cores/core" ${ESTMP}/${SYSTEM_NAME}.tmp 2>/dev/null ||:)
+      COTEST=$(xmlstarlet sel -t -c "//system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]/cores/core" ${ESTMP}/${SYSTEM_NAME}.tmp 2>/dev/null ||:)
       if [ -z "${COTEST}" ]
       then
         xmlstarlet ed --omit-decl --inplace \
-            -s "//systemList/system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]" -t elem -n "cores" -v "" \
+            -s "//system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]" -t elem -n "cores" -v "" \
             ${ESTMP}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
       fi
 
       ### Add each core.
       xmlstarlet ed --omit-decl --inplace \
-          -s "//systemList/system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]/cores" -t elem -n "core" -v "${SYSTEM_CORE}" \
+          -s "//system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]/cores" -t elem -n "core" -v "${SYSTEM_CORE}" \
           ${ESTMP}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
 
       if [ "${SYSTEM_DEFAULT}" = "true" ]
       then
         ### Add an attribute defining the default core
         xmlstarlet ed --omit-decl --inplace \
-            -i "//systemList/system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]/cores/core" -t attr -n "default" -v "true" \
+            -i "//system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]/cores/core" -t attr -n "default" -v "true" \
             ${ESTMP}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
       fi
     done <${ESTMP}/${SYSTEM_NAME}-emulators.tmp
   fi
 
-  xmlstarlet fo -t ${ESTMP}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
 }
 
 # Use distribution functions if any
