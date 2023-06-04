@@ -564,6 +564,144 @@ makeinstall_target() {
   add_emu_core scummvm retroarch scummvm false
   add_es_system scummvm
 
+  ### Sega 32X
+  add_emu_core sega32x retroarch picodrive true
+  add_es_system sega32x
+
+  ### Sega CD
+  add_emu_core segacd retroarch genesis_plus_gx true
+  add_emu_core segacd retroarch picodrive false
+  add_es_system segacd
+
+  ### Sega Mega-CD
+  add_emu_core megacd retroarch genesis_plus_gx true
+  add_emu_core megacd retroarch picodrive false
+  add_es_system megacd
+
+  ### Sega Genesis
+  add_emu_core genesis retroarch genesis_plus_gx true
+  add_emu_core genesis retroarch genesis_plus_gx_wide false
+  add_emu_core genesis retroarch picodrive false
+  add_es_system genesis
+
+  ### Sega Genesis Hacks
+  add_emu_core genh retroarch genesis_plus_gx true
+  add_emu_core genh retroarch genesis_plus_gx_wide false
+  add_emu_core genh retroarch picodrive false
+  add_es_system genh
+
+  ### Sega MasterSystem
+  add_emu_core mastersystem retroarch gearsystem true
+  add_emu_core mastersystem retroarch genesis_plus_gx false
+  add_emu_core mastersystem retroarch picodrive false
+  add_emu_core mastersystem retroarch smsplus false
+  add_es_system mastersystem
+
+  ### Sega MegaDrive 
+  add_emu_core megadrive retroarch genesis_plus_gx true
+  add_emu_core megadrive retroarch genesis_plus_gx_wide false
+  add_emu_core megadrive retroarch picodrive false
+  add_es_system megadrive
+
+  ### Welback Holdings Mega Duck
+  add_emu_core megaduck retroarch sameduck true
+  add_es_system megaduck
+
+  ### Sega Saturn
+  case ${TARGET_ARCH} in
+    aarch64)
+      add_emu_core saturn yabasanshiro yabasanshiro-sa true
+      add_emu_core saturn retroarch yabasanshiro false
+    ;;
+    x86_64)
+      add_emu_core saturn retroarch yabasanshiro true
+    ;;
+  esac
+  add_emu_core saturn retroarch beetle_saturn false
+  add_es_system saturn
+
+  ### Sega SG-1000
+  add_emu_core sg-1000 retroarch gearsystem true
+  add_emu_core sg-1000 retroarch genesis_plus_gx false
+  add_emu_core sg-1000 retroarch picodrive false
+  add_es_system sg-1000
+
+  ### Sharp X1
+  add_emu_core x1 retroarch x1 true
+  add_es_system x1
+
+  ### Microsoft XBox
+  case ${TARGET_ARCH} in
+    x86_64)
+      add_emu_core xbox xemu xemu-sa true
+      add_es_system xbox
+    ;;
+  esac
+
+  ### Sinclair ZX Spectrum
+  add_emu_core zxspectrum retroarch fuse
+  add_es_system zxspectrum
+
+  ### Sinclair ZX81
+  add_emu_core zx81 retroarch 81 true
+  add_es_system zx81
+
+  ### NEC Super Grafx
+  add_emu_core supergrafx retroarch beetle_supergrafx
+  add_emu_core supergrafx retroarch beetle_pce
+  add_es_system supergrafx
+
+  ### Nintendo SNES
+  add_emu_core snes retroarch snes9x true
+  add_emu_core snes retroarch snes9x2010 false
+  add_emu_core snes retroarch snes9x2002 false
+  add_emu_core snes retroarch snes9x2005_plus false
+  add_emu_core snes retroarch beetle_supafaust false
+  add_emu_core snes retroarch bsnes false
+  add_emu_core snes retroarch bsnes_mercury_performance false
+  add_emu_core snes retroarch bsnes_hd_beta false
+  add_es_system snes
+
+  ### Nintendo SNES Hacks
+  add_emu_core snesh retroarch snes9x true
+  add_emu_core snesh retroarch snes9x2010 false
+  add_emu_core snesh retroarch snes9x2002 false
+  add_emu_core snesh retroarch snes9x2005_plus false
+  add_emu_core snesh retroarch beetle_supafaust false
+  add_emu_core snesh retroarch bsnes false
+  add_emu_core snesh retroarch bsnes_mercury_performance false
+  add_emu_core snesh retroarch bsnes_hd_beta false
+  add_es_system snesh
+
+  ### Nintendo Super Famicom
+  add_emu_core sfc retroarch snes9x true
+  add_emu_core sfc retroarch snes9x2010 false
+  add_emu_core sfc retroarch snes9x2002 false
+  add_emu_core sfc retroarch snes9x2005_plus false
+  add_emu_core sfc retroarch beetle_supafaust false
+  add_emu_core sfc retroarch bsnes false
+  add_emu_core sfc retroarch bsnes_mercury_performance false
+  add_emu_core sfc retroarch bsnes_hd_beta false
+  add_es_system sfc
+
+  ### Nintendo Stellaview
+  add_emu_core satellaview retroarch snes9x true
+  add_emu_core satellaview retroarch snes9x2010 false
+  add_emu_core satellaview retroarch snes9x2002 false
+  add_emu_core satellaview retroarch snes9x2005_plus false
+  add_es_system satellaview
+
+  ### Bandai SuFami Turbo
+  add_emu_core sufami retroarch snes9x true
+  add_es_system sufami
+
+  ### Solarus
+  add_emu_core solarus solarus solarus true
+  add_es_system solarus
+
+  ### Watara Supervision
+  add_emu_core supervision retroarch potator true
+  add_es_system supervision
 
   ### Create es_systems
   mk_es_systems
