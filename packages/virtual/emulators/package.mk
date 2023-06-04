@@ -72,6 +72,33 @@ makeinstall_target() {
   ### Flush cache from previous builds
   clean_es_cache
 
+  ### Panasonic 3DO
+  add_emu_core 3do retroarch opera true
+  add_es_system 3do
+
+  ### Nintendo 3DS
+  add_emu_core 3ds retroarch citra true
+  add_emu_core 3ds citra citra-sa false
+  add_es_system 3ds
+
+  ### Commodore Amiga
+  add_emu_core amiga retroarch puae true
+  case ${TARGET_ARCH} in
+    aarch64)
+      add_emu_core amiga amiberry false
+    ;;
+  esac
+  add_es_system amiga
+
+  ### Commodore Amiga CD32
+  add_emu_core amigacd32 retroarch puae true
+  case ${TARGET_ARCH} in
+    aarch64)
+      add_emu_core amigacd32 retroarch uae4arm false
+    ;;
+  esac
+  add_es_system amigacd32
+
   ### Atari 2600 Libretro
   add_emu_core atari2600 retroarch stella true
   add_es_system atari2600
