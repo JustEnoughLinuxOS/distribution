@@ -69,6 +69,24 @@ esac
 PKG_DEPENDS_TARGET+=" ${PKG_EMUS} ${EMUS_32BIT} ${PKG_RETROARCH} ${LIBRETRO_CORES}"
 
 makeinstall_target() {
+  ### README BEFORE EDITING
+  ###
+  ### When adding new emulators to this package, it is now necessary to add
+  ### your emulator below for it to appear in EmulationStation as es_systems.cfg
+  ### is now automatically generated when this package is built.
+  ###
+  ### Add your cores BEFORE calling the function to add a new system, when the
+  ### system is generated and added to ES the cores need to already be defined.
+  ###
+  ### Only ONE core per system can be set as the default, setting multiple cores
+  ### will result in a build failure.
+  ###
+  ### add_emu_core schema:
+  ###
+  ### System | Emulator | Core | Default
+  ### 3do      retroarch  opera  true
+  ###
+ 
   ### Flush cache from previous builds
   clean_es_cache
 
@@ -556,9 +574,6 @@ makeinstall_target() {
   add_emu_core pokemini retroarch pokemini true
   add_es_system pokemini
 
-  ### PC Ports
-  add_es_system ports
-
   ### ScummVM
   add_emu_core scummvm scummvmsa scummvm true
   add_emu_core scummvm retroarch scummvm false
@@ -703,6 +718,66 @@ makeinstall_target() {
   add_emu_core supervision retroarch potator true
   add_es_system supervision
 
+  ### Nesbox TIC-80
+  add_emu_core tic-80 retroarch tic80 true
+  add_es_system tic-80
+
+  ### NEC TurboGrafx 16
+  add_emu_core tg16 retroarch beetle_pce_fast true
+  add_emu_core tg16 retroarch beetle_pce false
+  add_emu_core tg16 retroarch beetle_supergrafx false
+  add_es_system tg16
+
+  ### NEC TurboGrafx CD
+  add_emu_core tg16cd retroarch beetle_pce_fast true
+  add_emu_core tg16cd retroarch beetle_pce false
+  add_emu_core tg16cd retroarch beetle_supergrafx false
+  add_es_system tg16cd
+
+  ### Belogic Uzebox
+  add_emu_core uzebox retroarch uzem true
+  add_es_system uzebox
+
+  ### Milton Bradley Vectrex
+  add_emu_core vectrex retroarch vecx true
+  add_es_system vectrex
+
+  ### Philips Videopac
+  add_emu_core videopac retroarch o2em true
+  add_es_system videopac
+
+  ### Nintendo VirtualBoy
+  add_emu_core virtualboy retroarch beetle_vb true
+  add_es_system virtualboy
+
+  ### Bandai Wonderswan
+  add_emu_core wonderswan retroarch beetle_wswan true
+  add_es_system wonderswan
+
+  ### Bandai Wonderswan Color
+  add_emu_core wonderswancolor retroarch beetle_wswan true
+  add_es_system wonderswancolor
+
+  ### Sharp x68000
+  add_emu_core x68000 retroarch px68k true
+  add_es_system x68000
+
+  ### PC Ports
+  add_es_system ports
+
+  ### Media Player
+  add_emu_core mpv mpv true
+  add_es_system mplayer
+
+  ### Moonlight
+  add_es_system moonlight
+
+  ### Tools
+  add_es_system tools
+
+  ### Screenshots
+  add_es_system imageviewer
+  
   ### Create es_systems
   mk_es_systems
 
