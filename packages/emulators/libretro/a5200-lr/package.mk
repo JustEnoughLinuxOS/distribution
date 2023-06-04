@@ -37,3 +37,4 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
   cp a5200_libretro.so ${INSTALL}/usr/lib/libretro/
 }
+

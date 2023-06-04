@@ -48,7 +48,3 @@ makeinstall_target() {
   cp ${PKG_BUILD}/src/os/libretro/stella_libretro.so ${INSTALL}/usr/lib/libretro/
 }
 
-post_makeinstall_target() {
-  add_emu_core atari2600 retroarch stella true
-  add_es_system atari2600
-}
