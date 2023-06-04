@@ -99,6 +99,22 @@ makeinstall_target() {
   esac
   add_es_system amigacd32
 
+  ### Amstrad CPC
+  add_emu_core amstradcpc retroarch crocods true
+  add_emu_core amstradcpc retroarch cap32 false
+  add_es_system amstradcpc
+
+  ### Arcade
+  add_emu_core arcade retroarch mame2003_plus true
+  add_emu_core arcade retroarch mame2000 false
+  add_emu_core arcade retroarch mame2010 false
+  add_emu_core arcade retroarch mame2015 false
+  add_emu_core arcade retroarch mame false
+  add_emu_core arcade retroarch fbneo false
+  add_emu_core arcade retroarch fbalpha2012 false
+  add_emu_core arcade retroarch fbalpha2019 false
+  add_es_system arcade
+
   ### Atari 2600 Libretro
   add_emu_core atari2600 retroarch stella true
   add_es_system atari2600
@@ -108,6 +124,106 @@ makeinstall_target() {
   add_emu_core atari5200 retroarch atari800 false
   add_es_system atari5200
 
+  ### Atari 7800
+  add_emu_core atari7800 retroarch prosystem true
+  add_es_system atari7800
+
+  ## Atari 800
+  add_emu_core atari800 retroarch atari800 true
+  add_es_system atari800
+
+  ## Atari ST
+  add_emu_core atarist retroarch hatari true
+  add_emu_core atarist hatarisa hatarisa false
+  add_es_system atarist
+
+  ## Sammy Atomiswave
+  add_emu_core atomiswave retroarch flycast true
+  add_emu_core atomiswave retroarch flycast2021 false
+  add_emu_core atomiswave flycast flycast-sa false
+  add_es_system atomiswave
+
+  ### Fairchild Channel F
+  add_emu_core channelf retroarch freechaf true
+  add_es_system channelf
+
+  ### ColecoVision
+  add_emu_core colecovision retroarch bluemsx true
+  add_emu_core colecovision retroarch gearcoleco false
+  add_emu_core colecovision retroarch smsplus false
+  add_es_system colecovision
+
+  ### Commodore 128
+  add_emu_core c128 retroarch vice_x128 true
+  add_emu_core c128 vicesa x128 false
+  add_es_system c128
+
+  ### Commodore 16
+  add_emu_core c16 retroarch vice_xplus4 true
+  add_emu_core c16 vicesa xplus4 false
+  add_es_system c16
+
+  ### Commodore 64
+  add_emu_core c64 retroarch vice_x64 true
+  add_emu_core c64 vicesa x64sc false
+  add_es_system c64
+
+  ### Commodore PET
+  add_emu_core pet retroarch vice_xpet true
+  add_es_system pet
+
+  ### Commodore VIC-20
+  add_emu_core vic20 retroarch vice_vic true
+  add_emu_core vic20 vicesa vice_xvic false
+  add_es_system vic20
+
+  ### Capcom Playsystem 1
+  add_emu_core cps1 retroarch fbneo true
+  add_emu_core cps1 retroarch mame2003_plus false
+  add_emu_core cps1 retroarch mame2010 false
+  add_emu_core cps1 retroarch fbalpha2012 false
+  add_emu_core cps1 retroarch mba_mini false
+  case ${TARGET_ARCH} in
+    aarch64)
+      add_emu_core cps1 AdvanceMame AdvanceMame false
+    ;;
+  esac
+  add_es_system cps1
+
+  ### Capcom Playsystem 2
+  add_emu_core cps2 retroarch fbneo true
+  add_emu_core cps2 retroarch mame2003_plus false
+  add_emu_core cps2 retroarch mame2010 false
+  add_emu_core cps2 retroarch fbalpha2012 false
+  add_emu_core cps2 retroarch mba_mini false
+  case ${TARGET_ARCH} in
+    aarch64)
+      add_emu_core cps2 AdvanceMame AdvanceMame false
+    ;;
+  esac
+  add_es_system cps2
+
+  ### Capcom Playsystem 3
+  add_emu_core cps3 retroarch fbneo true
+  add_emu_core cps3 retroarch mame2003_plus false
+  add_emu_core cps3 retroarch mame2010 false
+  add_emu_core cps3 retroarch fbalpha2012 false
+  add_emu_core cps3 retroarch mba_mini false
+  case ${TARGET_ARCH} in
+    aarch64)
+      add_emu_core cps3 AdvanceMame AdvanceMame false
+    ;;
+  esac
+  add_es_system cps3
+
+  ### Daphne
+  add_emu_core daphne hypseus hypseus true
+  add_emu_core daphne retroarch daphne false
+  add_es_system daphne
+
   ### Create es_systems
   mk_es_systems
+
+  mkdir -p ${INSTALL}/usr/config/emulationstation
+  cp -f ${ESTMP}/es_systems.cfg ${INSTALL}/usr/config/emulationstation
 }
