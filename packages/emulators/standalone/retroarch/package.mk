@@ -3,7 +3,7 @@
 # Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="retroarch"
-PKG_VERSION="7f55153457065703f42bda51c27413ba58f45940"
+PKG_VERSION="35b445c3ed7a6a4934e080775ae71fef313569de"
 PKG_SITE="https://github.com/libretro/RetroArch"
 PKG_URL="${PKG_SITE}.git"
 PKG_LICENSE="GPLv3"
@@ -14,6 +14,8 @@ GET_HANDLER_SUPPORT="git"
 PKG_PATCH_DIRS+=" ${DEVICE}"
 
 pre_configure_target() {
+  CFLAGS+=" -DUDEV_TOUCH_SUPPORT"
+  CXXFLAGS+=" -DUDEV_TOUCH_SUPPORT"
   TARGET_CONFIGURE_OPTS=""
   PKG_CONFIGURE_OPTS_TARGET="	--disable-qt \
 				--enable-alsa \
