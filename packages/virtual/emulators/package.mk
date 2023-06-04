@@ -69,6 +69,9 @@ esac
 PKG_DEPENDS_TARGET+=" ${PKG_EMUS} ${EMUS_32BIT} ${PKG_RETROARCH} ${LIBRETRO_CORES}"
 
 makeinstall_target() {
+  ### Flush cache from previous builds
+  clean_es_cache
+
   ### Atari 2600 Libretro
   add_emu_core atari2600 retroarch stella true
   add_es_system atari2600
@@ -77,4 +80,7 @@ makeinstall_target() {
   add_emu_core atari5200 retroarch a5200 true
   add_emu_core atari5200 retroarch atari800 false
   add_es_system atari5200
+
+  ### Create es_systems
+  mk_es_systems
 }

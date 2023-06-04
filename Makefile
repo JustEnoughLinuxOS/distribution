@@ -23,35 +23,33 @@ distclean:
 src-pkg:
 	tar cvJf sources.tar.xz sources .stamps
 
-esclean:
-	rm -rf .es_cache*
 
 world: AMD64 RK3588 RK3326 RK3566 RK3566-X55 S922X
 
-AMD64: esclean
+AMD64:
 	unset DEVICE_ROOT
 	PROJECT=PC DEVICE=AMD64 ARCH=i686 ./scripts/build_distro
 	PROJECT=PC DEVICE=AMD64 ARCH=x86_64 ./scripts/build_distro
 
-RK3588: esclean
+RK3588:
 	unset DEVICE_ROOT
 	PROJECT=Rockchip DEVICE=RK3588 ARCH=arm ./scripts/build_distro
 	PROJECT=Rockchip DEVICE=RK3588 ARCH=aarch64 ./scripts/build_distro
 
-S922X: esclean
+S922X:
 	unset DEVICE_ROOT
 	PROJECT=Amlogic DEVICE=S922X ARCH=arm ./scripts/build_distro
 	PROJECT=Amlogic DEVICE=S922X ARCH=aarch64 ./scripts/build_distro
 
-RK3566: esclean
+RK3566:
 	DEVICE_ROOT=RK3566 PROJECT=Rockchip DEVICE=RK3566 ARCH=arm ./scripts/build_distro
 	DEVICE_ROOT=RK3566 PROJECT=Rockchip DEVICE=RK3566 ARCH=aarch64 ./scripts/build_distro
 
-RK3566-X55: esclean
+RK3566-X55:
 	DEVICE_ROOT=RK3566 PROJECT=Rockchip DEVICE=RK3566-X55 ARCH=arm ./scripts/build_distro
 	DEVICE_ROOT=RK3566 PROJECT=Rockchip DEVICE=RK3566-X55 ARCH=aarch64 ./scripts/build_distro
 
-RK3326: esclean
+RK3326:
 	unset DEVICE_ROOT
 	PROJECT=Rockchip DEVICE=RK3326 ARCH=arm ./scripts/build_distro
 	PROJECT=Rockchip DEVICE=RK3326 ARCH=aarch64 ./scripts/build_distro

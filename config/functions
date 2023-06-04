@@ -1763,17 +1763,39 @@ exec_thread_safe() {
   return ${result}
 }
 
-add_emu_core() {
-  TMPCACHE="${ROOT}/.es_cache"
-
-  if [ ! -d "${TMPCACHE}" ]
+clean_es_cache() {
+  ESTMP="${ROOT}/.es_cache"
+  if [ -d "${ESTMP}" ]
   then
-    mkdir "${TMPCACHE}"
+    rm -rf "${ESTMP}"
+  fi
+}
+
+add_emu_core() {
+  if [ ! -d "${ESTMP}" ]
+  then
+    mkdir "${ESTMP}"
   fi
 
   # Schema: emulator|core|true/false
-  echo "${2}|${3}|${4}" >>${TMPCACHE}/${1}-emulators.tmp
+  echo "${2}|${3}|${4}" >>${ESTMP}/${1}-emulators.tmp
 }
+
+mk_es_systems() {
+  cat <<EOF >${ESTMP}/es_systems.cfg
+<?xml version="1.0" encoding="UTF-8"?>
+<systemList>
+EOF
+  rm -f ${ESTMP}/*-emulators.tmp
+  for essystem in $(ls ${ESTMP}/*.tmp | sort)
+  do
+    sed -i -e '1,1d' -e '$ d' ${essystem}
+    cat ${essystem} >>${ESTMP}/es_systems.cfg
+  done
+  cat <<EOF >>${ESTMP}/es_systems.cfg
+</systemList>
+EOF
+} 
 
 add_es_system() {
   if [ -e "${ROOT}/config/emulators/${1}.conf" ]
@@ -1781,16 +1803,14 @@ add_es_system() {
     . ${ROOT}/config/emulators/${1}.conf
   fi
 
-  TMPCACHE="${ROOT}/.es_cache"
-
-  if [ ! -d "${TMPCACHE}" ]
+  if [ ! -d "${ESTMP}" ]
   then
-    mkdir "${TMPCACHE}"
+    mkdir "${ESTMP}"
   fi
 
-  if [ ! -e "${TMPCACHE}/${SYSTEM_NAME}.tmp" ]
+  if [ ! -e "${ESTMP}/${SYSTEM_NAME}.tmp" ]
   then
-    cat <<EOF >${TMPCACHE}/${SYSTEM_NAME}.tmp
+    cat <<EOF >${ESTMP}/${SYSTEM_NAME}.tmp
 <?xml version="1.0" encoding="UTF-8"?>
 <systemList>
 </systemList>
@@ -1810,9 +1830,9 @@ EOF
           -s '//systemList/system' -t elem -n 'command' -v "${SYSTEM_COMMAND}" \
           -s '//systemList/system' -t elem -n 'platform' -v "${SYSTEM_PLATFORM}" \
           -s '//systemList/system' -t elem -n 'theme' -v "${SYSTEM_THEME}" \
-          -s '//systemList/system' -t elem -n "emulators" -v "" ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+          -s '//systemList/system' -t elem -n "emulators" -v "" ${ESTMP}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
 
-  if [ -e "${TMPCACHE}/${SYSTEM_NAME}-emulators.tmp" ]
+  if [ -e "${ESTMP}/${SYSTEM_NAME}-emulators.tmp" ]
   then
     while read -r line
     do
@@ -1821,45 +1841,45 @@ EOF
       SYSTEM_DEFAULT=$(echo ${line} | awk 'BEGIN {FS="|"} {print $3}')
 
       ### Check to see if we've already added an emulator key.
-      EMTEST=$(xmlstarlet sel -t -c "////systemList/system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]" ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>/dev/null ||:)
+      EMTEST=$(xmlstarlet sel -t -c "////systemList/system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]" ${ESTMP}/${SYSTEM_NAME}.tmp 2>/dev/null ||:)
       if [ -z "${EMTEST}" ]
       then
         ### Add the emulator element
         xmlstarlet ed --omit-decl --inplace \
           -s "//systemList/system/emulators" -t elem -n "emulator" -v "" \
-          ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+          ${ESTMP}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
       fi
 
       ### Add an attribute defining the emulator's name.
       xmlstarlet ed --omit-decl --inplace \
           -s "//systemList/system/emulators/emulator[not(@name)]" -t attr -n "name" -v "${SYSTEM_EMULATOR}" \
-          ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+          ${ESTMP}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
 
       ### Check to see if we've already added a core element.
-      COTEST=$(xmlstarlet sel -t -c "////systemList/system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]/cores/core" ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>/dev/null ||:)
+      COTEST=$(xmlstarlet sel -t -c "////systemList/system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]/cores/core" ${ESTMP}/${SYSTEM_NAME}.tmp 2>/dev/null ||:)
       if [ -z "${COTEST}" ]
       then
         xmlstarlet ed --omit-decl --inplace \
             -s "//systemList/system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]" -t elem -n "cores" -v "" \
-            ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+            ${ESTMP}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
       fi
 
       ### Add each core.
       xmlstarlet ed --omit-decl --inplace \
           -s "//systemList/system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]/cores" -t elem -n "core" -v "${SYSTEM_CORE}" \
-          ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+          ${ESTMP}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
 
       if [ "${SYSTEM_DEFAULT}" = "true" ]
       then
         ### Add an attribute defining the default core
         xmlstarlet ed --omit-decl --inplace \
             -i "//systemList/system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]/cores/core" -t attr -n "default" -v "true" \
-            ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+            ${ESTMP}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
       fi
-    done <${TMPCACHE}/${SYSTEM_NAME}-emulators.tmp
+    done <${ESTMP}/${SYSTEM_NAME}-emulators.tmp
   fi
 
-  xmlstarlet fo -t ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+  xmlstarlet fo -t ${ESTMP}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
 }
 
 # Use distribution functions if any
