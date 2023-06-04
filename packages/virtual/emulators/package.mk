@@ -446,10 +446,124 @@ makeinstall_target() {
   add_es_system n64
 
   ### Nintendo DS
-  add_emu_core nds retroarch melonds true
-  add_emu_core nds retroarch desmume false
-  add_emu_core nds melonds melonds-sa false
+  case ${TARGET_ARCH} in
+    x86_64)
+      add_emu_core nds retroarch melonds true
+      add_emu_core nds retroarch desmume false
+      add_emu_core nds melonds melonds-sa false
+    ;;
+    aarch64)
+      add_emu_core nds drastic drastic-sa true
+      add_emu_core nds retroarch melonds false
+    ;;
+  esac
   add_es_system nds
+
+  ### Nintendo NES
+  add_emu_core nes retroarch nestopia true
+  add_emu_core nes retroarch fceumm false
+  add_emu_core nes retroarch quicknes false
+  add_emu_core nes retroarch mesen false
+  add_es_system nes
+
+  ### Nintendo NES Hacks
+  add_emu_core nesh retroarch nestopia true
+  add_emu_core nesh retroarch fceumm false
+  add_emu_core nesh retroarch quicknes false
+  add_emu_core nesh retroarch mesen false
+  add_es_system nesh
+
+  ### Magnavox Odyssey
+  add_emu_core odyssey2 retroarch o2em true
+  add_es_system odyssey2
+
+  ### OpenBOR
+  add_emu_core openbor OpenBOR OpenBOR true
+  add_es_system openbor
+
+  ### NEC PC-8800
+  add_emu_core pc-8800 retroarch quasi88 true
+  add_es_system pc-8800
+
+  ### NEC PC-9800
+  add_emu_core pc-9800 retroarch np2kai true
+  add_es_system pc-9800
+
+  ### NEC PC Engine
+  add_emu_core pcengine retroarch beetle_pce_fast true
+  add_emu_core pcengine retroarch beetle_pce false
+  add_emu_core pcengine retroarch beetle_supergrafx false
+  add_es_system pcengine
+
+  ### NEC PC Engine CD
+  add_emu_core pcenginecd retroarch beetle_pce_fast true
+  add_emu_core pcenginecd retroarch beetle_pce false
+  add_emu_core pcenginecd retroarch beetle_supergrafx false
+  add_es_system pcenginecd
+
+  ### NEC PC-FX
+  add_emu_core pcfx retroarch beetle_pcfx true
+  add_es_system pcfx
+
+  ### Lexaloffle PICO-8
+  add_emu_core pico-8 pico-8 pico8 true
+  add_emu_core pico-8 retroarch fake08 false
+  add_es_system pico-8
+
+  ### Sony Playstation
+  case ${TARGET_ARCH} in
+    x86_64)
+      add_emu_core psx retroarch beetle_psx true
+      add_emu_core psx Duckstation duckstation-sa false
+    ;;
+    aarch64)
+      add_emu_core psx retroarch pcsx_rearmed32 true
+      add_emu_core psx retroarch pcsx_rearmed false
+    ;;
+  esac
+  add_emu_core psx retroarch duckstation false
+  add_emu_core psx retroarch swanstation false
+  add_es_system psx
+
+  ### Sony Playstation 2
+  case ${TARGET_ARCH} in
+    x86_64)
+      add_emu_core psx2 retroarch pcsx2 true
+      add_emu_core psx2 pcsx2 pcsx2-sa false
+      add_es_system psx2
+    ;;
+  esac
+
+  ### Sony Playstation 3
+  case ${TARGET_ARCH} in
+    x86_64)
+      add_emu_core ps3 rpcs3 rpcs3-sa true
+      add_es_system ps3
+    ;;
+  esac
+
+  ### Sony Playstation Portable
+  add_emu_core psp ppsspp ppsspp-sa true
+  add_emu_core psp retroarch ppsspp false
+  add_es_system psp
+
+  ### Sony Playstation Portable Minis
+  add_emu_core pspminis ppsspp ppsspp-sa true
+  add_emu_core pspminis retroarch ppsspp false
+  add_es_system pspminis
+
+  ### Nintendo Pokemon Mini
+  add_emu_core pokemini retroarch pokemini true
+  add_es_system pokemini
+
+  ### PC Ports
+  add_es_system ports
+
+  ### ScummVM
+  add_emu_core scummvm scummvmsa scummvm true
+  add_emu_core scummvm retroarch scummvm false
+  add_es_system scummvm
+
 
   ### Create es_systems
   mk_es_systems
