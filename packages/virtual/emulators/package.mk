@@ -173,7 +173,7 @@ makeinstall_target() {
   add_es_system pet
 
   ### Commodore VIC-20
-  add_emu_core vic20 retroarch vice_vic true
+  add_emu_core vic20 retroarch vice_xvic true
   add_emu_core vic20 vicesa vice_xvic false
   add_es_system vic20
 
@@ -220,6 +220,236 @@ makeinstall_target() {
   add_emu_core daphne hypseus hypseus true
   add_emu_core daphne retroarch daphne false
   add_es_system daphne
+
+  ### Sega Dreamcast
+  add_emu_core dreamcast retroarch flycast true
+  add_emu_core dreamcast retroarch flycast2021 false
+  add_emu_core dreamcast flycast flycast-sa false
+  add_es_system dreamcast
+
+  ### EasyRPG
+  add_emu_core easyrpg retroarch easyrpg true
+  add_es_system easyrpg
+
+  ### Nintendo Famicom
+  add_emu_core famicom retroarch nestopia true
+  add_emu_core famicom retroarch fceumm false
+  add_emu_core famicom retroarch quicknes false
+  add_emu_core famicom retroarch mesen false
+  add_es_system famicom
+
+  ### Nintendo Famicom Disk System
+  add_emu_core fds retroarch nestopia true
+  add_emu_core fds retroarch fceumm false
+  add_emu_core fds retroarch quicknes false
+  add_es_system fds
+
+  ### Final Burn Neo
+  add_emu_core fbn retroarch fbneo true
+  add_emu_core fbn retroarch mame2003_plus false
+  add_emu_core fbn retroarch mame2010 false
+  add_emu_core fbn retroarch mame2015 false
+  add_emu_core fbn retroarch mame false
+  add_emu_core fbn retroarch fbalpha2012 false
+  add_emu_core fbn retroarch fbalpha2019 false
+  add_es_system fbn
+
+  ### Nintendo Game and Watch
+  add_emu_core gameandwatch retroarch gw
+  add_es_system gameandwatch
+
+  ### Nintendo GameBoy
+  add_emu_core gb retroarch gambatte true
+  add_emu_core gb retroarch sameboy false
+  add_emu_core gb retroarch gearboy false
+  add_emu_core gb retroarch tgbdual false
+  add_emu_core gb retroarch mgba false
+  add_emu_core gb retroarch vbam false
+  add_es_system gb
+
+  ### Nintendo GameBoy Hacks
+  add_emu_core gbh retroarch gambatte true
+  add_emu_core gbh retroarch sameboy false
+  add_emu_core gbh retroarch gearboy false
+  add_emu_core gbh retroarch tgbdual false
+  add_emu_core gbh retroarch mgba false
+  add_emu_core gbh retroarch vbam false
+  add_es_system gbh
+
+  ### Nintendo GameBoy Advance
+  add_emu_core gba retroarch mgba true
+  add_emu_core gba retroarch gbsp false
+  add_emu_core gba retroarch vbam false
+  add_emu_core gba retroarch vba_next false
+  add_emu_core gba retroarch beetle_gba false
+  add_es_system gba
+
+  ### Nintendo GameBoy Advance Hacks
+  add_emu_core gbah retroarch mgba true
+  add_emu_core gbah retroarch gbsp false
+  add_emu_core gbah retroarch vbam false
+  add_emu_core gbah retroarch vba_next false
+  add_emu_core gbah retroarch beetle_gba false
+  add_es_system gbah
+
+  ### Nintendo GameBoy Color
+  add_emu_core gbc retroarch gambatte true
+  add_emu_core gbc retroarch sameboy false
+  add_emu_core gbc retroarch gearboy false
+  add_emu_core gbc retroarch tgbdual false
+  add_emu_core gbc retroarch mgba false
+  add_emu_core gbc retroarch vbam false
+  add_es_system gbc
+
+  ### Nintendo GameCube
+  case ${DEVICE} in
+    AMD64|RK358*|RK356*|S922X*)
+      add_emu_core gamecube dolphin dolphin-sa-gc true
+      add_emu_core gamecube primehack primehack false
+      add_emu_core gamecube retroarch dolphin false
+      add_es_system gamecube
+    ;;
+  esac
+
+  ### Nintendo Wii
+  case ${DEVICE} in
+    AMD64|RK358*|RK356*|S922X*)
+      add_emu_core wii dolphin dolphin-sa-gc true
+      add_emu_core wii primehack primehack false
+      add_emu_core wii retroarch dolphin false
+      add_es_system wii
+    ;;
+  esac
+
+  ### Nintendo Wii U
+  case ${DEVICE} in
+    AMD64)
+      add_emu_core wiiu cemu cemu-sa true
+      add_es_system wiiu
+    ;;
+  esac
+
+  ### Nintendo Switch
+  case ${DEVICE} in
+    AMD64)
+      add_emu_core switch yuzu yuzu-sa true
+      add_emu_core switch ryujinx ryujinx-sa false
+      add_es_system switch
+    ;;
+  esac
+
+  ### Sega GameGear
+  add_emu_core gamegear retroarch gearsystem true
+  add_emu_core gamegear retroarch genesis_plus_gx false
+  add_emu_core gamegear retroarch picodrive false
+  add_emu_core gamegear retroarch smsplus false
+  add_es_system gamegear
+
+  ### Sega GameGear Hacks
+  add_emu_core ggh retroarch gearsystem true
+  add_emu_core ggh retroarch genesis_plus_gx false
+  add_emu_core ggh retroarch picodrive false
+  add_emu_core ggh retroarch smsplus false
+  add_es_system ggh
+
+  ### Intellivision
+  add_emu_core intellivision retroarch freeintv true
+  add_es_system intellivision
+
+  ### Sun Microsystems J2ME
+  add_emu_core j2me retroarch freej2me true
+  add_es_system j2me
+
+  ### Atari Jaguar
+  add_emu_core atarijaguar retroarch virtualjaguar true
+  add_es_system virtualjaguar
+
+  ### Atari Lynx
+  add_emu_core atarilynx retroarch handy true
+  add_emu_core atarilynx retroarch beetle_lynx false
+  add_es_system atarilynx
+
+  ### Arcade (MAME)
+  add_emu_core mame retroarch mame2003_plus true
+  add_emu_core mame retroarch mame2010 false
+  add_emu_core mame retroarch mame2015 false
+  add_emu_core mame retroarch mame false
+  add_emu_core mame retroarch fbneo false
+  add_emu_core mame retroarch fbalpha2012 false
+  add_emu_core mame retroarch fbalpha2019 false
+  add_es_system mame
+
+  ### Sega MegaDrive
+  add_emu_core megadrive-japan retroarch genesis_plus_gx true
+  add_emu_core megadrive-japan retroarch genesis_plus_gx_wide false
+  add_emu_core megadrive-japan retroarch picodrive
+  add_es_system megadrive-japan
+
+  ### Microsoft MS-DOS
+  add_emu_core pc retroarch dosbox_pure
+  add_emu_core pc retroarch dosbox_svn
+  add_es_system pc
+
+  ### Nintendo MSU-1
+  add_emu_core snesmsu1 retroarch snes9x true
+  add_emu_core snesmsu1 retroarch beetle_supafaust false
+  add_es_system snesmsu1
+
+  ### Microsoft MSX
+  add_emu_core msx retroarch bluemsx true
+  add_emu_core msx retroarch fmsx false
+  add_es_system msx
+
+  ### Microsoft MSX 2
+  add_emu_core msx2 retroarch bluemsx true
+  add_emu_core msx2 retroarch fmsx false
+  add_es_system msx2
+
+  ### Sega Naomi
+  add_emu_core naomi retroarch flycast true
+  add_emu_core naomi retroarch flucast2021 false
+  add_emu_core naomi flycast flycast-sa false
+  add_es_system naomi
+
+  ### SNK NeoGeo
+  add_emu_core neogeo retroarch fbneo true
+  add_emu_core neogeo retroarch mame2003_plus false
+  add_emu_core neogeo retroarch fbalpha2012 false
+  add_emu_core neogeo retroarch fbalpha2019 false
+  add_emu_core neogeo retroarch mame2010 false
+  add_emu_core neogeo retroarch mame2015 false
+  add_emu_core neogeo retroarch mame false
+  add_es_system neogeo
+
+  ### SNK NeoCD
+  add_emu_core neocd retroarch neocd true
+  add_emu_core neocd retroarch fbneo false
+  add_es_system neocd
+
+  ### SNK NeoGeo Pocket
+  add_emu_core ngp retroarch beetle_ngp true
+  add_emu_core ngp retroarch race false
+  add_es_system ngp
+
+  ### SNK NeoGeo Pocket Color
+  add_emu_core ngc retroarch beetle_ngp true
+  add_emu_core ngc retroarch race false
+  add_es_system ngc
+
+  ### Nintendo 64
+  add_emu_core n64 retroarch mupen64plus_next true
+  add_emu_core n64 retroarch mupen64plus false
+  add_emu_core n64 retroarch parallel_n64 false
+  add_emu_core n64 mupen64plus-sa m64p_gliden64 false
+  add_emu_core n64 mupen64plus-sa m64p_gl64mk2 false
+  add_emu_core n64 mupen64plus-sa m64p_rice false
+  add_es_system n64
+
+  ### Nintendo DS
+  add_emu_core nds retroarch melonds true
+  add_emu_core nds retroarch desmume false
+  add_emu_core nds melonds melonds-sa false
+  add_es_system nds
 
   ### Create es_systems
   mk_es_systems
