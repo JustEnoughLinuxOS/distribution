@@ -1,0 +1,39 @@
+diff --git a/build.sh b/build.sh
+index 24d073d..356a131 100755
+--- a/build.sh
++++ b/build.sh
+@@ -70,7 +70,7 @@ fi
+ 
+ mkdir -p "${base_dir}/simple64-gui/build"
+ cd "${base_dir}/simple64-gui/build"
+-cmake -G Ninja -DCMAKE_BUILD_TYPE="${RELEASE_TYPE}" ..
++cmake -G Ninja -DPLUGIN_DIR_PATH="/usr/local/lib/mupen64plus" -DCMAKE_BUILD_TYPE="${RELEASE_TYPE}" ..
+ VERBOSE=1 cmake --build .
+ 
+ if [[ ${UNAME} == *"Darwin"* ]]; then
+diff --git a/simple64-gui/CMakeLists.txt b/simple64-gui/CMakeLists.txt
+index a5d3ccb..893d718 100644
+--- a/simple64-gui/CMakeLists.txt
++++ b/simple64-gui/CMakeLists.txt
+@@ -13,7 +13,7 @@ endif()
+ 
+ include_directories(../mupen64plus-core/src/api)
+ 
+-add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x0602ff -DNETPLAY_VER=11)
++add_definitions(-DPLUGIN_DIR_PATH="${PLUGIN_DIR_PATH}" -DQT_DISABLE_DEPRECATED_BEFORE=0x0602ff -DNETPLAY_VER=11)
+ 
+ if (DEFINED ENV{SIMPLE64_AUTOUPDATE})
+     add_definitions(-D_AUTOUPDATE)
+diff --git a/simple64-gui/osal/osal_preproc.h b/simple64-gui/osal/osal_preproc.h
+index 9bde7c1..16e318e 100644
+--- a/simple64-gui/osal/osal_preproc.h
++++ b/simple64-gui/osal/osal_preproc.h
+@@ -59,7 +59,7 @@
+ 
+   #include <limits.h>  // for PATH_MAX
+ 
+-  #define OSAL_DEFAULT_DYNLIB_FILENAME "libmupen64plus.so"
++  #define OSAL_DEFAULT_DYNLIB_FILENAME "/usr/local/lib/libsimple64.so"
+   #define OSAL_DIR_SEPARATOR           '/'
+   #define OSAL_CURRENT_DIR             "./"
+   #define OSAL_DLL_EXTENSION           ".so"

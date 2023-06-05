@@ -16,7 +16,9 @@ FPS=$(get_setting show_fps n64 "${GAME}")
 PAK=$(get_setting controller_pak n64 "${GAME}")
 CON=$(get_setting input_configuration n64 "${GAME}")
 SHARE="/usr/local/share/mupen64plus"
+LIB="/usr/local/lib/mupen64plus"
 M64PCONF="/storage/.config/mupen64plus/mupen64plus.cfg"
+S64INI="/storage/.config/mupen64plus/simple64-gui.ini"
 TMP="/tmp/mupen64plus"
 GAMEDATA="/storage/.config/mupen64plus"
 
@@ -36,6 +38,11 @@ if [[ ! -f "$M64PCONF" ]]; then
 	cp $SHARE/mupen64plus.cfg* $M64PCONF
 fi
 
+if [[ ! -f "$S64INI" ]]; then
+	mkdir -p /storage/.config/mupen64plus
+	cp $SHARE/simple64-gui.ini $S64INI
+fi
+
 rm -rf $TMP
 mkdir -p $TMP
 
@@ -50,6 +57,7 @@ else
 fi
 
 cp $M64PCONF $TMP
+cp $S64INI $TMP
 SET_PARAMS="--set Core[SharedDataPath]=$TMP --set Video-Rice[ResolutionWidth]=$SCREENWIDTH"
 
 #Set the cores to use
@@ -82,6 +90,8 @@ fi
 # Native Res Factor (Upscaling)
 	if [ "{$CORE}" = "m64p_gliden64" ]; then
 		sed -i "/UseNativeResolutionFactor/c\UseNativeResolutionFactor = $IRES" $TMP/mupen64plus.cfg
+	elif [ "{$CORE}" = "simple64" ]; then
+		sed -i "/Upscaling/c\Upscaling = $IRES" $TMP/mupen64plus.cfg
 	fi
 
 
@@ -127,6 +137,9 @@ case $1 in
 	;;
 	"m64p_rice")
 		${EMUPERF} /usr/local/bin/mupen64plus --configdir $TMP --gfx mupen64plus-video-rice $SET_PARAMS "$TMP/$ROM"
+	;;
+	"simple64")
+		${EMUPERF} /usr/local/bin/simple64-gui --nogui --configdir $TMP $SET_PARAMS "$TMP/$ROM"
 	;;
 	*)
 		${EMUPERF} /usr/local/bin/mupen64plus --configdir $TMP --gfx mupen64plus-video-rice $SET_PARAMS "$TMP/$ROM"

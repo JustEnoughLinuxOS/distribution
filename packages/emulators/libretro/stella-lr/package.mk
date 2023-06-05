@@ -47,4 +47,3 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
   cp ${PKG_BUILD}/src/os/libretro/stella_libretro.so ${INSTALL}/usr/lib/libretro/
 }
-

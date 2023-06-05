@@ -4,9 +4,8 @@
 PKG_NAME="emulators"
 PKG_LICENSE="Apache-2.0"
 PKG_SITE="www.jelos.org"
-PKG_SECTION="emulation" # Do not change to virtual or makeinstall_target will not execute.
+PKG_SECTION="virtual"
 PKG_LONGDESC="Emulation metapackage."
-PKG_TOOLCHAIN="manual"
 
 PKG_EMUS="flycast-sa hatarisa hypseus-singe hypseus-singe moonlight openbor pico-8 ppsspp-sa
           vice-sa"
@@ -34,9 +33,9 @@ case "${DEVICE}" in
   AMD64)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="lutris-wine"
     PKG_EMUS+=" cemu-sa citra-sa dolphin-sa duckstation-sa melonds-sa minivmacsa mupen64plus-sa pcsx2-sa       \
-                primehack rpcs3-sa ryujinx-sa scummvmsa xemu-sa yuzu-sa"
+               primehack rpcs3-sa ryujinx-sa scummvmsa xemu-sa yuzu-sa simple64-sa"
     LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr citra-lr desmume-lr dolphin-lr flycast-lr lrps2-lr mame-lr     \
-                      minivmac-lr play-lr"
+                     minivmac-lr play-lr"
   ;;
   RK358*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
@@ -53,7 +52,7 @@ case "${DEVICE}" in
   S922X*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
     PKG_EMUS+=" aethersx2-sa citra-sa dolphin-sa duckstation-sa drastic-sa mupen64plus-sa yabasanshiro-sa     \
-                box64 portmaster"
+               box64 portmaster simple64-sa"
     LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr dolphin-lr flycast-lr"
     PKG_RETROARCH+=" retropie-shaders"
   ;;

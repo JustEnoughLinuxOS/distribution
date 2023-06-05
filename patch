@@ -1,142 +1,2608 @@
-diff --git a/packages/emulators/standalone/simple64-sa/package.mk b/packages/emulators/standalone/simple64-sa/package.mk
-index bdb85156..4f6594d3 100644
---- a/packages/emulators/standalone/simple64-sa/package.mk
-+++ b/packages/emulators/standalone/simple64-sa/package.mk
-@@ -11,10 +11,15 @@ PKG_LONGDESC="Simple64, a N64 Emulator"
- PKG_TOOLCHAIN="manual"
+diff --git a/.gitignore b/.gitignore
+index 1f1c1f63..52e1b831 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -43,8 +43,5 @@
+ .DS_Store
+ .directory
  
- pre_configure_target() {
--  case ${TARGET_ARCH} in
-+  case ${ARCH} in
-     aarch64|arm)
-+      export HOST_CPU=aarch64
-       find . -type f -name CMakeLists.txt -exec sed -i 's/x86-64-v3/armv8-a/g' {} \;
-     ;;
-+    x86_64)
-+      export HOST_CPU=x86_64
-+      PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
-+    ;;
-   esac
+-# es generation files
+-.es_cache/
+-
+ # release images
+ release/
+diff --git a/Makefile b/Makefile
+index b7400090..b211fc64 100644
+--- a/Makefile
++++ b/Makefile
+@@ -23,38 +23,33 @@ distclean:
+ src-pkg:
+ 	tar cvJf sources.tar.xz sources .stamps
+ 
+-esclean:
+-	rm -rf .es_cache*
+-
+ world: AMD64 RK3588 RK3326 RK3566 RK3566-X55 S922X
+ 
+-AMD64: esclean
+-	unset DEVICE_ROOT
++AMD64:
+ 	PROJECT=PC DEVICE=AMD64 ARCH=i686 ./scripts/build_distro
+ 	PROJECT=PC DEVICE=AMD64 ARCH=x86_64 ./scripts/build_distro
+ 
+-RK3588: esclean
+-	unset DEVICE_ROOT
++RK3588:
+ 	PROJECT=Rockchip DEVICE=RK3588 ARCH=arm ./scripts/build_distro
+ 	PROJECT=Rockchip DEVICE=RK3588 ARCH=aarch64 ./scripts/build_distro
+ 
+-S922X: esclean
+-	unset DEVICE_ROOT
+-	PROJECT=Amlogic DEVICE=S922X ARCH=arm ./scripts/build_distro
+-	PROJECT=Amlogic DEVICE=S922X ARCH=aarch64 ./scripts/build_distro
+ 
+-RK3566: esclean
++RK3326:
++	PROJECT=Rockchip DEVICE=RK3326 ARCH=arm ./scripts/build_distro
++	PROJECT=Rockchip DEVICE=RK3326 ARCH=aarch64 ./scripts/build_distro
++
++RK3566:
+ 	DEVICE_ROOT=RK3566 PROJECT=Rockchip DEVICE=RK3566 ARCH=arm ./scripts/build_distro
+ 	DEVICE_ROOT=RK3566 PROJECT=Rockchip DEVICE=RK3566 ARCH=aarch64 ./scripts/build_distro
+ 
+-RK3566-X55: esclean
++RK3566-X55:
+ 	DEVICE_ROOT=RK3566 PROJECT=Rockchip DEVICE=RK3566-X55 ARCH=arm ./scripts/build_distro
+ 	DEVICE_ROOT=RK3566 PROJECT=Rockchip DEVICE=RK3566-X55 ARCH=aarch64 ./scripts/build_distro
+-
+-RK3326: esclean
+ 	unset DEVICE_ROOT
+-	PROJECT=Rockchip DEVICE=RK3326 ARCH=arm ./scripts/build_distro
+-	PROJECT=Rockchip DEVICE=RK3326 ARCH=aarch64 ./scripts/build_distro
++
++S922X:
++	PROJECT=Amlogic DEVICE=S922X ARCH=arm ./scripts/build_distro
++	PROJECT=Amlogic DEVICE=S922X ARCH=aarch64 ./scripts/build_distro
+ 
+ update:
+ 	PROJECT=PC DEVICE=AMD64 ARCH=x86_64 ./scripts/update_packages
+diff --git a/config/emulators/3do.conf b/config/emulators/3do.conf
+deleted file mode 100644
+index 6240c2ea..00000000
+--- a/config/emulators/3do.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="3do"
+-SYSTEM_FULLNAME="3DO"
+-SYSTEM_MANUFACTURER="Panasonic"
+-SYSTEM_RELEASE="1993"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/3do"
+-SYSTEM_EXTENSION=".iso .ISO .bin .BIN .chd .CHD .cue .CUE"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="3do"
+-SYSTEM_THEME="3do"
+diff --git a/config/emulators/3ds.conf b/config/emulators/3ds.conf
+deleted file mode 100644
+index fe921539..00000000
+--- a/config/emulators/3ds.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="3ds"
+-SYSTEM_FULLNAME="3DS"
+-SYSTEM_MANUFACTURER="Nintendo"
+-SYSTEM_RELEASE="2010"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/3ds"
+-SYSTEM_EXTENSION=".3ds .3DS .3dsx .3DSX .elf .ELF .axf .AXF .cci .CCI .cxi .CXI .app .APP"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="3ds"
+-SYSTEM_THEME="3ds"
+diff --git a/config/emulators/amiga.conf b/config/emulators/amiga.conf
+deleted file mode 100644
+index df419bda..00000000
+--- a/config/emulators/amiga.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="amiga"
+-SYSTEM_FULLNAME="Amiga"
+-SYSTEM_MANUFACTURER="Commodore"
+-SYSTEM_RELEASE="1985"
+-SYSTEM_HARDWARE="computer"
+-SYSTEM_PATH="/storage/roms/amiga"
+-SYSTEM_EXTENSION=".zip .ZIP .adf .ADF .uae .UAE .ipf .IPF .dms .DMS .adz .ADZ .lha .LHA .m3u .M3U .hdf .HDF .hdz .HDZ"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="amiga"
+-SYSTEM_THEME="amiga"
+diff --git a/config/emulators/amigacd32.conf b/config/emulators/amigacd32.conf
+deleted file mode 100644
+index 3a09302f..00000000
+--- a/config/emulators/amigacd32.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="amigacd32"
+-SYSTEM_FULLNAME="Amiga CD32"
+-SYSTEM_MANUFACTURER="Commodore"
+-SYSTEM_RELEASE="1994"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/amigacd32"
+-SYSTEM_EXTENSION=".iso .ISO .cue .CUE .lha .LHA .chd .CHD"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="amigacd32"
+-SYSTEM_THEME="amigacd32"
+diff --git a/config/emulators/amstradcpc.conf b/config/emulators/amstradcpc.conf
+deleted file mode 100644
+index 9e1d0410..00000000
+--- a/config/emulators/amstradcpc.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="amstradcpc"
+-SYSTEM_FULLNAME="CPC"
+-SYSTEM_MANUFACTURER="Amstrad"
+-SYSTEM_RELEASE="1984"
+-SYSTEM_HARDWARE="computer"
+-SYSTEM_PATH="/storage/roms/amstradcpc"
+-SYSTEM_EXTENSION=".dsk .DSK .sna .SNA .tap .TAP .cdt .CDT .kcr .KCR .voc .VOC .m3u .M3U .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="amstradcpc"
+-SYSTEM_THEME="amstradcpc"
+diff --git a/config/emulators/arcade.conf b/config/emulators/arcade.conf
+deleted file mode 100644
+index aebabf7c..00000000
+--- a/config/emulators/arcade.conf
++++ /dev/null
+@@ -1,9 +0,0 @@
+-SYSTEM_NAME="arcade"
+-SYSTEM_FULLNAME="Arcade"
+-SYSTEM_MANUFACTURER="Arcade"
+-SYSTEM_HARDWARE="arcade"
+-SYSTEM_PATH="/storage/roms/arcade"
+-SYSTEM_EXTENSION=".zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="arcade"
+-SYSTEM_THEME="arcade"
+diff --git a/config/emulators/atari2600.conf b/config/emulators/atari2600.conf
+deleted file mode 100644
+index bdb2a3e1..00000000
+--- a/config/emulators/atari2600.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="atari2600"
+-SYSTEM_FULLNAME="2600"
+-SYSTEM_MANUFACTURER="Atari"
+-SYSTEM_RELEASE="1977"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/atari2600"
+-SYSTEM_EXTENSION=".a26 .A26 .bin .BIN .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="atari2600"
+-SYSTEM_THEME="atari2600"
+diff --git a/config/emulators/atari5200.conf b/config/emulators/atari5200.conf
+deleted file mode 100644
+index 631c16b9..00000000
+--- a/config/emulators/atari5200.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="atari5200"
+-SYSTEM_FULLNAME="5200"
+-SYSTEM_MANUFACTURER="Atari"
+-SYSTEM_RELEASE="1982"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/atari5200"
+-SYSTEM_EXTENSION=".rom .ROM .xfd .XFD .atr .ATR .atx .ATX .cdm .CDM .cas .CAS .car .CAR .bin .BIN .a52 .A52 .xex .XEX .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="atari5200"
+-SYSTEM_THEME="atari5200"
+diff --git a/config/emulators/atari7800.conf b/config/emulators/atari7800.conf
+deleted file mode 100644
+index 43de0824..00000000
+--- a/config/emulators/atari7800.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="atari7800"
+-SYSTEM_FULLNAME="7800"
+-SYSTEM_MANUFACTURER="Atari"
+-SYSTEM_RELEASE="1986"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/atari7800"
+-SYSTEM_EXTENSION=".a78 .A78 .bin .BIN .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="atari7800"
+-SYSTEM_THEME="atari7800"
+diff --git a/config/emulators/atari800.conf b/config/emulators/atari800.conf
+deleted file mode 100644
+index bace4589..00000000
+--- a/config/emulators/atari800.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="atari800"
+-SYSTEM_FULLNAME="Atari 800"
+-SYSTEM_MANUFACTURER="Atari"
+-SYSTEM_RELEASE="1979"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/atari800"
+-SYSTEM_EXTENSION=".rom .ROM .xfd .XFD .atr .ATR .atx .ATX .cdm .CDM .cas .CAS .car .CAR .bin .BIN .a52 .A52 .xex .XEX .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="atari800"
+-SYSTEM_THEME="atari800"
+diff --git a/config/emulators/atarijaguar.conf b/config/emulators/atarijaguar.conf
+deleted file mode 100644
+index ba1bd919..00000000
+--- a/config/emulators/atarijaguar.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="atarijaguar"
+-SYSTEM_FULLNAME="Jaguar"
+-SYSTEM_MANUFACTURER="Atari"
+-SYSTEM_RELEASE="1993"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/atarijaguar"
+-SYSTEM_EXTENSION=".j64 .J64 .jag .JAG .rom .ROM .abs .ABS .cof .COF .bin .BIN .prg .PRG"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="atarijaguar"
+-SYSTEM_THEME="atarijaguar"
+diff --git a/config/emulators/atarilynx.conf b/config/emulators/atarilynx.conf
+deleted file mode 100644
+index a8a6759d..00000000
+--- a/config/emulators/atarilynx.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="atarilynx"
+-SYSTEM_FULLNAME="Lynx"
+-SYSTEM_MANUFACTURER="Atari"
+-SYSTEM_RELEASE="1989"
+-SYSTEM_HARDWARE="portable"
+-SYSTEM_PATH="/storage/roms/atarilynx"
+-SYSTEM_EXTENSION=".lnx .LNX .o .O .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="atarilynx"
+-SYSTEM_THEME="atarilynx"
+diff --git a/config/emulators/atarist.conf b/config/emulators/atarist.conf
+deleted file mode 100644
+index 8c674775..00000000
+--- a/config/emulators/atarist.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="atarist"
+-SYSTEM_FULLNAME="Atari ST"
+-SYSTEM_MANUFACTURER="Atari"
+-SYSTEM_RELEASE="1985"
+-SYSTEM_HARDWARE="computer"
+-SYSTEM_PATH="/storage/roms/atarist"
+-SYSTEM_EXTENSION=".st .ST .msa .MSA .stx .STX .dim .DIM .ipf .IPF .m3u .M3U .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="atarist"
+-SYSTEM_THEME="atarist"
+diff --git a/config/emulators/atomiswave.conf b/config/emulators/atomiswave.conf
+deleted file mode 100644
+index 10d6c80d..00000000
+--- a/config/emulators/atomiswave.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="atomiswave"
+-SYSTEM_FULLNAME="Atomiswave"
+-SYSTEM_MANUFACTURER="Sammy"
+-SYSTEM_RELEASE="2003"
+-SYSTEM_HARDWARE="arcade"
+-SYSTEM_PATH="/storage/roms/atomiswave"
+-SYSTEM_EXTENSION=".lst .LST .bin .BIN .dat .DAT .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="atomiswave arcade"
+-SYSTEM_THEME="atomiswave"
+diff --git a/config/emulators/c128.conf b/config/emulators/c128.conf
+deleted file mode 100644
+index c5a4d0a6..00000000
+--- a/config/emulators/c128.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="c128"
+-SYSTEM_FULLNAME="C128"
+-SYSTEM_MANUFACTURER="Commodore"
+-SYSTEM_RELEASE="1985"
+-SYSTEM_HARDWARE="computer"
+-SYSTEM_PATH="/storage/roms/c128"
+-SYSTEM_EXTENSION=".d64 .D64 .d71 .D71 .d80 .D80 .d81 .D81 .d82 .D82 .g64 .G64 .g41 .G41 .x64 .X64 .t64 .T64 .tap .TAP .prg .PRG .p00 .P00 .crt .CRT .bin .BIN .d6z .D6Z .d7z .D7Z .d8z .D8Z .g6z .G6Z .g4z .G4Z .x6z .X6Z .cmd .CMD .m3u .M3U .vsf .VSF .nib .NIB .nbz .NBZ .zip .ZIP"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="c128"
+-SYSTEM_THEME="c128"
+diff --git a/config/emulators/c16.conf b/config/emulators/c16.conf
+deleted file mode 100644
+index 7e9641a4..00000000
+--- a/config/emulators/c16.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="c16"
+-SYSTEM_FULLNAME="C16"
+-SYSTEM_MANUFACTURER="Commodore"
+-SYSTEM_RELEASE="1984"
+-SYSTEM_HARDWARE="computer"
+-SYSTEM_PATH="/storage/roms/c16"
+-SYSTEM_EXTENSION=".d64 .D64 .d71 .D71 .d80 .D80 .d81 .D81 .d82 .D82 .g64 .G64 .g41 .G41 .x64 .X64 .t64 .T64 .tap .TAP .prg .PRG .p00 .P00 .crt .CRT .bin .BIN .d6z .D6Z .d7z .D7Z .d8z .D8Z .g6z .G6Z .g4z .G4Z .x6z .X6Z .cmd .CMD .m3u .M3U .vsf .VSF .nib .NIB .nbz .NBZ .zip .ZIP"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="c16"
+-SYSTEM_THEME="c16"
+diff --git a/config/emulators/c64.conf b/config/emulators/c64.conf
+deleted file mode 100644
+index f6182e0a..00000000
+--- a/config/emulators/c64.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="c64"
+-SYSTEM_FULLNAME="C64"
+-SYSTEM_MANUFACTURER="Commodore"
+-SYSTEM_RELEASE="1982"
+-SYSTEM_HARDWARE="computer"
+-SYSTEM_PATH="/storage/roms/c64"
+-SYSTEM_EXTENSION=".d64 .D64 .d71 .D71 .d80 .D80 .d81 .D81 .d82 .D82 .g64 .G64 .g41 .G41 .x64 .X64 .t64 .T64 .tap .TAP .prg .PRG .p00 .P00 .crt .CRT .bin .BIN .d6z .D6Z .d7z .D7Z .d8z .D8Z .g6z .G6Z .g4z .G4Z .x6z .X6Z .cmd .CMD .m3u .M3U .vsf .VSF .nib .NIB .nbz .NBZ .zip .ZIP"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="c64"
+-SYSTEM_THEME="c64"
+diff --git a/config/emulators/channelf.conf b/config/emulators/channelf.conf
+deleted file mode 100644
+index d233504e..00000000
+--- a/config/emulators/channelf.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="channelf"
+-SYSTEM_FULLNAME="Channel F"
+-SYSTEM_MANUFACTURER="Fairchild"
+-SYSTEM_RELEASE="1976"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/channelf"
+-SYSTEM_EXTENSION=".bin .BIN .chf .CHF .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="channelf"
+-SYSTEM_THEME="channelf"
+diff --git a/config/emulators/colecovision.conf b/config/emulators/colecovision.conf
+deleted file mode 100644
+index c332e6c9..00000000
+--- a/config/emulators/colecovision.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="colecovision"
+-SYSTEM_FULLNAME="ColecoVision"
+-SYSTEM_MANUFACTURER="Coleco"
+-SYSTEM_RELEASE="1982"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/coleco"
+-SYSTEM_EXTENSION=".bin .BIN .col .COL .rom .ROM .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="colecovision"
+-SYSTEM_THEME="colecovision"
+diff --git a/config/emulators/cps1.conf b/config/emulators/cps1.conf
+deleted file mode 100644
+index 41caa561..00000000
+--- a/config/emulators/cps1.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="cps1"
+-SYSTEM_FULLNAME="PlaySystem 1"
+-SYSTEM_MANUFACTURER="Capcom"
+-SYSTEM_RELEASE="1988"
+-SYSTEM_HARDWARE="arcade"
+-SYSTEM_PATH="/storage/roms/cps1"
+-SYSTEM_EXTENSION=".zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="arcade"
+-SYSTEM_THEME="cps1"
+diff --git a/config/emulators/cps2.conf b/config/emulators/cps2.conf
+deleted file mode 100644
+index 1191b5a9..00000000
+--- a/config/emulators/cps2.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="cps2"
+-SYSTEM_FULLNAME="PlaySystem 2"
+-SYSTEM_MANUFACTURER="Capcom"
+-SYSTEM_RELEASE="1993"
+-SYSTEM_HARDWARE="arcade"
+-SYSTEM_PATH="/storage/roms/cps2"
+-SYSTEM_EXTENSION=".zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="arcade"
+-SYSTEM_THEME="cps2"
+diff --git a/config/emulators/cps3.conf b/config/emulators/cps3.conf
+deleted file mode 100644
+index 413a93cf..00000000
+--- a/config/emulators/cps3.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="cps3"
+-SYSTEM_FULLNAME="PlaySystem 3"
+-SYSTEM_MANUFACTURER="Capcom"
+-SYSTEM_RELEASE="1996"
+-SYSTEM_HARDWARE="arcade"
+-SYSTEM_PATH="/storage/roms/cps3"
+-SYSTEM_EXTENSION=".zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="arcade"
+-SYSTEM_THEME="cps3"
+diff --git a/config/emulators/daphne.conf b/config/emulators/daphne.conf
+deleted file mode 100644
+index d61e77b9..00000000
+--- a/config/emulators/daphne.conf
++++ /dev/null
+@@ -1,9 +0,0 @@
+-SYSTEM_NAME="daphne"
+-SYSTEM_FULLNAME="Daphne"
+-SYSTEM_MANUFACTURER="Arcade"
+-SYSTEM_HARDWARE="arcade"
+-SYSTEM_PATH="/storage/roms/daphne"
+-SYSTEM_EXTENSION=".daphne .DAPHNE .zip .ZIP"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="daphne arcade"
+-SYSTEM_THEME="daphne"
+diff --git a/config/emulators/dreamcast.conf b/config/emulators/dreamcast.conf
+deleted file mode 100644
+index 9214dc13..00000000
+--- a/config/emulators/dreamcast.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="dreamcast"
+-SYSTEM_FULLNAME="Dreamcast"
+-SYSTEM_MANUFACTURER="Sega"
+-SYSTEM_RELEASE="1998"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/dreamcast"
+-SYSTEM_EXTENSION=".cdi .CDI .gdi .GDI .chd .CHD .m3u .M3U"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="dreamcast"
+-SYSTEM_THEME="dreamcast"
+diff --git a/config/emulators/easyrpg.conf b/config/emulators/easyrpg.conf
+deleted file mode 100644
+index 9c974b48..00000000
+--- a/config/emulators/easyrpg.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="easyrpg"
+-SYSTEM_FULLNAME="EasyRPG"
+-SYSTEM_MANUFACTURER="Various"
+-SYSTEM_RELEASE="2003"
+-SYSTEM_HARDWARE="game engine"
+-SYSTEM_PATH="/storage/roms/easyrpg"
+-SYSTEM_EXTENSION=".zip .ZIP .easyrpg .EASYRPG .ldb .LDB"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="easyrpg"
+-SYSTEM_THEME="easyrpg"
+diff --git a/config/emulators/famicom.conf b/config/emulators/famicom.conf
+deleted file mode 100644
+index 3c401477..00000000
+--- a/config/emulators/famicom.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="famicom"
+-SYSTEM_FULLNAME="Famicom"
+-SYSTEM_MANUFACTURER="Nintendo"
+-SYSTEM_RELEASE="1983"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/famicom"
+-SYSTEM_EXTENSION=".nes .NES .unif .UNIF .unf .UNF .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="nes"
+-SYSTEM_THEME="famicom"
+diff --git a/config/emulators/fbn.conf b/config/emulators/fbn.conf
+deleted file mode 100644
+index f42d250a..00000000
+--- a/config/emulators/fbn.conf
++++ /dev/null
+@@ -1,9 +0,0 @@
+-SYSTEM_NAME="fbn"
+-SYSTEM_FULLNAME="Final Burn Neo"
+-SYSTEM_MANUFACTURER="Arcade"
+-SYSTEM_HARDWARE="arcade"
+-SYSTEM_PATH="/storage/roms/fbneo"
+-SYSTEM_EXTENSION=".7z .zip .7Z .ZIP"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="arcade"
+-SYSTEM_THEME="fbn"
+diff --git a/config/emulators/fds.conf b/config/emulators/fds.conf
+deleted file mode 100644
+index a00c0a8f..00000000
+--- a/config/emulators/fds.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="fds"
+-SYSTEM_FULLNAME="Famicom Disk System"
+-SYSTEM_MANUFACTURER="Nintendo"
+-SYSTEM_RELEASE="1986"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/fds"
+-SYSTEM_EXTENSION=".fds .FDS .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="fds"
+-SYSTEM_THEME="fds"
+diff --git a/config/emulators/gameandwatch.conf b/config/emulators/gameandwatch.conf
+deleted file mode 100644
+index d3a2f9e7..00000000
+--- a/config/emulators/gameandwatch.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="gameandwatch"
+-SYSTEM_FULLNAME="Game and Watch"
+-SYSTEM_MANUFACTURER="Nintendo"
+-SYSTEM_RELEASE="1980"
+-SYSTEM_HARDWARE="portable"
+-SYSTEM_PATH="/storage/roms/gameandwatch"
+-SYSTEM_EXTENSION=".mgw .MGW .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="gameandwatch"
+-SYSTEM_THEME="gameandwatch"
+diff --git a/config/emulators/gamecube.conf b/config/emulators/gamecube.conf
+deleted file mode 100644
+index 76dcbf9a..00000000
+--- a/config/emulators/gamecube.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="gamecube"
+-SYSTEM_MANUFACTURER="Nintendo"
+-SYSTEM_RELEASE="2001"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/gamecube"
+-SYSTEM_EXTENSION=".gcm .GCM .iso .ISO .gcz .GCZ .ciso .CISO .wbfs .WBFS .rvz .RVZ .dol .DOL"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="gc"
+-SYSTEM_THEME="gc"
+-SYSTEM_FULLNAME="Wii"
+diff --git a/config/emulators/gamegear.conf b/config/emulators/gamegear.conf
+deleted file mode 100644
+index 74f7a07a..00000000
+--- a/config/emulators/gamegear.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="gamegear"
+-SYSTEM_FULLNAME="Game Gear"
+-SYSTEM_MANUFACTURER="Sega"
+-SYSTEM_RELEASE="1990"
+-SYSTEM_HARDWARE="portable"
+-SYSTEM_PATH="/storage/roms/gamegear"
+-SYSTEM_EXTENSION=".bin .BIN .gg .GG .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="gamegear"
+-SYSTEM_THEME="gamegear"
+diff --git a/config/emulators/gb.conf b/config/emulators/gb.conf
+deleted file mode 100644
+index b9f64331..00000000
+--- a/config/emulators/gb.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="gb"
+-SYSTEM_FULLNAME="Game Boy"
+-SYSTEM_MANUFACTURER="Nintendo"
+-SYSTEM_RELEASE="1989"
+-SYSTEM_HARDWARE="portable"
+-SYSTEM_PATH="/storage/roms/gb"
+-SYSTEM_EXTENSION=".gb .GB .gbc .GBC .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="gb"
+-SYSTEM_THEME="gb"
+diff --git a/config/emulators/gba.conf b/config/emulators/gba.conf
+deleted file mode 100644
+index efd7aeaf..00000000
+--- a/config/emulators/gba.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="gba"
+-SYSTEM_FULLNAME="Game Boy Advance"
+-SYSTEM_MANUFACTURER="Nintendo"
+-SYSTEM_RELEASE="2001"
+-SYSTEM_HARDWARE="portable"
+-SYSTEM_PATH="/storage/roms/gba"
+-SYSTEM_EXTENSION=".gba .GBA .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="gba"
+-SYSTEM_THEME="gba"
+diff --git a/config/emulators/gbah.conf b/config/emulators/gbah.conf
+deleted file mode 100644
+index 1ce8d35d..00000000
+--- a/config/emulators/gbah.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="gbah"
+-SYSTEM_FULLNAME="Game Boy Advance (Hacks)"
+-SYSTEM_MANUFACTURER="Nintendo"
+-SYSTEM_RELEASE="2001"
+-SYSTEM_HARDWARE="portable"
+-SYSTEM_PATH="/storage/roms/gbah"
+-SYSTEM_EXTENSION=".gba .GBA .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="gba"
+-SYSTEM_THEME="gbah"
+diff --git a/config/emulators/gbc.conf b/config/emulators/gbc.conf
+deleted file mode 100644
+index f0353765..00000000
+--- a/config/emulators/gbc.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="gbc"
+-SYSTEM_FULLNAME="Game Boy Color"
+-SYSTEM_MANUFACTURER="Nintendo"
+-SYSTEM_RELEASE="1998"
+-SYSTEM_HARDWARE="portable"
+-SYSTEM_PATH="/storage/roms/gbc"
+-SYSTEM_EXTENSION=".gb .GB .gbc .GBC .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="gbc"
+-SYSTEM_THEME="gbc"
+diff --git a/config/emulators/gbch.conf b/config/emulators/gbch.conf
+deleted file mode 100644
+index d9a75635..00000000
+--- a/config/emulators/gbch.conf
++++ /dev/null
+@@ -1,11 +0,0 @@
+-SYSTEM_NAME="gbch"
+-SYSTEM_FULLNAME="Game Boy Color (Hacks)"
+-SYSTEM_MANUFACTURER="Nintendo"
+-SYSTEM_RELEASE="1998"
+-SYSTEM_HARDWARE="portable"
+-SYSTEM_PATH="/storage/roms/gbch"
+-SYSTEM_EXTENSION=".gb .GB .gbc .GBC .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="gbc"
+-SYSTEM_THEME="gbch"
+-SYSTEM_FULLNAME="GameCube"
+diff --git a/config/emulators/gbh.conf b/config/emulators/gbh.conf
+deleted file mode 100644
+index 3ca8b7fa..00000000
+--- a/config/emulators/gbh.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="gbh"
+-SYSTEM_FULLNAME="Game Boy (Hacks)"
+-SYSTEM_MANUFACTURER="Nintendo"
+-SYSTEM_RELEASE="1989"
+-SYSTEM_HARDWARE="portable"
+-SYSTEM_PATH="/storage/roms/gbh"
+-SYSTEM_EXTENSION=".gb .GB .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="gb"
+-SYSTEM_THEME="gbh"
+diff --git a/config/emulators/genesis.conf b/config/emulators/genesis.conf
+deleted file mode 100644
+index d3095309..00000000
+--- a/config/emulators/genesis.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="genesis"
+-SYSTEM_FULLNAME="Genesis"
+-SYSTEM_MANUFACTURER="Sega"
+-SYSTEM_RELEASE="1989"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/genesis"
+-SYSTEM_EXTENSION=".bin .BIN .gen .GEN .md .MD .sg .SG .smd .SMD .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="genesis"
+-SYSTEM_THEME="genesis"
+diff --git a/config/emulators/genh.conf b/config/emulators/genh.conf
+deleted file mode 100644
+index d934fbd1..00000000
+--- a/config/emulators/genh.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="genh"
+-SYSTEM_FULLNAME="Genesis (Hacks)"
+-SYSTEM_MANUFACTURER="Sega"
+-SYSTEM_RELEASE="1989"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/genh"
+-SYSTEM_EXTENSION=".bin .BIN .gen .GEN .md .MD .sg .SG .smd .SMD .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="genesis"
+-SYSTEM_THEME="genh"
+diff --git a/config/emulators/ggh.conf b/config/emulators/ggh.conf
+deleted file mode 100644
+index 191b5e52..00000000
+--- a/config/emulators/ggh.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="ggh"
+-SYSTEM_FULLNAME="Game Gear (Hacks)"
+-SYSTEM_MANUFACTURER="Sega"
+-SYSTEM_RELEASE="1990"
+-SYSTEM_HARDWARE="portable"
+-SYSTEM_PATH="/storage/roms/gamegearh"
+-SYSTEM_EXTENSION=".bin .BIN .gg .GG .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="gamegear"
+-SYSTEM_THEME="ggh"
+diff --git a/config/emulators/imageviewer.conf b/config/emulators/imageviewer.conf
+deleted file mode 100644
+index d46c1373..00000000
+--- a/config/emulators/imageviewer.conf
++++ /dev/null
+@@ -1,9 +0,0 @@
+-SYSTEM_NAME="imageviewer"
+-SYSTEM_MANUFACTURER="Various"
+-SYSTEM_RELEASE="unknown"
+-SYSTEM_HARDWARE="system"
+-SYSTEM_PATH="/roms/screenshots"
+-SYSTEM_EXTENSION=".jpg .jpeg .png .bmp .psd .tga .gif .hdr .pic .ppm .pgm .mkv .pdf .mp4 .avi"
+-SYSTEM_COMMAND="/usr/bin/true"
+-SYSTEM_PLATFORM="imageviewer"
+-SYSTEM_THEME="imageviewer"
+diff --git a/config/emulators/intellivision.conf b/config/emulators/intellivision.conf
+deleted file mode 100644
+index bbb86ef4..00000000
+--- a/config/emulators/intellivision.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="intellivision"
+-SYSTEM_FULLNAME="Intellivision"
+-SYSTEM_MANUFACTURER="Mattel"
+-SYSTEM_RELEASE="1979"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/intellivision"
+-SYSTEM_EXTENSION=".int .INT .bin .BIN .rom .ROM .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="intellivision"
+-SYSTEM_THEME="intellivision"
+diff --git a/config/emulators/j2me.conf b/config/emulators/j2me.conf
+deleted file mode 100644
+index f3d3e97f..00000000
+--- a/config/emulators/j2me.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="j2me"
+-SYSTEM_FULLNAME="J2ME"
+-SYSTEM_MANUFACTURER="Sun Microsystems"
+-SYSTEM_RELEASE="2002"
+-SYSTEM_HARDWARE="portable"
+-SYSTEM_PATH="/storage/roms/j2me"
+-SYSTEM_EXTENSION=".jar .JAR"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="j2me"
+-SYSTEM_THEME="j2me"
+diff --git a/config/emulators/mame.conf b/config/emulators/mame.conf
+deleted file mode 100644
+index deaffb2c..00000000
+--- a/config/emulators/mame.conf
++++ /dev/null
+@@ -1,9 +0,0 @@
+-SYSTEM_NAME="mame"
+-SYSTEM_FULLNAME="MAME"
+-SYSTEM_MANUFACTURER="Arcade"
+-SYSTEM_HARDWARE="arcade"
+-SYSTEM_PATH="/storage/roms/mame"
+-SYSTEM_EXTENSION=".7z .7Z .zip .ZIP"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="arcade"
+-SYSTEM_THEME="mame"
+diff --git a/config/emulators/mastersystem.conf b/config/emulators/mastersystem.conf
+deleted file mode 100644
+index 44983235..00000000
+--- a/config/emulators/mastersystem.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="mastersystem"
+-SYSTEM_FULLNAME="Master System"
+-SYSTEM_MANUFACTURER="Sega"
+-SYSTEM_RELEASE="1985"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/mastersystem"
+-SYSTEM_EXTENSION=".bin .BIN .sms .SMS .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="mastersystem"
+-SYSTEM_THEME="mastersystem"
+diff --git a/config/emulators/megacd.conf b/config/emulators/megacd.conf
+deleted file mode 100644
+index db5f0165..00000000
+--- a/config/emulators/megacd.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="megacd"
+-SYSTEM_FULLNAME="Mega-CD"
+-SYSTEM_MANUFACTURER="Sega"
+-SYSTEM_RELEASE="1991"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/megacd"
+-SYSTEM_EXTENSION=".chd .CHD .cue .CUE .iso .ISO .m3u .M3U"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="segacd"
+-SYSTEM_THEME="megacd"
+diff --git a/config/emulators/megadrive-japan.conf b/config/emulators/megadrive-japan.conf
+deleted file mode 100644
+index b85bef07..00000000
+--- a/config/emulators/megadrive-japan.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="megadrive-japan"
+-SYSTEM_FULLNAME="Mega Drive"
+-SYSTEM_MANUFACTURER="Sega"
+-SYSTEM_RELEASE="1988"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/megadrive-japan"
+-SYSTEM_EXTENSION=".bin .BIN .gen .GEN .md .MD .sg .SG .smd .SMD .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="megadrive"
+-SYSTEM_THEME="megadrive-japan"
+diff --git a/config/emulators/megadrive.conf b/config/emulators/megadrive.conf
+deleted file mode 100644
+index 1adce0e7..00000000
+--- a/config/emulators/megadrive.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="megadrive"
+-SYSTEM_FULLNAME="Mega Drive"
+-SYSTEM_MANUFACTURER="Sega"
+-SYSTEM_RELEASE="1990"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/megadrive"
+-SYSTEM_EXTENSION=".bin .BIN .gen .GEN .md .MD .sg .SG .smd .SMD .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="megadrive"
+-SYSTEM_THEME="megadrive"
+diff --git a/config/emulators/megaduck.conf b/config/emulators/megaduck.conf
+deleted file mode 100644
+index a9fcd17b..00000000
+--- a/config/emulators/megaduck.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="megaduck"
+-SYSTEM_FULLNAME="Mega Duck"
+-SYSTEM_MANUFACTURER="Welback Holdings"
+-SYSTEM_RELEASE="1993"
+-SYSTEM_HARDWARE="portable"
+-SYSTEM_PATH="/storage/roms/megaduck"
+-SYSTEM_EXTENSION=".bin .BIN .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="megaduck"
+-SYSTEM_THEME="megaduck"
+diff --git a/config/emulators/moonlight.conf b/config/emulators/moonlight.conf
+deleted file mode 100644
+index ad2c47e7..00000000
+--- a/config/emulators/moonlight.conf
++++ /dev/null
+@@ -1,7 +0,0 @@
+-SYSTEM_NAME="moonlight"
+-SYSTEM_FULLNAME="Moonlight Game Streaming"
+-SYSTEM_PATH="/storage/roms/moonlight/"
+-SYSTEM_EXTENSION=".sh .SH"
+-SYSTEM_COMMAND="%ROM%"
+-SYSTEM_PLATFORM="moonlight"
+-SYSTEM_THEME="moonlight"
+diff --git a/config/emulators/mplayer.conf b/config/emulators/mplayer.conf
+deleted file mode 100644
+index 7feacc96..00000000
+--- a/config/emulators/mplayer.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="mplayer"
+-SYSTEM_FULLNAME="MPlayer"
+-SYSTEM_MANUFACTURER="Various"
+-SYSTEM_RELEASE="unknown"
+-SYSTEM_HARDWARE="system"
+-SYSTEM_PATH="/storage/roms/mplayer"
+-SYSTEM_EXTENSION=".mp4 .MP4 .mkv .MKV .avi .AVI .mov .MOV .wmv .WMV .m3u .M3U .mpg .MPG .ytb .YTB .twi .TWI .sh .SH .mp3 .MP3 .aac .AAC .mka .MKA .dts .DTS .flac .FLAC .ogg .OGG .m4a .M4A .ac3 .AC3 .opus .OPUS .wav .WAV .wv .WV .eac3 .EAC3 .thd .THD"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="mplayer"
+-SYSTEM_THEME="mplayer"
+diff --git a/config/emulators/msx.conf b/config/emulators/msx.conf
+deleted file mode 100644
+index e3b3b262..00000000
+--- a/config/emulators/msx.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="msx"
+-SYSTEM_FULLNAME="MSX"
+-SYSTEM_MANUFACTURER="Microsoft"
+-SYSTEM_RELEASE="1983"
+-SYSTEM_HARDWARE="computer"
+-SYSTEM_PATH="/storage/roms/msx"
+-SYSTEM_EXTENSION=".dsk .DSK .mx1 .MX1 .mx2 .MX2 .rom .ROM .zip .ZIP .7z .7Z .M3U .m3u"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="msx"
+-SYSTEM_THEME="msx"
+diff --git a/config/emulators/n64.conf b/config/emulators/n64.conf
+deleted file mode 100644
+index 7e5b2e87..00000000
+--- a/config/emulators/n64.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="n64"
+-SYSTEM_FULLNAME="N64"
+-SYSTEM_MANUFACTURER="Nintendo"
+-SYSTEM_RELEASE="1996"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/n64"
+-SYSTEM_EXTENSION=".z64 .Z64 .n64 .N64 .v64 .V64 .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="n64"
+-SYSTEM_THEME="n64"
+diff --git a/config/emulators/naomi.conf b/config/emulators/naomi.conf
+deleted file mode 100644
+index 4a30f41c..00000000
+--- a/config/emulators/naomi.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="naomi"
+-SYSTEM_FULLNAME="Naomi"
+-SYSTEM_MANUFACTURER="Sega"
+-SYSTEM_RELEASE="1998"
+-SYSTEM_HARDWARE="arcade"
+-SYSTEM_PATH="/storage/roms/naomi"
+-SYSTEM_EXTENSION=".lst .LST .bin .BIN .dat .DAT .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="naomi arcade"
+-SYSTEM_THEME="naomi"
+diff --git a/config/emulators/nds.conf b/config/emulators/nds.conf
+deleted file mode 100644
+index 7bd2ed41..00000000
+--- a/config/emulators/nds.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="nds"
+-SYSTEM_FULLNAME="DS"
+-SYSTEM_PATH="/storage/roms/nds"
+-SYSTEM_MANUFACTURER="Nintendo"
+-SYSTEM_RELEASE="2005"
+-SYSTEM_HARDWARE="portable"
+-SYSTEM_EXTENSION=".nds .zip .NDS .ZIP .7z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="nds"
+-SYSTEM_THEME="nds"
+diff --git a/config/emulators/neocd.conf b/config/emulators/neocd.conf
+deleted file mode 100644
+index 30beb548..00000000
+--- a/config/emulators/neocd.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="neocd"
+-SYSTEM_FULLNAME="Neo Geo CD"
+-SYSTEM_MANUFACTURER="SNK"
+-SYSTEM_RELEASE="1990"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/neocd"
+-SYSTEM_EXTENSION=".cue .CUE .iso .ISO .chd .CHD"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="neogeocd"
+-SYSTEM_THEME="neogeocd"
+diff --git a/config/emulators/neogeo.conf b/config/emulators/neogeo.conf
+deleted file mode 100644
+index e3e956ee..00000000
+--- a/config/emulators/neogeo.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="neogeo"
+-SYSTEM_FULLNAME="Neo Geo"
+-SYSTEM_MANUFACTURER="SNK"
+-SYSTEM_RELEASE="1990"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/neogeo"
+-SYSTEM_EXTENSION=".7z .7Z .zip .ZIP"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="neogeo"
+-SYSTEM_THEME="neogeo"
+diff --git a/config/emulators/nes.conf b/config/emulators/nes.conf
+deleted file mode 100644
+index 1f11fd40..00000000
+--- a/config/emulators/nes.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="nes"
+-SYSTEM_FULLNAME="NES"
+-SYSTEM_MANUFACTURER="Nintendo"
+-SYSTEM_RELEASE="1985"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/nes"
+-SYSTEM_EXTENSION=".nes .NES .unif .UNIF .unf .UNF .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="nes"
+-SYSTEM_THEME="nes"
+diff --git a/config/emulators/nesh.conf b/config/emulators/nesh.conf
+deleted file mode 100644
+index 766d8244..00000000
+--- a/config/emulators/nesh.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="nesh"
+-SYSTEM_FULLNAME="NES (Hacks)"
+-SYSTEM_MANUFACTURER="Nintendo"
+-SYSTEM_RELEASE="1985"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/nesh"
+-SYSTEM_EXTENSION=".nes .NES .unif .UNIF .unf .UNF .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="nes"
+-SYSTEM_THEME="nesh"
+diff --git a/config/emulators/ngp.conf b/config/emulators/ngp.conf
+deleted file mode 100644
+index 78092e6e..00000000
+--- a/config/emulators/ngp.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="ngp"
+-SYSTEM_FULLNAME="Neo Geo Pocket"
+-SYSTEM_MANUFACTURER="SNK"
+-SYSTEM_RELEASE="1998"
+-SYSTEM_HARDWARE="portable"
+-SYSTEM_PATH="/storage/roms/ngp"
+-SYSTEM_EXTENSION=".ngc .NGC .ngp .NGP .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="ngp"
+-SYSTEM_THEME="ngp"
+diff --git a/config/emulators/ngpc.conf b/config/emulators/ngpc.conf
+deleted file mode 100644
+index 2cfa1821..00000000
+--- a/config/emulators/ngpc.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="ngpc"
+-SYSTEM_FULLNAME="Neo Geo Pocket Color"
+-SYSTEM_MANUFACTURER="SNK"
+-SYSTEM_RELEASE="1999"
+-SYSTEM_HARDWARE="portable"
+-SYSTEM_PATH="/storage/roms/ngpc"
+-SYSTEM_EXTENSION=".ngc .NGC .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="ngpc"
+-SYSTEM_THEME="ngpc"
+diff --git a/config/emulators/odyssey2.conf b/config/emulators/odyssey2.conf
+deleted file mode 100644
+index 0da6ddef..00000000
+--- a/config/emulators/odyssey2.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="odyssey2"
+-SYSTEM_FULLNAME="Odyssey"
+-SYSTEM_MANUFACTURER="Magnavox"
+-SYSTEM_RELEASE="1979"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/odyssey"
+-SYSTEM_EXTENSION=".bin .BIN .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="odyssey2"
+-SYSTEM_THEME="odyssey2"
+diff --git a/config/emulators/openbor.conf b/config/emulators/openbor.conf
+deleted file mode 100644
+index 880b5df3..00000000
+--- a/config/emulators/openbor.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="openbor"
+-SYSTEM_FULLNAME="OpenBOR"
+-SYSTEM_MANUFACTURER="Various"
+-SYSTEM_RELEASE="2008"
+-SYSTEM_HARDWARE="game engine"
+-SYSTEM_PATH="/storage/roms/openbor"
+-SYSTEM_EXTENSION=".pak .PAK"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="openbor"
+-SYSTEM_THEME="openbor"
+diff --git a/config/emulators/pc-8800.conf b/config/emulators/pc-8800.conf
+deleted file mode 100644
+index e7d28274..00000000
+--- a/config/emulators/pc-8800.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="pc-8800"
+-SYSTEM_FULLNAME="PC-8800"
+-SYSTEM_MANUFACTURER="NEC"
+-SYSTEM_RELEASE="1981"
+-SYSTEM_HARDWARE="computer"
+-SYSTEM_PATH="/storage/roms/pc88"
+-SYSTEM_EXTENSION=".d88 .D88 .m3u .M3U"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="pc88"
+-SYSTEM_THEME="pc88"
+diff --git a/config/emulators/pc-9800.conf b/config/emulators/pc-9800.conf
+deleted file mode 100644
+index 61f52c08..00000000
+--- a/config/emulators/pc-9800.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="pc-9800"
+-SYSTEM_FULLNAME="PC-9800"
+-SYSTEM_MANUFACTURER="NEC"
+-SYSTEM_RELEASE="1983"
+-SYSTEM_HARDWARE="computer"
+-SYSTEM_PATH="/storage/roms/pc98"
+-SYSTEM_EXTENSION=".d98 .zip .98d .fdi .fdd .2hd .tfd .d88 .88d .hdm .xdf .dup .hdi .thd .nhd .hdd .hdn"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="pc98"
+-SYSTEM_THEME="pc98"
+diff --git a/config/emulators/pc.conf b/config/emulators/pc.conf
+deleted file mode 100644
+index 3c2c9234..00000000
+--- a/config/emulators/pc.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="pc"
+-SYSTEM_FULLNAME="MS-DOS"
+-SYSTEM_MANUFACTURER="Microsoft"
+-SYSTEM_RELEASE="1981"
+-SYSTEM_HARDWARE="computer"
+-SYSTEM_PATH="/storage/roms/pc"
+-SYSTEM_EXTENSION=".com .COM .bat .BAT .exe .EXE .dosz .DOSZ"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="pc"
+-SYSTEM_THEME="pc"
+diff --git a/config/emulators/pcengine.conf b/config/emulators/pcengine.conf
+deleted file mode 100644
+index 77d749af..00000000
+--- a/config/emulators/pcengine.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="pcengine"
+-SYSTEM_FULLNAME="PC Engine"
+-SYSTEM_MANUFACTURER="NEC"
+-SYSTEM_RELEASE="1987"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/pcengine"
+-SYSTEM_EXTENSION=".pce .PCE .bin .BIN .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="pcengine"
+-SYSTEM_THEME="pcengine"
+diff --git a/config/emulators/pcenginecd.conf b/config/emulators/pcenginecd.conf
+deleted file mode 100644
+index 8c0ee7a9..00000000
+--- a/config/emulators/pcenginecd.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="pcenginecd"
+-SYSTEM_FULLNAME="PC Engine CD"
+-SYSTEM_MANUFACTURER="NEC"
+-SYSTEM_RELEASE="1988"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/pcenginecd"
+-SYSTEM_EXTENSION=".cue .CUE .ccd .CCD .chd .CHD .toc .TOC .m3u .M3U"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="pcenginecd"
+-SYSTEM_THEME="pce-cd"
+diff --git a/config/emulators/pcfx.conf b/config/emulators/pcfx.conf
+deleted file mode 100644
+index 411eaba4..00000000
+--- a/config/emulators/pcfx.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="pcfx"
+-SYSTEM_FULLNAME="PC-FX"
+-SYSTEM_MANUFACTURER="NEC"
+-SYSTEM_RELEASE="1994"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/pcfx"
+-SYSTEM_EXTENSION=".chd .CHD .cue .CUE .ccd .CCD .toc .TOC"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="pcfx"
+-SYSTEM_THEME="pcfx"
+diff --git a/config/emulators/pet.conf b/config/emulators/pet.conf
+deleted file mode 100644
+index ce835ad5..00000000
+--- a/config/emulators/pet.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="pet"
+-SYSTEM_FULLNAME="Commodore PET"
+-SYSTEM_MANUFACTURER="Commodore"
+-SYSTEM_RELEASE="1977"
+-SYSTEM_HARDWARE="computer"
+-SYSTEM_PATH="/storage/roms/pet"
+-SYSTEM_EXTENSION=".20 .40 .60 .a0 .b0 .d64 .d71 .d80 .d81 .d82 .g64 .g41 .x64 .t64 .tap .prg .p00 .crt .bin .gz .d6z .d7z .d8z .g6z .g4z .x6z .cmd .m3u .vsf .nib .nbz .zip"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="pet"
+-SYSTEM_THEME="pet"
+diff --git a/config/emulators/pico-8.conf b/config/emulators/pico-8.conf
+deleted file mode 100644
+index edda1dce..00000000
+--- a/config/emulators/pico-8.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="pico-8"
+-SYSTEM_FULLNAME="PICO-8"
+-SYSTEM_MANUFACTURER="Lexaloffle"
+-SYSTEM_RELEASE="2015"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/pico-8"
+-SYSTEM_EXTENSION=".sh .p8 .png .SH .P8 .PNG"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="pico-8"
+-SYSTEM_THEME="pico-8"
+diff --git a/config/emulators/pokemini.conf b/config/emulators/pokemini.conf
+deleted file mode 100644
+index 4f2c7d5e..00000000
+--- a/config/emulators/pokemini.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="pokemini"
+-SYSTEM_FULLNAME="Pokémon Mini"
+-SYSTEM_MANUFACTURER="Nintendo"
+-SYSTEM_RELEASE="2001"
+-SYSTEM_HARDWARE="portable"
+-SYSTEM_PATH="/storage/roms/pokemini"
+-SYSTEM_EXTENSION=".min .MIN .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="pokemini"
+-SYSTEM_THEME="pokemini"
+diff --git a/config/emulators/ports.conf b/config/emulators/ports.conf
+deleted file mode 100644
+index 75678fde..00000000
+--- a/config/emulators/ports.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="ports"
+-SYSTEM_FULLNAME="Ports"
+-SYSTEM_MANUFACTURER="Various"
+-SYSTEM_RELEASE="unknown"
+-SYSTEM_HARDWARE="various"
+-SYSTEM_PATH="/storage/roms/ports"
+-SYSTEM_EXTENSION=".sh .SH"
+-SYSTEM_COMMAND="/USR/BIN/BASH %ROM% -P%SYSTEM% --CORE=%CORE% --EMULATOR=%EMULATOR% --CONTROLLERS="%CONTROLLERSCONFIG%""
+-SYSTEM_PLATFORM="pc"
+-SYSTEM_THEME="ports"
+diff --git a/config/emulators/ps2.conf b/config/emulators/ps2.conf
+deleted file mode 100644
+index aff3d7ad..00000000
+--- a/config/emulators/ps2.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="ps2"
+-SYSTEM_FULLNAME="PlayStation 2"
+-SYSTEM_MANUFACTURER="Sony"
+-SYSTEM_RELEASE="2000"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/ps2"
+-SYSTEM_EXTENSION=".iso .ISO .mdf .MDF .nrg .NRG .bin .BIN .img .IMG .dump .DUMP .gz .GZ .cso .CSO .chd .CHD"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="ps2"
+-SYSTEM_THEME="ps2"
+diff --git a/config/emulators/ps3.conf b/config/emulators/ps3.conf
+deleted file mode 100644
+index 6cdf2ee3..00000000
+--- a/config/emulators/ps3.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="ps3"
+-SYSTEM_FULLNAME="PlayStation 3"
+-SYSTEM_MANUFACTURER="Sony"
+-SYSTEM_RELEASE="2006"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/ps3"
+-SYSTEM_EXTENSION=".ps3 .PS3 .bin .BIN"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="ps3"
+-SYSTEM_THEME="ps3"
+diff --git a/config/emulators/psp.conf b/config/emulators/psp.conf
+deleted file mode 100644
+index 77a53faf..00000000
+--- a/config/emulators/psp.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="psp"
+-SYSTEM_FULLNAME="PlayStation Portable"
+-SYSTEM_MANUFACTURER="Sony"
+-SYSTEM_RELEASE="2004"
+-SYSTEM_HARDWARE="portable"
+-SYSTEM_PATH="/storage/roms/psp"
+-SYSTEM_EXTENSION=".iso .ISO .cso .CSO .pbp .PBP"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="psp"
+-SYSTEM_THEME="psp"
+diff --git a/config/emulators/pspminis.conf b/config/emulators/pspminis.conf
+deleted file mode 100644
+index e01c4ae6..00000000
+--- a/config/emulators/pspminis.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="pspminis"
+-SYSTEM_FULLNAME="PSP Minis"
+-SYSTEM_MANUFACTURER="Sony"
+-SYSTEM_RELEASE="2004"
+-SYSTEM_HARDWARE="portable"
+-SYSTEM_PATH="/storage/roms/pspminis"
+-SYSTEM_EXTENSION=".iso .ISO .cso .CSO .pbp .PBP"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="psp"
+-SYSTEM_THEME="pspminis"
+diff --git a/config/emulators/psx.conf b/config/emulators/psx.conf
+deleted file mode 100644
+index 50c44167..00000000
+--- a/config/emulators/psx.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="psx"
+-SYSTEM_FULLNAME="PlayStation"
+-SYSTEM_MANUFACTURER="Sony"
+-SYSTEM_RELEASE="1994"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/psx"
+-SYSTEM_EXTENSION=".bin .BIN .cue .CUE .img .IMG .mdf .MDF .pbp .PBP .toc .TOC .cbn .CBN .m3u .M3U .ccd .CCD .chd .CHD .iso .ISO"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="psx"
+-SYSTEM_THEME="psx"
+diff --git a/config/emulators/satellaview.conf b/config/emulators/satellaview.conf
+deleted file mode 100644
+index 1ae4b976..00000000
+--- a/config/emulators/satellaview.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="satellaview"
+-SYSTEM_FULLNAME="Satellaview"
+-SYSTEM_MANUFACTURER="Nintendo"
+-SYSTEM_RELEASE="1995"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/satellaview"
+-SYSTEM_EXTENSION=".smc .SMC .fig .FIG .bs .BS .sfc .SFC .bsx .BSX .swc .SWC .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="satellaview"
+-SYSTEM_THEME="satellaview"
+diff --git a/config/emulators/saturn.conf b/config/emulators/saturn.conf
+deleted file mode 100644
+index 15fcb007..00000000
+--- a/config/emulators/saturn.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="saturn"
+-SYSTEM_FULLNAME="Saturn"
+-SYSTEM_MANUFACTURER="Sega"
+-SYSTEM_RELEASE="1994"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/saturn"
+-SYSTEM_EXTENSION=".cue .CUE .chd .CHD .iso .ISO"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="saturn"
+-SYSTEM_THEME="saturn"
+diff --git a/config/emulators/sc-3000.conf b/config/emulators/sc-3000.conf
+deleted file mode 100644
+index 26100744..00000000
+--- a/config/emulators/sc-3000.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="sc-3000"
+-SYSTEM_FULLNAME="SC-3000"
+-SYSTEM_MANUFACTURER="Sega"
+-SYSTEM_RELEASE="1983"
+-SYSTEM_HARDWARE="computer"
+-SYSTEM_PATH="/storage/roms/sc-3000"
+-SYSTEM_EXTENSION=".bin .BIN .sg .SG .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="sc-3000"
+-SYSTEM_THEME="sc-3000"
+diff --git a/config/emulators/scummvm.conf b/config/emulators/scummvm.conf
+deleted file mode 100644
+index 40b295f7..00000000
+--- a/config/emulators/scummvm.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="scummvm"
+-SYSTEM_FULLNAME="ScummVM"
+-SYSTEM_MANUFACTURER="Various"
+-SYSTEM_RELEASE="2001"
+-SYSTEM_HARDWARE="game engine"
+-SYSTEM_PATH="/storage/.config/scummvm/games"
+-SYSTEM_EXTENSION=".sh .SH .svm .SVM .scummvm"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="pc"
+-SYSTEM_THEME="scummvm"
+diff --git a/config/emulators/sega32x.conf b/config/emulators/sega32x.conf
+deleted file mode 100644
+index 0fbd9f32..00000000
+--- a/config/emulators/sega32x.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="sega32x"
+-SYSTEM_FULLNAME="32X"
+-SYSTEM_MANUFACTURER="Sega"
+-SYSTEM_RELEASE="1994"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/sega32x"
+-SYSTEM_EXTENSION=".32x .32X .smd .SMD .bin .BIN .md .MD .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="sega32x"
+-SYSTEM_THEME="sega32x"
+diff --git a/config/emulators/segacd.conf b/config/emulators/segacd.conf
+deleted file mode 100644
+index 0d40b113..00000000
+--- a/config/emulators/segacd.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="segacd"
+-SYSTEM_FULLNAME="CD"
+-SYSTEM_MANUFACTURER="Sega"
+-SYSTEM_RELEASE="1991"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/segacd"
+-SYSTEM_EXTENSION=".chd .CHD .cue .CUE .iso .ISO .m3u .M3U"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="segacd"
+-SYSTEM_THEME="segacd"
+diff --git a/config/emulators/sfc.conf b/config/emulators/sfc.conf
+deleted file mode 100644
+index bb6676e6..00000000
+--- a/config/emulators/sfc.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="sfc"
+-SYSTEM_FULLNAME="Super Famicom"
+-SYSTEM_MANUFACTURER="Nintendo"
+-SYSTEM_RELEASE="1990"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/sfc"
+-SYSTEM_EXTENSION=".smc .SMC .fig .FIG .sfc .SFC .swc .SWC .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="snes"
+-SYSTEM_THEME="sfc"
+diff --git a/config/emulators/sg-1000.conf b/config/emulators/sg-1000.conf
+deleted file mode 100644
+index e5ead09a..00000000
+--- a/config/emulators/sg-1000.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="sg-1000"
+-SYSTEM_FULLNAME="SG-1000"
+-SYSTEM_MANUFACTURER="Sega"
+-SYSTEM_RELEASE="1983"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/sg-1000"
+-SYSTEM_EXTENSION=".bin .BIN .sg .SG .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="sg-1000"
+-SYSTEM_THEME="sg-1000"
+diff --git a/config/emulators/snes.conf b/config/emulators/snes.conf
+deleted file mode 100644
+index 73b2fbcf..00000000
+--- a/config/emulators/snes.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="snes"
+-SYSTEM_FULLNAME="Super Nintendo"
+-SYSTEM_MANUFACTURER="Nintendo"
+-SYSTEM_RELEASE="1991"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/snes"
+-SYSTEM_EXTENSION=".smc .SMC .fig .FIG .sfc .SFC .swc .SWC .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="snes"
+-SYSTEM_THEME="snes"
+diff --git a/config/emulators/snesh.conf b/config/emulators/snesh.conf
+deleted file mode 100644
+index 1e915a8e..00000000
+--- a/config/emulators/snesh.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="snesh"
+-SYSTEM_FULLNAME="Super Nintendo (Hacks)"
+-SYSTEM_MANUFACTURER="Nintendo"
+-SYSTEM_RELEASE="1991"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/snesh"
+-SYSTEM_EXTENSION=".smc .SMC .fig .FIG .sfc .SFC .swc .SWC .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="snes"
+-SYSTEM_THEME="snesh"
+diff --git a/config/emulators/snesmsu1.conf b/config/emulators/snesmsu1.conf
+deleted file mode 100644
+index aac2165c..00000000
+--- a/config/emulators/snesmsu1.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="snesmsu1"
+-SYSTEM_FULLNAME="MSU-1"
+-SYSTEM_MANUFACTURER="Nintendo"
+-SYSTEM_RELEASE="2012"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/snesmsu1"
+-SYSTEM_EXTENSION=".smc .SMC .fig .FIG .sfc .SFC .swc .SWC .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="snesmsu1 snes"
+-SYSTEM_THEME="snesmsu1"
+diff --git a/config/emulators/solarus.conf b/config/emulators/solarus.conf
+deleted file mode 100644
+index 7e37f387..00000000
+--- a/config/emulators/solarus.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="solarus"
+-SYSTEM_FULLNAME="Solarus"
+-SYSTEM_MANUFACTURER="Solarus"
+-SYSTEM_RELEASE="2020"
+-SYSTEM_HARDWARE="game engine"
+-SYSTEM_PATH="/storage/roms/solarus"
+-SYSTEM_EXTENSION=".solarus"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="solarus"
+-SYSTEM_THEME="solarus"
+diff --git a/config/emulators/sufami.conf b/config/emulators/sufami.conf
+deleted file mode 100644
+index 40e94d87..00000000
+--- a/config/emulators/sufami.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="sufami"
+-SYSTEM_FULLNAME="SuFami Turbo"
+-SYSTEM_MANUFACTURER="Bandai"
+-SYSTEM_RELEASE="1996"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/sufami"
+-SYSTEM_EXTENSION=".st .ST .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="sufami"
+-SYSTEM_THEME="sufami"
+diff --git a/config/emulators/supergrafx.conf b/config/emulators/supergrafx.conf
+deleted file mode 100644
+index 1a2ba6c3..00000000
+--- a/config/emulators/supergrafx.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="supergrafx"
+-SYSTEM_FULLNAME="Super Grafx"
+-SYSTEM_MANUFACTURER="NEC"
+-SYSTEM_RELEASE="1989"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/sgfx"
+-SYSTEM_EXTENSION=".pce .PCE .sgx .SGX .cue .CUE .ccd .CCD .chd .CHD .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="supergrafx"
+-SYSTEM_THEME="supergrafx"
+diff --git a/config/emulators/supervision.conf b/config/emulators/supervision.conf
+deleted file mode 100644
+index 38f58bb2..00000000
+--- a/config/emulators/supervision.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="supervision"
+-SYSTEM_FULLNAME="Supervision"
+-SYSTEM_MANUFACTURER="Watara"
+-SYSTEM_RELEASE="1992"
+-SYSTEM_HARDWARE="portable"
+-SYSTEM_PATH="/storage/roms/supervision"
+-SYSTEM_EXTENSION=".sv .SV .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="supervision"
+-SYSTEM_THEME="supervision"
+diff --git a/config/emulators/switch.conf b/config/emulators/switch.conf
+deleted file mode 100644
+index 1744e7a9..00000000
+--- a/config/emulators/switch.conf
++++ /dev/null
+@@ -1,9 +0,0 @@
+-SYSTEM_NAME="switch"
+-SYSTEM_MANUFACTURER="Nintendo"
+-SYSTEM_RELEASE="2017"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/switch"
+-SYSTEM_EXTENSION=".xci .XCI .nsp .NSP .nca .NCA .nso .NSO .nro .NRO"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="switch"
+-SYSTEM_THEME="switch"
+diff --git a/config/emulators/tg16.conf b/config/emulators/tg16.conf
+deleted file mode 100644
+index f50c6286..00000000
+--- a/config/emulators/tg16.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="tg16"
+-SYSTEM_FULLNAME="TurboGrafx-16"
+-SYSTEM_MANUFACTURER="NEC"
+-SYSTEM_RELEASE="1989"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/tg16"
+-SYSTEM_EXTENSION=".pce .PCE .bin .BIN .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="pcengine"
+-SYSTEM_THEME="tg16"
+diff --git a/config/emulators/tg16cd.conf b/config/emulators/tg16cd.conf
+deleted file mode 100644
+index 4ef0c537..00000000
+--- a/config/emulators/tg16cd.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="tg16cd"
+-SYSTEM_FULLNAME="TurboGrafx-CD"
+-SYSTEM_MANUFACTURER="NEC"
+-SYSTEM_RELEASE="1989"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/tg16cd"
+-SYSTEM_EXTENSION=".cue .CUE .ccd .CCD .chd .CHD .toc .TOC .m3u .M3U"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="pcenginecd"
+-SYSTEM_THEME="tg16cd"
+diff --git a/config/emulators/tic-80.conf b/config/emulators/tic-80.conf
+deleted file mode 100644
+index 19036b38..00000000
+--- a/config/emulators/tic-80.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="tic-80"
+-SYSTEM_FULLNAME="TIC-80"
+-SYSTEM_MANUFACTURER="Nesbox"
+-SYSTEM_RELEASE="2017"
+-SYSTEM_HARDWARE="computer"
+-SYSTEM_PATH="/storage/roms/tic-80"
+-SYSTEM_EXTENSION=".tic .TIC"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="tic80"
+-SYSTEM_THEME="tic-80"
+diff --git a/config/emulators/tools.conf b/config/emulators/tools.conf
+deleted file mode 100644
+index aa4fc16f..00000000
+--- a/config/emulators/tools.conf
++++ /dev/null
+@@ -1,11 +0,0 @@
+-SYSTEM_NAME="tools"
+-SYSTEM_FULLNAME="Tools"
+-SYSTEM_MANUFACTURER="Various"
+-SYSTEM_RELEASE="unknown"
+-SYSTEM_HARDWARE="system"
+-SYSTEM_PATH="/storage/.config/modules"
+-SYSTEM_EXTENSION=".sh"
+-SYSTEM_COMMAND="/usr/bin/run %ROM%"
+-SYSTEM_PLATFORM="tools"
+-SYSTEM_THEME="tools"
+-SYSTEM_FULLNAME="Screenshots"
+diff --git a/config/emulators/uzebox.conf b/config/emulators/uzebox.conf
+deleted file mode 100644
+index d35ba472..00000000
+--- a/config/emulators/uzebox.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="uzebox"
+-SYSTEM_FULLNAME="Uzebox"
+-SYSTEM_MANUFACTURER="belogic"
+-SYSTEM_RELEASE="2008"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/uzebox"
+-SYSTEM_EXTENSION=".uze .UZE"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="uzebox"
+-SYSTEM_THEME="uzebox"
+diff --git a/config/emulators/vectrex.conf b/config/emulators/vectrex.conf
+deleted file mode 100644
+index 0d14850d..00000000
+--- a/config/emulators/vectrex.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="vectrex"
+-SYSTEM_FULLNAME="Vectrex"
+-SYSTEM_MANUFACTURER="Milton Bradley"
+-SYSTEM_RELEASE="1982"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/vectrex"
+-SYSTEM_EXTENSION=".bin .BIN .gam .GAM .vec .VEC .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="vectrex"
+-SYSTEM_THEME="vectrex"
+diff --git a/config/emulators/vic20.conf b/config/emulators/vic20.conf
+deleted file mode 100644
+index a9ff4591..00000000
+--- a/config/emulators/vic20.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="vic20"
+-SYSTEM_FULLNAME="VIC-20"
+-SYSTEM_MANUFACTURER="Commodore"
+-SYSTEM_RELEASE="1980"
+-SYSTEM_HARDWARE="computer"
+-SYSTEM_PATH="/storage/roms/vic20"
+-SYSTEM_EXTENSION=".20 .40 .60 .a0 .A0 .b0 .B0 .d64 .D64 .d71 .D71 .d80 .D80 .d81 .D81 .d82 .D82 .g64 .G64 .g41 .G41 .x64 .X64 .t64 .T64 .tap .TAP .prg .PRG .p00 .P00 .crt .CRT .bin .BIN .gz .GZ .d6z .D6Z .d7z .D7Z .d8z .D8Z .g6z .G6Z .g4z .G4Z .x6z .X6Z .cmd .CMD .m3u .M3U .vsf .VSF .nib .NIB .nbz .NBZ .zip .ZIP"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="vic20"
+-SYSTEM_THEME="vic20"
+diff --git a/config/emulators/videopac.conf b/config/emulators/videopac.conf
+deleted file mode 100644
+index 95eeb16a..00000000
+--- a/config/emulators/videopac.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="videopac"
+-SYSTEM_FULLNAME="VideoPac"
+-SYSTEM_MANUFACTURER="Philips"
+-SYSTEM_RELEASE="1978"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/videopac"
+-SYSTEM_EXTENSION=".bin .BIN .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="videopac"
+-SYSTEM_THEME="videopac"
+diff --git a/config/emulators/virtualboy.conf b/config/emulators/virtualboy.conf
+deleted file mode 100644
+index 71e6be56..00000000
+--- a/config/emulators/virtualboy.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="virtualboy"
+-SYSTEM_FULLNAME="Virtual Boy"
+-SYSTEM_MANUFACTURER="Nintendo"
+-SYSTEM_RELEASE="1995"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/virtualboy"
+-SYSTEM_EXTENSION=".vb .VB .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="virtualboy"
+-SYSTEM_THEME="virtualboy"
+diff --git a/config/emulators/wii.conf b/config/emulators/wii.conf
+deleted file mode 100644
+index 2386d276..00000000
+--- a/config/emulators/wii.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="wii"
+-SYSTEM_MANUFACTURER="Nintendo"
+-SYSTEM_RELEASE="2006"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/wii"
+-SYSTEM_EXTENSION=".gcm .GCM .iso .ISO .gcz .GCZ .ciso .CISO .wbfs .WBFS .rvz .RVZ .dol .DOL .wad .WAD"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="wii"
+-SYSTEM_THEME="wii"
+-SYSTEM_FULLNAME="Wii U"
+diff --git a/config/emulators/wiiu.conf b/config/emulators/wiiu.conf
+deleted file mode 100644
+index d53b7135..00000000
+--- a/config/emulators/wiiu.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="wiiu"
+-SYSTEM_MANUFACTURER="Nintendo"
+-SYSTEM_RELEASE="2012"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/wiiu"
+-SYSTEM_EXTENSION=".wud .WUD .wux .WUX .wua .WUA"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="wiiu"
+-SYSTEM_THEME="wiiu"
+-SYSTEM_FULLNAME="Switch"
+diff --git a/config/emulators/wonderswan.conf b/config/emulators/wonderswan.conf
+deleted file mode 100644
+index 5b54650c..00000000
+--- a/config/emulators/wonderswan.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="wonderswan"
+-SYSTEM_FULLNAME="Wonderswan"
+-SYSTEM_MANUFACTURER="Bandai"
+-SYSTEM_RELEASE="1999"
+-SYSTEM_HARDWARE="portable"
+-SYSTEM_PATH="/storage/roms/wonderswan"
+-SYSTEM_EXTENSION=".ws .WS .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="wonderswan"
+-SYSTEM_THEME="wonderswan"
+diff --git a/config/emulators/wonderswancolor.conf b/config/emulators/wonderswancolor.conf
+deleted file mode 100644
+index 80e91f9b..00000000
+--- a/config/emulators/wonderswancolor.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="wonderswancolor"
+-SYSTEM_FULLNAME="Wonderswan Color"
+-SYSTEM_MANUFACTURER="Bandai"
+-SYSTEM_RELEASE="2000"
+-SYSTEM_HARDWARE="portable"
+-SYSTEM_PATH="/storage/roms/wonderswancolor"
+-SYSTEM_EXTENSION=".wsc .WSC .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="wonderswancolor"
+-SYSTEM_THEME="wonderswancolor"
+diff --git a/config/emulators/x1.conf b/config/emulators/x1.conf
+deleted file mode 100644
+index b0d1f01e..00000000
+--- a/config/emulators/x1.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="x1"
+-SYSTEM_FULLNAME="X1"
+-SYSTEM_MANUFACTURER="Sharp"
+-SYSTEM_RELEASE="1982"
+-SYSTEM_HARDWARE="computer"
+-SYSTEM_PATH="/storage/roms/x1"
+-SYSTEM_EXTENSION=".dx1 .DX1 .2d .2D .2hd .2HD .tfd .TFD .d88 .D88 .88d .88D .hdm .HDM .xdf .XDF .dup .DUP .tap .TAP .cmd .CMD .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="x1"
+-SYSTEM_THEME="x1"
+diff --git a/config/emulators/x68000.conf b/config/emulators/x68000.conf
+deleted file mode 100644
+index 0e38fe83..00000000
+--- a/config/emulators/x68000.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="x68000"
+-SYSTEM_FULLNAME="x68000"
+-SYSTEM_MANUFACTURER="Sharp"
+-SYSTEM_RELEASE="1987"
+-SYSTEM_HARDWARE="computer"
+-SYSTEM_PATH="/storage/roms/x68000"
+-SYSTEM_EXTENSION=".dim .DIM .img .IMG .d88 .D88 .88d .88D .hdm .HDM .dup .DUP .2hd .2HD .xdf .XDF .hdf .HDF .cmd .CMD .m3u .M3U .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="x68000"
+-SYSTEM_THEME="x68000"
+diff --git a/config/emulators/xbox.conf b/config/emulators/xbox.conf
+deleted file mode 100644
+index 1f1e5245..00000000
+--- a/config/emulators/xbox.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="xbox"
+-SYSTEM_FULLNAME="Xbox"
+-SYSTEM_MANUFACTURER="Microsoft"
+-SYSTEM_RELEASE="2001"
+-SYSTEM_HARDWARE="console"
+-SYSTEM_PATH="/storage/roms/xbox"
+-SYSTEM_EXTENSION=".iso .ISO"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="xbox"
+-SYSTEM_THEME="xbox"
+diff --git a/config/emulators/zx81.conf b/config/emulators/zx81.conf
+deleted file mode 100644
+index 10b7349f..00000000
+--- a/config/emulators/zx81.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="zx81"
+-SYSTEM_FULLNAME="ZX81"
+-SYSTEM_MANUFACTURER="Sinclair"
+-SYSTEM_RELEASE="1981"
+-SYSTEM_HARDWARE="computer"
+-SYSTEM_PATH="/storage/roms/zx81"
+-SYSTEM_EXTENSION=".tzx .TZX .p .P .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="zx81"
+-SYSTEM_THEME="zx81"
+diff --git a/config/emulators/zxspectrum.conf b/config/emulators/zxspectrum.conf
+deleted file mode 100644
+index c437f9f2..00000000
+--- a/config/emulators/zxspectrum.conf
++++ /dev/null
+@@ -1,10 +0,0 @@
+-SYSTEM_NAME="zxspectrum"
+-SYSTEM_FULLNAME="ZX Spectrum"
+-SYSTEM_MANUFACTURER="Sinclair"
+-SYSTEM_RELEASE="1982"
+-SYSTEM_HARDWARE="computer"
+-SYSTEM_PATH="/storage/roms/zxspectrum"
+-SYSTEM_EXTENSION=".tzx .TZX .tap .TAP .z80 .Z80 .rzx .RZX .scl .SCL .trd .TRD .dsk .DSK .zip .ZIP .7z .7Z"
+-SYSTEM_COMMAND="/usr/bin/runemu.sh %ROM% -P%SYSTEM% --core=%CORE% --emulator=%EMULATOR% --controllers=\"%CONTROLLERSCONFIG%\""
+-SYSTEM_PLATFORM="zxspectrum"
+-SYSTEM_THEME="zxspectrum"
+diff --git a/config/functions b/config/functions
+index 1855470f..fc7d9346 100644
+--- a/config/functions
++++ b/config/functions
+@@ -1763,105 +1763,6 @@ exec_thread_safe() {
+   return ${result}
  }
  
-diff --git a/packages/emulators/standalone/simple64-sa/patches/004-enable-cross-comp.patch b/packages/emulators/standalone/simple64-sa/patches/004-enable-cross-comp.patch
+-add_emu_core() {
+-  TMPCACHE="${ROOT}/.es_cache"
+-
+-  if [ ! -d "${TMPCACHE}" ]
+-  then
+-    mkdir "${TMPCACHE}"
+-  fi
+-
+-  # Schema: emulator|core|true/false
+-  echo "${2}|${3}|${4}" >>${TMPCACHE}/${1}-emulators.tmp
+-}
+-
+-add_es_system() {
+-  if [ -e "${ROOT}/config/emulators/${1}.conf" ]
+-  then
+-    . ${ROOT}/config/emulators/${1}.conf
+-  fi
+-
+-  TMPCACHE="${ROOT}/.es_cache"
+-
+-  if [ ! -d "${TMPCACHE}" ]
+-  then
+-    mkdir "${TMPCACHE}"
+-  fi
+-
+-  if [ ! -e "${TMPCACHE}/${SYSTEM_NAME}.tmp" ]
+-  then
+-    cat <<EOF >${TMPCACHE}/${SYSTEM_NAME}.tmp
+-<?xml version="1.0" encoding="UTF-8"?>
+-<systemList>
+-</systemList>
+-EOF
+-  fi
+-
+-  xmlstarlet ed --omit-decl --inplace \
+-          -d '//systemList/system' \
+-          -s '//systemList' -t elem -n 'system' \
+-          -s '//systemList/system' -t elem -n 'name' -v "${SYSTEM_NAME}" \
+-          -s '//systemList/system' -t elem -n 'fullname' -v "${SYSTEM_FULLNAME}" \
+-          -s '//systemList/system' -t elem -n 'manufacturer' -v "${SYSTEM_MANUFACTURER}" \
+-          -s '//systemList/system' -t elem -n 'release' -v "${SYSTEM_RELEASE}" \
+-          -s '//systemList/system' -t elem -n 'hardware' -v "${SYSTEM_HARDWARE}" \
+-          -s '//systemList/system' -t elem -n 'path' -v "${SYSTEM_PATH}" \
+-          -s '//systemList/system' -t elem -n 'extension' -v "${SYSTEM_EXTENSION}" \
+-          -s '//systemList/system' -t elem -n 'command' -v "${SYSTEM_COMMAND}" \
+-          -s '//systemList/system' -t elem -n 'platform' -v "${SYSTEM_PLATFORM}" \
+-          -s '//systemList/system' -t elem -n 'theme' -v "${SYSTEM_THEME}" \
+-          -s '//systemList/system' -t elem -n "emulators" -v "" ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+-
+-  if [ -e "${TMPCACHE}/${SYSTEM_NAME}-emulators.tmp" ]
+-  then
+-    while read -r line
+-    do
+-      SYSTEM_EMULATOR=$(echo ${line} | awk 'BEGIN {FS="|"} {print $1}')
+-      SYSTEM_CORE=$(echo ${line} | awk 'BEGIN {FS="|"} {print $2}')
+-      SYSTEM_DEFAULT=$(echo ${line} | awk 'BEGIN {FS="|"} {print $3}')
+-
+-      ### Check to see if we've already added an emulator key.
+-      EMTEST=$(xmlstarlet sel -t -c "////systemList/system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]" ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>/dev/null ||:)
+-      if [ -z "${EMTEST}" ]
+-      then
+-        ### Add the emulator element
+-        xmlstarlet ed --omit-decl --inplace \
+-          -s "//systemList/system/emulators" -t elem -n "emulator" -v "" \
+-          ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+-      fi
+-
+-      ### Add an attribute defining the emulator's name.
+-      xmlstarlet ed --omit-decl --inplace \
+-          -s "//systemList/system/emulators/emulator[not(@name)]" -t attr -n "name" -v "${SYSTEM_EMULATOR}" \
+-          ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+-
+-      ### Check to see if we've already added a core element.
+-      COTEST=$(xmlstarlet sel -t -c "////systemList/system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]/cores/core" ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>/dev/null ||:)
+-      if [ -z "${COTEST}" ]
+-      then
+-        xmlstarlet ed --omit-decl --inplace \
+-            -s "//systemList/system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]" -t elem -n "cores" -v "" \
+-            ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+-      fi
+-
+-      ### Add each core.
+-      xmlstarlet ed --omit-decl --inplace \
+-          -s "//systemList/system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]/cores" -t elem -n "core" -v "${SYSTEM_CORE}" \
+-          ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+-
+-      if [ "${SYSTEM_DEFAULT}" = "true" ]
+-      then
+-        ### Add an attribute defining the default core
+-        xmlstarlet ed --omit-decl --inplace \
+-            -i "//systemList/system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]/cores/core" -t attr -n "default" -v "true" \
+-            ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+-      fi
+-    done <${TMPCACHE}/${SYSTEM_NAME}-emulators.tmp
+-  fi
+-
+-  xmlstarlet fo -t ${TMPCACHE}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+-}
+-
+ # Use distribution functions if any
+ if [ -f "distributions/${DISTRO}/config/functions" ]; then
+   . distributions/${DISTRO}/config/functions
+diff --git a/distributions/JELOS/options b/distributions/JELOS/options
+index f42484a3..0fa18096 100644
+--- a/distributions/JELOS/options
++++ b/distributions/JELOS/options
+@@ -42,7 +42,7 @@
+ 
+ # Define package sets to clean based on the type of build being executed.
+ # This should be updated to be more dynamic in the future.
+-  CLEAN_OS_BASE="emulators initramfs system-utils modules quirks autostart splash jelos"
++  CLEAN_OS_BASE="initramfs system-utils modules quirks autostart splash jelos"
+   CLEAN_NETWORK="RTL8821CS-firmware"
+   CLEAN_EMU_32BIT="lib32 box86 flycast-lr pcsx_rearmed-lr"
+ 
+diff --git a/packages/devel/qt5/package.mk b/packages/devel/qt5/package.mk
+index eb46df9c..c4ea2edb 100644
+--- a/packages/devel/qt5/package.mk
++++ b/packages/devel/qt5/package.mk
+@@ -136,6 +136,12 @@ pre_configure_target() {
+                              -skip qtwinextras
+                              -skip qtx11extras"
+ 
++  # Vulkan support
++  if [ "${VULKAN_SUPPORT}" = "yes" ]
++  then
++    PKG_CONFIGURE_OPTS_TARGET+=" -feature-vulkan"
++  fi
++
+   # Build with OpenGL or OpenGLES support
+   if [ "${OPENGL_SUPPORT}" = "yes" ]; then
+     PKG_CONFIGURE_OPTS_TARGET+=" -opengl -no-eglfs"
+diff --git a/packages/emulators/libretro/a5200-lr/package.mk b/packages/emulators/libretro/a5200-lr/package.mk
+index 91c53291..aa9077c8 100644
+--- a/packages/emulators/libretro/a5200-lr/package.mk
++++ b/packages/emulators/libretro/a5200-lr/package.mk
+@@ -37,4 +37,3 @@ makeinstall_target() {
+   mkdir -p ${INSTALL}/usr/lib/libretro
+   cp a5200_libretro.so ${INSTALL}/usr/lib/libretro/
+ }
+-
+diff --git a/packages/emulators/libretro/stella-lr/package.mk b/packages/emulators/libretro/stella-lr/package.mk
+index 043198be..c64c0d0d 100644
+--- a/packages/emulators/libretro/stella-lr/package.mk
++++ b/packages/emulators/libretro/stella-lr/package.mk
+@@ -47,4 +47,3 @@ makeinstall_target() {
+   mkdir -p ${INSTALL}/usr/lib/libretro
+   cp ${PKG_BUILD}/src/os/libretro/stella_libretro.so ${INSTALL}/usr/lib/libretro/
+ }
+-
+diff --git a/packages/emulators/standalone/citra-sa/package.mk b/packages/emulators/standalone/citra-sa/package.mk
+index 53de89b0..8cadc3bb 100644
+--- a/packages/emulators/standalone/citra-sa/package.mk
++++ b/packages/emulators/standalone/citra-sa/package.mk
+@@ -2,7 +2,7 @@
+ # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
+ 
+ PKG_NAME="citra-sa"
+-PKG_VERSION="2fd5b184814034eb5cff474b54900e59cc884af6"
++PKG_VERSION="4e9604ac1d32bf67d189483f1ca37c57076fbab0"
+ PKG_LICENSE="MPLv2"
+ PKG_SITE="https://github.com/citra-emu/citra-canary"
+ PKG_URL="${PKG_SITE}.git"
+diff --git a/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-audio-sdl/package.mk b/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-audio-sdl/package.mk
+index 0b7d5fe0..b6dc338f 100644
+--- a/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-audio-sdl/package.mk
++++ b/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-audio-sdl/package.mk
+@@ -27,6 +27,7 @@ make_target() {
+       export USE_GLES=1
+     ;;
+     x86_64)
++      export HOST_CPU=x86_64
+       PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
+     ;;
+   esac
+diff --git a/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-core/config/AMD64/mupen64plus.cfg b/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-core/config/AMD64/mupen64plus.cfg
+index 41c7da21..f2a7ff4e 100644
+--- a/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-core/config/AMD64/mupen64plus.cfg
++++ b/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-core/config/AMD64/mupen64plus.cfg
+@@ -399,6 +399,45 @@ Fullscreen = True
+ VerticalSync = True
+ # Rotate screen contents: 0=0 degree, 1=90 degree, 2 = 180 degree, 3=270 degree
+ Rotate = 0
++# Display On-screen FPS
++ShowFPS = False
++
++[Video-Parallel]
++
++# Amount of rescaling: 1=None, 2=2x, 4=4x
++Upscaling = 1
++# Enable VSync
++VSync = True
++# Widescreen mode (stretched)
++WidescreenStretch = False
++# Deinterlacing method. False=Bob, True=Weave
++DeinterlaceWeave = False
++# Enable superscaling of readbacks when upsampling
++SuperscaledReads = False
++# Enable superscaling of dithering when upsampling
++SuperscaledDither = True
++# Enable synchronizing RDP and CPU
++SynchronousRDP = True
++# Amount of overscan pixels to crop on all sides
++CropOverscan = 0
++# Amount of pixels to stretch by vertically. Can fix PAL ports that didn't fill the PAL resolution of 288p (use value of 24 in that case).
++VerticalStretch = 0
++# VI anti-aliasing, smooths polygon edges.
++VIAA = True
++# Allow VI divot filter, cleans up stray black pixels.
++Divot = True
++# Allow VI gamma dither
++GammaDither = True
++# Allow VI bilinear scaling
++VIBilerp = True
++# Allow VI dedither filter
++VIDither = True
++# Downsampling factor, downscales output after VI, equivalent to SSAA. 0=disabled, 1=1/2, 2=1/4, 3=1/8
++DownScale = 0
++# Use native texture LOD computation when upscaling, effectively a LOD bias
++NativeTextLOD = False
++# Native resolution TEX_RECT. TEX_RECT primitives should generally be rendered at native resolution to avoid seams
++NativeTextRECT = True
+ 
+ [Video-GLideN64]
+ 
+@@ -631,8 +670,6 @@ LoadHiResCRCOnly = True
+ LoadHiResTextures = False
+ # Enable texture dumping
+ DumpTexturesToFiles = False
+-# Display On-screen FPS
+-ShowFPS = False
+ # Use Mipmapping? 0=no, 1=nearest, 2=bilinear, 3=trilinear
+ Mipmapping = 2
+ # Enable, Disable fog generation (0=Disable, 1=Enable)
+diff --git a/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-core/config/S922X/mupen64plus.cfg b/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-core/config/S922X/mupen64plus.cfg
+index dff58193..ba43af85 100644
+--- a/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-core/config/S922X/mupen64plus.cfg
++++ b/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-core/config/S922X/mupen64plus.cfg
+@@ -399,6 +399,45 @@ Fullscreen = True
+ VerticalSync = True
+ # Rotate screen contents: 0=0 degree, 1=90 degree, 2 = 180 degree, 3=270 degree
+ Rotate = 0
++# Display On-screen FPS
++ShowFPS = False
++
++[Video-Parallel]
++
++# Amount of rescaling: 1=None, 2=2x, 4=4x
++Upscaling = 1
++# Enable VSync
++VSync = True
++# Widescreen mode (stretched)
++WidescreenStretch = False
++# Deinterlacing method. False=Bob, True=Weave
++DeinterlaceWeave = False
++# Enable superscaling of readbacks when upsampling
++SuperscaledReads = False
++# Enable superscaling of dithering when upsampling
++SuperscaledDither = True
++# Enable synchronizing RDP and CPU
++SynchronousRDP = True
++# Amount of overscan pixels to crop on all sides
++CropOverscan = 0
++# Amount of pixels to stretch by vertically. Can fix PAL ports that didn't fill the PAL resolution of 288p (use value of 24 in that case).
++VerticalStretch = 0
++# VI anti-aliasing, smooths polygon edges.
++VIAA = True
++# Allow VI divot filter, cleans up stray black pixels.
++Divot = True
++# Allow VI gamma dither
++GammaDither = True
++# Allow VI bilinear scaling
++VIBilerp = True
++# Allow VI dedither filter
++VIDither = True
++# Downsampling factor, downscales output after VI, equivalent to SSAA. 0=disabled, 1=1/2, 2=1/4, 3=1/8
++DownScale = 0
++# Use native texture LOD computation when upscaling, effectively a LOD bias
++NativeTextLOD = False
++# Native resolution TEX_RECT. TEX_RECT primitives should generally be rendered at native resolution to avoid seams
++NativeTextRECT = True
+ 
+ [Video-GLideN64]
+ 
+@@ -631,8 +670,6 @@ LoadHiResCRCOnly = True
+ LoadHiResTextures = False
+ # Enable texture dumping
+ DumpTexturesToFiles = False
+-# Display On-screen FPS
+-ShowFPS = False
+ # Use Mipmapping? 0=no, 1=nearest, 2=bilinear, 3=trilinear
+ Mipmapping = 2
+ # Enable, Disable fog generation (0=Disable, 1=Enable)
+diff --git a/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-core/package.mk b/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-core/package.mk
+index 9fd22f3b..f7b07520 100644
+--- a/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-core/package.mk
++++ b/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-core/package.mk
+@@ -27,6 +27,7 @@ make_target() {
+       export USE_GLES=1
+     ;;
+     x86_64)
++      export HOST_CPU=x86_64
+       PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
+     ;;
+   esac
+@@ -48,9 +49,9 @@ makeinstall_target() {
+   mkdir -p ${INSTALL}/usr/local/share/mupen64plus
+   cp ${PKG_BUILD}/data/* ${INSTALL}/usr/local/share/mupen64plus
+   chmod 0644 ${INSTALL}/usr/local/share/mupen64plus/*
+-  mkdir -p ${INSTALL}/usr/local/include/mupen64plus
+-  cp ${PKG_BUILD}/src/api/m64p_*.h ${INSTALL}/usr/local/include/mupen64plus
+-  chmod 0644 ${INSTALL}/usr/local/include/mupen64plus/*
++  mkdir -p ${SYSROOT_PREFIX}/usr/include
++  cp ${PKG_BUILD}/src/api/*.h ${SYSROOT_PREFIX}/usr/include
++  chmod 0644 ${SYSROOT_PREFIX}/usr/include/*
+ 
+   if [ -e "${PKG_DIR}/config/${DEVICE}/mupen64plus.cfg" ]
+   then
+diff --git a/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-core/scripts/start_mupen64plus.sh b/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-core/scripts/start_mupen64plus.sh
+index 0e1996da..7b21a9b6 100644
+--- a/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-core/scripts/start_mupen64plus.sh
++++ b/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-core/scripts/start_mupen64plus.sh
+@@ -16,7 +16,9 @@ FPS=$(get_setting show_fps n64 "${GAME}")
+ PAK=$(get_setting controller_pak n64 "${GAME}")
+ CON=$(get_setting input_configuration n64 "${GAME}")
+ SHARE="/usr/local/share/mupen64plus"
++LIB="/usr/local/lib/mupen64plus"
+ M64PCONF="/storage/.config/mupen64plus/mupen64plus.cfg"
++S64INI="/storage/.config/mupen64plus/simple64-gui.ini"
+ TMP="/tmp/mupen64plus"
+ GAMEDATA="/storage/.config/mupen64plus"
+ 
+@@ -36,6 +38,11 @@ if [[ ! -f "$M64PCONF" ]]; then
+ 	cp $SHARE/mupen64plus.cfg* $M64PCONF
+ fi
+ 
++if [[ ! -f "$S64INI" ]]; then
++	mkdir -p /storage/.config/mupen64plus
++	cp $SHARE/simple64-gui.ini $S64INI
++fi
++
+ rm -rf $TMP
+ mkdir -p $TMP
+ 
+@@ -50,6 +57,7 @@ else
+ fi
+ 
+ cp $M64PCONF $TMP
++cp $S64INI $TMP
+ SET_PARAMS="--set Core[SharedDataPath]=$TMP --set Video-Rice[ResolutionWidth]=$SCREENWIDTH"
+ 
+ #Set the cores to use
+@@ -82,6 +90,8 @@ fi
+ # Native Res Factor (Upscaling)
+ 	if [ "{$CORE}" = "m64p_gliden64" ]; then
+ 		sed -i "/UseNativeResolutionFactor/c\UseNativeResolutionFactor = $IRES" $TMP/mupen64plus.cfg
++	elif [ "{$CORE}" = "simple64" ]; then
++		sed -i "/Upscaling/c\Upscaling = $IRES" $TMP/mupen64plus.cfg
+ 	fi
+ 
+ 
+@@ -128,6 +138,9 @@ case $1 in
+ 	"m64p_rice")
+ 		${EMUPERF} /usr/local/bin/mupen64plus --configdir $TMP --gfx mupen64plus-video-rice $SET_PARAMS "$TMP/$ROM"
+ 	;;
++	"simple64")
++		${EMUPERF} /usr/local/bin/simple64-gui --nogui --configdir $TMP $SET_PARAMS "$TMP/$ROM"
++	;;
+ 	*)
+ 		${EMUPERF} /usr/local/bin/mupen64plus --configdir $TMP --gfx mupen64plus-video-rice $SET_PARAMS "$TMP/$ROM"
+ 	;;
+diff --git a/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-input-sdl/package.mk b/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-input-sdl/package.mk
+index 7ebda6ec..6ea2dda3 100644
+--- a/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-input-sdl/package.mk
++++ b/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-input-sdl/package.mk
+@@ -27,6 +27,7 @@ make_target() {
+       export USE_GLES=1
+     ;;
+     x86_64)
++      export HOST_CPU=x86_64
+       PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
+     ;;
+   esac
+diff --git a/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-rsp-cxd4/package.mk b/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-rsp-cxd4/package.mk
+index 0cd09b4b..5486ba7a 100644
+--- a/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-rsp-cxd4/package.mk
++++ b/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-rsp-cxd4/package.mk
+@@ -34,6 +34,7 @@ make_target() {
+       CPPFLAGS="-DUSE_SSE2NEON"
+     ;;
+     x86_64)
++      export HOST_CPU=x86_64
+       PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
+     ;;
+   esac
+diff --git a/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-rsp-hle/package.mk b/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-rsp-hle/package.mk
+index 3869c667..227b89a5 100644
+--- a/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-rsp-hle/package.mk
++++ b/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-rsp-hle/package.mk
+@@ -27,6 +27,7 @@ make_target() {
+       export USE_GLES=1
+     ;;
+     x86_64)
++      export HOST_CPU=x86_64
+       PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
+     ;;
+   esac
+diff --git a/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-ui-console/package.mk b/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-ui-console/package.mk
+index 18e7468f..0ff98eae 100644
+--- a/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-ui-console/package.mk
++++ b/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-ui-console/package.mk
+@@ -27,6 +27,7 @@ make_target() {
+       export USE_GLES=1
+     ;;
+     x86_64)
++      export HOST_CPU=x86_64
+       PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
+     ;;
+   esac
+diff --git a/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-video-glide64mk2/package.mk b/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-video-glide64mk2/package.mk
+index 2658e785..3fa88540 100644
+--- a/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-video-glide64mk2/package.mk
++++ b/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-video-glide64mk2/package.mk
+@@ -27,6 +27,7 @@ make_target() {
+       export USE_GLES=1
+     ;;
+     x86_64)
++      export HOST_CPU=x86_64
+       PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
+     ;;
+   esac
+diff --git a/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-video-gliden64/package.mk b/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-video-gliden64/package.mk
+index cbb9976a..de9ed8c7 100644
+--- a/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-video-gliden64/package.mk
++++ b/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-video-gliden64/package.mk
+@@ -27,6 +27,7 @@ make_target() {
+       PKG_MAKE_OPTS_TARGET+="-DNOHQ=On -DCRC_ARMV8=On -DEGL=On -DNEON_OPT=On"
+     ;;
+     x86_64)
++      export HOST_CPU=x86_64
+       PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
+     ;;
+   esac
+diff --git a/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-video-rice/package.mk b/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-video-rice/package.mk
+index c4a2e33e..4bb23a54 100644
+--- a/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-video-rice/package.mk
++++ b/packages/emulators/standalone/mupen64plus-sa/mupen64plus-sa-video-rice/package.mk
+@@ -27,6 +27,7 @@ make_target() {
+       export USE_GLES=1
+     ;;
+     x86_64)
++      export HOST_CPU=x86_64
+       PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
+     ;;
+   esac
+diff --git a/packages/emulators/standalone/simple64-sa/config/simple64-gui.ini b/packages/emulators/standalone/simple64-sa/config/simple64-gui.ini
 new file mode 100644
-index 00000000..0d51be5f
+index 00000000..d8e2ee57
 --- /dev/null
-+++ b/packages/emulators/standalone/simple64-sa/patches/004-enable-cross-comp.patch
-@@ -0,0 +1,115 @@
-+diff --git a/mupen64plus-core/CMakeLists.txt b/mupen64plus-core/CMakeLists.txt
-+index fad5e48..f20a8ab 100644
-+--- a/mupen64plus-core/CMakeLists.txt
-++++ b/mupen64plus-core/CMakeLists.txt
-+@@ -128,13 +128,13 @@ set_property(TARGET mupen64plus PROPERTY CXX_VISIBILITY_PRESET hidden)
-+ set_property(TARGET mupen64plus PROPERTY VISIBILITY_INLINES_HIDDEN ON)
-+ target_compile_options(mupen64plus PRIVATE -Ofast)
-+ target_link_options(mupen64plus PRIVATE -Ofast)
-+-if (CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
-+-    target_compile_options(mupen64plus PRIVATE -march=armv8-a)
-+-    target_link_options(mupen64plus PRIVATE -march=armv8-a)
-+-else()
-++# if (CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
-++#     target_compile_options(mupen64plus PRIVATE -march=armv8-a)
-++#     target_link_options(mupen64plus PRIVATE -march=armv8-a)
-++# else()
-+     target_compile_options(mupen64plus PRIVATE -march=x86-64-v3)
-+     target_link_options(mupen64plus PRIVATE -march=x86-64-v3)
-+-endif()
-++# endif()
-+ if (NOT APPLE)
-+     target_link_options(mupen64plus PRIVATE -Wl,-Bsymbolic -Wl,-Bsymbolic-functions)
-+ endif (NOT APPLE)
-+diff --git a/parallel-rdp-standalone/CMakeLists.txt b/parallel-rdp-standalone/CMakeLists.txt
-+index 01d32ed..a4d777e 100644
-+--- a/parallel-rdp-standalone/CMakeLists.txt
-++++ b/parallel-rdp-standalone/CMakeLists.txt
-+@@ -74,13 +74,13 @@ set_property(TARGET ${NAME_PLUGIN_SIMPLE64} PROPERTY CXX_VISIBILITY_PRESET hidde
-+ set_property(TARGET ${NAME_PLUGIN_SIMPLE64} PROPERTY VISIBILITY_INLINES_HIDDEN ON)
-+ target_compile_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -Ofast)
-+ target_link_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -Ofast)
-+-if (CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
-+-    target_compile_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -march=armv8-a)
-+-    target_link_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -march=armv8-a)
-+-else()
-++# if (CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
-++#     target_compile_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -march=armv8-a)
-++#     target_link_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -march=armv8-a)
-++# else()
-+     target_compile_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -march=x86-64-v3)
-+     target_link_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -march=x86-64-v3)
-+-endif()
-++# endif()
-+ if (NOT APPLE)
-+     target_link_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -Wl,-Bsymbolic -Wl,-Bsymbolic-functions)
-+ endif (NOT APPLE)
-+diff --git a/parallel-rsp/CMakeLists.txt b/parallel-rsp/CMakeLists.txt
-+index 9c5bfcf..96a6b92 100644
-+--- a/parallel-rsp/CMakeLists.txt
-++++ b/parallel-rsp/CMakeLists.txt
-+@@ -89,13 +89,13 @@ set_property(TARGET ${NAME_PLUGIN_SIMPLE64} PROPERTY CXX_VISIBILITY_PRESET hidde
-+ set_property(TARGET ${NAME_PLUGIN_SIMPLE64} PROPERTY VISIBILITY_INLINES_HIDDEN ON)
-+ target_compile_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -DHAVE_MMAP -Ofast)
-+ target_link_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -DHAVE_MMAP -Ofast)
-+-if (CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
-+-    target_compile_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -march=armv8-a)
-+-    target_link_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -march=armv8-a)
-+-else()
-++# if (CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
-++#     target_compile_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -march=armv8-a)
-++#     target_link_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -march=armv8-a)
-++# else()
-+     target_compile_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -march=x86-64-v3)
-+     target_link_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -march=x86-64-v3)
-+-endif()
-++# endif()
-+ if (NOT APPLE)
-+     target_link_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -Wl,-Bsymbolic -Wl,-Bsymbolic-functions)
-+ endif (NOT APPLE)
-+diff --git a/simple64-audio-sdl2/CMakeLists.txt b/simple64-audio-sdl2/CMakeLists.txt
-+index d80a484..6d4d691 100644
-+--- a/simple64-audio-sdl2/CMakeLists.txt
-++++ b/simple64-audio-sdl2/CMakeLists.txt
-+@@ -26,13 +26,13 @@ set_property(TARGET simple64-audio-sdl2 PROPERTY VISIBILITY_INLINES_HIDDEN ON)
-+ set_target_properties(simple64-audio-sdl2 PROPERTIES PREFIX "")
-+ target_compile_options(simple64-audio-sdl2 PRIVATE -Ofast)
-+ target_link_options(simple64-audio-sdl2 PRIVATE -Ofast)
-+-if (CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
-+-    target_compile_options(simple64-audio-sdl2 PRIVATE -march=armv8-a)
-+-    target_link_options(simple64-audio-sdl2 PRIVATE -march=armv8-a)
-+-else()
-++# if (CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
-++#     target_compile_options(simple64-audio-sdl2 PRIVATE -march=armv8-a)
-++#     target_link_options(simple64-audio-sdl2 PRIVATE -march=armv8-a)
-++# else()
-+     target_compile_options(simple64-audio-sdl2 PRIVATE -march=x86-64-v3)
-+     target_link_options(simple64-audio-sdl2 PRIVATE -march=x86-64-v3)
-+-endif()
-++# endif()
-+ if (NOT APPLE)
-+     target_link_options(simple64-audio-sdl2 PRIVATE -Wl,-Bsymbolic -Wl,-Bsymbolic-functions)
-+ endif (NOT APPLE)
++++ b/packages/emulators/standalone/simple64-sa/config/simple64-gui.ini
+@@ -0,0 +1,3 @@
++[General]
++configDirPath=/storage/.config/mupen64plus
++inputPlugin=mupen64plus-input-sdl.so
+diff --git a/packages/emulators/standalone/simple64-sa/package.mk b/packages/emulators/standalone/simple64-sa/package.mk
+index fb196d23..bdb85156 100644
+--- a/packages/emulators/standalone/simple64-sa/package.mk
++++ b/packages/emulators/standalone/simple64-sa/package.mk
+@@ -6,7 +6,7 @@ PKG_VERSION="23107ed09a091b890c008fa71a69fc0a0ccc54cc"
+ PKG_LICENSE="GPLv3"
+ PKG_SITE="https://github.com/simple64/simple64"
+ PKG_URL="${PKG_SITE}.git"
+-PKG_DEPENDS_TARGET="toolchain qt5"
++PKG_DEPENDS_TARGET="toolchain qt5 mupen64plus-sa-core mupen64plus-sa-input-sdl"
+ PKG_LONGDESC="Simple64, a N64 Emulator"
+ PKG_TOOLCHAIN="manual"
+ 
+@@ -22,3 +22,33 @@ make_target() {
+   cd ${PKG_BUILD}
+   ./build.sh
+ }
++
++makeinstall_target() {
++  # Install the main library with a slightly different name from base mupen
++  mkdir -p ${INSTALL}/usr/local/lib
++  cp ${PKG_BUILD}/simple64/libmupen64plus.so ${INSTALL}/usr/local/lib/libsimple64.so
++  chmod 644 ${INSTALL}/usr/local/lib/libsimple64.so
++
++  # Install the rest of the libraries
++  mkdir -p ${INSTALL}/usr/local/lib/mupen64plus
++  #${STRIP} ${PKG_BUILD}/simple64/simple64-audio-sdl2.so
++  cp ${PKG_BUILD}/simple64/simple64-audio-sdl2.so ${INSTALL}/usr/local/lib/mupen64plus
++  #${STRIP} ${PKG_BUILD}/simple64/simple64-rsp-parallel.so
++  cp ${PKG_BUILD}/simple64/simple64-rsp-parallel.so ${INSTALL}/usr/local/lib/mupen64plus
++  #${STRIP} ${PKG_BUILD}/simple64/simple64-video-parallel.so
++  cp ${PKG_BUILD}/simple64/simple64-video-parallel.so ${INSTALL}/usr/local/lib/mupen64plus
++  chmod 0644 ${INSTALL}/usr/local/lib/mupen64plus/*
++
++  # Install additional files it needs to the share
++  mkdir -p ${INSTALL}/usr/local/share/mupen64plus
++  cp ${PKG_DIR}/config/simple64-gui.ini ${INSTALL}/usr/local/share/mupen64plus
++  cp ${PKG_BUILD}/simple64/pif.ntsc.rom ${INSTALL}/usr/local/share/mupen64plus
++  cp ${PKG_BUILD}/simple64/pif.pal.rom ${INSTALL}/usr/local/share/mupen64plus
++  chmod 0644 ${INSTALL}/usr/local/share/mupen64plus/*
++
++
++  # Install the main executable
++  mkdir -p ${INSTALL}/usr/local/bin
++  cp ${PKG_BUILD}/simple64/simple64-gui ${INSTALL}/usr/local/bin
++  chmod 0755 ${INSTALL}/usr/local/bin/simple64-gui
++}
+\ No newline at end of file
+diff --git a/packages/emulators/standalone/simple64-sa/patches/001-fix_build_sh.patch b/packages/emulators/standalone/simple64-sa/patches/001-fix_build_sh.patch
+index c2bb96e1..0e4949c6 100644
+--- a/packages/emulators/standalone/simple64-sa/patches/001-fix_build_sh.patch
++++ b/packages/emulators/standalone/simple64-sa/patches/001-fix_build_sh.patch
+@@ -1,16 +1,8 @@
+ diff --git a/build.sh b/build.sh
+-index 24d073d..52c41cf 100755
++index 24d073d..9d14e3c 100755
+ --- a/build.sh
+ +++ b/build.sh
+-@@ -1,7 +1,6 @@
+- #!/usr/bin/env bash
+- 
+- set -e
+--set -o pipefail
+- 
+- RELEASE_TYPE="Release"
+- 
+-@@ -34,18 +33,6 @@ VERBOSE=1 cmake --build .
++@@ -34,17 +34,17 @@ VERBOSE=1 cmake --build .
+  cp ./*mupen64plus"${suffix}" "${install_dir}"
+  cp "${base_dir}/mupen64plus-core/data/"* "${install_dir}"
+  
+@@ -25,7 +17,32 @@ index 24d073d..52c41cf 100755
+ -cmake -G Ninja -DCMAKE_BUILD_TYPE="${RELEASE_TYPE}" ..
+ -VERBOSE=1 cmake --build .
+ -cp simple64-input-qt.* "${install_dir}"
+--
+++# mkdir -p "${base_dir}/simple64-input-raphnetraw/build"
+++# cd "${base_dir}/simple64-input-raphnetraw/build"
+++# cmake -G Ninja -DCMAKE_BUILD_TYPE="${RELEASE_TYPE}" ..
+++# VERBOSE=1 cmake --build .
+++# cp simple64-input-raphnetraw.* "${install_dir}"
+++
+++# mkdir -p "${base_dir}/simple64-input-qt/build"
+++# cd "${base_dir}/simple64-input-qt/build"
+++# cmake -G Ninja -DCMAKE_BUILD_TYPE="${RELEASE_TYPE}" ..
+++# VERBOSE=1 cmake --build .
+++# cp simple64-input-qt.* "${install_dir}"
++ 
+  mkdir -p "${base_dir}/simple64-audio-sdl2/build"
+  cd "${base_dir}/simple64-audio-sdl2/build"
+- cmake -G Ninja -DCMAKE_BUILD_TYPE="${RELEASE_TYPE}" ..
++@@ -141,11 +141,11 @@ elif [[ ${UNAME} == *"Darwin"* ]]; then
++ else
++   if [[ "${PLATFORM}" == "aarch64" ]]; then
++     my_os=linux_aarch64
++-    cp "${base_dir}/simple64-input-qt/vosk/aarch64/libvosk.so" "${install_dir}"
+++    # cp "${base_dir}/simple64-input-qt/vosk/aarch64/libvosk.so" "${install_dir}"
++   else
++     my_os=linux_x86_64
++-    cp "${base_dir}/simple64-gui/discord/libdiscord_game_sdk.so" "${install_dir}"
++-    cp "${base_dir}/simple64-input-qt/vosk/x86_64/libvosk.so" "${install_dir}"
+++    # cp "${base_dir}/simple64-gui/discord/libdiscord_game_sdk.so" "${install_dir}"
+++    # cp "${base_dir}/simple64-input-qt/vosk/x86_64/libvosk.so" "${install_dir}"
++   fi
++ fi
++ 
+diff --git a/packages/emulators/standalone/simple64-sa/patches/002-lib-plugin-redirect.patch b/packages/emulators/standalone/simple64-sa/patches/002-lib-plugin-redirect.patch
+new file mode 100644
+index 00000000..6b09027c
+--- /dev/null
++++ b/packages/emulators/standalone/simple64-sa/patches/002-lib-plugin-redirect.patch
+@@ -0,0 +1,39 @@
++diff --git a/build.sh b/build.sh
++index 24d073d..356a131 100755
++--- a/build.sh
+++++ b/build.sh
++@@ -70,7 +70,7 @@ fi
++ 
++ mkdir -p "${base_dir}/simple64-gui/build"
++ cd "${base_dir}/simple64-gui/build"
++-cmake -G Ninja -DCMAKE_BUILD_TYPE="${RELEASE_TYPE}" ..
+++cmake -G Ninja -DPLUGIN_DIR_PATH="/usr/local/lib/mupen64plus" -DCMAKE_BUILD_TYPE="${RELEASE_TYPE}" ..
++ VERBOSE=1 cmake --build .
++ 
++ if [[ ${UNAME} == *"Darwin"* ]]; then
 +diff --git a/simple64-gui/CMakeLists.txt b/simple64-gui/CMakeLists.txt
-+index a5d3ccb..c19cdeb 100644
++index a5d3ccb..893d718 100644
 +--- a/simple64-gui/CMakeLists.txt
 ++++ b/simple64-gui/CMakeLists.txt
-+@@ -76,13 +76,13 @@ set_property(TARGET simple64-gui PROPERTY CXX_VISIBILITY_PRESET hidden)
-+ set_property(TARGET simple64-gui PROPERTY VISIBILITY_INLINES_HIDDEN ON)
-+ target_compile_options(simple64-gui PRIVATE -Ofast)
-+ target_link_options(simple64-gui PRIVATE -Ofast)
-+-if (CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
-+-    target_compile_options(simple64-gui PRIVATE -march=armv8-a)
-+-    target_link_options(simple64-gui PRIVATE -march=armv8-a)
-+-else()
-++# if (CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
-++#     target_compile_options(simple64-gui PRIVATE -march=armv8-a)
-++#     target_link_options(simple64-gui PRIVATE -march=armv8-a)
-++# else()
-+     target_compile_options(simple64-gui PRIVATE -march=x86-64-v3)
-+     target_link_options(simple64-gui PRIVATE -march=x86-64-v3)
-+-endif()
-++# endif()
-+ if (NOT APPLE)
-+     target_link_options(simple64-gui PRIVATE -Wl,-Bsymbolic -Wl,-Bsymbolic-functions)
-+ endif (NOT APPLE)
++@@ -13,7 +13,7 @@ endif()
++ 
++ include_directories(../mupen64plus-core/src/api)
++ 
++-add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x0602ff -DNETPLAY_VER=11)
+++add_definitions(-DPLUGIN_DIR_PATH="${PLUGIN_DIR_PATH}" -DQT_DISABLE_DEPRECATED_BEFORE=0x0602ff -DNETPLAY_VER=11)
++ 
++ if (DEFINED ENV{SIMPLE64_AUTOUPDATE})
++     add_definitions(-D_AUTOUPDATE)
++diff --git a/simple64-gui/osal/osal_preproc.h b/simple64-gui/osal/osal_preproc.h
++index 9bde7c1..16e318e 100644
++--- a/simple64-gui/osal/osal_preproc.h
+++++ b/simple64-gui/osal/osal_preproc.h
++@@ -59,7 +59,7 @@
++ 
++   #include <limits.h>  // for PATH_MAX
++ 
++-  #define OSAL_DEFAULT_DYNLIB_FILENAME "libmupen64plus.so"
+++  #define OSAL_DEFAULT_DYNLIB_FILENAME "/usr/local/lib/libsimple64.so"
++   #define OSAL_DIR_SEPARATOR           '/'
++   #define OSAL_CURRENT_DIR             "./"
++   #define OSAL_DLL_EXTENSION           ".so"
+diff --git a/packages/emulators/standalone/simple64-sa/patches/003-redirect-ini.patch b/packages/emulators/standalone/simple64-sa/patches/003-redirect-ini.patch
+new file mode 100644
+index 00000000..2a516f94
+--- /dev/null
++++ b/packages/emulators/standalone/simple64-sa/patches/003-redirect-ini.patch
+@@ -0,0 +1,13 @@
++diff --git a/simple64-gui/mainwindow.cpp b/simple64-gui/mainwindow.cpp
++index 07e13c8..e0fa8c7 100644
++--- a/simple64-gui/mainwindow.cpp
+++++ b/simple64-gui/mainwindow.cpp
++@@ -241,7 +241,7 @@ MainWindow::MainWindow(QWidget *parent) :
++     ui->setupUi(this);
++     this->setWindowTitle("simple64    build: " + QStringLiteral(GUI_VERSION).mid(0,7));
++ 
++-    QString ini_path = QDir(QCoreApplication::applicationDirPath()).filePath("simple64-gui.ini");
+++    QString ini_path = QDir("/storage/.config/mupen64plus").filePath("simple64-gui.ini");
++     settings = new QSettings(ini_path, QSettings::IniFormat, this);
++ 
++     if (!settings->isWritable())
+diff --git a/packages/multimedia/x265/package.mk b/packages/multimedia/x265/package.mk
+index 4a8d791f..4e72e6a7 100644
+--- a/packages/multimedia/x265/package.mk
++++ b/packages/multimedia/x265/package.mk
+@@ -11,7 +11,19 @@ PKG_DEPENDS_TARGET="toolchain"
+ PKG_LONGDESC="x265 is a H.265/HEVC video encoder application library"
+ PKG_TOOLCHAIN="make"
+ 
++if [ "${TARGET_ARCH}" = "x86_64" ]; then
++  PKG_DEPENDS_TARGET+=" nasm:host"
++fi
++
++
+ pre_configure_target() {
+   LDFLAGS="${LDFLAGS} -ldl"
+-  cmake -G "Unix Makefiles" ./source
++
++    # custom cmake build to override the LOCAL_CC/CXX
++  cp ${CMAKE_CONF} cmake-x265.conf
++
++  echo "SET(CMAKE_C_COMPILER   ${CC})"  >> cmake-x265.conf
++  echo "SET(CMAKE_CXX_COMPILER ${CXX})" >> cmake-x265.conf
++
++  cmake -DCMAKE_TOOLCHAIN_FILE=cmake-x265.conf -G "Unix Makefiles" ./source
+ }
+diff --git a/packages/ui/emulationstation/config/common/es_systems.cfg b/packages/ui/emulationstation/config/common/es_systems.cfg
+index c272c721..12705430 100644
+--- a/packages/ui/emulationstation/config/common/es_systems.cfg
++++ b/packages/ui/emulationstation/config/common/es_systems.cfg
+@@ -1277,6 +1277,7 @@
+          </emulator>
+       <emulator name="mupen64plus-sa">
+         <cores>
++          <core>simple64</core>
+           <core>m64p_gliden64</core>
+           <core>m64p_gl64mk2</core>
+           <core>m64p_rice</core>
+diff --git a/packages/ui/emulationstation/config/device/S922X/es_systems.cfg b/packages/ui/emulationstation/config/device/S922X/es_systems.cfg
+index 5bc29680..35f54420 100644
+--- a/packages/ui/emulationstation/config/device/S922X/es_systems.cfg
++++ b/packages/ui/emulationstation/config/device/S922X/es_systems.cfg
+@@ -1219,6 +1219,7 @@
+          </emulator>
+          <emulator name="mupen64plus-sa">
+             <cores>
++               <core>simple64</core>
+                <core>m64p_gliden64</core>
+                <core>m64p_gl64mk2</core>
+                <core>m64p_rice</core>
+diff --git a/packages/virtual/emulators/package.mk b/packages/virtual/emulators/package.mk
+index 8f14d589..f297ac20 100644
+--- a/packages/virtual/emulators/package.mk
++++ b/packages/virtual/emulators/package.mk
+@@ -4,9 +4,8 @@
+ PKG_NAME="emulators"
+ PKG_LICENSE="Apache-2.0"
+ PKG_SITE="www.jelos.org"
+-PKG_SECTION="emulation" # Do not change to virtual or makeinstall_target will not execute.
++PKG_SECTION="virtual"
+ PKG_LONGDESC="Emulation metapackage."
+-PKG_TOOLCHAIN="manual"
+ 
+ PKG_EMUS="flycast-sa hatarisa hypseus-singe hypseus-singe moonlight openbor pico-8 ppsspp-sa
+           vice-sa"
+@@ -34,9 +33,9 @@ case "${DEVICE}" in
+   AMD64)
+     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="lutris-wine"
+     PKG_EMUS+=" cemu-sa citra-sa dolphin-sa duckstation-sa melonds-sa minivmacsa mupen64plus-sa pcsx2-sa       \
+-                primehack rpcs3-sa ryujinx-sa scummvmsa xemu-sa yuzu-sa"
++               primehack rpcs3-sa ryujinx-sa scummvmsa xemu-sa yuzu-sa simple64-sa"
+     LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr citra-lr desmume-lr dolphin-lr flycast-lr lrps2-lr mame-lr     \
+-                      minivmac-lr play-lr"
++                     minivmac-lr play-lr"
+   ;;
+   RK358*)
+     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
+@@ -53,7 +52,7 @@ case "${DEVICE}" in
+   S922X*)
+     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
+     PKG_EMUS+=" aethersx2-sa citra-sa dolphin-sa duckstation-sa drastic-sa mupen64plus-sa yabasanshiro-sa     \
+-                box64 portmaster"
++               box64 portmaster simple64-sa"
+     LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr dolphin-lr flycast-lr"
+     PKG_RETROARCH+=" retropie-shaders"
+   ;;
+@@ -67,14 +66,3 @@ case "${DEVICE}" in
+ esac
+ 
+ PKG_DEPENDS_TARGET+=" ${PKG_EMUS} ${EMUS_32BIT} ${PKG_RETROARCH} ${LIBRETRO_CORES}"
+-
+-makeinstall_target() {
+-  ### Atari 2600 Libretro
+-  add_emu_core atari2600 retroarch stella true
+-  add_es_system atari2600
+-
+-  ### Atari 5200 Libretro
+-  add_emu_core atari5200 retroarch a5200 true
+-  add_emu_core atari5200 retroarch atari800 false
+-  add_es_system atari5200
+-}
+diff --git a/projects/Rockchip/packages/linux/package.mk b/projects/Rockchip/packages/linux/package.mk
+index c3c9c115..0840902c 100644
+--- a/projects/Rockchip/packages/linux/package.mk
++++ b/projects/Rockchip/packages/linux/package.mk
+@@ -26,7 +26,7 @@ case ${DEVICE} in
+   ;;
+   RK3566)
+     PKG_URL="${PKG_SITE}/rk356x-kernel.git"
+-    PKG_VERSION="12e859a990c093da534870e96069ed0f76a811ad"
++    PKG_VERSION="cc3d1b418"
+     GET_HANDLER_SUPPORT="git"
+     PKG_GIT_CLONE_BRANCH="main"
+   ;;

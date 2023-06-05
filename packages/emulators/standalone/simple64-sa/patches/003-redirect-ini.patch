@@ -1,0 +1,13 @@
+diff --git a/simple64-gui/mainwindow.cpp b/simple64-gui/mainwindow.cpp
+index 07e13c8..e0fa8c7 100644
+--- a/simple64-gui/mainwindow.cpp
++++ b/simple64-gui/mainwindow.cpp
+@@ -241,7 +241,7 @@ MainWindow::MainWindow(QWidget *parent) :
+     ui->setupUi(this);
+     this->setWindowTitle("simple64    build: " + QStringLiteral(GUI_VERSION).mid(0,7));
+ 
+-    QString ini_path = QDir(QCoreApplication::applicationDirPath()).filePath("simple64-gui.ini");
++    QString ini_path = QDir("/storage/.config/mupen64plus").filePath("simple64-gui.ini");
+     settings = new QSettings(ini_path, QSettings::IniFormat, this);
+ 
+     if (!settings->isWritable())

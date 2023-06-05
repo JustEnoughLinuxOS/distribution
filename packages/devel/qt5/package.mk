@@ -136,6 +136,12 @@ pre_configure_target() {
                              -skip qtwinextras
                              -skip qtx11extras"
 
+  # Vulkan support
+  if [ "${VULKAN_SUPPORT}" = "yes" ]
+  then
+    PKG_CONFIGURE_OPTS_TARGET+=" -feature-vulkan"
+  fi
+
   # Build with OpenGL or OpenGLES support
   if [ "${OPENGL_SUPPORT}" = "yes" ]; then
     PKG_CONFIGURE_OPTS_TARGET+=" -opengl -no-eglfs"
