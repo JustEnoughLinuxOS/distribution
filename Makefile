@@ -24,7 +24,7 @@ src-pkg:
 	tar cvJf sources.tar.xz sources .stamps
 
 
-world: AMD64 RK3588 RK3326 RK3566 RK3566-X55 S922X
+world: AMD64 RK3588 S922X RK3566 RK3566-X55 RK3326
 
 AMD64:
 	unset DEVICE_ROOT
