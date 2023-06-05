@@ -34,6 +34,7 @@ make_target() {
       CPPFLAGS="-DUSE_SSE2NEON"
     ;;
     x86_64)
+      export HOST_CPU=x86_64
       PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
     ;;
   esac

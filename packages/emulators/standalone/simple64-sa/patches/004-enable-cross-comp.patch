@@ -1,0 +1,115 @@
+diff --git a/mupen64plus-core/CMakeLists.txt b/mupen64plus-core/CMakeLists.txt
+index fad5e48..f20a8ab 100644
+--- a/mupen64plus-core/CMakeLists.txt
++++ b/mupen64plus-core/CMakeLists.txt
+@@ -128,13 +128,13 @@ set_property(TARGET mupen64plus PROPERTY CXX_VISIBILITY_PRESET hidden)
+ set_property(TARGET mupen64plus PROPERTY VISIBILITY_INLINES_HIDDEN ON)
+ target_compile_options(mupen64plus PRIVATE -Ofast)
+ target_link_options(mupen64plus PRIVATE -Ofast)
+-if (CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
+-    target_compile_options(mupen64plus PRIVATE -march=armv8-a)
+-    target_link_options(mupen64plus PRIVATE -march=armv8-a)
+-else()
++# if (CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
++#     target_compile_options(mupen64plus PRIVATE -march=armv8-a)
++#     target_link_options(mupen64plus PRIVATE -march=armv8-a)
++# else()
+     target_compile_options(mupen64plus PRIVATE -march=x86-64-v3)
+     target_link_options(mupen64plus PRIVATE -march=x86-64-v3)
+-endif()
++# endif()
+ if (NOT APPLE)
+     target_link_options(mupen64plus PRIVATE -Wl,-Bsymbolic -Wl,-Bsymbolic-functions)
+ endif (NOT APPLE)
+diff --git a/parallel-rdp-standalone/CMakeLists.txt b/parallel-rdp-standalone/CMakeLists.txt
+index 01d32ed..a4d777e 100644
+--- a/parallel-rdp-standalone/CMakeLists.txt
++++ b/parallel-rdp-standalone/CMakeLists.txt
+@@ -74,13 +74,13 @@ set_property(TARGET ${NAME_PLUGIN_SIMPLE64} PROPERTY CXX_VISIBILITY_PRESET hidde
+ set_property(TARGET ${NAME_PLUGIN_SIMPLE64} PROPERTY VISIBILITY_INLINES_HIDDEN ON)
+ target_compile_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -Ofast)
+ target_link_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -Ofast)
+-if (CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
+-    target_compile_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -march=armv8-a)
+-    target_link_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -march=armv8-a)
+-else()
++# if (CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
++#     target_compile_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -march=armv8-a)
++#     target_link_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -march=armv8-a)
++# else()
+     target_compile_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -march=x86-64-v3)
+     target_link_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -march=x86-64-v3)
+-endif()
++# endif()
+ if (NOT APPLE)
+     target_link_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -Wl,-Bsymbolic -Wl,-Bsymbolic-functions)
+ endif (NOT APPLE)
+diff --git a/parallel-rsp/CMakeLists.txt b/parallel-rsp/CMakeLists.txt
+index 9c5bfcf..96a6b92 100644
+--- a/parallel-rsp/CMakeLists.txt
++++ b/parallel-rsp/CMakeLists.txt
+@@ -89,13 +89,13 @@ set_property(TARGET ${NAME_PLUGIN_SIMPLE64} PROPERTY CXX_VISIBILITY_PRESET hidde
+ set_property(TARGET ${NAME_PLUGIN_SIMPLE64} PROPERTY VISIBILITY_INLINES_HIDDEN ON)
+ target_compile_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -DHAVE_MMAP -Ofast)
+ target_link_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -DHAVE_MMAP -Ofast)
+-if (CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
+-    target_compile_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -march=armv8-a)
+-    target_link_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -march=armv8-a)
+-else()
++# if (CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
++#     target_compile_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -march=armv8-a)
++#     target_link_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -march=armv8-a)
++# else()
+     target_compile_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -march=x86-64-v3)
+     target_link_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -march=x86-64-v3)
+-endif()
++# endif()
+ if (NOT APPLE)
+     target_link_options(${NAME_PLUGIN_SIMPLE64} PRIVATE -Wl,-Bsymbolic -Wl,-Bsymbolic-functions)
+ endif (NOT APPLE)
+diff --git a/simple64-audio-sdl2/CMakeLists.txt b/simple64-audio-sdl2/CMakeLists.txt
+index d80a484..6d4d691 100644
+--- a/simple64-audio-sdl2/CMakeLists.txt
++++ b/simple64-audio-sdl2/CMakeLists.txt
+@@ -26,13 +26,13 @@ set_property(TARGET simple64-audio-sdl2 PROPERTY VISIBILITY_INLINES_HIDDEN ON)
+ set_target_properties(simple64-audio-sdl2 PROPERTIES PREFIX "")
+ target_compile_options(simple64-audio-sdl2 PRIVATE -Ofast)
+ target_link_options(simple64-audio-sdl2 PRIVATE -Ofast)
+-if (CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
+-    target_compile_options(simple64-audio-sdl2 PRIVATE -march=armv8-a)
+-    target_link_options(simple64-audio-sdl2 PRIVATE -march=armv8-a)
+-else()
++# if (CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
++#     target_compile_options(simple64-audio-sdl2 PRIVATE -march=armv8-a)
++#     target_link_options(simple64-audio-sdl2 PRIVATE -march=armv8-a)
++# else()
+     target_compile_options(simple64-audio-sdl2 PRIVATE -march=x86-64-v3)
+     target_link_options(simple64-audio-sdl2 PRIVATE -march=x86-64-v3)
+-endif()
++# endif()
+ if (NOT APPLE)
+     target_link_options(simple64-audio-sdl2 PRIVATE -Wl,-Bsymbolic -Wl,-Bsymbolic-functions)
+ endif (NOT APPLE)
+diff --git a/simple64-gui/CMakeLists.txt b/simple64-gui/CMakeLists.txt
+index a5d3ccb..c19cdeb 100644
+--- a/simple64-gui/CMakeLists.txt
++++ b/simple64-gui/CMakeLists.txt
+@@ -76,13 +76,13 @@ set_property(TARGET simple64-gui PROPERTY CXX_VISIBILITY_PRESET hidden)
+ set_property(TARGET simple64-gui PROPERTY VISIBILITY_INLINES_HIDDEN ON)
+ target_compile_options(simple64-gui PRIVATE -Ofast)
+ target_link_options(simple64-gui PRIVATE -Ofast)
+-if (CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
+-    target_compile_options(simple64-gui PRIVATE -march=armv8-a)
+-    target_link_options(simple64-gui PRIVATE -march=armv8-a)
+-else()
++# if (CMAKE_SYSTEM_PROCESSOR STREQUAL "aarch64")
++#     target_compile_options(simple64-gui PRIVATE -march=armv8-a)
++#     target_link_options(simple64-gui PRIVATE -march=armv8-a)
++# else()
+     target_compile_options(simple64-gui PRIVATE -march=x86-64-v3)
+     target_link_options(simple64-gui PRIVATE -march=x86-64-v3)
+-endif()
++# endif()
+ if (NOT APPLE)
+     target_link_options(simple64-gui PRIVATE -Wl,-Bsymbolic -Wl,-Bsymbolic-functions)
+ endif (NOT APPLE)
