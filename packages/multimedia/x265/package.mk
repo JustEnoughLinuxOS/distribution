@@ -11,7 +11,19 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="x265 is a H.265/HEVC video encoder application library"
 PKG_TOOLCHAIN="make"
 
+if [ "${TARGET_ARCH}" = "x86_64" ]; then
+  PKG_DEPENDS_TARGET+=" nasm:host"
+fi
+
+
 pre_configure_target() {
   LDFLAGS="${LDFLAGS} -ldl"
-  cmake -G "Unix Makefiles" ./source
+
+    # custom cmake build to override the LOCAL_CC/CXX
+  cp ${CMAKE_CONF} cmake-x265.conf
+
+  echo "SET(CMAKE_C_COMPILER   ${CC})"  >> cmake-x265.conf
+  echo "SET(CMAKE_CXX_COMPILER ${CXX})" >> cmake-x265.conf
+
+  cmake -DCMAKE_TOOLCHAIN_FILE=cmake-x265.conf -G "Unix Makefiles" ./source
 }
