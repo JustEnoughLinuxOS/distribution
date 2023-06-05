@@ -1157,6 +1157,18 @@ msgstr "최상"
 msgid "HARDWARE / GPU"
 msgstr "하드웨어 / GPU"
 
+msgid "HARDWARE / SUSPEND"
+msgstr "하드웨어 / SUSPEND"
+
+msgid "DEVICE SUSPEND MODE"
+msgstr "DEVICE SUSPEND MODE"
+
+msgid "FREEZE (S0)"
+msgstr "FREEZE (S0)"
+
+msgid "DEEP (S3)"
+msgstr "DEEP (S3)"
+
 msgid "HARDWARE / WIFI"
 msgstr "하드웨어 / WIFI"
 
