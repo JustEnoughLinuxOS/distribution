@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2018 Team LibreELEC (https://libreelec.tv)
 # Copyright (C) 2018-present Team CoreELEC (https://coreelec.org)
+# Copyright (C) 2021-present Fewtarius
 
 ### FUNCTION HELPERS ###
 # die (message, code) abort with optional message and code
@@ -1761,6 +1762,128 @@ exec_thread_safe() {
   result=$?
   release_exclusive_lock "${PKG_NAME:exec}" "execcmd"
   return ${result}
+}
+
+clean_es_cache() {
+  ESTMP="${ROOT}/.es_cache"
+  if [ -d "${ESTMP}" ]
+  then
+    rm -rf "${ESTMP}"
+  fi
+}
+
+add_emu_core() {
+  if [ ! -d "${ESTMP}" ]
+  then
+    mkdir "${ESTMP}"
+  fi
+
+  # Schema: emulator|core|true/false
+  echo "${2}|${3}|${4}" >>${ESTMP}/${1}-emulators.tmp
+}
+
+mk_es_systems() {
+  cat <<EOF >${ESTMP}/.es_systems.cfg
+<?xml version="1.0" encoding="UTF-8"?>
+<systemList>
+EOF
+  rm -f ${ESTMP}/*-emulators.tmp
+  for essystem in $(ls ${ESTMP}/*.tmp | sort)
+  do
+    cat ${essystem} >>${ESTMP}/.es_systems.cfg
+  done
+  cat <<EOF >>${ESTMP}/.es_systems.cfg
+</systemList>
+EOF
+xmlstarlet fo -t ${ESTMP}/.es_systems.cfg >${ESTMP}/es_systems.cfg 2>/dev/null
+} 
+
+add_es_system() {
+  if [ -e "${ROOT}/config/emulators/${1}.conf" ]
+  then
+    . ${ROOT}/config/emulators/${1}.conf
+  fi
+
+  if [ ! -d "${ESTMP}" ]
+  then
+    mkdir "${ESTMP}"
+  fi
+
+  if [ ! -e "${ESTMP}/${SYSTEM_NAME}.tmp" ]
+  then
+    cat <<EOF >${ESTMP}/${SYSTEM_NAME}.tmp
+<system>
+	<name>${SYSTEM_NAME}</name>
+	<fullname>${SYSTEM_FULLNAME}</fullname>
+	<manufacturer>${SYSTEM_MANUFACTURER}</manufacturer>
+	<release>${SYSTEM_RELEASE}</release>
+	<hardware>${SYSTEM_HARDWARE}</hardware>
+	<path>${SYSTEM_PATH}</path>
+	<extension>${SYSTEM_EXTENSION}</extension>
+	<command>${SYSTEM_COMMAND}</command>
+	<platform>${SYSTEM_PLATFORM}</platform>
+	<theme>${SYSTEM_THEME}</theme>
+</system>
+EOF
+  fi
+
+  if [ -e "${ESTMP}/${SYSTEM_NAME}-emulators.tmp" ]
+  then
+    while read -r line
+    do
+      SYSTEM_EMULATOR=$(echo ${line} | awk 'BEGIN {FS="|"} {print $1}')
+      SYSTEM_CORE=$(echo ${line} | awk 'BEGIN {FS="|"} {print $2}')
+      SYSTEM_DEFAULT=$(echo ${line} | awk 'BEGIN {FS="|"} {print $3}')
+
+      ### Check to see if we've already added an emulator key.
+      EMTEST=$(xmlstarlet sel -t -c "//system/emulators" ${ESTMP}/${SYSTEM_NAME}.tmp 2>/dev/null ||:)
+      if [ -z "${EMTEST}" ]
+      then
+        ### Add the emulator element
+        xmlstarlet ed --omit-decl --inplace \
+          -s "//system" -t elem -n "emulators" -v "" \
+          ${ESTMP}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+      fi
+
+      ### Check to see if we've already added an emulator key.
+      EETEST=$(xmlstarlet sel -t -c "//system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]" ${ESTMP}/${SYSTEM_NAME}.tmp 2>/dev/null ||:)
+      if [ -z "${EETEST}" ]
+      then
+        ### Add the emulator element
+        xmlstarlet ed --omit-decl --inplace \
+          -s "//system/emulators" -t elem -n "emulator" -v "" \
+          ${ESTMP}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+      fi
+
+      ### Add an attribute defining the emulator's name.
+      xmlstarlet ed --omit-decl --inplace \
+          -s "//system/emulators/emulator[not(@name)]" -t attr -n "name" -v "${SYSTEM_EMULATOR}" \
+          ${ESTMP}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+
+      ### Check to see if we've already added a core element.
+      COTEST=$(xmlstarlet sel -t -c "//system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]/cores/core" ${ESTMP}/${SYSTEM_NAME}.tmp 2>/dev/null ||:)
+      if [ -z "${COTEST}" ]
+      then
+        xmlstarlet ed --omit-decl --inplace \
+            -s "//system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]" -t elem -n "cores" -v "" \
+            ${ESTMP}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+      fi
+
+      ### Add each core.
+      xmlstarlet ed --omit-decl --inplace \
+          -s "//system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]/cores" -t elem -n "core" -v "${SYSTEM_CORE}" \
+          ${ESTMP}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+
+      if [ "${SYSTEM_DEFAULT}" = "true" ]
+      then
+        ### Add an attribute defining the default core
+        xmlstarlet ed --omit-decl --inplace \
+            -i "//system/emulators/emulator[@name=\"${SYSTEM_EMULATOR}\"]/cores/core" -t attr -n "default" -v "true" \
+            ${ESTMP}/${SYSTEM_NAME}.tmp 2>&1 >/dev/null
+      fi
+    done <${ESTMP}/${SYSTEM_NAME}-emulators.tmp
+  fi
+
 }
 
 # Use distribution functions if any

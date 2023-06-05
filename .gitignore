@@ -43,5 +43,8 @@
 .DS_Store
 .directory
 
+# es generation files
+.es_cache/
+
 # release images
 release/
