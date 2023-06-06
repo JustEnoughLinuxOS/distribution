@@ -27,6 +27,7 @@ make_target() {
       PKG_MAKE_OPTS_TARGET+="-DNOHQ=On -DCRC_ARMV8=On -DEGL=On -DNEON_OPT=On"
     ;;
     x86_64)
+      export HOST_CPU=x86_64
       PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
     ;;
   esac

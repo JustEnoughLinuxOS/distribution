@@ -1,6 +1,9 @@
-# Device definition file for the Rockchip RK3588 devices
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2022-present Fewtarius 
+# Copyright (C) 2022-present Brooksytech
 
-# Device Features
+cat <<EOF >/storage/.config/profile.d/001-deviceconfig
 DEVICE_VOLUMECTL=true
 DEVICE_AUDIO_MIXER="PCM"
 DEVICE_PLAYBACK_PATH_SPK="SPK"
@@ -18,3 +21,4 @@ GPU_FREQ=("/sys/devices/platform/fb000000.gpu/devfreq/fb000000.gpu")
 # Affinity
 SLOW_CORES="taskset -c 0-3"
 FAST_CORES="taskset -c 4-7"
+EOF

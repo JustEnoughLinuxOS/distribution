@@ -11,11 +11,14 @@ PKG_LONGDESC="Simple64, a N64 Emulator"
 PKG_TOOLCHAIN="manual"
 
 pre_configure_target() {
-  case ${TARGET_ARCH} in
+  case ${ARCH} in
     aarch64|arm)
+      export HOST_CPU=aarch64
       find . -type f -name CMakeLists.txt -exec sed -i 's/x86-64-v3/armv8-a/g' {} \;
     ;;
-  esac
+    x86_64)
+      export HOST_CPU=x86_64
+    ;;
 }
 
 make_target() {

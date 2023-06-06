@@ -88,6 +88,9 @@ if [ -z "${PYTHON_EGG_CACHE}" ]; then
   export PYTHON_EGG_CACHE="${BUILD}/.egg_cache"
 fi
 
+# Adds a temp directory for constructing es_systems.cfg
+ESTMP="${ESTMP:-${ROOT}/.es_cache}"
+
 if [[ -z "$PATH" || ( "$PATH" != "${TOOLCHAIN}/bin:${TOOLCHAIN}/sbin" && "$PATH" = "${PATH#${TOOLCHAIN}/bin:${TOOLCHAIN}/sbin:}" ) ]]; then
   export PATH="${TOOLCHAIN}/bin:${TOOLCHAIN}/sbin${PATH:+":$PATH"}"
 fi

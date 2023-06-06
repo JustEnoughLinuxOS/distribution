@@ -2,9 +2,9 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="citra-sa"
-PKG_VERSION="2fd5b184814034eb5cff474b54900e59cc884af6"
+PKG_VERSION="e52b7e6"
 PKG_LICENSE="MPLv2"
-PKG_SITE="https://github.com/citra-emu/citra-canary"
+PKG_SITE="https://github.com/JustEnoughLinuxOS/citra-canary"
 PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain ffmpeg mesa SDL2 boost zlib libusb boost zstd"
 PKG_LONGDESC="Citra 3DS emulator"

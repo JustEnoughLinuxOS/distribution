@@ -42,7 +42,7 @@
 
 # Define package sets to clean based on the type of build being executed.
 # This should be updated to be more dynamic in the future.
-  CLEAN_OS_BASE="initramfs system-utils modules quirks autostart splash jelos"
+  CLEAN_OS_BASE="emulators initramfs system-utils modules quirks autostart splash jelos"
   CLEAN_NETWORK="RTL8821CS-firmware"
   CLEAN_EMU_32BIT="lib32 box86 flycast-lr pcsx_rearmed-lr"
 
@@ -50,7 +50,7 @@
 # a BSP kernel and a rotated display when using DEVICE_ROOT.
   if [ -n "${DEVICE_ROOT}" ]
   then
-    CLEAN_DEVICE_ROOT="linux u-boot SDL2 retroarch flycast-sa duckstation-sa drastic-sa"
+    CLEAN_DEVICE_ROOT="linux u-boot SDL2 retroarch mupen64plus-sa-input-sdl flycast-sa duckstation-sa drastic-sa"
   fi
 
 # additional drivers to install:
