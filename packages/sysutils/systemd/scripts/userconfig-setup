@@ -60,14 +60,14 @@ then
     convert /usr/config/splash/splash.png \
             -gravity center \
             -crop ${ASPECT} +repage \
-            /tmp/.logo.png
+            /tmp/.logo.png 2>/dev/null
 
     convert /tmp/.logo.png \
             -quality 100 \
             -resize ${FBWIDTH}x${FBHEIGHT} \
             -background black \
             -gravity center \
-            /storage/.config/emulationstation/resources/logo.png
+            /storage/.config/emulationstation/resources/logo.png 2>/dev/null
 
     rm -f /tmp/.logo.png
 
