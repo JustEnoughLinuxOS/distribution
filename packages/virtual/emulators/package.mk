@@ -332,7 +332,7 @@ makeinstall_target() {
   ### Nintendo Wii
   case ${DEVICE} in
     AMD64|RK358*|RK356*|S922X*)
-      add_emu_core wii dolphin dolphin-sa-gc true
+      add_emu_core wii dolphin dolphin-sa-wii true
       add_emu_core wii primehack primehack false
       add_emu_core wii retroarch dolphin false
       add_es_system wii
@@ -575,8 +575,15 @@ makeinstall_target() {
   add_es_system pokemini
 
   ### ScummVM
-  add_emu_core scummvm scummvmsa scummvm true
-  add_emu_core scummvm retroarch scummvm false
+  case ${DEVICE} in
+    S922X*)
+      add_emu_core scummvm retroarch scummvm true
+    ;;
+    *)
+      add_emu_core scummvm scummvmsa scummvm true
+      add_emu_core scummvm retroarch scummvm false
+    ;;
+  esac
   add_es_system scummvm
 
   ### Sega 32X
