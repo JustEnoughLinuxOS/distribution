@@ -13,7 +13,7 @@ fi
 
 #Check if GC custom controller profile exists in .config/dolphin-emu
 if [ ! -f "/storage/.config/dolphin-emu/Custom_GCPadNew.ini" ]; then
-        cp -r "/usr/config/dolphin-emu/GCPadNew.ini" "/storage/.config/dolphin-emu/Custom_GCPadNew.ini"
+        cp -r "/usr/config/dolphin-emu/GCPadNew.ini.south" "/storage/.config/dolphin-emu/Custom_GCPadNew.ini"
 fi
 
 #Link Save States to /roms/savestates
@@ -23,6 +23,10 @@ fi
 
 rm -rf /storage/.config/dolphin-emu/StateSaves
 ln -sf /storage/roms/savestates/gamecube /storage/.config/dolphin-emu/StateSaves
+
+#Grab a clean settings file during boot
+cp -r /usr/config/dolphin-emu/GFX.ini /storage/.config/dolphin-emu.GFX.ini
+cp -r /usr/config/dolphin-emu/Dolphin.ini /storage/.config/dolphin-emu.Dolphin.ini
 
 #Set the cores to use
 CORES=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
@@ -46,6 +50,8 @@ fi
   IRES=$(get_setting internal_resolution gamecube "${GAME}")
   FPS=$(get_setting show_fps gamecube "${GAME}")
   CON=$(get_setting gamecube_controller_profile gamecube "${GAME}")
+  SHADERM=$(get_setting shader_mode gamecube "${GAME}")
+  SHADERP=$(get_setting shader_precompile gamecube "${GAME}")
   VSYNC=$(get_setting vsync gamecube "${GAME}")
 
   #Anti-Aliasing
@@ -136,7 +142,6 @@ fi
 	then
   		sed -i '/GFXBackend/c\GFXBackend = OGL' /storage/.config/dolphin-emu/Dolphin.ini
 	fi
-
 	if [ "$RENDERER" = "vulkan" ]
 	then
   		sed -i '/GFXBackend/c\GFXBackend = Vulkan' /storage/.config/dolphin-emu/Dolphin.ini
@@ -147,18 +152,51 @@ fi
         fi
 
   #Internal Resolution
-        if [ "$IRES" = "1" ]
+        if [ "$IRES" = "0" ]
         then
                 sed -i '/InternalResolution/c\InternalResolution = 1' /storage/.config/dolphin-emu/GFX.ini
         fi
-        if [ "$IRES" = "2" ]
+        if [ "$IRES" = "1" ]
         then
                 sed -i '/InternalResolution/c\InternalResolution = 2' /storage/.config/dolphin-emu/GFX.ini
         fi
+        if [ "$IRES" = "2" ]
+        then
+                sed -i '/InternalResolution/c\InternalResolution = 4' /storage/.config/dolphin-emu/GFX.ini
+        fi
         if [ "$IRES" = "3" ]
         then
-                sed -i '/InternalResolution/c\InternalResolution = 3' /storage/.config/dolphin-emu/GFX.ini
+                sed -i '/InternalResolution/c\InternalResolution = 6' /storage/.config/dolphin-emu/GFX.ini
         fi
+
+  #Shader Mode
+        if [ "$SHADERM" = "0" ]
+        then
+                sed -i '/ShaderCompilationMode =/c\ShaderCompilationMode = 0' /storage/.config/dolphin-emu/GFX.ini
+        fi
+        if [ "$SHADERM" = "1" ]
+        then
+                sed -i '/ShaderCompilationMode =/c\ShaderCompilationMode = 1' /storage/.config/dolphin-emu/GFX.ini
+        fi
+        if [ "$SHADERM" = "2" ]
+        then
+                sed -i '/ShaderCompilationMode =/c\ShaderCompilationMode = 2' /storage/.config/dolphin-emu/GFX.ini
+        fi
+        if [ "$SHADERM" = "3" ]
+        then
+                sed -i '/ShaderCompilationMode =/c\ShaderCompilationMode = 3' /storage/.config/dolphin-emu/GFX.ini
+        fi
+
+  #Shader Precompile
+        if [ "$SHADERP" = "false" ]
+        then
+                sed -i '/WaitForShadersBeforeStarting =/c\WaitForShadersBeforeStarting = False' /storage/.config/dolphin-emu/GFX.ini
+        fi
+        if [ "$SHADERP" = "true" ]
+        then
+                sed -i '/WaitForShadersBeforeStarting =/c\WaitForShadersBeforeStarting = True' /storage/.config/dolphin-emu/GFX.ini
+        fi
+
 
   #Show FPS
 	if [ "$FPS" = "false" ]
