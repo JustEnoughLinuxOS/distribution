@@ -54,7 +54,7 @@ case "${DEVICE}" in
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
     PKG_EMUS+=" aethersx2-sa citra-sa dolphin-sa duckstation-sa drastic-sa mupen64plus-sa yabasanshiro-sa     \
                 box64 portmaster"
-    LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr dolphin-lr flycast-lr"
+    LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr dolphin-lr flycast-lr mame-lr"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
   RK3326*)
@@ -86,7 +86,7 @@ makeinstall_target() {
   ### System | Emulator | Core | Default
   ### 3do      retroarch  opera  true
   ###
- 
+
   ### Flush cache from previous builds
   clean_es_cache
 
@@ -95,9 +95,17 @@ makeinstall_target() {
   add_es_system 3do
 
   ### Nintendo 3DS
-  add_emu_core 3ds retroarch citra true
-  add_emu_core 3ds citra citra-sa false
-  add_es_system 3ds
+  case ${DEVICE} in
+    AMD64)
+      add_emu_core 3ds retroarch citra true
+      add_emu_core 3ds citra citra-sa false
+      add_es_system 3ds
+    ;;
+    S922X*)
+      add_emu_core 3ds citra citra-sa true
+      add_es_system 3ds
+    ;;
+  esac
 
   ### Commodore Amiga
   add_emu_core amiga retroarch puae true
@@ -127,10 +135,14 @@ makeinstall_target() {
   add_emu_core arcade retroarch mame2000 false
   add_emu_core arcade retroarch mame2010 false
   add_emu_core arcade retroarch mame2015 false
-  add_emu_core arcade retroarch mame false
   add_emu_core arcade retroarch fbneo false
   add_emu_core arcade retroarch fbalpha2012 false
   add_emu_core arcade retroarch fbalpha2019 false
+  case ${DEVICE} in
+    AMD64|RK3588|S922X)
+      add_emu_core arcade retroarch mame false
+    ;;
+  esac
   add_es_system arcade
 
   ### Atari 2600 Libretro
@@ -159,6 +171,11 @@ makeinstall_target() {
   add_emu_core atomiswave retroarch flycast true
   add_emu_core atomiswave retroarch flycast2021 false
   add_emu_core atomiswave flycast flycast-sa false
+  case ${DEVICE} in
+    RK3*)
+      add_emu_core atomiswave retroarch flycast32 true
+    ;;
+  esac
   add_es_system atomiswave
 
   ### Fairchild Channel F
@@ -243,6 +260,11 @@ makeinstall_target() {
   add_emu_core dreamcast retroarch flycast true
   add_emu_core dreamcast retroarch flycast2021 false
   add_emu_core dreamcast flycast flycast-sa false
+  case ${DEVICE} in
+    RK3*)
+      add_emu_core dreamcast retroarch flycast32 true
+    ;;
+  esac
   add_es_system dreamcast
 
   ### EasyRPG
@@ -427,6 +449,11 @@ makeinstall_target() {
   add_emu_core naomi retroarch flycast true
   add_emu_core naomi retroarch flucast2021 false
   add_emu_core naomi flycast flycast-sa false
+  case ${DEVICE} in
+    RK3*)
+      add_emu_core naomi retroarch flycast32 true
+    ;;
+  esac
   add_es_system naomi
 
   ### SNK NeoGeo
@@ -529,14 +556,21 @@ makeinstall_target() {
   add_es_system pico-8
 
   ### Sony Playstation
-  case ${TARGET_ARCH} in
-    x86_64)
+  case ${DEVICE} in
+    AMD64)
       add_emu_core psx retroarch beetle_psx true
       add_emu_core psx Duckstation duckstation-sa false
     ;;
-    aarch64)
+    S922X*)
+      add_emu_core psx retroarch pcsx_rearmed true
+      add_emu_core psx retroarch beetle_psx false
+      add_emu_core psx Duckstation duckstation-sa false
+    ;;
+    RK3*)
       add_emu_core psx retroarch pcsx_rearmed32 true
       add_emu_core psx retroarch pcsx_rearmed false
+      add_emu_core psx retroarch beetle_psx false
+      add_emu_core psx Duckstation duckstation-sa false
     ;;
   esac
   add_emu_core psx retroarch duckstation false
@@ -544,10 +578,14 @@ makeinstall_target() {
   add_es_system psx
 
   ### Sony Playstation 2
-  case ${TARGET_ARCH} in
-    x86_64)
+  case ${DEVICE} in
+    AMD64)
       add_emu_core ps2 retroarch pcsx2 true
       add_emu_core ps2 pcsx2 pcsx2-sa false
+      add_es_system ps2
+    ;;
+    RK3588|S922X*)
+      add_emu_core ps2 aethersx2 aethersx2-sa true
       add_es_system ps2
     ;;
   esac
@@ -784,7 +822,7 @@ makeinstall_target() {
 
   ### Screenshots
   add_es_system imageviewer
-  
+
   ### Create es_systems
   mk_es_systems
 
