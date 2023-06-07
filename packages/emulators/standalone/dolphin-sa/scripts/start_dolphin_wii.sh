@@ -24,6 +24,13 @@ if [ ! -d "/storage/roms/savestates/wii/" ]; then
     mkdir -p "/storage/roms/savestates/wii/"
 fi
 
+rm -rf /storage/.config/dolphin-emu/StateSaves
+ln -sf /storage/roms/savestates/wii /storage/.config/dolphin-emu/StateSaves
+
+#Grab a clean settings file during boot
+cp -r /usr/config/dolphin-emu/GFX.ini /storage/.config/dolphin-emu.GFX.ini
+cp -r /usr/config/dolphin-emu/Dolphin.ini /storage/.config/dolphin-emu.Dolphin.ini
+
 #Set the cores to use
 CORES=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
 if [ "${CORES}" = "little" ]
@@ -37,9 +44,6 @@ else
   unset EMUPERF
 fi
 
-rm -rf /storage/.config/dolphin-emu/StateSaves
-ln -sf /storage/roms/savestates/wii /storage/.config/dolphin-emu/StateSaves
-
   #Emulation Station options
   GAME=$(echo "${1}"| sed "s#^/.*/##")
   AA=$(get_setting anti_aliasing wii "${GAME}")
@@ -49,6 +53,8 @@ ln -sf /storage/roms/savestates/wii /storage/.config/dolphin-emu/StateSaves
   IRES=$(get_setting internal_resolution wii "${GAME}")
   FPS=$(get_setting show_fps wii "${GAME}")
   CON=$(get_setting wii_controller_profile wii "${GAME}")
+  SHADERM=$(get_setting shader_mode wii "${GAME}")
+  SHADERP=$(get_setting shader_precompile wii "${GAME}")
   VSYNC=$(get_setting vsync wii "${GAME}")
 
   #Anti-Aliasing
@@ -150,17 +156,49 @@ ln -sf /storage/roms/savestates/wii /storage/.config/dolphin-emu/StateSaves
         fi
 
   #Internal Resolution
-        if [ "$IRES" = "1" ]
+        if [ "$IRES" = "0" ]
         then
                 sed -i '/InternalResolution/c\InternalResolution = 1' /storage/.config/dolphin-emu/GFX.ini
         fi
-        if [ "$IRES" = "2" ]
+        if [ "$IRES" = "1" ]
         then
                 sed -i '/InternalResolution/c\InternalResolution = 2' /storage/.config/dolphin-emu/GFX.ini
         fi
+        if [ "$IRES" = "2" ]
+        then
+                sed -i '/InternalResolution/c\InternalResolution = 4' /storage/.config/dolphin-emu/GFX.ini
+        fi
         if [ "$IRES" = "3" ]
         then
-                sed -i '/InternalResolution/c\InternalResolution = 3' /storage/.config/dolphin-emu/GFX.ini
+                sed -i '/InternalResolution/c\InternalResolution = 6' /storage/.config/dolphin-emu/GFX.ini
+        fi
+
+  #Shader Mode
+        if [ "$SHADERM" = "0" ]
+        then
+                sed -i '/ShaderCompilationMode =/c\ShaderCompilationMode = 0' /storage/.config/dolphin-emu/GFX.ini
+        fi
+        if [ "$SHADERM" = "1" ]
+        then
+                sed -i '/ShaderCompilationMode =/c\ShaderCompilationMode = 1' /storage/.config/dolphin-emu/GFX.ini
+        fi
+        if [ "$SHADERM" = "2" ]
+        then
+                sed -i '/ShaderCompilationMode =/c\ShaderCompilationMode = 2' /storage/.config/dolphin-emu/GFX.ini
+        fi
+        if [ "$SHADERM" = "3" ]
+        then
+                sed -i '/ShaderCompilationMode =/c\ShaderCompilationMode = 3' /storage/.config/dolphin-emu/GFX.ini
+        fi
+
+  #Shader Precompile
+        if [ "$SHADERP" = "false" ]
+        then
+                sed -i '/WaitForShadersBeforeStarting =/c\WaitForShadersBeforeStarting = False' /storage/.config/dolphin-emu/GFX.ini
+        fi
+        if [ "$SHADERP" = "true" ]
+        then
+                sed -i '/WaitForShadersBeforeStarting =/c\WaitForShadersBeforeStarting = True' /storage/.config/dolphin-emu/GFX.ini
         fi
 
   #Show FPS
@@ -174,9 +212,13 @@ ln -sf /storage/roms/savestates/wii /storage/.config/dolphin-emu/StateSaves
 	fi
 
   #Wii Controller Profile
-        if [ "$CON" = "remote" ]
+        if [ "$CON" = "vremote" ]
         then
-		cp -r /usr/config/dolphin-emu/WiiControllerProfiles/remote.ini /storage/.config/dolphin-emu/WiimoteNew.ini
+		cp -r /usr/config/dolphin-emu/WiiControllerProfiles/vremote.ini /storage/.config/dolphin-emu/WiimoteNew.ini
+        fi
+        if [ "$CON" = "hremote" ]
+        then
+                cp -r /usr/config/dolphin-emu/WiiControllerProfiles/hremote.ini /storage/.config/dolphin-emu/WiimoteNew.ini
         fi
         if [ "$CON" = "nunchuck" ]
         then
