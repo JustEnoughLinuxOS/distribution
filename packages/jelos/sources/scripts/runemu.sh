@@ -330,7 +330,7 @@ then
                         RUNTHIS='${TBASH} /usr/bin/start_rpcs3sa.sh "${ROMNAME}"'
                         fi
                 ;;
-                "psp")
+                "psp"|"pspminis")
                         jslisten set "-9 ppsspp"
                         if [ "$EMU" = "ppsspp-sa" ]; then
                         RUNTHIS='${TBASH} /usr/bin/start_ppsspp.sh "${ROMNAME}"'
