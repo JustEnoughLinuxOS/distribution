@@ -168,12 +168,15 @@ makeinstall_target() {
   add_es_system atarist
 
   ## Sammy Atomiswave
-  add_emu_core atomiswave retroarch flycast true
   add_emu_core atomiswave retroarch flycast2021 false
   add_emu_core atomiswave flycast flycast-sa false
   case ${DEVICE} in
     RK3*)
       add_emu_core atomiswave retroarch flycast32 true
+      add_emu_core atomiswave retroarch flycast false
+    ;;
+    *)
+      add_emu_core atomiswave retroarch flycast true
     ;;
   esac
   add_es_system atomiswave
@@ -257,12 +260,15 @@ makeinstall_target() {
   add_es_system daphne
 
   ### Sega Dreamcast
-  add_emu_core dreamcast retroarch flycast true
   add_emu_core dreamcast retroarch flycast2021 false
   add_emu_core dreamcast flycast flycast-sa false
   case ${DEVICE} in
     RK3*)
       add_emu_core dreamcast retroarch flycast32 true
+      add_emu_core dreamcast retroarch flycast false
+    ;;
+    *)
+      add_emu_core dreamcast retroarch flycast true
     ;;
   esac
   add_es_system dreamcast
@@ -446,12 +452,15 @@ makeinstall_target() {
   add_es_system msx2
 
   ### Sega Naomi
-  add_emu_core naomi retroarch flycast true
   add_emu_core naomi retroarch flucast2021 false
   add_emu_core naomi flycast flycast-sa false
   case ${DEVICE} in
     RK3*)
       add_emu_core naomi retroarch flycast32 true
+      add_emu_core naomi retroarch flycast false
+    ;;
+    *)
+      add_emu_core naomi retroarch flycast true
     ;;
   esac
   add_es_system naomi
@@ -584,7 +593,7 @@ makeinstall_target() {
       add_emu_core ps2 pcsx2 pcsx2-sa false
       add_es_system ps2
     ;;
-    RK3588|S922X*)
+    RK3588|S922X)
       add_emu_core ps2 aethersx2 aethersx2-sa true
       add_es_system ps2
     ;;
