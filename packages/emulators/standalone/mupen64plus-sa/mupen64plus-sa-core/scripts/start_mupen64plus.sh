@@ -110,12 +110,6 @@ fi
 		sed -i '/show_fps/c\show_fps = 0' $TMP/mupen64plus.cfg
 	fi
 
-if [[ "${RSP}" == "hle" ]]; then
-	SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-hle.so"
-else
-	SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-cxd4.so"
-fi
-
 # SIMPLECORE, decide which executable to use for simple64
 if [ "{$SIMPLECORE}" = "mupen" ]; then
 	SIMPLESUFFIX="-simple"
@@ -123,19 +117,28 @@ else
 	SIMPLESUFFIX=""
 fi
 
+if [[ "${RSP}" == "hle" ]]; then
+	SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-hle$SIMPLESUFFIX.so"
+else
+	SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-cxd4$SIMPLESUFFIX.so"
+fi
+
+SET_PARAMS="$SET_PARAMS --input mupen64plus-input-sdl$SIMPLESUFFIX.so"
+SET_PARAMS="$SET_PARAMS --audio mupen64plus-audio-sdl$SIMPLESUFFIX.so"
+
 echo ${SET_PARAMS}
 
 case $1 in
 	"m64p_gliden64")
-		${EMUPERF} /usr/local/bin/mupen64plus --configdir $TMP --gfx mupen64plus-video-GLideN64 $SET_PARAMS "$TMP/$ROM"
+		${EMUPERF} /usr/local/bin/mupen64plus${SIMPLESUFFIX} --configdir $TMP --gfx mupen64plus-video-GLideN64${SIMPLESUFFIX} $SET_PARAMS "$TMP/$ROM"
 	;;
 	"m64p_gl64mk2")
-		${EMUPERF} /usr/local/bin/mupen64plus --configdir $TMP --gfx mupen64plus-video-glide64mk2 $SET_PARAMS "$TMP/$ROM"
+		${EMUPERF} /usr/local/bin/mupen64plus${SIMPLESUFFIX} --configdir $TMP --gfx mupen64plus-video-glide64mk2${SIMPLESUFFIX} $SET_PARAMS "$TMP/$ROM"
 	;;
 	"m64p_rice")
-		${EMUPERF} /usr/local/bin/mupen64plus --configdir $TMP --gfx mupen64plus-video-rice $SET_PARAMS "$TMP/$ROM"
+		${EMUPERF} /usr/local/bin/mupen64plus${SIMPLESUFFIX} --configdir $TMP --gfx mupen64plus-video-rice${SIMPLESUFFIX} $SET_PARAMS "$TMP/$ROM"
 	;;
 	*)
-		${EMUPERF} /usr/local/bin/mupen64plus --configdir $TMP --gfx mupen64plus-video-rice $SET_PARAMS "$TMP/$ROM"
+		${EMUPERF} /usr/local/bin/mupen64plus${SIMPLESUFFIX} --configdir $TMP --gfx mupen64plus-video-rice${SIMPLESUFFIX} $SET_PARAMS "$TMP/$ROM"
 	;;
 esac

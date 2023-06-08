@@ -39,11 +39,11 @@ make_target() {
   export VC=0
   make -C projects/unix clean
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
-  cp ${PKG_BUILD}/projects/unix/mupen64plus ${PKG_BUILD}/projects/unix/mupen64plus_base
+  cp ${PKG_BUILD}/projects/unix/mupen64plus ${PKG_BUILD}/projects/unix/mupen64plus-base
   export CFLAGS="${CFLAGS} -DSIMPLECORE"
   make -C projects/unix clean
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
-  cp ${PKG_BUILD}/projects/unix/mupen64plus ${PKG_BUILD}/projects/unix/metalCap
+  cp ${PKG_BUILD}/projects/unix/mupen64plus ${PKG_BUILD}/projects/unix/mupen64plus-simple
 }
 
 makeinstall_target() {
@@ -54,12 +54,12 @@ makeinstall_target() {
   UAPPSDIR=${UPREFIX}/share/applications
   UICONSDIR=${UPREFIX}/share/icons/hicolor
   mkdir -p ${UBINDIR}
-  cp ${PKG_BUILD}/projects/unix/mupen64plus_base ${UBINDIR}/mupen64plus
-  cp ${PKG_BUILD}/projects/unix/metalCap ${UBINDIR}
+  cp ${PKG_BUILD}/projects/unix/mupen64plus-base ${UBINDIR}/mupen64plus
+  cp ${PKG_BUILD}/projects/unix/mupen64plus-simple ${UBINDIR}
   #${STRIP} ${UBINDIR}/mupen64plus
-  #${STRIP} ${UBINDIR}/metalCap
+  #${STRIP} ${UBINDIR}/mupen64plus-simple
   chmod 0755 ${UBINDIR}/mupen64plus
-  chmod 0755 ${UBINDIR}/metalCap
+  chmod 0755 ${UBINDIR}/mupen64plus-simple
   mkdir -p ${UMANDIR}/man6
   cp ${PKG_BUILD}/doc/mupen64plus.6 ${UMANDIR}/man6
   chmod 0644 ${UMANDIR}/man6/mupen64plus.6
