@@ -117,28 +117,43 @@ else
 	SIMPLESUFFIX=""
 fi
 
-if [[ "${RSP}" == "hle" ]]; then
-	SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-hle$SIMPLESUFFIX.so"
-else
-	SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-cxd4$SIMPLESUFFIX.so"
-fi
+# Set the video plugin
+case $1 in
+	"m64p_parallel")
+		SET_PARAMS="$SET_PARAMS --gfx mupen64plus-video-parallel${SIMPLESUFFIX}"
+		RSP="parallel"
+	;;
+	"m64p_gliden64")
+		SET_PARAMS="$SET_PARAMS --gfx mupen64plus-video-GLideN64${SIMPLESUFFIX}"
+	;;
+	"m64p_gl64mk2")
+		SET_PARAMS="$SET_PARAMS --gfx mupen64plus-video-glide64mk2${SIMPLESUFFIX}"
+	;;
+	"m64p_rice")
+		SET_PARAMS="$SET_PARAMS --gfx mupen64plus-video-rice${SIMPLESUFFIX}"
+	;;
+	*)
+		SET_PARAMS="$SET_PARAMS --gfx mupen64plus-video-rice${SIMPLESUFFIX}"
+	;;
+esac
 
+# Set the RSP plugin
+case "${RSP}" in
+	"parallel")
+		SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-parallel$SIMPLESUFFIX.so"
+	;;
+	"cxd4")
+		SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-hle$SIMPLESUFFIX.so"
+	;;
+	*)
+    	SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-cxd4$SIMPLESUFFIX.so"
+  	;;
+esac
+
+# Set the remaining plugins
 SET_PARAMS="$SET_PARAMS --input mupen64plus-input-sdl$SIMPLESUFFIX.so"
 SET_PARAMS="$SET_PARAMS --audio mupen64plus-audio-sdl$SIMPLESUFFIX.so"
 
 echo ${SET_PARAMS}
 
-case $1 in
-	"m64p_gliden64")
-		${EMUPERF} /usr/local/bin/mupen64plus${SIMPLESUFFIX} --configdir $TMP --gfx mupen64plus-video-GLideN64${SIMPLESUFFIX} $SET_PARAMS "$TMP/$ROM"
-	;;
-	"m64p_gl64mk2")
-		${EMUPERF} /usr/local/bin/mupen64plus${SIMPLESUFFIX} --configdir $TMP --gfx mupen64plus-video-glide64mk2${SIMPLESUFFIX} $SET_PARAMS "$TMP/$ROM"
-	;;
-	"m64p_rice")
-		${EMUPERF} /usr/local/bin/mupen64plus${SIMPLESUFFIX} --configdir $TMP --gfx mupen64plus-video-rice${SIMPLESUFFIX} $SET_PARAMS "$TMP/$ROM"
-	;;
-	*)
-		${EMUPERF} /usr/local/bin/mupen64plus${SIMPLESUFFIX} --configdir $TMP --gfx mupen64plus-video-rice${SIMPLESUFFIX} $SET_PARAMS "$TMP/$ROM"
-	;;
-esac
+{EMUPERF} /usr/local/bin/mupen64plus${SIMPLESUFFIX} --configdir $TMP --gfx mupen64plus-video-parallel${SIMPLESUFFIX} $SET_PARAMS "$TMP/$ROM"
