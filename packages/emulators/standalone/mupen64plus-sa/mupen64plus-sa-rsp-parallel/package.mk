@@ -22,10 +22,10 @@ make_target() {
   case ${ARCH} in
     aarch64|arm)
       export HOST_CPU=aarch64
+      CPPFLAGS="-DUSE_SSE2NEON"
     ;;
     x86_64)
       export HOST_CPU=x86_64
-	    PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
     ;;
   esac
   make clean -C ${PKG_BUILD}/build
