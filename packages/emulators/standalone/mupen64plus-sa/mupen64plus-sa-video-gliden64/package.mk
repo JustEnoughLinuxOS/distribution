@@ -6,7 +6,7 @@ PKG_VERSION="1f4d04f43b53739bc9b128ab5577d20e3d60ed6a"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/gonetz/GLideN64"
 PKG_URL="${PKG_SITE}.git"
-PKG_DEPENDS_TARGET="toolchain boost libpng SDL2 SDL2_net zlib freetype nasm:host mupen64plus-sa-core"
+PKG_DEPENDS_TARGET="toolchain boost libpng SDL2 SDL2_net zlib freetype nasm:host mupen64plus-sa-core mupen64plus-sa-simplecore"
 PKG_SHORTDESC="mupen64plus-video-gliden64"
 PKG_LONGDESC="Mupen64Plus Standalone GLide64 Video Driver"
 PKG_TOOLCHAIN="manual"
@@ -38,6 +38,11 @@ make_target() {
   export V=1
   export VC=0
   ./src/getRevision.sh
+  cmake ${PKG_MAKE_OPTS_TARGET} -DMUPENPLUSAPI=On -DGLIDEN64_BUILD_TYPE=Release -DCMAKE_C_COMPILER="${CC}" -DCMAKE_CXX_COMPILER="${CXX}" -DCMAKE_C_FLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS} -pthread" -S src -B projects/cmake
+  make clean -C projects/cmake
+  make -Wno-unused-variable -C projects/cmake
+  cp ${PKG_BUILD}/projects/cmake/plugin/Release/mupen64plus-video-GLideN64.so ${PKG_BUILD}/projects/cmake/plugin/Release/mupen64plus-video-GLideN64-base.so
+  APIDIR=$(get_build_dir mupen64plus-sa-simplecore)/.install_pkg/usr/local/include/mupen64plus
   cmake ${PKG_MAKE_OPTS_TARGET} -DMUPENPLUSAPI=On -DGLIDEN64_BUILD_TYPE=Release -DCMAKE_C_COMPILER="${CC}" -DCMAKE_CXX_COMPILER="${CXX}" -DCMAKE_C_FLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS} -pthread" -S src -B projects/cmake
   make clean -C projects/cmake
   make -Wno-unused-variable -C projects/cmake

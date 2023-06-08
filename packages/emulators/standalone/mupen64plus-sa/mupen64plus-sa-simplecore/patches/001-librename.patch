@@ -1,0 +1,15 @@
+diff --git a/projects/unix/Makefile b/projects/unix/Makefile
+index 2222fe78..0fec2cbe 100755
+--- a/projects/unix/Makefile
++++ b/projects/unix/Makefile
+@@ -209,8 +209,8 @@ ifeq ($(OS), FREEBSD)
+   endif
+ endif
+ ifeq ($(OS), LINUX)
+-  TARGET = libmupen64plus$(POSTFIX).so.2.0.0
+-  SONAME = libmupen64plus$(POSTFIX).so.2
++  TARGET = libsimple64$(POSTFIX).so.2.0.0
++  SONAME = libsimple64$(POSTFIX).so.2
+   LDFLAGS += -Wl,-Bsymbolic -shared -Wl,-export-dynamic -Wl,-soname,$(SONAME)
+   LDLIBS += -ldl
+   # only export api symbols

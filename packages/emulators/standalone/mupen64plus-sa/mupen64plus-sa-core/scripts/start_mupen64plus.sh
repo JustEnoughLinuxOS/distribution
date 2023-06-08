@@ -12,6 +12,7 @@ GAME=$(echo "${2}"| sed "s#^/.*/##")
 ASPECT=$(get_setting game_aspect_ratio n64 "${GAME}")
 IRES=$(get_setting internal_resolution n64 "${GAME}")
 RSP=$(get_setting rsp_plugin n64 "${GAME}")
+SIMPLECORE=$(get_setting core_plugin n64 "${GAME}")
 FPS=$(get_setting show_fps n64 "${GAME}")
 PAK=$(get_setting controller_pak n64 "${GAME}")
 CON=$(get_setting input_configuration n64 "${GAME}")
@@ -82,6 +83,8 @@ fi
 # Native Res Factor (Upscaling)
 	if [ "{$CORE}" = "m64p_gliden64" ]; then
 		sed -i "/UseNativeResolutionFactor/c\UseNativeResolutionFactor = $IRES" $TMP/mupen64plus.cfg
+	elif [ "{$CORE}" = "m64p_parallel" ]; then
+		sed -i "/Upscaling/c\Upscaling = $IRES" $TMP/mupen64plus.cfg
 	fi
 
 
@@ -101,19 +104,23 @@ fi
 # Get configuration from system.cfg
 	if [ "${FPS}" = "true" ]; then
 		sed -i '/ShowFPS = (False|True)/c\ShowFPS = True' $TMP/mupen64plus.cfg
-		sed -i '/ShowFPS = [0,1]/c\ShowFPS = 1' $TMP/mupen64plus.cfg
 		sed -i '/show_fps/c\show_fps = 1' $TMP/mupen64plus.cfg
 	else
 		sed -i '/ShowFPS = (False|True)/c\ShowFPS = False' $TMP/mupen64plus.cfg
-		sed -i '/ShowFPS = [0,1]/c\ShowFPS = 0' $TMP/mupen64plus.cfg
 		sed -i '/show_fps/c\show_fps = 0' $TMP/mupen64plus.cfg
 	fi
 
-# RSP
-if [ "${RSP}" = "hle" ]; then
+if [[ "${RSP}" == "hle" ]]; then
 	SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-hle.so"
 else
 	SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-cxd4.so"
+fi
+
+# SIMPLECORE, decide which executable to use for simple64
+if [ "{$SIMPLECORE}" = "mupen" ]; then
+	SIMPLESUFFIX="-simple"
+else
+	SIMPLESUFFIX=""
 fi
 
 echo ${SET_PARAMS}

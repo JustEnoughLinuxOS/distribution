@@ -6,7 +6,7 @@ PKG_VERSION="3ad5cbb56fcf4921ffae8c7b8ee52ea0ae82c044"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/mupen64plus/mupen64plus-ui-console"
 PKG_URL="https://github.com/mupen64plus/mupen64plus-ui-console/archive/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain libpng SDL2 SDL2_net zlib freetype nasm:host mupen64plus-sa-core"
+PKG_DEPENDS_TARGET="toolchain libpng SDL2 SDL2_net zlib freetype nasm:host mupen64plus-sa-core mupen64plus-sa-simplecore"
 PKG_SHORTDESC="mupen64plus-ui-console"
 PKG_LONGDESC="Mupen64Plus Standalone Console"
 PKG_TOOLCHAIN="manual"
@@ -39,6 +39,11 @@ make_target() {
   export VC=0
   make -C projects/unix clean
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
+  cp ${PKG_BUILD}/projects/unix/mupen64plus ${PKG_BUILD}/projects/unix/mupen64plus_base
+  export CFLAGS="${CFLAGS} -DSIMPLECORE"
+  make -C projects/unix clean
+  make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
+  cp ${PKG_BUILD}/projects/unix/mupen64plus ${PKG_BUILD}/projects/unix/metalCap
 }
 
 makeinstall_target() {
@@ -49,9 +54,12 @@ makeinstall_target() {
   UAPPSDIR=${UPREFIX}/share/applications
   UICONSDIR=${UPREFIX}/share/icons/hicolor
   mkdir -p ${UBINDIR}
-  cp ${PKG_BUILD}/projects/unix/mupen64plus ${UBINDIR}
+  cp ${PKG_BUILD}/projects/unix/mupen64plus_base ${UBINDIR}/mupen64plus
+  cp ${PKG_BUILD}/projects/unix/metalCap ${UBINDIR}
   #${STRIP} ${UBINDIR}/mupen64plus
+  #${STRIP} ${UBINDIR}/metalCap
   chmod 0755 ${UBINDIR}/mupen64plus
+  chmod 0755 ${UBINDIR}/metalCap
   mkdir -p ${UMANDIR}/man6
   cp ${PKG_BUILD}/doc/mupen64plus.6 ${UMANDIR}/man6
   chmod 0644 ${UMANDIR}/man6/mupen64plus.6
