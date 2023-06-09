@@ -22,21 +22,22 @@ make_target() {
   case ${ARCH} in
     aarch64|arm)
       export HOST_CPU=aarch64
+      export USE_GLES=1
     ;;
     x86_64)
       export HOST_CPU=x86_64
-	    PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
+	    export USE_GLES=0
     ;;
   esac
   cd ${PKG_BUILD}
   rm -rf build
   mkdir build
   cd build
-  APIDIR=$(get_build_dir mupen64plus-sa-core)/.install_pkg/usr/local/include/mupen64plus
+  APIDIR=${SYSROOT_PREFIX}/usr/local/include/mupen64plus
   cmake -DAPIDIR=${APIDIR} ..
   cmake --build . --parallel
   cp ${PKG_BUILD}/build/mupen64plus-video-parallel.so ${PKG_BUILD}/build/mupen64plus-video-parallel-base.so
-  APIDIR=$(get_build_dir mupen64plus-sa-simplecore)/.install_pkg/usr/local/include/mupen64plus
+  APIDIR=${SYSROOT_PREFIX}/usr/local/include/simple64  
   cmake -DAPIDIR=${APIDIR} ..
   cmake --build . --parallel
   cp ${PKG_BUILD}/build/mupen64plus-video-parallel.so ${PKG_BUILD}/build/mupen64plus-video-parallel-simple.so

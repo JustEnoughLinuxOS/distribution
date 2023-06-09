@@ -28,10 +28,10 @@ make_target() {
     ;;
     x86_64)
       export HOST_CPU=x86_64
-      PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
+      export USE_GLES=0
     ;;
   esac
-  APIDIR=$(get_build_dir mupen64plus-sa-core)/.install_pkg/usr/local/include/mupen64plus
+  APIDIR=${SYSROOT_PREFIX}/usr/local/include/mupen64plus  
   export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -pthread"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
   export CROSS_COMPILE="${TARGET_PREFIX}"
@@ -42,7 +42,7 @@ make_target() {
   make clean -C projects/cmake
   make -Wno-unused-variable -C projects/cmake
   cp ${PKG_BUILD}/projects/cmake/plugin/Release/mupen64plus-video-GLideN64.so ${PKG_BUILD}/projects/cmake/plugin/Release/mupen64plus-video-GLideN64-base.so
-  APIDIR=$(get_build_dir mupen64plus-sa-simplecore)/.install_pkg/usr/local/include/mupen64plus
+  APIDIR=${SYSROOT_PREFIX}/usr/local/include/simple64  
   cmake ${PKG_MAKE_OPTS_TARGET} -DAPIDIR=${APIDIR} -DMUPENPLUSAPI=On -DGLIDEN64_BUILD_TYPE=Release -DCMAKE_C_COMPILER="${CC}" -DCMAKE_CXX_COMPILER="${CXX}" -DCMAKE_C_FLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS} -pthread" -S src -B projects/cmake
   make clean -C projects/cmake
   make -Wno-unused-variable -C projects/cmake

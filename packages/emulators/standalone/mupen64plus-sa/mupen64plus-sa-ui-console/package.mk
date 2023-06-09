@@ -28,10 +28,10 @@ make_target() {
     ;;
     x86_64)
       export HOST_CPU=x86_64
-      PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
+      export USE_GLES=0
     ;;
   esac
-  export APIDIR=$(get_build_dir mupen64plus-sa-core)/.install_pkg/usr/local/include/mupen64plus
+  export APIDIR=${SYSROOT_PREFIX}/usr/local/include/mupen64plus
   export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -pthread"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
   export CROSS_COMPILE="${TARGET_PREFIX}"
@@ -40,7 +40,8 @@ make_target() {
   make -C projects/unix clean
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
   cp ${PKG_BUILD}/projects/unix/mupen64plus ${PKG_BUILD}/projects/unix/mupen64plus-base
-  export APIDIR=$(get_build_dir mupen64plus-sa-simplecore)/.install_pkg/usr/local/include/mupen64plus  export CFLAGS="${CFLAGS} -DSIMPLECORE"
+  export APIDIR=${SYSROOT_PREFIX}/usr/local/include/simple64  
+  export CFLAGS="${CFLAGS} -DSIMPLECORE"
   make -C projects/unix clean
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
   cp ${PKG_BUILD}/projects/unix/mupen64plus ${PKG_BUILD}/projects/unix/mupen64plus-simple
