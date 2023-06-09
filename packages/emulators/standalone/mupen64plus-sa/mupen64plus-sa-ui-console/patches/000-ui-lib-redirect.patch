@@ -7,9 +7,9 @@ index c81525f..e62bf9c 100644
    #include <limits.h>  // for PATH_MAX
  
 -  #define OSAL_DEFAULT_DYNLIB_FILENAME "libmupen64plus.so.2"
-+  if defined(SIMPLECORE)
++  #ifdef SIMPLECORE
 +    #define OSAL_DEFAULT_DYNLIB_FILENAME "libsimple64.so.2"
-+  else
++  #else
 +    #define OSAL_DEFAULT_DYNLIB_FILENAME "libmupen64plus.so.2"
 +  #endif
    #define OSAL_DIR_SEPARATOR           '/'

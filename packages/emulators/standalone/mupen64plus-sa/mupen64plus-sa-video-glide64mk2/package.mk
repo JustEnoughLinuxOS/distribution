@@ -39,11 +39,10 @@ make_target() {
   export VC=0
   make -C projects/unix clean
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
-  cp ${PKG_BUILD}/projects/unix/mupen64plus-video-glidemk2.so ${PKG_BUILD}/projects/unix/mupen64plus-video-glidemk2-base.so
-  APIDIR=$(get_build_dir mupen64plus-sa-simplecore)/.install_pkg/usr/local/include/mupen64plus
-  make -C projects/unix clean
+  cp ${PKG_BUILD}/projects/unix/mupen64plus-video-glide64mk2.so ${PKG_BUILD}/projects/unix/mupen64plus-video-glide64mk2-base.so
+  export APIDIR=$(get_build_dir mupen64plus-sa-simplecore)/.install_pkg/usr/local/include/mupen64plus
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
-  cp ${PKG_BUILD}/projects/unix/mupen64plus-video-glidemk2.so ${PKG_BUILD}/projects/unix/mupen64plus-video-glidemk2-simple.so
+  cp ${PKG_BUILD}/projects/unix/mupen64plus-video-glide64mk2.so ${PKG_BUILD}/projects/unix/mupen64plus-video-glide64mk2-simple.so
 }
 
 makeinstall_target() {

@@ -40,7 +40,7 @@ make_target() {
   make -C projects/unix clean
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
   cp ${PKG_BUILD}/projects/unix/mupen64plus-video-rice.so ${PKG_BUILD}/projects/unix/mupen64plus-video-rice-base.so
-  APIDIR=$(get_build_dir mupen64plus-sa-simplecore)/.install_pkg/usr/local/include/mupen64plus
+  export APIDIR=$(get_build_dir mupen64plus-sa-simplecore)/.install_pkg/usr/local/include/mupen64plus
   make -C projects/unix clean
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
   cp ${PKG_BUILD}/projects/unix/mupen64plus-video-rice.so ${PKG_BUILD}/projects/unix/mupen64plus-video-rice-simple.so
@@ -56,8 +56,8 @@ makeinstall_target() {
   #${STRIP} ${UPLUGINDIR}/mupen64plus-video-rice.so
   chmod 0644 ${UPLUGINDIR}/mupen64plus-video-rice.so
   cp ${PKG_BUILD}/projects/unix/mupen64plus-video-rice-simple.so ${UPLUGINDIR}
-  #${STRIP} ${UPLUGINDIR}/mupen64plus-video-simple.so
-  chmod 0644 ${UPLUGINDIR}/mupen64plus-video-simple.so
+  #${STRIP} ${UPLUGINDIR}/mupen64plus-video-rice-simple.so
+  chmod 0644 ${UPLUGINDIR}/mupen64plus-video-rice-simple.so
   mkdir -p ${USHAREDIR}
   cp ${PKG_BUILD}/data/RiceVideoLinux.ini ${USHAREDIR}
   chmod 0644 ${USHAREDIR}/RiceVideoLinux.ini

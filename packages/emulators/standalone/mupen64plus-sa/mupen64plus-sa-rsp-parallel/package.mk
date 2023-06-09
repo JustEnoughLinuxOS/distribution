@@ -4,7 +4,7 @@
 PKG_NAME="mupen64plus-sa-rsp-parallel"
 PKG_VERSION="450419c3c0eafbf9d0a95553ad33adf784a45653"
 PKG_LICENSE="MIT"
-PKG_SITE="https://github.com/rishooty/parallel-rsp.git"
+PKG_SITE="https://github.com/rishooty/parallel-rsp"
 PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain mupen64plus-sa-core mupen64plus-sa-simplecore"
 PKG_LONGDESC="Mupen64Plus Standalone Parallel64 Rsp Driver"
@@ -28,9 +28,10 @@ make_target() {
       export HOST_CPU=x86_64
     ;;
   esac
-  make clean -C ${PKG_BUILD}/build
-  mkdir ${PKG_BUILD}/build
-  cd ${PKG_BUILD}/build
+  cd ${PKG_BUILD}
+  rm -rf build
+  mkdir build
+  cd build
   APIDIR=$(get_build_dir mupen64plus-sa-core)/.install_pkg/usr/local/include/mupen64plus
   cmake -DAPIDIR=${APIDIR} ..
   cmake --build . --parallel

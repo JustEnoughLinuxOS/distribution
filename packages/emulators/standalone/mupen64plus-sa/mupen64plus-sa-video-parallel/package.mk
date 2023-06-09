@@ -4,7 +4,7 @@
 PKG_NAME="mupen64plus-sa-video-parallel"
 PKG_VERSION="7cae79e294f8762d2382a6f508aa4e476ea6f70d"
 PKG_LICENSE="MIT"
-PKG_SITE="https://github.com/rishooty/parallel-rdp-standalone.git"
+PKG_SITE="https://github.com/rishooty/parallel-rdp-standalone"
 PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain mupen64plus-sa-core mupen64plus-sa-simplecore"
 PKG_LONGDESC="Mupen64Plus Standalone Parallel64 Video Driver"
@@ -28,9 +28,10 @@ make_target() {
 	    PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
     ;;
   esac
-  make clean -C ${PKG_BUILD}/build
-  mkdir ${PKG_BUILD}/build
-  cd ${PKG_BUILD}/build
+  cd ${PKG_BUILD}
+  rm -rf build
+  mkdir build
+  cd build
   APIDIR=$(get_build_dir mupen64plus-sa-core)/.install_pkg/usr/local/include/mupen64plus
   cmake -DAPIDIR=${APIDIR} ..
   cmake --build . --parallel
