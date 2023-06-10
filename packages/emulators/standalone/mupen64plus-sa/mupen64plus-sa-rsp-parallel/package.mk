@@ -2,7 +2,7 @@
 # Copyright (C) 2023-present RiShooty (https://github.com/rishooty)
 
 PKG_NAME="mupen64plus-sa-rsp-parallel"
-PKG_VERSION="450419c3c0eafbf9d0a95553ad33adf784a45653"
+PKG_VERSION="ca25ed5b5997fd687dbdcda086cea3d08441d638"
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/rishooty/parallel-rsp"
 PKG_URL="${PKG_SITE}.git"

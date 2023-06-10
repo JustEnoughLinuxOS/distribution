@@ -2,7 +2,7 @@
 # Copyright (C) 2023-present RiShooty (https://github.com/rishooty)
 
 PKG_NAME="mupen64plus-sa-video-parallel"
-PKG_VERSION="7cae79e294f8762d2382a6f508aa4e476ea6f70d"
+PKG_VERSION="3a97537ebe99b6c53420a52a038659931f606ab7"
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/rishooty/parallel-rdp-standalone"
 PKG_URL="${PKG_SITE}.git"
