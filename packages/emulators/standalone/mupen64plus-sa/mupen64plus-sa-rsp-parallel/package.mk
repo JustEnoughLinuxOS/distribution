@@ -22,7 +22,6 @@ make_target() {
   case ${ARCH} in
     aarch64|arm)
       export HOST_CPU=aarch64
-      CPPFLAGS="-DUSE_SSE2NEON"
     ;;
     x86_64)
       export HOST_CPU=x86_64
