@@ -115,8 +115,10 @@ fi
 # SIMPLECORE, decide which executable to use for simple64
 if [ "{$SIMPLECORE}" = "mupen" ]; then
 	SIMPLESUFFIX="-simple"
+	SET_PARAMS="$SET_PARAMS --set Core[R4300Emulator]=1"
 else
 	SIMPLESUFFIX=""
+	SET_PARAMS="$SET_PARAMS --set Core[R4300Emulator]=2"
 fi
 
 # Set the video plugin
