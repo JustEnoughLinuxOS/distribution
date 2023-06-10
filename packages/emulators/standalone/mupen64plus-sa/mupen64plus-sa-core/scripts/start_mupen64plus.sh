@@ -156,4 +156,4 @@ SET_PARAMS="$SET_PARAMS --audio mupen64plus-audio-sdl$SIMPLESUFFIX.so"
 
 echo ${SET_PARAMS}
 
-{EMUPERF} /usr/local/bin/mupen64plus${SIMPLESUFFIX} --configdir $TMP --gfx mupen64plus-video-parallel${SIMPLESUFFIX} $SET_PARAMS "$TMP/$ROM"
+${EMUPERF} /usr/local/bin/mupen64plus${SIMPLESUFFIX} --configdir $TMP --gfx mupen64plus-video-parallel${SIMPLESUFFIX} $SET_PARAMS "$TMP/$ROM"
