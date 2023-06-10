@@ -69,14 +69,14 @@ fi
 #Aspect Ratio
 	if [ "${ASPECT}" = "fullscreen" ]; then
 		# TODO: Set aspect ratio to fullscreen
-		SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$SCREENWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT --set Video-Glide64mk2[aspect]=2 --set Video-GLideN64[AspectRatio]=3"
+		SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$SCREENWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT --set Video-Parallel[ScreenWidth]=$SCREENWIDTH --set Video-Parallel[ScreenHeight]=$SCREENHEIGHT --set Video-Glide64mk2[aspect]=2 --set Video-GLideN64[AspectRatio]=3 --set Video-Parallel[WidescreenStretch]=False"
 	else
 		# TODO: Set aspect ratio to 4:3
 		if [ "{$CORE}" = "m64p_rice" ]; then
 			GAMEWIDTH=$(((SCREENHEIGHT * 4) / 3))
 			SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$GAMEWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT"
 		else
-			SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$SCREENWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT --set Video-Glide64mk2[aspect]=0 --set Video-GLideN64[AspectRatio]=1"
+			SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$SCREENWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT --set Video-Parallel[ScreenWidth]=$SCREENWIDTH --set Video-Parallel[ScreenHeight]=$SCREENHEIGHT --set Video-Parallel[WidescreenStretch]=False --set Video-Glide64mk2[aspect]=0 --set Video-GLideN64[AspectRatio]=1"
 		fi
 	fi
 
@@ -104,9 +104,11 @@ fi
 # Get configuration from system.cfg
 	if [ "${FPS}" = "true" ]; then
 		sed -i '/ShowFPS = (False|True)/c\ShowFPS = True' $TMP/mupen64plus.cfg
+		sed -i '/ShowFPS = (0|1)/c\ShowFPS = 1' $TMP/mupen64plus.cfg
 		sed -i '/show_fps/c\show_fps = 1' $TMP/mupen64plus.cfg
 	else
 		sed -i '/ShowFPS = (False|True)/c\ShowFPS = False' $TMP/mupen64plus.cfg
+		sed -i '/ShowFPS = (0|1)/c\ShowFPS = 0' $TMP/mupen64plus.cfg
 		sed -i '/show_fps/c\show_fps = 0' $TMP/mupen64plus.cfg
 	fi
 
