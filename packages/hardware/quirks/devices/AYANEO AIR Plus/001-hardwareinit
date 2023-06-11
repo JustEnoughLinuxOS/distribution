@@ -9,3 +9,6 @@ if [ -z "${MYSLEEPMODE}" ]
 then
   /usr/bin/setsuspendmode mem
 fi
+
+# AYANEO Air Plus does not yet support deep sleep.
+echo s2idle >/sys/power/mem_sleep
