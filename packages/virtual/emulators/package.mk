@@ -837,4 +837,7 @@ makeinstall_target() {
 
   mkdir -p ${INSTALL}/usr/config/emulationstation
   cp -f ${ESTMP}/es_systems.cfg ${INSTALL}/usr/config/emulationstation
+
+  mkdir -p ${INSTALL}/usr/lib/tmpfiles.d
+  cp -f ${ESTMP}/${DISTRO}-system-dirs.conf ${INSTALL}/usr/lib/tmpfiles.d
 }
