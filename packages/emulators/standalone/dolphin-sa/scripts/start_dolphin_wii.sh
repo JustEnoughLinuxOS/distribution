@@ -11,13 +11,18 @@ if [ ! -d "/storage/.config/dolphin-emu" ]; then
         cp -r "/usr/config/dolphin-emu" "/storage/.config/"
 fi
 
+#Check if Wii controller profile exists in .config/dolphin-emu
+if [ ! -f "/storage/.config/dolphin-emu/WiimoteNew.ini" ]; then
+        cp -r "/usr/config/dolphin-emu/WiiControllerProfiles/vremote.ini" "/storage/.config/dolphin-emu/WiimoteNew.ini"
+fi
+
 #Check if Wii custom controller profile exists in .config/dolphin-emu
 if [ ! -f "/storage/.config/dolphin-emu/Custom_WiimoteNew.ini" ]; then
         cp -r "/usr/config/dolphin-emu/WiiControllerProfiles/remote.ini" "/storage/.config/dolphin-emu/Custom_WiimoteNew.ini"
 fi
 
 #Gamecube controller profile needed for hotkeys to work
-cp -r "/usr/config/dolphin-emu/GCPadNew.ini" "/storage/.config/dolphin-emu/GCPadNew.ini"
+cp -r "/usr/config/dolphin-emu/GCPadNew.ini.south" "/storage/.config/dolphin-emu/GCPadNew.ini"
 
 #Link Save States to /roms/savestates/wii
 if [ ! -d "/storage/roms/savestates/wii/" ]; then

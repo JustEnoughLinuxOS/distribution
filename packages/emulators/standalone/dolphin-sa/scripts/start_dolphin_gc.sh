@@ -11,6 +11,11 @@ if [ ! -d "/storage/.config/dolphin-emu" ]; then
         cp -r "/usr/config/dolphin-emu" "/storage/.config/"
 fi
 
+#Check if GC controller profile exists in .config/dolphin-emu
+if [ ! -f "/storage/.config/dolphin-emu/GCPadNew.ini" ]; then
+	cp -r /usr/config/dolphin-emu/GCPadNew.ini.south /storage/.config/dolphin-emu/GCPadNew.ini
+fi
+
 #Check if GC custom controller profile exists in .config/dolphin-emu
 if [ ! -f "/storage/.config/dolphin-emu/Custom_GCPadNew.ini" ]; then
         cp -r "/usr/config/dolphin-emu/GCPadNew.ini.south" "/storage/.config/dolphin-emu/Custom_GCPadNew.ini"
