@@ -11,6 +11,19 @@ if [ ! -d "/storage/.config/drastic" ]; then
   cp -r /usr/config/drastic/* /storage/.config/drastic/
 fi
 
+if [ ! -d "/storage/.config/drastic/system" ]; then
+  mkdir -p   mkdir -p /storage/.config/drastic/system
+fi
+
+for bios in nds_bios_arm9.bin nds_bios_arm7.bin
+do
+  if [ ! -e "/storage/.config/drastic/system/${bios}"]; then
+     if [ -e "/storage/roms/bios/${bios}" ]; then
+       ln -sf /storage/roms/bios/${bios} /storage/.config/drastic/system
+     fi
+  fi
+done
+
 #Make drastic savestate folder
 if [ ! -d "/storage/roms/savestates/nds" ]; then
   mkdir -p /storage/roms/savestates/nds
