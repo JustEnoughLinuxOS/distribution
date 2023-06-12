@@ -34,7 +34,7 @@ case "${DEVICE}" in
   AMD64)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="lutris-wine"
     PKG_EMUS+=" cemu-sa citra-sa dolphin-sa duckstation-sa melonds-sa minivmacsa mupen64plus-sa pcsx2-sa       \
-                primehack rpcs3-sa ryujinx-sa scummvmsa xemu-sa yuzu-sa heroic"  # Move heroic!
+                primehack rpcs3-sa ryujinx-sa scummvmsa xemu-sa yuzu-sa"
     LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr citra-lr desmume-lr dolphin-lr flycast-lr lrps2-lr mame-lr     \
                       minivmac-lr play-lr"
   ;;
