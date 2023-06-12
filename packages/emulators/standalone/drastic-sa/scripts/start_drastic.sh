@@ -5,6 +5,8 @@
 
 . /etc/profile
 
+jslisten set "-9 drastic"
+
 #Copy drastic files to .config
 if [ ! -d "/storage/.config/drastic" ]; then
   mkdir -p /storage/.config/drastic/
