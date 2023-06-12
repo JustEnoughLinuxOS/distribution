@@ -6,6 +6,7 @@
 
 # Source predefined functions and variables
 . /etc/profile
+jslisten set "-9 yabasanshiro"
 
 ROM_DIR="/storage/roms/saturn/yabasanshiro"
 CONFIG_DIR="/storage/.config/yabasanshiro"

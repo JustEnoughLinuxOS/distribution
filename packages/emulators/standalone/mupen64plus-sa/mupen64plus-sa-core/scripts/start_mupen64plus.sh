@@ -6,6 +6,8 @@
 
 . /etc/profile
 
+jslisten set "-9 mupen64plus"
+
 #Emulation Station Features
 CORE="$1"
 GAME=$(echo "${2}"| sed "s#^/.*/##")

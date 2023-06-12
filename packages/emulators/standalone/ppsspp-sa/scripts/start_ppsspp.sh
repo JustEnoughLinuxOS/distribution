@@ -18,5 +18,6 @@ else
 fi
 
 ARG=${1//[\\]/}
-export SDL_AUDIODRIVER=alsa          
+export SDL_AUDIODRIVER=alsa
+jslisten set "-9 ppsspp"
 ${EMUPERF} ppsspp --pause-menu-exit "${ARG}"

@@ -4,6 +4,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 . /etc/profile
+jslisten set "-9 dolphin-emu-nogui"
 
 #Check if dolphin-emu exists in .config
 if [ ! -d "/storage/.config/dolphin-emu" ]; then

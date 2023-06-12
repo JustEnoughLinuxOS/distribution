@@ -764,10 +764,6 @@ makeinstall_target() {
   add_emu_core sufami retroarch snes9x true
   add_es_system sufami
 
-  ### Solarus
-  add_emu_core solarus solarus solarus true
-  add_es_system solarus
-
   ### Watara Supervision
   add_emu_core supervision retroarch potator true
   add_es_system supervision
