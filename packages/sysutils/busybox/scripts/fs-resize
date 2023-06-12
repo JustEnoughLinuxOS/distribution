@@ -58,4 +58,10 @@ if [ -e /storage/.please_resize_me ] ; then
     StartProgress countdown "Rebooting in 5s...     " 5 "NOW"
   fi
 fi
+
+for module in $(lsmod | awk '{print $1}')
+do
+  rmmod ${module}
+done
+
 shutdown -r now &>/dev/null
