@@ -17,7 +17,7 @@ fi
 
 for bios in nds_bios_arm9.bin nds_bios_arm7.bin
 do
-  if [ ! -e "/storage/.config/drastic/system/${bios}"]; then
+  if [ ! -e "/storage/.config/drastic/system/${bios}" ]; then
      if [ -e "/storage/roms/bios/${bios}" ]; then
        ln -sf /storage/roms/bios/${bios} /storage/.config/drastic/system
      fi
