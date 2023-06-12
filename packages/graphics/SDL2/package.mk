@@ -52,15 +52,13 @@ then
                            -DVIDEO_WAYLAND_QT_TOUCH=OFF \
                            -DWAYLAND_SHARED=ON \
                            -DVIDEO_X11=OFF \
-                           -DSDL_X11=OFF \
-			   -DSDL_HIDAPI_JOYSTICK=ON"
+                           -DSDL_X11=OFF"
 else
   PKG_CMAKE_OPTS_TARGET+=" -DVIDEO_WAYLAND=OFF \
                            -DVIDEO_WAYLAND_QT_TOUCH=ON \
                            -DWAYLAND_SHARED=OFF \
                            -DVIDEO_X11=OFF \
-                           -DSDL_X11=OFF \
-			   -DSDL_HIDAPI_JOYSTICK=OFF"
+                           -DSDL_X11=OFF"
 fi
 
 case ${DEVICE} in
@@ -109,7 +107,8 @@ pre_configure_target(){
                          -DFUSIONSOUND=OFF \
                          -DFUSIONSOUND_SHARED=OFF \
                          -DVIDEO_DUMMY=OFF \
-                         -DINPUT_TSLIB=OFF \
+                         -DINPUT_TSLIB=ON \
+                         -DSDL_HIDAPI_JOYSTICK=ON \
                          -DPTHREADS=ON \
                          -DPTHREADS_SEM=ON \
                          -DDIRECTX=OFF \
