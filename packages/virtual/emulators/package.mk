@@ -609,9 +609,11 @@ makeinstall_target() {
 
   ### Sony Playstation Portable
   add_emu_core psp ppsspp ppsspp-sa true
-  AMD64)
-    add_emu_core psp retroarch ppsspp false
-  ;;
+  case ${DEVICE} in
+    AMD64)
+      add_emu_core psp retroarch ppsspp false
+    ;;
+  esac
   add_es_system psp
 
   ### Sony Playstation Portable Minis
