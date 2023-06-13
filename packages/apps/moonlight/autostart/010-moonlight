@@ -2,8 +2,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (C) 2023-present Fewtarius (https://github.com/fewtarius)
 
-FBWIDTH=$(fbset | awk '/geometry/ {print $2}')
-FBHEIGHT=$(fbset | awk '/geometry/ {print $3}')
+FBHEIGHT=$(fbset | awk '/geometry/ {print $2}')
+FBWIDTH=$(fbset | awk '/geometry/ {print $3}')
 
 if [ ! -f "/storage/.config/moonlight/moonlight.conf" ]
 then
