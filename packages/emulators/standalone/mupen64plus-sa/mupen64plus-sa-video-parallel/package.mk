@@ -11,11 +11,9 @@ PKG_LONGDESC="Mupen64Plus Standalone Parallel64 Video Driver"
 PKG_TOOLCHAIN="manual"
 PKG_GIT_CLONE_BRANCH="simple64"
 
-if [ ! "${OPENGL}" = "no" ]; then
-  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
-fi
-if [ "${OPENGLES_SUPPORT}" = yes ]; then
-  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+if [ "${VULKAN_SUPPORT}" = "yes" ]
+then
+  PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
 fi
 
 make_target() {
@@ -32,13 +30,13 @@ make_target() {
   mkdir build
   cd build
   APIDIR=${SYSROOT_PREFIX}/usr/local/include/mupen64plus
-  cmake -DAPIDIR=${APIDIR} ..
-  cmake --build . --parallel
-  cp ${PKG_BUILD}/build/mupen64plus-video-parallel.so ${PKG_BUILD}/build/mupen64plus-video-parallel-base.so
+  cmake -G Ninja -DAPIDIR=${APIDIR} -DCMAKE_BUILD_TYPE="Release" ..
+  VERBOSE=1 cmake --build .
+  cp ${PKG_BUILD}/build/simple64-video-parallel.so ${PKG_BUILD}/build/mupen64plus-video-parallel-base.so
   APIDIR=${SYSROOT_PREFIX}/usr/local/include/simple64  
-  cmake -DAPIDIR=${APIDIR} ..
-  cmake --build . --parallel
-  cp ${PKG_BUILD}/build/mupen64plus-video-parallel.so ${PKG_BUILD}/build/mupen64plus-video-parallel-simple.so
+  cmake -G Ninja -DAPIDIR=${APIDIR} -DCMAKE_BUILD_TYPE="Release" ..
+  VERBOSE=1 cmake --build .
+  cp ${PKG_BUILD}/build/simple64-video-parallel.so ${PKG_BUILD}/build/mupen64plus-video-parallel-simple.so
 }
 
 makeinstall_target() {

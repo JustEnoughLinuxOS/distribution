@@ -10,6 +10,7 @@ PKG_DEPENDS_TARGET="toolchain boost libpng SDL2 SDL2_net zlib freetype nasm:host
 PKG_SHORTDESC="simple64"
 PKG_LONGDESC="Simple64's core"
 PKG_TOOLCHAIN="manual"
+PKG_GIT_CLONE_BRANCH="simple64"
 
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
