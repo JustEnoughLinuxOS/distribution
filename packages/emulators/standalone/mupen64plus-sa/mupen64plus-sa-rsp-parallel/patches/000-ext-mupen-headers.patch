@@ -1,0 +1,14 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 9c5bfcf..ef27c0e 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -6,6 +6,9 @@ set(LIGHTNING_VERSION "2.2.2")
+ 
+ set(NAME_PLUGIN_SIMPLE64 "simple64-rsp-parallel")
+ 
++if(DEFINED APIDIR)
++    include_directories("${APIDIR}")
++endif()
+ include_directories(../mupen64plus-core/src/api)
+ add_definitions(-DM64P_PLUGIN_API)
+ add_definitions(-DPARALLEL_INTEGRATION)
