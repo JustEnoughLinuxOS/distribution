@@ -9,7 +9,7 @@ PKG_URL="https://git.kernel.org/pub/scm/libs/libtrace/${PKG_NAME}.git/snapshot/$
 PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="toolchain libtraceevent:host linux:host"
 PKG_LONGDESC="Provides APIs to access kernel tracepoint events."
-PKG_BUILD_FLAGS="+pic"
+#PKG_BUILD_FLAGS="+pic"
 
 makeinstall_host() {
   mkdir -p ${TOOLCHAIN}/lib
@@ -20,6 +20,10 @@ makeinstall_host() {
 
   mkdir -p ${TOOLCHAIN}/lib/pkgconfig
   cp ${PKG_NAME}.pc ${TOOLCHAIN}/lib/pkgconfig
+}
+
+pre_make_target() {
+  make clean
 }
 
 makeinstall_target() {
