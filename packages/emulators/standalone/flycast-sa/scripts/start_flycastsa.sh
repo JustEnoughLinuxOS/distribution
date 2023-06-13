@@ -4,6 +4,7 @@
 # Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
 
 . /etc/profile
+jslisten set "-9 flycast"
 
 #Check if flycast exists in .config
 if [ ! -d "/storage/.config/flycast" ]; then

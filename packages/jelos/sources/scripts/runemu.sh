@@ -262,140 +262,33 @@ then
 	$VERBOSE && log $0 "Configuring for a non-libretro emulator"
 	case ${PLATFORM} in
 		"setup")
-				RUNTHIS='${TBASH} "${ROMNAME}"'
-		;;
-		"nds")
-			if [ "$EMU" = "melonds-sa" ]; then
-			jslisten set "-9 melonDS"
-			RUNTHIS='${TBASH} /usr/bin/start_melonds.sh "${ROMNAME}"'
-                        elif [ "$EMU" = "drastic-sa" ]; then
-                        jslisten set "-9 drastic"
-                        RUNTHIS='${TBASH} /usr/bin/start_drastic.sh "${ROMNAME}"'
-			fi
-		;;
-		"solarus")
-			if [ "$EMU" = "solarus" ]
-			then
-				jslisten set "solarus-run"
-				RUNTHIS='${TBASH} /usr/bin/solarus.sh "${ROMNAME}"'
-			fi
+			RUNTHIS='${TBASH} "${ROMNAME}"'
 		;;
 		"n64")
-			jslisten set "-9 mupen64plus"
 			if [[ "$EMU" =~ "m64p" ]]; then
 				RUNTHIS='${TBASH} /usr/bin/start_mupen64plus.sh "${CORE}" "${ROMNAME}"'
 			fi
 		;;
-		"pc")
-			jslisten set "dosbox dosbox-x"
-			if [ "$EMU" = "DOSBOXSDL2" ]
-			then
-				RUNTHIS='${TBASH} /usr/bin/dosbox.start -conf "${GAMEFOLDER}dosbox-SDL2.conf"'
-			elif [ "$EMU" = "DOSBOX-X" ]
-			then
-				RUNTHIS='${TBASH} /usr/bin/dosbox-x.start -conf "${GAMEFOLDER}dosbox-SDL2.conf"'
-			fi
-		;;
-		"neocd")
-			jslisten set "retroarch"
-			if [ "$EMU" = "fbneo" ]
-			then
-				RUNTHIS='/usr/bin/retroarch -L /tmp/cores/fbneo_libretro.so --subsystem neocd --config ${RATMPCONF} --appendconfig ${RAAPPENDCONF} "${ROMNAME}"'
-			fi
-		;;
-                "atomiswave"|"dreamcast"|"naomi")
-                        jslisten set "-9 flycast"
-                        if [ "$EMU" = "flycast-sa" ]; then
-                        RUNTHIS='${TBASH} /usr/bin/start_flycastsa.sh "${ROMNAME}"'
-                        fi
-                ;;
-		"psx")
-			jslisten set "-9 duckstation-nogui"
-		        if [ "$EMU" = "duckstation-sa" ]; then
-            		RUNTHIS='${TBASH} /usr/bin/start_duckstation.sh "${ROMNAME}"'
-        		fi
-                ;;
-                "ps2")
-                        if [ "$EMU" = "pcsx2-sa" ]; then
-                        jslisten set "-9 pcsx2-qt"
-                        RUNTHIS='${TBASH} /usr/bin/start_pcsx2.sh "${ROMNAME}"'
-			elif [ "$EMU" = "aethersx2-sa" ]; then
-                        jslisten set "-9 aethersx2"
-                        RUNTHIS='${TBASH} /usr/bin/start_aethersx2.sh "${ROMNAME}"'
-                        fi
-                ;;
-                "ps3")
-                        jslisten set "-9 rpcs3"
-                        if [ "$EMU" = "rpcs3-sa" ]; then
-                        RUNTHIS='${TBASH} /usr/bin/start_rpcs3sa.sh "${ROMNAME}"'
-                        fi
-                ;;
-                "psp"|"pspminis")
-                        jslisten set "-9 ppsspp"
-                        if [ "$EMU" = "ppsspp-sa" ]; then
-                        RUNTHIS='${TBASH} /usr/bin/start_ppsspp.sh "${ROMNAME}"'
-                        fi
-                ;;
                 "gamecube")
-                        jslisten set "-9 dolphin-emu-nogui"
                         if [ "$EMU" = "dolphin-sa-gc" ]; then
                         RUNTHIS='${TBASH} /usr/bin/start_dolphin_gc.sh "${ROMNAME}"'
                         elif [ "$EMU" = "primehack" ]; then
-                        RUNTHIS='${TBASH} /usr/bin/start_primehack.sh "${ROMNAME}"'
+                        RUNTHIS='${TBASH} /usr/bin/start_${EMU%-*}.sh "${ROMNAME}"'
                         fi
 
                 ;;
                 "wii")
-                        jslisten set "-9 dolphin-emu-nogui"
                         if [ "$EMU" = "dolphin-sa-wii" ]; then
                         RUNTHIS='${TBASH} /usr/bin/start_dolphin_wii.sh "${ROMNAME}"'
                         elif [ "$EMU" = "primehack" ]; then
-                        RUNTHIS='${TBASH} /usr/bin/start_primehack.sh "${ROMNAME}"'
+                        RUNTHIS='${TBASH} /usr/bin/start_${EMU%-*}.sh "${ROMNAME}"'
                         fi
                 ;;
-                "wiiu")
-                        jslisten set "-9 cemu"
-                        if [ "$EMU" = "cemu-sa" ]; then
-                        RUNTHIS='${TBASH} /usr/bin/start_cemu.sh "${ROMNAME}"'
-                        fi
-                ;;
-                "switch")
-                        if [ "$EMU" = "yuzu-sa" ]; then
-                        jslisten set "-9 yuzu"
-                        RUNTHIS='${TBASH} /usr/bin/start_yuzu.sh "${ROMNAME}"'
-			elif [ "$EMU" = "ryujinx-sa" ]; then
-                        jslisten set "-9 Ryujinx"
-                        RUNTHIS='${TBASH} /usr/bin/start_ryujinx.sh "${ROMNAME}"'
-                        fi
-                ;;
-                "xbox")
-                        jslisten set "-9 xemu"
-                        if [ "$EMU" = "xemu-sa" ]; then
-                        RUNTHIS='${TBASH} /usr/bin/start_xemu.sh "${ROMNAME}"'
-                        fi
-                ;;
-                "3ds")
-                        jslisten set "-9 citra"
-                        if [ "$EMU" = "citra-sa" ]; then
-                        RUNTHIS='${TBASH} /usr/bin/start_citra.sh "${ROMNAME}"'
-                        fi
-                ;;
-                "saturn")
-                        jslisten set "-9 yabasanshiro"
-                        if [ "$EMU" = "yabasanshiro-sa" ]; then
-                        RUNTHIS='${TBASH} /usr/bin/start_yabasanshiro.sh "${ROMNAME}"'
-                        fi
-                ;;
-		"mplayer")
-			jslisten set "mpv"
-			RUNTHIS='${TBASH} /usr/bin/mpv_video.sh "${ROMNAME}"'
-		;;
 		"shell")
 			RUNTHIS='${TBASH} "${ROMNAME}"'
 		;;
 		*)
-			jslisten set "${CORE}"
-			RUNTHIS='${TBASH} "start_${CORE}.sh" "${ROMNAME}"'
+			RUNTHIS='${TBASH} "start_${EMU%-*}.sh" "${ROMNAME}"'
 		esac
 else
 	$VERBOSE && log $0 "Configuring for a libretro core"

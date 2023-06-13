@@ -609,7 +609,11 @@ makeinstall_target() {
 
   ### Sony Playstation Portable
   add_emu_core psp ppsspp ppsspp-sa true
-  add_emu_core psp retroarch ppsspp false
+  case ${DEVICE} in
+    AMD64)
+      add_emu_core psp retroarch ppsspp false
+    ;;
+  esac
   add_es_system psp
 
   ### Sony Playstation Portable Minis
@@ -763,10 +767,6 @@ makeinstall_target() {
   ### Bandai SuFami Turbo
   add_emu_core sufami retroarch snes9x true
   add_es_system sufami
-
-  ### Solarus
-  add_emu_core solarus solarus solarus true
-  add_es_system solarus
 
   ### Watara Supervision
   add_emu_core supervision retroarch potator true

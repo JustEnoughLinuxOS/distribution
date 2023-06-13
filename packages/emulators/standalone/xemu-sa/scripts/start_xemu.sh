@@ -2,6 +2,7 @@
 # Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
 
 . /etc/profile
+jslisten set "-9 xemu"
 
 #Check if xemu exists in .config
 if [ ! -d "/storage/.config/xemu" ]; then

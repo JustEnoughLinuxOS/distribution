@@ -27,7 +27,7 @@ PKG_MULTIMEDIA="ffmpeg vlc mpv"
 
 PKG_BLUETOOTH="bluez pygobject"
 
-PKG_SOUND="libao"
+PKG_SOUND="espeak libao"
 
 PKG_SYNC="synctools"
 
