@@ -25,12 +25,12 @@ make_target() {
   mkdir build
   cd build
   APIDIR=${SYSROOT_PREFIX}/usr/local/include/mupen64plus
-  cmake -DAPIDIR=${APIDIR} ..
-  cmake --build . --parallel
+  cmake -G Ninja -DAPIDIR=${APIDIR} -DCMAKE_BUILD_TYPE="Release" ..
+  VERBOSE=1 cmake --build .
   cp ${PKG_BUILD}/build/simple64-rsp-parallel.so ${PKG_BUILD}/build/mupen64plus-rsp-parallel-base.so
   APIDIR=${SYSROOT_PREFIX}/usr/local/include/simple64  
-  cmake -DAPIDIR=${APIDIR} ..
-  cmake --build . --parallel
+  cmake -G Ninja -DAPIDIR=${APIDIR} -DCMAKE_BUILD_TYPE="Release" ..
+  VERBOSE=1 cmake --build .
   cp ${PKG_BUILD}/build/simple64-rsp-parallel.so ${PKG_BUILD}/build/mupen64plus-rsp-parallel-simple.so
 }
 
