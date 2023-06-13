@@ -2,14 +2,14 @@
 # Copyright (C) 2023-present RiShooty (https://github.com/rishooty)
 
 PKG_NAME="mupen64plus-sa-video-parallel"
-PKG_VERSION="3a97537ebe99b6c53420a52a038659931f606ab7"
+PKG_VERSION="b86a14e794e5db59ef59a952a3a0ec08ceb558e3"
 PKG_LICENSE="MIT"
-PKG_SITE="https://github.com/rishooty/parallel-rdp-standalone"
+PKG_SITE="https://github.com/simple64/parallel-rdp-standalone"
 PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain mupen64plus-sa-core mupen64plus-sa-simplecore"
 PKG_LONGDESC="Mupen64Plus Standalone Parallel64 Video Driver"
 PKG_TOOLCHAIN="manual"
-PKG_GIT_CLONE_BRANCH="ci-m64p"
+PKG_GIT_CLONE_BRANCH="simple64"
 
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
@@ -22,11 +22,9 @@ make_target() {
   case ${ARCH} in
     aarch64|arm)
       export HOST_CPU=aarch64
-      export USE_GLES=1
     ;;
     x86_64)
       export HOST_CPU=x86_64
-	    export USE_GLES=0
     ;;
   esac
   cd ${PKG_BUILD}
