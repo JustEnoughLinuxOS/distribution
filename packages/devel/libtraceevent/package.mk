@@ -15,8 +15,8 @@ makeinstall_host() {
   mkdir -p ${TOOLCHAIN}/lib
   cp lib/${PKG_NAME}.a ${TOOLCHAIN}/lib
 
-  mkdir -p ${TOOLCHAIN}/include
-  cp include/traceevent/* ${TOOLCHAIN}/include
+  mkdir -p ${TOOLCHAIN}/include/traceevent
+  cp include/traceevent/* ${TOOLCHAIN}/include/traceevent
 
   mkdir -p ${TOOLCHAIN}/lib/pkgconfig
   cp ${PKG_NAME}.pc ${TOOLCHAIN}/lib/pkgconfig
