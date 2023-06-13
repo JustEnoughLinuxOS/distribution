@@ -1,0 +1,42 @@
+diff -rupN linux-6.3.7.orig/tools/perf/util/debug.c linux-6.3.7/tools/perf/util/debug.c
+--- linux-6.3.7.orig/tools/perf/util/debug.c	2023-06-13 10:58:18.894087434 +0000
++++ linux-6.3.7/tools/perf/util/debug.c	2023-06-13 11:17:05.344846060 +0000
+@@ -235,14 +235,12 @@ int perf_debug_option(const char *str)
+ 	/* Allow only verbose value in range (0, 10), otherwise set 0. */
+ 	verbose = (verbose < 0) || (verbose > 10) ? 0 : verbose;
+ 
+-#if LIBTRACEEVENT_VERSION >= MAKE_LIBTRACEEVENT_VERSION(1, 3, 0)
+ 	if (verbose == 1)
+ 		tep_set_loglevel(TEP_LOG_INFO);
+ 	else if (verbose == 2)
+ 		tep_set_loglevel(TEP_LOG_DEBUG);
+ 	else if (verbose >= 3)
+ 		tep_set_loglevel(TEP_LOG_ALL);
+-#endif
+ 	return 0;
+ }
+ 
+diff -rupN linux-6.3.7.orig/tools/perf/util/trace-event.h linux-6.3.7/tools/perf/util/trace-event.h
+--- linux-6.3.7.orig/tools/perf/util/trace-event.h	2023-06-13 10:58:18.898087572 +0000
++++ linux-6.3.7/tools/perf/util/trace-event.h	2023-06-13 11:26:19.431910684 +0000
+@@ -140,20 +140,11 @@ int common_lock_depth(struct scripting_c
+ #define SAMPLE_FLAGS_BUF_SIZE 64
+ int perf_sample__sprintf_flags(u32 flags, char *str, size_t sz);
+ 
+-#if defined(LIBTRACEEVENT_VERSION) &&  LIBTRACEEVENT_VERSION >= MAKE_LIBTRACEEVENT_VERSION(1, 5, 0)
+ #include <traceevent/event-parse.h>
+ 
+ static inline bool tep_field_is_relative(unsigned long flags)
+ {
+ 	return (flags & TEP_FIELD_IS_RELATIVE) != 0;
+ }
+-#else
+-#include <linux/compiler.h>
+-
+-static inline bool tep_field_is_relative(unsigned long flags __maybe_unused)
+-{
+-	return false;
+-}
+-#endif
+ 
+ #endif /* _PERF_UTIL_TRACE_EVENT_H */
