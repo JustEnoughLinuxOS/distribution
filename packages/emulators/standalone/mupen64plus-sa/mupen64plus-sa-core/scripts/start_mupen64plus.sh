@@ -105,13 +105,17 @@ fi
 # Show FPS
 # Get configuration from system.cfg
 	if [ "${FPS}" = "true" ]; then
-		sed -i '/ShowFPS = (False|True)/c\ShowFPS = True' $TMP/mupen64plus.cfg
-		sed -i '/ShowFPS = (0|1)/c\ShowFPS = 1' $TMP/mupen64plus.cfg
-		sed -i '/show_fps/c\show_fps = 1' $TMP/mupen64plus.cfg
+		export LIBGL_SHOW_FPS="1"
+		export GALLIUM_HUD="cpu+GPU-load+fps"
+		# sed -i '/ShowFPS = (False|True)/c\ShowFPS = True' $TMP/mupen64plus.cfg
+		# sed -i '/ShowFPS = (0|1)/c\ShowFPS = 1' $TMP/mupen64plus.cfg
+		# sed -i '/show_fps/c\show_fps = 1' $TMP/mupen64plus.cfg
 	else
-		sed -i '/ShowFPS = (False|True)/c\ShowFPS = False' $TMP/mupen64plus.cfg
-		sed -i '/ShowFPS = (0|1)/c\ShowFPS = 0' $TMP/mupen64plus.cfg
-		sed -i '/show_fps/c\show_fps = 0' $TMP/mupen64plus.cfg
+		export LIBGL_SHOW_FPS="0"
+		export GALLIUM_HUD="off"
+		# sed -i '/ShowFPS = (False|True)/c\ShowFPS = False' $TMP/mupen64plus.cfg
+		# sed -i '/ShowFPS = (0|1)/c\ShowFPS = 0' $TMP/mupen64plus.cfg
+		# sed -i '/show_fps/c\show_fps = 0' $TMP/mupen64plus.cfg
 	fi
 
 # SIMPLECORE, decide which executable to use for simple64
@@ -146,6 +150,11 @@ esac
 # Set the RSP plugin
 case "${RSP}" in
 	"parallel")
+		export LIBGL_ALWAYS_SOFTWARE="1"
+		export MESA_GLSL_CACHE_DISABLE="1"
+		export MESA_GL_VERSION_OVERRIDE="3.3COMPAT"
+		export MESA_GLSL_VERSION_OVERRIDE="330"
+		export MESA_EXTENSION_OVERRIDE="-GL_ARB_buffer_storage"
 		SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-parallel$SIMPLESUFFIX.so"
 	;;
 	"cxd4")
