@@ -8,7 +8,7 @@ PKG_SECTION="emulation" # Do not change to virtual or makeinstall_target will no
 PKG_LONGDESC="Emulation metapackage."
 PKG_TOOLCHAIN="manual"
 
-PKG_EMUS="flycast-sa hatarisa hypseus-singe hypseus-singe moonlight openbor pico-8 ppsspp-sa
+PKG_EMUS="flycast-sa gzdoom-sa hatarisa hypseus-singe hypseus-singe moonlight openbor pico-8 ppsspp-sa
           vice-sa"
 
 PKG_RETROARCH="core-info libretro-database retroarch retroarch-assets retroarch-joypads retroarch-overlays     \
@@ -818,6 +818,10 @@ makeinstall_target() {
 
   ### PC Ports
   add_es_system ports
+
+  ### Doom
+  add_emu_core doom gzdoom gzdoom-sa true
+  add_es_system doom
 
   ### Media Player
   add_emu_core mpv mpv true
