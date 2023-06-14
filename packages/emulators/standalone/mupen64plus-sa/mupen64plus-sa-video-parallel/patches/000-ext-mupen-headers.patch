@@ -1,11 +1,11 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 01d32ed..f61bec9 100644
+index ce2dd4a..87d8c5e 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -4,6 +4,9 @@ set(CMAKE_OSX_DEPLOYMENT_TARGET "11.0")
- project(parallel-rdp LANGUAGES CXX C)
+@@ -5,6 +5,9 @@ project(parallel-rdp LANGUAGES CXX C)
+ set(OpenGL_GL_PREFERENCE GLVND)
  
- set(NAME_PLUGIN_SIMPLE64 "simple64-video-parallel")
+ set(NAME_PLUGIN_M64P "mupen64plus-video-parallel")
 +if(DEFINED APIDIR)
 +    include_directories("${APIDIR}")
 +endif()

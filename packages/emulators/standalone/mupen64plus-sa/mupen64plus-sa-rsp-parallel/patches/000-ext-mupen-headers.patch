@@ -1,11 +1,12 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 9c5bfcf..ef27c0e 100644
+index d3fe222..95ee881 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -6,6 +6,9 @@ set(LIGHTNING_VERSION "2.2.2")
+@@ -5,7 +5,9 @@ set(CMAKE_C_STANDARD 99)
+ project(parallel-rsp LANGUAGES CXX C)
  
- set(NAME_PLUGIN_SIMPLE64 "simple64-rsp-parallel")
- 
+ set(NAME_PLUGIN_M64P "mupen64plus-rsp-parallel")
+-
 +if(DEFINED APIDIR)
 +    include_directories("${APIDIR}")
 +endif()

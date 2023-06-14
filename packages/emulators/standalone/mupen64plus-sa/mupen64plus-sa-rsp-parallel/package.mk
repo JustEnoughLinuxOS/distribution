@@ -2,14 +2,14 @@
 # Copyright (C) 2023-present RiShooty (https://github.com/rishooty)
 
 PKG_NAME="mupen64plus-sa-rsp-parallel"
-PKG_VERSION="a3b2ef90939d06c1b0b4568fcaa89ea269081033"
+PKG_VERSION="6b5b15da67da79b845dd5f7a914ab70ea280edaf"
 PKG_LICENSE="MIT"
-PKG_SITE="https://github.com/simple64/parallel-rsp"
+PKG_SITE="https://github.com/Jj0YzL5nvJ/parallel-rsp"
 PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain mupen64plus-sa-core mupen64plus-sa-simplecore"
 PKG_LONGDESC="Mupen64Plus Standalone Parallel64 Rsp Driver"
 PKG_TOOLCHAIN="manual"
-PKG_GIT_CLONE_BRANCH="simple64"
+PKG_GIT_CLONE_BRANCH="ci-m64p"
 
 make_target() {
   case ${ARCH} in

@@ -2,14 +2,14 @@
 # Copyright (C) 2023-present RiShooty (https://github.com/rishooty)
 
 PKG_NAME="mupen64plus-sa-video-parallel"
-PKG_VERSION="b86a14e794e5db59ef59a952a3a0ec08ceb558e3"
+PKG_VERSION="900f1e58ea32ccc1d56046609eb24f8093740634"
 PKG_LICENSE="MIT"
-PKG_SITE="https://github.com/simple64/parallel-rdp-standalone"
+PKG_SITE="https://github.com/Jj0YzL5nvJ/parallel-rdp-standalone"
 PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain mupen64plus-sa-core mupen64plus-sa-simplecore"
 PKG_LONGDESC="Mupen64Plus Standalone Parallel64 Video Driver"
 PKG_TOOLCHAIN="manual"
-PKG_GIT_CLONE_BRANCH="simple64"
+PKG_GIT_CLONE_BRANCH="ci-m64p"
 
 if [ "${VULKAN_SUPPORT}" = "yes" ]
 then

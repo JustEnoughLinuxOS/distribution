@@ -48,6 +48,6 @@ makeinstall_target() {
   chmod 644 ${INSTALL}/usr/local/lib/libsimple64.so.2.0.0
   cp ${PKG_BUILD}/projects/unix/libsimple64.so.2 ${INSTALL}/usr/local/lib
   mkdir -p ${SYSROOT_PREFIX}/usr/local/include/simple64
-  find ${PKG_BUILD}/src -name "*.h" -exec cp \{} ${SYSROOT_PREFIX}/usr/local/include/simple64/ \;
+  rsync -avm --include='*.h' -f 'hide,! */' ${PKG_BUILD}/src/ ${SYSROOT_PREFIX}/usr/local/include/simple64/
   chmod 0644 ${SYSROOT_PREFIX}/usr/local/include/simple64/*
 }
