@@ -4,6 +4,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 . /etc/profile
+jslisten set "-9 duckstation-nogui"
 
 #Copy config folder to .config/duckstation
 if [ ! -d "/storage/.config/duckstation" ]; then

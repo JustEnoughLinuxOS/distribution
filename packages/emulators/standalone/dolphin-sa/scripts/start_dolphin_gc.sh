@@ -4,11 +4,17 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 . /etc/profile
+jslisten set "-9 dolphin-emu-nogui"
 
 #Check if dolphin-emu exists in .config
 if [ ! -d "/storage/.config/dolphin-emu" ]; then
     mkdir -p "/storage/.config/dolphin-emu"
         cp -r "/usr/config/dolphin-emu" "/storage/.config/"
+fi
+
+#Check if GC controller profile exists in .config/dolphin-emu
+if [ ! -f "/storage/.config/dolphin-emu/GCPadNew.ini" ]; then
+	cp -r /usr/config/dolphin-emu/GCPadNew.ini.south /storage/.config/dolphin-emu/GCPadNew.ini
 fi
 
 #Check if GC custom controller profile exists in .config/dolphin-emu

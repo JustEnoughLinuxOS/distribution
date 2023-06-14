@@ -76,6 +76,10 @@ fi
 $WGET -t 3 -T 60 --no-check-certificate "$website"ports.md -O /dev/shm/portmaster/pports.md
 $WGET -t 3 -T 60 --no-check-certificate "$jwebsite"jports.md -O /dev/shm/portmaster/jports.md
 
+#JELOS has moonlight built in, dont use PortMaster's version.
+sed -i '/Title="Moonlight ."/d' /dev/shm/portmaster/pports.md
+
+#Combine PortMaster with JelosAddOns
 cat /dev/shm/portmaster/pports.md /dev/shm/portmaster/jports.md > /dev/shm/portmaster/ports.md
 
 PortInfoInstall() {

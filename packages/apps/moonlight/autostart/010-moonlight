@@ -2,8 +2,14 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (C) 2023-present Fewtarius (https://github.com/fewtarius)
 
-FBWIDTH=$(fbset | awk '/geometry/ {print $2}')
 FBHEIGHT=$(fbset | awk '/geometry/ {print $2}')
+FBWIDTH=$(fbset | awk '/geometry/ {print $3}')
+
+if [ ! -f "/storage/.config/moonlight/moonlight.conf" ]
+then
+  mkdir -p /storage/.config/moonlight
+  cp /usr/config/moonlight/moonlight.conf /storage/.config/moonlight/moonlight.conf
+fi
 
 sed -i "s#@MWIDTH@#${FBWIDTH}#g" /storage/.config/moonlight/moonlight.conf
-sed -i "s#@MHEIGHT@#${FBHEIGHT}#g" /usr/config/moonlight/moonlight.conf
+sed -i "s#@MHEIGHT@#${FBHEIGHT}#g" /storage/.config/moonlight/moonlight.conf

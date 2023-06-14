@@ -4,6 +4,7 @@
 # Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
 
 . /etc/profile
+jslisten set "-9 Ryujinx"`
 
 if [ ! -d "/storage/.config/Ryujinx" ]; then
     mkdir -p "/storage/.config/Ryujinx"

@@ -6,6 +6,8 @@
 
 ARG=${1//[\\]/}
 set_audio pulseaudio
+jslisten set "-9 pcsx2-qt"
+
 if [ ! -d "/storage/.config/PCSX2" ]
 then
   cp -rf /usr/config/PCSX2 /storage/.config

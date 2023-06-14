@@ -29,7 +29,6 @@ post_makeinstall_target() {
     x86_64)
       rm -f ${INSTALL}/usr/config/modules/*32bit*
       rm -f ${INSTALL}/usr/config/modules/*Master*
-      rm -f ${INSTALL}/usr/config/modules/*351Files*
     ;;
     *)
       rm -f ${INSTALL}/usr/config/modules/Install*
@@ -38,6 +37,7 @@ post_makeinstall_target() {
   case ${DEVICE} in
     S922X*)
       rm -f ${INSTALL}/usr/config/modules/*ScummVM*
+      rm -f ${INSTALL}/usr/config/modules/*32bit*
     ;;
   esac
 }

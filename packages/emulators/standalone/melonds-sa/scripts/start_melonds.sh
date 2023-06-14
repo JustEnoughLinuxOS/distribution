@@ -5,6 +5,8 @@
 
 . /etc/profile
 
+jslisten set "-9 melonDS"
+
 if [ ! -d "/storage/.config/melonDS" ]; then
     mkdir -p "/storage/.config/melonDS"
         cp -r "/usr/config/melonDS" "/storage/.config/"

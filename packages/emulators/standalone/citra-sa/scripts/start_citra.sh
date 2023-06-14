@@ -4,6 +4,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 . /etc/profile
+jslisten set "-9 citra"
 
 if [ ! -d "/storage/.config/citra-emu" ]; then
     mkdir -p "/storage/.config/citra-emu"
