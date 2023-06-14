@@ -1,0 +1,191 @@
+diff -rupN gzdoom.orig/specs/udmf_zdoom.txt gzdoom/specs/udmf_zdoom.txt
+--- gzdoom.orig/specs/udmf_zdoom.txt	2023-06-13 15:19:18.519118273 +0000
++++ gzdoom/specs/udmf_zdoom.txt	2023-06-13 15:21:45.870418615 +0000
+@@ -211,8 +211,11 @@ Note: All <bool> fields default to false
+ 	  useowncolors_bottom = <bool>; // Set to 1 to use the colors set in the sidedef. Default is using the colors from the owning sector.
+ 	  uppercolor_bottom = <int>;    // Material color of the top of the lower tier.
+ 	  lowercolor_bottom = <int>;    // Material color of the bottom of the lower tier. (Hardware rendering only.)
++      colorscalefactor_top = <float>  // scales the material color by the given factor.  Default is 1.
++      colorscalefactor_mid = <float>  // scales the material color by the given factor.  Default is 1.
++      colorscalefactor_bottom = <float>  // scales the material color by the given factor.  Default is 1.
+ 
+-            useowncoloradd_top = <bool>;  // Controls where the advanced colorization properties are taken from.
++      useowncoloradd_top = <bool>;  // Controls where the advanced colorization properties are taken from.
+       useowncoloradd_mid = <bool>;  // 0: From the containing sector, 1: from the given part of the linedef itself
+       useowncoloradd_bottom = <bool>;  // Default for all 3 is 0.
+       coloradd_top = <int>;         // Additive material color to apply to top section of sidedef. Default is black (0x000000)
+diff -rupN gzdoom.orig/src/common/console/keydef.h gzdoom/src/common/console/keydef.h
+--- gzdoom.orig/src/common/console/keydef.h	2023-06-13 15:18:27.077967916 +0000
++++ gzdoom/src/common/console/keydef.h	2023-06-13 15:21:45.874418704 +0000
+@@ -75,8 +75,13 @@ enum EKeyCodes
+ 	KEY_JOY6,
+ 	KEY_JOY7,
+ 	KEY_JOY8,
+-	KEY_JOY14			= KEY_FIRSTJOYBUTTON+13,
+-	KEY_JOY15			= KEY_FIRSTJOYBUTTON+14,
++	KEY_JOY9,
++	KEY_JOY10,
++	KEY_JOY11,
++	KEY_JOY12,
++	KEY_JOY13,
++	KEY_JOY14,
++	KEY_JOY15,
+ 	KEY_LASTJOYBUTTON		= 0x187,
+ 	KEY_JOYPOV1_UP			= 0x188,
+ 	KEY_JOYPOV1_RIGHT		= 0x189,
+diff -rupN gzdoom.orig/src/common/menu/menu.cpp gzdoom/src/common/menu/menu.cpp
+--- gzdoom.orig/src/common/menu/menu.cpp	2023-06-13 15:19:18.527118451 +0000
++++ gzdoom/src/common/menu/menu.cpp	2023-06-13 15:21:45.878418792 +0000
+@@ -692,15 +692,12 @@ bool M_Responder (event_t *ev)
+ 			ch = ev->data1;
+ 			switch (ch)
+ 			{
+-			case KEY_JOY1:
+-			case KEY_JOY3:
+-			case KEY_JOY15:
++			case KEY_JOY2:
+ 			case KEY_PAD_A:
+ 				mkey = MKEY_Enter;
+ 				break;
+ 
+-			case KEY_JOY2:
+-			case KEY_JOY14:
++			case KEY_JOY1:
+ 			case KEY_PAD_B:
+ 				mkey = MKEY_Back;
+ 				break;
+@@ -724,6 +721,7 @@ bool M_Responder (event_t *ev)
+ 			case KEY_PAD_LTHUMB_UP:
+ 			case KEY_JOYAXIS2MINUS:
+ 			case KEY_JOYPOV1_UP:
++			case KEY_JOY9:
+ 				mkey = MKEY_Up;
+ 				break;
+ 
+@@ -731,6 +729,7 @@ bool M_Responder (event_t *ev)
+ 			case KEY_PAD_LTHUMB_DOWN:
+ 			case KEY_JOYAXIS2PLUS:
+ 			case KEY_JOYPOV1_DOWN:
++			case KEY_JOY10:
+ 				mkey = MKEY_Down;
+ 				break;
+ 
+@@ -738,6 +737,7 @@ bool M_Responder (event_t *ev)
+ 			case KEY_PAD_LTHUMB_LEFT:
+ 			case KEY_JOYAXIS1MINUS:
+ 			case KEY_JOYPOV1_LEFT:
++			case KEY_JOY11:
+ 				mkey = MKEY_Left;
+ 				break;
+ 
+@@ -745,6 +745,7 @@ bool M_Responder (event_t *ev)
+ 			case KEY_PAD_LTHUMB_RIGHT:
+ 			case KEY_JOYAXIS1PLUS:
+ 			case KEY_JOYPOV1_RIGHT:
++			case KEY_JOY12:
+ 				mkey = MKEY_Right;
+ 				break;
+ 			}
+diff -rupN gzdoom.orig/src/common/platform/posix/sdl/i_gui.cpp gzdoom/src/common/platform/posix/sdl/i_gui.cpp
+--- gzdoom.orig/src/common/platform/posix/sdl/i_gui.cpp	2023-06-13 15:18:27.085968095 +0000
++++ gzdoom/src/common/platform/posix/sdl/i_gui.cpp	2023-06-13 15:21:45.878418792 +0000
+@@ -68,7 +68,7 @@ bool I_SetCursor(FGameTexture *cursorpic
+ 			SDL_FreeCursor (cursor);
+ 		cursor = SDL_CreateColorCursor (cursorSurface, 0, 0);
+ 		SDL_SetCursor (cursor);
+-		SDL_ShowCursor(SDL_ENABLE);
++		SDL_ShowCursor(SDL_DISABLE);
+ 	}
+ 	else
+ 	{
+diff -rupN gzdoom.orig/src/common/platform/posix/sdl/sdlglvideo.cpp gzdoom/src/common/platform/posix/sdl/sdlglvideo.cpp
+--- gzdoom.orig/src/common/platform/posix/sdl/sdlglvideo.cpp	2023-06-13 15:19:18.527118451 +0000
++++ gzdoom/src/common/platform/posix/sdl/sdlglvideo.cpp	2023-06-13 15:22:11.590995370 +0000
+@@ -394,9 +394,7 @@ SDLVideo::SDLVideo ()
+ 	}
+ 
+ 	// Fail gracefully if we somehow reach here after linking against a SDL2 library older than 2.0.6.
+-	SDL_version sdlver;
+-	SDL_GetVersion(&sdlver);
+-	if (!(sdlver.patch >= 6))
++	if (!SDL_VERSION_ATLEAST(2, 0, 6))
+ 	{
+ 		I_FatalError("Only SDL 2.0.6 or later is supported.");
+ 	}
+diff -rupN gzdoom.orig/src/common/rendering/gles/gles_system.cpp gzdoom/src/common/rendering/gles/gles_system.cpp
+--- gzdoom.orig/src/common/rendering/gles/gles_system.cpp	2023-06-13 15:19:18.535118630 +0000
++++ gzdoom/src/common/rendering/gles/gles_system.cpp	2023-06-13 15:49:15.910885661 +0000
+@@ -10,7 +10,7 @@ CVAR(Bool, gles_force_glsl_v100, false,
+ CVAR(Int, gles_max_lights_per_surface, 32, 0);
+ EXTERN_CVAR(Bool, gl_customshader);
+ 
+-
++#define __ANDROID__
+ #if USE_GLES2
+ 
+ PFNGLMAPBUFFERRANGEEXTPROC glMapBufferRange = NULL;
+@@ -182,6 +182,7 @@ namespace OpenGLESRenderer
+ #if USE_GLES2
+ 		gles.depthStencilAvailable = CheckExtension("GL_OES_packed_depth_stencil");
+ 		gles.npotAvailable = CheckExtension("GL_OES_texture_npot");
++		gles.useMappedBuffers = true;
+ 		gles.depthClampAvailable = CheckExtension("GL_EXT_depth_clamp");
+ #else
+ 		gles.depthStencilAvailable = true;
+diff -rupN gzdoom.orig/src/common/rendering/gles/gles_system.h gzdoom/src/common/rendering/gles/gles_system.h
+--- gzdoom.orig/src/common/rendering/gles/gles_system.h	2023-06-13 15:19:18.535118630 +0000
++++ gzdoom/src/common/rendering/gles/gles_system.h	2023-06-13 15:21:45.886418973 +0000
+@@ -23,7 +23,7 @@
+ #include <sys/stat.h>
+ #include <fcntl.h>
+ 
+-#define USE_GLES2 0
++#define USE_GLES2 1
+ 
+ #if (USE_GLES2)
+ 	#include "glad/glad.h"
+diff -rupN gzdoom.orig/src/gamedata/doomfont.h gzdoom/src/gamedata/doomfont.h
+--- gzdoom.orig/src/gamedata/doomfont.h	2023-06-13 15:19:18.555119077 +0000
++++ gzdoom/src/gamedata/doomfont.h	2023-06-13 15:21:45.918419689 +0000
+@@ -56,7 +56,7 @@ void InitDoomFonts()
+ 	}
+ 	else if (fileSystem.CheckNumForName("STCFN033", ns_graphics) >= 0)
+ 	{
+-		OriginalSmallFont = new FFont("OriginalSmallFont", "STCFN%.3d", "defsmallfont", HU_FONTSTART, HU_FONTSIZE, HU_FONTSTART, -1, -1, false, true, true);
++		OriginalSmallFont = new FFont("OriginalSmallFont", "STCFN%.3d", "defsmallfont", HU_FONTSTART, HU_FONTSIZE, HU_FONTSTART, -1, -1, false, true);
+ 	}
+ 
+ 
+diff -rupN gzdoom.orig/wadsrc/static/language.def gzdoom/wadsrc/static/language.def
+--- gzdoom.orig/wadsrc/static/language.def	2023-06-13 15:19:18.583119704 +0000
++++ gzdoom/wadsrc/static/language.def	2023-06-13 15:21:45.958420587 +0000
+@@ -99,6 +99,9 @@ STARTUP3 = "";
+ STARTUP4 = "";
+ STARTUP5 = "";
+ 
++// Engine strings
++CNTRLMNU_OPEN_MAIN				= "Open Main Menu";
++
+ // Placeholder definitions for strings that are in the game content table where the labels are needed even when that file is not loaded.
+ 
+ // Level names
+diff -rupN gzdoom.orig/wadsrc/static/menudef.txt gzdoom/wadsrc/static/menudef.txt
+--- gzdoom.orig/wadsrc/static/menudef.txt	2023-06-13 15:19:18.583119704 +0000
++++ gzdoom/wadsrc/static/menudef.txt	2023-06-13 15:21:45.958420587 +0000
+@@ -662,6 +662,7 @@ OptionMenu "OtherControlsMenu" protected
+ 	Control    "$CNTRLMNU_ADJUST_GAMMA"    , "bumpgamma"
+ 
+ 	StaticText ""
++	Control    "$CNTRLMNU_OPEN_MAIN"       , "menu_main"
+ 	Control    "$CNTRLMNU_OPEN_HELP"       , "menu_help"
+ 	Control    "$CNTRLMNU_OPEN_SAVE"       , "menu_save"
+ 	Control    "$CNTRLMNU_OPEN_LOAD"       , "menu_load"
+@@ -1776,7 +1777,7 @@ OptionMenu "CompatMapMenu" protected
+ 	Option "$CMPTMNU_PUSHWINDOW",					"compat_pushwindow", "YesNo"
+ 	Option "$CMPTMNU_CHECKSWITCHRANGE",				"compat_checkswitchrange", "YesNo"
+ 	Option "$CMPTMNU_RAILINGHACK",					"compat_railing", "YesNo"
+-	Option "$CMPTMNU_NOMBF21",						"compat_nombf21", "YesNo"
++	Option "$CMPTMNU_NOMBF21",						"compat_nombf21", "YeaNo"
+ 	Class "CompatibilityMenu"
+ }
+ 

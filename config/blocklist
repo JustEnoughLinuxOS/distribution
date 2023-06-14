@@ -3,3 +3,4 @@ vice-sa # Doesn't support updating with the script.
 dolphin-sa # Wayland patch is now broken upstream
 duckstation-lr #Libretro support removed from upstream.
 rpcs3-sa #Need to update to llvm 16 
+gzdoom-sa #will break build patch
