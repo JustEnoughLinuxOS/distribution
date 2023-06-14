@@ -1798,6 +1798,16 @@ EOF
 xmlstarlet fo -t ${ESTMP}/.es_systems.cfg >${ESTMP}/es_systems.cfg 2>/dev/null
 } 
 
+add_system_dir() {
+  if [ ! -d "${ESTMP}" ]
+  then
+    mkdir "${ESTMP}"
+  fi
+  cat <<EOF >>${ESTMP}/${DISTRO}-system-dirs.conf
+d	${1}			0777 root root - -
+EOF
+}
+
 add_es_system() {
   if [ -e "${ROOT}/config/emulators/${1}.conf" ]
   then
@@ -1826,6 +1836,8 @@ add_es_system() {
 </system>
 EOF
   fi
+
+  add_system_dir "${SYSTEM_PATH}"
 
   if [ -e "${ESTMP}/${SYSTEM_NAME}-emulators.tmp" ]
   then

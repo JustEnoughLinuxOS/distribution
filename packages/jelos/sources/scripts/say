@@ -1,0 +1,26 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2023-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+battery_percent() {
+  cat /sys/class/power_supply/{BAT,bat}*/uevent 2>/dev/null | grep -E "^POWER_SUPPLY_CAPACITY=" | sed -e s+'^POWER_SUPPLY_CAPACITY='++ | sort -rn | head -1
+}
+
+AUDIOTEST=$(ps -ef | grep [p]ulseaudio)
+if [ ! $? = 0 ]
+then
+  PLAYCMD="aplay -q"
+else
+  PLAYCMD="paplay"
+fi
+
+case $1 in
+  -b)
+    espeak --stdout "$(battery_percent)%" | ${PLAYCMD}
+  ;;
+  *)
+    espeak --stdout "$*" | ${PLAYCMD}
+  ;;
+esac

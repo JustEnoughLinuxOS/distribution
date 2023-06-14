@@ -4,7 +4,7 @@
 
 PKG_NAME="linux"
 PKG_LICENSE="GPL"
-PKG_VERSION="6.1.32"
+PKG_VERSION="6.3.7"
 PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_SITE="http://www.kernel.org"
 PKG_DEPENDS_HOST="ccache:host rsync:host openssl:host"
@@ -26,7 +26,7 @@ fi
 
 if [ "${PKG_BUILD_PERF}" != "no" ] && grep -q ^CONFIG_PERF_EVENTS= ${PKG_KERNEL_CFG_FILE}; then
   PKG_BUILD_PERF="yes"
-  PKG_DEPENDS_TARGET+=" binutils elfutils libunwind zlib openssl"
+  PKG_DEPENDS_TARGET+=" binutils elfutils libunwind zlib openssl libtraceevent libtracefs"
 fi
 
 if [[ "${TARGET_ARCH}" =~ i*86|x86_64 ]]; then

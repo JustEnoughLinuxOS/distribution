@@ -58,4 +58,11 @@ if [ -e /storage/.please_resize_me ] ; then
     StartProgress countdown "Rebooting in 5s...     " 5 "NOW"
   fi
 fi
+
+# Remove all of the modules that may be loaded to see if /flash will cleanly unmount.
+for module in $(lsmod | awk '{print $1}')
+do
+  rmmod ${module} 2>/dev/null
+done
+
 shutdown -r now &>/dev/null

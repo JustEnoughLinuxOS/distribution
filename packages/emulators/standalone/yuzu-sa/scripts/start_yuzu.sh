@@ -206,6 +206,8 @@ ln -sf /storage/.config/yuzu /storage/.local/share/yuzu
 #Set QT Platform to Wayland-EGL
 export QT_QPA_PLATFORM=wayland-egl
 
+jslisten set "-9 yuzu"
+
 #Run Yuzu emulator
 	if [ "$SUI" = "1" ]
 	then

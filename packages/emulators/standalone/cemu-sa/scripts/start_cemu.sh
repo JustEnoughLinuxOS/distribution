@@ -9,6 +9,7 @@
 # Ensure we're using pulseaudio
 rr_audio.sh pulseaudio
 export SDL_AUDIODRIVER=pulseaudio
+jslisten set "-9 cemu"
 
 BTTIMEOUT=10
 BTTESTCOUNT=0
