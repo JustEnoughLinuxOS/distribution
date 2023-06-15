@@ -494,7 +494,7 @@ makeinstall_target() {
   add_emu_core n64 retroarch mupen64plus_next true
   add_emu_core n64 retroarch mupen64plus false
   add_emu_core n64 retroarch parallel_n64 false
-  add_emu_core n64 mupen64plus-sa m64p_parallel false
+  # add_emu_core n64 mupen64plus-sa rmg_parallel false
   add_emu_core n64 mupen64plus-sa m64p_gliden64 false
   add_emu_core n64 mupen64plus-sa m64p_gl64mk2 false
   add_emu_core n64 mupen64plus-sa m64p_rice false

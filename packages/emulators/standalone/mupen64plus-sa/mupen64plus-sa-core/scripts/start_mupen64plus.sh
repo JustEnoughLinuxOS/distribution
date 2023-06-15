@@ -85,7 +85,7 @@ fi
 # Native Res Factor (Upscaling)
 	if [ "{$CORE}" = "m64p_gliden64" ]; then
 		sed -i "/UseNativeResolutionFactor/c\UseNativeResolutionFactor = $IRES" $TMP/mupen64plus.cfg
-	elif [ "{$CORE}" = "m64p_parallel" ]; then
+	elif [ "{$CORE}" = "rmg_parallel" ]; then
 		sed -i "/Upscaling/c\Upscaling = $IRES" $TMP/mupen64plus.cfg
 	fi
 
@@ -129,7 +129,7 @@ fi
 
 # Set the video plugin
 case $1 in
-	"m64p_parallel")
+	"rmg_parallel")
 		SET_PARAMS="$SET_PARAMS --gfx mupen64plus-video-parallel${SIMPLESUFFIX}"
 		RSP="parallel"
 	;;
@@ -150,11 +150,6 @@ esac
 # Set the RSP plugin
 case "${RSP}" in
 	"parallel")
-		export LIBGL_ALWAYS_SOFTWARE="1"
-		export MESA_GLSL_CACHE_DISABLE="1"
-		export MESA_GL_VERSION_OVERRIDE="3.3COMPAT"
-		export MESA_GLSL_VERSION_OVERRIDE="330"
-		export MESA_EXTENSION_OVERRIDE="-GL_ARB_buffer_storage"
 		SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-parallel$SIMPLESUFFIX.so"
 	;;
 	"cxd4")
@@ -171,4 +166,4 @@ SET_PARAMS="$SET_PARAMS --audio mupen64plus-audio-sdl$SIMPLESUFFIX.so"
 
 echo ${SET_PARAMS}
 
-${EMUPERF} /usr/local/bin/mupen64plus${SIMPLESUFFIX} --configdir $TMP --gfx mupen64plus-video-parallel${SIMPLESUFFIX} $SET_PARAMS "$TMP/$ROM"
+${EMUPERF} /usr/local/bin/mupen64plus${SIMPLESUFFIX} --configdir $TMP $SET_PARAMS "$TMP/$ROM"
