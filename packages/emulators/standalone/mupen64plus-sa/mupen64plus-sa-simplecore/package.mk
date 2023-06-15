@@ -32,6 +32,7 @@ make_target() {
       export USE_GLES=0
     ;;
   esac
+  export NEW_DYNAREC="1"
   export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -pthread"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
   export CROSS_COMPILE="${TARGET_PREFIX}"
