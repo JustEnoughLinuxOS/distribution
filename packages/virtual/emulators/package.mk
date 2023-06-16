@@ -169,14 +169,18 @@ makeinstall_target() {
 
   ## Sammy Atomiswave
   add_emu_core atomiswave retroarch flycast2021 false
-  add_emu_core atomiswave flycast flycast-sa false
   case ${DEVICE} in
     RK3*)
       add_emu_core atomiswave retroarch flycast32 true
       add_emu_core atomiswave retroarch flycast false
+      add_emu_core atomiswave flycast flycast-sa false
     ;;
+    S922X)
+      add_emu_core atomiswave flycast flycast-sa true
+      add_emu_core atomiswave retroarch flycast false
     *)
       add_emu_core atomiswave retroarch flycast true
+      add_emu_core atomiswave flycast flycast-sa false
     ;;
   esac
   add_es_system atomiswave
@@ -261,14 +265,18 @@ makeinstall_target() {
 
   ### Sega Dreamcast
   add_emu_core dreamcast retroarch flycast2021 false
-  add_emu_core dreamcast flycast flycast-sa false
   case ${DEVICE} in
     RK3*)
       add_emu_core dreamcast retroarch flycast32 true
       add_emu_core dreamcast retroarch flycast false
+      add_emu_core dreamcast flycast flycast-sa false
     ;;
+    S922X)
+      add_emu_core dreamcast flycast flycast-sa true
+      add_emu_core dreamcast retroarch flycast false
     *)
       add_emu_core dreamcast retroarch flycast true
+      add_emu_core dreamcast flycast flycast-sa false
     ;;
   esac
   add_es_system dreamcast
@@ -453,14 +461,18 @@ makeinstall_target() {
 
   ### Sega Naomi
   add_emu_core naomi retroarch flycast2021 false
-  add_emu_core naomi flycast flycast-sa false
   case ${DEVICE} in
     RK3*)
       add_emu_core naomi retroarch flycast32 true
       add_emu_core naomi retroarch flycast false
+      add_emu_core naomi flycast flycast-sa false
     ;;
+    S922X)
+      add_emu_core naomi flycast flycast-sa true
+      add_emu_core naomi retroarch flycast false
     *)
       add_emu_core naomi retroarch flycast true
+      add_emu_core naomi flycast flycast-sa false
     ;;
   esac
   add_es_system naomi
