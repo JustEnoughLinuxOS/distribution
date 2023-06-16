@@ -2,7 +2,7 @@
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="mupen64plus-sa-video-glide64mk2"
-PKG_VERSION="497a8255ac962c0090487514268011fe509b1e2c"
+PKG_VERSION="d900f2191575e01eb846a1009be71cbc1b413dba"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/mupen64plus/mupen64plus-video-glide64mk2"
 PKG_URL="https://github.com/mupen64plus/mupen64plus-video-glide64mk2/archive/${PKG_VERSION}.tar.gz"
@@ -40,7 +40,7 @@ make_target() {
   make -C projects/unix clean
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
   cp ${PKG_BUILD}/projects/unix/mupen64plus-video-glide64mk2.so ${PKG_BUILD}/projects/unix/mupen64plus-video-glide64mk2-base.so
-  export APIDIR=${SYSROOT_PREFIX}/usr/local/include/simple64
+  export APIDIR=${SYSROOT_PREFIX}/usr/local/include/simple64/src
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
   cp ${PKG_BUILD}/projects/unix/mupen64plus-video-glide64mk2.so ${PKG_BUILD}/projects/unix/mupen64plus-video-glide64mk2-simple.so
 }
