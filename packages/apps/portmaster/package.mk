@@ -11,10 +11,22 @@ PKG_TOOLCHAIN="manual"
 PKG_LONGDESC="Portmaster - a simple tool that allows you to download various game ports"
 
 makeinstall_target() {
+  export STRIP=true
   mkdir -p ${INSTALL}/usr/config/PortMaster
   tar -xvf ${PKG_DIR}/sources/${PKG_NAME}.tar.gz -C ${INSTALL}/usr/config/PortMaster
-  cp -rf ${PKG_DIR}/sources/PortMaster.sh ${INSTALL}/usr/config/PortMaster
-  chmod +x ${INSTALL}/usr/config/PortMaster/PortMaster.sh
+
+  case ${DEVICE} in
+    S922X)
+      mkdir -p ${INSTALL}/usr/lib/egl
+      tar -xvf ${PKG_DIR}/sources/libegl.tar.gz -C ${INSTALL}/usr/lib/egl
+      cp -rf ${PKG_DIR}/sources/${DEVICE}/PortMaster.sh ${INSTALL}/usr/config/PortMaster
+      chmod +x ${INSTALL}/usr/config/PortMaster/PortMaster.sh
+    ;;
+    *)
+      cp -rf ${PKG_DIR}/sources/PortMaster.sh ${INSTALL}/usr/config/PortMaster
+      chmod +x ${INSTALL}/usr/config/PortMaster/PortMaster.sh
+    ;;
+  esac
 
   mkdir -p ${INSTALL}/usr/bin
   cp -rf ${PKG_DIR}/scripts/* ${INSTALL}/usr/bin
