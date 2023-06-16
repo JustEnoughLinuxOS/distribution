@@ -31,7 +31,7 @@ make_target() {
       export USE_GLES=0
     ;;
   esac
-  export APIDIR=${SYSROOT_PREFIX}/usr/local/include/mupen64plus
+  export APIDIR=${SYSROOT_PREFIX}/usr/local/include/mupen64plus/api
   export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -pthread"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
   export CROSS_COMPILE="${TARGET_PREFIX}"
@@ -40,7 +40,7 @@ make_target() {
   make -C projects/unix clean
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
   cp ${PKG_BUILD}/projects/unix/mupen64plus-input-sdl.so ${PKG_BUILD}/projects/unix/mupen64plus-input-sdl-base.so
-  export APIDIR=${SYSROOT_PREFIX}/usr/local/include/simple64
+  export APIDIR=${SYSROOT_PREFIX}/usr/local/include/simple64/api
   make -C projects/unix clean
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
   cp ${PKG_BUILD}/projects/unix/mupen64plus-input-sdl.so ${PKG_BUILD}/projects/unix/mupen64plus-input-sdl-simple.so
