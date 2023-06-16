@@ -452,7 +452,7 @@ makeinstall_target() {
   add_es_system msx2
 
   ### Sega Naomi
-  add_emu_core naomi retroarch flucast2021 false
+  add_emu_core naomi retroarch flycast2021 false
   add_emu_core naomi flycast flycast-sa false
   case ${DEVICE} in
     RK3*)

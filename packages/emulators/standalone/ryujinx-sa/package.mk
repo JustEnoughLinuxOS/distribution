@@ -2,7 +2,8 @@
 # Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="ryujinx-sa"
-PKG_VERSION="1.1.869"
+PKG_VERSION="1.1.748"
+#DON'T UPDATE!, BROKEN BEYOND THIS VERSION!
 PKG_ARCH="x86_64"
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/Ryujinx"
