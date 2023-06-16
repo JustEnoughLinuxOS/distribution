@@ -1,0 +1,24 @@
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2018-present Frank Hartung (supervisedthinking (@) gmail.com)
+
+--- a/projects/unix/Makefile
++++ b/projects/unix/Makefile
+@@ -320,7 +320,7 @@
+ 
+ # test for presence of SDL
+ ifeq ($(origin SDL_CFLAGS) $(origin SDL_LDLIBS), undefined undefined)
+-  SDL_CONFIG = $(CROSS_COMPILE)sdl2-config
++  SDL_CONFIG = $(SYSROOT_PREFIX)/usr/bin/sdl2-config
+   ifeq ($(shell which $(SDL_CONFIG) 2>/dev/null),)
+     SDL_CONFIG = $(CROSS_COMPILE)sdl-config
+     ifeq ($(shell which $(SDL_CONFIG) 2>/dev/null),)
+@@ -403,9 +403,6 @@
+ endif
+ 
+ # set base program pointers and flags
+-CC       = $(CROSS_COMPILE)gcc
+-CXX      = $(CROSS_COMPILE)g++
+-STRINGS  = $(CROSS_COMPILE)strings
+ AS        = nasm
+ TR       ?= tr
+ RM       ?= rm -f

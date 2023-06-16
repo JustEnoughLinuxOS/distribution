@@ -23,7 +23,7 @@ fi
 get_graphicdrivers() {
 
   # set defaults
-  GALLIUM_DRIVERS=""
+  GALLIUM_DRIVERS="swrast"
   XORG_DRIVERS=""
   VULKAN_DRIVERS_CONFIG=""
   VULKAN_DRIVERS_MESA=""
@@ -153,6 +153,9 @@ get_graphicdrivers() {
   if [ ! "${DISPLAYSERVER}" = "x11" ]; then
     VDPAU_SUPPORT="no"
   fi
+
+  # add swrast to GALLIUM_DRIVERS regardless of GRAPHIC_DRIVERS value
+  GALLIUM_DRIVERS+=" swrast"
 
   # remove duplicate entries
   GALLIUM_DRIVERS="$(echo ${GALLIUM_DRIVERS} | xargs -n1 | sort -u | xargs)"
