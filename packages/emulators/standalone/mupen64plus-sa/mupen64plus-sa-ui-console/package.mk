@@ -42,6 +42,7 @@ make_target() {
   cp ${PKG_BUILD}/projects/unix/mupen64plus ${PKG_BUILD}/projects/unix/mupen64plus-base
   export APIDIR=${SYSROOT_PREFIX}/usr/local/include/simple64/src
   export CFLAGS="${CFLAGS} -DSIMPLECORE"
+  make -C projects/unix clean
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
   cp ${PKG_BUILD}/projects/unix/mupen64plus ${PKG_BUILD}/projects/unix/mupen64plus-simple
 }

@@ -54,4 +54,5 @@ makeinstall_target() {
   mkdir -p ${SYSROOT_PREFIX}/usr/local/include/simple64
   cp -r ${PKG_BUILD}/src ${SYSROOT_PREFIX}/usr/local/include/simple64/
   find ${PKG_BUILD}/src -name "*.h" -exec cp \{} ${SYSROOT_PREFIX}/usr/local/include/simple64/src \;
+  chmod -R 0644 ${SYSROOT_PREFIX}/usr/local/include/simple64/src
 }
