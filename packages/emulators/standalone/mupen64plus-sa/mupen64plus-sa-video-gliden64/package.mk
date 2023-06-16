@@ -2,7 +2,7 @@
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="mupen64plus-sa-video-gliden64"
-PKG_VERSION="1f4d04f43b53739bc9b128ab5577d20e3d60ed6a"
+PKG_VERSION="0fee30d010d1feda7d343654871b3dfd05ccab70"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/gonetz/GLideN64"
 PKG_URL="${PKG_SITE}.git"
@@ -44,7 +44,6 @@ make_target() {
   cp ${PKG_BUILD}/projects/cmake/plugin/Release/mupen64plus-video-GLideN64.so ${PKG_BUILD}/projects/cmake/plugin/Release/mupen64plus-video-GLideN64-base.so
   APIDIR=${SYSROOT_PREFIX}/usr/local/include/simple64/src
   cmake ${PKG_MAKE_OPTS_TARGET} -DAPIDIR=${APIDIR} -DMUPENPLUSAPI=On -DGLIDEN64_BUILD_TYPE=Release -DCMAKE_C_COMPILER="${CC}" -DCMAKE_CXX_COMPILER="${CXX}" -DCMAKE_C_FLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS} -pthread" -S src -B projects/cmake
-  make clean -C projects/cmake
   make -Wno-unused-variable -C projects/cmake
   cp ${PKG_BUILD}/projects/cmake/plugin/Release/mupen64plus-video-GLideN64.so ${PKG_BUILD}/projects/cmake/plugin/Release/mupen64plus-video-GLideN64-simple.so
 }

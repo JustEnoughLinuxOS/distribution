@@ -53,7 +53,6 @@ makeinstall_target() {
   mkdir -p ${SYSROOT_PREFIX}/usr/local/include/mupen64plus
   cp -r ${PKG_BUILD}/src ${SYSROOT_PREFIX}/usr/local/include/mupen64plus/
   find ${PKG_BUILD}/src -name "*.h" -exec cp \{} ${SYSROOT_PREFIX}/usr/local/include/mupen64plus/src \;
-  chmod -R 0644 ${SYSROOT_PREFIX}/usr/local/include/mupen64plus/src
 
   if [ -e "${PKG_DIR}/config/${DEVICE}/mupen64plus.cfg" ]
   then
