@@ -8,7 +8,7 @@ PKG_SECTION="emulation" # Do not change to virtual or makeinstall_target will no
 PKG_LONGDESC="Emulation metapackage."
 PKG_TOOLCHAIN="manual"
 
-PKG_EMUS="flycast-sa hatarisa hypseus-singe hypseus-singe moonlight openbor pico-8 ppsspp-sa
+PKG_EMUS="flycast-sa gzdoom-sa hatarisa hypseus-singe hypseus-singe moonlight openbor pico-8 ppsspp-sa
           vice-sa"
 
 PKG_RETROARCH="core-info libretro-database retroarch retroarch-assets retroarch-joypads retroarch-overlays     \
@@ -169,14 +169,18 @@ makeinstall_target() {
 
   ## Sammy Atomiswave
   add_emu_core atomiswave retroarch flycast2021 false
-  add_emu_core atomiswave flycast flycast-sa false
   case ${DEVICE} in
     RK3*)
       add_emu_core atomiswave retroarch flycast32 true
       add_emu_core atomiswave retroarch flycast false
+      add_emu_core atomiswave flycast flycast-sa false
     ;;
+    S922X)
+      add_emu_core atomiswave flycast flycast-sa true
+      add_emu_core atomiswave retroarch flycast false
     *)
       add_emu_core atomiswave retroarch flycast true
+      add_emu_core atomiswave flycast flycast-sa false
     ;;
   esac
   add_es_system atomiswave
@@ -261,14 +265,18 @@ makeinstall_target() {
 
   ### Sega Dreamcast
   add_emu_core dreamcast retroarch flycast2021 false
-  add_emu_core dreamcast flycast flycast-sa false
   case ${DEVICE} in
     RK3*)
       add_emu_core dreamcast retroarch flycast32 true
       add_emu_core dreamcast retroarch flycast false
+      add_emu_core dreamcast flycast flycast-sa false
     ;;
+    S922X)
+      add_emu_core dreamcast flycast flycast-sa true
+      add_emu_core dreamcast retroarch flycast false
     *)
       add_emu_core dreamcast retroarch flycast true
+      add_emu_core dreamcast flycast flycast-sa false
     ;;
   esac
   add_es_system dreamcast
@@ -452,15 +460,19 @@ makeinstall_target() {
   add_es_system msx2
 
   ### Sega Naomi
-  add_emu_core naomi retroarch flucast2021 false
-  add_emu_core naomi flycast flycast-sa false
+  add_emu_core naomi retroarch flycast2021 false
   case ${DEVICE} in
     RK3*)
       add_emu_core naomi retroarch flycast32 true
       add_emu_core naomi retroarch flycast false
+      add_emu_core naomi flycast flycast-sa false
     ;;
+    S922X)
+      add_emu_core naomi flycast flycast-sa true
+      add_emu_core naomi retroarch flycast false
     *)
       add_emu_core naomi retroarch flycast true
+      add_emu_core naomi flycast flycast-sa false
     ;;
   esac
   add_es_system naomi
@@ -819,6 +831,10 @@ makeinstall_target() {
 
   ### PC Ports
   add_es_system ports
+
+  ### Doom
+  add_emu_core doom gzdoom gzdoom-sa true
+  add_es_system doom
 
   ### Media Player
   add_emu_core mpv mpv true
