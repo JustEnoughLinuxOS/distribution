@@ -31,7 +31,7 @@ make_target() {
       export USE_GLES=0
     ;;
   esac
-  export APIDIR=${SYSROOT_PREFIX}/usr/local/include/mupen64plus/api
+  export APIDIR=${SYSROOT_PREFIX}/usr/local/include/mupen64plus/src
   export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -pthread"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
   export CROSS_COMPILE="${TARGET_PREFIX}"

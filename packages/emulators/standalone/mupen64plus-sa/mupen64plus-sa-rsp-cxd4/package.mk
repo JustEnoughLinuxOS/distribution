@@ -31,7 +31,7 @@ make_target() {
       export USE_GLES=0
     ;;
   esac
-  export APIDIR=${SYSROOT_PREFIX}/usr/local/include/mupen64plus/api
+  export APIDIR=${SYSROOT_PREFIX}/usr/local/include/mupen64plus/src
   export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -pthread"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
   export CROSS_COMPILE="${TARGET_PREFIX}"
@@ -45,7 +45,7 @@ make_target() {
     SUFFIX=""
   fi
   cp ${PKG_BUILD}/projects/unix/mupen64plus-rsp-cxd4${SUFFIX}.so ${PKG_BUILD}/projects/unix/mupen64plus-rsp-cxd4-base.so
-  export APIDIR=${SYSROOT_PREFIX}/usr/local/include/simple64/api
+  export APIDIR=${SYSROOT_PREFIX}/usr/local/include/simple64/src
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
   cp ${PKG_BUILD}/projects/unix/mupen64plus-rsp-cxd4${SUFFIX}.so ${PKG_BUILD}/projects/unix/mupen64plus-rsp-cxd4-simple.so
 }
