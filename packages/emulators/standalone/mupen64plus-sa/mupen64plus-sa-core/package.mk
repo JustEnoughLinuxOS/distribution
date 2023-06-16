@@ -28,9 +28,10 @@ make_target() {
     ;;
     x86_64)
       export HOST_CPU=x86_64
-      PKG_MAKE_OPTS_TARGET+="USE_GLES=0"
+      export USE_GLES=0
     ;;
   esac
+  export NEW_DYNAREC=1
   export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -pthread"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
   export CROSS_COMPILE="${TARGET_PREFIX}"
@@ -49,9 +50,9 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/local/share/mupen64plus
   cp ${PKG_BUILD}/data/* ${INSTALL}/usr/local/share/mupen64plus
   chmod 0644 ${INSTALL}/usr/local/share/mupen64plus/*
-  mkdir -p ${INSTALL}/usr/local/include/mupen64plus
-  cp ${PKG_BUILD}/src/api/m64p_*.h ${INSTALL}/usr/local/include/mupen64plus
-  chmod 0644 ${INSTALL}/usr/local/include/mupen64plus/*
+  mkdir -p ${SYSROOT_PREFIX}/usr/local/include/mupen64plus
+  find ${PKG_BUILD}/src -name "*.h" -exec cp \{} ${SYSROOT_PREFIX}/usr/local/include/mupen64plus/ \;
+  chmod 0644 ${SYSROOT_PREFIX}/usr/local/include/mupen64plus/*
 
   if [ -e "${PKG_DIR}/config/${DEVICE}/mupen64plus.cfg" ]
   then

@@ -14,6 +14,7 @@ GAME=$(echo "${2}"| sed "s#^/.*/##")
 ASPECT=$(get_setting game_aspect_ratio n64 "${GAME}")
 IRES=$(get_setting internal_resolution n64 "${GAME}")
 RSP=$(get_setting rsp_plugin n64 "${GAME}")
+SIMPLECORE=$(get_setting core_plugin n64 "${GAME}")
 FPS=$(get_setting show_fps n64 "${GAME}")
 PAK=$(get_setting controller_pak n64 "${GAME}")
 CON=$(get_setting input_configuration n64 "${GAME}")
@@ -70,20 +71,22 @@ fi
 #Aspect Ratio
 	if [ "${ASPECT}" = "fullscreen" ]; then
 		# TODO: Set aspect ratio to fullscreen
-		SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$SCREENWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT --set Video-Glide64mk2[aspect]=2 --set Video-GLideN64[AspectRatio]=3"
+		SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$SCREENWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT --set Video-Parallel[ScreenWidth]=$SCREENWIDTH --set Video-Parallel[ScreenHeight]=$SCREENHEIGHT --set Video-Glide64mk2[aspect]=2 --set Video-GLideN64[AspectRatio]=3 --set Video-Parallel[WidescreenStretch]=False"
 	else
 		# TODO: Set aspect ratio to 4:3
 		if [ "{$CORE}" = "m64p_rice" ]; then
 			GAMEWIDTH=$(((SCREENHEIGHT * 4) / 3))
 			SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$GAMEWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT"
 		else
-			SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$SCREENWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT --set Video-Glide64mk2[aspect]=0 --set Video-GLideN64[AspectRatio]=1"
+			SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$SCREENWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT --set Video-Parallel[ScreenWidth]=$SCREENWIDTH --set Video-Parallel[ScreenHeight]=$SCREENHEIGHT --set Video-Parallel[WidescreenStretch]=False --set Video-Glide64mk2[aspect]=0 --set Video-GLideN64[AspectRatio]=1"
 		fi
 	fi
 
 # Native Res Factor (Upscaling)
 	if [ "{$CORE}" = "m64p_gliden64" ]; then
 		sed -i "/UseNativeResolutionFactor/c\UseNativeResolutionFactor = $IRES" $TMP/mupen64plus.cfg
+	elif [ "{$CORE}" = "rmg_parallel" ]; then
+		sed -i "/Upscaling/c\Upscaling = $IRES" $TMP/mupen64plus.cfg
 	fi
 
 
@@ -102,35 +105,65 @@ fi
 # Show FPS
 # Get configuration from system.cfg
 	if [ "${FPS}" = "true" ]; then
-		sed -i '/ShowFPS = (False|True)/c\ShowFPS = True' $TMP/mupen64plus.cfg
-		sed -i '/ShowFPS = [0,1]/c\ShowFPS = 1' $TMP/mupen64plus.cfg
-		sed -i '/show_fps/c\show_fps = 1' $TMP/mupen64plus.cfg
+		export LIBGL_SHOW_FPS="1"
+		export GALLIUM_HUD="cpu+GPU-load+fps"
+		# sed -i '/ShowFPS = (False|True)/c\ShowFPS = True' $TMP/mupen64plus.cfg
+		# sed -i '/ShowFPS = (0|1)/c\ShowFPS = 1' $TMP/mupen64plus.cfg
+		# sed -i '/show_fps/c\show_fps = 1' $TMP/mupen64plus.cfg
 	else
-		sed -i '/ShowFPS = (False|True)/c\ShowFPS = False' $TMP/mupen64plus.cfg
-		sed -i '/ShowFPS = [0,1]/c\ShowFPS = 0' $TMP/mupen64plus.cfg
-		sed -i '/show_fps/c\show_fps = 0' $TMP/mupen64plus.cfg
+		export LIBGL_SHOW_FPS="0"
+		export GALLIUM_HUD="off"
+		# sed -i '/ShowFPS = (False|True)/c\ShowFPS = False' $TMP/mupen64plus.cfg
+		# sed -i '/ShowFPS = (0|1)/c\ShowFPS = 0' $TMP/mupen64plus.cfg
+		# sed -i '/show_fps/c\show_fps = 0' $TMP/mupen64plus.cfg
 	fi
 
-# RSP
-if [ "${RSP}" = "hle" ]; then
-	SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-hle.so"
+# SIMPLECORE, decide which executable to use for simple64
+if [ "{$SIMPLECORE}" = "simple" ]; then
+	SIMPLESUFFIX="-simple"
+	SET_PARAMS="$SET_PARAMS --set Core[R4300Emulator]=1"
 else
-	SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-cxd4.so"
+	SIMPLESUFFIX=""
+	SET_PARAMS="$SET_PARAMS --set Core[R4300Emulator]=2"
 fi
+
+# Set the video plugin
+case $1 in
+	"rmg_parallel")
+		SET_PARAMS="$SET_PARAMS --gfx mupen64plus-video-parallel${SIMPLESUFFIX}"
+		RSP="parallel"
+	;;
+	"m64p_gliden64")
+		SET_PARAMS="$SET_PARAMS --gfx mupen64plus-video-GLideN64${SIMPLESUFFIX}"
+	;;
+	"m64p_gl64mk2")
+		SET_PARAMS="$SET_PARAMS --gfx mupen64plus-video-glide64mk2${SIMPLESUFFIX}"
+	;;
+	"m64p_rice")
+		SET_PARAMS="$SET_PARAMS --gfx mupen64plus-video-rice${SIMPLESUFFIX}"
+	;;
+	*)
+		SET_PARAMS="$SET_PARAMS --gfx mupen64plus-video-rice${SIMPLESUFFIX}"
+	;;
+esac
+
+# Set the RSP plugin
+case "${RSP}" in
+	"parallel")
+		SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-parallel$SIMPLESUFFIX.so"
+	;;
+	"cxd4")
+		SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-hle$SIMPLESUFFIX.so"
+	;;
+	*)
+    	SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-cxd4$SIMPLESUFFIX.so"
+  	;;
+esac
+
+# Set the remaining plugins
+SET_PARAMS="$SET_PARAMS --input mupen64plus-input-sdl$SIMPLESUFFIX.so"
+SET_PARAMS="$SET_PARAMS --audio mupen64plus-audio-sdl$SIMPLESUFFIX.so"
 
 echo ${SET_PARAMS}
 
-case $1 in
-	"m64p_gliden64")
-		${EMUPERF} /usr/local/bin/mupen64plus --configdir $TMP --gfx mupen64plus-video-GLideN64 $SET_PARAMS "$TMP/$ROM"
-	;;
-	"m64p_gl64mk2")
-		${EMUPERF} /usr/local/bin/mupen64plus --configdir $TMP --gfx mupen64plus-video-glide64mk2 $SET_PARAMS "$TMP/$ROM"
-	;;
-	"m64p_rice")
-		${EMUPERF} /usr/local/bin/mupen64plus --configdir $TMP --gfx mupen64plus-video-rice $SET_PARAMS "$TMP/$ROM"
-	;;
-	*)
-		${EMUPERF} /usr/local/bin/mupen64plus --configdir $TMP --gfx mupen64plus-video-rice $SET_PARAMS "$TMP/$ROM"
-	;;
-esac
+${EMUPERF} /usr/local/bin/mupen64plus${SIMPLESUFFIX} --configdir $TMP $SET_PARAMS "$TMP/$ROM"
