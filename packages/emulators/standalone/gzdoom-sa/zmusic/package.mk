@@ -16,6 +16,7 @@ make_host() {
   [ -d "${PKG_BUILD}/build" ] && rm -rf ${PKG_BUILD}/build
   mkdir ${PKG_BUILD}/build
   cd ${PKG_BUILD}/build
+  unset HOST_CMAKE_OPTS
   cmake -DCMAKE_BUILD_TYPE=Release ..
   cmake --build .
 }
