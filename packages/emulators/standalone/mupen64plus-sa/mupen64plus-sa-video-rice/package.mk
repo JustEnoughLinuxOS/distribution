@@ -12,7 +12,7 @@ PKG_LONGDESC="Mupen64Plus Standalone Rice Video Driver"
 PKG_TOOLCHAIN="manual"
 
 case ${DEVICE} in
-  AMD64|RK3588)
+  AMD64|RK3588|S922X)
     PKG_DEPENDS_TARGET="mupen64plus-sa-simplecore"
   ;;
 esac
