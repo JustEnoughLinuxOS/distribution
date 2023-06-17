@@ -12,15 +12,29 @@ PKG_SHORTDESC="GZDoom's music system as a standalone library"
 GET_HANDLER_SUPPORT="git"
 PKG_TOOLCHAIN="cmake-make"
 
-make_target() {
-  mkdir ${PKG_BUILD}/build_target
-  cd ${PKG_BUILD}/build_target
+make_host() {
+  mkdir ${PKG_BUILD}/build
+  cd ${PKG_BUILD}/build
   cmake -DCMAKE_BUILD_TYPE=Release ..
   cmake --build .
 }
 
+make_target() {
+  rm -rf ${PKG_BUILD}/build
+  mkdir ${PKG_BUILD}/build
+  cd ${PKG_BUILD}/build
+  cmake -DCMAKE_BUILD_TYPE=Release ..
+  cmake --build .
+}
+
+makeinstall_host() {
+  mkdir -p ${TOOLCHAIN}/usr/{lib,include}
+  cp -f ${PKG_BUILD}/build/source/libzmusic* ${TOOLCHAIN}/usr/lib/
+  cp -f ${PKG_BUILD}/include/zmusic.h ${TOOLCHAIN}/usr/include
+}
+
 makeinstall_target() {
   mkdir -p ${SYSROOT_PREFIX}/usr/{lib,include}
-  cp -f ${PKG_BUILD}/build_target/source/libzmusic* ${SYSROOT_PREFIX}/usr/lib/
+  cp -f ${PKG_BUILD}/build/source/libzmusic* ${SYSROOT_PREFIX}/usr/lib/
   cp -f ${PKG_BUILD}/include/zmusic.h ${SYSROOT_PREFIX}/usr/include
 }
