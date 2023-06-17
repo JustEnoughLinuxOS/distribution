@@ -25,25 +25,23 @@ make_target() {
     arm|aarch64)
       export HOST_CPU=aarch64
       BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
-      export USE_GLES=1
+      sed -i 's/x86-64-v3/armv8-a/g' ${PKG_BUILD}/CMakeLists.txt
+      ARM="-DARM=1"
     ;;
     x86_64)
       export HOST_CPU=x86_64
-      export USE_GLES=0
+      ARM=""
     ;;
   esac
   export NEW_DYNAREC=1
   export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -pthread"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
   export CROSS_COMPILE="${TARGET_PREFIX}"
-  export V=1
-  export VC=0
-  export OSD=0
   cd ${PKG_BUILD}
   rm -rf build
   mkdir build
   cd build
-  cmake -G Ninja -DCMAKE_BUILD_TYPE="${RELEASE_TYPE}" ..
+  cmake -G Ninja ${ARM} -DCMAKE_BUILD_TYPE="Release" ..
   VERBOSE=1 cmake --build .
 }
 
