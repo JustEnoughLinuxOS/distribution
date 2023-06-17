@@ -6,10 +6,16 @@ PKG_VERSION="0fee30d010d1feda7d343654871b3dfd05ccab70"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/gonetz/GLideN64"
 PKG_URL="${PKG_SITE}.git"
-PKG_DEPENDS_TARGET="toolchain boost libpng SDL2 SDL2_net zlib freetype nasm:host mupen64plus-sa-core mupen64plus-sa-simplecore"
+PKG_DEPENDS_TARGET="toolchain boost libpng SDL2 SDL2_net zlib freetype nasm:host mupen64plus-sa-core"
 PKG_SHORTDESC="mupen64plus-video-gliden64"
 PKG_LONGDESC="Mupen64Plus Standalone GLide64 Video Driver"
 PKG_TOOLCHAIN="manual"
+
+case ${DEVICE} in
+  AMD64|RK3588|S922X)
+    PKG_DEPENDS_TARGET="mupen64plus-sa-simplecore"
+  ;;
+esac
 
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"

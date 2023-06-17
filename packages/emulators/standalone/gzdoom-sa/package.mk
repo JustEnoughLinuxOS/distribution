@@ -14,8 +14,11 @@ PKG_LONGDESC="GZDoom is a modder-friendly OpenGL and Vulkan source port based on
 GET_HANDLER_SUPPORT="git"
 PKG_TOOLCHAIN="cmake-make"
 
-pre_build_host() {
-  HOST_CMAKE_OPTS=""
+
+pre_configure_host() {
+  unset HOST_CMAKE_OPTS
+  PKG_CMAKE_OPTS_HOST=" -DZMUSIC_LIBRARIES=${TOOLCHAIN}/usr/lib/libzmusic.so \
+                        -DZMUSIC_INCLUDE_DIR=${TOOLCHAIN}/usr/include"
 }
 
 make_host() {
@@ -24,31 +27,27 @@ make_host() {
 }
 
 makeinstall_host() {
-: #no
-}
-
-pre_configure_host(){
-PKG_CMAKE_OPTS_HOST=" -DZMUSIC_LIBRARIES=$(get_build_dir zmusic)/build_host/source/libzmusic.so \
-                      -DZMUSIC_INCLUDE_DIR=$(get_build_dir zmusic)/include"
+  :
 }
 
 pre_configure_target() {
-PKG_CMAKE_OPTS_TARGET+=" -DNO_GTK=ON \
-                         -DFORCE_CROSSCOMPILE=ON \
-                         -DIMPORT_EXECUTABLES=${PKG_BUILD}/.${HOST_NAME}/ImportExecutables.cmake \
-                         -DCMAKE_BUILD_TYPE=Release \
-                         -DZMUSIC_LIBRARIES=$(get_build_dir zmusic)/build_target/source/libzmusic.so -DZMUSIC_INCLUDE_DIR=$(get_build_dir zmusic)/include"
+  PKG_CMAKE_OPTS_TARGET+=" -DNO_GTK=ON \
+                           -DFORCE_CROSSCOMPILE=ON \
+                           -DIMPORT_EXECUTABLES=${PKG_BUILD}/.${HOST_NAME}/ImportExecutables.cmake \
+                           -DCMAKE_BUILD_TYPE=Release \
+                           -DZMUSIC_LIBRARIES=${SYSROOT_PREFIX}/usr/lib/libzmusic.so -DZMUSIC_INCLUDE_DIR=${SYSROOT_PREFIX}/usr/include"
 }
 
 makeinstall_target() {
+
   mkdir -p ${INSTALL}/usr/bin
-  cp ${PKG_BUILD}/.${TARGET_NAME}/gzdoom ${INSTALL}/usr/bin
+  cp ${PKG_BUILD}/.${HOST_NAME}/gzdoom ${INSTALL}/usr/bin
   cp ${PKG_DIR}/scripts/start_gzdoom.sh ${INSTALL}/usr/bin/
   chmod +x ${INSTALL}/usr/bin/*
 
   mkdir -p ${INSTALL}/usr/config/gzdoom
   cp ${PKG_DIR}/config/* ${INSTALL}/usr/config/gzdoom
-  cp ${PKG_BUILD}/.${TARGET_NAME}/*.pk3 ${INSTALL}/usr/config/gzdoom
-  cp -r ${PKG_BUILD}/.${TARGET_NAME}/soundfonts ${INSTALL}/usr/config/gzdoom
-  cp -r ${PKG_BUILD}/.${TARGET_NAME}/fm_banks ${INSTALL}/usr/config/gzdoom
+  cp ${PKG_BUILD}/.${HOST_NAME}/*.pk3 ${INSTALL}/usr/config/gzdoom
+  cp -r ${PKG_BUILD}/.${HOST_NAME}/soundfonts ${INSTALL}/usr/config/gzdoom
+  cp -r ${PKG_BUILD}/.${HOST_NAME}/fm_banks ${INSTALL}/usr/config/gzdoom
 }
