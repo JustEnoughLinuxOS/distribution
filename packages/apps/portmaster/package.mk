@@ -28,6 +28,10 @@ makeinstall_target() {
     ;;
   esac
 
+  sed -e "s/jelos.dialogrc/All_Black.dialogrc/g" \
+      -i ${INSTALL}/usr/config/PortMaster/PortMaster.sh
+  cp -rf ${PKG_DIR}/sources/All_Black.dialogrc ${INSTALL}/usr/config/PortMaster/colorscheme
+
   mkdir -p ${INSTALL}/usr/bin
   cp -rf ${PKG_DIR}/scripts/* ${INSTALL}/usr/bin
   chmod +x ${INSTALL}/usr/bin/start_portmaster.sh
