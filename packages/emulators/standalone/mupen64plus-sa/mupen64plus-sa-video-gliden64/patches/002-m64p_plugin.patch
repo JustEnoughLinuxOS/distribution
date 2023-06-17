@@ -1,0 +1,13 @@
+diff --git a/src/PluginAPI.h b/src/PluginAPI.h
+index cc6e222e..df65408f 100644
+--- a/src/PluginAPI.h
++++ b/src/PluginAPI.h
+@@ -5,7 +5,7 @@
+ #ifndef NOMINMAX
+ #define NOMINMAX
+ #endif
+-#include "m64p_plugin.h"
++#include "mupen64plus/src/api/m64p_plugin.h"
+ #else
+ #include "windows/GLideN64_windows.h"
+ #include "ZilmarGFX_1_3.h"

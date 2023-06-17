@@ -437,6 +437,8 @@ EnableNativeResTexrects = 1
 ThreadedVideo = 1
 # Screen aspect ratio (0=stretch, 1=force 4:3, 2=force 16:9, 3=adjust)
 AspectRatio = 1
+# Display On-screen FPS
+ShowFPS = False
 
 [Video-Glide64mk2]
 

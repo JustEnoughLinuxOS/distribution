@@ -1,0 +1,82 @@
+#!/bin/bash
+
+# Usage: "source /scripts/setEnv AMD64" after using "make docker-shell"
+# Copyright (C) 2023 Nicholas Ricciuti (rishooty@gmail.com)
+
+case "$1" in
+    "AMD64")
+        unset DEVICE_ROOT
+        export PROJECT=PC
+        export DEVICE=AMD64
+        export ARCH=x86_64
+    ;;
+    "RK3588")
+        unset DEVICE_ROOT
+        export PROJECT=Rockchip
+        export DEVICE=RK3588
+        export ARCH=aarch64
+    ;;
+    "S922X")
+        unset DEVICE_ROOT
+        export PROJECT=Amlogic
+        export DEVICE=S922X
+        export ARCH=aarch64
+    ;;
+    "RK3566")
+        export DEVICE_ROOT=RK3566
+        export PROJECT=Rockchip
+        export DEVICE=RK3566
+        export ARCH=aarch64
+    ;;
+    "RK3566-X55")
+        export DEVICE_ROOT=RK3566
+        export PROJECT=Rockchip
+        export DEVICE=RK3566-X55
+        export ARCH=aarch64
+    ;;
+    "RK3326")
+        unset DEVICE_ROOT
+        export PROJECT=Rockchip
+        export DEVICE=RK3326
+        export ARCH=aarch64
+    ;;
+    "AMD64-32")
+        unset DEVICE_ROOT
+        export PROJECT=PC
+        export DEVICE=AMD64
+        export ARCH=i686
+    ;;
+    "RK3588-32")
+        unset DEVICE_ROOT
+        export PROJECT=Rockchip
+        export DEVICE=RK3588
+        export ARCH=arm
+    ;;
+    "S922X-32")
+        unset DEVICE_ROOT
+        export PROJECT=Amlogic
+        export DEVICE=S922X
+        export ARCH=arm
+    ;;
+    "RK3566-32")
+        export DEVICE_ROOT=RK3566
+        export PROJECT=Rockchip
+        export DEVICE=RK3566
+        export ARCH=arm
+    ;;
+    "RK3566-X55-32")
+        export DEVICE_ROOT=RK3566
+        export PROJECT=Rockchip
+        export DEVICE=RK3566-X55
+        export ARCH=arm
+    ;;
+    "RK3326-32")
+        unset DEVICE_ROOT
+        export PROJECT=Rockchip
+        export DEVICE=RK3326
+        export ARCH=arm
+    ;;
+    *)
+        echo "Unknown device."
+    ;;
+esac

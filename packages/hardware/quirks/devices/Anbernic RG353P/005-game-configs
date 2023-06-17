@@ -1,0 +1,14 @@
+
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
+
+. /etc/profile
+
+#Set up gzdoom
+if [ ! -d "/storage/.config/gzdoom/" ]; then
+  cp -rf /usr/config/gzdoom /storage/.config/
+  sed -i '/Joy10=/c\Joy10=togglemap' /storage/.config/gzdoom/gzdoom.ini
+  sed -i '/Joy9=/c\Joy9=menu_main' /storage/.config/gzdoom/gzdoom.ini
+  sed -i '/vid_defheight=/c\vid_defheight=480' /storage/.config/gzdoom/gzdoom.ini
+  sed -i '/vid_defwidth=/c\vid_defwidth=640' /storage/.config/gzdoom/gzdoom.ini
+fi

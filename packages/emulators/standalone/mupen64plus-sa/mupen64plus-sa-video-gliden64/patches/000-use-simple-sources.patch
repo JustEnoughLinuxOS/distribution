@@ -1,0 +1,1703 @@
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index fca4e3a3..5f062dff 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -32,6 +32,7 @@ else(GIT_FOUND AND EXISTS "${CMAKE_SOURCE_DIR}/../.git")
+ endif(GIT_FOUND AND EXISTS "${CMAKE_SOURCE_DIR}/../.git")
+ set_property(SOURCE ${PATH_REVISION} PROPERTY SKIP_AUTOGEN ON)
+ include_directories("${CMAKE_CURRENT_BINARY_DIR}/inc")
++include_directories("${APIDIR}")
+ 
+ project( GLideN64 )
+ 
+diff --git a/src/inc/m64p_common.h b/src/inc/m64p_common.h
+deleted file mode 100644
+index 3e80db6e..00000000
+--- a/src/inc/m64p_common.h
++++ /dev/null
+@@ -1,90 +0,0 @@
+-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+- *   Mupen64plus-core - m64p_common.h                                      *
+- *   Mupen64Plus homepage: https://mupen64plus.org/                        *
+- *   Copyright (C) 2009 Richard Goedeken                                   *
+- *                                                                         *
+- *   This program is free software; you can redistribute it and/or modify  *
+- *   it under the terms of the GNU General Public License as published by  *
+- *   the Free Software Foundation; either version 2 of the License, or     *
+- *   (at your option) any later version.                                   *
+- *                                                                         *
+- *   This program is distributed in the hope that it will be useful,       *
+- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+- *   GNU General Public License for more details.                          *
+- *                                                                         *
+- *   You should have received a copy of the GNU General Public License     *
+- *   along with this program; if not, write to the                         *
+- *   Free Software Foundation, Inc.,                                       *
+- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
+- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+-
+-/* This header file defines typedefs for function pointers to common Core
+- * and plugin functions, for use by the front-end and plugin modules to attach
+- * to the dynamic libraries.
+- */
+-
+-#if !defined(M64P_COMMON_H)
+-#define M64P_COMMON_H
+-
+-#include "m64p_types.h"
+-
+-#ifdef __cplusplus
+-extern "C" {
+-#endif
+-
+-/* PluginGetVersion()
+- *
+- * This function retrieves version information from a library. This
+- * function is the same for the core library and the plugins.
+- */
+-typedef m64p_error (*ptr_PluginGetVersion)(m64p_plugin_type *, int *, int *, const char **, int *);
+-#if defined(M64P_PLUGIN_PROTOTYPES) || defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL PluginGetVersion(m64p_plugin_type *, int *, int *, const char **, int *);
+-#endif
+-
+-/* CoreGetAPIVersions()
+- *
+- * This function retrieves API version information from the core.
+- */
+-typedef m64p_error (*ptr_CoreGetAPIVersions)(int *, int *, int *, int *);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL CoreGetAPIVersions(int *, int *, int *, int *);
+-#endif
+-
+-/* CoreErrorMessage()
+- *
+- * This function returns a pointer to a NULL-terminated string giving a
+- * human-readable description of the error.
+-*/
+-typedef const char * (*ptr_CoreErrorMessage)(m64p_error);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT const char * CALL CoreErrorMessage(m64p_error);
+-#endif
+-
+-/* PluginStartup()
+- *
+- * This function initializes a plugin for use by allocating memory, creating
+- * data structures, and loading the configuration data.
+-*/
+-typedef m64p_error (*ptr_PluginStartup)(m64p_dynlib_handle, void *, void (*)(void *, int, const char *));
+-#if defined(M64P_PLUGIN_PROTOTYPES) || defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL PluginStartup(m64p_dynlib_handle, void *, void (*)(void *, int, const char *));
+-#endif
+-
+-/* PluginShutdown()
+- *
+- * This function destroys data structures and releases memory allocated by
+- * the plugin library.
+-*/
+-typedef m64p_error (*ptr_PluginShutdown)(void);
+-#if defined(M64P_PLUGIN_PROTOTYPES) || defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL PluginShutdown(void);
+-#endif
+-
+-#ifdef __cplusplus
+-}
+-#endif
+-
+-#endif /* #define M64P_COMMON_H */
+-
+diff --git a/src/inc/m64p_config.h b/src/inc/m64p_config.h
+deleted file mode 100644
+index 85199167..00000000
+--- a/src/inc/m64p_config.h
++++ /dev/null
+@@ -1,302 +0,0 @@
+-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+- *   Mupen64plus-core - m64p_config.h                                      *
+- *   Mupen64Plus homepage: https://mupen64plus.org/                        *
+- *   Copyright (C) 2009 Richard Goedeken                                   *
+- *                                                                         *
+- *   This program is free software; you can redistribute it and/or modify  *
+- *   it under the terms of the GNU General Public License as published by  *
+- *   the Free Software Foundation; either version 2 of the License, or     *
+- *   (at your option) any later version.                                   *
+- *                                                                         *
+- *   This program is distributed in the hope that it will be useful,       *
+- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+- *   GNU General Public License for more details.                          *
+- *                                                                         *
+- *   You should have received a copy of the GNU General Public License     *
+- *   along with this program; if not, write to the                         *
+- *   Free Software Foundation, Inc.,                                       *
+- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
+- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+-
+-/* This header file defines typedefs for function pointers to the Core's
+- * configuration handling functions.
+- */
+-
+-#if !defined(M64P_CONFIG_H)
+-#define M64P_CONFIG_H
+-
+-#include "m64p_types.h"
+-
+-#ifdef __cplusplus
+-extern "C" {
+-#endif
+-
+-/* ConfigListSections()
+- *
+- * This function is called to enumerate the list of Sections in the Mupen64Plus
+- * configuration file. It is expected that there will be a section named "Core"
+- * for core-specific configuration data, "Graphics" for common graphics options,
+- * and one or more sections for each plugin library. 
+- */
+-typedef m64p_error (*ptr_ConfigListSections)(void *, void (*)(void *, const char *));
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL ConfigListSections(void *, void (*)(void *, const char *));
+-#endif
+-
+-/* ConfigOpenSection()
+- *
+- * This function is used to give a configuration section handle to the front-end
+- * which may be used to read or write configuration parameter values in a given
+- * section of the configuration file.
+- */
+-typedef m64p_error (*ptr_ConfigOpenSection)(const char *, m64p_handle *);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL ConfigOpenSection(const char *, m64p_handle *);
+-#endif
+-
+-/* ConfigListParameters()
+- *
+- * This function is called to enumerate the list of Parameters in a given
+- * Section of the Mupen64Plus configuration file. 
+- */
+-typedef m64p_error (*ptr_ConfigListParameters)(m64p_handle, void *, void (*)(void *, const char *, m64p_type));
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL ConfigListParameters(m64p_handle, void *, void (*)(void *, const char *, m64p_type));
+-#endif
+-
+-/* ConfigSaveFile()
+- *
+- * This function saves the entire current Mupen64Plus configuration to disk.
+- */
+-typedef m64p_error (*ptr_ConfigSaveFile)(void);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL ConfigSaveFile(void);
+-#endif
+-
+-/* ConfigSaveSection()
+- *
+- * This function saves one section of the current Mupen64Plus configuration to disk.
+- */
+-typedef m64p_error (*ptr_ConfigSaveSection)(const char *);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL ConfigSaveSection(const char *);
+-#endif
+-
+-/* ConfigHasUnsavedChanges()
+- *
+- * This function determines if a given Section (or all sections) of the Mupen64Plus Core configuration file has been modified since it was last saved or loaded.
+- */
+-typedef int (*ptr_ConfigHasUnsavedChanges)(const char *);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT int CALL ConfigHasUnsavedChanges(const char *);
+-#endif
+-
+-/* ConfigDeleteSection()
+- *
+- * This function deletes a section from the Mupen64Plus configuration data.
+- */
+-typedef m64p_error (*ptr_ConfigDeleteSection)(const char *SectionName);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL ConfigDeleteSection(const char *SectionName);
+-#endif
+-
+-/* ConfigRevertChanges()
+- *
+- * This function reverts changes previously made to one section of the configuration file, so that it will match with the configuration at the last time that it was loaded from or saved to disk.
+- */
+-typedef m64p_error (*ptr_ConfigRevertChanges)(const char *SectionName);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL ConfigRevertChanges(const char *SectionName);
+-#endif
+-
+-/* ConfigSetParameter()
+- *
+- * This function sets the value of one of the emulator's configuration
+- * parameters.
+- */
+-typedef m64p_error (*ptr_ConfigSetParameter)(m64p_handle, const char *, m64p_type, const void *);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL ConfigSetParameter(m64p_handle, const char *, m64p_type, const void *);
+-#endif
+-
+-/* ConfigSetParameterHelp()
+- *
+- * This function sets the help string of one of the emulator's configuration
+- * parameters.
+- */
+-typedef m64p_error (*ptr_ConfigSetParameterHelp)(m64p_handle, const char *, const char *);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL ConfigSetParameterHelp(m64p_handle, const char *, const char *);
+-#endif
+-
+-/* ConfigGetParameter()
+- *
+- * This function retrieves the value of one of the emulator's parameters. 
+- */
+-typedef m64p_error (*ptr_ConfigGetParameter)(m64p_handle, const char *, m64p_type, void *, int);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL ConfigGetParameter(m64p_handle, const char *, m64p_type, void *, int);
+-#endif
+-
+-/* ConfigGetParameterType()
+- *
+- * This function retrieves the type of one of the emulator's parameters. 
+- */
+-typedef m64p_error (*ptr_ConfigGetParameterType)(m64p_handle, const char *, m64p_type *);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL ConfigGetParameterType(m64p_handle, const char *, m64p_type *);
+-#endif
+-
+-/* ConfigGetParameterHelp()
+- *
+- * This function retrieves the help information about one of the emulator's
+- * parameters.
+- */
+-typedef const char * (*ptr_ConfigGetParameterHelp)(m64p_handle, const char *);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT const char * CALL ConfigGetParameterHelp(m64p_handle, const char *);
+-#endif
+-
+-/* ConfigSetDefault***()
+- *
+- * These functions are used to set the value of a configuration parameter if it
+- * is not already present in the configuration file. This may happen if a new
+- * user runs the emulator, or an upgraded module uses a new parameter, or the
+- * user deletes his or her configuration file. If the parameter is already
+- * present in the given section of the configuration file, then no action will
+- * be taken and this function will return successfully.
+- */
+-typedef m64p_error (*ptr_ConfigSetDefaultInt)(m64p_handle, const char *, int, const char *);
+-typedef m64p_error (*ptr_ConfigSetDefaultFloat)(m64p_handle, const char *, float, const char *);
+-typedef m64p_error (*ptr_ConfigSetDefaultBool)(m64p_handle, const char *, int, const char *);
+-typedef m64p_error (*ptr_ConfigSetDefaultString)(m64p_handle, const char *, const char *, const char *);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL ConfigSetDefaultInt(m64p_handle, const char *, int, const char *);
+-EXPORT m64p_error CALL ConfigSetDefaultFloat(m64p_handle, const char *, float, const char *);
+-EXPORT m64p_error CALL ConfigSetDefaultBool(m64p_handle, const char *, int, const char *);
+-EXPORT m64p_error CALL ConfigSetDefaultString(m64p_handle, const char *, const char *, const char *);
+-#endif
+-
+-/* ConfigGetParam***()
+- *
+- * These functions retrieve the value of one of the emulator's parameters in
+- * the given section, and return the value directly to the calling function. If
+- * an errors occurs (such as an invalid Section handle, or invalid
+- * configuration parameter name), then an error will be sent to the front-end
+- * via the DebugCallback() function, and either a 0 (zero) or an empty string
+- * will be returned.
+- */
+-typedef int          (*ptr_ConfigGetParamInt)(m64p_handle, const char *);
+-typedef float        (*ptr_ConfigGetParamFloat)(m64p_handle, const char *);
+-typedef int          (*ptr_ConfigGetParamBool)(m64p_handle, const char *);
+-typedef const char * (*ptr_ConfigGetParamString)(m64p_handle, const char *);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT int          CALL ConfigGetParamInt(m64p_handle, const char *);
+-EXPORT float        CALL ConfigGetParamFloat(m64p_handle, const char *);
+-EXPORT int          CALL ConfigGetParamBool(m64p_handle, const char *);
+-EXPORT const char * CALL ConfigGetParamString(m64p_handle, const char *);
+-#endif
+-
+-/* ConfigGetSharedDataFilepath()
+- *
+- * This function is provided to allow a plugin to retrieve a full pathname to a
+- * given shared data file. This type of file is intended to be shared among
+- * multiple users on a system, so it is likely to be read-only.
+- */
+-typedef const char * (*ptr_ConfigGetSharedDataFilepath)(const char *);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT const char * CALL ConfigGetSharedDataFilepath(const char *);
+-#endif
+-
+-/* ConfigGetUserConfigPath()
+- *
+- * This function may be used by the plugins or front-end to get a path to the
+- * directory for storing user-specific configuration files. This will be the
+- * directory where "mupen64plus.cfg" is located.
+- */
+-typedef const char * (*ptr_ConfigGetUserConfigPath)(void);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT const char * CALL ConfigGetUserConfigPath(void);
+-#endif
+-
+-/* ConfigGetUserDataPath()
+- *
+- * This function may be used by the plugins or front-end to get a path to the
+- * directory for storing user-specific data files. This may be used to store
+- * files such as screenshots, saved game states, or hi-res textures.
+- */
+-typedef const char * (*ptr_ConfigGetUserDataPath)(void);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT const char * CALL ConfigGetUserDataPath(void);
+-#endif
+-
+-/* ConfigGetUserCachePath()
+- *
+- * This function may be used by the plugins or front-end to get a path to the
+- * directory for storing cached user-specific data files. Files in this
+- * directory may be deleted by the user to save space, so critical information
+- * should not be stored here.  This directory may be used to store files such
+- * as the ROM browser cache.
+- */
+-typedef const char * (*ptr_ConfigGetUserCachePath)(void);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT const char * CALL ConfigGetUserCachePath(void);
+-#endif
+-
+-/* ConfigExternalOpen()
+- *
+- * This function reads the contents of the config file into memory
+- * and returns M64ERR_SUCCESS if successful.
+- */
+-typedef m64p_error (*ptr_ConfigExternalOpen)(const char *, m64p_handle *);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL ConfigExternalOpen(const char *, m64p_handle *);
+-#endif
+-
+-/* ConfigExternalClose()
+- *
+- * Frees the memory pointer created by ConfigExternalOpen.
+- */
+-typedef m64p_error (*ptr_ConfigExternalClose)(m64p_handle);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL ConfigExternalClose(m64p_handle);
+-#endif
+-
+-/* ConfigExternalGetParameter()
+- *
+- * This functions allows a plugin to leverage the built-in ini parser to read
+- * any cfg/ini file. It will return M64ERR_SUCCESS if the item was found.
+- */
+-typedef m64p_error (*ptr_ConfigExternalGetParameter)(m64p_handle, const char *, const char *, char *, int);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL ConfigExternalGetParameter(m64p_handle, const char *, const char *, char *, int);
+-#endif
+-
+-/* ConfigSendNetplayConfig()
+- *
+- * This function allows plugins to take advantage of the netplay TCP connection
+- * to send configuration data to the netplay server.
+- */
+-
+-typedef m64p_error (*ptr_ConfigSendNetplayConfig)(char*, int);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL ConfigSendNetplayConfig(char*, int);
+-#endif
+-
+-/* ConfigReceiveNetplayConfig()
+- *
+- * This function allows plugins to take advantage of the netplay TCP connection
+- * to receive configuration data from the netplay server.
+- */
+-
+-typedef m64p_error (*ptr_ConfigReceiveNetplayConfig)(char*, int);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL ConfigReceiveNetplayConfig(char*, int);
+-#endif
+-
+-#ifdef __cplusplus
+-}
+-#endif
+-
+-#endif /* #define M64P_CONFIG_H */
+diff --git a/src/inc/m64p_debugger.h b/src/inc/m64p_debugger.h
+deleted file mode 100644
+index f19e3d08..00000000
+--- a/src/inc/m64p_debugger.h
++++ /dev/null
+@@ -1,222 +0,0 @@
+-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+- *   Mupen64plus-core - m64p_debugger.h                                    *
+- *   Mupen64Plus homepage: https://mupen64plus.org/                        *
+- *   Copyright (C) 2009 Richard Goedeken                                   *
+- *                                                                         *
+- *   This program is free software; you can redistribute it and/or modify  *
+- *   it under the terms of the GNU General Public License as published by  *
+- *   the Free Software Foundation; either version 2 of the License, or     *
+- *   (at your option) any later version.                                   *
+- *                                                                         *
+- *   This program is distributed in the hope that it will be useful,       *
+- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+- *   GNU General Public License for more details.                          *
+- *                                                                         *
+- *   You should have received a copy of the GNU General Public License     *
+- *   along with this program; if not, write to the                         *
+- *   Free Software Foundation, Inc.,                                       *
+- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
+- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+-
+-/* This header file defines typedefs for function pointers to Core Debugger
+- * functions.
+- */
+-
+-#if !defined(M64P_DEBUGGER_H)
+-#define M64P_DEBUGGER_H
+-
+-#include "m64p_types.h"
+-
+-#ifdef __cplusplus
+-extern "C" {
+-#endif
+-
+-/* DebugSetCallbacks()
+- *
+- * This function is called by the front-end to supply debugger callback
+- * function pointers. If debugger is enabled and then later disabled within the
+- * UI, this function may be called with NULL pointers in order to disable the
+- * callbacks. 
+- */
+-typedef m64p_error (*ptr_DebugSetCallbacks)(void (*)(void), void (*)(unsigned int), void (*)(void));
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL DebugSetCallbacks(void (*)(void), void (*)(unsigned int), void (*)(void));
+-#endif
+-
+-/* DebugSetCoreCompare()
+- *
+- * This function is called by the front-end to supply callback function pointers
+- * for the Core Comparison feature.
+- */
+-typedef m64p_error (*ptr_DebugSetCoreCompare)(void (*)(unsigned int), void (*)(int, void *));
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL DebugSetCoreCompare(void (*)(unsigned int), void (*)(int, void *));
+-#endif
+-
+-/* DebugSetRunState()
+- *
+- * This function sets the run state of the R4300 CPU emulator.
+- */
+-typedef m64p_error (*ptr_DebugSetRunState)(m64p_dbg_runstate);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL DebugSetRunState(m64p_dbg_runstate);
+-#endif
+-
+-/* DebugGetState()
+- *
+- * This function reads and returns a debugger state variable, which are
+- * enumerated in m64p_types.h. 
+- */
+-typedef int (*ptr_DebugGetState)(m64p_dbg_state);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT int CALL DebugGetState(m64p_dbg_state);
+-#endif
+-
+-/* DebugStep()
+- *
+- * This function signals the debugger to advance one instruction when in the
+- * stepping mode.
+- */
+-typedef m64p_error (*ptr_DebugStep)(void);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL DebugStep(void);
+-#endif
+-
+-/* DebugDecodeOp()
+- *
+- * This is a helper function for the debugger front-end. This instruction takes
+- * a PC value and an R4300 instruction opcode and writes the disassembled
+- * instruction mnemonic and arguments into character buffers. This is intended
+- * to be used to display disassembled code. 
+- */
+-typedef void (*ptr_DebugDecodeOp)(unsigned int, char *, char *, int);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT void CALL DebugDecodeOp(unsigned int, char *, char *, int);
+-#endif
+-
+-/* DebugMemGetRecompInfo()
+- *
+- * This function is used by the front-end to retrieve disassembly information
+- * about recompiled code. For example, the dynamic recompiler may take a single
+- * R4300 instruction and compile it into 10 x86 instructions. This function may
+- * then be used to retrieve the disassembled code of the 10 x86 instructions.
+- */
+-typedef void * (*ptr_DebugMemGetRecompInfo)(m64p_dbg_mem_info, unsigned int, int);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT void * CALL DebugMemGetRecompInfo(m64p_dbg_mem_info, unsigned int, int);
+-#endif
+-
+-/* DebugMemGetMemInfo()
+- *
+- * This function returns an integer value regarding the memory location address,
+- * corresponding to the information requested by mem_info_type, which is a type
+- * enumerated in m64p_types.h.
+- */
+-typedef int (*ptr_DebugMemGetMemInfo)(m64p_dbg_mem_info, unsigned int);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT int CALL DebugMemGetMemInfo(m64p_dbg_mem_info, unsigned int);
+-#endif
+-
+-/* DebugMemGetPointer()
+- *
+- * This function returns a memory pointer (in x86 memory space) to a block of
+- * emulated N64 memory. This may be used to retrieve a pointer to a special N64
+- * block (such as the serial, video, or audio registers) or the RDRAM.
+- */
+-typedef void * (*ptr_DebugMemGetPointer)(m64p_dbg_memptr_type);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT void * CALL DebugMemGetPointer(m64p_dbg_memptr_type);
+-#endif
+-
+-/* DebugMemRead**()
+- *
+- * These functions retrieve a value from the emulated N64 memory. The returned
+- * value will be correctly byte-swapped for the host architecture. 
+- */
+-typedef unsigned long long (*ptr_DebugMemRead64)(unsigned int);
+-typedef unsigned int 	   (*ptr_DebugMemRead32)(unsigned int);
+-typedef unsigned short 	   (*ptr_DebugMemRead16)(unsigned int);
+-typedef unsigned char 	   (*ptr_DebugMemRead8)(unsigned int);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT unsigned long long  CALL DebugMemRead64(unsigned int);
+-EXPORT unsigned int 	   CALL DebugMemRead32(unsigned int);
+-EXPORT unsigned short 	   CALL DebugMemRead16(unsigned int);
+-EXPORT unsigned char 	   CALL DebugMemRead8(unsigned int);
+-#endif
+-
+-/* DebugMemWrite**()
+- *
+- * These functions write a value into the emulated N64 memory. The given value
+- * will be correctly byte-swapped before storage. 
+- */
+-typedef void (*ptr_DebugMemWrite64)(unsigned int, unsigned long long);
+-typedef void (*ptr_DebugMemWrite32)(unsigned int, unsigned int);
+-typedef void (*ptr_DebugMemWrite16)(unsigned int, unsigned short);
+-typedef void (*ptr_DebugMemWrite8)(unsigned int, unsigned char);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT void CALL DebugMemWrite64(unsigned int, unsigned long long);
+-EXPORT void CALL DebugMemWrite32(unsigned int, unsigned int);
+-EXPORT void CALL DebugMemWrite16(unsigned int, unsigned short);
+-EXPORT void CALL DebugMemWrite8(unsigned int, unsigned char);
+-#endif
+-
+-/* DebugGetCPUDataPtr()
+- *
+- * This function returns a memory pointer (in x86 memory space) to a specific
+- * register in the emulated R4300 CPU.
+- */
+-typedef void * (*ptr_DebugGetCPUDataPtr)(m64p_dbg_cpu_data);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT void * CALL DebugGetCPUDataPtr(m64p_dbg_cpu_data);
+-#endif
+-
+-/* DebugBreakpointLookup()
+- *
+- * This function searches through all current breakpoints in the debugger to
+- * find one that matches the given input parameters. If a matching breakpoint
+- * is found, the index number is returned. If no breakpoints are found, -1 is
+- * returned. 
+- */
+-typedef int (*ptr_DebugBreakpointLookup)(unsigned int, unsigned int, unsigned int);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT int CALL DebugBreakpointLookup(unsigned int, unsigned int, unsigned int);
+-#endif
+-
+-/* DebugBreakpointCommand()
+- *
+- * This function is used to process common breakpoint commands, such as adding,
+- * removing, or searching the breakpoints. The meanings of the index and ptr
+- * input parameters vary by command.
+- */
+-typedef int (*ptr_DebugBreakpointCommand)(m64p_dbg_bkp_command, unsigned int, m64p_breakpoint *);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT int CALL DebugBreakpointCommand(m64p_dbg_bkp_command, unsigned int, m64p_breakpoint *);
+-#endif
+-
+-/* DebugBreakpointTriggeredBy()
+- *
+- * This function is used to retrieve the trigger flags and address for the
+- * most recently triggered breakpoint.
+- */
+-typedef void (*ptr_DebugBreakpointTriggeredBy)(uint32_t *, uint32_t *);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT void CALL DebugBreakpointTriggeredBy(uint32_t *, uint32_t *);
+-#endif
+-
+-/* DebugVirtualToPhysical()
+- *
+- * This function is used to translate virtual addresses to physical addresses.
+- * Memory read/write breakpoints operate on physical addresses.
+- */
+-typedef uint32_t (*ptr_DebugVirtualToPhysical)(uint32_t);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT uint32_t CALL DebugVirtualToPhysical(uint32_t);
+-#endif
+-
+-#ifdef __cplusplus
+-}
+-#endif
+-
+-#endif /* #define M64P_DEBUGGER_H */
+-
+diff --git a/src/inc/m64p_frontend.h b/src/inc/m64p_frontend.h
+deleted file mode 100644
+index 0853eaa5..00000000
+--- a/src/inc/m64p_frontend.h
++++ /dev/null
+@@ -1,141 +0,0 @@
+-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+- *   Mupen64plus-core - m64p_frontend.h                                    *
+- *   Mupen64Plus homepage: https://mupen64plus.org/                        *
+- *   Copyright (C) 2009 Richard Goedeken                                   *
+- *                                                                         *
+- *   This program is free software; you can redistribute it and/or modify  *
+- *   it under the terms of the GNU General Public License as published by  *
+- *   the Free Software Foundation; either version 2 of the License, or     *
+- *   (at your option) any later version.                                   *
+- *                                                                         *
+- *   This program is distributed in the hope that it will be useful,       *
+- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+- *   GNU General Public License for more details.                          *
+- *                                                                         *
+- *   You should have received a copy of the GNU General Public License     *
+- *   along with this program; if not, write to the                         *
+- *   Free Software Foundation, Inc.,                                       *
+- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
+- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+-
+-/* This header file defines typedefs for function pointers to Core functions
+- * designed for use by the front-end user interface.
+- */
+-
+-#if !defined(M64P_FRONTEND_H)
+-#define M64P_FRONTEND_H
+-
+-#include "m64p_types.h"
+-
+-#ifdef __cplusplus
+-extern "C" {
+-#endif
+-
+-
+-/* pointer types to the callback functions in the front-end application */
+-typedef void (*ptr_DebugCallback)(void *Context, int level, const char *message);
+-typedef void (*ptr_StateCallback)(void *Context, m64p_core_param param_type, int new_value);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT void CALL DebugCallback(void *Context, int level, const char *message);
+-EXPORT void CALL StateCallback(void *Context, m64p_core_param param_type, int new_value);
+-#endif
+-
+-/* CoreStartup()
+- *
+- * This function initializes libmupen64plus for use by allocating memory,
+- * creating data structures, and loading the configuration file.
+- */
+-typedef m64p_error (*ptr_CoreStartup)(int, const char *, const char *, void *, ptr_DebugCallback, void *, ptr_StateCallback);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL CoreStartup(int, const char *, const char *, void *, ptr_DebugCallback, void *, ptr_StateCallback);
+-#endif
+-
+-/* CoreShutdown()
+- *
+- * This function saves the configuration file, then destroys data structures
+- * and releases memory allocated by the core library.
+- */
+-typedef m64p_error (*ptr_CoreShutdown)(void);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL CoreShutdown(void);
+-#endif
+-
+-/* CoreAttachPlugin()
+- *
+- * This function attaches the given plugin to the emulator core. There can only
+- * be one plugin of each type attached to the core at any given time. 
+- */
+-typedef m64p_error (*ptr_CoreAttachPlugin)(m64p_plugin_type, m64p_dynlib_handle);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL CoreAttachPlugin(m64p_plugin_type, m64p_dynlib_handle);
+-#endif
+-
+-/* CoreDetachPlugin()
+- *
+- * This function detaches the given plugin from the emulator core, and re-attaches
+- * the 'dummy' plugin functions. 
+- */
+-typedef m64p_error (*ptr_CoreDetachPlugin)(m64p_plugin_type);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL CoreDetachPlugin(m64p_plugin_type);
+-#endif
+-
+-/* CoreDoCommand()
+- *
+- * This function sends a command to the emulator core.
+- */
+-typedef m64p_error (*ptr_CoreDoCommand)(m64p_command, int, void *);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL CoreDoCommand(m64p_command, int, void *);
+-#endif
+-
+-/* CoreOverrideVidExt()
+- *
+- * This function overrides the core's internal SDL-based OpenGL functions. This
+- * override functionality allows a front-end to define its own video extension
+- * functions to be used instead of the SDL functions. If any of the function
+- * pointers in the structure are NULL, the override function will be disabled
+- * and the core's internal SDL functions will be used.
+- */
+-typedef m64p_error (*ptr_CoreOverrideVidExt)(m64p_video_extension_functions *);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL CoreOverrideVidExt(m64p_video_extension_functions *);
+-#endif
+-
+-/* CoreAddCheat()
+- *
+- * This function will add a Cheat Function to a list of currently active cheats
+- * which are applied to the open ROM.
+- */
+-typedef m64p_error (*ptr_CoreAddCheat)(const char *, m64p_cheat_code *, int);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL CoreAddCheat(const char *, m64p_cheat_code *, int);
+-#endif
+-
+-/* CoreCheatEnabled()
+- *
+- * This function will enable or disable a Cheat Function which is in the list of
+- * currently active cheats.
+- */
+-typedef m64p_error (*ptr_CoreCheatEnabled)(const char *, int);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL CoreCheatEnabled(const char *, int);
+-#endif
+-
+-/* CoreGetRomSettings()
+- *
+- * This function will retrieve the ROM settings from the mupen64plus INI file for
+- * the ROM image corresponding to the given CRC values.
+- */
+-typedef m64p_error (*ptr_CoreGetRomSettings)(m64p_rom_settings *, int, int, int);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL CoreGetRomSettings(m64p_rom_settings *, int, int, int);
+-#endif
+-
+-#ifdef __cplusplus
+-}
+-#endif
+-
+-#endif /* #define M64P_FRONTEND_H */
+-
+diff --git a/src/inc/m64p_plugin.h b/src/inc/m64p_plugin.h
+deleted file mode 100644
+index 0f5a95d3..00000000
+--- a/src/inc/m64p_plugin.h
++++ /dev/null
+@@ -1,287 +0,0 @@
+-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+- *   Mupen64plus-core - m64p_plugin.h                                      *
+- *   Mupen64Plus homepage: https://mupen64plus.org/                        *
+- *   Copyright (C) 2002 Hacktarux                                          *
+- *   Copyright (C) 2009 Richard Goedeken                                   *
+- *                                                                         *
+- *   This program is free software; you can redistribute it and/or modify  *
+- *   it under the terms of the GNU General Public License as published by  *
+- *   the Free Software Foundation; either version 2 of the License, or     *
+- *   (at your option) any later version.                                   *
+- *                                                                         *
+- *   This program is distributed in the hope that it will be useful,       *
+- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+- *   GNU General Public License for more details.                          *
+- *                                                                         *
+- *   You should have received a copy of the GNU General Public License     *
+- *   along with this program; if not, write to the                         *
+- *   Free Software Foundation, Inc.,                                       *
+- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
+- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+-
+-#if !defined(M64P_PLUGIN_H)
+-#define M64P_PLUGIN_H
+-
+-#include "m64p_types.h"
+-
+-#ifdef __cplusplus
+-extern "C" {
+-#endif
+-
+-/*** Controller plugin's ****/
+-#define PLUGIN_NONE                 1
+-#define PLUGIN_MEMPAK               2
+-#define PLUGIN_RUMBLE_PAK           3 /* not implemented for non raw data */
+-#define PLUGIN_TRANSFER_PAK         4 /* not implemented for non raw data */
+-#define PLUGIN_RAW                  5 /* the controller plugin is passed in raw data */
+-#define PLUGIN_BIO_PAK              6
+-
+-/***** Structures *****/
+-typedef struct {
+-    unsigned char * RDRAM;
+-    unsigned char * DMEM;
+-    unsigned char * IMEM;
+-
+-    unsigned int * MI_INTR_REG;
+-
+-    unsigned int * SP_MEM_ADDR_REG;
+-    unsigned int * SP_DRAM_ADDR_REG;
+-    unsigned int * SP_RD_LEN_REG;
+-    unsigned int * SP_WR_LEN_REG;
+-    unsigned int * SP_STATUS_REG;
+-    unsigned int * SP_DMA_FULL_REG;
+-    unsigned int * SP_DMA_BUSY_REG;
+-    unsigned int * SP_PC_REG;
+-    unsigned int * SP_SEMAPHORE_REG;
+-
+-    unsigned int * DPC_START_REG;
+-    unsigned int * DPC_END_REG;
+-    unsigned int * DPC_CURRENT_REG;
+-    unsigned int * DPC_STATUS_REG;
+-    unsigned int * DPC_CLOCK_REG;
+-    unsigned int * DPC_BUFBUSY_REG;
+-    unsigned int * DPC_PIPEBUSY_REG;
+-    unsigned int * DPC_TMEM_REG;
+-
+-    void (*CheckInterrupts)(void);
+-    void (*ProcessDlistList)(void);
+-    void (*ProcessAlistList)(void);
+-    void (*ProcessRdpList)(void);
+-    void (*ShowCFB)(void);
+-} RSP_INFO;
+-
+-typedef struct {
+-    unsigned char * HEADER;  /* This is the rom header (first 40h bytes of the rom) */
+-    unsigned char * RDRAM;
+-    unsigned char * DMEM;
+-    unsigned char * IMEM;
+-
+-    unsigned int * MI_INTR_REG;
+-
+-    unsigned int * DPC_START_REG;
+-    unsigned int * DPC_END_REG;
+-    unsigned int * DPC_CURRENT_REG;
+-    unsigned int * DPC_STATUS_REG;
+-    unsigned int * DPC_CLOCK_REG;
+-    unsigned int * DPC_BUFBUSY_REG;
+-    unsigned int * DPC_PIPEBUSY_REG;
+-    unsigned int * DPC_TMEM_REG;
+-
+-    unsigned int * VI_STATUS_REG;
+-    unsigned int * VI_ORIGIN_REG;
+-    unsigned int * VI_WIDTH_REG;
+-    unsigned int * VI_INTR_REG;
+-    unsigned int * VI_V_CURRENT_LINE_REG;
+-    unsigned int * VI_TIMING_REG;
+-    unsigned int * VI_V_SYNC_REG;
+-    unsigned int * VI_H_SYNC_REG;
+-    unsigned int * VI_LEAP_REG;
+-    unsigned int * VI_H_START_REG;
+-    unsigned int * VI_V_START_REG;
+-    unsigned int * VI_V_BURST_REG;
+-    unsigned int * VI_X_SCALE_REG;
+-    unsigned int * VI_Y_SCALE_REG;
+-
+-    void (*CheckInterrupts)(void);
+-
+-    /* The GFX_INFO.version parameter was added in version 2.5.1 of the core.
+-       Plugins should ensure the core is at least this version before
+-       attempting to read GFX_INFO.version. */
+-    unsigned int version;
+-    /* SP_STATUS_REG and RDRAM_SIZE were added in version 2 of GFX_INFO.version.
+-       Plugins should only attempt to read these values if GFX_INFO.version is at least 2. */
+-
+-    /* The RSP plugin should set (HALT | BROKE | TASKDONE) *before* calling ProcessDList.
+-       It should not modify SP_STATUS_REG after ProcessDList has returned.
+-       This will allow the GFX plugin to unset these bits if it needs. */
+-    unsigned int * SP_STATUS_REG;
+-    const unsigned int * RDRAM_SIZE;
+-} GFX_INFO;
+-
+-typedef struct {
+-    unsigned char * RDRAM;
+-    unsigned char * DMEM;
+-    unsigned char * IMEM;
+-
+-    unsigned int * MI_INTR_REG;
+-
+-    unsigned int * AI_DRAM_ADDR_REG;
+-    unsigned int * AI_LEN_REG;
+-    unsigned int * AI_CONTROL_REG;
+-    unsigned int * AI_STATUS_REG;
+-    unsigned int * AI_DACRATE_REG;
+-    unsigned int * AI_BITRATE_REG;
+-
+-    void (*CheckInterrupts)(void);
+-} AUDIO_INFO;
+-
+-typedef struct {
+-    int Present;
+-    int RawData;
+-    int Plugin;
+-} CONTROL;
+-
+-typedef union {
+-    unsigned int Value;
+-    struct {
+-        unsigned R_DPAD       : 1;
+-        unsigned L_DPAD       : 1;
+-        unsigned D_DPAD       : 1;
+-        unsigned U_DPAD       : 1;
+-        unsigned START_BUTTON : 1;
+-        unsigned Z_TRIG       : 1;
+-        unsigned B_BUTTON     : 1;
+-        unsigned A_BUTTON     : 1;
+-
+-        unsigned R_CBUTTON    : 1;
+-        unsigned L_CBUTTON    : 1;
+-        unsigned D_CBUTTON    : 1;
+-        unsigned U_CBUTTON    : 1;
+-        unsigned R_TRIG       : 1;
+-        unsigned L_TRIG       : 1;
+-        unsigned Reserved1    : 1;
+-        unsigned Reserved2    : 1;
+-
+-        signed   X_AXIS       : 8;
+-        signed   Y_AXIS       : 8;
+-    };
+-} BUTTONS;
+-
+-typedef struct {
+-    CONTROL *Controls;      /* A pointer to an array of 4 controllers .. eg:
+-                               CONTROL Controls[4]; */
+-} CONTROL_INFO;
+-
+-/* common plugin function pointer types */
+-typedef void (*ptr_RomClosed)(void);
+-typedef int  (*ptr_RomOpen)(void);
+-#if defined(M64P_PLUGIN_PROTOTYPES)
+-EXPORT int  CALL RomOpen(void);
+-EXPORT void CALL RomClosed(void);
+-#endif
+-
+-/* video plugin function pointer types */
+-typedef void (*ptr_ChangeWindow)(void);
+-typedef int  (*ptr_InitiateGFX)(GFX_INFO Gfx_Info);
+-typedef void (*ptr_MoveScreen)(int x, int y);
+-typedef void (*ptr_ProcessDList)(void);
+-typedef void (*ptr_ProcessRDPList)(void);
+-typedef void (*ptr_ShowCFB)(void);
+-typedef void (*ptr_UpdateScreen)(void);
+-typedef void (*ptr_ViStatusChanged)(void);
+-typedef void (*ptr_ViWidthChanged)(void);
+-typedef void (*ptr_ReadScreen2)(void *dest, int *width, int *height, int front);
+-typedef void (*ptr_SetRenderingCallback)(void (*callback)(int));
+-typedef void (*ptr_ResizeVideoOutput)(int width, int height);
+-#if defined(M64P_PLUGIN_PROTOTYPES)
+-EXPORT void CALL ChangeWindow(void);
+-EXPORT int  CALL InitiateGFX(GFX_INFO Gfx_Info);
+-EXPORT void CALL MoveScreen(int x, int y);
+-EXPORT void CALL ProcessDList(void);
+-EXPORT void CALL ProcessRDPList(void);
+-EXPORT void CALL ShowCFB(void);
+-EXPORT void CALL UpdateScreen(void);
+-EXPORT void CALL ViStatusChanged(void);
+-EXPORT void CALL ViWidthChanged(void);
+-EXPORT void CALL ReadScreen2(void *dest, int *width, int *height, int front);
+-EXPORT void CALL SetRenderingCallback(void (*callback)(int));
+-EXPORT void CALL ResizeVideoOutput(int width, int height);
+-#endif
+-
+-/* frame buffer plugin spec extension */
+-typedef struct
+-{
+-   unsigned int addr;
+-   unsigned int size;
+-   unsigned int width;
+-   unsigned int height;
+-} FrameBufferInfo;
+-typedef void (*ptr_FBRead)(unsigned int addr);
+-typedef void (*ptr_FBWrite)(unsigned int addr, unsigned int size);
+-typedef void (*ptr_FBGetFrameBufferInfo)(void *p);
+-#if defined(M64P_PLUGIN_PROTOTYPES)
+-EXPORT void CALL FBRead(unsigned int addr);
+-EXPORT void CALL FBWrite(unsigned int addr, unsigned int size);
+-EXPORT void CALL FBGetFrameBufferInfo(void *p);
+-#endif
+-
+-/* audio plugin function pointers */
+-typedef void (*ptr_AiDacrateChanged)(int SystemType);
+-typedef void (*ptr_AiLenChanged)(void);
+-typedef int  (*ptr_InitiateAudio)(AUDIO_INFO Audio_Info);
+-typedef void (*ptr_ProcessAList)(void);
+-typedef void (*ptr_SetSpeedFactor)(int percent);
+-typedef void (*ptr_VolumeUp)(void);
+-typedef void (*ptr_VolumeDown)(void);
+-typedef int  (*ptr_VolumeGetLevel)(void);
+-typedef void (*ptr_VolumeSetLevel)(int level);
+-typedef void (*ptr_VolumeMute)(void);
+-typedef const char * (*ptr_VolumeGetString)(void);
+-#if defined(M64P_PLUGIN_PROTOTYPES)
+-EXPORT void CALL AiDacrateChanged(int SystemType);
+-EXPORT void CALL AiLenChanged(void);
+-EXPORT int  CALL InitiateAudio(AUDIO_INFO Audio_Info);
+-EXPORT void CALL ProcessAList(void);
+-EXPORT void CALL SetSpeedFactor(int percent);
+-EXPORT void CALL VolumeUp(void);
+-EXPORT void CALL VolumeDown(void);
+-EXPORT int  CALL VolumeGetLevel(void);
+-EXPORT void CALL VolumeSetLevel(int level);
+-EXPORT void CALL VolumeMute(void);
+-EXPORT const char * CALL VolumeGetString(void);
+-#endif
+-
+-/* input plugin function pointers */
+-typedef void (*ptr_ControllerCommand)(int Control, unsigned char *Command);
+-typedef void (*ptr_GetKeys)(int Control, BUTTONS *Keys);
+-typedef void (*ptr_InitiateControllers)(CONTROL_INFO ControlInfo);
+-typedef void (*ptr_ReadController)(int Control, unsigned char *Command);
+-typedef void (*ptr_SDL_KeyDown)(int keymod, int keysym);
+-typedef void (*ptr_SDL_KeyUp)(int keymod, int keysym);
+-typedef void (*ptr_RenderCallback)(void);
+-#if defined(M64P_PLUGIN_PROTOTYPES)
+-EXPORT void CALL ControllerCommand(int Control, unsigned char *Command);
+-EXPORT void CALL GetKeys(int Control, BUTTONS *Keys);
+-EXPORT void CALL InitiateControllers(CONTROL_INFO ControlInfo);
+-EXPORT void CALL ReadController(int Control, unsigned char *Command);
+-EXPORT void CALL SDL_KeyDown(int keymod, int keysym);
+-EXPORT void CALL SDL_KeyUp(int keymod, int keysym);
+-EXPORT void CALL RenderCallback(void);
+-#endif
+-
+-/* RSP plugin function pointers */
+-typedef unsigned int (*ptr_DoRspCycles)(unsigned int Cycles);
+-typedef void (*ptr_InitiateRSP)(RSP_INFO Rsp_Info, unsigned int *CycleCount);
+-#if defined(M64P_PLUGIN_PROTOTYPES)
+-EXPORT unsigned int CALL DoRspCycles(unsigned int Cycles);
+-EXPORT void CALL InitiateRSP(RSP_INFO Rsp_Info, unsigned int *CycleCount);
+-#endif
+-
+-#ifdef __cplusplus
+-}
+-#endif
+-
+-#endif /* M64P_PLUGIN_H */
+-
+-
+diff --git a/src/inc/m64p_types.h b/src/inc/m64p_types.h
+deleted file mode 100644
+index e915e7b2..00000000
+--- a/src/inc/m64p_types.h
++++ /dev/null
+@@ -1,417 +0,0 @@
+-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+- *   Mupen64plus-core - m64p_types.h                                       *
+- *   Mupen64Plus homepage: https://mupen64plus.org/                        *
+- *   Copyright (C) 2012 CasualJames                                        *
+- *   Copyright (C) 2009 Richard Goedeken                                   *
+- *                                                                         *
+- *   This program is free software; you can redistribute it and/or modify  *
+- *   it under the terms of the GNU General Public License as published by  *
+- *   the Free Software Foundation; either version 2 of the License, or     *
+- *   (at your option) any later version.                                   *
+- *                                                                         *
+- *   This program is distributed in the hope that it will be useful,       *
+- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+- *   GNU General Public License for more details.                          *
+- *                                                                         *
+- *   You should have received a copy of the GNU General Public License     *
+- *   along with this program; if not, write to the                         *
+- *   Free Software Foundation, Inc.,                                       *
+- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
+- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+-
+-#if !defined(M64P_TYPES_H)
+-#define M64P_TYPES_H
+-
+-/* ----------------------------------------- */
+-/* Platform-specific stuff                   */
+-/* ----------------------------------------- */
+-
+-/* necessary headers */
+-#include <stdint.h>
+-#if defined(WIN32) || defined(WIN64)
+-  #include <windows.h>
+-#endif
+-
+-/* DLL handles and function declaration specifiers */
+-#if defined(WIN32) || defined(WIN64)
+-  #define IMPORT extern "C" __declspec(dllimport)
+-  #define EXPORT __declspec(dllexport)
+-  #define CALL   __cdecl
+-  typedef HMODULE m64p_dynlib_handle;
+-#else
+-  #define IMPORT extern "C"
+-  #define EXPORT __attribute__((visibility("default")))
+-  #define CALL
+-  typedef void * m64p_dynlib_handle;
+-#endif
+-
+-/* ----------------------------------------- */
+-/* Structures and Types for Core library API */
+-/* ----------------------------------------- */
+-
+-typedef void * m64p_handle;
+-
+-/* Generic function pointer returned from osal_dynlib_getproc (and the like)
+- * Don't use it directly, cast to proper type before using it.
+- */
+-typedef void (*m64p_function)(void);
+-
+-typedef void (*m64p_frame_callback)(unsigned int FrameIndex);
+-typedef void (*m64p_input_callback)(void);
+-typedef void (*m64p_audio_callback)(void);
+-typedef void (*m64p_vi_callback)(void);
+-
+-typedef enum {
+-  M64TYPE_INT = 1,
+-  M64TYPE_FLOAT,
+-  M64TYPE_BOOL,
+-  M64TYPE_STRING
+-} m64p_type;
+-
+-typedef enum {
+-  M64MSG_ERROR = 1,
+-  M64MSG_WARNING,
+-  M64MSG_INFO,
+-  M64MSG_STATUS,
+-  M64MSG_VERBOSE
+-} m64p_msg_level;
+-
+-typedef enum {
+-  M64ERR_SUCCESS = 0,
+-  M64ERR_NOT_INIT,        /* Function is disallowed before InitMupen64Plus() is called */
+-  M64ERR_ALREADY_INIT,    /* InitMupen64Plus() was called twice */
+-  M64ERR_INCOMPATIBLE,    /* API versions between components are incompatible */
+-  M64ERR_INPUT_ASSERT,    /* Invalid parameters for function call, such as ParamValue=NULL for GetCoreParameter() */
+-  M64ERR_INPUT_INVALID,   /* Invalid input data, such as ParamValue="maybe" for SetCoreParameter() to set a BOOL-type value */
+-  M64ERR_INPUT_NOT_FOUND, /* The input parameter(s) specified a particular item which was not found */
+-  M64ERR_NO_MEMORY,       /* Memory allocation failed */
+-  M64ERR_FILES,           /* Error opening, creating, reading, or writing to a file */
+-  M64ERR_INTERNAL,        /* Internal error (bug) */
+-  M64ERR_INVALID_STATE,   /* Current program state does not allow operation */
+-  M64ERR_PLUGIN_FAIL,     /* A plugin function returned a fatal error */
+-  M64ERR_SYSTEM_FAIL,     /* A system function call, such as an SDL or file operation, failed */
+-  M64ERR_UNSUPPORTED,     /* Function call is not supported (ie, core not built with debugger) */
+-  M64ERR_WRONG_TYPE       /* A given input type parameter cannot be used for desired operation */
+-} m64p_error;
+-
+-typedef enum {
+-  M64CAPS_DYNAREC = 1,
+-  M64CAPS_DEBUGGER = 2,
+-  M64CAPS_CORE_COMPARE = 4
+-} m64p_core_caps;
+-
+-typedef enum {
+-  M64PLUGIN_NULL = 0,
+-  M64PLUGIN_RSP = 1,
+-  M64PLUGIN_GFX,
+-  M64PLUGIN_AUDIO,
+-  M64PLUGIN_INPUT,
+-  M64PLUGIN_CORE
+-} m64p_plugin_type;
+-
+-typedef enum {
+-  M64EMU_STOPPED = 1,
+-  M64EMU_RUNNING,
+-  M64EMU_PAUSED
+-} m64p_emu_state;
+-
+-typedef enum {
+-  M64VIDEO_NONE = 1,
+-  M64VIDEO_WINDOWED,
+-  M64VIDEO_FULLSCREEN
+-} m64p_video_mode;
+-
+-typedef enum {
+-  M64VIDEOFLAG_SUPPORT_RESIZING = 1
+-} m64p_video_flags;
+-
+-typedef enum {
+-  M64CORE_EMU_STATE = 1,
+-  M64CORE_VIDEO_MODE,
+-  M64CORE_SAVESTATE_SLOT,
+-  M64CORE_SPEED_FACTOR,
+-  M64CORE_SPEED_LIMITER,
+-  M64CORE_VIDEO_SIZE,
+-  M64CORE_AUDIO_VOLUME,
+-  M64CORE_AUDIO_MUTE,
+-  M64CORE_INPUT_GAMESHARK,
+-  M64CORE_STATE_LOADCOMPLETE,
+-  M64CORE_STATE_SAVECOMPLETE
+-} m64p_core_param;
+-
+-typedef enum {
+-  M64CMD_NOP = 0,
+-  M64CMD_ROM_OPEN,
+-  M64CMD_ROM_CLOSE,
+-  M64CMD_ROM_GET_HEADER,
+-  M64CMD_ROM_GET_SETTINGS,
+-  M64CMD_EXECUTE,
+-  M64CMD_STOP,
+-  M64CMD_PAUSE,
+-  M64CMD_RESUME,
+-  M64CMD_CORE_STATE_QUERY,
+-  M64CMD_STATE_LOAD,
+-  M64CMD_STATE_SAVE,
+-  M64CMD_STATE_SET_SLOT,
+-  M64CMD_SEND_SDL_KEYDOWN,
+-  M64CMD_SEND_SDL_KEYUP,
+-  M64CMD_SET_FRAME_CALLBACK,
+-  M64CMD_TAKE_NEXT_SCREENSHOT,
+-  M64CMD_CORE_STATE_SET,
+-  M64CMD_READ_SCREEN,
+-  M64CMD_RESET,
+-  M64CMD_ADVANCE_FRAME,
+-  M64CMD_SET_MEDIA_LOADER,
+-  M64CMD_NETPLAY_INIT,
+-  M64CMD_NETPLAY_CONTROL_PLAYER,
+-  M64CMD_NETPLAY_GET_VERSION,
+-  M64CMD_NETPLAY_CLOSE
+-} m64p_command;
+-
+-typedef struct {
+-  uint32_t address;
+-  int      value;
+-} m64p_cheat_code;
+-
+-typedef struct {
+-  /* Frontend-defined callback data. */
+-  void* cb_data;
+-
+-  /* Allow the frontend to specify the GB cart ROM file to load
+-   * cb_data: points to frontend-defined callback data.
+-   * controller_num: (0-3) tell the frontend which controller is about to load a GB cart
+-   * Returns a NULL-terminated string owned by the core specifying the GB cart ROM filename to load.
+-   * Empty or NULL string results in no GB cart being loaded (eg. empty transferpak).
+-   */
+-  char* (*get_gb_cart_rom)(void* cb_data, int controller_num);
+-
+-  /* Allow the frontend to specify the GB cart RAM file to load
+-   * cb_data: points to frontend-defined callback data.
+-   * controller_num: (0-3) tell the frontend which controller is about to load a GB cart
+-   * Returns a NULL-terminated string owned by the core specifying the GB cart RAM filename to load
+-   * Empty or NULL string results in the core generating a default save file with empty content.
+-   */
+-  char* (*get_gb_cart_ram)(void* cb_data, int controller_num);
+-
+-  /* Allow the frontend to specify the DD IPL ROM file to load
+-   * cb_data: points to frontend-defined callback data.
+-   * Returns a NULL-terminated string owned by the core specifying the DD IPL ROM filename to load
+-   * Empty or NULL string results in disabled 64DD.
+-   */
+-  char* (*get_dd_rom)(void* cb_data);
+-
+-  /* Allow the frontend to specify the DD disk file to load
+-   * cb_data: points to frontend-defined callback data.
+-   * Returns a NULL-terminated string owned by the core specifying the DD disk filename to load
+-   * Empty or NULL string results in no DD disk being loaded (eg. empty disk drive).
+-   */
+-  char* (*get_dd_disk)(void* cb_data);
+-} m64p_media_loader;
+-
+-/* ----------------------------------------- */
+-/* Structures to hold ROM image information  */
+-/* ----------------------------------------- */
+-
+-typedef enum
+-{
+-    SYSTEM_NTSC = 0,
+-    SYSTEM_PAL,
+-    SYSTEM_MPAL
+-} m64p_system_type;
+-
+-typedef struct
+-{
+-   uint8_t  init_PI_BSB_DOM1_LAT_REG;  /* 0x00 */
+-   uint8_t  init_PI_BSB_DOM1_PGS_REG;  /* 0x01 */
+-   uint8_t  init_PI_BSB_DOM1_PWD_REG;  /* 0x02 */
+-   uint8_t  init_PI_BSB_DOM1_PGS_REG2; /* 0x03 */
+-   uint32_t ClockRate;                 /* 0x04 */
+-   uint32_t PC;                        /* 0x08 */
+-   uint32_t Release;                   /* 0x0C */
+-   uint32_t CRC1;                      /* 0x10 */
+-   uint32_t CRC2;                      /* 0x14 */
+-   uint32_t Unknown[2];                /* 0x18 */
+-   uint8_t  Name[20];                  /* 0x20 */
+-   uint32_t unknown;                   /* 0x34 */
+-   uint32_t Manufacturer_ID;           /* 0x38 */
+-   uint16_t Cartridge_ID;              /* 0x3C - Game serial number  */
+-   uint16_t Country_code;              /* 0x3E */
+-} m64p_rom_header;
+-
+-typedef struct
+-{
+-   char goodname[256];
+-   char MD5[33];
+-   unsigned char savetype;
+-   unsigned char status;  /* Rom status on a scale from 0-5. */
+-   unsigned char players; /* Local players 0-4, 2/3/4 way Netplay indicated by 5/6/7. */
+-   unsigned char rumble;  /* 0 - No, 1 - Yes boolean for rumble support. */
+-   unsigned char transferpak; /* 0 - No, 1 - Yes boolean for transfer pak support. */
+-   unsigned char mempak; /* 0 - No, 1 - Yes boolean for memory pak support. */
+-   unsigned char biopak; /* 0 - No, 1 - Yes boolean for bio pak support. */
+-} m64p_rom_settings;
+-
+-/* ----------------------------------------- */
+-/* Structures and Types for the Debugger     */
+-/* ----------------------------------------- */
+-
+-typedef enum {
+-  M64P_DBG_RUN_STATE = 1,
+-  M64P_DBG_PREVIOUS_PC,
+-  M64P_DBG_NUM_BREAKPOINTS,
+-  M64P_DBG_CPU_DYNACORE,
+-  M64P_DBG_CPU_NEXT_INTERRUPT
+-} m64p_dbg_state;
+-
+-typedef enum {
+-  M64P_DBG_RUNSTATE_PAUSED = 0,
+-  M64P_DBG_RUNSTATE_STEPPING,
+-  M64P_DBG_RUNSTATE_RUNNING
+-} m64p_dbg_runstate;
+-
+-typedef enum {
+-  M64P_DBG_MEM_TYPE = 1,
+-  M64P_DBG_MEM_FLAGS,
+-  M64P_DBG_MEM_HAS_RECOMPILED,
+-  M64P_DBG_MEM_NUM_RECOMPILED,
+-  M64P_DBG_RECOMP_OPCODE = 16,
+-  M64P_DBG_RECOMP_ARGS,
+-  M64P_DBG_RECOMP_ADDR
+-} m64p_dbg_mem_info;
+-
+-typedef enum {
+-  M64P_MEM_NOMEM = 0,
+-  M64P_MEM_NOTHING,
+-  M64P_MEM_RDRAM,
+-  M64P_MEM_RDRAMREG,
+-  M64P_MEM_RSPMEM,
+-  M64P_MEM_RSPREG,
+-  M64P_MEM_RSP,
+-  M64P_MEM_DP,
+-  M64P_MEM_DPS,
+-  M64P_MEM_VI,
+-  M64P_MEM_AI,
+-  M64P_MEM_PI,
+-  M64P_MEM_RI,
+-  M64P_MEM_SI,
+-  M64P_MEM_FLASHRAMSTAT,
+-  M64P_MEM_ROM,
+-  M64P_MEM_PIF,
+-  M64P_MEM_MI,
+-  M64P_MEM_BREAKPOINT
+-} m64p_dbg_mem_type;
+-
+-typedef enum {
+-  M64P_MEM_FLAG_READABLE = 0x01,
+-  M64P_MEM_FLAG_WRITABLE = 0x02,
+-  M64P_MEM_FLAG_READABLE_EMUONLY = 0x04,  /* the EMUONLY flags signify that emulated code can read/write here, but debugger cannot */
+-  M64P_MEM_FLAG_WRITABLE_EMUONLY = 0x08
+-} m64p_dbg_mem_flags;
+-
+-typedef enum {
+-  M64P_DBG_PTR_RDRAM = 1,
+-  M64P_DBG_PTR_PI_REG,
+-  M64P_DBG_PTR_SI_REG,
+-  M64P_DBG_PTR_VI_REG,
+-  M64P_DBG_PTR_RI_REG,
+-  M64P_DBG_PTR_AI_REG
+-} m64p_dbg_memptr_type;
+-
+-typedef enum {
+-  M64P_CPU_PC = 1,
+-  M64P_CPU_REG_REG,
+-  M64P_CPU_REG_HI,
+-  M64P_CPU_REG_LO,
+-  M64P_CPU_REG_COP0,
+-  M64P_CPU_REG_COP1_DOUBLE_PTR,
+-  M64P_CPU_REG_COP1_SIMPLE_PTR,
+-  M64P_CPU_REG_COP1_FGR_64,
+-  M64P_CPU_TLB
+-} m64p_dbg_cpu_data;
+-
+-typedef enum {
+-  M64P_BKP_CMD_ADD_ADDR = 1,
+-  M64P_BKP_CMD_ADD_STRUCT,
+-  M64P_BKP_CMD_REPLACE,
+-  M64P_BKP_CMD_REMOVE_ADDR,
+-  M64P_BKP_CMD_REMOVE_IDX,
+-  M64P_BKP_CMD_ENABLE,
+-  M64P_BKP_CMD_DISABLE,
+-  M64P_BKP_CMD_CHECK
+-} m64p_dbg_bkp_command;
+-
+-#define M64P_MEM_INVALID        0xFFFFFFFF  /* invalid memory read will return this */
+-
+-#define BREAKPOINTS_MAX_NUMBER  128
+-
+-typedef enum {
+-  M64P_BKP_FLAG_ENABLED = 0x01,
+-  M64P_BKP_FLAG_READ = 0x02,
+-  M64P_BKP_FLAG_WRITE = 0x04,
+-  M64P_BKP_FLAG_EXEC = 0x08,
+-  M64P_BKP_FLAG_LOG = 0x10 /* Log to the console when this breakpoint hits */
+-} m64p_dbg_bkp_flags;
+-
+-#define BPT_CHECK_FLAG(a, b)  ((a.flags & b) == b)
+-#define BPT_SET_FLAG(a, b)    a.flags = (a.flags | b);
+-#define BPT_CLEAR_FLAG(a, b)  a.flags = (a.flags & (~b));
+-#define BPT_TOGGLE_FLAG(a, b) a.flags = (a.flags ^ b);
+-
+-typedef struct {
+-  uint32_t     address;
+-  uint32_t     endaddr;
+-  unsigned int flags;
+-} m64p_breakpoint;
+-
+-/* ------------------------------------------------- */
+-/* Structures and Types for Core Video Extension API */
+-/* ------------------------------------------------- */
+-
+-typedef struct {
+-  unsigned int uiWidth;
+-  unsigned int uiHeight;
+-} m64p_2d_size;
+-
+-typedef enum {
+-  M64P_GL_DOUBLEBUFFER = 1,
+-  M64P_GL_BUFFER_SIZE,
+-  M64P_GL_DEPTH_SIZE,
+-  M64P_GL_RED_SIZE,
+-  M64P_GL_GREEN_SIZE,
+-  M64P_GL_BLUE_SIZE,
+-  M64P_GL_ALPHA_SIZE,
+-  M64P_GL_SWAP_CONTROL,
+-  M64P_GL_MULTISAMPLEBUFFERS,
+-  M64P_GL_MULTISAMPLESAMPLES,
+-  M64P_GL_CONTEXT_MAJOR_VERSION,
+-  M64P_GL_CONTEXT_MINOR_VERSION,
+-  M64P_GL_CONTEXT_PROFILE_MASK
+-} m64p_GLattr;
+-
+-typedef enum {
+-  M64P_GL_CONTEXT_PROFILE_CORE,
+-  M64P_GL_CONTEXT_PROFILE_COMPATIBILITY,
+-  M64P_GL_CONTEXT_PROFILE_ES
+-} m64p_GLContextType;
+-
+-typedef struct {
+-  unsigned int Functions;
+-  m64p_error    (*VidExtFuncInit)(void);
+-  m64p_error    (*VidExtFuncQuit)(void);
+-  m64p_error    (*VidExtFuncListModes)(m64p_2d_size *, int *);
+-  m64p_error    (*VidExtFuncListRates)(m64p_2d_size, int *, int *);
+-  m64p_error    (*VidExtFuncSetMode)(int, int, int, int, int);
+-  m64p_error    (*VidExtFuncSetModeWithRate)(int, int, int, int, int, int);
+-  m64p_function (*VidExtFuncGLGetProc)(const char*);
+-  m64p_error    (*VidExtFuncGLSetAttr)(m64p_GLattr, int);
+-  m64p_error    (*VidExtFuncGLGetAttr)(m64p_GLattr, int *);
+-  m64p_error    (*VidExtFuncGLSwapBuf)(void);
+-  m64p_error    (*VidExtFuncSetCaption)(const char *);
+-  m64p_error    (*VidExtFuncToggleFS)(void);
+-  m64p_error    (*VidExtFuncResizeWindow)(int, int);
+-  uint32_t      (*VidExtFuncGLGetDefaultFramebuffer)(void);
+-} m64p_video_extension_functions;
+-
+-#endif /* define M64P_TYPES_H */
+-
+diff --git a/src/inc/m64p_vidext.h b/src/inc/m64p_vidext.h
+deleted file mode 100644
+index 9e2a338c..00000000
+--- a/src/inc/m64p_vidext.h
++++ /dev/null
+@@ -1,190 +0,0 @@
+-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+- *   Mupen64plus-core - m64p_vidext.h                                      *
+- *   Mupen64Plus homepage: https://mupen64plus.org/                        *
+- *   Copyright (C) 2009 Richard Goedeken                                   *
+- *                                                                         *
+- *   This program is free software; you can redistribute it and/or modify  *
+- *   it under the terms of the GNU General Public License as published by  *
+- *   the Free Software Foundation; either version 2 of the License, or     *
+- *   (at your option) any later version.                                   *
+- *                                                                         *
+- *   This program is distributed in the hope that it will be useful,       *
+- *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+- *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+- *   GNU General Public License for more details.                          *
+- *                                                                         *
+- *   You should have received a copy of the GNU General Public License     *
+- *   along with this program; if not, write to the                         *
+- *   Free Software Foundation, Inc.,                                       *
+- *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.          *
+- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+-
+-/* This header file defines typedefs for function pointers to the core's
+- * video extension functions.
+- */
+-
+-#if !defined(M64P_VIDEXT_H)
+-#define M64P_VIDEXT_H
+-
+-#include "m64p_types.h"
+-
+-#ifdef __cplusplus
+-extern "C" {
+-#endif
+-
+-/* VidExt_Init()
+- *
+- * This function should be called from within the InitiateGFX() video plugin
+- * function call. The default SDL implementation of this function simply calls
+- * SDL_InitSubSystem(SDL_INIT_VIDEO). It does not open a rendering window or
+- * switch video modes.
+- */
+-typedef m64p_error (*ptr_VidExt_Init)(void);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL VidExt_Init(void);
+-#endif
+-
+-/* VidExt_Quit()
+- *
+- * This function closes any open rendering window and shuts down the video
+- * system. The default SDL implementation of this function calls
+- * SDL_QuitSubSystem(SDL_INIT_VIDEO). This function should be called from
+- * within the RomClose() video plugin function.
+- */
+-typedef m64p_error (*ptr_VidExt_Quit)(void);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL VidExt_Quit(void);
+-#endif
+-
+-/* VidExt_ListFullscreenModes()
+- *
+- * This function is used to enumerate the available resolutions for fullscreen
+- * video modes. A pointer to an array is passed into the function, which is
+- * then filled with resolution sizes.
+- */
+-typedef m64p_error (*ptr_VidExt_ListFullscreenModes)(m64p_2d_size *, int *);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL VidExt_ListFullscreenModes(m64p_2d_size *, int *);
+-#endif
+-
+-/* VidExt_ListFullscreenRates()
+- *
+- * This function is used to enumerate the available refresh rates for a fullscreen
+- * video mode.
+- * 
+- */
+-typedef m64p_error (*ptr_VidExt_ListFullscreenRates)(m64p_2d_size, int *, int *);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL VidExt_ListFullscreenRates(m64p_2d_size, int *, int *);
+-#endif
+-
+-/* VidExt_SetVideoMode()
+- *
+- * This function creates a rendering window or switches into a fullscreen
+- * video mode. Any desired OpenGL attributes should be set before calling
+- * this function.
+- */
+-typedef m64p_error (*ptr_VidExt_SetVideoMode)(int, int, int, m64p_video_mode, m64p_video_flags);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL VidExt_SetVideoMode(int, int, int, m64p_video_mode, m64p_video_flags);
+-#endif
+-
+-/* VidExt_SetVideoModeWithRate()
+- *
+- * This function creates a rendering window or switches into a fullscreen
+- * video mode. Any desired OpenGL attributes should be set before calling
+- * this function.
+- */
+-typedef m64p_error (*ptr_VidExt_SetVideoModeWithRate)(int, int, int, int, m64p_video_mode, m64p_video_flags);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL VidExt_SetVideoModeWithRate(int, int, int, int, m64p_video_mode, m64p_video_flags);
+-#endif
+-
+-/* VidExt_ResizeWindow()
+- *
+- * This function resizes the opengl rendering window to match the given size.
+- */
+-typedef m64p_error (*ptr_VidExt_ResizeWindow)(int, int);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL VidExt_ResizeWindow(int, int);
+-#endif
+-
+-/* VidExt_SetCaption()
+- *
+- * This function sets the caption text of the emulator rendering window.
+- */
+-typedef m64p_error (*ptr_VidExt_SetCaption)(const char *);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL VidExt_SetCaption(const char *);
+-#endif
+-
+-/* VidExt_ToggleFullScreen()
+- *
+- * This function toggles between fullscreen and windowed rendering modes.
+- */
+-typedef m64p_error (*ptr_VidExt_ToggleFullScreen)(void);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL VidExt_ToggleFullScreen(void);
+-#endif
+-
+-/* VidExt_GL_GetProcAddress()
+- *
+- * This function is used to get a pointer to an OpenGL extension function. This
+- * is only necessary on the Windows platform, because the OpenGL implementation
+- * shipped with Windows only supports OpenGL version 1.1.
+- */
+-typedef m64p_function (*ptr_VidExt_GL_GetProcAddress)(const char *);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_function CALL VidExt_GL_GetProcAddress(const char *);
+-#endif
+-
+-/* VidExt_GL_SetAttribute()
+- *
+- * This function is used to set certain OpenGL attributes which must be
+- * specified before creating the rendering window with VidExt_SetVideoMode.
+- */
+-typedef m64p_error (*ptr_VidExt_GL_SetAttribute)(m64p_GLattr, int);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL VidExt_GL_SetAttribute(m64p_GLattr, int);
+-#endif
+-
+-/* VidExt_GL_GetAttribute()
+- *
+- * This function is used to get the value of OpenGL attributes.  These values may
+- * be changed when calling VidExt_SetVideoMode.
+- */
+-typedef m64p_error (*ptr_VidExt_GL_GetAttribute)(m64p_GLattr, int *);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL VidExt_GL_GetAttribute(m64p_GLattr, int *);
+-#endif
+-
+-/* VidExt_GL_SwapBuffers()
+- *
+- * This function is used to swap the front/back buffers after rendering an
+- * output video frame.
+- */
+-typedef m64p_error (*ptr_VidExt_GL_SwapBuffers)(void);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT m64p_error CALL VidExt_GL_SwapBuffers(void);
+-#endif
+-
+-/* VidExt_GL_GetDefaultFramebuffer()
+- *
+- * On some platforms (for instance, iOS) the default framebuffer object
+- * depends on the surface being rendered to, and might be different from 0.
+- * This function should be called after VidExt_SetVideoMode to retrieve the
+- * name of the default FBO.
+- * Calling this function may have performance implications
+- * and it should not be called every time the default FBO is bound.
+- */
+-typedef uint32_t (*ptr_VidExt_GL_GetDefaultFramebuffer)(void);
+-#if defined(M64P_CORE_PROTOTYPES)
+-EXPORT uint32_t CALL VidExt_GL_GetDefaultFramebuffer(void);
+-#endif
+-
+-#ifdef __cplusplus
+-}
+-#endif
+-
+-#endif /* #define M64P_VIDEXT_H */
+-
