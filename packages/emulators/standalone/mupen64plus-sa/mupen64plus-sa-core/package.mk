@@ -25,6 +25,7 @@ make_target() {
       export HOST_CPU=aarch64
       BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
       export USE_GLES=1
+      export NEON=1
     ;;
     x86_64)
       export HOST_CPU=x86_64
