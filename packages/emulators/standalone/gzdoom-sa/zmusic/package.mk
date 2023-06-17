@@ -13,6 +13,7 @@ GET_HANDLER_SUPPORT="git"
 PKG_TOOLCHAIN="cmake-make"
 
 make_host() {
+  [ -d "${PKG_BUILD}/build" ] && rm -rf ${PKG_BUILD}/build
   mkdir ${PKG_BUILD}/build
   cd ${PKG_BUILD}/build
   cmake -DCMAKE_BUILD_TYPE=Release ..
@@ -20,7 +21,7 @@ make_host() {
 }
 
 make_target() {
-  rm -rf ${PKG_BUILD}/build
+  [ -d "${PKG_BUILD}/build" ] && rm -rf ${PKG_BUILD}/build
   mkdir ${PKG_BUILD}/build
   cd ${PKG_BUILD}/build
   cmake -DCMAKE_BUILD_TYPE=Release ..
