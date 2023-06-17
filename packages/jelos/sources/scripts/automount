@@ -36,7 +36,7 @@ mount_games() {
       then
         log $0 "Mounting ${1} on /storage/roms"
         /usr/bin/busybox mount ${1} /storage/roms >/dev/null 2>&1
-        /usr/bin/systemd-tmpfiles --create /usr/lib/tmpfiles.d/jelos-dirs.conf >/dev/null 2>&1
+        /usr/bin/systemd-tmpfiles --create /usr/lib/tmpfiles.d/JELOS-system-dirs.conf >/dev/null 2>&1
       fi
 }
 
