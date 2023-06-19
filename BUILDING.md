@@ -173,19 +173,28 @@ JELOS supports various build variables which alter the behavior of the distribut
 > Note: <sup>1</sup> this property will change to yes/no for consistency in a future release.
 
 ### Special env variables
-For development build, you can use the following env variables to customize the image. Some of them can be included in your `.bashrc` startup shell script.
+For development build, you can use the following env variables to customize the image or change build time functionality. They can be included in your `.bashrc` startup shell script.
+|Variable|Function|
+|----|----|
+|LOCAL_SSH_KEYS_FILE|Enables using ssh public keys for access without the root password.|
+|LOCAL_WIFI_SSID|The SSID of the network the device should connect too automatically.|
+|LOCAL_WIFI_KEY|The WIFI authentication key for the connection."|
+|SCREENSCRAPER_DEV_LOGIN|Login information for screenscraper.fr.|
+|GAMESDB_APIKEY|Login information for thegamesdb.net.|
+|CHEEVOS_DEV_LOGIN|Login information for retroachievements.org.|
+|CLEAN_PACKAGES|Allows specifying packages to clean during a build.|
 
-**SSH keys**
+#### SSH keys
 ```
 export LOCAL_SSH_KEYS_FILE=~/.ssh/jelos/authorized_keys
 ```
-**WiFi SSID and password**
+#### WiFi SSID and password
 ```
 export LOCAL_WIFI_SSID=MYWIFI
 export LOCAL_WIFI_KEY=secret
 ```
 
-**Screenscraper, GamesDB, and RetroAchievements**
+#### Screenscraper, GamesDB, and RetroAchievements
 
 To enable Screenscraper, GamesDB, and RetroAchievements, register at each site and apply the api keys in ~/developer_settings.conf or add them as environment variables. Unsetting one of the variables will disable it in EmulationStation. This configuration is picked up by EmulationStation during the build.
 
@@ -196,6 +205,11 @@ export SCREENSCRAPER_DEV_LOGIN="devid=DEVID&devpassword=DEVPASSWORD"
 export GAMESDB_APIKEY="APIKEY"
 # Find your Cheevos Web API key here: https://retroachievements.org/controlpanel.php
 export CHEEVOS_DEV_LOGIN="z=RETROACHIEVEMENTSUSERNAME&y=APIKEYID"
+```
+
+#### Cleaning additional packages
+```
+CLEAN_PACKAGES="linux ppsspp-sa" make AMD64
 ```
 
 ### Creating a patch for a package

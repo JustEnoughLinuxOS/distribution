@@ -115,3 +115,9 @@ do
     set_setting display.${DPROP} 50
   fi
 done
+
+### Update JSListen
+for JSL in jslisten_hotkeys jslisten_profile
+do
+  cp -f /usr/config/${JSL} /storage/.config
+done
