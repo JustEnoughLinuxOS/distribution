@@ -92,7 +92,7 @@ for all_dtb in $SYSTEM_ROOT/usr/share/bootloader/*.dtb; do
 done
 
 
-echo "UPDATE" > /storage/.config/boot.hint
+echo "UPDATE" > /storage/.boot.hint
 
 # update bootloader
 

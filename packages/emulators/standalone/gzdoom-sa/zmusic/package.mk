@@ -40,4 +40,7 @@ makeinstall_target() {
   mkdir -p ${SYSROOT_PREFIX}/usr/{lib,include}
   cp -f ${PKG_BUILD}/build/source/libzmusic* ${SYSROOT_PREFIX}/usr/lib/
   cp -f ${PKG_BUILD}/include/zmusic.h ${SYSROOT_PREFIX}/usr/include
+
+  mkdir -p ${INSTALL}/usr/lib
+  cp -f ${PKG_BUILD}/build/source/libzmusic* ${INSTALL}/usr/lib
 }
