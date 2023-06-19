@@ -41,13 +41,13 @@ pre_configure_target() {
 makeinstall_target() {
 
   mkdir -p ${INSTALL}/usr/bin
-  cp ${PKG_BUILD}/.${HOST_NAME}/gzdoom ${INSTALL}/usr/bin
+  cp ${PKG_BUILD}/.${TARGET_NAME}/gzdoom ${INSTALL}/usr/bin
   cp ${PKG_DIR}/scripts/start_gzdoom.sh ${INSTALL}/usr/bin/
   chmod +x ${INSTALL}/usr/bin/*
 
   mkdir -p ${INSTALL}/usr/config/gzdoom
   cp ${PKG_DIR}/config/* ${INSTALL}/usr/config/gzdoom
-  cp ${PKG_BUILD}/.${HOST_NAME}/*.pk3 ${INSTALL}/usr/config/gzdoom
-  cp -r ${PKG_BUILD}/.${HOST_NAME}/soundfonts ${INSTALL}/usr/config/gzdoom
-  cp -r ${PKG_BUILD}/.${HOST_NAME}/fm_banks ${INSTALL}/usr/config/gzdoom
+  cp ${PKG_BUILD}/.${TARGET_NAME}/*.pk3 ${INSTALL}/usr/config/gzdoom
+  cp -r ${PKG_BUILD}/.${TARGET_NAME}/soundfonts ${INSTALL}/usr/config/gzdoom
+  cp -r ${PKG_BUILD}/.${TARGET_NAME}/fm_banks ${INSTALL}/usr/config/gzdoom
 }
