@@ -59,11 +59,6 @@ button1=${BTN_KILL_HOTKEY}
 button2=${BTN_KILL_SELECTA}
 button3=${BTN_KILL_SELECTB}
 
-[BatteryPercent]
-program="/usr/bin/say -b"
-button1=${BTN_BAT_HOTKEY}
-button2=${BTN_BAT_TL2}
-button3=${BTN_BAT_TR2}
 EOF
                 systemctl start jslisten
         elif [ "$1" == "stop" ]
