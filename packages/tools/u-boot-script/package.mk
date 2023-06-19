@@ -13,7 +13,7 @@ PKG_NEED_UNPACK="${PROJECT_DIR}/${PROJECT}/bootloader"
 
 make_target() {
   if find_dir_path bootloader/scripts ; then
-    for src in $FOUND_PATH/*.src ; do
+    for src in ${FOUND_PATH}/*.src ; do
       mkimage -A ${TARGET_KERNEL_ARCH} -O linux -T script -C none -d "$src" "$(basename $src .src)"
     done
   fi
