@@ -60,7 +60,7 @@ then
 fi
 
 # Clean necessary packages.
-PKG_CLEAN+=" ${CLEAN_NETWORK} ${CLEAN_OS_BASE} ${CLEAN_DEVICE_ROOT}"
+PKG_CLEAN+=" ${CLEAN_NETWORK} ${CLEAN_OS_BASE} ${CLEAN_DEVICE_ROOT} ${CLEAN_PACKAGES}"
 
 if [ ! -n "${DIRTY}" ]
 then
