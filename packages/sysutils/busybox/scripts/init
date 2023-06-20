@@ -983,7 +983,7 @@ check_update() {
   update_bootloader
   echo "UPDATE" >/storage/.boot.hint
   sync
-  StartProgress countdown "Update complete. Reboot in 5s... " 10 "NOW"
+  StartProgress countdown "Update complete. Reboot in 5s... " 5 "NOW"
   do_cleanup
   sync
   do_reboot

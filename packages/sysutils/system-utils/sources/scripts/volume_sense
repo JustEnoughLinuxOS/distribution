@@ -24,7 +24,8 @@ VOL_EVENT='*(KEY_VOLUME*, value *' # This matches all volume events
 VOL_UP='*UP), value *'  # Differentiate 'up' volume event
 VOL_DOWN='*DOWN), value *' #Differentiate 'down' volume event
 
-V_FUNC_KEY_EVENT='*('${DEVICE_VOL_MODIFIER}'), value *'
+V_FUNC_KEYA_EVENT='*('${DEVICE_FUNC_KEYA_MODIFIER}'), value *'
+V_FUNC_KEYB_EVENT='*('${DEVICE_FUNC_KEYB_MODIFIER}'), value *'
 
 # Matches if a button was pressed (1), released (0) or held down (2)
 PRESS='value [1-9]'
@@ -37,7 +38,8 @@ VOLUME_REPEAT_MOD=4
 BRIGHTNESS_REPEAT_MOD=4
 
 # Variable to keep track of Fn being currently pressed
-FUNC_PRESSED=no
+FUNCA_PRESSED=no
+FUNCB_PRESSED=no
 
 CONTROLLER_DISCONNECTED="*error reading: No such device"
 DEVICE_DISCONNECTED="*error reading: No such device"
@@ -122,15 +124,18 @@ mkcontroller 2>/dev/null ||:
              REPEAT_NUM=0
              continue
           fi
-
           # Setup for 'brightness' if Fn pressed
-          if [[ "${FUNC_PRESSED}" == "yes" ]]; then
-            COMMAND=/usr/bin/brightness
+          if [[ "${FUNCA_PRESSED}" == "yes" ]]; then
+            COMMAND="/usr/bin/brightness"
             UP="up"
             DOWN="down"
             REPEAT_MOD=${BRIGHTNESS_REPEAT_MOD}
-          # Default to 'volume' if Fn is not pressed
+          elif [[ "${FUNCB_PRESSED}" == "yes" ]]; then
+	    COMMAND="/usr/bin/say"
+            UP="-b"
+            DOWN="-b"
           else
+            # Default to 'volume' if Fn a or b is not pressed
             COMMAND="/usr/bin/system_utils vol"
             UP="+"
             DOWN="-"
@@ -152,21 +157,36 @@ mkcontroller 2>/dev/null ||:
           # Run the commands to adjust volume/brightness
           if [[ "${line}" == ${VOL_UP} ]]; then
             ${COMMAND} ${UP} ${INCREMENT_AMOUNT} > /dev/null
+            read -t 0.1
           elif [[ "${line}" == ${VOL_DOWN} ]]; then
             ${COMMAND} ${DOWN} ${INCREMENT_AMOUNT} > /dev/null
+            read -t 0.1
           fi
         ;;
 
-        (${V_FUNC_KEY_EVENT})
+        (${V_FUNC_KEYA_EVENT})
 
           #Reset the number of repeats when Fn is pressed/release
           #  as repeat speed is different between volume/brightness
           REPEAT_NUM=0
 
           if [[ "${line}" =~ ${PRESS} ]]; then
-            FUNC_PRESSED=yes
+            FUNCA_PRESSED=yes
           elif [[ "${line}" =~ ${RELEASE} ]]; then
-            FUNC_PRESSED=no
+            FUNCA_PRESSED=no
+          fi
+        ;;
+
+        (${V_FUNC_KEYB_EVENT})
+
+          #Reset the number of repeats when Fn is pressed/release
+          #  as repeat speed is different between volume/brightness
+          REPEAT_NUM=0
+
+          if [[ "${line}" =~ ${PRESS} ]]; then
+            FUNCB_PRESSED=yes
+          elif [[ "${line}" =~ ${RELEASE} ]]; then
+            FUNCB_PRESSED=no
           fi
         ;;
     esac
