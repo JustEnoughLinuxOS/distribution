@@ -112,7 +112,7 @@ makeinstall_target() {
   cp -rf ${PKG_BUILD}/resources/* ${INSTALL}/usr/config/emulationstation/resources/
   rm -rf ${INSTALL}/usr/config/emulationstation/resources/logo.png
 
-   mkdir -p ${INSTALL}/usr/bin
+  mkdir -p ${INSTALL}/usr/bin
   cp ${PKG_BUILD}/es_settings ${INSTALL}/usr/bin
   chmod 0755 ${INSTALL}/usr/bin/es_settings
 
@@ -120,7 +120,7 @@ makeinstall_target() {
   chmod 0755 ${INSTALL}/usr/bin/start_es.sh
 
   cp ${PKG_BUILD}/ppsspp_font.sh ${INSTALL}/usr/bin
-	chmod 0755 ${INSTALL}/usr/bin/ppsspp_font.sh
+  chmod 0755 ${INSTALL}/usr/bin/ppsspp_font.sh
   
   mkdir -p ${INSTALL}/usr/lib/${PKG_PYTHON_VERSION}
   cp -rf ${PKG_DIR}/bluez/* ${INSTALL}/usr/lib/${PKG_PYTHON_VERSION}
@@ -133,11 +133,11 @@ makeinstall_target() {
   ln -sf /storage/.config/emulationstation/themes ${INSTALL}/etc/emulationstation/
   ln -sf /usr/config/emulationstation/es_systems.cfg ${INSTALL}/etc/emulationstation/es_systems.cfg
 
-   cp -rf ${PKG_DIR}/config/common/*.cfg ${INSTALL}/usr/config/emulationstation
+  cp -rf ${PKG_DIR}/config/common/*.cfg ${INSTALL}/usr/config/emulationstation
 
-   if [ -d "${PKG_DIR}/config/device/${DEVICE}" ]; then
-     cp -rf ${PKG_DIR}/config/device/${DEVICE}/*.cfg ${INSTALL}/usr/config/emulationstation
-   fi
+  if [ -d "${PKG_DIR}/config/device/${DEVICE}" ]; then
+    cp -rf ${PKG_DIR}/config/device/${DEVICE}/*.cfg ${INSTALL}/usr/config/emulationstation
+  fi
 
   ln -sf /storage/.cache/system_timezone ${INSTALL}/etc/timezone
 
