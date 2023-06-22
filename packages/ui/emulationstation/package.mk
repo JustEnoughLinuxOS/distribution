@@ -155,6 +155,6 @@ post_install() {
 
   # WARN: Deprecated
   if [ -f ~/developer_settings.conf ]; then
-    echo "WARNING: developer_settings.conf is deprecated, please migrate variables to the shell profile."
+    echo "WARNING: developer_settings.conf is deprecated, please migrate variables to \${HOME}/.${DISTRO}/options."
   fi
 }
