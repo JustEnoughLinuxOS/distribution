@@ -18,6 +18,8 @@ PARENT_PKG="${2:-${PKG_NAME}}"
 
 pkg_lock "${PKG_NAME}" "unpack" "${PARENT_PKG}"
 
+pkg_call_exists pre_get && pkg_call pre_get
+
 ${SCRIPTS}/get "${PKG_NAME}"
 
 if [ -n "${PKG_DEPENDS_UNPACK}" ]; then
