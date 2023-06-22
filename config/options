@@ -91,8 +91,8 @@ CCACHE_CACHE_SIZE="20G"
 CCACHE_COMPRESSLEVEL="0"
 
 # read GLOBAL options if available
-if [ -f "${HOME}/${DISTRO}/options" ]; then
-  . "${HOME}/${DISTRO}/options"
+if [ -f "${HOME}/.${DISTRO}/options" ]; then
+  . "${HOME}/.${DISTRO}/options"
 fi
 
 # read ROOT options from ${ROOT} if available
