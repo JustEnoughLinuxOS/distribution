@@ -38,6 +38,6 @@ makeinstall_target() {
 
   # copy binary & start script
   cp src/hatari ${INSTALL}/usr/bin/hatarisa
-  cp -R ${PKG_DIR}/scripts/start_hatarisa.sh ${INSTALL}/usr/bin/
-  chmod 0755 ${INSTALL}/usr/bin/start_hatarisa.sh
+  cp -R ${PKG_DIR}/scripts/start_hatari.sh ${INSTALL}/usr/bin/
+  chmod 0755 ${INSTALL}/usr/bin/start_hatari.sh
 }
