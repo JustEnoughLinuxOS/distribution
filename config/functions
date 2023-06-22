@@ -1163,7 +1163,7 @@ unset_functions() {
 
   unset -f configure_package
 
-  unset -f pre_unpack unpack post_unpack
+  unset -f pre_unpack unpack post_unpack pre_get
   unset -f pre_patch post_patch
 
   for target in target host init bootstrap; do
