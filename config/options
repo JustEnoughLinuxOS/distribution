@@ -46,6 +46,11 @@ BUILD_DATE=$(date)
 # include helper functions
 . config/functions
 
+# read GLOBAL options if available
+if [ -f "${HOME}/${DISTRO}/options" ]; then
+  . "${HOME}/${DISTRO}/options"
+fi
+
 # read DISTRO options if available
 if [ -f "${DISTRO_DIR}/${DISTRO}/options" ]; then
   . "${DISTRO_DIR}/${DISTRO}/options"
