@@ -173,7 +173,7 @@ JELOS supports various build variables which alter the behavior of the distribut
 > Note: <sup>1</sup> this property will change to yes/no for consistency in a future release.
 
 ### Special env variables
-For development build, you can use the following env variables to customize the image or change build time functionality. They can be included in your `.bashrc` startup shell script.
+For development builds, you can use the following env variables to customize the image or change build time functionality. To make them globally available to the builds, add them to ${HOME}/.JELOS/options.
 |Variable|Function|
 |----|----|
 |LOCAL_SSH_KEYS_FILE|Enables using ssh public keys for access without the root password.|
