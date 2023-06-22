@@ -46,26 +46,6 @@ BUILD_DATE=$(date)
 # include helper functions
 . config/functions
 
-# read GLOBAL options if available
-if [ -f "${HOME}/${DISTRO}/options" ]; then
-  . "${HOME}/${DISTRO}/options"
-fi
-
-# read DISTRO options if available
-if [ -f "${DISTRO_DIR}/${DISTRO}/options" ]; then
-  . "${DISTRO_DIR}/${DISTRO}/options"
-fi
-
-# read PROJECT options if available
-if [ -f "${PROJECT_DIR}/${PROJECT}/options" ]; then
-  . "${PROJECT_DIR}/${PROJECT}/options"
-fi
-
-# read DEVICE options if available
-if [ -f "${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options" ]; then
-  . "${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options"
-fi
-
 # projects can set KERNEL_NAME (kernel.img)
 KERNEL_NAME="${KERNEL_NAME:-KERNEL}"
 
@@ -110,19 +90,29 @@ CCACHE_CACHE_SIZE="20G"
 # suitable zstd level, currently 1.
 CCACHE_COMPRESSLEVEL="0"
 
-# read global persistent options from $HOME if available
-if [ -f "${HOME}/.${DISTRO}/options" ]; then
-  . "${HOME}/.${DISTRO}/options"
+# read GLOBAL options if available
+if [ -f "${HOME}/${DISTRO}/options" ]; then
+  . "${HOME}/${DISTRO}/options"
 fi
 
-# read local persistent options from ${ROOT} if available
+# read ROOT options from ${ROOT} if available
 if [ -f "${ROOT}/.${DISTRO}/options" ]; then
   . "${ROOT}/.${DISTRO}/options"
 fi
 
-# read global persistent options from ${DOCKER_WORK_DIR} if available
-if [ -f "${DOCKER_WORK_DIR}/.jelos/options" ]; then
-  . "${DOCKER_WORK_DIR}/.jelos/options"
+# read DISTRO options if available
+if [ -f "${DISTRO_DIR}/${DISTRO}/options" ]; then
+  . "${DISTRO_DIR}/${DISTRO}/options"
+fi
+
+# read PROJECT options if available
+if [ -f "${PROJECT_DIR}/${PROJECT}/options" ]; then
+  . "${PROJECT_DIR}/${PROJECT}/options"
+fi
+
+# read DEVICE options if available
+if [ -f "${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options" ]; then
+  . "${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options"
 fi
 
 if [ "${LOCAL_CCACHE_SUPPORT}" = "yes" ] && [ -z "${CCACHE_DISABLE}" ]; then
