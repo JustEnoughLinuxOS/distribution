@@ -12,7 +12,7 @@
     esac
 
   # kernel command line
-    EXTRA_CMDLINE="quiet console=tty0 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20 intel_pstate=disable"
+    EXTRA_CMDLINE="quiet console=tty0 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20 intel_pstate=active amd_pstate=active amd_pstate.shared_mem=1 amdgpu.dpm=1"
 
   # Partition label
     PARTITION_TABLE="msdos"
