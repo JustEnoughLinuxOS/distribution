@@ -42,6 +42,13 @@ then
   set_setting system.cpugovernor schedutil
 fi
 
+### Set the default GPU performance mode
+GPUPERF=$(get_setting system.gpuperf)
+if [ -n "${GPUPERF}" ]
+then
+  gpu_performance_level ${GPUPERF}
+fi
+
 ### Configure suspend mode.
 MYSLEEPMODE=$(get_setting system.suspendmode)
 if [ -n "${MYSLEEPMODE}" ]

@@ -3,7 +3,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="emulationstation"
-PKG_VERSION="ebdd2ff"
+PKG_VERSION="58e1a4e"
 PKG_GIT_CLONE_BRANCH="main"
 PKG_REV="1"
 PKG_ARCH="any"
@@ -81,52 +81,68 @@ pre_configure_target() {
   if [ -f ~/developer_settings.conf ]; then
     . ~/developer_settings.conf
   fi
+
+  for key in SCREENSCRAPER_DEV_LOGIN \
+        GAMESDB_APIKEY \
+        CHEEVOS_DEV_LOGIN
+  do
+    if [ -z "${!key}" ]
+    then
+      echo "WARNING: ${!key} not declared, will not build support."
+    fi
+  done
+
   export DEVICE=$(echo ${DEVICE^^} | sed "s#-#_##g")
 }
 
 makeinstall_target() {
-	mkdir -p ${INSTALL}/usr/config/locale
-	cp -rf ${PKG_BUILD}/locale/lang/* ${INSTALL}/usr/config/locale/
+  mkdir -p ${INSTALL}/usr/config/locale
+  cp -rf ${PKG_BUILD}/locale/lang/* ${INSTALL}/usr/config/locale/
 
-	mkdir -p ${INSTALL}/usr/config/emulationstation/resources
-	cp -rf ${PKG_BUILD}/resources/* ${INSTALL}/usr/config/emulationstation/resources/
-	rm -rf ${INSTALL}/usr/config/emulationstation/resources/logo.png
+  mkdir -p ${INSTALL}/usr/config/emulationstation/resources
+  cp -rf ${PKG_BUILD}/resources/* ${INSTALL}/usr/config/emulationstation/resources/
+  rm -rf ${INSTALL}/usr/config/emulationstation/resources/logo.png
 
-        mkdir -p ${INSTALL}/usr/bin
-	cp ${PKG_BUILD}/es_settings ${INSTALL}/usr/bin
-	chmod 0755 ${INSTALL}/usr/bin/es_settings
+   mkdir -p ${INSTALL}/usr/bin
+  cp ${PKG_BUILD}/es_settings ${INSTALL}/usr/bin
+  chmod 0755 ${INSTALL}/usr/bin/es_settings
 
-	cp ${PKG_BUILD}/start_es.sh ${INSTALL}/usr/bin
-	chmod 0755 ${INSTALL}/usr/bin/start_es.sh
+  cp ${PKG_BUILD}/start_es.sh ${INSTALL}/usr/bin
+  chmod 0755 ${INSTALL}/usr/bin/start_es.sh
 
-	mkdir -p ${INSTALL}/usr/lib/${PKG_PYTHON_VERSION}
-	cp -rf ${PKG_DIR}/bluez/* ${INSTALL}/usr/lib/${PKG_PYTHON_VERSION}
+  mkdir -p ${INSTALL}/usr/lib/${PKG_PYTHON_VERSION}
+  cp -rf ${PKG_DIR}/bluez/* ${INSTALL}/usr/lib/${PKG_PYTHON_VERSION}
 
-	mkdir -p ${INSTALL}/usr/bin
-	#ln -sf /storage/.config/emulationstation/resources ${INSTALL}/usr/bin/resources
-	cp -rf ${PKG_BUILD}/emulationstation ${INSTALL}/usr/bin
+  mkdir -p ${INSTALL}/usr/bin
+  #ln -sf /storage/.config/emulationstation/resources ${INSTALL}/usr/bin/resources
+  cp -rf ${PKG_BUILD}/emulationstation ${INSTALL}/usr/bin
 
-	mkdir -p ${INSTALL}/etc/emulationstation/
-	ln -sf /storage/.config/emulationstation/themes ${INSTALL}/etc/emulationstation/
-	ln -sf /usr/config/emulationstation/es_systems.cfg ${INSTALL}/etc/emulationstation/es_systems.cfg
+  mkdir -p ${INSTALL}/etc/emulationstation/
+  ln -sf /storage/.config/emulationstation/themes ${INSTALL}/etc/emulationstation/
+  ln -sf /usr/config/emulationstation/es_systems.cfg ${INSTALL}/etc/emulationstation/es_systems.cfg
 
-        cp -rf ${PKG_DIR}/config/common/*.cfg ${INSTALL}/usr/config/emulationstation
+   cp -rf ${PKG_DIR}/config/common/*.cfg ${INSTALL}/usr/config/emulationstation
 
-        if [ -d "${PKG_DIR}/config/device/${DEVICE}" ]; then
-          cp -rf ${PKG_DIR}/config/device/${DEVICE}/*.cfg ${INSTALL}/usr/config/emulationstation
-        fi
+   if [ -d "${PKG_DIR}/config/device/${DEVICE}" ]; then
+     cp -rf ${PKG_DIR}/config/device/${DEVICE}/*.cfg ${INSTALL}/usr/config/emulationstation
+   fi
 
-	ln -sf /storage/.cache/system_timezone ${INSTALL}/etc/timezone
+  ln -sf /storage/.cache/system_timezone ${INSTALL}/etc/timezone
 
 }
 
 
 post_install() {
-        mkdir -p ${INSTALL}/usr/share
-        ln -sf /storage/.config/locale ${INSTALL}/usr/share/locale
+  mkdir -p ${INSTALL}/usr/share
+  ln -sf /storage/.config/locale ${INSTALL}/usr/share/locale
 
-        mkdir -p ${INSTALL}/usr/lib
-        ln -sf /usr/share/locale ${INSTALL}/usr/lib/locale
+  mkdir -p ${INSTALL}/usr/lib
+  ln -sf /usr/share/locale ${INSTALL}/usr/lib/locale
 
-        ln -sf /usr/share/locale  ${INSTALL}/usr/config/emulationstation/locale
+  ln -sf /usr/share/locale  ${INSTALL}/usr/config/emulationstation/locale
+
+  # WARN: Deprecated
+  if [ -f ~/developer_settings.conf ]; then
+    echo "WARNING: developer_settings.conf is deprecated, please migrate variables to \${HOME}/.${DISTRO}/options."
+  fi
 }

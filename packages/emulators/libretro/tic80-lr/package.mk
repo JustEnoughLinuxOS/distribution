@@ -20,8 +20,7 @@
 ################################################################################
 
 PKG_NAME="tic80-lr"
-PKG_VERSION="5dd72cf0eac7a98f9f35982cd09332165c70ff20"
-PKG_REV="1"
+PKG_VERSION="687802d"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/nesbox/TIC-80"
@@ -35,14 +34,12 @@ PKG_LONGDESC="TIC-80 emulator"
 GET_HANDLER_SUPPORT="git"
 PKG_BUILD_FLAGS="+pic"
 
-PKG_IS_ADDON="no"
-PKG_AUTORECONF="no"
-
 pre_configure_host() {
   PKG_CMAKE_OPTS_HOST="-DBUILD_PLAYER=OFF \
-                       -DBUILD_WITH_JANET=ON \
                        -DBUILD_SOKOL=OFF \
+                       -DBUILD_WITH_JANET=ON \
                        -DBUILD_SDL=OFF \
+                       -DBUILD_TOUCH_INPUT=OFF \
                        -DBUILD_DEMO_CARTS=OFF \
                        -DBUILD_LIBRETRO=OFF \
                        -DBUILD_WITH_MRUBY=OFF \
@@ -53,6 +50,7 @@ pre_configure_target() {
   PKG_CMAKE_OPTS_TARGET="-DBUILD_PLAYER=ON \
                        -DBUILD_SOKOL=OFF \
                        -DBUILD_SDL=OFF \
+                       -DBUILD_TOUCH_INPUT=ON \
                        -DBUILD_DEMO_CARTS=OFF \
                        -DBUILD_LIBRETRO=ON \
 		       -DBUILD_WITH_MRUBY=OFF \
