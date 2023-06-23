@@ -34,9 +34,9 @@
     UBOOT_DTB="${DEVICE_DTB[0]}"
     UBOOT_CONFIG="evb-rk3399_defconfig"
     PKG_SOC="rk3399"
-    PKG_DATAFILE="$PKG_RKBIN/bin/rk33/rk3399_ddr_933MHz_v1.25.bin"
+    PKG_DATAFILE="$PKG_RKBIN/bin/rk33/rk3399_ddr_933MHz_v1.30.bin"
     PKG_LOADER="$PKG_RKBIN/bin/rk33/rk3399_miniloader_v1.26.bin"
-    PKG_BL31="$PKG_RKBIN/bin/rk33/rk3399_bl31_v1.35.elf"
+    PKG_BL31="$PKG_RKBIN/bin/rk33/rk3399_bl31_v1.36.elf"
     BOOT_INI=false
     EXT_LINUX_CONF=true
 
