@@ -54,6 +54,11 @@ RK3326:
 	PROJECT=Rockchip DEVICE=RK3326 ARCH=arm ./scripts/build_distro
 	PROJECT=Rockchip DEVICE=RK3326 ARCH=aarch64 ./scripts/build_distro
 
+RK3399:
+	PROJECT=Rockchip DEVICE=RK3399 ARCH=arm ./scripts/build_distro
+	PROJECT=Rockchip DEVICE=RK3399 ARCH=aarch64 ./scripts/build_distro
+
+
 update:
 	PROJECT=PC DEVICE=AMD64 ARCH=x86_64 ./scripts/update_packages
 

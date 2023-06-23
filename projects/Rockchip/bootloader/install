@@ -29,7 +29,7 @@ generate_rkspi_loader() {
 if [ -n "${PKG_DATAFILE}" -a -n "${PKG_LOADER}" ]; then
   echo "loader: Make idbloader.img from ${PKG_DATAFILE}:${PKG_LOADER}..."
   case "${PKG_SOC}" in
-    rk35*)
+    rk35*|rk3399)
       tools/mkimage -n ${PKG_SOC} -T rksd -d ${PKG_DATAFILE}:${PKG_LOADER} -C bzip2 idbloader.img
     ;;
     *)
@@ -60,7 +60,7 @@ case "${PKG_SOC}" in
 esac
 
 case "${DEVICE}" in
-  RK3326)
+  RK33*)
 if [ -n "${PKG_BL31}" ]; then
   echo "trust: create trust.ini..."
   cat >trust.ini <<EOF
