@@ -95,7 +95,7 @@ function get_game_setting() {
 		EES=$(sed -n "${PAT}" "${CONF}" | head -1)
 	fi
 
-	[ -z "${EES}" ] && EES="false"
+	( [ -z "${EES}" ] || [ "${EES}" == "auto" ] ) && EES="false"
 }
 
 
