@@ -86,3 +86,10 @@ device_powersave() {
     echo ${PSMODE} >"${DEVICE}" 2>/dev/null
   done
 }
+
+device_powerlevel() {
+  for device in $(find /sys/devices/pci* -name level)
+  do
+    echo ${1} >${device} 2>/dev/null
+  done
+}
