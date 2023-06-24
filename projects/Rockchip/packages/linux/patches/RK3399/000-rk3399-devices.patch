@@ -1,37 +1,119 @@
+diff -rupN linux.orig/Makefile linux/Makefile
+--- linux.orig/Makefile	2023-06-23 03:53:37.552116029 +0000
++++ linux/Makefile	2023-06-23 03:57:17.715782858 +0000
+@@ -826,6 +826,8 @@ KBUILD_CFLAGS	+= $(call cc-disable-warni
+ KBUILD_CFLAGS	+= $(call cc-disable-warning, format-truncation)
+ KBUILD_CFLAGS	+= $(call cc-disable-warning, format-overflow)
+ KBUILD_CFLAGS	+= $(call cc-disable-warning, address-of-packed-member)
++KBUILD_CFLAGS	+= $(call cc-disable-warning, unused-label)
++KBUILD_CFLAGS	+= $(call cc-disable-warning, unused-variable)
+ 
+ ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
+ KBUILD_CFLAGS += -O2
+@@ -1075,7 +1077,7 @@ endif
+ KBUILD_CFLAGS   += -Werror=date-time
+ 
+ # enforce correct pointer usage
+-KBUILD_CFLAGS   += $(call cc-option,-Werror=incompatible-pointer-types)
++# KBUILD_CFLAGS   += $(call cc-option,-Werror=incompatible-pointer-types)
+ 
+ # Require designated initializers for all marked structures
+ KBUILD_CFLAGS   += $(call cc-option,-Werror=designated-init)
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/Makefile linux/arch/arm64/boot/dts/rockchip/Makefile
---- linux.orig/arch/arm64/boot/dts/rockchip/Makefile	2022-11-01 17:55:23.658604366 -0400
-+++ linux/arch/arm64/boot/dts/rockchip/Makefile	2022-11-01 17:56:17.128793891 -0400
-@@ -43,6 +43,7 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-na
- dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-orangepi.dtb
+--- linux.orig/arch/arm64/boot/dts/rockchip/Makefile	2023-06-23 03:53:36.244094795 +0000
++++ linux/arch/arm64/boot/dts/rockchip/Makefile	2023-06-23 03:57:55.424426472 +0000
+@@ -46,6 +46,7 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-or
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-pinebook-pro.dtb
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-pinephone-pro.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-puma-haikou.dtb
 +dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-rg552-linux.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-roc-pc.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-roc-pc-mezzanine.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-roc-pc-plus.dtb
-diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-opp.dtsi linux/arch/arm64/boot/dts/rockchip/rk3399-opp.dtsi
---- linux.orig/arch/arm64/boot/dts/rockchip/rk3399-opp.dtsi	2022-11-01 17:55:23.662604223 -0400
-+++ linux/arch/arm64/boot/dts/rockchip/rk3399-opp.dtsi	2022-11-01 17:56:17.128793891 -0400
-@@ -101,6 +101,10 @@
- 			opp-hz = /bits/ 64 <800000000>;
- 			opp-microvolt = <1100000 1100000 1150000>;
+diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-op1-opp.dtsi linux/arch/arm64/boot/dts/rockchip/rk3399-op1-opp.dtsi
+--- linux.orig/arch/arm64/boot/dts/rockchip/rk3399-op1-opp.dtsi	2023-06-23 03:53:36.252094923 +0000
++++ linux/arch/arm64/boot/dts/rockchip/rk3399-op1-opp.dtsi	2023-06-24 13:37:58.016663539 +0000
+@@ -37,6 +37,14 @@
+ 			opp-hz = /bits/ 64 <1512000000>;
+ 			opp-microvolt = <1150000>;
  		};
-+		opp06 {
-+			opp-hz = /bits/ 64 <900000000>;
-+			opp-microvolt = <1100000 1100000 1150000>;
++		opp-07 {
++			opp-hz = /bits/ 64 <1608000000>;
++			opp-microvolt = <1200000>;
++		};
++		opp-08 {
++			opp-hz = /bits/ 64 <1704000000>;
++			opp-microvolt = <1225000>;
 +		};
  	};
- };
  
+ 	cluster1_opp: opp-table-1 {
+@@ -80,6 +88,18 @@
+ 			opp-hz = /bits/ 64 <2016000000>;
+ 			opp-microvolt = <1250000>;
+ 		};
++		opp09 {
++			opp-hz = /bits/ 64 <2040000000>;
++			opp-microvolt = <1250000>;
++		};
++		opp10 {
++			opp-hz = /bits/ 64 <2088000000>;
++			opp-microvolt = <1250000>;
++		};
++		opp11 {
++			opp-hz = /bits/ 64 <2184000000>;
++			opp-microvolt = <1350000>;
++		};
+ 	};
+ 
+ 	gpu_opp_table: opp-table-2 {
+@@ -109,26 +129,31 @@
+ 			opp-hz = /bits/ 64 <800000000>;
+ 			opp-microvolt = <1075000>;
+ 		};
++                opp06 {
++                        opp-hz = /bits/ 64 <900000000>;
++                        opp-microvolt = <1100000>;
++                };
++
+ 	};
+ 
+ 	dmc_opp_table: opp-table-3 {
+ 		compatible = "operating-points-v2";
+ 
+ 		opp00 {
+-			opp-hz = /bits/ 64 <400000000>;
++			opp-hz = /bits/ 64 <328000000>;
+ 			opp-microvolt = <900000>;
+ 		};
+ 		opp01 {
+-			opp-hz = /bits/ 64 <666000000>;
++			opp-hz = /bits/ 64 <416000000>;
+ 			opp-microvolt = <900000>;
+ 		};
+ 		opp02 {
+-			opp-hz = /bits/ 64 <800000000>;
++			opp-hz = /bits/ 64 <666000000>;
+ 			opp-microvolt = <900000>;
+ 		};
+ 		opp03 {
+-			opp-hz = /bits/ 64 <928000000>;
+-			opp-microvolt = <925000>;
++			opp-hz = /bits/ 64 <856000000>;
++			opp-microvolt = <900000>;
+ 		};
+ 	};
+ };
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts
---- linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts	1969-12-31 19:00:00.000000000 -0500
-+++ linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts	2022-11-01 17:56:17.132793763 -0400
-@@ -0,0 +1,1407 @@
+--- linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts	1970-01-01 00:00:00.000000000 +0000
++++ linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts	2023-06-24 13:46:17.061649664 +0000
+@@ -0,0 +1,1371 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2017 Fuzhou Rockchip Electronics Co., Ltd.
 + * Copyright (c) 2018 Akash Gajjar <Akash_Gajjar@mentor.com>
 + * Copyright (c) 2022 Maya Matuszczyk <maccraft123mc@gmail.com>
++ * Copyright (C) 2023 BrooksyTech (https://github.com/brooksytech)
 + */
 +
 +
@@ -40,7 +122,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +#include <dt-bindings/pwm/pwm.h>
 +#include <dt-bindings/usb/pd.h>
 +#include "rk3399.dtsi"
-+#include "rk3399-opp.dtsi"
++#include "rk3399-op1-opp.dtsi"
 +
 +/ {
 +	model = "Anbernic RG552";
@@ -110,7 +192,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +
 +		joypad-name = "retrogame_joypad";
 +		joypad-product = <0x1101>;
-+		joypad-revision = <0x0100>;
++		joypad-revision = <0x0200>;
 +
 +		status = "okay";
 +
@@ -327,6 +409,17 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +		fan-supply = <&vcc5v0_sys>;
 +	};
 +
++	fiq_debugger: fiq-debugger {
++		compatible = "rockchip,fiq-debugger";
++		rockchip,serial-id = <2>;
++		rockchip,wake-irq = <0>;
++		rockchip,irq-mode-enable = <0>;  /* If enable uart uses irq instead of fiq */
++		rockchip,baudrate = <1500000>;  /* Only 115200 and 1500000 */
++		pinctrl-names = "default";
++		pinctrl-0 = <&uart2c_xfer>;
++		interrupts = <GIC_SPI 150 IRQ_TYPE_LEVEL_HIGH 0>;
++	};
++
 +	backlight: backlight {
 +		status = "okay";
 +		compatible = "pwm-backlight";
@@ -367,28 +460,12 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +		248 249 250 251 252 253 254 255>;
 +		default-brightness-level = <200>;
 +	};
++
 +	bat: battery {
 +		compatible = "simple-battery";
 +		charge-full-design-microamp-hours = <6400000>;
 +		voltage-max-design-microvolt = <4350000>;
 +		voltage-min-design-microvolt = <3400000>;
-+                constant-charge-current-max-microamp = <1500000>;
-+                constant-charge-voltage-max-microvolt = <4350000>;
-+                factory-internal-resistance-micro-ohms = <150000>;
-+                resistance-temp-table = <20 150>;
-+		
-+                ocv-capacity-celsius = <20>;
-+                ocv-capacity-table-0 =	<4308000 100>,<4217000 95>,
-+					<4161000 90>,<4110000 85>,
-+					<4066000 80>,<4007000 75>,
-+					<3974000 70>,<3937000 65>,
-+					<3896000 60>,<3853000 55>,
-+					<3827000 50>,<3807000 45>,
-+					<3793000 40>,<3780000 35>,
-+					<3768000 30>,<3756000 25>,
-+					<3740000 20>,<3716000 15>,
-+					<3689000 10>,<3675000 5>,
-+					<3400000 0>;
 +	};
 +
 +	mains_charger: dc-charger {
@@ -399,7 +476,6 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +		/* Also triggered by USB charger */
 +		pinctrl-names = "default";
 +		pinctrl-0 = <&dc_det_pin>;
-+		monitored-battery = <&bat>;
 +	};
 +
 +	xin32k: xin32k {
@@ -554,73 +630,31 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +		regulator-always-on;
 +		regulator-boot-on;
 +	};
-+
-+	dmc_opp_table: dmc_opp_table {
-+		compatible = "operating-points-v2";
-+
-+		opp-300000000 {
-+			opp-hz = /bits/ 64 <300000000>;
-+			opp-microvolt = <900000>;
-+		};
-+		opp-666000000 {
-+			opp-hz = /bits/ 64 <666000000>;
-+			opp-microvolt = <900000>;
-+		};
-+		opp-800000000 {
-+			opp-hz = /bits/ 64 <800000000>;
-+			opp-microvolt = <900000>;
-+		};
-+		opp-856000000 {
-+			opp-hz = /bits/ 64 <856000000>;
-+			opp-microvolt = <900000>;
-+		};
-+		opp-928000000 {
-+			opp-hz = /bits/ 64 <928000000>;
-+			opp-microvolt = <900000>;
-+		};
-+		opp-933000000 {
-+			opp-hz = /bits/ 64 <933000000>;
-+			opp-microvolt = <900000>;
-+		};
-+	};
 +};
 +
-+&cluster0_opp {
-+        opp-1512000000 {
-+            opp-hz = /bits/ 64 <1512000000>;
-+            opp-microvolt = <1200000>;
-+        };
-+        opp-1608000000 {
-+            opp-hz = /bits/ 64 <1608000000>;
-+            opp-microvolt = <1200000>;
-+        };
-+        opp-1704000000 {
-+            opp-hz = /bits/ 64 <1704000000>;
-+            opp-microvolt = <1225000>;
-+        };
++&dmc {
++       status = "okay";
++       center-supply = <&vdd_log>;
++       operating-points-v2 = <&dmc_opp_table>;
++
++       rockchip,pd-idle-ns = <160>;
++       rockchip,sr-idle-ns = <10240>;
++       rockchip,sr-mc-gate-idle-ns = <40960>;
++       rockchip,srpd-lite-idle-ns = <61440>;
++       rockchip,standby-idle-ns = <81920>;
++
++       rockchip,ddr3_odt_dis_freq = <666000000>;
++       rockchip,lpddr3_odt_dis_freq = <666000000>;
++       rockchip,lpddr4_odt_dis_freq = <666000000>;
++
++       rockchip,sr-mc-gate-idle-dis-freq-hz = <1000000000>;
++       rockchip,srpd-lite-idle-dis-freq-hz = <0>;
++       rockchip,standby-idle-dis-freq-hz = <928000000>;
++
 +};
 +
-+&cluster1_opp {
-+	opp-1992000000 {
-+            opp-hz = /bits/ 64 <1992000000>;
-+            opp-microvolt = <1250000>;
-+	};
-+        opp-2016000000 {
-+            opp-hz = /bits/ 64 <2016000000>;
-+            opp-microvolt = <1250000>;
-+        };
-+        opp-2040000000 {
-+            opp-hz = /bits/ 64 <2040000000>;
-+            opp-microvolt = <1250000>;
-+        };
-+        opp-2088000000 {
-+            opp-hz = /bits/ 64 <2088000000>;
-+            opp-microvolt = <1250000>;
-+        };
-+        opp-2184000000 {
-+            opp-hz = /bits/ 64 <2184000000>;
-+            opp-microvolt = <1350000>;
-+        };
++&dfi {
++       status = "okay";
 +};
 +
 +&cpu_thermal {
@@ -730,6 +764,16 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +&gpu {
 +	mali-supply = <&vdd_gpu>;
 +	status = "okay";
++};
++
++&dfi {
++	status = "okay";
++};
++
++&dmc {
++	status = "okay";
++	operating-points-v2 = <&dmc_opp_table>;
++	center-supply = <&vdd_center>;
 +};
 +
 +&pwm0 {
@@ -1050,19 +1094,20 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +		compatible = "cellwise,cw2015";
 +		reg = <0x62>;
 +		cellwise,battery-profile = /bits/ 8 <
-+				   0x15 0x7E 0x66 0x5B 0x58 0x55 0x51 0x4D
-+				   0x4A 0x47 0x44 0x47 0x4D 0x46 0x32 0x27
-+				   0x1F 0x1A 0x15 0x16 0x21 0x30 0x3F 0x4A
-+				   0x46 0x5C 0x0C 0x29 0x19 0x31 0x59 0x74
-+				   0x7B 0x7D 0x81 0x82 0x3F 0x1A 0x58 0x22
-+				   0x06 0x42 0x2B 0x63 0x89 0x93 0x94 0x3C
-+				   0x57 0x7D 0x93 0xAE 0x80 0xC2 0xD2 0xCB
-+				   0x2F 0x00 0x64 0xA5 0xB5 0x1F 0xB0 0x11
++			0x17 0x67 0x80 0x73 0x6E 0x6C 0x6B 0x63
++			0x77 0x51 0x5C 0x58 0x50 0x4C 0x48 0x36
++			0x15 0x0C 0x0C 0x19 0x5B 0x7D 0x6F 0x69
++			0x69 0x5B 0x0C 0x29 0x20 0x40 0x52 0x59
++			0x57 0x56 0x54 0x4F 0x3B 0x1F 0x7F 0x17
++			0x06 0x1A 0x30 0x5A 0x85 0x93 0x96 0x2D
++			0x48 0x77 0x9C 0xB3 0x80 0x52 0x94 0xCB
++			0x2F 0x00 0x64 0xA5 0xB5 0x11 0xF0 0x11
 +		>;
 +		cellwise,monitor-interval-ms = <5000>;
-+		power-supplies = <&mains_charger>;	
 +		monitored-battery = <&bat>;
++		power-supplies = <&mains_charger>, <&fusb0>;
 +	};
++
 +};
 +
 +&i2c1 {
@@ -1435,8 +1480,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +	status = "okay";
 +};
 diff -rupN linux.orig/drivers/gpu/drm/panel/Kconfig linux/drivers/gpu/drm/panel/Kconfig
---- linux.orig/drivers/gpu/drm/panel/Kconfig	2022-11-01 17:55:26.614499464 -0400
-+++ linux/drivers/gpu/drm/panel/Kconfig	2022-11-01 17:56:17.136793634 -0400
+--- linux.orig/drivers/gpu/drm/panel/Kconfig	2023-06-23 03:53:39.968155272 +0000
++++ linux/drivers/gpu/drm/panel/Kconfig	2023-06-23 03:57:17.715782858 +0000
 @@ -588,6 +588,15 @@ config DRM_PANEL_SHARP_LS043T1LE01
  	  Say Y here if you want to enable support for Sharp LS043T1LE01 qHD
  	  (540x960) DSI panel as found on the Qualcomm APQ8074 Dragonboard
@@ -1454,8 +1499,8 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/Kconfig linux/drivers/gpu/drm/panel/
  	tristate "Sharp LS060T1SX01 FullHD video mode panel"
  	depends on OF
 diff -rupN linux.orig/drivers/gpu/drm/panel/Makefile linux/drivers/gpu/drm/panel/Makefile
---- linux.orig/drivers/gpu/drm/panel/Makefile	2022-11-01 17:55:26.614499464 -0400
-+++ linux/drivers/gpu/drm/panel/Makefile	2022-11-01 17:56:17.136793634 -0400
+--- linux.orig/drivers/gpu/drm/panel/Makefile	2023-06-23 03:53:39.968155272 +0000
++++ linux/drivers/gpu/drm/panel/Makefile	2023-06-23 03:57:17.715782858 +0000
 @@ -59,6 +59,7 @@ obj-$(CONFIG_DRM_PANEL_SEIKO_43WVF1G) +=
  obj-$(CONFIG_DRM_PANEL_SHARP_LQ101R1SX01) += panel-sharp-lq101r1sx01.o
  obj-$(CONFIG_DRM_PANEL_SHARP_LS037V7DW01) += panel-sharp-ls037v7dw01.o
@@ -1465,8 +1510,8 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/Makefile linux/drivers/gpu/drm/panel
  obj-$(CONFIG_DRM_PANEL_SITRONIX_ST7701) += panel-sitronix-st7701.o
  obj-$(CONFIG_DRM_PANEL_SITRONIX_ST7703) += panel-sitronix-st7703.o
 diff -rupN linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c linux/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c
---- linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c	2022-11-01 17:58:24.801136793 -0400
+--- linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c	1970-01-01 00:00:00.000000000 +0000
++++ linux/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c	2023-06-23 03:57:17.715782858 +0000
 @@ -0,0 +1,368 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +/*
@@ -1836,9 +1881,43 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c linux/driv
 +MODULE_AUTHOR("Maya Matuszczyk <maccraft123mc@gmail.com>");
 +MODULE_DESCRIPTION("Panel driver for Sharp LS054B3SX01 1152x1080 Video Mode DSI Panel");
 +MODULE_LICENSE("GPL v2");
+diff -rupN linux.orig/drivers/input/Kconfig linux/drivers/input/Kconfig
+--- linux.orig/drivers/input/Kconfig	2023-06-23 03:53:40.600165543 +0000
++++ linux/drivers/input/Kconfig	2023-06-23 03:57:17.715782858 +0000
+@@ -51,6 +51,19 @@ config INPUT_FF_MEMLESS
+ 	  To compile this driver as a module, choose M here: the
+ 	  module will be called ff-memless.
+ 
++config INPUT_POLLDEV
++	tristate "Polled input device skeleton"
++	help
++	  Say Y here if you are using a driver for an input
++	  device that periodically polls hardware state. This
++	  option is only useful for out-of-tree drivers since
++	  in-tree drivers select it automatically.
++
++	  If unsure, say N.
++
++	  To compile this driver as a module, choose M here: the
++	  module will be called input-polldev.
++
+ config INPUT_SPARSEKMAP
+ 	tristate "Sparse keymap support library"
+ 	help
+diff -rupN linux.orig/drivers/input/Makefile linux/drivers/input/Makefile
+--- linux.orig/drivers/input/Makefile	2023-06-23 03:53:40.600165543 +0000
++++ linux/drivers/input/Makefile	2023-06-23 03:57:17.715782858 +0000
+@@ -10,6 +10,7 @@ input-core-y := input.o input-compat.o i
+ input-core-y += touchscreen.o
+ 
+ obj-$(CONFIG_INPUT_FF_MEMLESS)	+= ff-memless.o
++obj-$(CONFIG_INPUT_POLLDEV)	+= input-polldev.o
+ obj-$(CONFIG_INPUT_SPARSEKMAP)	+= sparse-keymap.o
+ obj-$(CONFIG_INPUT_MATRIXKMAP)	+= matrix-keymap.o
+ obj-$(CONFIG_INPUT_VIVALDIFMAP)	+= vivaldi-fmap.o
 diff -rupN linux.orig/drivers/input/input-polldev.c linux/drivers/input/input-polldev.c
---- linux.orig/drivers/input/input-polldev.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux/drivers/input/input-polldev.c	2022-11-01 17:56:17.140793505 -0400
+--- linux.orig/drivers/input/input-polldev.c	1970-01-01 00:00:00.000000000 +0000
++++ linux/drivers/input/input-polldev.c	2023-06-23 03:57:17.715782858 +0000
 @@ -0,0 +1,362 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +/*
@@ -2203,9 +2282,9 @@ diff -rupN linux.orig/drivers/input/input-polldev.c linux/drivers/input/input-po
 +}
 +EXPORT_SYMBOL(input_unregister_polled_device);
 diff -rupN linux.orig/drivers/input/joystick/Kconfig linux/drivers/input/joystick/Kconfig
---- linux.orig/drivers/input/joystick/Kconfig	2022-11-01 17:55:27.006485589 -0400
-+++ linux/drivers/input/joystick/Kconfig	2022-11-01 17:56:17.140793505 -0400
-@@ -392,6 +392,12 @@ config JOYSTICK_FSIA6B
+--- linux.orig/drivers/input/joystick/Kconfig	2023-06-23 03:53:40.604165608 +0000
++++ linux/drivers/input/joystick/Kconfig	2023-06-23 03:57:17.715782858 +0000
+@@ -393,6 +393,12 @@ config JOYSTICK_FSIA6B
  	  To compile this driver as a module, choose M here: the
  	  module will be called fsia6b.
  
@@ -2219,8 +2298,8 @@ diff -rupN linux.orig/drivers/input/joystick/Kconfig linux/drivers/input/joystic
  	bool "N64 controller"
  	depends on MACH_NINTENDO64
 diff -rupN linux.orig/drivers/input/joystick/Makefile linux/drivers/input/joystick/Makefile
---- linux.orig/drivers/input/joystick/Makefile	2022-11-01 17:55:27.006485589 -0400
-+++ linux/drivers/input/joystick/Makefile	2022-11-01 17:56:17.140793505 -0400
+--- linux.orig/drivers/input/joystick/Makefile	2023-06-23 03:53:40.604165608 +0000
++++ linux/drivers/input/joystick/Makefile	2023-06-23 03:57:17.715782858 +0000
 @@ -30,6 +30,7 @@ obj-$(CONFIG_JOYSTICK_PXRC)		+= pxrc.o
  obj-$(CONFIG_JOYSTICK_QWIIC)		+= qwiic-joystick.o
  obj-$(CONFIG_JOYSTICK_SENSEHAT)	+= sensehat-joystick.o
@@ -2230,8 +2309,8 @@ diff -rupN linux.orig/drivers/input/joystick/Makefile linux/drivers/input/joysti
  obj-$(CONFIG_JOYSTICK_SPACEORB)		+= spaceorb.o
  obj-$(CONFIG_JOYSTICK_STINGER)		+= stinger.o
 diff -rupN linux.orig/drivers/input/joystick/singleadcjoy.c linux/drivers/input/joystick/singleadcjoy.c
---- linux.orig/drivers/input/joystick/singleadcjoy.c	1969-12-31 19:00:00.000000000 -0500
-+++ linux/drivers/input/joystick/singleadcjoy.c	2022-11-01 17:56:17.140793505 -0400
+--- linux.orig/drivers/input/joystick/singleadcjoy.c	1970-01-01 00:00:00.000000000 +0000
++++ linux/drivers/input/joystick/singleadcjoy.c	2023-06-23 03:57:17.715782858 +0000
 @@ -0,0 +1,1416 @@
 +/*----------------------------------------------------------------------------*/
 +
@@ -3649,829 +3728,21 @@ diff -rupN linux.orig/drivers/input/joystick/singleadcjoy.c linux/drivers/input/
 +/*----------------------------------------------------------------------------*/
 +late_initcall(joypad_init);
 +module_exit(joypad_exit);
-diff -rupN linux.orig/drivers/input/Kconfig linux/drivers/input/Kconfig
---- linux.orig/drivers/input/Kconfig	2022-11-01 17:55:27.002485730 -0400
-+++ linux/drivers/input/Kconfig	2022-11-01 17:56:17.140793505 -0400
-@@ -51,6 +51,19 @@ config INPUT_FF_MEMLESS
- 	  To compile this driver as a module, choose M here: the
- 	  module will be called ff-memless.
+diff -rupN linux.orig/drivers/power/supply/cw2015_battery.c linux/drivers/power/supply/cw2015_battery.c
+--- linux.orig/drivers/power/supply/cw2015_battery.c	2023-06-23 03:53:42.860202281 +0000
++++ linux/drivers/power/supply/cw2015_battery.c	2023-06-24 12:55:27.741045953 +0000
+@@ -553,7 +553,7 @@ static enum power_supply_property cw_bat
+ };
  
-+config INPUT_POLLDEV
-+	tristate "Polled input device skeleton"
-+	help
-+	  Say Y here if you are using a driver for an input
-+	  device that periodically polls hardware state. This
-+	  option is only useful for out-of-tree drivers since
-+	  in-tree drivers select it automatically.
-+
-+	  If unsure, say N.
-+
-+	  To compile this driver as a module, choose M here: the
-+	  module will be called input-polldev.
-+
- config INPUT_SPARSEKMAP
- 	tristate "Sparse keymap support library"
- 	help
-diff -rupN linux.orig/drivers/input/Makefile linux/drivers/input/Makefile
---- linux.orig/drivers/input/Makefile	2022-11-01 17:55:27.002485730 -0400
-+++ linux/drivers/input/Makefile	2022-11-01 17:56:17.140793505 -0400
-@@ -10,6 +10,7 @@ input-core-y := input.o input-compat.o i
- input-core-y += touchscreen.o
- 
- obj-$(CONFIG_INPUT_FF_MEMLESS)	+= ff-memless.o
-+obj-$(CONFIG_INPUT_POLLDEV)	+= input-polldev.o
- obj-$(CONFIG_INPUT_SPARSEKMAP)	+= sparse-keymap.o
- obj-$(CONFIG_INPUT_MATRIXKMAP)	+= matrix-keymap.o
- obj-$(CONFIG_INPUT_VIVALDIFMAP)	+= vivaldi-fmap.o
---- linux.orig/drivers/power/supply/cw2015_battery.c.orig	1969-12-31 19:00:00.000000000 -0500
-+++ linux/drivers/power/supply/cw2015_battery.c.orig	2022-10-29 04:08:36.000000000 -0400
-@@ -0,0 +1,764 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Fuel gauge driver for CellWise 2013 / 2015
-+ *
-+ * Copyright (C) 2012, RockChip
-+ * Copyright (C) 2020, Tobias Schramm
-+ *
-+ * Authors: xuhuicong <xhc@rock-chips.com>
-+ * Authors: Tobias Schramm <t.schramm@manjaro.org>
-+ */
-+
-+#include <linux/bits.h>
-+#include <linux/delay.h>
-+#include <linux/i2c.h>
-+#include <linux/gfp.h>
-+#include <linux/gpio/consumer.h>
-+#include <linux/kernel.h>
-+#include <linux/module.h>
-+#include <linux/power_supply.h>
-+#include <linux/property.h>
-+#include <linux/regmap.h>
-+#include <linux/time.h>
-+#include <linux/workqueue.h>
-+
-+#define CW2015_SIZE_BATINFO		64
-+
-+#define CW2015_RESET_TRIES		5
-+
-+#define CW2015_REG_VERSION		0x00
-+#define CW2015_REG_VCELL		0x02
-+#define CW2015_REG_SOC			0x04
-+#define CW2015_REG_RRT_ALERT		0x06
-+#define CW2015_REG_CONFIG		0x08
-+#define CW2015_REG_MODE			0x0A
-+#define CW2015_REG_BATINFO		0x10
-+
-+#define CW2015_MODE_SLEEP_MASK		GENMASK(7, 6)
-+#define CW2015_MODE_SLEEP		(0x03 << 6)
-+#define CW2015_MODE_NORMAL		(0x00 << 6)
-+#define CW2015_MODE_QUICK_START		(0x03 << 4)
-+#define CW2015_MODE_RESTART		(0x0f << 0)
-+
-+#define CW2015_CONFIG_UPDATE_FLG	(0x01 << 1)
-+#define CW2015_ATHD(x)			((x) << 3)
-+#define CW2015_MASK_ATHD		GENMASK(7, 3)
-+#define CW2015_MASK_SOC			GENMASK(12, 0)
-+
-+/* reset gauge of no valid state of charge could be polled for 40s */
-+#define CW2015_BAT_SOC_ERROR_MS		(40 * MSEC_PER_SEC)
-+/* reset gauge if state of charge stuck for half an hour during charging */
-+#define CW2015_BAT_CHARGING_STUCK_MS	(1800 * MSEC_PER_SEC)
-+
-+/* poll interval from CellWise GPL Android driver example */
-+#define CW2015_DEFAULT_POLL_INTERVAL_MS		8000
-+
-+#define CW2015_AVERAGING_SAMPLES		3
-+
-+struct cw_battery {
-+	struct device *dev;
-+	struct workqueue_struct *battery_workqueue;
-+	struct delayed_work battery_delay_work;
-+	struct regmap *regmap;
-+	struct power_supply *rk_bat;
-+	struct power_supply_battery_info *battery;
-+	u8 *bat_profile;
-+
-+	bool charger_attached;
-+	bool battery_changed;
-+
-+	int soc;
-+	int voltage_mv;
-+	int status;
-+	int time_to_empty;
-+	int charge_count;
-+
-+	u32 poll_interval_ms;
-+	u8 alert_level;
-+
-+	unsigned int read_errors;
-+	unsigned int charge_stuck_cnt;
-+};
-+
-+static int cw_read_word(struct cw_battery *cw_bat, u8 reg, u16 *val)
-+{
-+	__be16 value;
-+	int ret;
-+
-+	ret = regmap_bulk_read(cw_bat->regmap, reg, &value, sizeof(value));
-+	if (ret)
-+		return ret;
-+
-+	*val = be16_to_cpu(value);
-+	return 0;
-+}
-+
-+static int cw_update_profile(struct cw_battery *cw_bat)
-+{
-+	int ret;
-+	unsigned int reg_val;
-+	u8 reset_val;
-+
-+	/* make sure gauge is not in sleep mode */
-+	ret = regmap_read(cw_bat->regmap, CW2015_REG_MODE, &reg_val);
-+	if (ret)
-+		return ret;
-+
-+	reset_val = reg_val;
-+	if ((reg_val & CW2015_MODE_SLEEP_MASK) == CW2015_MODE_SLEEP) {
-+		dev_err(cw_bat->dev,
-+			"Gauge is in sleep mode, can't update battery info\n");
-+		return -EINVAL;
-+	}
-+
-+	/* write new battery info */
-+	ret = regmap_raw_write(cw_bat->regmap, CW2015_REG_BATINFO,
-+			       cw_bat->bat_profile,
-+			       CW2015_SIZE_BATINFO);
-+	if (ret)
-+		return ret;
-+
-+	/* set config update flag  */
-+	reg_val |= CW2015_CONFIG_UPDATE_FLG;
-+	reg_val &= ~CW2015_MASK_ATHD;
-+	reg_val |= CW2015_ATHD(cw_bat->alert_level);
-+	ret = regmap_write(cw_bat->regmap, CW2015_REG_CONFIG, reg_val);
-+	if (ret)
-+		return ret;
-+
-+	/* reset gauge to apply new battery profile */
-+	reset_val &= ~CW2015_MODE_RESTART;
-+	reg_val = reset_val | CW2015_MODE_RESTART;
-+	ret = regmap_write(cw_bat->regmap, CW2015_REG_MODE, reg_val);
-+	if (ret)
-+		return ret;
-+
-+	/* wait for gauge to reset */
-+	msleep(20);
-+
-+	/* clear reset flag */
-+	ret = regmap_write(cw_bat->regmap, CW2015_REG_MODE, reset_val);
-+	if (ret)
-+		return ret;
-+
-+	/* wait for gauge to become ready */
-+	ret = regmap_read_poll_timeout(cw_bat->regmap, CW2015_REG_SOC,
-+				       reg_val, reg_val <= 100,
-+				       10 * USEC_PER_MSEC, 10 * USEC_PER_SEC);
-+	if (ret)
-+		dev_err(cw_bat->dev,
-+			"Gauge did not become ready after profile upload\n");
-+	else
-+		dev_dbg(cw_bat->dev, "Battery profile updated\n");
-+
-+	return ret;
-+}
-+
-+static int cw_init(struct cw_battery *cw_bat)
-+{
-+	int ret;
-+	unsigned int reg_val = CW2015_MODE_SLEEP;
-+
-+	if ((reg_val & CW2015_MODE_SLEEP_MASK) == CW2015_MODE_SLEEP) {
-+		reg_val = CW2015_MODE_NORMAL;
-+		ret = regmap_write(cw_bat->regmap, CW2015_REG_MODE, reg_val);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	ret = regmap_read(cw_bat->regmap, CW2015_REG_CONFIG, &reg_val);
-+	if (ret)
-+		return ret;
-+
-+	if ((reg_val & CW2015_MASK_ATHD) != CW2015_ATHD(cw_bat->alert_level)) {
-+		dev_dbg(cw_bat->dev, "Setting new alert level\n");
-+		reg_val &= ~CW2015_MASK_ATHD;
-+		reg_val |= ~CW2015_ATHD(cw_bat->alert_level);
-+		ret = regmap_write(cw_bat->regmap, CW2015_REG_CONFIG, reg_val);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	ret = regmap_read(cw_bat->regmap, CW2015_REG_CONFIG, &reg_val);
-+	if (ret)
-+		return ret;
-+
-+	if (!(reg_val & CW2015_CONFIG_UPDATE_FLG)) {
-+		dev_dbg(cw_bat->dev,
-+			"Battery profile not present, uploading battery profile\n");
-+		if (cw_bat->bat_profile) {
-+			ret = cw_update_profile(cw_bat);
-+			if (ret) {
-+				dev_err(cw_bat->dev,
-+					"Failed to upload battery profile\n");
-+				return ret;
-+			}
-+		} else {
-+			dev_warn(cw_bat->dev,
-+				 "No profile specified, continuing without profile\n");
-+		}
-+	} else if (cw_bat->bat_profile) {
-+		u8 bat_info[CW2015_SIZE_BATINFO];
-+
-+		ret = regmap_raw_read(cw_bat->regmap, CW2015_REG_BATINFO,
-+				      bat_info, CW2015_SIZE_BATINFO);
-+		if (ret) {
-+			dev_err(cw_bat->dev,
-+				"Failed to read stored battery profile\n");
-+			return ret;
-+		}
-+
-+		if (memcmp(bat_info, cw_bat->bat_profile, CW2015_SIZE_BATINFO)) {
-+			dev_warn(cw_bat->dev, "Replacing stored battery profile\n");
-+			ret = cw_update_profile(cw_bat);
-+			if (ret)
-+				return ret;
-+		}
-+	} else {
-+		dev_warn(cw_bat->dev,
-+			 "Can't check current battery profile, no profile provided\n");
-+	}
-+
-+	dev_dbg(cw_bat->dev, "Battery profile configured\n");
-+	return 0;
-+}
-+
-+static int cw_power_on_reset(struct cw_battery *cw_bat)
-+{
-+	int ret;
-+	unsigned char reset_val;
-+
-+	reset_val = CW2015_MODE_SLEEP;
-+	ret = regmap_write(cw_bat->regmap, CW2015_REG_MODE, reset_val);
-+	if (ret)
-+		return ret;
-+
-+	/* wait for gauge to enter sleep */
-+	msleep(20);
-+
-+	reset_val = CW2015_MODE_NORMAL;
-+	ret = regmap_write(cw_bat->regmap, CW2015_REG_MODE, reset_val);
-+	if (ret)
-+		return ret;
-+
-+	ret = cw_init(cw_bat);
-+	if (ret)
-+		return ret;
-+	return 0;
-+}
-+
-+#define HYSTERESIS(current, previous, up, down) \
-+	(((current) < (previous) + (up)) && ((current) > (previous) - (down)))
-+
-+static int cw_get_soc(struct cw_battery *cw_bat)
-+{
-+	unsigned int soc;
-+	int ret;
-+
-+	ret = regmap_read(cw_bat->regmap, CW2015_REG_SOC, &soc);
-+	if (ret)
-+		return ret;
-+
-+	if (soc > 100) {
-+		int max_error_cycles =
-+			CW2015_BAT_SOC_ERROR_MS / cw_bat->poll_interval_ms;
-+
-+		dev_err(cw_bat->dev, "Invalid SoC %d%%\n", soc);
-+		cw_bat->read_errors++;
-+		if (cw_bat->read_errors > max_error_cycles) {
-+			dev_warn(cw_bat->dev,
-+				 "Too many invalid SoC reports, resetting gauge\n");
-+			cw_power_on_reset(cw_bat);
-+			cw_bat->read_errors = 0;
-+		}
-+		return cw_bat->soc;
-+	}
-+	cw_bat->read_errors = 0;
-+
-+	/* Reset gauge if stuck while charging */
-+	if (cw_bat->status == POWER_SUPPLY_STATUS_CHARGING && soc == cw_bat->soc) {
-+		int max_stuck_cycles =
-+			CW2015_BAT_CHARGING_STUCK_MS / cw_bat->poll_interval_ms;
-+
-+		cw_bat->charge_stuck_cnt++;
-+		if (cw_bat->charge_stuck_cnt > max_stuck_cycles) {
-+			dev_warn(cw_bat->dev,
-+				 "SoC stuck @%u%%, resetting gauge\n", soc);
-+			cw_power_on_reset(cw_bat);
-+			cw_bat->charge_stuck_cnt = 0;
-+		}
-+	} else {
-+		cw_bat->charge_stuck_cnt = 0;
-+	}
-+
-+	/* Ignore voltage dips during charge */
-+	if (cw_bat->charger_attached && HYSTERESIS(soc, cw_bat->soc, 0, 3))
-+		soc = cw_bat->soc;
-+
-+	/* Ignore voltage spikes during discharge */
-+	if (!cw_bat->charger_attached && HYSTERESIS(soc, cw_bat->soc, 3, 0))
-+		soc = cw_bat->soc;
-+
-+	return soc;
-+}
-+
-+static int cw_get_voltage(struct cw_battery *cw_bat)
-+{
-+	int ret, i, voltage_mv;
-+	u16 reg_val;
-+	u32 avg = 0;
-+
-+	for (i = 0; i < CW2015_AVERAGING_SAMPLES; i++) {
-+		ret = cw_read_word(cw_bat, CW2015_REG_VCELL, &reg_val);
-+		if (ret)
-+			return ret;
-+
-+		avg += reg_val;
-+	}
-+	avg /= CW2015_AVERAGING_SAMPLES;
-+
-+	/*
-+	 * 305 uV per ADC step
-+	 * Use 312 / 1024  as efficient approximation of 305 / 1000
-+	 * Negligible error of 0.1%
-+	 */
-+	voltage_mv = avg * 312 / 1024;
-+
-+	dev_dbg(cw_bat->dev, "Read voltage: %d mV, raw=0x%04x\n",
-+		voltage_mv, reg_val);
-+	return voltage_mv;
-+}
-+
-+static int cw_get_time_to_empty(struct cw_battery *cw_bat)
-+{
-+	int ret;
-+	u16 value16;
-+
-+	ret = cw_read_word(cw_bat, CW2015_REG_RRT_ALERT, &value16);
-+	if (ret)
-+		return ret;
-+
-+	return value16 & CW2015_MASK_SOC;
-+}
-+
-+static void cw_update_charge_status(struct cw_battery *cw_bat)
-+{
-+	int ret;
-+
-+	ret = power_supply_am_i_supplied(cw_bat->rk_bat);
-+	if (ret < 0) {
-+		dev_warn(cw_bat->dev, "Failed to get supply state: %d\n", ret);
-+	} else {
-+		bool charger_attached;
-+
-+		charger_attached = !!ret;
-+		if (cw_bat->charger_attached != charger_attached) {
-+			cw_bat->battery_changed = true;
-+			if (charger_attached)
-+				cw_bat->charge_count++;
-+		}
-+		cw_bat->charger_attached = charger_attached;
-+	}
-+}
-+
-+static void cw_update_soc(struct cw_battery *cw_bat)
-+{
-+	int soc;
-+
-+	soc = cw_get_soc(cw_bat);
-+	if (soc < 0)
-+		dev_err(cw_bat->dev, "Failed to get SoC from gauge: %d\n", soc);
-+	else if (cw_bat->soc != soc) {
-+		cw_bat->soc = soc;
-+		cw_bat->battery_changed = true;
-+	}
-+}
-+
-+static void cw_update_voltage(struct cw_battery *cw_bat)
-+{
-+	int voltage_mv;
-+
-+	voltage_mv = cw_get_voltage(cw_bat);
-+	if (voltage_mv < 0)
-+		dev_err(cw_bat->dev, "Failed to get voltage from gauge: %d\n",
-+			voltage_mv);
-+	else
-+		cw_bat->voltage_mv = voltage_mv;
-+}
-+
-+static void cw_update_status(struct cw_battery *cw_bat)
-+{
-+	int status = POWER_SUPPLY_STATUS_DISCHARGING;
-+
-+	if (cw_bat->charger_attached) {
-+		if (cw_bat->soc >= 100)
-+			status = POWER_SUPPLY_STATUS_FULL;
-+		else
-+			status = POWER_SUPPLY_STATUS_CHARGING;
-+	}
-+
-+	if (cw_bat->status != status)
-+		cw_bat->battery_changed = true;
-+	cw_bat->status = status;
-+}
-+
-+static void cw_update_time_to_empty(struct cw_battery *cw_bat)
-+{
-+	int time_to_empty;
-+
-+	time_to_empty = cw_get_time_to_empty(cw_bat);
-+	if (time_to_empty < 0)
-+		dev_err(cw_bat->dev, "Failed to get time to empty from gauge: %d\n",
-+			time_to_empty);
-+	else if (cw_bat->time_to_empty != time_to_empty) {
-+		cw_bat->time_to_empty = time_to_empty;
-+		cw_bat->battery_changed = true;
-+	}
-+}
-+
-+static void cw_bat_work(struct work_struct *work)
-+{
-+	struct delayed_work *delay_work;
-+	struct cw_battery *cw_bat;
-+	int ret;
-+	unsigned int reg_val;
-+
-+	delay_work = to_delayed_work(work);
-+	cw_bat = container_of(delay_work, struct cw_battery, battery_delay_work);
-+	ret = regmap_read(cw_bat->regmap, CW2015_REG_MODE, &reg_val);
-+	if (ret) {
-+		dev_err(cw_bat->dev, "Failed to read mode from gauge: %d\n", ret);
-+	} else {
-+		if ((reg_val & CW2015_MODE_SLEEP_MASK) == CW2015_MODE_SLEEP) {
-+			int i;
-+
-+			for (i = 0; i < CW2015_RESET_TRIES; i++) {
-+				if (!cw_power_on_reset(cw_bat))
-+					break;
-+			}
-+		}
-+		cw_update_soc(cw_bat);
-+		cw_update_voltage(cw_bat);
-+		cw_update_charge_status(cw_bat);
-+		cw_update_status(cw_bat);
-+		cw_update_time_to_empty(cw_bat);
-+	}
-+	dev_dbg(cw_bat->dev, "charger_attached = %d\n", cw_bat->charger_attached);
-+	dev_dbg(cw_bat->dev, "status = %d\n", cw_bat->status);
-+	dev_dbg(cw_bat->dev, "soc = %d%%\n", cw_bat->soc);
-+	dev_dbg(cw_bat->dev, "voltage = %dmV\n", cw_bat->voltage_mv);
-+
-+	if (cw_bat->battery_changed)
-+		power_supply_changed(cw_bat->rk_bat);
-+	cw_bat->battery_changed = false;
-+
-+	queue_delayed_work(cw_bat->battery_workqueue,
-+			   &cw_bat->battery_delay_work,
-+			   msecs_to_jiffies(cw_bat->poll_interval_ms));
-+}
-+
-+static bool cw_battery_valid_time_to_empty(struct cw_battery *cw_bat)
-+{
-+	return	cw_bat->time_to_empty > 0 &&
-+		cw_bat->time_to_empty < CW2015_MASK_SOC &&
-+		cw_bat->status == POWER_SUPPLY_STATUS_DISCHARGING;
-+}
-+
-+static int cw_battery_get_property(struct power_supply *psy,
-+				   enum power_supply_property psp,
-+				   union power_supply_propval *val)
-+{
-+	struct cw_battery *cw_bat;
-+
-+	cw_bat = power_supply_get_drvdata(psy);
-+	switch (psp) {
-+	case POWER_SUPPLY_PROP_CAPACITY:
-+		val->intval = cw_bat->soc;
-+		break;
-+
-+	case POWER_SUPPLY_PROP_STATUS:
-+		val->intval = cw_bat->status;
-+		break;
-+
-+	case POWER_SUPPLY_PROP_PRESENT:
-+		val->intval = !!cw_bat->voltage_mv;
-+		break;
-+
-+	case POWER_SUPPLY_PROP_VOLTAGE_NOW:
-+		val->intval = cw_bat->voltage_mv * 1000;
-+		break;
-+
-+	case POWER_SUPPLY_PROP_TIME_TO_EMPTY_NOW:
-+		if (cw_battery_valid_time_to_empty(cw_bat))
-+			val->intval = cw_bat->time_to_empty;
-+		else
-+			val->intval = 0;
-+		break;
-+
-+	case POWER_SUPPLY_PROP_TECHNOLOGY:
-+		val->intval = POWER_SUPPLY_TECHNOLOGY_LION;
-+		break;
-+
-+	case POWER_SUPPLY_PROP_CHARGE_COUNTER:
-+		val->intval = cw_bat->charge_count;
-+		break;
-+
-+	case POWER_SUPPLY_PROP_CHARGE_FULL:
-+	case POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN:
-+		if (cw_bat->battery->charge_full_design_uah > 0)
-+			val->intval = cw_bat->battery->charge_full_design_uah;
-+		else
-+			val->intval = 0;
-+		break;
-+
-+	case POWER_SUPPLY_PROP_CHARGE_NOW:
-+		val->intval = cw_bat->battery->charge_full_design_uah;
-+		val->intval = val->intval * cw_bat->soc / 100;
-+		break;
-+
-+	case POWER_SUPPLY_PROP_CURRENT_NOW:
-+		if (cw_battery_valid_time_to_empty(cw_bat) &&
-+		    cw_bat->battery->charge_full_design_uah > 0) {
-+			/* calculate remaining capacity */
-+			val->intval = cw_bat->battery->charge_full_design_uah;
-+			val->intval = val->intval * cw_bat->soc / 100;
-+
-+			/* estimate current based on time to empty */
-+			val->intval = 60 * val->intval / cw_bat->time_to_empty;
-+		} else {
-+			val->intval = 0;
-+		}
-+
-+		break;
-+
-+	default:
-+		break;
-+	}
-+	return 0;
-+}
-+
-+static enum power_supply_property cw_battery_properties[] = {
-+	POWER_SUPPLY_PROP_CAPACITY,
-+	POWER_SUPPLY_PROP_STATUS,
-+	POWER_SUPPLY_PROP_PRESENT,
-+	POWER_SUPPLY_PROP_VOLTAGE_NOW,
-+	POWER_SUPPLY_PROP_TIME_TO_EMPTY_NOW,
-+	POWER_SUPPLY_PROP_TECHNOLOGY,
-+	POWER_SUPPLY_PROP_CHARGE_COUNTER,
-+	POWER_SUPPLY_PROP_CHARGE_FULL,
-+	POWER_SUPPLY_PROP_CHARGE_FULL_DESIGN,
-+	POWER_SUPPLY_PROP_CHARGE_NOW,
-+	POWER_SUPPLY_PROP_CURRENT_NOW,
-+};
-+
-+static const struct power_supply_desc cw2015_bat_desc = {
-+	.name		= "cw2015-battery",
-+	.type		= POWER_SUPPLY_TYPE_BATTERY,
-+	.properties	= cw_battery_properties,
-+	.num_properties	= ARRAY_SIZE(cw_battery_properties),
-+	.get_property	= cw_battery_get_property,
-+};
-+
-+static int cw2015_parse_properties(struct cw_battery *cw_bat)
-+{
-+	struct device *dev = cw_bat->dev;
-+	int length;
-+	int ret;
-+
-+	length = device_property_count_u8(dev, "cellwise,battery-profile");
-+	if (length < 0) {
-+		dev_warn(cw_bat->dev,
-+			 "No battery-profile found, using current flash contents\n");
-+	} else if (length != CW2015_SIZE_BATINFO) {
-+		dev_err(cw_bat->dev, "battery-profile must be %d bytes\n",
-+			CW2015_SIZE_BATINFO);
-+		return -EINVAL;
-+	} else {
-+		cw_bat->bat_profile = devm_kzalloc(dev, length, GFP_KERNEL);
-+		if (!cw_bat->bat_profile)
-+			return -ENOMEM;
-+
-+		ret = device_property_read_u8_array(dev,
-+						"cellwise,battery-profile",
-+						cw_bat->bat_profile,
-+						length);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	ret = device_property_read_u32(dev, "cellwise,monitor-interval-ms",
-+				       &cw_bat->poll_interval_ms);
-+	if (ret) {
-+		dev_dbg(cw_bat->dev, "Using default poll interval\n");
-+		cw_bat->poll_interval_ms = CW2015_DEFAULT_POLL_INTERVAL_MS;
-+	}
-+
-+	return 0;
-+}
-+
-+static const struct regmap_range regmap_ranges_rd_yes[] = {
-+	regmap_reg_range(CW2015_REG_VERSION, CW2015_REG_VERSION),
-+	regmap_reg_range(CW2015_REG_VCELL, CW2015_REG_CONFIG),
-+	regmap_reg_range(CW2015_REG_MODE, CW2015_REG_MODE),
-+	regmap_reg_range(CW2015_REG_BATINFO,
-+			CW2015_REG_BATINFO + CW2015_SIZE_BATINFO - 1),
-+};
-+
-+static const struct regmap_access_table regmap_rd_table = {
-+	.yes_ranges = regmap_ranges_rd_yes,
-+	.n_yes_ranges = 4,
-+};
-+
-+static const struct regmap_range regmap_ranges_wr_yes[] = {
-+	regmap_reg_range(CW2015_REG_RRT_ALERT, CW2015_REG_CONFIG),
-+	regmap_reg_range(CW2015_REG_MODE, CW2015_REG_MODE),
-+	regmap_reg_range(CW2015_REG_BATINFO,
-+			CW2015_REG_BATINFO + CW2015_SIZE_BATINFO - 1),
-+};
-+
-+static const struct regmap_access_table regmap_wr_table = {
-+	.yes_ranges = regmap_ranges_wr_yes,
-+	.n_yes_ranges = 3,
-+};
-+
-+static const struct regmap_range regmap_ranges_vol_yes[] = {
-+	regmap_reg_range(CW2015_REG_VCELL, CW2015_REG_SOC + 1),
-+};
-+
-+static const struct regmap_access_table regmap_vol_table = {
-+	.yes_ranges = regmap_ranges_vol_yes,
-+	.n_yes_ranges = 1,
-+};
-+
-+static const struct regmap_config cw2015_regmap_config = {
-+	.reg_bits = 8,
-+	.val_bits = 8,
-+	.rd_table = &regmap_rd_table,
-+	.wr_table = &regmap_wr_table,
-+	.volatile_table = &regmap_vol_table,
-+	.max_register = CW2015_REG_BATINFO + CW2015_SIZE_BATINFO - 1,
-+};
-+
-+static int cw_bat_probe(struct i2c_client *client)
-+{
-+	int ret;
-+	struct cw_battery *cw_bat;
-+	struct power_supply_config psy_cfg = { 0 };
-+
-+	cw_bat = devm_kzalloc(&client->dev, sizeof(*cw_bat), GFP_KERNEL);
-+	if (!cw_bat)
-+		return -ENOMEM;
-+
-+	i2c_set_clientdata(client, cw_bat);
-+	cw_bat->dev = &client->dev;
-+	cw_bat->soc = 1;
-+
-+	ret = cw2015_parse_properties(cw_bat);
-+	if (ret) {
-+		dev_err(cw_bat->dev, "Failed to parse cw2015 properties\n");
-+		return ret;
-+	}
-+
-+	cw_bat->regmap = devm_regmap_init_i2c(client, &cw2015_regmap_config);
-+	if (IS_ERR(cw_bat->regmap)) {
-+		dev_err(cw_bat->dev, "Failed to allocate regmap: %ld\n",
-+			PTR_ERR(cw_bat->regmap));
-+		return PTR_ERR(cw_bat->regmap);
-+	}
-+
-+	ret = cw_init(cw_bat);
-+	if (ret) {
-+		dev_err(cw_bat->dev, "Init failed: %d\n", ret);
-+		return ret;
-+	}
-+
-+	psy_cfg.drv_data = cw_bat;
-+	psy_cfg.fwnode = dev_fwnode(cw_bat->dev);
-+
-+	cw_bat->rk_bat = devm_power_supply_register(&client->dev,
-+						    &cw2015_bat_desc,
-+						    &psy_cfg);
-+	if (IS_ERR(cw_bat->rk_bat)) {
-+		/* try again if this happens */
-+		dev_err_probe(&client->dev, PTR_ERR(cw_bat->rk_bat),
-+			"Failed to register power supply\n");
-+		return PTR_ERR(cw_bat->rk_bat);
-+	}
-+
-+	ret = power_supply_get_battery_info(cw_bat->rk_bat, &cw_bat->battery);
-+	if (ret) {
-+		/* Allocate an empty battery */
-+		cw_bat->battery = devm_kzalloc(&client->dev,
-+					       sizeof(*cw_bat->battery),
-+					       GFP_KERNEL);
-+		if (!cw_bat->battery)
-+			return -ENOMEM;
-+		dev_warn(cw_bat->dev,
-+			 "No monitored battery, some properties will be missing\n");
-+	}
-+
-+	cw_bat->battery_workqueue = create_singlethread_workqueue("rk_battery");
-+	INIT_DELAYED_WORK(&cw_bat->battery_delay_work, cw_bat_work);
-+	queue_delayed_work(cw_bat->battery_workqueue,
-+			   &cw_bat->battery_delay_work, msecs_to_jiffies(10));
-+	return 0;
-+}
-+
-+static int __maybe_unused cw_bat_suspend(struct device *dev)
-+{
-+	struct i2c_client *client = to_i2c_client(dev);
-+	struct cw_battery *cw_bat = i2c_get_clientdata(client);
-+
-+	cancel_delayed_work_sync(&cw_bat->battery_delay_work);
-+	return 0;
-+}
-+
-+static int __maybe_unused cw_bat_resume(struct device *dev)
-+{
-+	struct i2c_client *client = to_i2c_client(dev);
-+	struct cw_battery *cw_bat = i2c_get_clientdata(client);
-+
-+	queue_delayed_work(cw_bat->battery_workqueue,
-+			   &cw_bat->battery_delay_work, 0);
-+	return 0;
-+}
-+
-+static SIMPLE_DEV_PM_OPS(cw_bat_pm_ops, cw_bat_suspend, cw_bat_resume);
-+
-+static int cw_bat_remove(struct i2c_client *client)
-+{
-+	struct cw_battery *cw_bat = i2c_get_clientdata(client);
-+
-+	cancel_delayed_work_sync(&cw_bat->battery_delay_work);
-+	power_supply_put_battery_info(cw_bat->rk_bat, cw_bat->battery);
-+	return 0;
-+}
-+
-+static const struct i2c_device_id cw_bat_id_table[] = {
-+	{ "cw2015", 0 },
-+	{ }
-+};
-+
-+static const struct of_device_id cw2015_of_match[] = {
-+	{ .compatible = "cellwise,cw2015" },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, cw2015_of_match);
-+
-+static struct i2c_driver cw_bat_driver = {
-+	.driver = {
-+		.name = "cw2015",
-+		.of_match_table = cw2015_of_match,
-+		.pm = &cw_bat_pm_ops,
-+	},
-+	.probe_new = cw_bat_probe,
-+	.remove = cw_bat_remove,
-+	.id_table = cw_bat_id_table,
-+};
-+
-+module_i2c_driver(cw_bat_driver);
-+
-+MODULE_AUTHOR("xhc<xhc@rock-chips.com>");
-+MODULE_AUTHOR("Tobias Schramm <t.schramm@manjaro.org>");
-+MODULE_DESCRIPTION("cw2015/cw2013 battery driver");
-+MODULE_LICENSE("GPL");
-diff -rupN linux.orig/include/linux/compiler.h linux/include/linux/compiler.h
---- linux.orig/include/linux/compiler.h	2022-11-01 17:55:30.018379377 -0400
-+++ linux/include/linux/compiler.h	2022-11-01 17:56:17.144793376 -0400
-@@ -213,6 +213,8 @@ void ftrace_likely_update(struct ftrace_
- #define function_nocfi(x) (x)
- #endif
- 
-+#include <asm/rwonce.h>
-+
- #endif /* __KERNEL__ */
- 
- /*
-@@ -251,6 +253,4 @@ static inline void *offset_to_ptr(const
-  */
- #define prevent_tail_call_optimization()	mb()
- 
--#include <asm/rwonce.h>
--
- #endif /* __LINUX_COMPILER_H */
+ static const struct power_supply_desc cw2015_bat_desc = {
+-	.name		= "cw2015-battery",
++	.name		= "battery",
+ 	.type		= POWER_SUPPLY_TYPE_BATTERY,
+ 	.properties	= cw_battery_properties,
+ 	.num_properties	= ARRAY_SIZE(cw_battery_properties),
 diff -rupN linux.orig/include/linux/input-polldev.h linux/include/linux/input-polldev.h
---- linux.orig/include/linux/input-polldev.h	1969-12-31 19:00:00.000000000 -0500
-+++ linux/include/linux/input-polldev.h	2022-11-01 17:56:17.144793376 -0400
+--- linux.orig/include/linux/input-polldev.h	1970-01-01 00:00:00.000000000 +0000
++++ linux/include/linux/input-polldev.h	2023-06-23 03:57:17.715782858 +0000
 @@ -0,0 +1,58 @@
 +/* SPDX-License-Identifier: GPL-2.0-only */
 +#ifndef _INPUT_POLLDEV_H
@@ -4531,24 +3802,3 @@ diff -rupN linux.orig/include/linux/input-polldev.h linux/include/linux/input-po
 +void input_unregister_polled_device(struct input_polled_dev *dev);
 +
 +#endif
-diff -rupN linux.orig/Makefile linux/Makefile
---- linux.orig/Makefile	2022-11-01 17:55:23.054625866 -0400
-+++ linux/Makefile	2022-11-01 17:56:17.128793891 -0400
-@@ -755,6 +755,8 @@ KBUILD_CFLAGS	+= $(call cc-disable-warni
- KBUILD_CFLAGS	+= $(call cc-disable-warning, format-truncation)
- KBUILD_CFLAGS	+= $(call cc-disable-warning, format-overflow)
- KBUILD_CFLAGS	+= $(call cc-disable-warning, address-of-packed-member)
-+KBUILD_CFLAGS	+= $(call cc-disable-warning, unused-label)
-+KBUILD_CFLAGS	+= $(call cc-disable-warning, unused-variable)
- 
- ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
- KBUILD_CFLAGS += -O2
-@@ -1002,7 +1004,7 @@ endif
- KBUILD_CFLAGS   += -Werror=date-time
- 
- # enforce correct pointer usage
--KBUILD_CFLAGS   += $(call cc-option,-Werror=incompatible-pointer-types)
-+# KBUILD_CFLAGS   += $(call cc-option,-Werror=incompatible-pointer-types)
- 
- # Require designated initializers for all marked structures
- KBUILD_CFLAGS   += $(call cc-option,-Werror=designated-init)

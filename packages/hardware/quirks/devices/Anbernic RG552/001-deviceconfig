@@ -29,7 +29,7 @@ DEVICE_TEMP_SENSOR="/sys/devices/virtual/thermal/thermal_zone*/temp"
 # FREQ Governors
 CPU_FREQ=("/sys/devices/system/cpu/cpufreq/policy0" "/sys/devices/system/cpu/cpufreq/policy4")
 GPU_FREQ="/sys/devices/platform/ff9a0000.gpu/devfreq/ff9a0000.gpu"
-DMC_FREQ="/sys/devices/platform/memory-controller/devfreq/memory-controller/req/memory-controller/"
+DMC_FREQ="/sys/devices/platform/memory-controller/devfreq/memory-controller/"
 
 # Affinity
 SLOW_CORES="taskset -c 0-3"
