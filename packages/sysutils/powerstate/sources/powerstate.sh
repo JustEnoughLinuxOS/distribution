@@ -36,6 +36,7 @@ do
           gpu_performance_level ${GPUPROFILE}
           pcie_aspm_policy powersave
           device_powersave 1
+          device_powerlevel auto
         ;;
         *)
           log $0 "Switching to performance mode."
@@ -45,6 +46,7 @@ do
           gpu_performance_level auto
           pcie_aspm_policy default
           device_powersave 0
+          device_powerlevel on
         ;;
       esac
     fi
