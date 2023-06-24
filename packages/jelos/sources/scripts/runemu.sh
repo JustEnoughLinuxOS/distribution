@@ -135,14 +135,10 @@ then
 fi
 
 GPUPERF=$(get_setting "gpuperf" "${PLATFORM}" "${ROMNAME##*/}")
-if [ ! "${GPUPERF}" = "system" ] && \
-   [ ! -z "${GPUPERF}" ]
+if [ ! -z ${GPUPERF} ]
 then
-  if [ ! "${GPUPERF}" = "default" ]
-  then
-    echo "${GPUPERF}" >/tmp/.gpuperf
-    systemctl restart powerstate
-  fi
+  gpu_performance_level ${GPUPERF}
+  get_gpu_performance_level >/tmp/.gpu_performance_level
 fi
 
 if [ "${DEVICE_HAS_FAN}" = "true" ]
@@ -476,12 +472,14 @@ then
 	fi
 fi
 
-### Remove GPU performance helper
-if [ -e "/tmp/.gpuperf" ]
+GPUPERF=$(get_setting "system.gpuperf")
+if [ ! -z ${GPUPERF} ]
 then
-  rm -f /tmp/.gpuperf
-  systemctl restart powerstate
+  gpu_performance_level ${GPUPERF}
+else
+  gpu_performance_level auto
 fi
+rm -f /tmp/.gpu_performance_level 2>/dev/null
 
 ### Backup save games
 CLOUD_BACKUP=$(get_setting "cloud.backup")
