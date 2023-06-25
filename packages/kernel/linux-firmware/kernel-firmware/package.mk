@@ -84,6 +84,12 @@ makeinstall_target() {
     ln -s "rtl8723bs_config-OBDA8723.bin" "${FW_TARGET_DIR}/rtl_bt/rtl8723bs_config.bin"
   fi
 
+  # Firmware mt7601u.bin not being copied to correct dir for R3399 builds.
+  if [ -f "${FW_TARGET_DIR}/mt7601u.bin" ]; then
+    #cd "${FW_TARGET_DIR}/rtl_bt"
+    cp ${FW_TARGET_DIR}/mt7601u.bin ${FW_TARGET_DIR}/mediatek/mt7601u.bin
+  fi
+
   # Cleanup - which may be project or device specific
   find_file_path scripts/cleanup.sh && ${FOUND_PATH} ${FW_TARGET_DIR} || true
 }
