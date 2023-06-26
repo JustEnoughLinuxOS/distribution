@@ -66,6 +66,10 @@ set_audio() {
   /usr/bin/rr_audio.sh ${AUDIO}
 }
 
+battery_percent() {
+  awk 'BEGIN {FS="="} /POWER_SUPPLY_CAPACITY=/ {print $2}' /sys/class/power_supply/{BAT,bat}*/uevent 2>/dev/null
+}
+
 get_es_setting() {
   echo $(sed -n "s|\s*<${1} name=\"${2}\" value=\"\(.*\)\" />|\1|p" ${ES_CONF})
 }

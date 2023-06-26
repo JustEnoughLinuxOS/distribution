@@ -10,6 +10,7 @@
 
 . /etc/profile
 
+BATCNT=0
 while true
 do
   if [ "$(get_setting system.powersave)" = 1 ]
@@ -52,5 +53,19 @@ do
     fi
     CURRENT_MODE="${STATUS}"
   fi
+  ### Until we have an overlay. :rofl:
+  if (( "${BATCNT}" >= "90" )) &&
+     [[ "${STATUS}" =~ Disch ]]
+  then
+    BATLEFT=$(battery_percent)
+    AUDIBLEALERT=$(get_setting system.battery.warning)
+    if (( "${BATLEFT}" < "25" )) &&
+       [ "${AUDIBLEALERT}" = "1" ]
+    then
+      say "BATTERY AT ${BATLEFT}%"
+      BATCNT=0
+    fi
+  fi
+  BATCNT=$(( ${BATCNT} + 1 ))
   sleep 2
 done
