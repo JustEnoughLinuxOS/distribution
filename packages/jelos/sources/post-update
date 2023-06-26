@@ -146,3 +146,9 @@ if [ -z "${USBPOWERSAVE}" ]
 then
   set_setting system.usb.powersave 0
 fi
+
+AUDIBLEALERT=$(get_setting system.battery.warning)
+if [ -z "${AUDIBLEALERT}" ]
+then
+  set_setting system.battery.warning 1
+fi

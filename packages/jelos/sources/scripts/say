@@ -4,10 +4,6 @@
 
 . /etc/profile
 
-battery_percent() {
-  cat /sys/class/power_supply/{BAT,bat}*/uevent 2>/dev/null | grep -E "^POWER_SUPPLY_CAPACITY=" | sed -e s+'^POWER_SUPPLY_CAPACITY='++ | sort -rn | head -1
-}
-
 AUDIOTEST=$(ps -ef | grep [p]ulseaudio)
 if [ ! $? = 0 ]
 then
