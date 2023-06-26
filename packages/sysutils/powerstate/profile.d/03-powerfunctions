@@ -31,6 +31,11 @@ gpu_performance_level() {
 }
 
 pcie_aspm_policy() {
+  PCIEPOWERSAVE=$(get_setting system.pcie.powersave)
+  if [ ! "${PCIEPOWERSAVE}" = "1" ]
+  then
+    return 0
+  fi
   if [ -e "/sys/module/pcie_aspm/parameters/policy" ]
   then
     echo ${1} >/sys/module/pcie_aspm/parameters/policy 2>/dev/null
@@ -38,6 +43,11 @@ pcie_aspm_policy() {
 }
 
 cpu_perftune() {
+  CPUPOWERSAVE=$(get_setting system.cpu.powersave)
+  if [ ! "${CPUPOWERSAVE}" = "1" ]
+  then
+    return 0
+  fi
   CPU="$(awk '/vendor_id/ {print $3;exit}' /proc/cpuinfo)"
   if [ "${CPU}" = "AuthenticAMD" ]
   then
@@ -62,6 +72,11 @@ cpu_perftune() {
 }
 
 audio_powersave() {
+  AUDIOPOWERSAVE=$(get_setting system.audio.powersave)
+  if [ ! "${AUDIOPOWERSAVE}" = "1" ]
+  then
+    return 0
+  fi
   for MODULE in snd_hda_intel snd_ac97_codec
   do
     if [ -e "/sys/module/${MODULE}/parameters/power_save" ]
@@ -72,6 +87,11 @@ audio_powersave() {
 }
 
 device_powersave() {
+  USBPOWERSAVE=$(get_setting system.usb.powersave)
+  if [ ! "${USBPOWERSAVE}" = "1" ]
+  then
+    return 0
+  fi
   case ${1} in
     1)
       PSMODE=auto
@@ -88,6 +108,11 @@ device_powersave() {
 }
 
 device_powerlevel() {
+  USBPOWERSAVE=$(get_setting system.USB.powersave)
+  if [ ! "${USBPOWERSAVE}" = "1" ]
+  then
+    return 0
+  fi
   for device in $(find /sys/devices/pci* -name level)
   do
     echo ${1} >${device} 2>/dev/null

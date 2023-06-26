@@ -121,3 +121,28 @@ for JSL in jslisten_hotkeys jslisten_profile
 do
   cp -f /usr/config/${JSL} /storage/.config
 done
+
+### Add properties for enhanced power savings control.
+AUDIOPOWERSAVE=$(get_setting system.audio.powersave)
+if [ -z "${AUDIOPOWERSAVE}" ]
+then
+  set_setting system.audio.powersave 1
+fi
+
+CPUPOWERSAVE=$(get_setting system.cpu.powersave)
+if [ -z "${CPUPOWERSAVE}" ]
+then
+  set_setting system.cpu.powersave 1
+fi
+
+PCIEPOWERSAVE=$(get_setting system.pcie.powersave)
+if [ -z "${PCIEPOWERSAVE}" ]
+then
+  set_setting system.pcie.powersave 1
+fi
+
+USBPOWERSAVE=$(get_setting system.usb.powersave)
+if [ -z "${USBPOWERSAVE}" ]
+then
+  set_setting system.usb.powersave 0
+fi

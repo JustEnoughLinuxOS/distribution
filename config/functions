@@ -1765,7 +1765,7 @@ exec_thread_safe() {
 }
 
 clean_es_cache() {
-  ESTMP="${ROOT}/.es_cache"
+  ESTMP="${ROOT}/.es_cache/${DEVICE}"
   if [ -d "${ESTMP}" ]
   then
     rm -rf "${ESTMP}"
