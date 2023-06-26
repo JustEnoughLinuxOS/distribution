@@ -131,9 +131,21 @@ mkcontroller 2>/dev/null ||:
             DOWN="down"
             REPEAT_MOD=${BRIGHTNESS_REPEAT_MOD}
           elif [[ "${FUNCB_PRESSED}" == "yes" ]]; then
-	    COMMAND="/usr/bin/say"
-            UP="-b"
-            DOWN="-b"
+            if [[ "${line}" == ${VOL_UP} ]]; then
+	      COMMAND="/usr/bin/say"
+              UP="-b"
+            else
+              COMMAND="/usr/bin/wifictl"
+              WIFISTATE=$(get_setting wifi.enabled)
+	      if [ "${WIFISTATE}" = 0 ]
+              then
+                DOWN="reconnect"
+		/usr/bin/say "WIFI On"
+	      else
+	        DOWN="disable"
+		/usr/bin/say "WIFI Off"
+              fi
+            fi
           else
             # Default to 'volume' if Fn a or b is not pressed
             COMMAND="/usr/bin/system_utils vol"
