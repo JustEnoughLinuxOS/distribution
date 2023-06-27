@@ -67,7 +67,7 @@ set_audio() {
 }
 
 battery_percent() {
-  awk 'BEGIN {FS="="} /POWER_SUPPLY_CAPACITY=/ {print $2}' /sys/class/power_supply/{BAT,bat}*/uevent 2>/dev/null
+  awk 'BEGIN {FS="="} /POWER_SUPPLY_CAPACITY=/ {print $2}' /sys/class/power_supply/[Bb][Aa][Tt]*/uevent 2>/dev/null
 }
 
 get_es_setting() {
