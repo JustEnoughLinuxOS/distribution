@@ -10,6 +10,7 @@
 
 . /etc/profile
 
+BATCNT=0
 while true
 do
   if [ "$(get_setting system.powersave)" = 1 ]
@@ -20,38 +21,51 @@ do
       case ${STATUS} in
         Disch*)
           log $0 "Switching to battery mode."
-          if [ -e "/tmp/.gpuperf" ]
+          if [ -e "/tmp/.gpu_performance_level" ]
           then
-            GPUMODE=$(cat /tmp/.gpuperf)
+            GPUPROFILE=$(cat /tmp/.gpu_performance_level)
           else
-            GPUMODE=$(get_setting system.gpuperf)
-            if [ -z "${GPUMODE}" ]
-            then
-              GPUMODE=auto
-              set_setting system.gpuperf auto
-            fi
+            GPUPROFILE=$(get_setting system.gpuperf)
+          fi
+          if [ -z "${GPUPROFILE}" ]
+          then
+            GPUPROFILE="auto"
           fi
           ledcontrol
           audio_powersave 1
           cpu_perftune battery
-          gpu_performance_level ${GPUMODE}
-          gpu_power_profile 1
+          gpu_performance_level ${GPUPROFILE}
           pcie_aspm_policy powersave
           device_powersave 1
+          device_powerlevel auto
         ;;
         *)
           log $0 "Switching to performance mode."
           ledcontrol
           audio_powersave 0
           cpu_perftune performance
-          gpu_performance_level profile_standard
-          gpu_power_profile 1
+          gpu_performance_level auto
           pcie_aspm_policy default
           device_powersave 0
+          device_powerlevel on
         ;;
       esac
     fi
     CURRENT_MODE="${STATUS}"
   fi
+  ### Until we have an overlay. :rofl:
+  if (( "${BATCNT}" >= "90" )) &&
+     [[ "${STATUS}" =~ Disch ]]
+  then
+    BATLEFT=$(battery_percent)
+    AUDIBLEALERT=$(get_setting system.battery.warning)
+    if (( "${BATLEFT}" < "25" )) &&
+       [ "${AUDIBLEALERT}" = "1" ]
+    then
+      say "BATTERY AT ${BATLEFT}%"
+      BATCNT=0
+    fi
+  fi
+  BATCNT=$(( ${BATCNT} + 1 ))
   sleep 2
 done
