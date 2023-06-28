@@ -36,8 +36,10 @@ do
           cpu_perftune battery
           gpu_performance_level ${GPUPROFILE}
           pcie_aspm_policy powersave
-          device_powersave 1
-          device_powerlevel auto
+          pci_powersave enabled
+          usb_powersave auto
+          usb_powerlevel auto
+
         ;;
         *)
           log $0 "Switching to performance mode."
@@ -46,8 +48,9 @@ do
           cpu_perftune performance
           gpu_performance_level auto
           pcie_aspm_policy default
-          device_powersave 0
-          device_powerlevel on
+          pci_powersave disabled
+          usb_powersave on
+          usb_powerlevel on
         ;;
       esac
     fi
