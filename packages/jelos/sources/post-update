@@ -123,34 +123,40 @@ do
 done
 
 ### Add properties for enhanced power savings control.
-AUDIOPOWERSAVE=$(get_setting system.audio.powersave)
+AUDIOPOWERSAVE=$(get_setting system.power.audio)
 if [ -z "${AUDIOPOWERSAVE}" ]
 then
-  set_setting system.audio.powersave 1
+  set_setting system.power.audio 1
 fi
 
-CPUPOWERSAVE=$(get_setting system.cpu.powersave)
+CPUPOWERSAVE=$(get_setting system.power.cpu)
 if [ -z "${CPUPOWERSAVE}" ]
 then
-  set_setting system.cpu.powersave 1
+  set_setting system.power.cpu 1
 fi
 
-PCIEPOWERSAVE=$(get_setting system.pcie.powersave)
+PCIEPOWERSAVE=$(get_setting system.power.pcie)
 if [ -z "${PCIEPOWERSAVE}" ]
 then
-  set_setting system.pcie.powersave 1
+  set_setting system.power.pcie 1
 fi
 
-USBPOWERSAVE=$(get_setting system.usb.powersave)
-if [ -z "${USBPOWERSAVE}" ]
+RTPM=$(get_setting system.power.rtpm)
+if [ -z "${RTPM}" ]
 then
-  set_setting system.usb.powersave 0
+  set_setting system.power.rtpm 0
 fi
 
-PCIPOWERSAVE=$(get_setting system.pci.powersave)
-if [ -z "${PCIPOWERSAVE}" ]
+WAKEEVENTS=$(get_setting system.power.wakeevents)
+if [ -z "${WAKEEVENTS}" ]
 then
-  set_setting system.pci.powersave 1
+  set_setting system.power.wakeevents 1
+fi
+
+WIFIPOWERSAVE=$(get_setting system.power.wifi)
+if [ -z "${WIFIPOWERSAVE}" ]
+then
+  set_setting system.power.wifi 0
 fi
 
 AUDIBLEALERT=$(get_setting system.battery.warning)

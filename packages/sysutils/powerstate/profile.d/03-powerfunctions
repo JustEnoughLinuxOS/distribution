@@ -31,7 +31,7 @@ gpu_performance_level() {
 }
 
 pcie_aspm_policy() {
-  PCIEPOWERSAVE=$(get_setting system.pcie.powersave)
+  PCIEPOWERSAVE=$(get_setting system.power.pcie)
   if [ ! "${PCIEPOWERSAVE}" = "1" ]
   then
     return 0
@@ -43,7 +43,7 @@ pcie_aspm_policy() {
 }
 
 cpu_perftune() {
-  CPUPOWERSAVE=$(get_setting system.cpu.powersave)
+  CPUPOWERSAVE=$(get_setting system.power.cpu)
   if [ ! "${CPUPOWERSAVE}" = "1" ]
   then
     return 0
@@ -72,7 +72,7 @@ cpu_perftune() {
 }
 
 audio_powersave() {
-  AUDIOPOWERSAVE=$(get_setting system.audio.powersave)
+  AUDIOPOWERSAVE=$(get_setting system.power.audio)
   if [ ! "${AUDIOPOWERSAVE}" = "1" ]
   then
     return 0
@@ -86,38 +86,26 @@ audio_powersave() {
   done
 }
 
-usb_powersave() {
-  USBPOWERSAVE=$(get_setting system.usb.powersave)
-  if [ ! "${USBPOWERSAVE}" = "1" ]
+runtime_power_management() {
+  RTPM=$(get_setting system.power.rtpm)
+  if [ ! "${RTPM}" = "1" ]
   then
     return 0
   fi
-  find /sys/devices -name control -print0 | \
+  find /sys/devices -type f -name control -print0 2>/dev/null | \
   while read -r -d '' DEVICE
   do
     echo ${1} >"${DEVICE}" 2>/dev/null
   done
 }
 
-usb_powerlevel() {
-  USBPOWERSAVE=$(get_setting system.usb.powersave)
-  if [ ! "${USBPOWERSAVE}" = "1" ]
+wake_events() {
+  WAKEEVENTS=$(get_setting system.power.wakeevents)
+  if [ ! "${WAKEEVENTS}" = "1" ]
   then
     return 0
   fi
-  for device in $(find /sys/devices/pci* -name level)
-  do
-    echo ${1} >${device} 2>/dev/null
-  done
-}
-
-pci_powersave() {
-  PCIPOWERSAVE=$(get_setting system.pci.powersave)
-  if [ ! "${PCIPOWERSAVE}" = "1" ]
-  then
-    return 0
-  fi
-  for device in $(find /sys/devices/pci* -name wakeup)
+  for device in $(find /sys/devices/pci* -type f -name wakeup 2>/dev/null)
   do
     echo ${1} >${device} 2>/dev/null
   done

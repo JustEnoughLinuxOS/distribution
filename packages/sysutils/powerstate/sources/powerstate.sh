@@ -36,9 +36,9 @@ do
           cpu_perftune battery
           gpu_performance_level ${GPUPROFILE}
           pcie_aspm_policy powersave
-          pci_powersave enabled
-          usb_powersave auto
-          usb_powerlevel auto
+          wake_events enabled
+          runtime_power_management auto
+          /usr/bin/wifictl setpowersave
 
         ;;
         *)
@@ -48,9 +48,9 @@ do
           cpu_perftune performance
           gpu_performance_level auto
           pcie_aspm_policy default
-          pci_powersave disabled
-          usb_powersave on
-          usb_powerlevel on
+          wake_events disabled
+          runtime_power_management on
+          /usr/bin/wifictl setpowersave
         ;;
       esac
     fi
