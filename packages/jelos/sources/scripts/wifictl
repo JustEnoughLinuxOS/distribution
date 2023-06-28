@@ -43,7 +43,7 @@ get_wifi_service() {
 }
 
 set_powersave() {
-  ENABLED=$(get_setting wifi.powersave)
+  ENABLED=$(get_setting system.power.wifi)
   if [ "${ENABLED}" = "1" ]
   then
     log $0 "Enabling WIFI power saving."
