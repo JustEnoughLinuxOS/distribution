@@ -31,6 +31,11 @@ gpu_performance_level() {
 }
 
 pcie_aspm_policy() {
+  PCIEPOWERSAVE=$(get_setting system.power.pcie)
+  if [ ! "${PCIEPOWERSAVE}" = "1" ]
+  then
+    return 0
+  fi
   if [ -e "/sys/module/pcie_aspm/parameters/policy" ]
   then
     echo ${1} >/sys/module/pcie_aspm/parameters/policy 2>/dev/null
@@ -38,6 +43,11 @@ pcie_aspm_policy() {
 }
 
 cpu_perftune() {
+  CPUPOWERSAVE=$(get_setting system.power.cpu)
+  if [ ! "${CPUPOWERSAVE}" = "1" ]
+  then
+    return 0
+  fi
   CPU="$(awk '/vendor_id/ {print $3;exit}' /proc/cpuinfo)"
   if [ "${CPU}" = "AuthenticAMD" ]
   then
@@ -62,6 +72,11 @@ cpu_perftune() {
 }
 
 audio_powersave() {
+  AUDIOPOWERSAVE=$(get_setting system.power.audio)
+  if [ ! "${AUDIOPOWERSAVE}" = "1" ]
+  then
+    return 0
+  fi
   for MODULE in snd_hda_intel snd_ac97_codec
   do
     if [ -e "/sys/module/${MODULE}/parameters/power_save" ]
@@ -71,24 +86,26 @@ audio_powersave() {
   done
 }
 
-device_powersave() {
-  case ${1} in
-    1)
-      PSMODE=auto
-    ;;
-    *)
-      PSMODE=on
-    ;;
-  esac
-  find /sys/devices -name control -print0 | \
+runtime_power_management() {
+  RTPM=$(get_setting system.power.rtpm)
+  if [ ! "${RTPM}" = "1" ]
+  then
+    return 0
+  fi
+  find /sys/devices -type f -name control -print0 2>/dev/null | \
   while read -r -d '' DEVICE
   do
-    echo ${PSMODE} >"${DEVICE}" 2>/dev/null
+    echo ${1} >"${DEVICE}" 2>/dev/null
   done
 }
 
-device_powerlevel() {
-  for device in $(find /sys/devices/pci* -name level)
+wake_events() {
+  WAKEEVENTS=$(get_setting system.power.wakeevents)
+  if [ ! "${WAKEEVENTS}" = "1" ]
+  then
+    return 0
+  fi
+  for device in $(find /sys/devices/pci* -type f -name wakeup 2>/dev/null)
   do
     echo ${1} >${device} 2>/dev/null
   done

@@ -846,7 +846,7 @@ makeinstall_target() {
   add_es_system doom
 
   ### Media Player
-  add_emu_core mpv mpv true
+  add_emu_core mplayer mplayer mplayer true
   add_es_system mplayer
 
   ### Moonlight

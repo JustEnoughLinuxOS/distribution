@@ -10,6 +10,7 @@
 
 . /etc/profile
 
+BATCNT=0
 while true
 do
   if [ "$(get_setting system.powersave)" = 1 ]
@@ -35,8 +36,10 @@ do
           cpu_perftune battery
           gpu_performance_level ${GPUPROFILE}
           pcie_aspm_policy powersave
-          device_powersave 1
-          device_powerlevel auto
+          wake_events enabled
+          runtime_power_management auto
+          /usr/bin/wifictl setpowersave
+
         ;;
         *)
           log $0 "Switching to performance mode."
@@ -45,12 +48,27 @@ do
           cpu_perftune performance
           gpu_performance_level auto
           pcie_aspm_policy default
-          device_powersave 0
-          device_powerlevel on
+          wake_events disabled
+          runtime_power_management on
+          /usr/bin/wifictl setpowersave
         ;;
       esac
     fi
     CURRENT_MODE="${STATUS}"
   fi
+  ### Until we have an overlay. :rofl:
+  if (( "${BATCNT}" >= "90" )) &&
+     [[ "${STATUS}" =~ Disch ]]
+  then
+    BATLEFT=$(battery_percent)
+    AUDIBLEALERT=$(get_setting system.battery.warning)
+    if (( "${BATLEFT}" < "25" )) &&
+       [ "${AUDIBLEALERT}" = "1" ]
+    then
+      say "BATTERY AT ${BATLEFT}%"
+      BATCNT=0
+    fi
+  fi
+  BATCNT=$(( ${BATCNT} + 1 ))
   sleep 2
 done
