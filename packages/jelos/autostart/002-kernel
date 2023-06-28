@@ -8,6 +8,6 @@ tocon "Applying kernel parameters..."
 sysctl vm.swappiness=1
 sysctl kernel.nmi_watchdog=0
 sysctl vm.laptop_mode=5
-sysctl vm.dirty_writeback_centisecs=6000
+sysctl vm.dirty_writeback_centisecs=1500
 
 toggle-ipv6

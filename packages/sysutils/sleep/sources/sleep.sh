@@ -108,7 +108,6 @@ case $1 in
     volumectl stop
     bluetooth stop
     powerstate stop
-    device_powersave stop 
     modules stop 
     quirks pre
     touch /run/.last_sleep_time

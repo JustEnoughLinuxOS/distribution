@@ -147,6 +147,12 @@ then
   set_setting system.usb.powersave 0
 fi
 
+PCIPOWERSAVE=$(get_setting system.pci.powersave)
+if [ -z "${PCIPOWERSAVE}" ]
+then
+  set_setting system.pci.powersave 1
+fi
+
 AUDIBLEALERT=$(get_setting system.battery.warning)
 if [ -z "${AUDIBLEALERT}" ]
 then
