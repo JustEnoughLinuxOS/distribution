@@ -30,84 +30,10 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/Makefile linux/arch/arm64/boo
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-roc-pc.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-roc-pc-mezzanine.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-roc-pc-plus.dtb
-diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-op1-opp.dtsi linux/arch/arm64/boot/dts/rockchip/rk3399-op1-opp.dtsi
---- linux.orig/arch/arm64/boot/dts/rockchip/rk3399-op1-opp.dtsi	2023-06-23 03:53:36.252094923 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3399-op1-opp.dtsi	2023-06-24 13:37:58.016663539 +0000
-@@ -37,6 +37,14 @@
- 			opp-hz = /bits/ 64 <1512000000>;
- 			opp-microvolt = <1150000>;
- 		};
-+		opp-07 {
-+			opp-hz = /bits/ 64 <1608000000>;
-+			opp-microvolt = <1200000>;
-+		};
-+		opp-08 {
-+			opp-hz = /bits/ 64 <1704000000>;
-+			opp-microvolt = <1225000>;
-+		};
- 	};
- 
- 	cluster1_opp: opp-table-1 {
-@@ -80,6 +88,18 @@
- 			opp-hz = /bits/ 64 <2016000000>;
- 			opp-microvolt = <1250000>;
- 		};
-+		opp09 {
-+			opp-hz = /bits/ 64 <2040000000>;
-+			opp-microvolt = <1250000>;
-+		};
-+		opp10 {
-+			opp-hz = /bits/ 64 <2088000000>;
-+			opp-microvolt = <1250000>;
-+		};
-+		opp11 {
-+			opp-hz = /bits/ 64 <2184000000>;
-+			opp-microvolt = <1350000>;
-+		};
- 	};
- 
- 	gpu_opp_table: opp-table-2 {
-@@ -109,26 +129,31 @@
- 			opp-hz = /bits/ 64 <800000000>;
- 			opp-microvolt = <1075000>;
- 		};
-+                opp06 {
-+                        opp-hz = /bits/ 64 <900000000>;
-+                        opp-microvolt = <1100000>;
-+                };
-+
- 	};
- 
- 	dmc_opp_table: opp-table-3 {
- 		compatible = "operating-points-v2";
- 
- 		opp00 {
--			opp-hz = /bits/ 64 <400000000>;
-+			opp-hz = /bits/ 64 <328000000>;
- 			opp-microvolt = <900000>;
- 		};
- 		opp01 {
--			opp-hz = /bits/ 64 <666000000>;
-+			opp-hz = /bits/ 64 <416000000>;
- 			opp-microvolt = <900000>;
- 		};
- 		opp02 {
--			opp-hz = /bits/ 64 <800000000>;
-+			opp-hz = /bits/ 64 <666000000>;
- 			opp-microvolt = <900000>;
- 		};
- 		opp03 {
--			opp-hz = /bits/ 64 <928000000>;
--			opp-microvolt = <925000>;
-+			opp-hz = /bits/ 64 <856000000>;
-+			opp-microvolt = <900000>;
- 		};
- 	};
- };
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts	2023-06-24 13:46:17.061649664 +0000
-@@ -0,0 +1,1371 @@
++++ linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts	2023-06-25 22:29:37.555182851 +0000
+@@ -0,0 +1,1360 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2017 Fuzhou Rockchip Electronics Co., Ltd.
@@ -122,7 +48,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +#include <dt-bindings/pwm/pwm.h>
 +#include <dt-bindings/usb/pd.h>
 +#include "rk3399.dtsi"
-+#include "rk3399-op1-opp.dtsi"
++#include "rk3399-rg552-opp.dtsi"
 +
 +/ {
 +	model = "Anbernic RG552";
@@ -407,17 +333,6 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +		#cooling-cells = <2>;
 +		cooling-levels = <80 140 200 255>;
 +		fan-supply = <&vcc5v0_sys>;
-+	};
-+
-+	fiq_debugger: fiq-debugger {
-+		compatible = "rockchip,fiq-debugger";
-+		rockchip,serial-id = <2>;
-+		rockchip,wake-irq = <0>;
-+		rockchip,irq-mode-enable = <0>;  /* If enable uart uses irq instead of fiq */
-+		rockchip,baudrate = <1500000>;  /* Only 115200 and 1500000 */
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&uart2c_xfer>;
-+		interrupts = <GIC_SPI 150 IRQ_TYPE_LEVEL_HIGH 0>;
 +	};
 +
 +	backlight: backlight {
@@ -1478,6 +1393,204 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +
 +&vopl_mmu {
 +	status = "okay";
++};
+diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi
+--- linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi	1970-01-01 00:00:00.000000000 +0000
++++ linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi	2023-06-25 22:32:23.845932541 +0000
+@@ -0,0 +1,194 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++/*
++ * Copyright (c) 2016-2017 Fuzhou Rockchip Electronics Co., Ltd
++ */
++
++/ {
++	cluster0_opp: opp-table-0 {
++		compatible = "operating-points-v2";
++		opp-shared;
++
++		opp00 {
++			opp-hz = /bits/ 64 <408000000>;
++			opp-microvolt = <825000 825000 1250000>;
++			clock-latency-ns = <40000>;
++		};
++		opp01 {
++			opp-hz = /bits/ 64 <600000000>;
++			opp-microvolt = <825000 825000 1250000>;
++		};
++		opp02 {
++			opp-hz = /bits/ 64 <816000000>;
++			opp-microvolt = <850000 850000 1250000>;
++		};
++		opp03 {
++			opp-hz = /bits/ 64 <1008000000>;
++			opp-microvolt = <925000 925000 1250000>;
++		};
++		opp04 {
++			opp-hz = /bits/ 64 <1200000000>;
++			opp-microvolt = <1000000 1000000 1250000>;
++		};
++		opp05 {
++			opp-hz = /bits/ 64 <1416000000>;
++			opp-microvolt = <1125000 1125000 1250000>;
++		};
++		opp-06 {
++			opp-hz = /bits/ 64 <1512000000>;
++			opp-microvolt = <1200000 1200000 1250000>;
++		};
++		opp-07 {
++			opp-hz = /bits/ 64 <1608000000>;
++			opp-microvolt = <1200000 1200000 1250000>;
++		};
++		//opp-08 {
++		//	opp-hz = /bits/ 64 <1704000000>;
++		//	opp-microvolt = <1225000 1225000 1250000>;
++		//};
++	};
++
++	cluster1_opp: opp-table-1 {
++		compatible = "operating-points-v2";
++		opp-shared;
++
++		opp00 {
++			opp-hz = /bits/ 64 <408000000>;
++			opp-microvolt = <825000 825000 1250000>;
++			clock-latency-ns = <40000>;
++		};
++		opp01 {
++			opp-hz = /bits/ 64 <600000000>;
++			opp-microvolt = <825000 825000 1250000>;
++		};
++		opp02 {
++			opp-hz = /bits/ 64 <816000000>;
++			opp-microvolt = <825000 825000 1250000>;
++		};
++		opp03 {
++			opp-hz = /bits/ 64 <1008000000>;
++			opp-microvolt = <875000 875000 1250000>;
++		};
++		opp04 {
++			opp-hz = /bits/ 64 <1200000000>;
++			opp-microvolt = <950000 950000 1250000>;
++		};
++		opp05 {
++			opp-hz = /bits/ 64 <1416000000>;
++			opp-microvolt = <1025000 1025000 1250000>;
++		};
++		opp06 {
++			opp-hz = /bits/ 64 <1608000000>;
++			opp-microvolt = <1100000 1100000 1250000>;
++		};
++		opp07 {
++			opp-hz = /bits/ 64 <1800000000>;
++			opp-microvolt = <1200000 1200000 1250000>;
++		};
++		opp-08 {
++			opp-hz = /bits/ 64 <1992000000>;
++			opp-microvolt = <1250000 1250000 1250000>;
++		};
++		opp-09 {
++			opp-hz = /bits/ 64 <2016000000>;
++			opp-microvolt = <1250000 1250000 1250000>;
++		};
++		opp-10 {
++			opp-hz = /bits/ 64 <2040000000>;
++			opp-microvolt = <1250000 1250000 1250000>;
++		};
++		//opp-11 {
++		//	opp-hz = /bits/ 64 <2088000000>;
++		//	opp-microvolt = <1250000 1250000 1250000>;
++		//};
++		//opp-12 {
++		//	opp-hz = /bits/ 64 <2184000000>;
++		//	opp-microvolt = <1350000>;
++		//};
++	};
++
++	gpu_opp_table: opp-table-2 {
++		compatible = "operating-points-v2";
++
++		opp00 {
++			opp-hz = /bits/ 64 <200000000>;
++			opp-microvolt = <825000 825000 1150000>;
++		};
++		opp01 {
++			opp-hz = /bits/ 64 <297000000>;
++			opp-microvolt = <825000 825000 1150000>;
++		};
++		opp02 {
++			opp-hz = /bits/ 64 <400000000>;
++			opp-microvolt = <825000 825000 1150000>;
++		};
++		opp03 {
++			opp-hz = /bits/ 64 <500000000>;
++			opp-microvolt = <875000 875000 1150000>;
++		};
++		opp04 {
++			opp-hz = /bits/ 64 <600000000>;
++			opp-microvolt = <925000 925000 1150000>;
++		};
++		opp05 {
++			opp-hz = /bits/ 64 <800000000>;
++			opp-microvolt = <1100000 1100000 1150000>;
++		};
++		opp06 {
++			opp-hz = /bits/ 64 <900000000>;
++			opp-microvolt = <1100000 1100000 1150000>;
++		};
++	};
++
++        dmc_opp_table: opp-table-3 {
++                compatible = "operating-points-v2";
++
++                opp00 {
++                        opp-hz = /bits/ 64 <328000000>;
++                        opp-microvolt = <900000>;
++                };
++                opp01 {
++                        opp-hz = /bits/ 64 <416000000>;
++                        opp-microvolt = <900000>;
++                };
++                opp02 {
++                        opp-hz = /bits/ 64 <666000000>;
++                        opp-microvolt = <900000>;
++                };
++                opp03 {
++                        opp-hz = /bits/ 64 <856000000>;
++                        opp-microvolt = <900000>;
++                };
++        };
++};
++
++&cpu_l0 {
++	operating-points-v2 = <&cluster0_opp>;
++};
++
++&cpu_l1 {
++	operating-points-v2 = <&cluster0_opp>;
++};
++
++&cpu_l2 {
++	operating-points-v2 = <&cluster0_opp>;
++};
++
++&cpu_l3 {
++	operating-points-v2 = <&cluster0_opp>;
++};
++
++&cpu_b0 {
++	operating-points-v2 = <&cluster1_opp>;
++};
++
++&cpu_b1 {
++	operating-points-v2 = <&cluster1_opp>;
++};
++
++&dmc {
++        operating-points-v2 = <&dmc_opp_table>;
++};
++
++&gpu {
++	operating-points-v2 = <&gpu_opp_table>;
 +};
 diff -rupN linux.orig/drivers/gpu/drm/panel/Kconfig linux/drivers/gpu/drm/panel/Kconfig
 --- linux.orig/drivers/gpu/drm/panel/Kconfig	2023-06-23 03:53:39.968155272 +0000
