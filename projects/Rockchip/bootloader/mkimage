@@ -5,7 +5,7 @@
 source ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
 
 case "${PKG_SOC}" in
-  rk35*)
+  rk35*|rk3399)
     IDBSEEK="bs=512 seek=64"
   ;;
   *)
