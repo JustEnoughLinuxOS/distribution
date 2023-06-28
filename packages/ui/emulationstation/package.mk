@@ -82,6 +82,8 @@ pre_configure_target() {
     . ~/developer_settings.conf
   fi
 
+  SCREENSCRAPER_DEV_LOGIN="devid=jelos&devpassword=jelos"
+
   for key in SCREENSCRAPER_DEV_LOGIN \
         GAMESDB_APIKEY \
         CHEEVOS_DEV_LOGIN
