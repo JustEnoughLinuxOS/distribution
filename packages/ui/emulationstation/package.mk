@@ -3,7 +3,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="emulationstation"
-PKG_VERSION="cebf26fc1b2b00cddf27722e8f35ad69682d6973"
+PKG_VERSION="43acab12e64e1b281bec7a8425c6b957c499081b"
 PKG_GIT_CLONE_BRANCH="main"
 PKG_REV="1"
 PKG_ARCH="any"
@@ -129,6 +129,11 @@ makeinstall_target() {
 
   ln -sf /storage/.cache/system_timezone ${INSTALL}/etc/timezone
 
+  #Delete all vulkan options from es_features when vulkan is not present
+  if [ ! "${VULKAN_SUPPORT}" = "yes" ]
+    then
+      sed -i '/vulkan/d' ${INSTALL}/usr/config/emulationstation/es_features.cfg
+  fi
 }
 
 

@@ -24,7 +24,7 @@ src-pkg:
 	tar cvJf sources.tar.xz sources .stamps
 
 
-world: AMD64 RK3588 S922X RK3566 RK3566-X55 RK3326
+world: AMD64 RK3588 S922X RK3566 RK3566-X55 RK3326 RK3399
 
 AMD64:
 	unset DEVICE_ROOT
@@ -55,6 +55,7 @@ RK3326:
 	PROJECT=Rockchip DEVICE=RK3326 ARCH=aarch64 ./scripts/build_distro
 
 RK3399:
+	unset DEVICE_ROOT
 	PROJECT=Rockchip DEVICE=RK3399 ARCH=arm ./scripts/build_distro
 	PROJECT=Rockchip DEVICE=RK3399 ARCH=aarch64 ./scripts/build_distro
 

@@ -32,7 +32,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/Makefile linux/arch/arm64/boo
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-roc-pc-plus.dtb
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts	2023-06-25 22:29:37.555182851 +0000
++++ linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts	2023-06-29 13:30:29.099778837 +0000
 @@ -0,0 +1,1360 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
@@ -1009,14 +1009,14 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +		compatible = "cellwise,cw2015";
 +		reg = <0x62>;
 +		cellwise,battery-profile = /bits/ 8 <
-+			0x17 0x67 0x80 0x73 0x6E 0x6C 0x6B 0x63
-+			0x77 0x51 0x5C 0x58 0x50 0x4C 0x48 0x36
-+			0x15 0x0C 0x0C 0x19 0x5B 0x7D 0x6F 0x69
-+			0x69 0x5B 0x0C 0x29 0x20 0x40 0x52 0x59
-+			0x57 0x56 0x54 0x4F 0x3B 0x1F 0x7F 0x17
-+			0x06 0x1A 0x30 0x5A 0x85 0x93 0x96 0x2D
-+			0x48 0x77 0x9C 0xB3 0x80 0x52 0x94 0xCB
-+			0x2F 0x00 0x64 0xA5 0xB5 0x11 0xF0 0x11
++			   0x15 0x7E 0x66 0x5B 0x58 0x55 0x51 0x4D
++			   0x4A 0x47 0x44 0x47 0x4D 0x46 0x32 0x27
++			   0x1F 0x1A 0x15 0x16 0x21 0x30 0x3F 0x4A
++			   0x46 0x5C 0x0C 0x29 0x19 0x31 0x59 0x74
++			   0x7B 0x7D 0x81 0x82 0x3F 0x1A 0x58 0x22
++			   0x06 0x42 0x2B 0x63 0x89 0x93 0x94 0x3C
++			   0x57 0x7D 0x93 0xAE 0x80 0xC2 0xD2 0xCB
++			   0x2F 0x00 0x64 0xA5 0xB5 0x1F 0xB0 0x11
 +		>;
 +		cellwise,monitor-interval-ms = <5000>;
 +		monitored-battery = <&bat>;
@@ -1396,7 +1396,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +};
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi	2023-06-25 22:32:23.845932541 +0000
++++ linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi	2023-06-29 14:47:59.405775923 +0000
 @@ -0,0 +1,194 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
@@ -1408,15 +1408,15 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi linux/a
 +		compatible = "operating-points-v2";
 +		opp-shared;
 +
-+		opp00 {
-+			opp-hz = /bits/ 64 <408000000>;
-+			opp-microvolt = <825000 825000 1250000>;
-+			clock-latency-ns = <40000>;
-+		};
-+		opp01 {
-+			opp-hz = /bits/ 64 <600000000>;
-+			opp-microvolt = <825000 825000 1250000>;
-+		};
++		//opp00 {
++		//	opp-hz = /bits/ 64 <408000000>;
++		//	opp-microvolt = <825000 825000 1250000>;
++		//	clock-latency-ns = <40000>;
++		//};
++		//opp01 {
++		//	opp-hz = /bits/ 64 <600000000>;
++		//	opp-microvolt = <825000 825000 1250000>;
++		//};
 +		opp02 {
 +			opp-hz = /bits/ 64 <816000000>;
 +			opp-microvolt = <850000 850000 1250000>;
@@ -1451,15 +1451,15 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi linux/a
 +		compatible = "operating-points-v2";
 +		opp-shared;
 +
-+		opp00 {
-+			opp-hz = /bits/ 64 <408000000>;
-+			opp-microvolt = <825000 825000 1250000>;
-+			clock-latency-ns = <40000>;
-+		};
-+		opp01 {
-+			opp-hz = /bits/ 64 <600000000>;
-+			opp-microvolt = <825000 825000 1250000>;
-+		};
++		//opp00 {
++		//	opp-hz = /bits/ 64 <408000000>;
++		//	opp-microvolt = <825000 825000 1250000>;
++		//	clock-latency-ns = <40000>;
++		//};
++		//opp01 {
++		//	opp-hz = /bits/ 64 <600000000>;
++		//	opp-microvolt = <825000 825000 1250000>;
++		//};
 +		opp02 {
 +			opp-hz = /bits/ 64 <816000000>;
 +			opp-microvolt = <825000 825000 1250000>;
@@ -1496,10 +1496,10 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi linux/a
 +			opp-hz = /bits/ 64 <2040000000>;
 +			opp-microvolt = <1250000 1250000 1250000>;
 +		};
-+		//opp-11 {
-+		//	opp-hz = /bits/ 64 <2088000000>;
-+		//	opp-microvolt = <1250000 1250000 1250000>;
-+		//};
++		opp-11 {
++			opp-hz = /bits/ 64 <2088000000>;
++			opp-microvolt = <1250000 1250000 1250000>;
++		};
 +		//opp-12 {
 +		//	opp-hz = /bits/ 64 <2184000000>;
 +		//	opp-microvolt = <1350000>;
@@ -1509,14 +1509,14 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi linux/a
 +	gpu_opp_table: opp-table-2 {
 +		compatible = "operating-points-v2";
 +
-+		opp00 {
-+			opp-hz = /bits/ 64 <200000000>;
-+			opp-microvolt = <825000 825000 1150000>;
-+		};
-+		opp01 {
-+			opp-hz = /bits/ 64 <297000000>;
-+			opp-microvolt = <825000 825000 1150000>;
-+		};
++		//opp00 {
++		//	opp-hz = /bits/ 64 <200000000>;
++		//	opp-microvolt = <825000 825000 1150000>;
++		//};
++		//opp01 {
++		//	opp-hz = /bits/ 64 <297000000>;
++		//	opp-microvolt = <825000 825000 1150000>;
++		//};
 +		opp02 {
 +			opp-hz = /bits/ 64 <400000000>;
 +			opp-microvolt = <825000 825000 1150000>;
@@ -1542,10 +1542,10 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi linux/a
 +        dmc_opp_table: opp-table-3 {
 +                compatible = "operating-points-v2";
 +
-+                opp00 {
-+                        opp-hz = /bits/ 64 <328000000>;
-+                        opp-microvolt = <900000>;
-+                };
++                //opp00 {
++                //        opp-hz = /bits/ 64 <328000000>;
++                //        opp-microvolt = <900000>;
++                //};
 +                opp01 {
 +                        opp-hz = /bits/ 64 <416000000>;
 +                        opp-microvolt = <900000>;
