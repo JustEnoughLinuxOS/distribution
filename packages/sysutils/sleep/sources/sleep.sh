@@ -12,7 +12,6 @@ else
 fi
 QUIRK_DEVICE="$(echo ${QUIRK_DEVICE} | sed -e "s#[/]#-#g")"
 
-
 headphones() {
   if [ "${DEVICE_FAKE_JACKSENSE}" == "true" ]
   then
@@ -107,8 +106,9 @@ case $1 in
     headphones stop
     volumectl stop
     bluetooth stop
+    runtime_power_management on
+    wake_events disabled
     powerstate stop
-    device_powersave stop 
     modules stop 
     quirks pre
     touch /run/.last_sleep_time
