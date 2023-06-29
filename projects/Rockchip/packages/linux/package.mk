@@ -40,6 +40,10 @@ case ${DEVICE} in
     PKG_VERSION="6.1.35"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
   ;;
+  RK3399)
+    PKG_VERSION="6.0.19"
+    PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
+  ;;
 esac
 
 PKG_KERNEL_CFG_FILE=$(kernel_config_path) || die
