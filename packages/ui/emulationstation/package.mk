@@ -129,6 +129,11 @@ makeinstall_target() {
 
   ln -sf /storage/.cache/system_timezone ${INSTALL}/etc/timezone
 
+  #Delete all vulkan options from es_features when vulkan is not present
+  if [ ! "${VULKAN_SUPPORT}" = "yes" ]
+    then
+      sed -i '/vulkan/d' ${INSTALL}/usr/config/emulationstation/es_features.cfg
+  fi
 }
 
 
