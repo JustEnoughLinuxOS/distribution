@@ -1,0 +1,27 @@
+#!/bin/sh
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2023-present Fewtarius
+
+###
+### Provision a container containing linaro toolchains
+### and use it to build the OGU kernel and u-boot.
+###
+
+###
+### Export PROJECTS="kernel uboot" or the default will
+### only build u-boot.
+###
+
+PROJECTS="${PROJECTS:-uboot}"
+CONTAINER="linaro:latest"
+
+echo "Provisioning container..."
+docker build -t "${CONTAINER}" .
+
+for BUILD in ${PROJECTS}
+do
+  echo "Building ${BUILD}..."
+  docker run -it --rm --user $(id -u):$(id -g) -v $(pwd):/work -w /work ${CONTAINER} /work/${BUILD}
+done
+
+
