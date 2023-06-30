@@ -198,7 +198,7 @@ export LOCAL_WIFI_KEY=secret
 
 #### Screenscraper, GamesDB, and RetroAchievements
 
-To enable Screenscraper, GamesDB, and RetroAchievements, register at each site and apply the api keys in ~/developer_settings.conf or add them as environment variables. Unsetting one of the variables will disable it in EmulationStation. This configuration is picked up by EmulationStation during the build.
+To enable Screenscraper, GamesDB, and RetroAchievements, register at each site and apply the api keys in ${HOME}/.JELOS/options. Unsetting one of the variables will disable it in EmulationStation. This configuration is picked up by EmulationStation during the build.
 
 ```
 # Apply for a Screenscraper API Key here: https://www.screenscraper.fr/forumsujets.php?frub=12&numpage=0

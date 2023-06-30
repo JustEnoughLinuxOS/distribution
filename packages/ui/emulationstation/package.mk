@@ -78,12 +78,6 @@ post_unpack() {
 fi
 
 pre_configure_target() {
-  if [ -f ~/developer_settings.conf ]; then
-    . ~/developer_settings.conf
-  fi
-
-  SCREENSCRAPER_DEV_LOGIN="devid=jelos&devpassword=jelos"
-
   for key in SCREENSCRAPER_DEV_LOGIN \
         GAMESDB_APIKEY \
         CHEEVOS_DEV_LOGIN
@@ -160,8 +154,4 @@ post_install() {
 
   ln -sf /usr/share/locale  ${INSTALL}/usr/config/emulationstation/locale
 
-  # WARN: Deprecated
-  if [ -f ~/developer_settings.conf ]; then
-    echo "WARNING: developer_settings.conf is deprecated, please migrate variables to \${HOME}/.${DISTRO}/options."
-  fi
 }

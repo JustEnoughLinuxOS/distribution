@@ -16,7 +16,7 @@ case "${DEVICE}" in
   RK356*)
     OPT_ENABLE_KERNEL=4.4.0
   ;;
-  RK358*)
+  RK358*|RK3399)
     OPT_ENABLE_KERNEL=5.10.0
   ;;
   *)
