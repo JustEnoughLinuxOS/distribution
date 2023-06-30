@@ -44,6 +44,13 @@ case "${DEVICE}" in
     LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr citra-lr dolphin-lr mame-lr"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
+  RK3399)
+    [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
+    PKG_EMUS+=" aethersx2-sa dolphin-sa drastic-sa duckstation-sa pcsx_rearmed-lr box64 scummvmsa             \
+               yabasanshiro-sa box64 portmaster"
+    LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr dolphin-lr"
+    PKG_RETROARCH+=" retropie-shaders"
+  ;;
   RK356*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
     PKG_DEPENDS_TARGET+=" common-shaders duckstation-sa glsl-shaders mupen64plus-sa scummvmsa box64 portmaster"
@@ -359,7 +366,7 @@ makeinstall_target() {
 
   ### Nintendo GameCube
   case ${DEVICE} in
-    AMD64|RK358*|RK356*|S922X*)
+    AMD64|RK358*|RK356*|S922X*|RK3399)
       add_emu_core gamecube dolphin dolphin-sa-gc true
       add_emu_core gamecube primehack primehack false
       add_emu_core gamecube retroarch dolphin false
@@ -369,7 +376,7 @@ makeinstall_target() {
 
   ### Nintendo Wii
   case ${DEVICE} in
-    AMD64|RK358*|RK356*|S922X*)
+    AMD64|RK358*|RK356*|S922X*|RK3399)
       add_emu_core wii dolphin dolphin-sa-wii true
       add_emu_core wii primehack primehack false
       add_emu_core wii retroarch dolphin false
@@ -609,7 +616,7 @@ makeinstall_target() {
       add_emu_core ps2 pcsx2 pcsx2-sa false
       add_es_system ps2
     ;;
-    RK3588|S922X)
+    RK3588|S922X|RK3399)
       add_emu_core ps2 aethersx2 aethersx2-sa true
       add_es_system ps2
     ;;
@@ -686,7 +693,7 @@ makeinstall_target() {
   add_emu_core mastersystem retroarch smsplus false
   add_es_system mastersystem
 
-  ### Sega MegaDrive 
+  ### Sega MegaDrive
   add_emu_core megadrive retroarch genesis_plus_gx true
   add_emu_core megadrive retroarch genesis_plus_gx_wide false
   add_emu_core megadrive retroarch picodrive false

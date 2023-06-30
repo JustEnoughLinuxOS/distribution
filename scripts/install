@@ -83,6 +83,7 @@ if [ "${TARGET}" = "target" ] ; then
     if [ -d ${PKG_TMP_DIR}/autostart ]; then
       mkdir -p ${INSTALL}/usr/lib/autostart/common
       cp ${PKG_TMP_DIR}/autostart/* ${INSTALL}/usr/lib/autostart/common
+      chmod 0755 ${INSTALL}/usr/lib/autostart/common/*
     fi
 
     if [ -d ${PKG_TMP_DIR}/daemons ]; then
