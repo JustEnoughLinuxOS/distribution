@@ -10,15 +10,6 @@ performance 2>&1 >${BOOTLOG}
 
 date 2>&1 >>${BOOTLOG}
 
-### Apply device quirks
-if [ -e "/sys/firmware/devicetree/base/model" ]
-then
-  QUIRK_DEVICE=$(cat /sys/firmware/devicetree/base/model 2>/dev/null)
-else
-  QUIRK_DEVICE="$(cat /sys/class/dmi/id/sys_vendor 2>/dev/null) $(cat /sys/class/dmi/id/product_name 2>/dev/null)"
-fi
-QUIRK_DEVICE="$(echo ${QUIRK_DEVICE} | sed -e "s#[/]#-#g")"
-
 if [ -d "/usr/lib/autostart/quirks/${QUIRK_DEVICE}" ]
 then
   echo "Executing ${QUIRK_DEVICE} quirks." 2>&1 >>${BOOTLOG}
@@ -26,7 +17,10 @@ then
   for script in "/usr/lib/autostart/quirks/${QUIRK_DEVICE}"/*
   do
     echo "Executing ${script}" 2>&1 >>${BOOTLOG}
-    "${script}" 2>&1 >>${BOOTLOG}
+    if [ -f "${script}" ]
+    then
+      "${script}" 2>&1 >>${BOOTLOG}
+    fi
   done
 fi
 
