@@ -48,3 +48,7 @@
 
 # release images
 release/
+
+# Linaro SDK
+linaro/linux/
+linaro/u-boot/
