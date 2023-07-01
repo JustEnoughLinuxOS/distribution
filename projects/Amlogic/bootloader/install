@@ -11,7 +11,7 @@ case "${DEVICE}" in
   ;;
   *)
     echo "uboot: encrypting u-boot.bin with fip..."
-    cp -av u-boot.bin ${FIP_DIR}/
+    cp -av build/u-boot.bin ${FIP_DIR}/
     cd ${FIP_DIR}
     ./build-fip.sh ${BOOT_FIP} u-boot.bin ${INSTALL}/usr/share/bootloader/
   ;;
@@ -36,7 +36,7 @@ setenv loadaddr "0x1B00000"
 setenv bootargs "boot=UUID=@BOOT_UUID@ disk=UUID=@DISK_UUID@ ${EXTRA_CMDLINE}"
 
 load mmc \${devno}:1 \${loadaddr} KERNEL
-load mmc \${devno}:1 \${dtb_loadaddr} ${DEVICE_DTB[0]}.dtb
+load mmc \${devno}:1 \${dtb_loadaddr} \${fdtfile}
 
 fdt addr \${dtb_loadaddr}
 
