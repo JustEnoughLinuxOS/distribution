@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (C) 2023-present Fewtarius
 
@@ -8,20 +8,27 @@
 ###
 
 ###
-### Export PROJECTS="kernel uboot" or the default will
+### Export SCRIPTS="mkkernel mkuboot" or the default will
 ### only build u-boot.
 ###
 
-PROJECTS="${PROJECTS:-uboot}"
+SCRIPTS="${SCRIPTS:-mkuboot}"
 CONTAINER="linaro:latest"
 
 echo "Provisioning container..."
 docker build -t "${CONTAINER}" .
 
-for BUILD in ${PROJECTS}
+for SCRIPT in ${SCRIPTS}
 do
-  echo "Building ${BUILD}..."
-  docker run -it --rm --user $(id -u):$(id -g) -v $(pwd):/work -w /work ${CONTAINER} /work/${BUILD}
+  echo "Executing ${SCRIPT}..."
+  docker run -it --rm --user $(id -u):$(id -g) -v $(pwd):/work -w /work ${CONTAINER} /work/${SCRIPT}
+
+  if [[ "${SCRIPT}" =~ mkuboot ]] && \
+     [ -e "u-boot/sd_fuse/u-boot.bin" ]
+  then
+    echo "Copying u-boot binary..."
+    cp u-boot/sd_fuse/u-boot.bin ../projects/Amlogic/packages/u-boot/bin/S922X/u-boot.bin
+  fi
 done
 
 
