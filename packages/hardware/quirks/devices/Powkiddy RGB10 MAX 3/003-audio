@@ -232,7 +232,7 @@ state.Ultra {
 	control.15 {
 		iface MIXER
 		name 'Playback Mux'
-		value SPK
+		value HP
 		comment {
 			access 'read write'
 			type ENUMERATED
