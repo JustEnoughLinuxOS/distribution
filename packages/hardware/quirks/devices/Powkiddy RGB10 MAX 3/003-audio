@@ -8,10 +8,6 @@
 set-audio set "CUSTOM (UNMANAGED)"
 set-audio esset "Master"
 
-amixer sset 'FRDDR_A SINK 1 SEL' 'OUT 1'
-amixer sset 'FRDDR_A SRC 1 EN' 'on'
-amixer sset 'TDMOUT_B SRC SEL' 'IN 0'
-
 cat <<EOF >/storage/.config/asound.conf
 pcm.!default {
 	type plug
@@ -258,3 +254,10 @@ state.Ultra {
 
 EOF
 fi
+
+alsactl restore -f /storage/.config/asound.state
+amixer sset 'FRDDR_A SINK 1 SEL' 'OUT 1'
+amixer sset 'FRDDR_A SRC 1 EN' 'on'
+amixer sset 'TDMOUT_B SRC SEL' 'IN 0'
+amixer -c0 sset "Playback Mux" "${DEVICE_PLAYBACK_PATH_SPK}"
+alsactl store -f /storage/.config/asound.state
