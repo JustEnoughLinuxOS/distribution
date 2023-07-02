@@ -1802,9 +1802,6 @@ add_system_dir() {
   if [ ! -d "${ESTMP}" ]
   then
     mkdir "${ESTMP}"
-  cat <<EOF >>${ESTMP}/${DISTRO}-system-dirs.conf
-d       bios                    0777 root root - -
-EOF
   fi
   cat <<EOF >>${ESTMP}/${DISTRO}-system-dirs.conf
 d	${1}			0777 root root - -
