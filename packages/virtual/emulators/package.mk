@@ -47,8 +47,8 @@ case "${DEVICE}" in
   RK3399)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
     PKG_EMUS+=" aethersx2-sa dolphin-sa drastic-sa duckstation-sa pcsx_rearmed-lr box64 scummvmsa             \
-               yabasanshiro-sa box64 portmaster"
-    LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr dolphin-lr"
+               yabasanshiro-sa portmaster"
+    LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr dolphin-lr flycast-lr mame-lr"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
   RK356*)
@@ -146,7 +146,7 @@ makeinstall_target() {
   add_emu_core arcade retroarch fbalpha2012 false
   add_emu_core arcade retroarch fbalpha2019 false
   case ${DEVICE} in
-    AMD64|RK3588|S922X)
+    AMD64|RK3588|S922X|RK3399)
       add_emu_core arcade retroarch mame false
     ;;
   esac
