@@ -97,6 +97,9 @@ makeinstall_target() {
   ### Flush cache from previous builds
   clean_es_cache
 
+  ### Add BIOS directory
+  add_system_dir bios
+
   ### Panasonic 3DO
   add_emu_core 3do retroarch opera true
   add_es_system 3do
