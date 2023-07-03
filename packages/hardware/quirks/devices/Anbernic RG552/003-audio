@@ -38,7 +38,7 @@ state.rockchipes8316c {
 	control.1 {
 		iface CARD
 		name 'Headphones Jack'
-		value false
+		value true
 		comment {
 			access read
 			type BOOLEAN
@@ -48,8 +48,8 @@ state.rockchipes8316c {
 	control.2 {
 		iface MIXER
 		name 'Headphone Playback Volume'
-		value.0 3
-		value.1 3
+		value.0 2
+		value.1 2
 		comment {
 			access 'read write'
 			type INTEGER
@@ -57,15 +57,15 @@ state.rockchipes8316c {
 			range '0 - 3'
 			dbmin -4800
 			dbmax 0
-			dbvalue.0 0
-			dbvalue.1 0
+			dbvalue.0 -1200
+			dbvalue.1 -1200
 		}
 	}
 	control.3 {
 		iface MIXER
 		name 'Headphone Mixer Volume'
-		value.0 11
-		value.1 11
+		value.0 10
+		value.1 10
 		comment {
 			access 'read write'
 			type INTEGER
@@ -73,8 +73,8 @@ state.rockchipes8316c {
 			range '0 - 11'
 			dbmin -1200
 			dbmax 0
-			dbvalue.0 0
-			dbvalue.1 0
+			dbvalue.0 -150
+			dbvalue.1 -150
 		}
 	}
 	control.4 {
@@ -94,8 +94,8 @@ state.rockchipes8316c {
 	control.5 {
 		iface MIXER
 		name 'DAC Playback Volume'
-		value.0 93
-		value.1 93
+		value.0 165
+		value.1 165
 		comment {
 			access 'read write'
 			type INTEGER
@@ -103,14 +103,14 @@ state.rockchipes8316c {
 			range '0 - 192'
 			dbmin -9999999
 			dbmax 0
-			dbvalue.0 -4950
-			dbvalue.1 -4950
+			dbvalue.0 -1350
+			dbvalue.1 -1350
 		}
 	}
 	control.6 {
 		iface MIXER
 		name 'DAC Soft Ramp Switch'
-		value true
+		value false
 		comment {
 			access 'read write'
 			type BOOLEAN
@@ -120,7 +120,7 @@ state.rockchipes8316c {
 	control.7 {
 		iface MIXER
 		name 'DAC Soft Ramp Rate'
-		value 0
+		value 4
 		comment {
 			access 'read write'
 			type INTEGER
@@ -151,7 +151,7 @@ state.rockchipes8316c {
 	control.10 {
 		iface MIXER
 		name 'DAC Stereo Enhancement'
-		value 0
+		value 7
 		comment {
 			access 'read write'
 			type INTEGER
@@ -285,10 +285,10 @@ state.rockchipes8316c {
 			access 'read write'
 			type INTEGER
 			count 1
-			range '0 - 10'
+			range '0 - 11'
 			dbmin -1650
 			dbmax -150
-			dbvalue.0 0
+			dbvalue.0 -150
 		}
 	}
 	control.22 {
