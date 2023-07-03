@@ -98,7 +98,7 @@ makeinstall_target() {
   clean_es_cache
 
   ### Add BIOS directory
-  add_system_dir bios
+  add_system_dir /storage/roms/bios
 
   ### Panasonic 3DO
   add_emu_core 3do retroarch opera true
