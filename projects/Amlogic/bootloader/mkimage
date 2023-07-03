@@ -38,7 +38,7 @@ setenv loadaddr "0x1B00000"
 setenv bootargs "boot=UUID=${UUID_SYSTEM} disk=UUID=${UUID_STORAGE} ${EXTRA_CMDLINE}"
 
 load mmc \${devno}:1 \${loadaddr} KERNEL
-load mmc \${devno}:1 \${dtb_loadaddr} ${DEVICE_DTB[0]}.dtb
+load mmc \${devno}:1 \${dtb_loadaddr} \${fdtfile}
 
 fdt addr \${dtb_loadaddr}
 
