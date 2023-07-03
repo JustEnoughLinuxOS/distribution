@@ -74,7 +74,7 @@ post_install() {
 EOF
 
   cp ${PKG_DIR}/sources/scripts/* ${INSTALL}/usr/bin
-  chmod 0755 ${INSTALL}/usr/bin/* ||:
+  chmod 0755 ${INSTALL}/usr/bin/* 2>/dev/null ||:
   enable_service jelos-automount.service
 
   ### Fix and migrate to autostart package
