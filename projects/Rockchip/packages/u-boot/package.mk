@@ -22,6 +22,10 @@ case ${DEVICE} in
     PKG_URL="${PKG_SITE}/rk356x-uboot.git"
     PKG_VERSION="4dbf6b2"
   ;;
+  RK3399)
+    PKG_URL="${PKG_SITE}/rk3399-uboot.git"
+    PKG_VERSION="bb226439ac676a75b87a555e8741ac3c0b3e11b1"
+  ;;
   RK332*)
     PKG_URL="https://github.com/hardkernel/u-boot.git"
     PKG_VERSION="0e26e35cb18a80005b7de45c95858c86a2f7f41e"

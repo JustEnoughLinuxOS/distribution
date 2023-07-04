@@ -2,15 +2,18 @@
 # Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="box86"
-PKG_VERSION="b7283b8d9df3218fe7d82b213ebffca77326a133"
+PKG_VERSION="ecf7bfd8480fce4d54fd6308711c1d2c06e2088f"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/ptitSeb/box86"
 PKG_URL="${PKG_SITE}.git"
-PKG_DEPENDS_TARGET="toolchain gl4es ncurses SDL_sound"
+PKG_DEPENDS_TARGET="toolchain ncurses SDL_sound"
 PKG_LONGDESC="Box86 lets you run x86 Linux programs (such as games) on non-x86 Linux systems, like ARM."
 PKG_TOOLCHAIN="cmake"
 
+if [ "${OPENGL}" = "no" ]; then
+  PKG_DEPENDS_TARGET+=" gl4es"
+fi
 
 PKG_CMAKE_OPTS_TARGET+=" -DCMAKE_BUILD_TYPE=Release"
 

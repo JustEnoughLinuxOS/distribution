@@ -3,7 +3,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="emulationstation"
-PKG_VERSION="43acab1"
+PKG_VERSION="909cd19"
 PKG_GIT_CLONE_BRANCH="main"
 PKG_REV="1"
 PKG_ARCH="any"
@@ -78,10 +78,6 @@ post_unpack() {
 fi
 
 pre_configure_target() {
-  if [ -f ~/developer_settings.conf ]; then
-    . ~/developer_settings.conf
-  fi
-
   for key in SCREENSCRAPER_DEV_LOGIN \
         GAMESDB_APIKEY \
         CHEEVOS_DEV_LOGIN
@@ -129,6 +125,11 @@ makeinstall_target() {
 
   ln -sf /storage/.cache/system_timezone ${INSTALL}/etc/timezone
 
+  #Delete all vulkan options from es_features when vulkan is not present
+  if [ ! "${VULKAN_SUPPORT}" = "yes" ]
+    then
+      sed -i '/vulkan/d' ${INSTALL}/usr/config/emulationstation/es_features.cfg
+  fi
 }
 
 
@@ -141,8 +142,4 @@ post_install() {
 
   ln -sf /usr/share/locale  ${INSTALL}/usr/config/emulationstation/locale
 
-  # WARN: Deprecated
-  if [ -f ~/developer_settings.conf ]; then
-    echo "WARNING: developer_settings.conf is deprecated, please migrate variables to \${HOME}/.${DISTRO}/options."
-  fi
 }

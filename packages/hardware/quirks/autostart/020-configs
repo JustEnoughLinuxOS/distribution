@@ -1,0 +1,13 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2023-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+if [ -d "/usr/lib/autostart/quirks/${QUIRK_DEVICE}/config" ] && \
+   [ ! -f ".quirkconfigs" ]
+then
+  tocon "Applying ${QUIRK_DEVICE} specific configuration..."
+  rsync -a --exclude={es_features.cfg,es_systems.cfg} /usr/lib/autostart/quirks/"${QUIRK_DEVICE}"/config/* /storage/.config/ 2>/dev/null
+  touch /storage/.quirkconfigs
+fi

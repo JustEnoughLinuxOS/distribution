@@ -2,14 +2,18 @@
 # Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="box64"
-PKG_VERSION="dc0ab611c46502f115dc68c5d924f4834511216a"
+PKG_VERSION="509157a8b04ddec0f20e39136877bd13ce83e4e4"
 PKG_ARCH="aarch64"
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/ptitSeb/box64"
 PKG_URL="${PKG_SITE}.git"
-PKG_DEPENDS_TARGET="toolchain gl4es ncurses SDL_sound"
+PKG_DEPENDS_TARGET="toolchain ncurses SDL_sound"
 PKG_LONGDESC="Box64 lets you run x86_64 Linux programs (such as games) on non-x86_64 Linux systems, like ARM."
 PKG_TOOLCHAIN="cmake"
+
+if [ "${OPENGL}" = "no" ]; then
+  PKG_DEPENDS_TARGET+=" gl4es"
+fi
 
 PKG_CMAKE_OPTS_TARGET+=" -DCMAKE_BUILD_TYPE=Release"
 
