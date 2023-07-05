@@ -367,6 +367,15 @@ makeinstall_target() {
   add_emu_core gbc retroarch vbam false
   add_es_system gbc
 
+  ### Nintendo GameBoy Color Hacks
+  add_emu_core gbch retroarch gambatte true
+  add_emu_core gbch retroarch sameboy false
+  add_emu_core gbch retroarch gearboy false
+  add_emu_core gbch retroarch tgbdual false
+  add_emu_core gbch retroarch mgba false
+  add_emu_core gbch retroarch vbam false
+  add_es_system gbch
+
   ### Nintendo GameCube
   case ${DEVICE} in
     AMD64|RK358*|RK356*|S922X*|RK3399)

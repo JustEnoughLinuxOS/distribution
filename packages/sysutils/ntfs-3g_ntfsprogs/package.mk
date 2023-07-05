@@ -3,8 +3,7 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="ntfs-3g_ntfsprogs"
-PKG_VERSION="2021.8.22"
-PKG_SHA256="55b883aa05d94b2ec746ef3966cb41e66bed6db99f22ddd41d1b8b94bb202efb"
+PKG_VERSION="2022.10.3"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/tuxera/ntfs-3g"
 PKG_URL="https://tuxera.com/opensource/${PKG_NAME}-${PKG_VERSION}.tgz"
