@@ -38,15 +38,57 @@ printf "\e[?25h" > ${CUR_TTY}
 dialog --clear
 
 hotkey="Select"
-height="15"
-width="55"
 power='(?<=Title_P=\").*?(?=\")'
 opengl="None"
 jport="None"
+device=$(cat /sys/firmware/devicetree/base/model 2>/dev/null)
 
-if [[ "${UI_SERVICE}" =~ weston.service ]]; then
-  opengl='(?<=Title_F=\").*?(?=\")'
-fi
+# Set device for oga controls profile
+case ${device} in
+  "Anbernic RG552")
+    param_device="rg552"
+    height="20"
+    width="60"
+    opengl='(?<=Title_F=\").*?(?=\")'
+  ;;
+  "Hardkernel ODROID-GO-Ultra"|"Powkiddy RGB10 MAX 3")
+    param_device="s922x"
+    height="20"
+    width="60"
+    opengl="None"
+  ;;
+  "Powkiddy x55")
+    param_device="x55"
+    height="20"
+    width="60"
+    opengl="None"
+  ;;
+  "Anbernic RG351*")
+    param_device="anbernic"
+    opengl='(?<=Title_F=\").*?(?=\")'
+    height="15"
+    width="55"
+  ;;
+  "ODROID-GO Advance*")
+    param_device="oga"
+    opengl='(?<=Title_F=\").*?(?=\")'
+    height="15"
+    width="55"
+  ;;
+  "ODROID-GO Super")
+    param_device="ogs"
+    opengl='(?<=Title_F=\").*?(?=\")'
+    height="20"
+    width="60"
+  ;;
+  *)
+    param_device="rg552"
+    height="20"
+    width="60"
+    opengl="None"
+  ;;
+esac
+
 
 cd $toolsfolderloc/PortMaster
 
@@ -175,6 +217,19 @@ userExit() {
   rm -f /dev/shm/portmaster/*ports.md
   dialog --clear
   printf "\033c" > ${CUR_TTY}
+
+  case ${device} in
+    "Hardkernel ODROID-GO-Ultra"|"Powkiddy RGB10 MAX 3")
+      #Fixing ports on S922X, exclude FNA games
+      for port in /storage/roms/ports/*.sh; do
+        if ! grep -q FNA "$port"; then
+          sed -i '/get_controls/c\get_controls && export SDL_VIDEO_GL_DRIVER=/usr/lib/egl/libGL.so.1 SDL_VIDEO_EGL_DRIVER=/usr/lib/egl/libEGL.so.1' "$port"
+          echo Fixing: "$port";
+        fi
+      done;
+    ;;
+  esac
+
   exit 0
 }
 
