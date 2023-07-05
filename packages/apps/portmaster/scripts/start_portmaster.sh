@@ -43,6 +43,8 @@ cp /storage/.config/PortMaster/control.txt /storage/roms/ports/PortMaster/contro
 cp /storage/.config/PortMaster/gptokeyb /storage/roms/ports/PortMaster/gptokeyb
 cp /storage/.config/PortMaster/gamecontrollerdb.txt /storage/roms/ports/PortMaster/gamecontrollerdb.txt
 
+cp /usr/bin/oga_controls* /storage/roms/ports/PortMaster/
+
 #Delete and refrence to PortMaster.sh, we only want to use ours.
 find /storage/roms/ports -type f -name "PortMaster.sh" -delete
 

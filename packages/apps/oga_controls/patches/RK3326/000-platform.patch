@@ -1,0 +1,33 @@
+diff --git a/main.c b/main.c
+index 2e43de7..27cbd65 100644
+--- a/main.c
++++ b/main.c
+@@ -1455,7 +1455,7 @@ void handle_event_ogx(int type, int code, int value) {
+ 	}
+ }
+ 
+-void handle_event_rk2020(int type, int code, int value) {
++void handle_event_oga(int type, int code, int value) {
+ 	if (type == 1) {
+ 		if (code == back_key && value == 1) {
+ 			hold = 1;
+@@ -2215,7 +2215,7 @@ int main(int argc, char* argv[]) {
+       deadzone_x = -300;
+       strcpy(inputstr, "/dev/input/by-path/platform-odroidgo2-joypad-event-joystick");
+ 	}
+-	else if (strcmp(argv[2], "rk2020") == 0) {
++	else if (strcmp(argv[2], "oga") == 0) {
+       back_key = 704;
+       start_key = 709;
+       a_key = 305;
+@@ -2456,8 +2456,8 @@ int main(int argc, char* argv[]) {
+            if (strcmp(argv[2], "anbernic") == 0) {
+               handle_event_anbernic(ev_joypad.type, ev_joypad.code, ev_joypad.value);
+            }
+-           else if (strcmp(argv[2], "rk2020") == 0) {
+-              handle_event_rk2020(ev_joypad.type, ev_joypad.code, ev_joypad.value);
++           else if (strcmp(argv[2], "oga") == 0) {
++              handle_event_oga(ev_joypad.type, ev_joypad.code, ev_joypad.value);
+            }
+            else if (strcmp(argv[2], "chi") == 0) {
+               handle_event_chi(ev_joypad.type, ev_joypad.code, ev_joypad.value);
