@@ -127,7 +127,7 @@
     EXFAT="yes"
 
   # build and install NTFS-3G fuse support (yes / no)
-    NTFS3G="yes"
+    NTFS3G="no"
 
   # build and install hfs filesystem utilities (yes / no)
     HFSTOOLS="no"
