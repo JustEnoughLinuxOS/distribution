@@ -15,6 +15,7 @@ cd /storage/.config/PortMaster
 
 #Grab the latest PortMaster.sh script
 cp /usr/config/PortMaster/PortMaster.sh PortMaster.sh
+cp /usr/config/PortMaster/control.txt control.txt
 
 #Use our gamecontrollerdb.txt
 rm gamecontrollerdb.txt
