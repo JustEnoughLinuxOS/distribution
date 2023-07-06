@@ -80,7 +80,7 @@ state.rockchipes8316c {
 	control.4 {
 		iface MIXER
 		name 'Playback Polarity'
-		value 'R Invert'
+		value Normal
 		comment {
 			access 'read write'
 			type ENUMERATED
