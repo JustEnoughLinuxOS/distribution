@@ -164,3 +164,6 @@ if [ -z "${AUDIBLEALERT}" ]
 then
   set_setting system.battery.warning 1
 fi
+
+### Revert the recent ES PowerSavingMode change.
+sed -i 's#<string name="PowerSaverMode".*$#<string name="PowerSaverMode" value="default"/>#g' /storage/.config/emulationstation/es_settings.cfg
