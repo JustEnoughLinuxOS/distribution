@@ -178,14 +178,19 @@ makeinstall_target() {
   add_es_system atarist
 
   ## Sammy Atomiswave
-  add_emu_core atomiswave retroarch flycast2021 false
   case ${DEVICE} in
     RK35*|RK3326)
+      add_emu_core atomiswave retroarch flycast2021 false
       add_emu_core atomiswave retroarch flycast32 true
       add_emu_core atomiswave retroarch flycast false
       add_emu_core atomiswave flycast flycast-sa false
     ;;
+    RK3399)
+      add_emu_core atomiswave flycast flycast-sa false
+      add_emu_core atomiswave retroarch flycast true
+    ;;
     S922X)
+      add_emu_core atomiswave retroarch flycast2021 false
       add_emu_core atomiswave flycast flycast-sa true
       add_emu_core atomiswave retroarch flycast false
     ;;
@@ -275,18 +280,24 @@ makeinstall_target() {
   add_es_system daphne
 
   ### Sega Dreamcast
-  add_emu_core dreamcast retroarch flycast2021 false
   case ${DEVICE} in
     RK35*|RK3326)
+      add_emu_core dreamcast retroarch flycast2021 false
       add_emu_core dreamcast retroarch flycast32 true
       add_emu_core dreamcast retroarch flycast false
       add_emu_core dreamcast flycast flycast-sa false
     ;;
+    RK3399)
+      add_emu_core dreamcast flycast flycast-sa false
+      add_emu_core dreamcast retroarch flycast true
+    ;;
     S922X)
+      add_emu_core dreamcast retroarch flycast2021 false
       add_emu_core dreamcast flycast flycast-sa true
       add_emu_core dreamcast retroarch flycast false
     ;;
     *)
+      add_emu_core dreamcast retroarch flycast2021 false
       add_emu_core dreamcast retroarch flycast true
       add_emu_core dreamcast flycast flycast-sa false
     ;;
@@ -481,18 +492,24 @@ makeinstall_target() {
   add_es_system msx2
 
   ### Sega Naomi
-  add_emu_core naomi retroarch flycast2021 false
   case ${DEVICE} in
     RK35*|RK3326)
+      add_emu_core naomi retroarch flycast2021 false
       add_emu_core naomi retroarch flycast32 true
       add_emu_core naomi retroarch flycast false
       add_emu_core naomi flycast flycast-sa false
     ;;
+    RK3399)
+      add_emu_core naomi flycast flycast-sa false
+      add_emu_core naomi retroarch flycast true
+    ;;
     S922X)
+      add_emu_core naomi retroarch flycast2021 false
       add_emu_core naomi flycast flycast-sa true
       add_emu_core naomi retroarch flycast false
     ;;
     *)
+      add_emu_core naomi retroarch flycast2021 false
       add_emu_core naomi retroarch flycast true
       add_emu_core naomi flycast flycast-sa false
     ;;
