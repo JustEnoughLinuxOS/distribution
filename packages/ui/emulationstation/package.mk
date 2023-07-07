@@ -3,12 +3,12 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="emulationstation"
-PKG_VERSION="d1e5064"
-PKG_GIT_CLONE_BRANCH="main"
+PKG_VERSION="e58ee0e289c860d02e9166df271bc67a731472e4"
+PKG_GIT_CLONE_BRANCH="sw_hp_switch"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/JustEnoughLinuxOS/emulationstation"
+PKG_SITE="https://github.com/brooksytech/emulationstation"
 PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="boost toolchain SDL2 freetype curl freeimage bash rapidjson SDL2_mixer fping p7zip alsa vlc drm_tool splash"
 PKG_NEED_UNPACK="busybox"
