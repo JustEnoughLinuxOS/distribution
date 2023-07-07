@@ -42,6 +42,9 @@ fi
                 sed -i '/^ScreenVSync=/c\ScreenVSync=1' /storage/.config/melonDS/melonDS.ini
         fi
 
+#Set OpenGL 3.3 on panfrost
+  export PAN_MESA_DEBUG=gl3,gofaster
+
 #Set QT Platform to Wayland
   export QT_QPA_PLATFORM=wayland
 
