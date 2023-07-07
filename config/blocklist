@@ -5,3 +5,4 @@ duckstation-lr #Libretro support removed from upstream.
 rpcs3-sa #Need to update to llvm 16 
 gzdoom-sa #will break build patch
 ryujinx-sa #broken on JELOS after build 1.1740.
+melonds-sa #Broken OpenGL renderer upstream
