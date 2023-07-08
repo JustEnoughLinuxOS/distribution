@@ -3,23 +3,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
 
-# Source predefined functions and variables
 . /etc/profile
-
-# Check headphone gpio at boot and set the correct output device
-HP_GPIO=$(cat /sys/class/gpio/gpio${DEVICE_JACK}/value)
-  case ${HP_GPIO} in
-    "1")
-      amixer cset name='Speaker Switch' ${DEVICE_PLAYBACK_PATH_HP}
-      amixer set 'Headphone' '67%'
-      set_setting "audio.device" "headphone"
-    ;;
-    *)
-      amixer cset name='Speaker Switch' ${DEVICE_PLAYBACK_PATH_SPK}
-      amixer set 'Headphone' '100%'
-      set_setting "audio.device" "speakers"
-    ;;
-  esac
 
 # Headphone sensing
 DEVICE="${DEVICE_HEADPHONE_DEV}"
