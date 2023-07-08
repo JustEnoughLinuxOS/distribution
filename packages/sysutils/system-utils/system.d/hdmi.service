@@ -1,0 +1,12 @@
+[Unit]
+Description=HDMI Sense
+Before=jelos.target
+
+[Service]
+Environment=HOME=/storage
+EnvironmentFile=/etc/profile
+ExecStart=/usr/bin/hdmi_sense
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
