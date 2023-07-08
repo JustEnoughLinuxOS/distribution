@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
+
+. /etc/profile
+
+# Set export GPIO for HDMI
+if [ ! -d "/sys/class/gpio/gpio${DEVICE_HDMI_GPIO}" ]; then
+  echo ${DEVICE_HDMI_GPIO} > /sys/class/gpio/export
+  echo in > /sys/class/gpio/gpio${DEVICE_HDMI_GPIO}/direction
+fi
+
+# Check HDMI plug state and switch to HDMI audo if true
+HDMI_VALUE=$(cat /sys/class/gpio/gpio${DEVICE_HDMI_GPIO}/value)
+  case ${HDMI_VALUE} in
+    "0")
+      sed -i 's/pcm "hw:0,0"/pcm "hw:1,0"'/ /storage/.config/asound.conf
+    ;;
+  esac

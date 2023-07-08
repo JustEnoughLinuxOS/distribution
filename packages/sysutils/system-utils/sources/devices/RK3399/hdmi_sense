@@ -1,0 +1,52 @@
+#!/bin/bash
+
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
+
+. /etc/profile
+
+DEVICE_HDMI_GPIO="54"
+
+# Set export GPIO for HDMI
+if [ ! -d "/sys/class/gpio/gpio${DEVICE_HDMI_GPIO}" ]; then
+  echo ${DEVICE_HDMI_GPIO} > /sys/class/gpio/export
+  echo in > /sys/class/gpio/gpio${DEVICE_HDMI_GPIO}/direction
+fi
+
+# Pull GPIO for Speaker / Headphone plugged
+if [ -d "/sys/class/gpio/gpio${DEVICE_JACK}" ]; then
+  HP_GPIO=$(cat /sys/class/gpio/gpio${DEVICE_JACK}/value)
+fi
+
+# Check HDMI plugged / unplugged, set audio output, restart Emulation Station
+HDMI_VALUE=$(cat /sys/class/gpio/gpio${DEVICE_HDMI_GPIO}/value)
+while true
+do
+    HDMI_NEW_VALUE=$(cat /sys/class/gpio/gpio${DEVICE_HDMI_GPIO}/value)
+
+    if test "${HDMI_VALUE}" != "${HDMI_NEW_VALUE}"
+    then
+      case ${HDMI_NEW_VALUE} in
+        "0") #HDMI plugged
+          sed -i 's/pcm "hw:0,0"/pcm "hw:1,0"/' /storage/.config/asound.conf
+        ;;
+        "1") #HDMI unpluagged
+          sed -i 's/pcm "hw:1,0"/pcm "hw:0,0"/' /storage/.config/asound.conf
+            case ${HP_GPIO} in
+              "1")
+                amixer set 'Headphone' '67%'
+                set_setting "audio.device" "headphone"
+              ;;
+              *)
+                amixer set 'Headphone' '100%'
+                set_setting "audio.device" "speakers"
+              ;;
+            esac
+        ;;
+      esac
+      systemctl restart weston
+
+      HDMI_VALUE=${HDMI_NEW_VALUE}
+    fi
+    sleep 5
+done
