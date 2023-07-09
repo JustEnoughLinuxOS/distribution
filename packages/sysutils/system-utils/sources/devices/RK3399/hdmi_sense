@@ -5,8 +5,6 @@
 
 . /etc/profile
 
-DEVICE_HDMI_GPIO="54"
-
 # Set export GPIO for HDMI
 if [ ! -d "/sys/class/gpio/gpio${DEVICE_HDMI_GPIO}" ]; then
   echo ${DEVICE_HDMI_GPIO} > /sys/class/gpio/export
@@ -34,11 +32,15 @@ do
           sed -i 's/pcm "hw:1,0"/pcm "hw:0,0"/' /storage/.config/asound.conf
             case ${HP_GPIO} in
               "1")
+                amixer cset name='Speaker Switch' ${DEVICE_PLAYBACK_PATH_HP}
                 amixer set 'Headphone' '67%'
+                amixer set 'Playback Polarity' Normal
                 set_setting "audio.device" "headphone"
               ;;
               *)
+                amixer cset name='Speaker Switch' ${DEVICE_PLAYBACK_PATH_SPK}
                 amixer set 'Headphone' '100%'
+                amixer set 'Playback Polarity' 'R Invert'
                 set_setting "audio.device" "speakers"
               ;;
             esac
