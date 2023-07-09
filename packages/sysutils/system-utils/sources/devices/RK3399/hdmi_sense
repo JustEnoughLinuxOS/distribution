@@ -11,16 +11,12 @@ if [ ! -d "/sys/class/gpio/gpio${DEVICE_HDMI_GPIO}" ]; then
   echo in > /sys/class/gpio/gpio${DEVICE_HDMI_GPIO}/direction
 fi
 
-# Pull GPIO for Speaker / Headphone plugged
-if [ -d "/sys/class/gpio/gpio${DEVICE_JACK}" ]; then
-  HP_GPIO=$(cat /sys/class/gpio/gpio${DEVICE_JACK}/value)
-fi
-
 # Check HDMI plugged / unplugged, set audio output, restart Emulation Station
 HDMI_VALUE=$(cat /sys/class/gpio/gpio${DEVICE_HDMI_GPIO}/value)
 while true
 do
     HDMI_NEW_VALUE=$(cat /sys/class/gpio/gpio${DEVICE_HDMI_GPIO}/value)
+    HP_GPIO=$(cat /sys/class/gpio/gpio${DEVICE_JACK}/value)
 
     if test "${HDMI_VALUE}" != "${HDMI_NEW_VALUE}"
     then
