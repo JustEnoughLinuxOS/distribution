@@ -31,14 +31,12 @@ pcm.dmixer  {
 }
 EOF
 
-if [ ! -e "/storage/.config/asound.state" ]
-then
-  cat <<EOF >/storage/.config/asound.state
+cat <<EOF >/storage/.config/asound.state
 state.rockchipes8316c {
 	control.1 {
 		iface CARD
 		name 'Headphones Jack'
-		value true
+		value false
 		comment {
 			access read
 			type BOOLEAN
@@ -48,8 +46,8 @@ state.rockchipes8316c {
 	control.2 {
 		iface MIXER
 		name 'Headphone Playback Volume'
-		value.0 2
-		value.1 2
+		value.0 3
+		value.1 3
 		comment {
 			access 'read write'
 			type INTEGER
@@ -57,15 +55,15 @@ state.rockchipes8316c {
 			range '0 - 3'
 			dbmin -4800
 			dbmax 0
-			dbvalue.0 -1200
-			dbvalue.1 -1200
+			dbvalue.0 0
+			dbvalue.1 0
 		}
 	}
 	control.3 {
 		iface MIXER
 		name 'Headphone Mixer Volume'
-		value.0 10
-		value.1 10
+		value.0 11
+		value.1 11
 		comment {
 			access 'read write'
 			type INTEGER
@@ -73,14 +71,14 @@ state.rockchipes8316c {
 			range '0 - 11'
 			dbmin -1200
 			dbmax 0
-			dbvalue.0 -150
-			dbvalue.1 -150
+			dbvalue.0 0
+			dbvalue.1 0
 		}
 	}
 	control.4 {
 		iface MIXER
 		name 'Playback Polarity'
-		value Normal
+		value 'R Invert'
 		comment {
 			access 'read write'
 			type ENUMERATED
@@ -94,8 +92,8 @@ state.rockchipes8316c {
 	control.5 {
 		iface MIXER
 		name 'DAC Playback Volume'
-		value.0 165
-		value.1 165
+		value.0 144
+		value.1 144
 		comment {
 			access 'read write'
 			type INTEGER
@@ -103,8 +101,8 @@ state.rockchipes8316c {
 			range '0 - 192'
 			dbmin -9999999
 			dbmax 0
-			dbvalue.0 -1350
-			dbvalue.1 -1350
+			dbvalue.0 -2400
+			dbvalue.1 -2400
 		}
 	}
 	control.6 {
@@ -208,7 +206,7 @@ state.rockchipes8316c {
 	control.15 {
 		iface MIXER
 		name 'ADC PGA Gain Volume'
-		value 8
+		value 7
 		comment {
 			access 'read write'
 			type INTEGER
@@ -216,7 +214,7 @@ state.rockchipes8316c {
 			range '0 - 10'
 			dbmin -350
 			dbmax 2400
-			dbvalue.0 1800
+			dbvalue.0 1600
 		}
 	}
 	control.16 {
@@ -280,12 +278,12 @@ state.rockchipes8316c {
 	control.21 {
 		iface MIXER
 		name 'ALC Capture Target Volume'
-		value 11
+		value 10
 		comment {
 			access 'read write'
 			type INTEGER
 			count 1
-			range '0 - 11'
+			range '0 - 10'
 			dbmin -1650
 			dbmax -150
 			dbvalue.0 -150
@@ -477,6 +475,56 @@ state.rockchipes8316c {
 		}
 	}
 }
+state.hdmisound {
+	control.1 {
+		iface PCM
+		name 'Playback Channel Map'
+		value.0 0
+		value.1 0
+		value.2 0
+		value.3 0
+		value.4 0
+		value.5 0
+		value.6 0
+		value.7 0
+		comment {
+			access read
+			type INTEGER
+			count 8
+			range '0 - 36'
+		}
+	}
+	control.2 {
+		iface PCM
+		name 'IEC958 Playback Mask'
+		value ffffffffffffffffffffffffffffffffffffffffffffffff0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+		comment {
+			access read
+			type IEC958
+			count 1
+		}
+	}
+	control.3 {
+		iface PCM
+		name 'IEC958 Playback Default'
+		value '0400000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+		comment {
+			access 'read write'
+			type IEC958
+			count 1
+		}
+	}
+	control.4 {
+		iface PCM
+		name ELD
+		value '0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+		comment {
+			access 'read volatile'
+			type BYTES
+			count 128
+		}
+	}
+}
 EOF
-  alsactl restore -f /storage/.config/asound.state
-fi
+
+alsactl restore -f /storage/.config/asound.state

@@ -5,6 +5,23 @@
 
 . /etc/profile
 
+# Check headphone gpio at boot and set the correct output device
+HP_GPIO=$(cat /sys/class/gpio/gpio${DEVICE_JACK}/value)
+  case ${HP_GPIO} in
+    "1")
+      amixer cset name='Speaker Switch' ${DEVICE_PLAYBACK_PATH_HP}
+      amixer set 'Headphone' '67%'
+      amixer set 'Playback Polarity' Normal
+      set_setting "audio.device" "headphone"
+    ;;
+    *)
+      amixer cset name='Speaker Switch' ${DEVICE_PLAYBACK_PATH_SPK}
+      amixer set 'Headphone' '100%'
+      amixer set 'Playback Polarity' 'R Invert'
+      set_setting "audio.device" "speakers"
+    ;;
+  esac
+
 # Headphone sensing
 DEVICE="${DEVICE_HEADPHONE_DEV}"
 
@@ -14,14 +31,16 @@ HP_ON='*(SW_HEADPHONE_INSERT), value 1*'
 evtest "${DEVICE}" | while read line; do
     case $line in
     (${HP_ON})
-    amixer cset name='Speaker Switch' ${DEVICE_PLAYBACK_PATH_HP}
-    amixer set 'Headphone' '67%'
-    set_setting "audio.device" "headphone"
+      amixer cset name='Speaker Switch' ${DEVICE_PLAYBACK_PATH_HP}
+      amixer set 'Headphone' '67%'
+      amixer set 'Playback Polarity' Normal
+      set_setting "audio.device" "headphone"
     ;;
     (${HP_OFF})
-    amixer cset name='Speaker Switch' ${DEVICE_PLAYBACK_PATH_SPK}
-    amixer set 'Headphone' '100%'
-    set_setting "audio.device" "speakers"
+      amixer cset name='Speaker Switch' ${DEVICE_PLAYBACK_PATH_SPK}
+      amixer set 'Headphone' '100%'
+      amixer set 'Playback Polarity' 'R Invert'
+      set_setting "audio.device" "speakers"
     ;;
     esac
 done
