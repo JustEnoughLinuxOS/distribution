@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="cemu-sa"
-PKG_VERSION="eda4cf4b241d56c5c16f6aa4d135b8a269676a76"
+PKG_VERSION="f1c200a"
 PKG_ARCH="x86_64"
 PKG_LICENSE="MPL-2.0"
 PKG_SITE="https://github.com/cemu-project/Cemu"
