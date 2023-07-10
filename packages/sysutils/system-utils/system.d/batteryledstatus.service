@@ -1,0 +1,12 @@
+[Unit]
+Description=Battery LED Status
+Before=jelos.target
+
+[Service]
+Environment=HOME=/storage
+EnvironmentFile=/etc/profile
+ExecStart=/usr/bin/battery_led_status
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

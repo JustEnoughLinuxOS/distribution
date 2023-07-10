@@ -35,3 +35,11 @@ then
 else
   nohup systemctl stop hdmi &
 fi
+
+if [ "${DEVICE_BATTERY_LED_STATUS}" == "true" ]
+then
+  tocon "Starting battery led status service..."
+  nohup systemctl start batteryledstatus &
+else
+  nohup systemctl stop batteryledstatus &
+fi
