@@ -165,9 +165,9 @@ function log() {
 		then
 			mkdir -p "$LOGSDIR"
 		fi
-		echo "${MYNAME}: $1" 2>&1 | tee -a ${LOGSDIR}/${LOGFILE}
+		echo "${MYNAME}: $*" 2>&1 | tee -a ${LOGSDIR}/${LOGFILE}
 	else
-		echo "${MYNAME}: $1"
+		echo "${MYNAME}: $*"
 	fi
 }
 
