@@ -1,8 +1,10 @@
+#!/bin/bash
+
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2020-present Fewtarius
 
 # Simple script to watch the battery capacity and
-# turn the power LED red when it reaches 25%
+# turn the power LED orange when it reaches 30%, red at 20%, and blinking red at 10%
 
 . /etc/profile
 
@@ -44,10 +46,10 @@ do
         sleep .5
       done
       continue
-    elif (( ${CAP} <= 25 ))
+    elif (( ${CAP} <= 20 ))
     then
       set_led red
-    elif (( ${CAP} <= 49 ))
+    elif (( ${CAP} <=  30 ))
     then
       set_led orange
     else
