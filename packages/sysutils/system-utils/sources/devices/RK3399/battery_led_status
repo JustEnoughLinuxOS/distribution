@@ -34,30 +34,36 @@ while true
 do
   CAP=$(cat /sys/class/power_supply/battery/capacity)
   STAT=$(cat /sys/class/power_supply/battery/status)
-  if [ ${STAT} == "Discharging" ]
+  ISDISABLED=$(get_setting powerled.disabled)
+  if [ "${ISDISABLED}" == "1" ]
   then
-    if (( ${CAP} <= 10 ))
+    set_led off
+  else
+    if [ ${STAT} == "Discharging" ]
     then
-      for ctr in $(seq 1 1 5)
-      do
+      if (( ${CAP} <= 10 ))
+      then
+        for ctr in $(seq 1 1 5)
+        do
+          set_led red
+          sleep .5
+          set_led off
+          sleep .5
+        done
+        continue
+      elif (( ${CAP} <= 20 ))
+      then
         set_led red
-        sleep .5
-        set_led off
-        sleep .5
-      done
-      continue
-    elif (( ${CAP} <= 20 ))
+      elif (( ${CAP} <=  30 ))
+      then
+        set_led orange
+      else
+        set_led green
+      fi
+    elif (( ${CAP} >= 95 ))
     then
-      set_led red
-    elif (( ${CAP} <=  30 ))
-    then
-      set_led orange
-    else
       set_led green
     fi
-  elif (( ${CAP} >= 95 ))
-  then
-    set_led green
+    sleep 15
   fi
-  sleep 15
 done

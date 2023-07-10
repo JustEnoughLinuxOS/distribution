@@ -15,6 +15,7 @@ DEVICE_HEADPHONE_DEV="/dev/input/by-path/platform-es8316-sound-event"
 DEVICE_HAS_HDMI=true
 DEVICE_HDMI_GPIO="54"
 DEVICE_BATTERY_LED_STATUS=true
+DEVICE_PWR_LED_CONTROL=true
 UI_SERVICE="weston.service"
 
 DEVICE_TEMP_SENSOR=("/sys/devices/virtual/thermal/thermal_zone0/temp" "/sys/devices/virtual/thermal/thermal_zone1/temp")
