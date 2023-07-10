@@ -53,7 +53,7 @@ function log() {
 			mkdir -p "$LOGSDIR"
 		fi
 		DATE=$(date +"%b %d %H:%M:%S")
-		echo "${DATE} ${MYNAME}: $1" 2>&1 >> ${LOGSDIR}/${LOGFILE}
+		echo "${DATE} ${MYNAME}: $*" 2>&1 >> ${LOGSDIR}/${LOGFILE}
 	fi
 }
 
@@ -79,23 +79,10 @@ function doexit() {
 
 ## This needs to be killed with fire.
 function get_game_setting() {
-	log $0 "Get Settings function (${1})"
-	#We look for the setting on the ROM first, if not found we search for platform and lastly we search globally
-	escaped_rom_name=$(echo "${ROM}" | sed -E 's|([][])|\\\1|g')
-	PAT="s|^${PLATFORM}\[\"${escaped_rom_name}\"\][\.-]${1}=\(.*\)|\1|p"
-	EES=$(sed -n "${PAT}" "${CONF}" | head -1)
-
-	if [ -z "${EES}" ]; then
-		PAT="s|^${PLATFORM}[\.-]${1}=\(.*\)|\1|p"
-		EES=$(sed -n "${PAT}" "${CONF}" | head -1)
-	fi
-
-	if [ -z "${EES}" ]; then
-		PAT="s|^global[\.-].*${1}=\(.*\)|\1|p"
-		EES=$(sed -n "${PAT}" "${CONF}" | head -1)
-	fi
-
+	log $0 "Get Settings function (\"${1}\" \"${PLATFORM}\" \"${ROM}\")"
+	EES=$(get_setting "${1}" "${PLATFORM}" "${ROM}")
 	( [ -z "${EES}" ] || [ "${EES}" == "auto" ] ) && EES="false"
+	log $0 "Setting: (${EES})"
 }
 
 
