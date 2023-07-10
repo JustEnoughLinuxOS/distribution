@@ -167,3 +167,6 @@ fi
 
 ### Revert the recent ES PowerSavingMode change.
 sed -i 's#<string name="PowerSaverMode".*$#<string name="PowerSaverMode" value="default"/>#g' /storage/.config/emulationstation/es_settings.cfg
+
+### Remove properties containing "auto" from the system config.
+sed -i "/^.*=auto/d" /storage/.config/system/configs/system.cfg
