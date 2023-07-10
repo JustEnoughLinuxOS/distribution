@@ -5,17 +5,10 @@
 
 . /etc/profile
 
-DEVICE_HDMI_GPIO="54"
-
 # Set export GPIO for HDMI
 if [ ! -d "/sys/class/gpio/gpio${DEVICE_HDMI_GPIO}" ]; then
   echo ${DEVICE_HDMI_GPIO} > /sys/class/gpio/export
   echo in > /sys/class/gpio/gpio${DEVICE_HDMI_GPIO}/direction
-fi
-
-# Pull GPIO for Speaker / Headphone plugged
-if [ -d "/sys/class/gpio/gpio${DEVICE_JACK}" ]; then
-  HP_GPIO=$(cat /sys/class/gpio/gpio${DEVICE_JACK}/value)
 fi
 
 # Check HDMI plugged / unplugged, set audio output, restart Emulation Station
@@ -23,6 +16,7 @@ HDMI_VALUE=$(cat /sys/class/gpio/gpio${DEVICE_HDMI_GPIO}/value)
 while true
 do
     HDMI_NEW_VALUE=$(cat /sys/class/gpio/gpio${DEVICE_HDMI_GPIO}/value)
+    HP_GPIO=$(cat /sys/class/gpio/gpio${DEVICE_JACK}/value)
 
     if test "${HDMI_VALUE}" != "${HDMI_NEW_VALUE}"
     then
@@ -34,11 +28,15 @@ do
           sed -i 's/pcm "hw:1,0"/pcm "hw:0,0"/' /storage/.config/asound.conf
             case ${HP_GPIO} in
               "1")
+                amixer cset name='Speaker Switch' ${DEVICE_PLAYBACK_PATH_HP}
                 amixer set 'Headphone' '67%'
+                amixer set 'Playback Polarity' Normal
                 set_setting "audio.device" "headphone"
               ;;
               *)
+                amixer cset name='Speaker Switch' ${DEVICE_PLAYBACK_PATH_SPK}
                 amixer set 'Headphone' '100%'
+                amixer set 'Playback Polarity' 'R Invert'
                 set_setting "audio.device" "speakers"
               ;;
             esac
