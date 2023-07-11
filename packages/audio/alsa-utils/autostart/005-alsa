@@ -31,6 +31,11 @@ then
 fi
 
 PREAMP=$(get_setting "audio.preamp" 2>/dev/null)
+if [ -z "${PREAMP}" ]
+then
+  PREAMP=50
+  set_setting audio.preamp ${PREAMP}
+fi
 amixer -M set Pre-Amp -- ${PREAMP}%
 
 VOL=$(get_setting "audio.volume" 2>/dev/null)

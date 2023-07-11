@@ -1,0 +1,69 @@
+#!/bin/bash
+
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2020-present Fewtarius
+
+# Simple script to watch the battery capacity and
+# turn the power LED orange when it reaches 30%, red at 20%, and blinking red at 10%
+
+. /etc/profile
+
+function set_led() {
+  case $1 in
+    red)
+      echo 0 > /sys/class/leds/battery_green/brightness
+      echo 1 > /sys/class/leds/battery_red/brightness
+    ;;
+    green)
+      echo 1 > /sys/class/leds/battery_green/brightness
+      echo 0 > /sys/class/leds/battery_red/brightness
+    ;;
+    orange)
+      echo 1 > /sys/class/leds/battery_green/brightness
+      echo 1 > /sys/class/leds/battery_red/brightness
+    ;;
+    off)
+      echo 0 > /sys/class/leds/battery_green/brightness
+      echo 0 > /sys/class/leds/battery_red/brightness
+    ;;
+  esac
+}
+
+
+while true
+do
+  CAP=$(cat /sys/class/power_supply/battery/capacity)
+  STAT=$(cat /sys/class/power_supply/battery/status)
+  ISDISABLED=$(get_setting powerled.disabled)
+  if [ "${ISDISABLED}" == "1" ]
+  then
+    set_led off
+  else
+    if [ ${STAT} == "Discharging" ]
+    then
+      if (( ${CAP} <= 10 ))
+      then
+        for ctr in $(seq 1 1 5)
+        do
+          set_led red
+          sleep .5
+          set_led off
+          sleep .5
+        done
+        continue
+      elif (( ${CAP} <= 20 ))
+      then
+        set_led red
+      elif (( ${CAP} <=  30 ))
+      then
+        set_led orange
+      else
+        set_led green
+      fi
+    elif (( ${CAP} >= 95 ))
+    then
+      set_led green
+    fi
+    sleep 15
+  fi
+done

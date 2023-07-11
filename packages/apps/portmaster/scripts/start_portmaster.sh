@@ -15,6 +15,7 @@ cd /storage/.config/PortMaster
 
 #Grab the latest PortMaster.sh script
 cp /usr/config/PortMaster/PortMaster.sh PortMaster.sh
+cp /usr/config/PortMaster/control.txt control.txt
 
 #Use our gamecontrollerdb.txt
 rm gamecontrollerdb.txt
@@ -42,6 +43,8 @@ fi
 cp /storage/.config/PortMaster/control.txt /storage/roms/ports/PortMaster/control.txt
 cp /storage/.config/PortMaster/gptokeyb /storage/roms/ports/PortMaster/gptokeyb
 cp /storage/.config/PortMaster/gamecontrollerdb.txt /storage/roms/ports/PortMaster/gamecontrollerdb.txt
+
+cp /usr/bin/oga_controls* /storage/roms/ports/PortMaster/
 
 #Delete and refrence to PortMaster.sh, we only want to use ours.
 find /storage/roms/ports -type f -name "PortMaster.sh" -delete

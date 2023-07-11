@@ -46,7 +46,7 @@ case "${DEVICE}" in
   ;;
   RK3399)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 pcsx_rearmed-lr"
-    PKG_EMUS+=" aethersx2-sa dolphin-sa drastic-sa duckstation-sa mupen64plus-sa box64 scummvmsa             \
+    PKG_EMUS+=" aethersx2-sa dolphin-sa drastic-sa duckstation-sa melonds-sa mupen64plus-sa box64 scummvmsa   \
                yabasanshiro-sa portmaster"
     LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr dolphin-lr flycast-lr mame-lr pcsx_rearmed-lr"
     PKG_RETROARCH+=" retropie-shaders"
@@ -178,14 +178,19 @@ makeinstall_target() {
   add_es_system atarist
 
   ## Sammy Atomiswave
-  add_emu_core atomiswave retroarch flycast2021 false
   case ${DEVICE} in
     RK35*|RK3326)
+      add_emu_core atomiswave retroarch flycast2021 false
       add_emu_core atomiswave retroarch flycast32 true
       add_emu_core atomiswave retroarch flycast false
       add_emu_core atomiswave flycast flycast-sa false
     ;;
+    RK3399)
+      add_emu_core atomiswave flycast flycast-sa false
+      add_emu_core atomiswave retroarch flycast true
+    ;;
     S922X)
+      add_emu_core atomiswave retroarch flycast2021 false
       add_emu_core atomiswave flycast flycast-sa true
       add_emu_core atomiswave retroarch flycast false
     ;;
@@ -275,18 +280,24 @@ makeinstall_target() {
   add_es_system daphne
 
   ### Sega Dreamcast
-  add_emu_core dreamcast retroarch flycast2021 false
   case ${DEVICE} in
     RK35*|RK3326)
+      add_emu_core dreamcast retroarch flycast2021 false
       add_emu_core dreamcast retroarch flycast32 true
       add_emu_core dreamcast retroarch flycast false
       add_emu_core dreamcast flycast flycast-sa false
     ;;
+    RK3399)
+      add_emu_core dreamcast flycast flycast-sa false
+      add_emu_core dreamcast retroarch flycast true
+    ;;
     S922X)
+      add_emu_core dreamcast retroarch flycast2021 false
       add_emu_core dreamcast flycast flycast-sa true
       add_emu_core dreamcast retroarch flycast false
     ;;
     *)
+      add_emu_core dreamcast retroarch flycast2021 false
       add_emu_core dreamcast retroarch flycast true
       add_emu_core dreamcast flycast flycast-sa false
     ;;
@@ -366,6 +377,15 @@ makeinstall_target() {
   add_emu_core gbc retroarch mgba false
   add_emu_core gbc retroarch vbam false
   add_es_system gbc
+
+  ### Nintendo GameBoy Color Hacks
+  add_emu_core gbch retroarch gambatte true
+  add_emu_core gbch retroarch sameboy false
+  add_emu_core gbch retroarch gearboy false
+  add_emu_core gbch retroarch tgbdual false
+  add_emu_core gbch retroarch mgba false
+  add_emu_core gbch retroarch vbam false
+  add_es_system gbch
 
   ### Nintendo GameCube
   case ${DEVICE} in
@@ -472,18 +492,24 @@ makeinstall_target() {
   add_es_system msx2
 
   ### Sega Naomi
-  add_emu_core naomi retroarch flycast2021 false
   case ${DEVICE} in
     RK35*|RK3326)
+      add_emu_core naomi retroarch flycast2021 false
       add_emu_core naomi retroarch flycast32 true
       add_emu_core naomi retroarch flycast false
       add_emu_core naomi flycast flycast-sa false
     ;;
+    RK3399)
+      add_emu_core naomi flycast flycast-sa false
+      add_emu_core naomi retroarch flycast true
+    ;;
     S922X)
+      add_emu_core naomi retroarch flycast2021 false
       add_emu_core naomi flycast flycast-sa true
       add_emu_core naomi retroarch flycast false
     ;;
     *)
+      add_emu_core naomi retroarch flycast2021 false
       add_emu_core naomi retroarch flycast true
       add_emu_core naomi flycast flycast-sa false
     ;;
@@ -526,13 +552,18 @@ makeinstall_target() {
   add_es_system n64
 
   ### Nintendo DS
-  case ${TARGET_ARCH} in
-    x86_64)
+  case ${DEVICE} in
+    AMD64)
       add_emu_core nds retroarch melonds true
       add_emu_core nds retroarch desmume false
       add_emu_core nds melonds melonds-sa false
     ;;
-    aarch64)
+    RK3399)
+      add_emu_core nds drastic drastic-sa true
+      add_emu_core nds retroarch melonds false
+      add_emu_core nds melonds melonds-sa false
+    ;;
+    *)
       add_emu_core nds drastic drastic-sa true
       add_emu_core nds retroarch melonds false
     ;;
@@ -601,10 +632,15 @@ makeinstall_target() {
       add_emu_core psx retroarch beetle_psx false
       add_emu_core psx Duckstation duckstation-sa false
     ;;
-    RK3*)
+    RK3399|RK3588)
       add_emu_core psx retroarch pcsx_rearmed32 true
       add_emu_core psx retroarch pcsx_rearmed false
       add_emu_core psx retroarch beetle_psx false
+      add_emu_core psx Duckstation duckstation-sa false
+    ;;
+    RK3326|RK3566)
+      add_emu_core psx retroarch pcsx_rearmed32 true
+      add_emu_core psx retroarch pcsx_rearmed false
       add_emu_core psx Duckstation duckstation-sa false
     ;;
   esac
