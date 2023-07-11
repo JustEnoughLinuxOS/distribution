@@ -40,7 +40,7 @@ PKG_MESON_OPTS_TARGET="-Dbackend-drm=true \
                        -Ddemo-clients=false \
                        -Dsimple-clients=[] \
                        -Dresize-pool=false \
-                       -Dwcap-decode=false \
+                       -Dwcap-decode=true \
                        -Dtest-junit-xml=false \
                        -Dtest-skip-is-failure=false \
                        -Dtest-gl-renderer=false \
