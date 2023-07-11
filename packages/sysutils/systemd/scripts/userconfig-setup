@@ -12,7 +12,7 @@ then
   # Copy config files, but don't overwrite.  Only run if /storage is fresh
   rsync -a --ignore-existing --exclude={es_features.cfg,es_systems.cfg} /usr/config/* /storage/.config/ >/var/log/configure.log 2>&1
 
-  if [ -d "/usr/lib/autostart/quirks/"${QUIRK_DEVICE}"/config" ]
+  if [ -d "/usr/lib/autostart/quirks/${QUIRK_DEVICE}/config" ]
   then
     rsync -a --exclude={es_features.cfg,es_systems.cfg} /usr/lib/autostart/quirks/"${QUIRK_DEVICE}"/config/* /storage/.config/ >>/var/log/configure.log 2>&1
   fi
