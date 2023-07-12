@@ -1,5 +1,5 @@
 PKG_NAME="mupen64plus-sa-rsp-cxd4"
-PKG_VERSION="b69e7de60c634619c27aa785e9f59f7b1602818e"
+PKG_VERSION="0a4e30f56033396e3ba47ec0fdd7acea3522362a"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/mupen64plus/mupen64plus-rsp-cxd4"
 PKG_URL="${PKG_SITE}.git"

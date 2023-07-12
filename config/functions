@@ -1775,7 +1775,7 @@ clean_es_cache() {
 add_emu_core() {
   if [ ! -d "${ESTMP}" ]
   then
-    mkdir "${ESTMP}"
+    mkdir -p "${ESTMP}"
   fi
 
   # Schema: emulator|core|true/false
