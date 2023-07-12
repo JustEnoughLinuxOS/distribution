@@ -24,19 +24,35 @@ get_setting() {
       return
     else
       ### If not, check to see if we have a system setting.
-      awk -F: '/^'"${2}.${1}"'=/ { st = index($0,"=");print substr($0,st+1);exit}' ${J_CONF}
+      LOCAL=$(awk -F: '/^'"${2}.${1}"'=/ { st = index($0,"=");print substr($0,st+1);exit}' ${J_CONF})
+      if [ ! -z "${LOCAL}" ]
+      then
+        echo ${LOCAL}
+        return
+      fi
+    fi
+  fi
+
+  if [ -z "${3}" ] && [ ! -z "${2}" ]
+  then
+    ### Check to see if we have a system setting.
+    LOCAL=$(awk -F: '/^'"${2}.${1}"'=/ {  st = index($0,"=");print substr($0,st+1);exit}' ${J_CONF})
+    if [ ! -z "${LOCAL}" ]
+    then
+      echo ${LOCAL}
       return
     fi
-  elif [ -z "${3}" ] && [ ! -z "${2}" ]
-  then
-      ### Check to see if we have a system setting.
-      awk -F: '/^'"${2}.${1}"'=/ {  st = index($0,"=");print substr($0,st+1);exit}' ${J_CONF}
-      return
-  else
-    ### Check to see if we have a global setting
-    awk -F: '/^'"${1}"='/ { st = index($0,"=");print substr($0,st+1);exit}' ${J_CONF}
-    return
   fi
+
+  ### Check to see if we have a global setting and account for legacy "global."
+  LOCAL=$(awk -F: '/^'"${1}"='/ { st = index($0,"=");print substr($0,st+1);exit}' ${J_CONF})
+  if [ -z "${LOCAL}" ]
+  then
+    awk -F: '/^global.'"${1}"='/ { st = index($0,"=");print substr($0,st+1);exit}' ${J_CONF}
+  else
+    echo ${LOCAL}
+  fi
+  return
 }
 
 del_setting() {
