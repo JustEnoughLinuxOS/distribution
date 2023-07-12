@@ -105,7 +105,7 @@ wake_events() {
   then
     return 0
   fi
-  for device in $(find /sys/devices/pci* -type f -name wakeup 2>/dev/null)
+  for device in $(find /sys/devices/{platform,pci*} -type f -name wakeup 2>/dev/null)
   do
     echo ${1} >${device} 2>/dev/null
   done
