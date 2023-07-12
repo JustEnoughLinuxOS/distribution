@@ -638,7 +638,7 @@ makeinstall_target() {
       add_emu_core psx retroarch beetle_psx false
       add_emu_core psx Duckstation duckstation-sa false
     ;;
-    RK3326|RK3566)
+    RK3326|RK3566*)
       add_emu_core psx retroarch pcsx_rearmed32 true
       add_emu_core psx retroarch pcsx_rearmed false
       add_emu_core psx Duckstation duckstation-sa false
