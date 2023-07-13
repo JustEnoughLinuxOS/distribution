@@ -13,23 +13,23 @@ PKG_TOOLCHAIN="manual"
 
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+  PKG_MAKE_OPTS_TARGET+=" USE_GLES=0"
 fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+  PKG_MAKE_OPTS_TARGET+=" USE_GLES=1"
 fi
 
 make_target() {
   case ${ARCH} in
     arm|aarch64)
-      export HOST_CPU=aarch64
       BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
-      export USE_GLES=1
-      export NEON=1
+      export HOST_CPU=aarch64
+      PKG_MAKE_OPTS_TARGET+=" NEON=1"
     ;;
     x86_64)
       export HOST_CPU=x86_64
-      export USE_GLES=0
     ;;
   esac
   export NEW_DYNAREC=1

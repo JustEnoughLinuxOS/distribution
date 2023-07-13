@@ -16,10 +16,12 @@ esac
 
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+  PKG_MAKE_OPTS_TARGET+=" USE_GLES=0"
 fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+  PKG_MAKE_OPTS_TARGET+=" USE_GLES=1"
 fi
 
 PKG_MAKE_OPTS_TARGET+="cxd4VIDEO=1"
@@ -29,12 +31,10 @@ make_target() {
     arm|aarch64)
       export HOST_CPU=aarch64
       BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
-      export USE_GLES=1
       CPPFLAGS="-DUSE_SSE2NEON"
     ;;
     x86_64)
       export HOST_CPU=x86_64
-      export USE_GLES=0
     ;;
   esac
   export APIDIR=${SYSROOT_PREFIX}/usr/local/include/mupen64plus/src
