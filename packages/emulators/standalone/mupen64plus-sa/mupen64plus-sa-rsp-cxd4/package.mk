@@ -22,12 +22,6 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
 fi
 
- if [ "${VULKAN_SUPPORT}" = "no" ]; then
-   PKG_MAKE_OPTS_TARGET+="HLEVIDEO=1"
- else
-   PKG_MAKE_OPTS_TARGET+="HLEVIDEO=0"
-fi
-
 make_target() {
   case ${ARCH} in
     arm|aarch64)
@@ -48,6 +42,7 @@ make_target() {
   export V=1
   export VC=0
   make -C projects/unix clean
+  PKG_MAKE_OPTS_TARGET+="HLEVIDEO=1"
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
   if [ "${DEVICE}" = "AMD64" ]; then
     SUFFIX="-sse2"
