@@ -2,7 +2,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="retroarch-joypads"
-PKG_VERSION="ce8c5441884fffa1872a7de218157f23e15591e9"
+PKG_VERSION="83a6184dd201b5297f0c7440a081237ed0cb1fa7"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/libretro/retroarch-joypad-autoconfig"
 PKG_URL="${PKG_SITE}.git"

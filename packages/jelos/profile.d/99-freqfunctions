@@ -56,14 +56,28 @@ set_cpu_gov() {
 set_dmc_gov() {
   if [ -e "${DMC_FREQ}/governor" ]
   then
-    echo $1 >${DMC_FREQ}/governor 2>/dev/null || echo dmc_$1 >${DMC_FREQ}/governor 2>/dev/null
+    for governor in $1 dmc_$1 simple_$1
+    do
+      echo $1 >${DMC_FREQ}/governor 2>/dev/null || echo dmc_$1 >${DMC_FREQ}/governor 2>/dev/null
+      if [ "$?" = 0 ]
+      then
+        return
+      fi
+   done
   fi
 }
 
 set_gpu_gov() {
   if [ -e "${GPU_FREQ}/governor" ]
   then
-    echo $1 >${GPU_FREQ}/governor 2>/dev/null || echo dmc_$1 >${GPU_FREQ}/governor 2>/dev/null
+    for governor in $1 dmc_$1 simple_$1
+    do
+      echo $1 >${GPU_FREQ}/governor 2>/dev/null
+      if [ "$?" = 0 ]
+      then
+        return
+      fi
+   done
   fi
 }
 
@@ -88,15 +102,15 @@ performance() {
 ondemand() {
   set_cpu_gov ondemand
   set_amdgpu_perf auto
-  set_gpu_gov simple_ondemand
-  set_dmc_gov simple_ondemand
+  set_gpu_gov ondemand
+  set_dmc_gov ondemand
 }
 
 schedutil() {
   set_cpu_gov schedutil
   set_amdgpu_perf auto
-  set_gpu_gov simple_ondemand
-  set_dmc_gov simple_ondemand
+  set_gpu_gov ondemand
+  set_dmc_gov ondemand
 }
 
 powersave() {
