@@ -55,7 +55,7 @@ make_target() {
     SUFFIX=""
   fi
   cp ${PKG_BUILD}/projects/unix/mupen64plus-rsp-cxd4${SUFFIX}.so ${PKG_BUILD}/projects/unix/mupen64plus-rsp-cxd4-base.so
-  export APIDIR=${SYSROOT_PREFIX}/usr/local/include/simple64/src
+  export APIDIR=${SYSROOT_PREFIX}/usr/local/include/simple64
   PKG_MAKE_OPTS_TARGET+="cxd4VIDEO=1 HLEVIDEO=0"
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
   cp ${PKG_BUILD}/projects/unix/mupen64plus-rsp-cxd4${SUFFIX}.so ${PKG_BUILD}/projects/unix/mupen64plus-rsp-cxd4-simple.so
