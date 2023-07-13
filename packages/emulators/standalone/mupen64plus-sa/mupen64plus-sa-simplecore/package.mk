@@ -49,7 +49,8 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/local/lib
   cp ${PKG_BUILD}/build/libmupen64plus.so ${INSTALL}/usr/local/lib/libsimple64.so.2
   chmod 644 ${INSTALL}/usr/local/lib/libsimple64.so.2
+  rm -rf ${SYSROOT_PREFIX}/usr/local/include/simple64
   mkdir -p ${SYSROOT_PREFIX}/usr/local/include/simple64
-  cp -r ${PKG_BUILD}/src ${SYSROOT_PREFIX}/usr/local/include/simple64/
-  find ${PKG_BUILD}/src -name "*.h" -exec cp \{} ${SYSROOT_PREFIX}/usr/local/include/simple64/src \;
+  cp -r ${PKG_BUILD}/src/* ${SYSROOT_PREFIX}/usr/local/include/simple64/
+  mv ${PKG_BUILD}/src/api/m64p_*.h ${SYSROOT_PREFIX}/usr/local/include/simple64/
 }

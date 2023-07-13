@@ -22,7 +22,11 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
 fi
 
-PKG_MAKE_OPTS_TARGET+="cxd4VIDEO=1"
+ if [ "${VULKAN_SUPPORT}" = "no" ]; then
+   PKG_MAKE_OPTS_TARGET+="HLEVIDEO=1"
+ else
+   PKG_MAKE_OPTS_TARGET+="HLEVIDEO=0"
+fi
 
 make_target() {
   case ${ARCH} in
@@ -37,7 +41,7 @@ make_target() {
       export USE_GLES=0
     ;;
   esac
-  export APIDIR=${SYSROOT_PREFIX}/usr/local/include/mupen64plus/src
+  export APIDIR=${SYSROOT_PREFIX}/usr/local/include/mupen64plus
   export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -pthread"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
   export CROSS_COMPILE="${TARGET_PREFIX}"
@@ -52,6 +56,7 @@ make_target() {
   fi
   cp ${PKG_BUILD}/projects/unix/mupen64plus-rsp-cxd4${SUFFIX}.so ${PKG_BUILD}/projects/unix/mupen64plus-rsp-cxd4-base.so
   export APIDIR=${SYSROOT_PREFIX}/usr/local/include/simple64/src
+  PKG_MAKE_OPTS_TARGET+="cxd4VIDEO=1 HLEVIDEO=0"
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
   cp ${PKG_BUILD}/projects/unix/mupen64plus-rsp-cxd4${SUFFIX}.so ${PKG_BUILD}/projects/unix/mupen64plus-rsp-cxd4-simple.so
 }

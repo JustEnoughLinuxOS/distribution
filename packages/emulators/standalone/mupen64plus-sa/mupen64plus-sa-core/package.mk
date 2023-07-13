@@ -51,9 +51,10 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/local/share/mupen64plus
   cp ${PKG_BUILD}/data/* ${INSTALL}/usr/local/share/mupen64plus
   chmod 0644 ${INSTALL}/usr/local/share/mupen64plus/*
+  rm -rf ${SYSROOT_PREFIX}/usr/local/include/mupen64plus/
   mkdir -p ${SYSROOT_PREFIX}/usr/local/include/mupen64plus
-  cp -r ${PKG_BUILD}/src ${SYSROOT_PREFIX}/usr/local/include/mupen64plus/
-  find ${PKG_BUILD}/src -name "*.h" -exec cp \{} ${SYSROOT_PREFIX}/usr/local/include/mupen64plus/src \;
+  cp -r ${PKG_BUILD}/src/* ${SYSROOT_PREFIX}/usr/local/include/mupen64plus/
+  mv ${PKG_BUILD}/src/api/m64p_*.h ${SYSROOT_PREFIX}/usr/local/include/mupen64plus/
 
   if [ -e "${PKG_DIR}/config/${DEVICE}/mupen64plus.cfg" ]
   then
