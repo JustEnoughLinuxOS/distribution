@@ -13,23 +13,23 @@ PKG_TOOLCHAIN="manual"
 
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
-  PKG_MAKE_OPTS_TARGET+=" USE_GLES=0"
 fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-  PKG_MAKE_OPTS_TARGET+=" USE_GLES=1"
 fi
 
 make_target() {
   case ${ARCH} in
     arm|aarch64)
-      BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
       export HOST_CPU=aarch64
-      PKG_MAKE_OPTS_TARGET+=" NEON=1"
+      BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
+      export USE_GLES=1
+      export NEON=1
     ;;
     x86_64)
       export HOST_CPU=x86_64
+      export USE_GLES=0
     ;;
   esac
   export NEW_DYNAREC=1
@@ -51,9 +51,10 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/local/share/mupen64plus
   cp ${PKG_BUILD}/data/* ${INSTALL}/usr/local/share/mupen64plus
   chmod 0644 ${INSTALL}/usr/local/share/mupen64plus/*
+  rm -rf ${SYSROOT_PREFIX}/usr/local/include/mupen64plus/
   mkdir -p ${SYSROOT_PREFIX}/usr/local/include/mupen64plus
-  cp -r ${PKG_BUILD}/src ${SYSROOT_PREFIX}/usr/local/include/mupen64plus/
-  find ${PKG_BUILD}/src -name "*.h" -exec cp \{} ${SYSROOT_PREFIX}/usr/local/include/mupen64plus/src \;
+  cp -r ${PKG_BUILD}/src/* ${SYSROOT_PREFIX}/usr/local/include/mupen64plus/
+  mv ${PKG_BUILD}/src/api/m64p_*.h ${SYSROOT_PREFIX}/usr/local/include/mupen64plus/
 
   if [ -e "${PKG_DIR}/config/${DEVICE}/mupen64plus.cfg" ]
   then
