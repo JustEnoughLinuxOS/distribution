@@ -1826,7 +1826,7 @@ mk_system_doc() {
       cat ${DOCTMP}/${system}:emulators.tmp >>${SYSDOC}.tmp
     fi
     echo "|" >>${SYSDOC}.tmp
-    cat ${SYSDOC}.tmp | sort >${SYSDOC}
+    cat ${SYSDOC}.tmp | sort >>${SYSDOC}
     rm -f ${SYSDOC}.tmp
   done
 }
