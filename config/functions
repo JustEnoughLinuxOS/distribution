@@ -1797,9 +1797,7 @@ EOF
 }
 
 add_system_doc() {
-  cat <<EOF >>${DOCTMP}/${1}:system.tmp
-|${SYSTEM_MANUFACTURER}|${SYSTEM_FULLNAME} (${SYSTEM_NAME})|${SYSTEM_RELEASE}|${SYSTEM_PATH}|${SYSTEM_EXTENSION}|Emulator and Core|
-EOF
+  echo -n "|${SYSTEM_MANUFACTURER}|${SYSTEM_FULLNAME} (${SYSTEM_NAME})|${SYSTEM_RELEASE}|${SYSTEM_PATH}|${SYSTEM_EXTENSION}|" >>${DOCTMP}/${1}:system.tmp
 }
 
 add_emu_doc() {
@@ -1807,9 +1805,7 @@ add_emu_doc() {
   then
     mkdir -p "${DOCTMP}"
   fi
-  cat <<EOF >>${DOCTMP}/${1}:emulators.tmp
-||||||${2}: ${3}|
-EOF
+  echo -n "${2}: ${3}\n" >>${DOCTMP}/${1}:emulators.tmp
 }
 
 mk_system_doc() {
@@ -1820,6 +1816,7 @@ mk_system_doc() {
     then
       cat ${DOCTMP}/${system}:emulators.tmp >>${SYSDOC}
     fi
+    echo "|" >>${SYSDOC}
   done
 }
 
