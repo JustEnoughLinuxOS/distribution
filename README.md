@@ -82,19 +82,25 @@ limitations under the License.
 * External services are disabled by default in stable builds.  When enabled, the username for ssh and samba access is "root".  The root password is generated during every boot, it can be found in the System Settings menu.
 
 ## Documentation
-* [Home](https://github.com/JustEnoughLinuxOS/distribution/wiki)
-* [Donating to JELOS](https://github.com/JustEnoughLinuxOS/distribution/wiki/Donating-to-JELOS)
-* [Frequently asked Questions](https://github.com/JustEnoughLinuxOS/distribution/wiki/Frequently-Asked-Questions)
-* [HotKeys](https://github.com/JustEnoughLinuxOS/distribution/wiki/Hotkeys)
-* [Emulators and Game Engines](https://github.com/JustEnoughLinuxOS/distribution/wiki/JELOS-emulators-and-game-engines)
-* [Moonlight Game Streaming](https://github.com/JustEnoughLinuxOS/distribution/wiki/Moonlight-Game-Streaming)
-* [Performance and Battery Life Optimizations](https://github.com/JustEnoughLinuxOS/distribution/wiki/Performance-and-Battery-Life-Optimizations)
-* [Using Cloud Drives](https://github.com/JustEnoughLinuxOS/distribution/wiki/Using-Cloud-Drives)
-* [Tailscale VPN](https://github.com/JustEnoughLinuxOS/distribution/wiki/Tailscale-VPN)
-* [Wireguard VPN](https://github.com/JustEnoughLinuxOS/distribution/wiki/WireGuard-VPN)
 
-## Contributing
-* [Developing and Building JELOS](https://github.com/JustEnoughLinuxOS/distribution/blob/dev/BUILDING.md)
+### Documentation For Developers
+* [Adding Hardware Quirks](/documentation/DEVEL_ADD_HARDWARE_QUIRKS.md)
+* [Building The Distribution](/documentation/DEVEL_BUILDING_JELOS.md)
+* [Creating Packages](/documentation/DEVEL_CREATING_PACKAGES.md)
+
+### Documentation For Everyone
+* [Donating to JELOS](/documentation/GENERAL_DONATING_TO_JELOS.md)
+* [Frequently Asked Questions](/documentation/GENERAL_FREQUENTLY_ASKED_QUESTIONS.md)
+* [Hotkeys and Button Codes](/documentation/GENERAL_HOTKEYS_AND_BUTTON_CODES.md)
+* [Device Specific Documentation](/documentation/PER_DEVICE_DOCUMENTATION)
+
+### Using JELOS
+* [Setting Up Cloud Drives](/documentation/SETUP_CLOUD_DRIVES.md)
+* [Game Engines and Launch Files](/documentation/SETUP_GAME_ENGINES_AND_LAUNCH_FILES.md)
+* [Configuring Moonlight Streaming](/documentation/SETUP_MOONLIGHT_STREAMING.md)
+* [Setting Up P2P Networking With ZeroTier](/documentation/SETUP_P2P_ZEROTIER.md)
+* [Configure TailScale VPN](/documentation/SETUP_VPN_TAILSCALE.md)
+* [Setting Up Wireguard VPN](/documentation/SETUP_VPN_WIREGUARD.md)
 
 ## Credits
 Like any Linux distribution, this project is not the work of one person.  It is the work of many persons all over the world who have developed the open source bits without which this project could not exist.  Special thanks to CoreELEC, LibreELEC, and to developers and contributors across the open source community.
