@@ -1820,12 +1820,14 @@ add_emu_doc() {
 mk_system_doc() {
   for system in $(ls ${DOCTMP}/ | awk 'BEGIN {FS=":"} {print $1}' | sort | uniq)
   do
-    cat ${DOCTMP}/${system}:system.tmp >>${SYSDOC}
+    cat ${DOCTMP}/${system}:system.tmp >>${SYSDOC}.tmp
     if [ -e "${DOCTMP}/${system}:emulators.tmp" ]
     then
-      cat ${DOCTMP}/${system}:emulators.tmp >>${SYSDOC}
+      cat ${DOCTMP}/${system}:emulators.tmp >>${SYSDOC}.tmp
     fi
-    echo "|" >>${SYSDOC}
+    echo "|" >>${SYSDOC}.tmp
+    cat ${SYSDOC}.tmp | sort >${SYSDOC}
+    rm -f ${SYSDOC}.tmp
   done
 }
 
