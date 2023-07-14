@@ -86,13 +86,17 @@ limitations under the License.
 ### Documentation For Developers
 * [Adding Hardware Quirks](/documentation/DEVEL_ADD_HARDWARE_QUIRKS.md)
 * [Building The Distribution](/documentation/DEVEL_BUILDING_JELOS.md)
+* [Contributor Code of Conduct](/CODE_OF_CONDUCT.md)
+* [Contributing to JELOS](/CONTRIBUTING.md)
 * [Creating Packages](/documentation/DEVEL_CREATING_PACKAGES.md)
+* [Pull Request Template](/PULL_REQUEST_TEMPLATE.md)
 
 ### Documentation For Everyone
+* [Installation and Device Support](https://github.com/JustEnoughLinuxOS/distribution/tree/main#readme)
+* [Device Specific Documentation](/documentation/PER_DEVICE_DOCUMENTATION)
 * [Donating to JELOS](/documentation/GENERAL_DONATING_TO_JELOS.md)
 * [Frequently Asked Questions](/documentation/GENERAL_FREQUENTLY_ASKED_QUESTIONS.md)
 * [Hotkeys and Button Codes](/documentation/GENERAL_HOTKEYS_AND_BUTTON_CODES.md)
-* [Device Specific Documentation](/documentation/PER_DEVICE_DOCUMENTATION)
 
 ### Using JELOS
 * [Setting Up Cloud Drives](/documentation/SETUP_CLOUD_DRIVES.md)
