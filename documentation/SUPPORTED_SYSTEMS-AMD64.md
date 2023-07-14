@@ -4,8 +4,6 @@
 # Supported Systems Emulators and Cores
 This document describes all available systems emulators and cores available for the device.
 
-#
-
 |Manufacturer|System|Release Date|Games Path|Supported Extensions|Emulator / Core|
 |----|----|----|----|----|----|
 |Panasonic|3DO (3do)|1993|/storage/roms/3do|.iso .ISO .bin .BIN .chd .CHD .cue .CUE|<p>retroarch: opera</p>|
