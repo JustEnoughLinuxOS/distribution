@@ -1805,7 +1805,7 @@ add_emu_doc() {
   then
     mkdir -p "${DOCTMP}"
   fi
-  echo -n "${2}: ${3}\n" >>${DOCTMP}/${1}:emulators.tmp
+  echo -n "<p>${2}: ${3}</p>" >>${DOCTMP}/${1}:emulators.tmp
 }
 
 mk_system_doc() {
