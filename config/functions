@@ -1808,7 +1808,13 @@ add_emu_doc() {
   then
     mkdir -p "${DOCTMP}"
   fi
-  echo -n "**${2}:** ${3}<br>" >>${DOCTMP}/${1}:emulators.tmp
+  if [ "${4}" = "true" ]
+  then
+    DEFAULT=" (default)"
+  else
+    unset DEFAULT
+  fi
+  echo -n "**${2}:** ${3}${DEFAULT}<br>" >>${DOCTMP}/${1}:emulators.tmp
 }
 
 mk_system_doc() {
