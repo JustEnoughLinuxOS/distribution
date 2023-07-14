@@ -1784,13 +1784,16 @@ start_system_doc() {
   then
     rm -f ${SYSDOC}
   fi
-  if [ -e "${ROOT}/templates/${SYSDOCROOT}.md" ]
+  if [ -e "${ROOT}/templates/HEADER.md" ]
   then
-    cp ${ROOT}/templates/${SYSDOCROOT}.md ${SYSDOC}
+    cat ${ROOT}/templates/HEADER.md >${SYSDOC}
+  fi
+  DOCTEMPLATE="$(basename ${SYSDOCROOT})"
+  if [ -e "${ROOT}/templates/${DOCTEMPLATE}.md" ]
+  then
+    cat ${ROOT}/templates/${DOCTEMPLATE}.md >>${SYSDOC}
   fi
   cat <<EOF >>${SYSDOC}
-## Supported Systems, Emulators, and Cores for ${DEVICE}
-
 |Manufacturer|System|Release Date|Games Path|Supported Extensions|Emulator / Core|
 |----|----|----|----|----|----|
 EOF
