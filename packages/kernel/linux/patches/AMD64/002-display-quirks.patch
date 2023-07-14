@@ -1,7 +1,21 @@
-diff -rupN linux-6.3.9.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c linux-6.3.9/drivers/gpu/drm/drm_panel_orientation_quirks.c
---- linux-6.3.9.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c	2023-06-21 22:34:17.552602880 +0000
-+++ linux-6.3.9/drivers/gpu/drm/drm_panel_orientation_quirks.c	2023-06-21 22:41:10.707016041 +0000
-@@ -170,13 +170,13 @@ static const struct dmi_system_id orient
+diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+index 0cb646cb04ee..1045ffe447ad 100644
+--- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
++++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+@@ -133,6 +133,12 @@ static const struct drm_dmi_panel_orientation_data lcd1600x2560_rightside_up = {
+ 	.orientation = DRM_MODE_PANEL_ORIENTATION_RIGHT_UP,
+ };
+ 
++static const struct drm_dmi_panel_orientation_data lcd1200x1920_leftside_up = {
++	.width = 1200,
++	.height = 1920,
++	.orientation = DRM_MODE_PANEL_ORIENTATION_LEFT_UP,
++};
++
+ static const struct dmi_system_id orientation_data[] = {
+ 	{	/* Acer One 10 (S1003) */
+ 		.matches = {
+@@ -170,13 +176,13 @@ static const struct dmi_system_id orientation_data[] = {
  		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "T103HAF"),
  		},
  		.driver_data = (void *)&lcd800x1280_rightside_up,
@@ -18,7 +32,7 @@ diff -rupN linux-6.3.9.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c linux
  		.matches = {
  		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "AYANEO"),
  		  DMI_MATCH(DMI_PRODUCT_NAME, "AIR"),
-@@ -188,6 +188,18 @@ static const struct dmi_system_id orient
+@@ -188,6 +194,24 @@ static const struct dmi_system_id orientation_data[] = {
  		  DMI_MATCH(DMI_BOARD_NAME, "NEXT"),
  		},
  		.driver_data = (void *)&lcd800x1280_rightside_up,
@@ -34,6 +48,12 @@ diff -rupN linux-6.3.9.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c linux
 +                  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "AYANEO 2"),
 +                },
 +                .driver_data = (void *)&lcd1200x1920_rightside_up,
++        }, {    /* AOKZOE A1 Pro */
++                .matches = {
++                  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "AOKZOE"),
++                  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "AOKZOE A1 Pro"),
++                },
++		.driver_data = (void *)&lcd1200x1920_leftside_up,
  	}, {	/* Chuwi HiBook (CWI514) */
  		.matches = {
  			DMI_MATCH(DMI_BOARD_VENDOR, "Hampoo"),
