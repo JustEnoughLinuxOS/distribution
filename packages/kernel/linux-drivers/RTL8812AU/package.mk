@@ -4,7 +4,7 @@
 # Copyright (C) 2021-present Fewtarius
 
 PKG_NAME="RTL8812AU"
-PKG_VERSION="a185a595248926eda0796104fa8417c6248bfd60"
+PKG_VERSION="37dc7d2ec9d1348a0ea6faf0a79d255fb24588f0"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/morrownr/8812au-20210629"
 PKG_URL="${PKG_SITE}.git"
@@ -23,7 +23,7 @@ make_target() {
        ARCH=${TARGET_KERNEL_ARCH} \
        KSRC=$(kernel_path) \
        CROSS_COMPILE=${TARGET_KERNEL_PREFIX} \
-       CONFIG_POWER_SAVING=n
+       CONFIG_POWER_SAVING=y
 }
 
 makeinstall_target() {
