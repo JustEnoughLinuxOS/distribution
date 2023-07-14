@@ -98,15 +98,15 @@ jobs:
             * Write the image to an SDCARD using an imaging tool.  Common imaging tools include [Balena Etcher](https://www.balena.io/etcher/), [Raspberry Pi Imager](https://www.raspberrypi.com/software/), and [Win32 Disk Imager](https://sourceforge.net/projects/win32diskimager/).  If you're skilled with the command line, dd works fine too.
 
             ### Installation Package Downloads
-            |**Device/Platform**|**Download Package**|
-            |----|----|
-            |**Anbernic RG351P/M, ODROID Go Advance, ODROID Go Super**|[JELOS-RK3326.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3326.aarch64-${{ steps.version.outputs.version }}.img.gz)|
-            |**Anbernic RG353P/M/V/VS, RG503, and Powkiddy RK2023**|[JELOS-RK3566.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3566.aarch64-${{ steps.version.outputs.version }}.img.gz)|
-            |**Anbernic RG552**|[JELOS-RK3399.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3399.aarch64-${{ steps.version.outputs.version }}.img.gz)|
-            |**Ayaneo Handhelds, Atari VCS, and other x86_64 devices**|[JELOS-AMD64.x86_64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-AMD64.x86_64-${{ steps.version.outputs.version }}.img.gz)|
-            |**Hardkernel ODROID Go Ultra, Powkiddy RGB10 Max 3 Pro**|[JELOS-S922X.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-S922X.aarch64-${{ steps.version.outputs.version }}.img.gz)|
-            |**Orange Pi 5, and Indiedroid Nova**|[JELOS-RK3588.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3588.aarch64-${{ steps.version.outputs.version }}.img.gz)|
-            |**Powkiddy x55**|[JELOS-RK3566-X55.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3566-X55.aarch64-${{ steps.version.outputs.version }}.img.gz)|
+            |**Device/Platform**|**Download Package**|**Documentation**|
+            |----|----|----|
+            |**Anbernic RG351P/M, ODROID Go Advance, ODROID Go Super**|[JELOS-RK3326.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3326.aarch64-${{ steps.version.outputs.version }}.img.gz)|[documentation](/documentation/RK3326/)|
+            |**Anbernic RG353P/M/V/VS, RG503, and Powkiddy RK2023**|[JELOS-RK3566.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3566.aarch64-${{ steps.version.outputs.version }}.img.gz)|[documentation](/documentation/RK3566/)|
+            |**Anbernic RG552**|[JELOS-RK3399.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3399.aarch64-${{ steps.version.outputs.version }}.img.gz)|[documentation](/documentation/RK3399/)|
+            |**Ayaneo Handhelds, Atari VCS, and other x86_64 devices**|[JELOS-AMD64.x86_64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-AMD64.x86_64-${{ steps.version.outputs.version }}.img.gz)|[documentation](/documentation/AMD64/)|
+            |**Hardkernel ODROID Go Ultra, Powkiddy RGB10 Max 3 Pro**|[JELOS-S922X.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-S922X.aarch64-${{ steps.version.outputs.version }}.img.gz)|[documentation](/documentation/S922X/)|
+            |**Orange Pi 5, and Indiedroid Nova**|[JELOS-RK3588.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3588.aarch64-${{ steps.version.outputs.version }}.img.gz)|[documentation](/documentation/RK3588/)|
+            |**Powkiddy x55**|[JELOS-RK3566-X55.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3566-X55.aarch64-${{ steps.version.outputs.version }}.img.gz)|[documentation](/documentation/RK3566-X55/)|
 
             ## Upgrading
             * Download and install the update online via the System Settings menu.
@@ -128,6 +128,7 @@ jobs:
 
             ## Documentation
             * [Home](https://github.com/JustEnoughLinuxOS/distribution/wiki)
+            * [General Documentation](https://github.com/JustEnoughLinuxOS/distribution/documentation)
             * [Donating to JELOS](https://github.com/JustEnoughLinuxOS/distribution/wiki/Donating-to-JELOS)
             * [Frequently asked Questions](https://github.com/JustEnoughLinuxOS/distribution/wiki/Frequently-Asked-Questions)
             * [HotKeys](https://github.com/JustEnoughLinuxOS/distribution/wiki/Hotkeys)

@@ -1780,20 +1780,24 @@ start_system_doc() {
     echo "Unable to generate documentation, define SYSDOC in options."
     exit 1
   fi
-  if [ -e "${SYSDOC}" ]
+  if [ ! -d "${SYSDOCROOT}" ]
   then
-    rm -f ${SYSDOC}
+    mkdir ${SYSDOCROOT}
+  fi
+  if [ -e "${SYSDOC}.md" ]
+  then
+    rm -f ${SYSDOC}.md
   fi
   if [ -e "${ROOT}/templates/HEADER.md" ]
   then
-    cat ${ROOT}/templates/HEADER.md >${SYSDOC}
+    cat ${ROOT}/templates/HEADER.md >${SYSDOC}.md
   fi
-  DOCTEMPLATE="$(basename ${SYSDOCROOT})"
+  DOCTEMPLATE="$(basename ${SYSDOC})"
   if [ -e "${ROOT}/templates/${DOCTEMPLATE}.md" ]
   then
-    cat ${ROOT}/templates/${DOCTEMPLATE}.md >>${SYSDOC}
+    cat ${ROOT}/templates/${DOCTEMPLATE}.md >>${SYSDOC}.md
   fi
-  cat <<EOF >>${SYSDOC}
+  cat <<EOF >>${SYSDOC}.md
 |Manufacturer|System|Release Date|Games Path|Supported Extensions|Emulator / Core|
 |----|----|----|----|----|----|
 EOF
@@ -1826,9 +1830,9 @@ mk_system_doc() {
       cat ${DOCTMP}/${system}:emulators.tmp >>${SYSDOC}.tmp
     fi
     echo "|" >>${SYSDOC}.tmp
-    cat ${SYSDOC}.tmp | sort >>${SYSDOC}
-    rm -f ${SYSDOC}.tmp
   done
+  cat ${SYSDOC}.tmp | sort -f >>${SYSDOC}.md
+  rm -f ${SYSDOC}.tmp
 }
 
 ### Generate ES Systems
