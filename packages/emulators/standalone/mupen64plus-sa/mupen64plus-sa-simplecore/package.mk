@@ -2,7 +2,7 @@
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="mupen64plus-sa-simplecore"
-PKG_VERSION="ee86bb54a8a6bda2ce5c7a03a86e8efab34258e5"
+PKG_VERSION="89ab4c78354abd921f19fdb99d6d815ac2f8263e"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/simple64/mupen64plus-core"
 PKG_URL="https://github.com/simple64/mupen64plus-core/archive/${PKG_VERSION}.tar.gz"
@@ -49,7 +49,8 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/local/lib
   cp ${PKG_BUILD}/build/libmupen64plus.so ${INSTALL}/usr/local/lib/libsimple64.so.2
   chmod 644 ${INSTALL}/usr/local/lib/libsimple64.so.2
+  rm -rf ${SYSROOT_PREFIX}/usr/local/include/simple64
   mkdir -p ${SYSROOT_PREFIX}/usr/local/include/simple64
-  cp -r ${PKG_BUILD}/src ${SYSROOT_PREFIX}/usr/local/include/simple64/
-  find ${PKG_BUILD}/src -name "*.h" -exec cp \{} ${SYSROOT_PREFIX}/usr/local/include/simple64/src \;
+  cp -r ${PKG_BUILD}/src/* ${SYSROOT_PREFIX}/usr/local/include/simple64/
+  mv ${PKG_BUILD}/src/api/m64p_*.h ${SYSROOT_PREFIX}/usr/local/include/simple64/
 }

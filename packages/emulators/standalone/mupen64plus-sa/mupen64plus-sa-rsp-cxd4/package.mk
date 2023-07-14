@@ -1,5 +1,5 @@
 PKG_NAME="mupen64plus-sa-rsp-cxd4"
-PKG_VERSION="b69e7de60c634619c27aa785e9f59f7b1602818e"
+PKG_VERSION="0a4e30f56033396e3ba47ec0fdd7acea3522362a"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/mupen64plus/mupen64plus-rsp-cxd4"
 PKG_URL="${PKG_SITE}.git"
@@ -22,8 +22,6 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
 fi
 
-PKG_MAKE_OPTS_TARGET+="cxd4VIDEO=1"
-
 make_target() {
   case ${ARCH} in
     arm|aarch64)
@@ -37,13 +35,14 @@ make_target() {
       export USE_GLES=0
     ;;
   esac
-  export APIDIR=${SYSROOT_PREFIX}/usr/local/include/mupen64plus/src
+  export APIDIR=${SYSROOT_PREFIX}/usr/local/include/mupen64plus
   export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -pthread"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
   export CROSS_COMPILE="${TARGET_PREFIX}"
   export V=1
   export VC=0
   make -C projects/unix clean
+  PKG_MAKE_OPTS_TARGET+="HLEVIDEO=1"
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
   if [ "${DEVICE}" = "AMD64" ]; then
     SUFFIX="-sse2"
@@ -51,7 +50,8 @@ make_target() {
     SUFFIX=""
   fi
   cp ${PKG_BUILD}/projects/unix/mupen64plus-rsp-cxd4${SUFFIX}.so ${PKG_BUILD}/projects/unix/mupen64plus-rsp-cxd4-base.so
-  export APIDIR=${SYSROOT_PREFIX}/usr/local/include/simple64/src
+  export APIDIR=${SYSROOT_PREFIX}/usr/local/include/simple64
+  PKG_MAKE_OPTS_TARGET+="cxd4VIDEO=1 HLEVIDEO=0"
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
   cp ${PKG_BUILD}/projects/unix/mupen64plus-rsp-cxd4${SUFFIX}.so ${PKG_BUILD}/projects/unix/mupen64plus-rsp-cxd4-simple.so
 }

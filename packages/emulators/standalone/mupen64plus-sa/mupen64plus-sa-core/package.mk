@@ -2,7 +2,7 @@
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="mupen64plus-sa-core"
-PKG_VERSION="d4f3e12db0609158c7b4e0beef2bb950aad0ccb9"
+PKG_VERSION="eb59aa8bfaea824b65374fcceff338df02905d31"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/mupen64plus/mupen64plus-core"
 PKG_URL="https://github.com/mupen64plus/mupen64plus-core/archive/${PKG_VERSION}.tar.gz"
@@ -51,9 +51,10 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/local/share/mupen64plus
   cp ${PKG_BUILD}/data/* ${INSTALL}/usr/local/share/mupen64plus
   chmod 0644 ${INSTALL}/usr/local/share/mupen64plus/*
+  rm -rf ${SYSROOT_PREFIX}/usr/local/include/mupen64plus/
   mkdir -p ${SYSROOT_PREFIX}/usr/local/include/mupen64plus
-  cp -r ${PKG_BUILD}/src ${SYSROOT_PREFIX}/usr/local/include/mupen64plus/
-  find ${PKG_BUILD}/src -name "*.h" -exec cp \{} ${SYSROOT_PREFIX}/usr/local/include/mupen64plus/src \;
+  cp -r ${PKG_BUILD}/src/* ${SYSROOT_PREFIX}/usr/local/include/mupen64plus/
+  mv ${PKG_BUILD}/src/api/m64p_*.h ${SYSROOT_PREFIX}/usr/local/include/mupen64plus/
 
   if [ -e "${PKG_DIR}/config/${DEVICE}/mupen64plus.cfg" ]
   then

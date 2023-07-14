@@ -1775,7 +1775,7 @@ clean_es_cache() {
 add_emu_core() {
   if [ ! -d "${ESTMP}" ]
   then
-    mkdir "${ESTMP}"
+    mkdir -p "${ESTMP}"
   fi
 
   # Schema: emulator|core|true/false
@@ -1801,7 +1801,7 @@ xmlstarlet fo -t ${ESTMP}/.es_systems.cfg >${ESTMP}/es_systems.cfg 2>/dev/null
 add_system_dir() {
   if [ ! -d "${ESTMP}" ]
   then
-    mkdir "${ESTMP}"
+    mkdir -p "${ESTMP}"
   fi
   cat <<EOF >>${ESTMP}/${DISTRO}-system-dirs.conf
 d	${1}			0777 root root - -
@@ -1816,7 +1816,7 @@ add_es_system() {
 
   if [ ! -d "${ESTMP}" ]
   then
-    mkdir "${ESTMP}"
+    mkdir -p "${ESTMP}"
   fi
 
   if [ ! -e "${ESTMP}/${SYSTEM_NAME}.tmp" ]
