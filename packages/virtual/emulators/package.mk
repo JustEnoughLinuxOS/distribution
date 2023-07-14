@@ -908,9 +908,6 @@ makeinstall_target() {
   ### Generate document
   mk_system_doc
 
-  ### Add the generated document to git
-  git add ${SYSDOC}
-
   mkdir -p ${INSTALL}/usr/config/emulationstation
   cp -f ${ESTMP}/es_systems.cfg ${INSTALL}/usr/config/emulationstation
 
