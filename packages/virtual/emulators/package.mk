@@ -96,9 +96,13 @@ makeinstall_target() {
 
   ### Flush cache from previous builds
   clean_es_cache
+  clean_doc_cache
 
   ### Add BIOS directory
   add_system_dir /storage/roms/bios
+
+  ### Apply documentation header
+  start_system_doc
 
   ### Panasonic 3DO
   add_emu_core 3do retroarch opera true
@@ -900,6 +904,9 @@ makeinstall_target() {
 
   ### Create es_systems
   mk_es_systems
+
+  ### Generate document
+  mk_system_doc
 
   mkdir -p ${INSTALL}/usr/config/emulationstation
   cp -f ${ESTMP}/es_systems.cfg ${INSTALL}/usr/config/emulationstation

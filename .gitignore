@@ -46,6 +46,9 @@
 # es generation files
 .es_cache/
 
+# system document cache
+.doc_cache/
+
 # release images
 release/
 

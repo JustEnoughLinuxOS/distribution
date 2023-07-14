@@ -43,6 +43,10 @@ OS_VERSION=$(date +%Y%m%d)
 # defines the born on date of a build
 BUILD_DATE=$(date)
 
+# defines supported systems documentation path
+SYSDOCROOT="${ROOT}/documentation/${DEVICE}/"
+SYSDOC="${SYSDOCROOT}/SUPPORTED_EMULATORS_AND_CORES"
+
 # include helper functions
 . config/functions
 
