@@ -1,5 +1,9 @@
 &nbsp;&nbsp;<img src="https://raw.githubusercontent.com/JustEnoughLinuxOS/distribution/dev/distributions/JELOS/logos/jelos-logo.png" width=192>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![Latest Version](https://img.shields.io/github/release/JustEnoughLinuxOS/distribution.svg?color=5998FF&label=latest%20version&style=flat-square)](https://github.com/JustEnoughLinuxOS/distribution/releases/latest) [![Activity](https://img.shields.io/github/commit-activity/m/JustEnoughLinuxOS/distribution?color=5998FF&style=flat-square)](https://github.com/JustEnoughLinuxOS/distribution/commits) [![Pull Requests](https://img.shields.io/github/issues-pr-closed/JustEnoughLinuxOS/distribution?color=5998FF&style=flat-square)](https://github.com/JustEnoughLinuxOS/distribution/pulls) [![Discord Server](https://img.shields.io/discord/948029830325235753?color=5998FF&label=chat&style=flat-square)](https://discord.gg/seTxckZjJy)
 #
+
+# Supported Systems Emulators and Cores
+This document describes all available systems emulators and cores available for the device.
+
 |Manufacturer|System|Release Date|Games Path|Supported Extensions|Emulator / Core|
 |----|----|----|----|----|----|
 |Amstrad|CPC (amstradcpc)|1984|`amstradcpc`|.dsk .DSK .sna .SNA .tap .TAP .cdt .CDT .kcr .KCR .voc .VOC .m3u .M3U .zip .ZIP .7z .7Z|**retroarch:** crocods (default)<br>**retroarch:** cap32<br>|
