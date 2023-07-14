@@ -1800,7 +1800,7 @@ EOF
 }
 
 add_system_doc() {
-  echo -n "|${SYSTEM_MANUFACTURER}|${SYSTEM_FULLNAME} (${SYSTEM_NAME})|${SYSTEM_RELEASE}|${SYSTEM_PATH}|${SYSTEM_EXTENSION}|" >>${DOCTMP}/${1}:system.tmp
+  echo -n "|${SYSTEM_MANUFACTURER}|${SYSTEM_FULLNAME} (${SYSTEM_NAME})|${SYSTEM_RELEASE}|\`$(basename ${SYSTEM_PATH})\`|${SYSTEM_EXTENSION}|" >>${DOCTMP}/${1}:system.tmp
 }
 
 add_emu_doc() {
@@ -1808,7 +1808,7 @@ add_emu_doc() {
   then
     mkdir -p "${DOCTMP}"
   fi
-  echo -n "<p>${2}: ${3}</p>" >>${DOCTMP}/${1}:emulators.tmp
+  echo -n "**${2}:** ${3}<br>" >>${DOCTMP}/${1}:emulators.tmp
 }
 
 mk_system_doc() {
