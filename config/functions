@@ -1808,7 +1808,7 @@ add_emu_doc() {
     mkdir -p "${DOCTMP}"
   fi
   cat <<EOF >>${DOCTMP}/${1}:emulators.tmp
-|||||${2}: ${3}|
+||||||${2}: ${3}|
 EOF
 }
 
