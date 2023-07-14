@@ -54,6 +54,11 @@ RK3326:
 	PROJECT=Rockchip DEVICE=RK3326 ARCH=arm ./scripts/build_distro
 	PROJECT=Rockchip DEVICE=RK3326 ARCH=aarch64 ./scripts/build_distro
 
+RG351X:
+	unset DEVICE_ROOT
+	PROJECT=Rockchip DEVICE=RK3326 ARCH=arm UBOOT=RG351X ./scripts/build_distro
+	PROJECT=Rockchip DEVICE=RK3326 ARCH=aarch64 UBOOT=RG351X ./scripts/build_distro
+
 RK3399:
 	unset DEVICE_ROOT
 	PROJECT=Rockchip DEVICE=RK3399 ARCH=arm ./scripts/build_distro
