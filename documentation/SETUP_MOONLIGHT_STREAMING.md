@@ -27,6 +27,6 @@ After pairing was successful, select "UPDATE MOONLIGHT GAMES" option. This shoul
 Find Moonlight Game Streaming tab in Emulation Station. Select the game you want to play. The game should start and you should be able to interact with it.
 
 ## Remote Playing over internet
-* The easiest option is to add your device to your Tailscale network with your local PC, [link](https://github.com/JustEnoughLinuxOS/distribution/wiki/Tailscale-VPN).
+* The easiest option is to add your device to your Tailscale network with your local PC, [link](https://github.com/JustEnoughLinuxOS/distribution/documentation/SETUP_VPN_TAILSCALE.md).
 * Moonlight allows to open several ports to connect to the local PC to stream over the internet. Setup might be somewhat complicated.
-* Another option is to use [WireGuard VPN](https://github.com/JustEnoughLinuxOS/distribution/wiki/WireGuard-VPN) to setup the connection with the device. This approach requires only a single open port, but it requires WireGuard server to be running on your local network.
+* Another option is to use [WireGuard VPN](https://github.com/JustEnoughLinuxOS/distribution/documentation/SETUP_VPN_WIREGUARD.md) to setup the connection with the device. This approach requires only a single open port, but it requires WireGuard server to be running on your local network.
