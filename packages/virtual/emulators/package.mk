@@ -123,8 +123,8 @@ makeinstall_target() {
 
   ### Commodore Amiga
   add_emu_core amiga retroarch puae true
-  case ${DEVICE} in
-    RK3566*|RK3399|S922X)
+  case ${TARGET_ARCH} in
+    aarch64)
       add_emu_core amiga amiberry amiberry false
     ;;
   esac
