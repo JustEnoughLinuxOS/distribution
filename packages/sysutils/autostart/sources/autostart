@@ -6,17 +6,20 @@
 . /etc/os-release
 
 BOOTLOG="/var/log/boot.log"
-performance 2>&1 >${BOOTLOG}
 
-date 2>&1 >>${BOOTLOG}
+log() {
+  echo "$(date): Autostart: $*" >>${BOOTLOG} 2>&1
+}
+
+performance 2>/dev/null
 
 if [ -d "/usr/lib/autostart/quirks/${QUIRK_DEVICE}" ]
 then
-  echo "Executing ${QUIRK_DEVICE} quirks." 2>&1 >>${BOOTLOG}
+  log "Run ${QUIRK_DEVICE} quirks."
   tocon "Applying ${QUIRK_DEVICE} quirks..."
   for script in "/usr/lib/autostart/quirks/${QUIRK_DEVICE}"/*
   do
-    echo "Executing ${script}" 2>&1 >>${BOOTLOG}
+    log "Run ${script}"
     if [ -f "${script}" ]
     then
       "${script}" 2>&1 >>${BOOTLOG}
@@ -27,7 +30,7 @@ fi
 ### Run common start scripts
 for script in /usr/lib/autostart/common/*
 do
-  echo "Executing ${script}" 2>&1 >>${BOOTLOG}
+  log "Run ${script}"
   ${script} 2>&1 >>${BOOTLOG}
 done
 
@@ -36,11 +39,12 @@ if [ -d "/storage/.config/autostart" ]
 then
   for script in /storage/.config/autostart/*
   do
-    echo "Executing ${script}" 2>&1 >>${BOOTLOG}
+    log "Run ${script}"
    ${script} 2>&1 >>${BOOTLOG}
   done
 fi
 
+log "Startup complete..."
 tocon "Startup complete..."
 
 clear >/dev/console
@@ -51,8 +55,9 @@ clear >/dev/console
 ### Lock is a prerequisite for emustation
 rm /var/lock/start.games 2>&1 >>${BOOTLOG}
 touch /var/lock/start.games 2>&1 >>${BOOTLOG}
+log "Starting ${UI_SERVICE}..."
 systemctl start ${UI_SERVICE} 2>&1 >>${BOOTLOG} &
 
 DEVICE_CPU_GOVERNOR=$(get_setting system.cpugovernor)
 ${DEVICE_CPU_GOVERNOR} 2>&1 >>${BOOTLOG}
-date 2>&1 >>${BOOTLOG}
+log "Autostart complete..."
