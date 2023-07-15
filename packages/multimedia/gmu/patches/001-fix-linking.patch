@@ -1,0 +1,13 @@
+diff --git a/Makefile b/Makefile
+index 00b8677..8774c6d 100644
+--- a/Makefile
++++ b/Makefile
+@@ -19,7 +19,7 @@ include config.mk
+ 
+ PREFIX?=/usr/local
+ CFLAGS+=$(COPTS) -pipe -Wall -Wcast-qual -Wno-variadic-macros -Wuninitialized -Wcast-align -Wredundant-decls -Wmissing-declarations -DFILE_HW_H="\"hw_$(TARGET).h\"" -DGMU_INSTALL_PREFIX="\"$(PREFIX)\""
+-LFLAGS+=-pthread
++LFLAGS+=-pthread -lncursesw -ltinfow
+ 
+ # Release build compiler/linker flags
+ ifeq ($(RELEASE_BUILD),1)
