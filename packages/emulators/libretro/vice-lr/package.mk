@@ -21,7 +21,7 @@
 ################################################################################
 
 PKG_NAME="vice-lr"
-PKG_VERSION="83c501343f1976628c2647ac203700643a55351a"
+PKG_VERSION="341dd731a43599891aca921c95addd767d1cc778"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
@@ -32,16 +32,9 @@ PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
 PKG_SHORTDESC="Versatile Commodore 8-bit Emulator version 3.0"
 PKG_LONGDESC="Versatile Commodore 8-bit Emulator version 3.0"
-
-PKG_IS_ADDON="no"
 PKG_TOOLCHAIN="make"
-PKG_AUTORECONF="no"
-PKG_BUILD_FLAGS="-lto"
 
 make_target() {
-  if [ "${ARCH}" == "arm" ]; then
-    CFLAGS="${CFLAGS} -DARM -DALIGN_DWORD -mstructure-size-boundary=32 -mthumb-interwork -falign-functions=16 -marm"
-  fi
   if [ ! -d "built" ]
   then
     mkdir built
