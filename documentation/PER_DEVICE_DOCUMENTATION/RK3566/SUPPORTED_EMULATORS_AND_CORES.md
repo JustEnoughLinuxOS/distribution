@@ -10,7 +10,7 @@ This document describes all available systems emulators and cores available for 
 |Arcade|Arcade (arcade)|1984|`arcade`|.zip .ZIP .7z .7Z|**retroarch:** mame2003_plus (default)<br>**retroarch:** mame2000<br>**retroarch:** mame2010<br>**retroarch:** mame2015<br>**retroarch:** fbneo<br>**retroarch:** fbalpha2012<br>**retroarch:** fbalpha2019<br>|
 |Arcade|Daphne (daphne)|1996|`daphne`|.daphne .DAPHNE .zip .ZIP|**hypseus:** hypseus (default)<br>**retroarch:** daphne<br>|
 |Arcade|Final Burn Neo (fbn)|1986|`fbneo`|.7z .zip .7Z .ZIP|**retroarch:** fbneo (default)<br>**retroarch:** mame2003_plus<br>**retroarch:** mame2010<br>**retroarch:** mame2015<br>**retroarch:** mame<br>**retroarch:** fbalpha2012<br>**retroarch:** fbalpha2019<br>|
-|Arcade|MAME (mame)|1989|`mame`|.7z .7Z .zip .ZIP|**retroarch:** mame2003_plus (default)<br>**retroarch:** mame2010<br>**retroarch:** mame2015<br>**retroarch:** mame<br>**retroarch:** fbneo<br>**retroarch:** fbalpha2012<br>**retroarch:** fbalpha2019<br>|
+|Arcade|MAME (mame)|1979|`mame`|.7z .7Z .zip .ZIP|**retroarch:** mame2003_plus (default)<br>**retroarch:** mame2010<br>**retroarch:** mame2015<br>**retroarch:** mame<br>**retroarch:** fbneo<br>**retroarch:** fbalpha2012<br>**retroarch:** fbalpha2019<br>|
 |Atari|2600 (atari2600)|1977|`atari2600`|.a26 .A26 .bin .BIN .zip .ZIP .7z .7Z|**retroarch:** stella (default)<br>|
 |Atari|5200 (atari5200)|1982|`atari5200`|.rom .ROM .xfd .XFD .atr .ATR .atx .ATX .cdm .CDM .cas .CAS .car .CAR .bin .BIN .a52 .A52 .xex .XEX .zip .ZIP .7z .7Z|**retroarch:** a5200 (default)<br>**retroarch:** atari800<br>|
 |Atari|7800 (atari7800)|1986|`atari7800`|.a78 .A78 .bin .BIN .zip .ZIP .7z .7Z|**retroarch:** prosystem (default)<br>|
@@ -35,6 +35,7 @@ This document describes all available systems emulators and cores available for 
 |Commodore|VIC-20 (vic20)|1980|`vic20`|.20 .40 .60 .a0 .A0 .b0 .B0 .d64 .D64 .d71 .D71 .d80 .D80 .d81 .D81 .d82 .D82 .g64 .G64 .g41 .G41 .x64 .X64 .t64 .T64 .tap .TAP .prg .PRG .p00 .P00 .crt .CRT .bin .BIN .gz .GZ .d6z .D6Z .d7z .D7Z .d8z .D8Z .g6z .G6Z .g4z .G4Z .x6z .X6Z .cmd .CMD .m3u .M3U .vsf .VSF .nib .NIB .nbz .NBZ .zip .ZIP|**retroarch:** vice_xvic (default)<br>**vicesa:** vice_xvic<br>|
 |Fairchild|Channel F (channelf)|1976|`channelf`|.bin .BIN .chf .CHF .zip .ZIP .7z .7Z|**retroarch:** freechaf (default)<br>|
 |id Software|Doom (doom)|1993|`doom`|.doom|**gzdoom:** gzdoom-sa (default)<br>|
+|Infocom|Z-Machine (zmachine)|1979|`zmachine`|.dat .DAT .z1 .Z1 .z3 .Z3 .zip .ZIP|**retroarch:** mojozork (default)<br>|
 |JELOS|Moonlight Game Streaming (moonlight)|2021|`moonlight`|.sh .SH||
 |JELOS|MPlayer (mplayer)|unknown|`mplayer`|.mp4 .MP4 .mkv .MKV .avi .AVI .mov .MOV .wmv .WMV .m3u .M3U .mpg .MPG .ytb .YTB .twi .TWI .sh .SH .mp3 .MP3 .aac .AAC .mka .MKA .dts .DTS .flac .FLAC .ogg .OGG .m4a .M4A .ac3 .AC3 .opus .OPUS .wav .WAV .wv .WV .eac3 .EAC3 .thd .THD|**mplayer:** mplayer (default)<br>|
 |JELOS|Ports (ports)|2021|`ports`|.sh .SH||
