@@ -126,6 +126,8 @@ jobs:
             |**Orange Pi 5, and Indiedroid Nova**|[JELOS-RK3588.aarch64-${{ steps.version.outputs.version }}.tar](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3588.aarch64-${{ steps.version.outputs.version }}.tar)|
             |**Powkiddy x55**|[JELOS-RK3566-X55.aarch64-${{ steps.version.outputs.version }}.tar](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3566-X55.aarch64-${{ steps.version.outputs.version }}.tar)|
 
+            ## Documentation
+
             ### Documentation For Developers
             * [Adding Hardware Quirks](/documentation/DEVEL_ADD_HARDWARE_QUIRKS.md)
             * [Building The Distribution](/documentation/DEVEL_BUILDING_JELOS.md)
@@ -135,10 +137,12 @@ jobs:
             * [Pull Request Template](/PULL_REQUEST_TEMPLATE.md)
 
             ### Documentation For Everyone
+            * [Installation and Device Support](https://github.com/JustEnoughLinuxOS/distribution/tree/main#readme)
+            * [Device Specific Documentation](/documentation/PER_DEVICE_DOCUMENTATION)
             * [Donating to JELOS](/documentation/GENERAL_DONATING_TO_JELOS.md)
             * [Frequently Asked Questions](/documentation/GENERAL_FREQUENTLY_ASKED_QUESTIONS.md)
             * [Hotkeys and Button Codes](/documentation/GENERAL_HOTKEYS_AND_BUTTON_CODES.md)
-            * [Device Specific Documentation](/documentation/PER_DEVICE_DOCUMENTATION)
+            * [Optimizing Performance and Battery Life](/documentation/GENERAL_PERFORMANCE_AND_BATTERY.md)
 
             ### Using JELOS
             * [Setting Up Cloud Drives](/documentation/SETUP_CLOUD_DRIVES.md)
@@ -147,9 +151,6 @@ jobs:
             * [Setting Up P2P Networking With ZeroTier](/documentation/SETUP_P2P_ZEROTIER.md)
             * [Configure TailScale VPN](/documentation/SETUP_VPN_TAILSCALE.md)
             * [Setting Up Wireguard VPN](/documentation/SETUP_VPN_WIREGUARD.md)
-
-            ## Contributing
-            * [Developing and Building JELOS](https://github.com/JustEnoughLinuxOS/distribution/blob/dev/BUILDING.md)
 
           artifacts: "release/*"
           prerelease: false

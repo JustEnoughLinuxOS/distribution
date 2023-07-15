@@ -34,12 +34,6 @@ JELOS branding is licensed for non-commercial use only.  Even if approved to be 
 ### What if you stop working on JELOS?
 * I don't expect that to happen, however JELOS is an Open Source project hosted here on GitHub which means the source code is readily available for anyone in the world to pick up and continue where we left off.  Our [license model](https://tldrlegal.com/license/apache-license-2.0-(apache-2.0)) allows for this to happen by providing and encouraging redistribution ([freedom 2](https://www.gnu.org/philosophy/free-sw.en.html#four-freedoms)) and the right to distribute a modified version ([freedom 3](https://www.gnu.org/philosophy/free-sw.en.html#four-freedoms)).  JELOS only prohibits commercial use through our branding which is licensed by the [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://tldrlegal.com/license/creative-commons-attribution-noncommercial-sharealike-4.0-international-(cc-by-nc-sa-4.0)).
 
-### I have a device with single storage and I can't see the games partition in Windows or macOS.
-* JELOS does not create an ExFAT partition on the boot device, and expands the full partition using ext4.  You can sync files to the device using SyncThing, copy files to the device using SAMBA, or by loading your files onto a EXT4, ExFAT, or FAT32 formatted usb stick and copy them with FileMan or over ssh.
-  * Windows Users can connect to their device by unc path using the device name such as ```\\handheld``` or by IP ```\\device IP address``` into the address bar in Windows Explorer.
-  * Mac users can connect by selecting "Go" from the Finder menu, followed by "Connect to Server", then enter ```smb://handheld``` or ```smb://device IP address```.
-* Log in as root.  The root password is required for access which can be found in the system menu.
-
 ## About Using JELOS
 
 ### Which emulators and game engines are supported by JELOS?
@@ -94,3 +88,9 @@ Various logs are generated, including
 * Retroarch logs are [turned off by default](https://github.com/JustEnoughLinuxOS/distribution/blob/main/packages/games/emulators/retroarch/sources/handheld/retroarch.cfg#L420), but can be enabled within Retroarch (`Tools > Retroarch`: `Settings > Logging > Log to a File`), are stored in `/var/log/retroarch` and are quite detailed, so should provide sufficient detail to identify missing roms within a game's romset, configuration issues and other errors that prevent games from working
 
 > Note: Retroarch uses a shared config file, so logging can be enabled within 64bit or 32bit and it will be enabled for all Retroarch cores
+
+### I have a device with a single microsd and I can't see the games partition in Windows or macOS.
+* JELOS does not create an ExFAT partition on the boot device, and expands the full partition using ext4.  You can sync files to the device using SyncThing, copy files to the device using SAMBA, or by loading your files onto a EXT4, ExFAT, or FAT32 formatted usb stick and copy them with FileMan or over ssh.
+  * Windows Users can connect to their device by unc path using the device name such as ```\\handheld``` or by IP ```\\device IP address``` into the address bar in Windows Explorer.
+  * Mac users can connect by selecting "Go" from the Finder menu, followed by "Connect to Server", then enter ```smb://handheld``` or ```smb://device IP address```.
+* Log in as root.  The root password is required for access which can be found in the system menu.
