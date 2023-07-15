@@ -19,6 +19,11 @@ do
       export ARCH="$(basename ${ARCH} | awk 'BEGIN {FS="."} {print $2}')"
       echo -e "\n${PROJECT}/${DEVICE}/${ARCH}: Run \`${COMMAND}\`"
         ${COMMAND}
+        if [ ! "$?" = "0" ]
+        then
+          echo "Command failed, aborting."
+          exit 1
+        fi
     done
   done
 done
