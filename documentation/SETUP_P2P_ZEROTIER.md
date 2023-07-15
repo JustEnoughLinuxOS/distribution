@@ -2,7 +2,7 @@
 #
 
 # ZeroTier quickstart
-JELOS now supports ZeroTier. ZeroTier allows you to build robust peer-to-peer networks, connetcting all of your devices together. It's very similar to [Tailscale](https://github.com/JustEnoughLinuxOS/distribution/wiki/Tailscale-VPN).
+JELOS now supports ZeroTier. ZeroTier allows you to build robust peer-to-peer networks, connetcting all of your devices together. It's very similar to [Tailscale](https://github.com/JustEnoughLinuxOS/distribution/documentation/SETUP_VPN_TAILSCALE.md).
 
 ## Step 1: Sign up for ZeroTier account
 [Sign up for a ZeroTier account](https://my.zerotier.com).
