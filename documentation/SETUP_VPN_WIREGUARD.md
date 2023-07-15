@@ -30,7 +30,7 @@ Endpoint = <server>:<port>
 ### Enabling WireGuard connection
 Emulation Station now has a new menu item toggle to enable or disable WireGuard VPN connection. Use it turn the connection on or off.
 
-> Note: make sure that WireGuard config file is present on the device, see the [Configuring WireGuard VPN in JELOS](https://github.com/JustEnoughLinuxOS/distribution/wiki/WireGuard-VPN#Configuring-WireGuard-VPN-in-JELOS) section above. The menu option is only available when the config file is present.
+> Note: make sure that WireGuard config file is present on the device, see the [Configuring WireGuard VPN in JELOS](https://github.com/JustEnoughLinuxOS/distribution/documentation/SETUP_VPN_WIREGUARD.md#Configuring-WireGuard-VPN-in-JELOS) section above. The menu option is only available when the config file is present.
 
 Connect to configured VPN server
 * Press "start" button to go into Emulation Station Main Menu
