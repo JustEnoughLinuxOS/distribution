@@ -1,0 +1,36 @@
+diff -rupN vice.orig/Makefile vice/Makefile
+--- vice.orig/Makefile	2023-07-15 00:00:00.002733244 +0000
++++ vice/Makefile	2023-07-15 00:01:40.460608911 +0000
+@@ -414,9 +414,11 @@ endif
+ COMMONFLAGS += -DCORE_NAME=\"$(EMUTYPE)\"
+ include Makefile.common
+ 
++$(info CFLAGS: $(CFLAGS) $(COMMONFLAGS))
++$(info -------)
++
+ OBJECTS     += $(patsubst %.cpp,%.o,$(SOURCES_CXX:.cc=.o)) $(SOURCES_C:.c=.o)
+ OBJECT_DEPS  = $(OBJECTS:.o=.d)
+-PLATFLAGS   := $(CFLAGS)
+ CXXFLAGS    += $(fpic) $(INCFLAGS) $(COMMONFLAGS)
+ CFLAGS      += $(fpic) $(INCFLAGS) $(COMMONFLAGS)
+ LDFLAGS     += -lm $(fpic)
+@@ -434,12 +436,6 @@ ifeq ($(platform), theos_ios)
+ 	${LIBRARY_NAME}_FILES = $(SOURCES_CXX) $(SOURCES_C)
+ 	include $(THEOS_MAKE_PATH)/library.mk
+ else
+-
+-default:
+-	$(info CFLAGS: $(PLATFLAGS) $(COMMONFLAGS))
+-	$(info -------)
+-	$(MAKE) $(TARGET)
+-
+ all: $(TARGET)
+ $(TARGET): $(OBJECTS)
+ ifeq ($(platform), emscripten)
+@@ -473,5 +469,5 @@ objectclean:
+ targetclean:
+ 	rm -f $(TARGET)
+ 
+-.PHONY: all clean objectclean targetclean
++.PHONY: clean
+ endif

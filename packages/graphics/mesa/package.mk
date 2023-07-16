@@ -16,6 +16,12 @@ case ${DEVICE} in
         PKG_URL="${PKG_SITE}.git"
         PKG_GIT_CLONE_BRANCH="csf"
   ;;
+  RK3399)
+        PKG_VERSION="22.3.7"
+        PKG_SHA256="894ce2f4a1c2e76177cdd2284620192d0da3066b243eec2fbb1d7cf37f13042c"
+        PKG_SITE="http://www.mesa3d.org/"
+        PKG_URL="https://mesa.freedesktop.org/archive/mesa-${PKG_VERSION}.tar.xz"
+  ;;
   *)
 	PKG_VERSION="23.1.3"
 	PKG_SHA256="2f6d7381bc10fbd2d6263ad1022785b8b511046c1a904162f8f7da18eea8aed9"

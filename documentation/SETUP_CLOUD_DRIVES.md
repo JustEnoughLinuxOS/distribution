@@ -22,7 +22,7 @@ Now that you're connected you will need to configure Rclone.  This process is me
 * [Rclone Provider Documentation](https://rclone.org/#providers)
 * [Rclone Headless Configuration](https://rclone.org/remote_setup/)
 
-[See detailed setup example below](https://github.com/JustEnoughLinuxOS/distribution/wiki/Using-Cloud-Drives/#setting-up-rclone-detailed-example) 
+[See detailed setup example below](https://github.com/JustEnoughLinuxOS/distribution/documentation/SETUP_CLOUD_DRIVES.md#setting-up-rclone-detailed-example) 
 
 ### Using Rclone
 In JELOS you are able to mount your cloud drive like any other storage device, as long as you are network connected.  To mount your cloud drive, press Start, select Network Settings, and then select the Mount Cloud Drive option.  This drive is available on /storage/cloud by default, and is accessible from ssh and from 351Files.  To mount the cloud drive over ssh use ```rclonectl mount``` to mount the drive and ```rclonectl unmount``` to unmount it.
@@ -177,4 +177,4 @@ The names of the top-level folders within Dropbox cloud service will be displaye
 
 ![Dropbox folder names are displayed](https://github.com/JustEnoughLinuxOS/distribution/blob/gh-pages/images/ssh%20rclone%20list%20top-level%20directories%20on%20dropbox.png "Top-level folder names in Dropbox cloud service")
 
-Now that the connection is set up and authorized [Using Rclone](https://github.com/JustEnoughLinuxOS/distribution/wiki/Using-Cloud-Drives#using-rclone) and [Using Cloud Backup and Restore](https://github.com/JustEnoughLinuxOS/distribution/wiki/Using-Cloud-Drives#using-cloud-backup-and-restore) explain how to configure and use the connection for backup
+Now that the connection is set up and authorized [Using Rclone](https://github.com/JustEnoughLinuxOS/distribution/documentation/SETUP_CLOUD_DRIVES.md#using-rclone) and [Using Cloud Backup and Restore](https://github.com/JustEnoughLinuxOS/distribution/documentation/SETUP_CLOUD_DRIVES.md#using-cloud-backup-and-restore) explain how to configure and use the connection for backup

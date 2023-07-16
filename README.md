@@ -97,6 +97,7 @@ limitations under the License.
 * [Donating to JELOS](/documentation/GENERAL_DONATING_TO_JELOS.md)
 * [Frequently Asked Questions](/documentation/GENERAL_FREQUENTLY_ASKED_QUESTIONS.md)
 * [Hotkeys and Button Codes](/documentation/GENERAL_HOTKEYS_AND_BUTTON_CODES.md)
+* [Optimizing Performance and Battery Life](/documentation/GENERAL_PERFORMANCE_AND_BATTERY.md)
 
 ### Using JELOS
 * [Setting Up Cloud Drives](/documentation/SETUP_CLOUD_DRIVES.md)

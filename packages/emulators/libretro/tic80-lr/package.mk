@@ -20,7 +20,7 @@
 ################################################################################
 
 PKG_NAME="tic80-lr"
-PKG_VERSION="687802d"
+PKG_VERSION="48d8a58401b2529fccbfdfbfc9f78e33f196d9dd"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/nesbox/TIC-80"
@@ -55,6 +55,11 @@ pre_configure_target() {
                        -DBUILD_LIBRETRO=ON \
 		       -DBUILD_WITH_MRUBY=OFF \
 		       -DCMAKE_BUILD_TYPE=Release"
+}
+
+pre_make_host() {
+  ### Work around a bug.
+  sed -i 's~export.h~../src/export.h~g' ${PKG_BUILD}/vendor/pocketpy/c_bindings/pocketpy_c.h
 }
 
 makeinstall_target() {
