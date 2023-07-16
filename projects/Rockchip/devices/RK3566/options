@@ -64,7 +64,7 @@
     WINDOWMANAGER="no"
 
   # kernel serial console
-    EXTRA_CMDLINE="quiet rootwait console=ttyUSB0,1500000 console=tty0 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20 video=HDMI-A-1:1280x720@60"
+    EXTRA_CMDLINE="quiet rootwait console=ttyUSB0,1500000 console=tty0 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20 video=HDMI-A-1:1920x1080@60"
 
   # additional packages to install
   #  ADDITIONAL_PACKAGES=""
