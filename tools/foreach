@@ -1,0 +1,31 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2020-present Fewtarius
+
+###
+### A simple loop to allow running commands against all projects/devices/architectures.
+###
+
+COMMAND="$*"
+
+for PROJECT in $(find projects/ -mindepth 1 -maxdepth 1 -type d)
+do
+  export PROJECT="$(basename ${PROJECT})"
+  for DEVICE in $(find projects/${PROJECT}/devices/ -mindepth 1 -maxdepth 1 -type d)
+  do
+    export DEVICE="$(basename ${DEVICE})"
+    for ARCH in $(find projects/${PROJECT}/devices/${DEVICE}/linux -name linux* -type f)
+    do
+      export ARCH="$(basename ${ARCH} | awk 'BEGIN {FS="."} {print $2}')"
+      echo -e "\n${PROJECT}/${DEVICE}/${ARCH}: Run \`${COMMAND}\`"
+        eval "${COMMAND}"
+        if [ ! "$?" = "0" ]
+        then
+          echo "Command failed, aborting."
+          exit 1
+        fi
+    done
+  done
+done
+
+unset PROJECT DEVICE ARCH

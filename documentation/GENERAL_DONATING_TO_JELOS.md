@@ -2,7 +2,7 @@
 #
 
 ## Donations and Funding
-Thank you for your interest in donating to JELOS!  At this time we are not accepting financial contributions.  If you would like to volunteer or contribute in some way to our project, please read our [Code of Conduct](https://github.com/JustEnoughLinuxOS/distribution/blob/main/CODE_OF_CONDUCT.md#contributor-covenant-code-of-conduct) and [Contributing to JELOS](https://github.com/JustEnoughLinuxOS/distribution/blob/main/CONTRIBUTING.md#contributing-to-jelos) guides.  You are also encouraged to join us on Discord.  Our Discord invitation can be found at the top of our [WIKI home page](https://github.com/JustEnoughLinuxOS/distribution/wiki).
+Thank you for your interest in donating to JELOS!  At this time we are not accepting financial contributions.  If you would like to volunteer or contribute in some way to our project, please read our [Code of Conduct](https://github.com/JustEnoughLinuxOS/distribution/blob/main/CODE_OF_CONDUCT.md#contributor-covenant-code-of-conduct) and [Contributing to JELOS](https://github.com/JustEnoughLinuxOS/distribution/blob/main/CONTRIBUTING.md#contributing-to-jelos) guides.  You are also encouraged to join us on Discord.  Our Discord invitation can be found at the top of the page.
 
 ## Why Don't You Accept Donations?
 * As an Open Source project our operational expenses are fairly low, so to us a donation of your time is much more valuable.
@@ -22,4 +22,4 @@ GitHub serves our release packages, as well as our WIKI.  Our domain, https://ww
 | Project | URL | Comment |
 |----|----|----|
 | JELOS | https://github.com/JustEnoughLinuxOS/distribution | Project site, Stable Release Repository. |
-| Documentation | https://github.com/JustEnoughLinuxOS/distribution/wiki | JELOS User Documentation | 
+| Documentation | https://github.com/JustEnoughLinuxOS/distribution/README.md | JELOS User Documentation | 

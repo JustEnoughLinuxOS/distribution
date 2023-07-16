@@ -23,6 +23,8 @@ distclean:
 src-pkg:
 	tar cvJf sources.tar.xz sources .stamps
 
+docs:
+	./tools/foreach './scripts/clean emulators && ./scripts/build emulators'
 
 world: AMD64 RK3588 S922X RK3566 RK3566-X55 RK3326 RK3399
 
