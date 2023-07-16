@@ -1,0 +1,14 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+
+MYDEVICE=$(get_setting system.audiodevice)
+if [ -z "${MYDEVICE}" ]
+then
+  ### Set the audio device.
+  set-audio set "ALC269VB (1:0)"
+  set-audio esset "Master"
+fi
