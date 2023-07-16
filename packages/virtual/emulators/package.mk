@@ -101,6 +101,9 @@ makeinstall_target() {
   ### Add BIOS directory
   add_system_dir /storage/roms/bios
 
+  ### Add music directory
+  add_system_dir /storage/roms/music
+
   ### Apply documentation header
   start_system_doc
 
