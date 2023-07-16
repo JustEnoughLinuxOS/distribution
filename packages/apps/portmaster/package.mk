@@ -2,7 +2,7 @@
 # Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="portmaster"
-PKG_VERSION="9b246380239da619c5de4edda858071c99a1b62d"
+PKG_VERSION="3c9b43d4397ded48708f63a4237f77f642515d1f"
 PKG_SITE="https://github.com/christianhaitian/PortMaster"
 PKG_LICENSE="MIT"
 PKG_ARCH="arm aarch64"

@@ -4,7 +4,6 @@
 
 cat <<EOF >/storage/.config/profile.d/001-deviceconfig
 # Device Features
-DEVICE_HAS_FAN=false
 DEVICE_VOLUMECTL=true
 DEVICE_POWER_LED=false
 DEVICE_SW_HP_SWITCH=true
