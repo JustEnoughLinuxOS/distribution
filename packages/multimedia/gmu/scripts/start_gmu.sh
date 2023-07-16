@@ -27,4 +27,4 @@ then
 fi
 
 cd /usr/local/share/gmu
-/usr/local/bin/gmu.bin -d /usr/local/etc/gmu -c /storage/.config/gmu/gmu.conf
+/usr/local/bin/gmu.bin -d /usr/local/etc/gmu -c /storage/.config/gmu/gmu.conf "$1"
