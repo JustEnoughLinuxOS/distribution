@@ -23,7 +23,7 @@ PKG_GRAPHICS="imagemagick splash"
 
 PKG_FONTS="terminus-font corefonts"
 
-PKG_MULTIMEDIA="ffmpeg vlc mpv"
+PKG_MULTIMEDIA="ffmpeg vlc mpv gmu"
 
 PKG_BLUETOOTH="bluez pygobject"
 

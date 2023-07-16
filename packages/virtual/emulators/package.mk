@@ -898,6 +898,10 @@ makeinstall_target() {
   add_emu_core mplayer mplayer mplayer true
   add_es_system mplayer
 
+  ### Music Player
+  add_emu_core music gmu gmu true
+  add_es_system music
+
   ### Moonlight
   add_es_system moonlight
 
