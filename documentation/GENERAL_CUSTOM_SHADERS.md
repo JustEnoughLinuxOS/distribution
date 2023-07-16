@@ -8,20 +8,31 @@ JELOS supports adding custom shaders in addition to the built-in shaders availab
 If Shaders are set to "off," change to "on" 
 
 ## Step 2: Configure Shader settings to preference by modifying existing shaders
-Specific parameters will vary on a per-shader basis. Example below is based on a custom shader with two passes for GBA:
+Specific parameters will vary on a per-shader basis so it's recommended you test with the individual shaders first by loading the built-ins and modifying their parameters to your preference. 
+When you know how you'd lke to configure everything, you'll select your parameters and passes. To start, you'll select the number of shader passes, the filtering (linear, nearests, or default), and the number of passes for each individual shader listed (generally leave this item at default). Then select "apply changes," set parameters, and save the shader.
+
+----
+
+### Example 
+The below example shader configuration is based on a custom shader with two passes for GBA to enable vba-color for original colors (ala real hardware) and LCD grid:
 
 In shaders, choose "load" and then load "vba-color" (either from the main list, or if on android/PC, it'll be in the "handhelds" folder.
 
 Once loaded, go down to "shader passes" and change it from 1 to 2. 
 
-For the second pass where it says "N/A" select it, go into the "handhelds" folder again and choose LCD1x. 
+For the second pass where it says "N/A" select it, go into the "handhelds" folder and choose LCD1x. 
 
-Then press "Apply changes" to set it. From there go into "shader parameters" and you'll see the darkening, brighten scanlines, and brighten LCD options. Configure parameters as preferred
-Once it's configured to your liking, in the shaders menu press "save" and in the save menu set "Simple Presets" to "off" and then "save shader preset as" and name the custom shader. It'll now be selectable as a default like any of the other preconfigured shaders.
+Then press "Apply changes" to set it. From there go into "shader parameters" and you'll see the darkening, brighten scanlines, and brighten LCD options. Configure parameters as preferred. For this example, set:
+
+* Darken: 0.25
+* Brighten Scanlines: 28.00
+* Brighten LCD: 6.00
+
+Once it's configured to your liking, back out of the parameters menu and in the shaders menu press "save" in the menu list. In the save menu set "Simple Presets" to "off" and then "save shader preset as" and name the custom shader. It will now be selectable as a default like any of the other preconfigured shaders.
 
 -----------
 
-You can add additional passes following the steps above (increase passes to 3 and follow steps), but bear in mind performance will be dependent on your device, and not all shaders will work at full speed with multiple passes.
+You can add additional passes following the steps above (increase passes to 3 and follow the same steps), but keep in mind performance will be dependent on your device, and not all shaders will work at full speed with multiple passes.
 
 
 ## Step 3: Save your new shader preset
@@ -29,7 +40,7 @@ Select "Save" in the shaders menu.
 
 At the top of the list, set "Simple Presets" to off. Then choose "Save Shader Preset As" and name the shader. Press the enter key on the on-screen keyboard to save the preset. Exit Retroarch normally via the hotkey preset, or by backing out to the main menu and choosing "Quit Retroarch"
 
-## Step 4: Load your shader preset from JELOS ES menu
+## Step 4: Load your shader preset from JELOS menu
 
 Browse into either "advanced game options" within game selection, or Main Menu -> Game Settings -> Per System Advanced Configuration.
 
