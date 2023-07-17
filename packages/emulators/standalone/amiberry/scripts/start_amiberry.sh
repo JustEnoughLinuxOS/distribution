@@ -9,7 +9,7 @@
 jslisten set "-9 amiberry"
 
 # Set some common variables
-AMIBERRY_DIR="/storage/.config/game/configs/amiberry"
+AMIBERRY_DIR="/storage/.config/amiberry"
 AMIBERRY_CONFIG_DIR="${AMIBERRY_DIR}/conf"
 AMIBERRY_TMP_DIR="/tmp/emulation/amiberry"
 AMIBERRY_TMP_CONFIG="${AMIBERRY_TMP_DIR}/.amiberry_conf.uae"
@@ -33,11 +33,8 @@ then
   cp -rf /usr/config/amiberry ${AMIBERRY_DIR}
 fi
 
-### Refresh the config if there's incorrect data in it.
-if [ "$(grep FIND_FILE ${AMIBERRY_DIR}/conf/*.uae >/dev/null 2>&1)" ]
-then 
-  cp /usr/config/amiberry/conf/* ${AMIBERRY_DIR}/conf
-fi
+### Refresh the configs so we can manage them.
+cp -f /usr/config/amiberry/conf/* ${AMIBERRY_DIR}/conf
 
 find_gamepad() {
   GAMEPAD=$(grep -b4 js0 /proc/bus/input/devices | awk 'BEGIN {FS="\""}; /Name/ {printf $2}')
