@@ -1,0 +1,22 @@
+diff --git a/src/frontends/sdl/sdl.c b/src/frontends/sdl/sdl.c
+index 7a31fc0..e0e6661 100644
+--- a/src/frontends/sdl/sdl.c
++++ b/src/frontends/sdl/sdl.c
+@@ -186,7 +186,7 @@ static SDL_Surface *init_sdl(int with_joystick, int width, int height, int fulls
+ 			SDL_WINDOWPOS_UNDEFINED,
+ 			width,
+ 			height,
+-			(fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0) | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN
++			(fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0) | SDL_WINDOW_VULKAN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN
+ 		);
+ 		if (!window) {
+ 			wdprintf(V_FATAL, "sdl_frontend", "Unable to setup window.\n");
+@@ -1091,7 +1091,7 @@ static void run_player(char *skin_name, char *decoders_str)
+ 								SDL_WINDOWPOS_UNDEFINED,
+ 								w,
+ 								h,
+-								(fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0) | SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN
++								(fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0) | SDL_WINDOW_VULKAN | SDL_WINDOW_RESIZABLE | SDL_WINDOW_SHOWN
+ 							);
+ 							if (!window) {
+ 								wdprintf(V_FATAL, "sdl_frontend", "Unable to flip fullscreen mode.\n");

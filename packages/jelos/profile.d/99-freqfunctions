@@ -20,6 +20,9 @@ set_online_threads() {
     MODE=0
   fi
   case ${1} in
+    default)
+      return
+    ;;
     all)
       THREADS=0
       MODE="1"
