@@ -38,7 +38,7 @@ This document describes all available systems emulators and cores available for 
 |Infocom|Z-Machine (zmachine)|1979|`zmachine`|.dat .DAT .z1 .Z1 .z2 .Z2 .z3 .Z3 .z4 .Z4 .z5 .Z5 .z6 .Z6 .zip .ZIP|**retroarch:** mojozork (default)<br>|
 |JELOS|Moonlight Game Streaming (moonlight)|2021|`moonlight`|.sh .SH||
 |JELOS|MPlayer (mplayer)|unknown|`mplayer`|.mp4 .MP4 .mkv .MKV .avi .AVI .mov .MOV .wmv .WMV .m3u .M3U .mpg .MPG .ytb .YTB .twi .TWI .sh .SH .mp3 .MP3 .aac .AAC .mka .MKA .dts .DTS .flac .FLAC .ogg .OGG .m4a .M4A .ac3 .AC3 .opus .OPUS .wav .WAV .wv .WV .eac3 .EAC3 .thd .THD|**mplayer:** mplayer (default)<br>|
-|JELOS|Music Player (music)|unknown|`music`|.flac .FLAC .mod .MOD .xm .XM .it .IT .669 .669 .s3m .S3M .amf .AMF .ams .AMS .dbm .DBM .dmf .DMF .dsm .DSM .far .FAR .mdl .MDL .med .MED .mtm .MTM .okt .OKT .ptm .PTM .stm .STM .ult .ULT .umx .UMX .mt2 .MT2 .psm .PSM .mid .MID .midi .MIDI .mp3 .MP3 .mp2 .MP2 .mp1 .MP1 .opus .OPUS .ogg .OGG .oga .OGA|**gmu:** gmu (default)<br>|
+|JELOS|Music Player (music)|unknown|`playlists`|.m3u .M3U .sh .SH|**gmu:** gmu (default)<br>|
 |JELOS|Ports (ports)|2021|`ports`|.sh .SH||
 |JELOS|Screenshots (imageviewer)|2021|`screenshots`|.jpg .jpeg .png .bmp .psd .tga .gif .hdr .pic .ppm .pgm .mkv .pdf .mp4 .avi||
 |JELOS|Tools (tools)|2021|`modules`|.sh||

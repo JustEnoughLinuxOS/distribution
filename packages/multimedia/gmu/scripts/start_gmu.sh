@@ -4,10 +4,17 @@
 
 . /etc/profile
 
-jslisten set "-9 gmu.bin"
+jslisten set "gmu.bin"
 
 GMUPATH="/storage/.config/gmu"
 GMUCONFIG="${GMUPATH}/gmu.conf"
+
+if [ -d "/storage/.local/share/gmu" ]
+then
+  rm -rf /storage/.local/share/gmu
+fi
+
+ln -sf ${GMUPATH}/playlists /storage/.local/share/gmu
 
 FBHEIGHT=$(fbset | awk '/geometry/ {print $2}')
 FBWIDTH=$(fbset | awk '/geometry/ {print $3}')
@@ -26,5 +33,10 @@ then
   sed -i "s~SDL.Fullscreen=.*\$~SDL.Fullscreen=no~g" ${GMUCONFIG}
 fi
 
+if [ "${1}" ]
+then
+  PLAYLIST="-l \"${1}\""
+fi
+
 cd /usr/local/share/gmu
-/usr/local/bin/gmu.bin -d /usr/local/etc/gmu -c /storage/.config/gmu/gmu.conf "$1"
+/usr/local/bin/gmu.bin -d /usr/local/etc/gmu -c /storage/.config/gmu/gmu.conf ${PLAYLIST}
