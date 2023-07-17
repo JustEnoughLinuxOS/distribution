@@ -32,20 +32,20 @@ LIBRETRO_CORES="81-lr a5200-lr atari800-lr beetle-gba-lr beetle-lynx-lr beetle-n
 case "${DEVICE}" in
   AMD64)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="lutris-wine"
-    PKG_EMUS+=" cemu-sa citra-sa dolphin-sa duckstation-sa melonds-sa minivmacsa mupen64plus-sa pcsx2-sa       \
+    PKG_EMUS+=" amiberry cemu-sa citra-sa dolphin-sa duckstation-sa melonds-sa minivmacsa mupen64plus-sa pcsx2-sa       \
                 primehack rpcs3-sa ryujinx-sa scummvmsa xemu-sa yuzu-sa"
     LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr citra-lr desmume-lr dolphin-lr flycast-lr lrps2-lr mame-lr     \
                       minivmac-lr play-lr"
   ;;
   RK358*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
-    PKG_EMUS+=" aethersx2-sa duckstation-sa pcsx_rearmed-lr box64 scummvmsa yabasanshiro-sa box64 portmaster"
+    PKG_EMUS+=" amiberry aethersx2-sa duckstation-sa pcsx_rearmed-lr box64 scummvmsa yabasanshiro-sa box64 portmaster"
     LIBRETRO_CORES+=" uae4arm beetle-psx-lr bsnes-hd-lr citra-lr dolphin-lr mame-lr"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
   RK3399)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 pcsx_rearmed-lr"
-    PKG_EMUS+=" aethersx2-sa dolphin-sa drastic-sa duckstation-sa melonds-sa mupen64plus-sa box64 scummvmsa   \
+    PKG_EMUS+=" amiberry aethersx2-sa dolphin-sa drastic-sa duckstation-sa melonds-sa mupen64plus-sa box64 scummvmsa   \
                yabasanshiro-sa portmaster"
     LIBRETRO_CORES+=" uae4arm beetle-psx-lr bsnes-hd-lr dolphin-lr flycast-lr mame-lr pcsx_rearmed-lr"
     PKG_RETROARCH+=" retropie-shaders"
@@ -59,7 +59,7 @@ case "${DEVICE}" in
   ;;
   S922X*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
-    PKG_EMUS+=" aethersx2-sa citra-sa dolphin-sa duckstation-sa drastic-sa mupen64plus-sa yabasanshiro-sa     \
+    PKG_EMUS+=" amiberry aethersx2-sa citra-sa dolphin-sa duckstation-sa drastic-sa mupen64plus-sa yabasanshiro-sa     \
                 box64 portmaster"
     LIBRETRO_CORES+=" uae4arm beetle-psx-lr bsnes-hd-lr dolphin-lr flycast-lr mame-lr"
     PKG_RETROARCH+=" retropie-shaders"
@@ -67,7 +67,7 @@ case "${DEVICE}" in
   RK3326*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="flycast-lr pcsx_rearmed-lr"
     PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders"
-    PKG_EMUS+=" drastic-sa mupen64plus-sa scummvmsa yabasanshiro-sa portmaster"
+    PKG_EMUS+=" amiberry drastic-sa mupen64plus-sa scummvmsa yabasanshiro-sa portmaster"
     LIBRETRO_CORES+=" uae4arm flycast-lr"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
@@ -128,12 +128,7 @@ makeinstall_target() {
   add_emu_core amiga retroarch puae true
   case ${TARGET_ARCH} in
     aarch64)
-      case ${DEVICE} in
-        RK3566*)
-          ### Amiberry does not like OpenGL with Weston
-          add_emu_core amiga amiberry amiberry false
-        ;;
-      esac
+      add_emu_core amiga amiberry amiberry false
       add_emu_core amiga retroarch uae4arm false
     ;;
   esac
