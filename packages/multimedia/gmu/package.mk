@@ -10,6 +10,11 @@ PKG_DEPENDS_TARGET="toolchain SDL2 opus mpg123 libvorbis flac speex"
 PKG_LONGDESC="The Gmu Music Player"
 PKG_TOOLCHAIN="configure"
 
+if [ "${VULKAN_SUPPORT}" = "yes" ]
+then
+  PKG_PATCH_DIRS+=" vulkan"
+fi
+
 configure_target() {
   export LDFLAGS="${LDFLAGS} -lreadline -lncursesw -ltinfow"
   export TARGET_CFLAGS="${TARGET_CFLAGS} -fcommon"
