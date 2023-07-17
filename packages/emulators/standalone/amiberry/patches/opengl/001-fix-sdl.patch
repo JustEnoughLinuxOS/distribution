@@ -1,0 +1,13 @@
+diff --git a/src/osdep/vkbd/vkbd.cpp b/src/osdep/vkbd/vkbd.cpp
+index bcf25636..f7b56242 100644
+--- a/src/osdep/vkbd/vkbd.cpp
++++ b/src/osdep/vkbd/vkbd.cpp
+@@ -21,6 +21,8 @@ using VkbdRect = struct
+ 	int key;
+ };
+ 
++SDL_Renderer* sdl_renderer;
++
+ // Configurable options
+ static bool vkbdHires = true;
+ static VkbdLanguage vkbdLanguage = VKBD_LANGUAGE_US;

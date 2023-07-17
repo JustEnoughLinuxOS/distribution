@@ -4,7 +4,7 @@
 
 . /etc/profile
 
-jslisten set "gmu.bin"
+jslisten set "-HUP gmu.bin"
 
 GMUPATH="/storage/.config/gmu"
 GMUCONFIG="${GMUPATH}/gmu.conf"
@@ -14,23 +14,28 @@ then
   rm -rf /storage/.local/share/gmu
 fi
 
-ln -sf ${GMUPATH}/playlists /storage/.local/share/gmu
 
 FBHEIGHT=$(fbset | awk '/geometry/ {print $2}')
 FBWIDTH=$(fbset | awk '/geometry/ {print $3}')
 
 if [ ! -d "${GMUPATH}" ]
 then
-  cp -rf /usr/config/gmu ${GMUPATH}
+  mkdir -p ${GMUPATH}
 fi
+
+cp -rf /usr/config/gmu/* ${GMUPATH}
+ln -sf ${GMUPATH}/playlists /storage/.local/share/gmu
 
 sed -i "s~SDL.Height=.*\$~SDL.Height=${FBHEIGHT}~g" ${GMUCONFIG}
 sed -i "s~SDL.Width=.*\$~SDL.Width=${FBWIDTH}~g" ${GMUCONFIG}
 
-if (( ${FBWIDTH} <= 800 ))
+if (( ${FBWIDTH} <= 1024 ))
 then
   sed -i "s~default-modern-large~default-modern~g" ${GMUCONFIG}
   sed -i "s~SDL.Fullscreen=.*\$~SDL.Fullscreen=no~g" ${GMUCONFIG}
+else
+  sed -i "s~default-modern.*\$~default-modern-large~g" ${GMUCONFIG}
+  sed -i "s~SDL.Fullscreen=.*\$~SDL.Fullscreen=yes~g" ${GMUCONFIG}
 fi
 
 if [ "${1}" ]
