@@ -1,0 +1,39 @@
+diff --git a/src/osdep/amiberry_gfx.cpp b/src/osdep/amiberry_gfx.cpp
+index 73cd03eb..9d85fc0d 100644
+--- a/src/osdep/amiberry_gfx.cpp
++++ b/src/osdep/amiberry_gfx.cpp
+@@ -2077,7 +2077,7 @@ int graphics_init(bool mousecapture)
+ 			// Set Window allow high DPI by default
+ 			sdl_window_mode |= SDL_WINDOW_ALLOW_HIGHDPI;
+ #ifdef USE_OPENGL
+-			sdl_window_mode |= SDL_WINDOW_OPENGL;
++			sdl_window_mode |= SDL_WINDOW_VULKAN;
+ #endif
+ 		}
+ 		else
+diff --git a/src/osdep/gui/ShowMessage.cpp b/src/osdep/gui/ShowMessage.cpp
+index 36cf1cbf..86a51804 100644
+--- a/src/osdep/gui/ShowMessage.cpp
++++ b/src/osdep/gui/ShowMessage.cpp
+@@ -82,7 +82,7 @@ static void InitShowMessage(const std::string& message)
+ 	{
+ 		Uint32 flags = SDL_WINDOW_FULLSCREEN_DESKTOP;
+ #ifdef USE_OPENGL
+-		flags |= SDL_WINDOW_OPENGL;
++		flags |= SDL_WINDOW_VULKAN;
+ #endif
+ 		mon->sdl_window = SDL_CreateWindow("Amiberry",
+ 			SDL_WINDOWPOS_CENTERED,
+diff --git a/src/osdep/gui/main_window.cpp b/src/osdep/gui/main_window.cpp
+index 06fc5777..bccd47c6 100644
+--- a/src/osdep/gui/main_window.cpp
++++ b/src/osdep/gui/main_window.cpp
+@@ -472,7 +472,7 @@ void amiberry_gui_init()
+ 		flags |= SDL_WINDOW_ALLOW_HIGHDPI;
+ 
+ #ifdef USE_OPENGL
+-		flags |= SDL_WINDOW_OPENGL;
++		flags |= SDL_WINDOW_VULKAN;
+ #endif
+ 
+ 		mon->sdl_window = SDL_CreateWindow("Amiberry",

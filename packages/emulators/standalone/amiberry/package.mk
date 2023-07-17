@@ -14,15 +14,25 @@ PKG_TOOLCHAIN="make"
 PKG_GIT_CLONE_BRANCH="master"
 PKG_PATCH_DIRS+=" ${DEVICE}"
 
+### Note: OpenGL does not work.
+# if [ ! "${OPENGL}" = "no" ]; then
+#   PKG_PATCH_DIRS+=" opengl"
+# fi
+# if [ "${VULKAN_SUPPORT}" = "yes" ]
+# then
+#   PKG_PATCH_DIRS+=" vulkan"
+# fi
+
 pre_configure_target() {
   cd ${PKG_BUILD}
   export SYSROOT_PREFIX=${SYSROOT_PREFIX}
   AMIBERRY_PLATFORM="PLATFORM=${DEVICE}"
 
-  if [ ! "${OPENGL}" = "no" ]; then
-    PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
-    SET_OPENGL="USE_OPENGL=1"
-  fi
+### Note: OpenGL does not work.
+#   if [ ! "${OPENGL}" = "no" ]; then
+#     PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+#     SET_OPENGL="USE_OPENGL=1"
+#   fi
  
   sed -i "s|AS     = as|AS     \?= as|" Makefile
   PKG_MAKE_OPTS_TARGET+="${AMIBERRY_PLATFORM} ${SET_OPENGL} all SDL_CONFIG=${SYSROOT_PREFIX}/usr/bin/sdl2-config"

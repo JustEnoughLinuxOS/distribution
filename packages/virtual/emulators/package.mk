@@ -130,6 +130,7 @@ makeinstall_target() {
     aarch64)
       case ${DEVICE} in
         RK3566*)
+          ### Amiberry does not like OpenGL with Weston
           add_emu_core amiga amiberry amiberry false
         ;;
       esac
