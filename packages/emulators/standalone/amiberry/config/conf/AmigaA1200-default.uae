@@ -94,12 +94,19 @@ amiberry.use_analogue_remap=false
 amiberry.use_retroarch_quit=true
 amiberry.use_retroarch_menu=true
 amiberry.use_retroarch_reset=false
-vkbd_enabled=true
-vkbd_hires=true
-vkbd_exit=true
-vkbd_transparency=0
-vkbd_language=US
+default_retroarch_vkbd=yes
+default_vkbd_exit=yes
+default_vkbd_hires=yes
+default_vkbd_enabled=yes
 vkbd_style=Original
+vkbd_language=US
+vkbd_transparency=0
+vkbd_exit=true
+vkbd_hires=true
+amiberry.use_retroarch_vkbd=true
+amiberry.vkbd_enabled=true
+amiberry.vkbd_hires=true
+amiberry.vkbd_exit=true
 ;
 ; *** Common / Paths
 ;
