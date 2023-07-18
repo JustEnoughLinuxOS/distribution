@@ -15,9 +15,11 @@ JELOS supports a variety of ARM and Intel/AMD based devices<sup>1</sup>.
 |Anbernic| RG552 | Rockchip RK3399 (ARM) | Mainline Linux | Panfrost | Weston + EmulationStation|
 |Anbernic|Win600|AMD Athlon Silver 3050e (x86_64)|Mainline Linux|Radeonsi|Weston + EmulationStation|
 |Atari|VCS|AMD Ryzen R1606G (x86_64)|Mainline Linux|Radeonsi|Weston + EmulationStation|
+|AOKZOE | A1 Pro | AMD 7840u (x86_64)|Mainline Linux|Radeonsi|Weston + EmulationStation|
 |AYANEO<sup>3</sup>|Air / Air Pro|Amd Ryzen 5 5560U / AMD Ryzen 7 5825U (x86_64)|Mainline Linux|Radeonsi|Weston + EmulationStation|
 |AYANEO<sup>3</sup>|Air Plus|Amd Ryzen 7 6800U / (x86_64)|Mainline Linux|Radeonsi|Weston + EmulationStation|
 |AYANEO<sup>3</sup>|AYANEO 2|Amd Ryzen 7 6800U / (x86_64)|Mainline Linux|Radeonsi|Weston + EmulationStation|
+|GPD|Win 4|Amd Ryzen 7 6800U / (x86_64)|Mainline Linux|Radeonsi|Weston + EmulationStation|
 |GPD|Win Max 2 (2022)|Amd Ryzen 7 6800U / (x86_64)|Mainline Linux|Radeonsi|Weston + EmulationStation|
 |Hardkernel| Odroid Go Advance | Rockchip RK3326 (ARM) | Mainline Linux | Panfrost | Weston + EmulationStation|
 |Hardkernel| Odroid Go Super | Rockchip RK3326 (ARM) | Mainline Linux | Panfrost | Weston + EmulationStation|
@@ -106,6 +108,7 @@ limitations under the License.
 * [Setting Up P2P Networking With ZeroTier](/documentation/SETUP_P2P_ZEROTIER.md)
 * [Configure TailScale VPN](/documentation/SETUP_VPN_TAILSCALE.md)
 * [Setting Up Wireguard VPN](/documentation/SETUP_VPN_WIREGUARD.md)
+* [Creating Custom Shader Presets for Per Game / Per System Use](https://github.com/gannon345/distribution/blob/main/documentation/GENERAL_CUSTOM_SHADERS.md)
 
 ## Credits
 Like any Linux distribution, this project is not the work of one person.  It is the work of many persons all over the world who have developed the open source bits without which this project could not exist.  Special thanks to CoreELEC, LibreELEC, and to developers and contributors across the open source community.

@@ -38,7 +38,7 @@ This document describes all available systems emulators and cores available for 
 |Infocom|Z-Machine (zmachine)|1979|`zmachine`|.dat .DAT .z1 .Z1 .z2 .Z2 .z3 .Z3 .z4 .Z4 .z5 .Z5 .z6 .Z6 .zip .ZIP|**retroarch:** mojozork (default)<br>|
 |JELOS|Moonlight Game Streaming (moonlight)|2021|`moonlight`|.sh .SH||
 |JELOS|MPlayer (mplayer)|unknown|`mplayer`|.mp4 .MP4 .mkv .MKV .avi .AVI .mov .MOV .wmv .WMV .m3u .M3U .mpg .MPG .ytb .YTB .twi .TWI .sh .SH .mp3 .MP3 .aac .AAC .mka .MKA .dts .DTS .flac .FLAC .ogg .OGG .m4a .M4A .ac3 .AC3 .opus .OPUS .wav .WAV .wv .WV .eac3 .EAC3 .thd .THD|**mplayer:** mplayer (default)<br>|
-|JELOS|Music Player (music)|unknown|`music`|.mp4 .MP4 .mkv .MKV .avi .AVI .mov .MOV .wmv .WMV .m3u .M3U .mpg .MPG .ytb .YTB .twi .TWI .sh .SH .mp3 .MP3 .aac .AAC .mka .MKA .dts .DTS .flac .FLAC .ogg .OGG .m4a .M4A .ac3 .AC3 .opus .OPUS .wav .WAV .wv .WV .eac3 .EAC3 .thd .THD|**gmu:** gmu (default)<br>|
+|JELOS|Music Player (music)|unknown|`playlists`|.m3u .M3U .sh .SH|**gmu:** gmu (default)<br>|
 |JELOS|Ports (ports)|2021|`ports`|.sh .SH||
 |JELOS|Screenshots (imageviewer)|2021|`screenshots`|.jpg .jpeg .png .bmp .psd .tga .gif .hdr .pic .ppm .pgm .mkv .pdf .mp4 .avi||
 |JELOS|Tools (tools)|2021|`modules`|.sh||
@@ -80,7 +80,7 @@ This document describes all available systems emulators and cores available for 
 |Nintendo|Super Famicom (sfc)|1990|`sfc`|.smc .SMC .fig .FIG .sfc .SFC .swc .SWC .zip .ZIP .7z .7Z|**retroarch:** snes9x (default)<br>**retroarch:** snes9x2010<br>**retroarch:** snes9x2002<br>**retroarch:** snes9x2005_plus<br>**retroarch:** beetle_supafaust<br>**retroarch:** bsnes<br>**retroarch:** bsnes_mercury_performance<br>**retroarch:** bsnes_hd_beta<br>|
 |Nintendo|Super Nintendo (Hacks) (snesh)|1991|`snesh`|.smc .SMC .fig .FIG .sfc .SFC .swc .SWC .zip .ZIP .7z .7Z|**retroarch:** snes9x (default)<br>**retroarch:** snes9x2010<br>**retroarch:** snes9x2002<br>**retroarch:** snes9x2005_plus<br>**retroarch:** beetle_supafaust<br>**retroarch:** bsnes<br>**retroarch:** bsnes_mercury_performance<br>**retroarch:** bsnes_hd_beta<br>|
 |Nintendo|Super Nintendo (snes)|1991|`snes`|.smc .SMC .fig .FIG .sfc .SFC .swc .SWC .zip .ZIP .7z .7Z|**retroarch:** snes9x (default)<br>**retroarch:** snes9x2010<br>**retroarch:** snes9x2002<br>**retroarch:** snes9x2005_plus<br>**retroarch:** beetle_supafaust<br>**retroarch:** bsnes<br>**retroarch:** bsnes_mercury_performance<br>**retroarch:** bsnes_hd_beta<br>|
-|Nintendo|switch (switch)|2017|`switch`|.xci .XCI .nsp .NSP .nca .NCA .nso .NSO .nro .NRO|**yuzu:** yuzu-sa (default)<br>**ryujinx:** ryujinx-sa<br>|
+|Nintendo|Switch (switch)|2017|`switch`|.xci .XCI .nsp .NSP .nca .NCA .nso .NSO .nro .NRO|**yuzu:** yuzu-sa (default)<br>**ryujinx:** ryujinx-sa<br>|
 |Nintendo|Virtual Boy (virtualboy)|1995|`virtualboy`|.vb .VB .zip .ZIP .7z .7Z|**retroarch:** beetle_vb (default)<br>|
 |Nintendo|Wii (wii)|2006|`wii`|.gcm .GCM .iso .ISO .gcz .GCZ .ciso .CISO .wbfs .WBFS .rvz .RVZ .dol .DOL .wad .WAD|**dolphin:** dolphin-sa-wii (default)<br>**primehack:** primehack<br>**retroarch:** dolphin<br>|
 |Nintendo|Wii U (wiiu)|2012|`wiiu`|.wud .WUD .wux .WUX .wua .WUA|**cemu:** cemu-sa (default)<br>|

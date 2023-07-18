@@ -32,7 +32,7 @@ LIBRETRO_CORES="81-lr a5200-lr atari800-lr beetle-gba-lr beetle-lynx-lr beetle-n
 case "${DEVICE}" in
   AMD64)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="lutris-wine"
-    PKG_EMUS+=" cemu-sa citra-sa dolphin-sa duckstation-sa melonds-sa minivmacsa mupen64plus-sa pcsx2-sa       \
+    PKG_EMUS+=" amiberry cemu-sa citra-sa dolphin-sa duckstation-sa melonds-sa minivmacsa mupen64plus-sa pcsx2-sa       \
                 primehack rpcs3-sa ryujinx-sa scummvmsa xemu-sa yuzu-sa"
     LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr citra-lr desmume-lr dolphin-lr flycast-lr lrps2-lr mame-lr     \
                       minivmac-lr play-lr"
@@ -67,7 +67,7 @@ case "${DEVICE}" in
   RK3326*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="flycast-lr pcsx_rearmed-lr"
     PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders"
-    PKG_EMUS+=" drastic-sa mupen64plus-sa scummvmsa yabasanshiro-sa portmaster"
+    PKG_EMUS+=" amiberry drastic-sa mupen64plus-sa scummvmsa yabasanshiro-sa portmaster"
     LIBRETRO_CORES+=" uae4arm flycast-lr"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
@@ -100,6 +100,9 @@ makeinstall_target() {
 
   ### Add BIOS directory
   add_system_dir /storage/roms/bios
+
+  ### Add music directory
+  add_system_dir /storage/roms/music
 
   ### Apply documentation header
   start_system_doc

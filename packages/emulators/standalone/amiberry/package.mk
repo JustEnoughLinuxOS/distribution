@@ -3,7 +3,7 @@
 
 PKG_NAME="amiberry"
 PKG_ARCH="aarch64"
-PKG_VERSION="4bd019c"
+PKG_VERSION="346d096d8478b1bc489bf36c25c18f2ddb1e8ba3"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/midwan/amiberry"
 PKG_URL="${PKG_SITE}.git"
@@ -12,13 +12,17 @@ PKG_LONGDESC="Amiberry is an optimized Amiga emulator for ARM-based boards."
 GET_HANDLER_SUPPORT="git"
 PKG_TOOLCHAIN="make"
 PKG_GIT_CLONE_BRANCH="master"
-PKG_PATCH_DIRS+="${DEVICE}"
+PKG_PATCH_DIRS+=" ${DEVICE}"
+
+if [ ! "${OPENGL}" = "no" ]; then
+  PKG_PATCH_DIRS+=" opengl"
+fi
 
 pre_configure_target() {
   cd ${PKG_BUILD}
   export SYSROOT_PREFIX=${SYSROOT_PREFIX}
   AMIBERRY_PLATFORM="PLATFORM=${DEVICE}"
- 
+
   sed -i "s|AS     = as|AS     \?= as|" Makefile
   PKG_MAKE_OPTS_TARGET+="${AMIBERRY_PLATFORM} all SDL_CONFIG=${SYSROOT_PREFIX}/usr/bin/sdl2-config"
 }

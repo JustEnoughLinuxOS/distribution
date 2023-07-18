@@ -36,26 +36,42 @@ amiberry.rom_path=/storage/.config/amiberry/kickstarts/
 amiberry.floppy_path=/storage/.config/amiberry/disks/
 amiberry.hardfile_path=/storage/.config/amiberry/
 amiberry.cd_path=/storage/.config/amiberry/cd32/
-; 
+;
+;
+config_path=/storage/.config/amiberry/conf
+controllers_path=/usr/config/SDL-GameControllerDB
+retroarch_config=/storage/.config/retroarch/retroarch.cfg
+;
 ; *** Controller/Input Configuration
-; 
+;
 joyport0=mouse
 joyport0_autofire=none
 joyport0_friendlyname=Mouse
 joyport0_name=MOUSE0
-; 
-joyport1=joy1
+;
+joyport1=joy0
 joyport1_autofire=normal
-joyport1_friendlyname=Logitech Gamepad F310
-joyport1_name=JOY1
-; 
-joyport2=joy0
-joyport2_autofire=normal
-joyport2_friendlyname=Keyboard as Joystick [Default]
-joyport2_name=JOY0
-; 
-; 
-; 
+joyport1_friendlyname=Retrogame Joypad
+joyport1_name=JOY0
+;
+;
+joyport1_amiberry_custom_none_a=Joy1 Fire/Mouse1 Left Button
+joyport1_amiberry_custom_none_b=Swap joystick ports
+joyport1_amiberry_custom_none_x=Joy1 2nd Button/Mouse1 Right Button
+joyport1_amiberry_custom_none_y=Toggle Virtual Keyboard
+joyport1_amiberry_custom_none_start=Pause emulation
+joyport1_amiberry_custom_none_leftshoulder=Quick restore state
+joyport1_amiberry_custom_none_rightshoulder=Quick save state
+joyport1_amiberry_custom_none_dpup=Joy1 Up
+joyport1_amiberry_custom_none_dpdown=Joy2 Down
+joyport1_amiberry_custom_none_dpleft=Joy2 Left
+joyport1_amiberry_custom_none_dpright=Joy2 Right
+joyport1_amiberry_custom_axis_none_leftx=Joy1 Horizontal
+joyport1_amiberry_custom_axis_none_lefty=Joy1 Vertical
+joyport1_amiberry_custom_axis_none_rightx=Mouse1 Horizontal
+joyport1_amiberry_custom_axis_none_righty=Mouse1 Vertical
+;
+;
 input.joymouse_speed_analog=2
 input.joymouse_speed_digital=10
 input.joymouse_deadzone=33
@@ -65,9 +81,9 @@ input.analog_joystick_offset=-1
 input.mouse_speed=100
 input.autofire_speed=2496
 kbd_lang=us
-; 
+;
 ; *** Host-Specific
-; 
+;
 amiberry.vertical_offset=0
 amiberry.hide_idle_led=0
 amiberry.gfx_correct_aspect=1
@@ -78,34 +94,47 @@ amiberry.use_analogue_remap=false
 amiberry.use_retroarch_quit=true
 amiberry.use_retroarch_menu=true
 amiberry.use_retroarch_reset=false
-; 
+default_retroarch_vkbd=yes
+default_vkbd_exit=yes
+default_vkbd_hires=yes
+default_vkbd_enabled=yes
+vkbd_style=Original
+vkbd_language=US
+vkbd_transparency=0
+vkbd_exit=true
+vkbd_hires=true
+amiberry.use_retroarch_vkbd=true
+amiberry.vkbd_enabled=true
+amiberry.vkbd_hires=true
+amiberry.vkbd_exit=true
+;
 ; *** Common / Paths
-; 
+;
 use_gui=no
 kickstart_rom_file=@BIOS_PATH@/kick34005.A500.rom
 kickstart_ext_rom_file=
 ide_mb_rom_file=:ENABLED
 flash_file=
 cart_file=
-; 
+;
 ; *** Floppy Drives
-; 
+;
 ;floppy0=
 ;floppy1=
 ;floppy2=
 ;floppy3=
 nr_floppies=4
 floppy_speed=100
-; 
+;
 ; *** Hard Drives
-; 
-; 
+;
+;
 ; *** CD / CD32
-; 
+;
 cd_speed=100
-; 
+;
 ; *** Display / Screen Setup
-; 
+;
 gfx_framerate=0
 gfx_width=NULL
 gfx_height=NULL
@@ -117,9 +146,9 @@ gfx_linemode=none
 gfx_fullscreen_amiga=false
 gfx_fullscreen_picasso=false
 ntsc=false
-; 
+;
 ; *** CPU options
-; 
+;
 cpu_speed=real
 cpu_type=68000
 cpu_model=68000
@@ -128,9 +157,9 @@ cpu_24bit_addressing=true
 fpu_strict=false
 compfpu=true
 cachesize=8192
-; 
+;
 ; *** Memory
-; 
+;
 chipmem_size=2
 z3mapping=real
 fastmem_size=0
@@ -140,9 +169,9 @@ z3mem_size=0
 z3mem_start=0x40000000
 bogomem_size=0
 rtg_modes=0x502
-; 
+;
 ; *** Chipset
-; 
+;
 chipset=ecs
 chipset_refreshrate=50.000000
 collision_level=playfields
@@ -150,9 +179,9 @@ chipset_compatible=Generic
 rtc=MSM6242B
 immediate_blits=false
 fast_copper=true
-; 
+;
 ; *** Sound Options
-; 
+;
 sound_output=exact
 sound_channels=stereo
 sound_stereo_separation=7
@@ -162,7 +191,7 @@ sound_interpol=none
 sound_filter=off
 sound_filter_type=standard
 sound_volume_cd=20
-; 
+;
 ; *** Misc. Options
-; 
+;
 bsdsocket_emu=false

@@ -32,8 +32,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/Makefile linux/arch/arm64/boo
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-roc-pc-plus.dtb
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts	2023-07-02 20:33:29.742070227 +0000
-@@ -0,0 +1,1359 @@
++++ linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts	2023-07-17 13:40:26.075147554 +0000
+@@ -0,0 +1,1352 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2017 Fuzhou Rockchip Electronics Co., Ltd.
@@ -553,8 +553,12 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +
 +&dmc {
 +       status = "okay";
-+       center-supply = <&vdd_log>;
++       center-supply = <&vdd_center>;
 +       operating-points-v2 = <&dmc_opp_table>;
++
++       rockchip,pd-idle-dis-freq-hz = <800000000>;
++       rockchip,sr-idle-dis-freq-hz = <800000000>;
++       rockchip,sr-mc-gate-idle-dis-freq-hz = <800000000>;
 +
 +       rockchip,pd-idle-ns = <160>;
 +       rockchip,sr-idle-ns = <10240>;
@@ -685,16 +689,6 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +	status = "okay";
 +};
 +
-+&dfi {
-+	status = "okay";
-+};
-+
-+&dmc {
-+	status = "okay";
-+	operating-points-v2 = <&dmc_opp_table>;
-+	center-supply = <&vdd_center>;
-+};
-+
 +&pwm0 {
 +	status = "okay";
 +};
@@ -788,7 +782,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +		interrupt-parent = <&gpio3>;
 +		interrupts = <10 IRQ_TYPE_LEVEL_LOW>;
 +		#clock-cells = <1>;
-+		clock-output-names = "xin32k", "rk808-clkout2";
++		clock-output-names = "rk808-clkout1", "rk808-clkout2";
 +		pinctrl-names = "default";
 +		pinctrl-0 = <&pmic_int_l>;
 +		rockchip,system-power-controller;
@@ -811,13 +805,13 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +			status = "okay";
 +		};
 +
-+		regulators { // are all those regulator-on-in-suspend really needed?/
++		regulators {
 +			vdd_center: DCDC_REG1 {
 +				regulator-name = "vdd_center";
 +				regulator-always-on;
 +				regulator-boot-on;
-+				regulator-min-microvolt = <750000>;
-+				regulator-max-microvolt = <1350000>;
++				regulator-min-microvolt = <900000>;
++				regulator-max-microvolt = <900000>;
 +				regulator-ramp-delay = <6001>;
 +				regulator-state-mem {
 +					regulator-off-in-suspend;
@@ -1057,7 +1051,6 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +
 +	gt9xx: gt9xx@14 { 
 +		compatible = "goodix,gt927";
-+		goodix,config-name = "rg552_goodix_927_cfg.bin";
 +		reg = <0x14>;
 +		irq-gpios = <&gpio3 RK_PD7 GPIO_ACTIVE_HIGH>;
 +		reset-gpios = <&gpio3 RK_PD6 GPIO_ACTIVE_HIGH>;
@@ -1395,7 +1388,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +};
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi	2023-07-02 20:04:12.325801424 +0000
++++ linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi	2023-07-17 12:53:39.548017755 +0000
 @@ -0,0 +1,141 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
@@ -1410,27 +1403,27 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi linux/a
 +
 +		opp00 {
 +			opp-hz = /bits/ 64 <816000000>;
-+			opp-microvolt = <850000 850000 1250000>;
++			opp-microvolt = <850000>;
 +		};
 +		opp01 {
 +			opp-hz = /bits/ 64 <1008000000>;
-+			opp-microvolt = <925000 925000 1250000>;
++			opp-microvolt = <925000>;
 +		};
 +		opp02 {
 +			opp-hz = /bits/ 64 <1200000000>;
-+			opp-microvolt = <1000000 1000000 1250000>;
++			opp-microvolt = <1000000>;
 +		};
 +		opp03 {
 +			opp-hz = /bits/ 64 <1416000000>;
-+			opp-microvolt = <1125000 1125000 1250000>;
++			opp-microvolt = <1125000>;
 +		};
 +		opp-04 {
 +			opp-hz = /bits/ 64 <1512000000>;
-+			opp-microvolt = <1200000 1200000 1250000>;
++			opp-microvolt = <1200000>;
 +		};
 +		opp-05 {
 +			opp-hz = /bits/ 64 <1608000000>;
-+			opp-microvolt = <1200000 1200000 1250000>;
++			opp-microvolt = <1225000>;
 +		};
 +	};
 +
@@ -1440,35 +1433,35 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi linux/a
 +
 +		opp00 {
 +			opp-hz = /bits/ 64 <816000000>;
-+			opp-microvolt = <825000 825000 1250000>;
++			opp-microvolt = <825000>;
 +		};
 +		opp01 {
 +			opp-hz = /bits/ 64 <1008000000>;
-+			opp-microvolt = <875000 875000 1250000>;
++			opp-microvolt = <875000>;
 +		};
 +		opp02 {
 +			opp-hz = /bits/ 64 <1200000000>;
-+			opp-microvolt = <950000 950000 1250000>;
++			opp-microvolt = <950000>;
 +		};
 +		opp03 {
 +			opp-hz = /bits/ 64 <1416000000>;
-+			opp-microvolt = <1025000 1025000 1250000>;
++			opp-microvolt = <1025000>;
 +		};
 +		opp04 {
 +			opp-hz = /bits/ 64 <1608000000>;
-+			opp-microvolt = <1100000 1100000 1250000>;
++			opp-microvolt = <1100000>;
 +		};
 +		opp05 {
 +			opp-hz = /bits/ 64 <1800000000>;
-+			opp-microvolt = <1200000 1200000 1250000>;
++			opp-microvolt = <1200000>;
 +		};
 +		opp-06 {
 +			opp-hz = /bits/ 64 <1992000000>;
-+			opp-microvolt = <1250000 1250000 1250000>;
++			opp-microvolt = <1250000>;
 +		};
 +		opp-07 {
 +			opp-hz = /bits/ 64 <2088000000>;
-+			opp-microvolt = <1250000 1250000 1250000>;
++			opp-microvolt = <1250000>;
 +		};
 +	};
 +
@@ -1477,19 +1470,19 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi linux/a
 +
 +		opp00 {
 +			opp-hz = /bits/ 64 <500000000>;
-+			opp-microvolt = <875000 875000 1150000>;
++			opp-microvolt = <875000>;
 +		};
 +		opp01 {
 +			opp-hz = /bits/ 64 <600000000>;
-+			opp-microvolt = <925000 925000 1150000>;
++			opp-microvolt = <925000>;
 +		};
 +		opp02 {
 +			opp-hz = /bits/ 64 <800000000>;
-+			opp-microvolt = <1100000 1100000 1150000>;
++			opp-microvolt = <1100000>;
 +		};
 +		opp03 {
 +			opp-hz = /bits/ 64 <900000000>;
-+			opp-microvolt = <1100000 1100000 1150000>;
++			opp-microvolt = <1150000>;
 +		};
 +	};
 +
@@ -1539,8 +1532,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi linux/a
 +	operating-points-v2 = <&gpu_opp_table>;
 +};
 diff -rupN linux.orig/drivers/gpio/gpio-rockchip.c linux/drivers/gpio/gpio-rockchip.c
---- linux.orig/drivers/gpio/gpio-rockchip.c	2023-07-01 21:03:53.270083135 +0000
-+++ linux/drivers/gpio/gpio-rockchip.c	2023-07-02 20:04:12.325801424 +0000
+--- linux.orig/drivers/gpio/gpio-rockchip.c	2023-07-16 19:38:02.962868756 +0000
++++ linux/drivers/gpio/gpio-rockchip.c	2023-07-16 19:38:30.783741586 +0000
 @@ -335,13 +335,13 @@ static void rockchip_irq_demux(struct ir
  	unsigned long pending;
  	unsigned int irq;
@@ -3806,6 +3799,18 @@ diff -rupN linux.orig/drivers/input/joystick/singleadcjoy.c linux/drivers/input/
 +/*----------------------------------------------------------------------------*/
 +late_initcall(joypad_init);
 +module_exit(joypad_exit);
+diff -rupN linux.orig/drivers/input/touchscreen/goodix.c linux/drivers/input/touchscreen/goodix.c
+--- linux.orig/drivers/input/touchscreen/goodix.c	2023-06-23 03:53:40.656166453 +0000
++++ linux/drivers/input/touchscreen/goodix.c	2023-07-17 06:09:30.498252404 +0000
+@@ -1010,7 +1010,7 @@ retry_get_irq_gpio:
+ 	default:
+ 		if (ts->gpiod_int && ts->gpiod_rst) {
+ 			ts->reset_controller_at_probe = true;
+-			ts->load_cfg_from_disk = true;
++			ts->load_cfg_from_disk = false;
+ 			ts->irq_pin_access_method = IRQ_PIN_ACCESS_GPIO;
+ 		}
+ 	}
 diff -rupN linux.orig/drivers/power/supply/cw2015_battery.c linux/drivers/power/supply/cw2015_battery.c
 --- linux.orig/drivers/power/supply/cw2015_battery.c	2023-06-23 03:53:42.860202281 +0000
 +++ linux/drivers/power/supply/cw2015_battery.c	2023-07-02 20:04:12.325801424 +0000
@@ -3880,15 +3885,3 @@ diff -rupN linux.orig/include/linux/input-polldev.h linux/include/linux/input-po
 +void input_unregister_polled_device(struct input_polled_dev *dev);
 +
 +#endif
-diff -rupN linux.orig/sound/soc/codecs/es8316.c linux/sound/soc/codecs/es8316.c
---- linux.orig/sound/soc/codecs/es8316.c	2023-07-02 13:08:52.645749113 +0000
-+++ linux/sound/soc/codecs/es8316.c	2023-07-02 20:59:43.997250025 +0000
-@@ -696,7 +696,7 @@ static void es8316_disable_jack_detect(s
- 	snd_soc_component_update_bits(component, ES8316_GPIO_DEBOUNCE,
- 				      ES8316_GPIO_ENABLE_INTERRUPT, 0);
- 
--	if (es8316->jack->status & SND_JACK_MICROPHONE) {
-+	if (es8316->jack && (es8316->jack->status & SND_JACK_MICROPHONE)) {
- 		es8316_disable_micbias_for_mic_gnd_short_detect(component);
- 		snd_soc_jack_report(es8316->jack, 0, SND_JACK_BTN_0);
- 	}

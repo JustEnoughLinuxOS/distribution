@@ -138,7 +138,7 @@ fi
 PCIEPOWERSAVE=$(get_setting system.power.pcie)
 if [ -z "${PCIEPOWERSAVE}" ]
 then
-  set_setting system.power.pcie 1
+  set_setting system.power.pcie 0
 fi
 
 RTPM=$(get_setting system.power.rtpm)
@@ -150,7 +150,7 @@ fi
 WAKEEVENTS=$(get_setting system.power.wakeevents)
 if [ -z "${WAKEEVENTS}" ]
 then
-  set_setting system.power.wakeevents 1
+  set_setting system.power.wakeevents 0
 fi
 
 WIFIPOWERSAVE=$(get_setting system.power.wifi)
@@ -170,3 +170,14 @@ sed -i 's#<string name="PowerSaverMode".*$#<string name="PowerSaverMode" value="
 
 ### Remove properties containing "auto" from the system config.
 sed -i "/^.*=auto/d" /storage/.config/system/configs/system.cfg
+
+### Fix up music player to start selection
+if [ -d "/storage/.local/share/gmu" ]
+then
+  rm -rf /storage/.local/share/gmu
+fi
+if [ ! -d "/storage/.config/gmu/playlists" ]
+then
+  mkdir -p /storage/.config/gmu/playlists
+fi
+cp -rf /usr/config/gmu/playlists/* /storage/.config/gmu/playlists/
