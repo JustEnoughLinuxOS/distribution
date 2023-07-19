@@ -18,6 +18,7 @@ SNAPSHOTS="${ROMS_DIR}/savestates"
 TMP_CONFIG="/tmp/.retroarch.cfg"
 LOG_DIR="/var/log"
 LOG_FILE="exec.log"
+LOCK_FILE="/tmp/.retroarch.lock"
 
 ###
 ### Variables parsed from the command line
@@ -201,6 +202,11 @@ then
     mkdir -p ${LOG_DIR}
 fi
 
+if [ -e "${LOCK_FILE}" ]
+then
+  rm -f "${LOCK_FILE}"
+fi
+
 ### Copy the retroarch config file for editing
 if [ -f "${TMP_CONFIG}" ]
 then
@@ -233,9 +239,9 @@ function game_setting() {
     fi
 }
 
-function clean_setting() {
-    log "Remove setting [${1}]"
-    sed -i "/^${1}/d" ${RETROARCH_CONFIG} >/dev/null 2>&1
+function clear_setting() {
+      log "Remove setting [${1}]"
+      sed -i "/^${1}/d" ${RETROARCH_CONFIG} >/dev/null 2>&1
 }
 
 function add_setting() {
@@ -245,7 +251,7 @@ function add_setting() {
     fi
     local RETROARCH_KEY="${2}"
     local RETROARCH_VALUE="${3}"
-    if [ -z "${RETROARCH_VALUE}" ] && \
+    if [ -z "${RETROARCH_VALUE}" ]& \
        [ ! "${1}" = "none" ]
     then
             case ${OS_SETTING} in
@@ -260,7 +266,7 @@ function add_setting() {
             ;;
         esac
     fi
-    clean_setting "${RETROARCH_KEY}"
+    clear_setting "${RETROARCH_KEY}"
     echo "${RETROARCH_KEY} = \"${RETROARCH_VALUE}\"" >>${TMP_CONFIG}
     log "Added setting: ${RETROARCH_KEY} = \"${RETROARCH_VALUE}\""
 }
@@ -294,13 +300,13 @@ function configure_hotkeys() {
             cp /tmp/joypads/"${MY_CONTROLLER}.cfg" /tmp
             sed -i "s# = #=#g" /tmp/"${MY_CONTROLLER}.cfg"
             source /tmp/"${MY_CONTROLLER}.cfg"
-            sed -i "/input_enable_hotkey_btn/d" ${RETROARCH_CONFIG}
-            sed -i "/input_bind_hold/d" ${RETROARCH_CONFIG}
-            sed -i "/input_exit_emulator_btn/d" ${RETROARCH_CONFIG}
-            sed -i "/input_fps_toggle_btn/d" ${RETROARCH_CONFIG}
-            sed -i "/input_menu_toggle_btn/d" ${RETROARCH_CONFIG}
-            sed -i "/input_save_state_btn/d" ${RETROARCH_CONFIG}
-            sed -i "/input_load_state_btn/d" ${RETROARCH_CONFIG}
+            for HKEYSETTING in input_enable_hotkey_btn input_bind_hold      \
+                               input_exit_emulator_btn input_fps_toggle_btn \
+                               input_menu_toggle_btn input_save_state_btn   \
+                               input_load_state_btn
+            do
+                clear_setting "${HKEYSETTING}"
+            done
             cat <<EOF >>${RETROARCH_CONFIG}
 input_enable_hotkey_btn = "${input_select_btn}"
 input_bind_hold = "${input_select_btn}"
@@ -310,7 +316,7 @@ input_menu_toggle_btn = "${input_x_btn}"
 input_save_state_btn = "${input_r_btn}"
 input_load_state_btn = "${input_l_btn}"
 EOF
-        rm -f /tmp/"${MY_CONTROLLER}.cfg"
+            rm -f /tmp/"${MY_CONTROLLER}.cfg"
         fi
     fi
 }
@@ -332,7 +338,7 @@ function set_fps() {
 function set_cheevos() {
     local USE_CHEEVOS=$(game_setting "retroachievements")
     local CHECK_CHEEVOS="$(match "${PLATFORM}" "${HAS_CHEEVOS[@]}")"
-    if [ "${USE_CHEEVOS}" = 1 ] && \
+    if [ "${USE_CHEEVOS}" = 1 ]& \
        [ "${CHECK_CHEEVOS}" = 1 ]
     then
         add_setting "none" "cheevos_enable" "true"
@@ -511,24 +517,31 @@ function set_savestates() {
 }
 
 function set_autosave() {
-    local AUTOSAVE="$(game_setting autosave)"
-    add_setting "none" "savestate_directory" "${SNAPSHOTS}/${PLATFORM}"
-    if [ ! -z "${SNAPSHOT}" ]
-    then
-        case ${AUTOSAVE} in
-            0|false|none)
-                add_setting "none" "savestate_auto_save" "false"
-                add_setting "none" "savestate_auto_load" "false"
-            ;;
-            *)
-                add_setting "none" "savestate_auto_save" "true"
-                add_setting "none" "savestate_auto_load" "true"
-            ;;
-        esac
-    else
-            add_setting "none" "savestate_auto_load" "false"
-            add_setting "none" "savestate_auto_save" "false"
-    fi
+    local CHKAUTOSAVE="$(game_setting autosave)"
+    local SETLOADSTATE=false
+    local SETSAVESTATE=false
+    case ${CHKAUTOSAVE} in
+        [1-3])
+            log "Autosave enabled (${CHKAUTOSAVE})"
+            add_setting "none" "savestate_directory" "${SNAPSHOTS}/${PLATFORM}"
+            case ${AUTOSAVE} in
+                1)
+                    log "Autosave active (${AUTOSAVE})"
+                    SETSAVESTATE="true"
+                    if [ ! -z "${SNAPSHOT}" ]
+                    then
+                        log "Autosave snapshot enabled (${SNAPSHOT})"
+                        add_setting "none" "state_slot" "${SNAPSHOT}"
+                        SETLOADSTATE="true"
+                    else
+                        SETLOADSTATE="false"
+                    fi
+                ;;
+            esac
+        ;;
+    esac
+    add_setting "none" "savestate_auto_load" "${SETLOADSTATE}"
+    add_setting "none" "savestate_auto_save" "${SETSAVESTATE}"
 }
 
 function set_runahead() {
@@ -710,34 +723,28 @@ function set_controllers() {
 ### Execute functions
 ###
 
-configure_hotkeys &
-set_ra_menudriver &
-set_fps &
-set_cheevos &
-set_netplay &
-set_translation &
-set_aspectratio &
-set_filtering &
-set_integerscale &
-set_rgascale &
-set_shader &
-set_filter &
-set_rewind &
-set_savestates &
-set_autosave &
-set_runahead &
-set_audiolatency &
-set_analogsupport &
-set_tatemode &
-set_n64opts &
-set_atari &
-set_gambatte &
-set_controllers &
-
-###
-### Wait for functions to complete.
-###
-
-wait
+configure_hotkeys
+set_ra_menudriver
+set_fps
+set_cheevos
+set_netplay
+set_translation
+set_aspectratio
+set_filtering
+set_integerscale
+set_rgascale
+set_shader
+set_filter
+set_rewind
+set_savestates
+set_autosave
+set_runahead
+set_audiolatency
+set_analogsupport
+set_tatemode
+set_n64opts
+set_atari
+set_gambatte
+set_controllers
 
 cleanup
