@@ -32,8 +32,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/Makefile linux/arch/arm64/boo
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-roc-pc-plus.dtb
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts	2023-07-17 13:40:26.075147554 +0000
-@@ -0,0 +1,1352 @@
++++ linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts	2023-07-19 13:58:38.063475368 +0000
+@@ -0,0 +1,1358 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2017 Fuzhou Rockchip Electronics Co., Ltd.
@@ -76,21 +76,29 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +		pinctrl-0 = <&vol_pwr_btn>;
 +
 +		sw1 {
++			label = "BTN VOL+";
++			linux,code = <KEY_VOLUMEUP>;
++			gpios = <&gpio3 RK_PB5 GPIO_ACTIVE_LOW>;
++		};
++		sw2 {
++			label = "BTN VOL-";
++			linux,code = <KEY_VOLUMEDOWN>;
++			gpios = <&gpio3 RK_PB6 GPIO_ACTIVE_LOW>;
++		};
++	};
++
++	power-btn {
++		compatible = "gpio-keys";
++		autorepeat;
++		pinctrl-names = "default";
++		pinctrl-0 = <&pwr_btn>;
++
++		sw1 {
 +			debounce-interval = <100>;
 +			gpios = <&gpio0 RK_PA5 GPIO_ACTIVE_LOW>;
 +			label = "BTN PWR";
 +			linux,code = <KEY_POWER>;
 +			wakeup-source;
-+		};
-+		sw2 {
-+			label = "BTN VOL+";
-+			linux,code = <KEY_VOLUMEUP>;
-+			gpios = <&gpio3 RK_PB5 GPIO_ACTIVE_LOW>;
-+		};
-+		sw3 {
-+			label = "BTN VOL-";
-+			linux,code = <KEY_VOLUMEDOWN>;
-+			gpios = <&gpio3 RK_PB6 GPIO_ACTIVE_LOW>;
 +		};
 +	};
 +
@@ -552,28 +560,23 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +};
 +
 +&dmc {
-+       status = "okay";
-+       center-supply = <&vdd_center>;
-+       operating-points-v2 = <&dmc_opp_table>;
++        status = "okay";
++        center-supply = <&vdd_center>;
++        operating-points-v2 = <&dmc_opp_table>;
 +
-+       rockchip,pd-idle-dis-freq-hz = <800000000>;
-+       rockchip,sr-idle-dis-freq-hz = <800000000>;
-+       rockchip,sr-mc-gate-idle-dis-freq-hz = <800000000>;
++	rockchip,pd-idle-ns = <160>;
++	rockchip,sr-idle-ns = <10240>;
++	rockchip,sr-mc-gate-idle-ns = <40960>;
++	rockchip,srpd-lite-idle-ns = <61440>;
++	rockchip,standby-idle-ns = <81920>;
 +
-+       rockchip,pd-idle-ns = <160>;
-+       rockchip,sr-idle-ns = <10240>;
-+       rockchip,sr-mc-gate-idle-ns = <40960>;
-+       rockchip,srpd-lite-idle-ns = <61440>;
-+       rockchip,standby-idle-ns = <81920>;
++	rockchip,lpddr4_odt_dis_freq = <666000000>;
 +
-+       rockchip,ddr3_odt_dis_freq = <666000000>;
-+       rockchip,lpddr3_odt_dis_freq = <666000000>;
-+       rockchip,lpddr4_odt_dis_freq = <666000000>;
-+
-+       rockchip,sr-mc-gate-idle-dis-freq-hz = <1000000000>;
-+       rockchip,srpd-lite-idle-dis-freq-hz = <0>;
-+       rockchip,standby-idle-dis-freq-hz = <928000000>;
-+
++	rockchip,srpd-lite-idle-dis-freq-hz = <0>;
++	rockchip,standby-idle-dis-freq-hz = <928000000>;
++	rockchip,sr-mc-gate-idle-dis-freq-hz = <800000000>;
++	rockchip,pd-idle-dis-freq-hz = <800000000>;
++	rockchip,sr-idle-dis-freq-hz = <800000000>;
 +};
 +
 +&dfi {
@@ -1250,9 +1253,12 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +		};
 +		vol_pwr_btn: vol-pwr-btn {
 +			rockchip,pins =
-+					<0 RK_PA5 RK_FUNC_GPIO &pcfg_pull_up>,
 +					<3 RK_PB5 RK_FUNC_GPIO &pcfg_pull_up>,
 +					<3 RK_PB6 RK_FUNC_GPIO &pcfg_pull_up>;
++		};
++		pwr_btn: pwr-btn {
++			rockchip,pins =
++					<0 RK_PA5 RK_FUNC_GPIO &pcfg_pull_up>;
 +		};
 +	};
 +};
@@ -1388,7 +1394,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +};
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi	2023-07-17 12:53:39.548017755 +0000
++++ linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi	2023-07-19 19:22:18.903393789 +0000
 @@ -0,0 +1,141 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
@@ -1489,14 +1495,14 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi linux/a
 +        dmc_opp_table: opp-table-3 {
 +                compatible = "operating-points-v2";
 +
-+                opp00 {
-+                        opp-hz = /bits/ 64 <666000000>;
-+                        opp-microvolt = <900000>;
-+                };
-+                opp01 {
-+                        opp-hz = /bits/ 64 <856000000>;
-+                        opp-microvolt = <900000>;
-+                };
++		opp00 {
++			opp-hz = /bits/ 64 <666000000>;
++			opp-microvolt = <900000>;
++		};
++		opp01 {
++			opp-hz = /bits/ 64 <856000000>;
++			opp-microvolt = <900000>;
++		};
 +        };
 +};
 +
