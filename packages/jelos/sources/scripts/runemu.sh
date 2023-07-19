@@ -22,7 +22,7 @@ LOGSDIR="/var/log"
 LOGFILE="exec.log"
 TBASH="/usr/bin/bash"
 RATMPCONF="/storage/.config/retroarch/retroarch.cfg"
-RAAPPENDCONF="/tmp/raappend.cfg"
+RAAPPENDCONF="/tmp/.retroarch.cfg"
 NETPLAY="No"
 SHADERTMP="/tmp/shader"
 OUTPUT_LOG="${LOGSDIR}/${LOGFILE}"
@@ -47,7 +47,6 @@ EMULATOR="${EMULATOR%% *}"  # until a space is found
 ROMNAME="$1"
 BASEROMNAME=${ROMNAME##*/}
 GAMEFOLDER="${ROMNAME//${BASEROMNAME}}"
-
 
 ### Determine if we're running a Libretro core and append the libretro suffix
 if [[ $EMULATOR = "retroarch" ]]; then
