@@ -99,7 +99,7 @@ fi
 
 ### Set the performance mode
 PERFORMANCE_MODE=$(get_setting "cpugovernor" "${PLATFORM}" "${ROMNAME##*/}")
-if [ ! "${PERFORMANCE_MODE}" = "auto" ]
+if [ ! "${PERFORMANCE_MODE}" = "default" ]
 then
   ${PERFORMANCE_MODE}
 fi
@@ -397,12 +397,14 @@ then
 	rm -f "${SHADERTMP}"
 fi
 
+performance
 if [[ ${PLATFORM} == "ports" ]]; then
 	(/usr/bin/setsettings.sh "${PLATFORM}" "${PORTSCRIPT}" "${CORE}" --controllers="${CONTROLLERCONFIG}" --autosave="${AUTOSAVE}" --snapshot="${SNAPSHOT}" >${SHADERTMP}) &
 else
 	(/usr/bin/setsettings.sh "${PLATFORM}" "${ROMNAME}" "${CORE}" --controllers="${CONTROLLERCONFIG}" --autosave="${AUTOSAVE}" --snapshot="${SNAPSHOT}" >${SHADERTMP}) &
 fi
 SETSETTINGS_PID=$!
+${PERFORMANCE_MODE}
 
 clear_screen
 

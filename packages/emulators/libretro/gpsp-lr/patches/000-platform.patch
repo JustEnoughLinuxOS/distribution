@@ -2,46 +2,13 @@ diff --git a/Makefile b/Makefile
 index c52b50b..5e7f2ec 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -289,6 +289,50 @@ else ifeq ($(platform), rpi1)
+@@ -289,6 +289,17 @@ else ifeq ($(platform), rpi1)
  	MMAP_JIT_CACHE = 1
  	HAVE_DYNAREC = 1
  
-+# RK3326
-+else ifeq ($(platform), RK3326)
-+     CPUFLAGS := -marm -march=armv8-a+crc+simd -mtune=cortex-a35 -mfpu=neon-fp-armv8 -mfloat-abi=hard -flto
-+     CFLAGS  := $(CPUFLAGS) -fpic -ffast-math -fno-rtti -fno-exceptions
-+     TARGET := $(TARGET_NAME)_libretro.so
-+     fpic := -fPIC
-+     SHARED := -shared -Wl,--version-script=link.T -Wl,--no-undefined
-+     CPU_ARCH := arm
-+     MMAP_JIT_CACHE = 1
-+     HAVE_DYNAREC = 1
-+
-+# RK3566
-+else ifeq ($(platform), RK3566)
-+     CPUFLAGS := -marm -march=armv8-a+crc+simd -mtune=cortex-a55 -mfpu=neon-fp-armv8 -mfloat-abi=hard -flto
-+     CFLAGS  := $(CPUFLAGS) -fpic -ffast-math -fno-rtti -fno-exceptions
-+     TARGET := $(TARGET_NAME)_libretro.so
-+     fpic := -fPIC
-+     SHARED := -shared -Wl,--version-script=link.T -Wl,--no-undefined
-+     CPU_ARCH := arm
-+     MMAP_JIT_CACHE = 1
-+     HAVE_DYNAREC = 1
-+
-+# RK3399
-+else ifeq ($(platform), RK3399)
-+     CPUFLAGS := -marm -march=armv8-a -mfpu=neon-fp-armv8 -mfloat-abi=hard -flto
-+     CFLAGS  := $(CPUFLAGS) -fpic -ffast-math -fno-rtti -fno-exceptions
-+     TARGET := $(TARGET_NAME)_libretro.so
-+     fpic := -fPIC
-+     SHARED := -shared -Wl,--version-script=link.T -Wl,--no-undefined
-+     CPU_ARCH := arm
-+     MMAP_JIT_CACHE = 1
-+     HAVE_DYNAREC = 1
-+
-+# RK3588
-+else ifeq ($(platform), RK3588)
-+     CPUFLAGS := -marm -march=armv8-a -mfpu=neon-fp-armv8 -mfloat-abi=hard -flto
++# @DEVICE@
++else ifeq ($(platform), @DEVICE@)
++     CPUFLAGS := -marm -march=armv8-a+crc+simd -mtune=@TARGET_CPU@ -mfpu=neon-fp-armv8 -mfloat-abi=hard -flto
 +     CFLAGS  := $(CPUFLAGS) -fpic -ffast-math -fno-rtti -fno-exceptions
 +     TARGET := $(TARGET_NAME)_libretro.so
 +     fpic := -fPIC
