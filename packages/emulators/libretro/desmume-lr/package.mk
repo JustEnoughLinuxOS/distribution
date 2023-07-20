@@ -7,8 +7,6 @@ PKG_LICENSE="GPLv2"
 PKG_SITE="https://git.libretro.com/libretro/desmume"
 PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain libpcap"
-PKG_PRIORITY="optional"
-PKG_SECTION="libretro"
 PKG_SHORTDESC="DeSmuME - Nintendo DS libretro"
 PKG_TOOLCHAIN="make"
 
@@ -23,14 +21,6 @@ fi
 
 pre_configure_target() {
   cd ${PKG_BUILD}/desmume/src/frontend/libretro
-#
-#  if [ "${ARCH}" = "arm" ] then;
-#      PKG_MAKE_OPTS_TARGET+=" platform=armv-unix-${TARGET_FLOAT}float-${TARGET_CPU}"
-#  elif [ "${ARCH}" = "x86_64" ] then;
-#      PKG_MAKE_OPTS_TARGET+=" platform=unix"
-#  else
-#    :
-#  fi
 }
 
 if [ "${ARCH}" = "arm" ]
