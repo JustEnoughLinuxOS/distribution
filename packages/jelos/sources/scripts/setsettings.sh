@@ -606,7 +606,16 @@ function set_tatemode() {
             mkdir -p "${MAME2003REMAPDIR}"
     fi
     case ${TATEMODE} in
-        0|false|none)
+        1|true)
+            cp "/usr/config/retroarch/TATE-MAME 2003-Plus.rmp" "${MAME2003REMAPDIR}/MAME 2003-Plus.rmp"
+            if [ "$(grep mame2003-plus_tate_mode "${MAME2003DIR}/MAME 2003-Plus.opt" > /dev/null 2>&1)" ]
+            then
+                sed -i 's#mame2003-plus_tate_mode.*$#mame2003-plus_tate_mode = "enabled"#' "${MAME2003DIR}/MAME 2003-Plus.opt" 2>/dev/null
+            else
+                echo 'mame2003-plus_tate_mode = "enabled"' > "${MAME2003DIR}/MAME 2003-Plus.opt"
+            fi
+        ;;
+        *)
             if [ -e "${MAME2003DIR}/MAME 2003-Plus.opt" ]
             then
                 sed -i 's#mame2003-plus_tate_mode.*$#mame2003-plus_tate_mode = "disabled"#' "${MAME2003DIR}/MAME 2003-Plus.opt" 2>/dev/null
@@ -614,15 +623,6 @@ function set_tatemode() {
             if [ -e "${MAME2003REMAPDIR}/MAME 2003-Plus.rmp" ]
             then
                 rm -f "${MAME2003REMAPDIR}/MAME 2003-Plus.rmp"
-            fi  
-        ;;
-        *)
-            cp "/usr/config/retroarch/TATE-MAME 2003-Plus.rmp" "${MAME2003REMAPDIR}/MAME 2003-Plus.rmp"
-            if [ "$(grep mame2003-plus_tate_mode "${MAME2003DIR}/MAME 2003-Plus.opt" > /dev/null 2>&1)" ]
-            then
-                sed -i 's#mame2003-plus_tate_mode.*$#mame2003-plus_tate_mode = "enabled"#' "${MAME2003DIR}/MAME 2003-Plus.opt" 2>/dev/null
-            else
-                echo 'mame2003-plus_tate_mode = "enabled"' > "${MAME2003DIR}/MAME 2003-Plus.opt"
             fi
         ;;
     esac
