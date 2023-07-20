@@ -14,7 +14,7 @@ PKG_EMUS="flycast-sa gzdoom-sa hatarisa hypseus-singe hypseus-singe moonlight op
 PKG_RETROARCH="core-info libretro-database retroarch retroarch-assets retroarch-joypads retroarch-overlays     \
               slang-shaders"
 
-LIBRETRO_CORES="81-lr a5200-lr atari800-lr beetle-gba-lr beetle-lynx-lr beetle-ngp-lr beetle-pce-lr beetle-pce-fast-lr    \
+LIBRETRO_CORES="81-lr a5200-lr arduous-lr atari800-lr beetle-gba-lr beetle-lynx-lr beetle-ngp-lr beetle-pce-lr beetle-pce-fast-lr    \
                 beetle-pcfx-lr bsnes-lr bsnes-mercury-performance-lr beetle-supafaust-lr beetle-supergrafx-lr             \
                 beetle-vb-lr beetle-wswan-lr beetle-saturn-lr bluemsx-lr cannonball-lr cap32-lr crocods-lr daphne-lr      \
                 dinothawr-lr dosbox-svn-lr dosbox-pure-lr duckstation-lr easyrpg-lr fake08-lr fbalpha2012-lr              \
@@ -162,6 +162,10 @@ makeinstall_target() {
     ;;
   esac
   add_es_system arcade
+
+  ### Arduboy
+  add_emu_core arduboy retroarch arduous true
+  add_es_system arduboy
 
   ### Atari 2600 Libretro
   add_emu_core atari2600 retroarch stella true
