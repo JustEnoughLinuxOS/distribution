@@ -27,4 +27,10 @@ if [ "${DISPLAYSERVER}" = "wl" ]; then
 fi
 
 ### Emulators and Cores
-PKG_DEPENDS_TARGET+=" retroarch pcsx_rearmed-lr gpsp-lr flycast-lr box86 desmume-lr"
+PKG_DEPENDS_TARGET+=" retroarch pcsx_rearmed-lr gpsp-lr flycast-lr box86"
+
+case "${DEVICE}" in
+  RK3399)
+    PKG_DEPENDS_TARGET+=" desmume-lr"
+  ;;
+esac
