@@ -283,7 +283,7 @@ else
 		### Check if we need retroarch 32 bits or 64 bits
 		if [[ "${CORE}" =~ pcsx_rearmed32 ]] || \
 	           [[ "${CORE}" =~ gpsp ]] || \
-	           [[ "${CORE}" =~ flycast32 ]]
+	           [[ "${CORE}" =~ flycast32 ]] \
 	           [[ "${CORE}" =~ desmume ]]
 		then
                         export LIBGL_DRIVERS_PATH="/usr/lib32/dri"
