@@ -207,11 +207,14 @@ then
   rm -f "${LOCK_FILE}"
 fi
 
-### Copy the retroarch config file for editing
-if [ -f "${TMP_CONFIG}" ]
-then
-  rm -f "${TMP_CONFIG}"
-fi
+### Clean up temp files
+for FILE in ${TMP_CONFIG} ${TMP_CONFIG}.sed
+do
+  if [ -f "${FILE}" ]
+  then
+    rm -f "${FILE}"
+  fi
+done
 
 ###
 ### Core functions
@@ -241,7 +244,19 @@ function game_setting() {
 
 function clear_setting() {
       log "Remove setting [${1}]"
-      sed -i "/^${1}/d" ${RETROARCH_CONFIG} >/dev/null 2>&1
+      if [ ! -f "${TMP_CONFIG}.sed" ]
+      then
+          echo -n 'sed -i "' >${TMP_CONFIG}.sed
+      else
+          echo -n ' /^'${1}'/d;' >>${TMP_CONFIG}.sed
+      fi
+}
+
+function flush_settings() {
+    echo -n '" '${RETROARCH_CONFIG}' >/dev/null 2>&1' >>${TMP_CONFIG}.sed
+    chmod 0755 ${TMP_CONFIG}.sed
+    ${TMP_CONFIG}.sed >/dev/null 2>&1 ||:
+    rm -f ${TMP_CONFIG}.sed
 }
 
 function add_setting() {
@@ -307,6 +322,7 @@ function configure_hotkeys() {
             do
                 clear_setting "${HKEYSETTING}"
             done
+            flush_settings
             cat <<EOF >>${RETROARCH_CONFIG}
 input_enable_hotkey_btn = "${input_select_btn}"
 input_bind_hold = "${input_select_btn}"
@@ -664,6 +680,7 @@ function set_atari() {
             echo "STEREO_POKEY=1" >> ${ATARICONF}
             echo "BUILTIN_BASIC=1" >> ${ATARICONF}
         fi
+	flush_settings
     fi
 }
 
@@ -723,28 +740,46 @@ function set_controllers() {
 ### Execute functions
 ###
 
+###
+### Functions that cannot be parallelized
+###
+
 configure_hotkeys
-set_ra_menudriver
-set_fps
-set_cheevos
-set_netplay
-set_translation
-set_aspectratio
-set_filtering
-set_integerscale
-set_rgascale
-set_shader
-set_filter
-set_rewind
-set_savestates
-set_autosave
-set_runahead
-set_audiolatency
-set_analogsupport
-set_tatemode
-set_n64opts
-set_atari
-set_gambatte
-set_controllers
+
+###
+### Functions that can execute in parallel.
+###
+
+set_ra_menudriver &
+set_fps &
+set_cheevos &
+set_netplay &
+set_translation &
+set_aspectratio &
+set_filtering &
+set_integerscale &
+set_rgascale &
+set_shader &
+set_filter &
+set_rewind &
+set_savestates &
+set_autosave &
+set_runahead &
+set_audiolatency &
+set_analogsupport &
+set_tatemode &
+set_n64opts &
+
+### Sed operations are expensive, so they are staged and executed as
+### a single process when all forks complete.
+wait
+flush_settings
+
+set_atari &
+set_gambatte &
+set_controllers &
+
+wait
+flush_settings
 
 cleanup

@@ -48,6 +48,9 @@ ROMNAME="$1"
 BASEROMNAME=${ROMNAME##*/}
 GAMEFOLDER="${ROMNAME//${BASEROMNAME}}"
 
+### Use performance mode to prepare to start the emulator.
+performance
+
 ### Determine if we're running a Libretro core and append the libretro suffix
 if [[ $EMULATOR = "retroarch" ]]; then
 	EMU="${CORE}_libretro"
@@ -95,13 +98,6 @@ if [ -n "${NUMTHREADS}" ] &&
    [ ! ${NUMTHREADS} = "default" ]
 then
   onlinethreads ${NUMTHREADS} 0
-fi
-
-### Set the performance mode
-PERFORMANCE_MODE=$(get_setting "cpugovernor" "${PLATFORM}" "${ROMNAME##*/}")
-if [ ! "${PERFORMANCE_MODE}" = "default" ]
-then
-  ${PERFORMANCE_MODE}
 fi
 
 ### Set the cores to use
@@ -337,6 +333,13 @@ else
                 ;;
         esac
 
+
+        ### Set the performance mode for emulation
+        PERFORMANCE_MODE=$(get_setting "cpugovernor" "${PLATFORM}" "${ROMNAME##*/}")
+        if [ ! "${PERFORMANCE_MODE}" = "default" ]
+        then
+            ${PERFORMANCE_MODE}
+        fi
 	if [[ "${CORE}" =~ "custom" ]] 
 	then
 	RUNTHIS='${EMUPERF} /usr/bin/${RABIN} -L /storage/.config/retroarch/cores/${EMU}.so --config ${RATMPCONF} --appendconfig ${RAAPPENDCONF} "${ROMNAME}"'
@@ -407,14 +410,12 @@ then
 	rm -f "${SHADERTMP}"
 fi
 
-performance
 if [[ ${PLATFORM} == "ports" ]]; then
 	(/usr/bin/setsettings.sh "${PLATFORM}" "${PORTSCRIPT}" "${CORE}" --controllers="${CONTROLLERCONFIG}" --autosave="${AUTOSAVE}" --snapshot="${SNAPSHOT}" >${SHADERTMP}) &
 else
 	(/usr/bin/setsettings.sh "${PLATFORM}" "${ROMNAME}" "${CORE}" --controllers="${CONTROLLERCONFIG}" --autosave="${AUTOSAVE}" --snapshot="${SNAPSHOT}" >${SHADERTMP}) &
 fi
 SETSETTINGS_PID=$!
-${PERFORMANCE_MODE}
 
 clear_screen
 
@@ -436,6 +437,13 @@ fi
 clear_screen
 $VERBOSE && log $0 "executing game: ${ROMNAME}"
 $VERBOSE && log $0 "script to execute: ${RUNTHIS}"
+
+### Set the performance mode for emulation
+PERFORMANCE_MODE=$(get_setting "cpugovernor" "${PLATFORM}" "${ROMNAME##*/}")
+if [ ! "${PERFORMANCE_MODE}" = "default" ]
+then
+    ${PERFORMANCE_MODE}
+fi
 # If the rom is a shell script just execute it, useful for DOSBOX and ScummVM scan scripts
 if [[ "${ROMNAME}" == *".sh" ]]; then
 	$VERBOSE && log $0 "Executing shell script ${ROMNAME}"
@@ -446,6 +454,9 @@ else
 	eval ${RUNTHIS} &>>${OUTPUT_LOG}
 	ret_error=$?
 fi
+
+### Switch back to performance mode to clean up
+performance
 
 clear_screen
 
