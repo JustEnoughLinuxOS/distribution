@@ -2,6 +2,11 @@
 #
 Just Enough Linux Operating System (JELOS) is an immutable Linux distribution for handheld gaming devices developed by a small community of enthusiasts.  Our goal is to produce an operating system that has the features and capabilities that we need, and to have fun as we develop it.
 
+## Screenshots
+|System View|Menu View|Game List|
+|----|----|----|
+|![system-view](https://github.com/JustEnoughLinuxOS/distribution/assets/88717793/3f8b0b5a-c3ba-4b56-a0fb-d72cf143e44f)|![menu](https://github.com/JustEnoughLinuxOS/distribution/assets/88717793/2a6f0d0a-9b13-4619-ab08-19791d49d3d0)|![gamelist-view-metadata-off-immersive](https://github.com/JustEnoughLinuxOS/distribution/assets/88717793/9120a7c4-f06d-4236-a3e8-d49c7089f727)|
+
 ## Device Support
 JELOS supports a variety of ARM and Intel/AMD based devices<sup>1</sup>.  
 | Manufacturer | Device | CPU / Architecture | Kernel | GL driver | Interface |
