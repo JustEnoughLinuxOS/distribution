@@ -338,7 +338,7 @@ function set_fps() {
 function set_cheevos() {
     local USE_CHEEVOS=$(game_setting "retroachievements")
     local CHECK_CHEEVOS="$(match "${PLATFORM}" "${HAS_CHEEVOS[@]}")"
-    if [ "${USE_CHEEVOS}" = 1 ]& \
+    if [ "${USE_CHEEVOS}" = 1 ] && \
        [ "${CHECK_CHEEVOS}" = 1 ]
     then
         add_setting "none" "cheevos_enable" "true"
