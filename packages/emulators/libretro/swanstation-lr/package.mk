@@ -3,7 +3,7 @@
 # Maintenance 2020 351ELEC team (https://github.com/fewtarius/351ELEC)
 
 PKG_NAME="swanstation-lr"
-PKG_VERSION="ab8cd2955b102856214290619e69aae5c5d70302"
+PKG_VERSION="e76104d5cabc27c6cab92d697df40da99d0af8d5"
 PKG_ARCH=""
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/libretro/swanstation"
