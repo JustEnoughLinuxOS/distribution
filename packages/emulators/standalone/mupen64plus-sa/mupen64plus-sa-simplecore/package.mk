@@ -51,6 +51,10 @@ makeinstall_target() {
   chmod 644 ${INSTALL}/usr/local/lib/libsimple64.so.2
   rm -rf ${SYSROOT_PREFIX}/usr/local/include/simple64
   mkdir -p ${SYSROOT_PREFIX}/usr/local/include/simple64
-  cp -r ${PKG_BUILD}/src/* ${SYSROOT_PREFIX}/usr/local/include/simple64/
-  mv ${PKG_BUILD}/src/api/m64p_*.h ${SYSROOT_PREFIX}/usr/local/include/simple64/
+  cp -rf ${PKG_BUILD}/src ${SYSROOT_PREFIX}/usr/local/include/simple64/
+  for header in ${SYSROOT_PREFIX}/usr/local/include/simple64/src/api/*h
+  do
+    ln -sf ${header} ${SYSROOT_PREFIX}/usr/local/include/simple64/
+  done
+  #mv ${PKG_BUILD}/src/api/m64p_*.h ${SYSROOT_PREFIX}/usr/local/include/simple64/
 }
