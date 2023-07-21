@@ -428,10 +428,10 @@ set_consolefont() {
   progress "Set console font"
   if [ -e /dev/fb0 ]; then
     hres="$(fbset 2>/dev/null | awk '/geometry/ { print $2 }')"
-    if [ "${hres}" -gt "0" ] && [ "${hres}" -lt "640" ]
+    if [ "${hres}" -gt "0" ] && [ "${hres}" -le "640" ]
     then
       setfont -C /dev/console ter-v12n.psf
-    elif [ "${hres}" -ge "640" ] && [ "${hres}" -lt "720" ]
+    elif [ "${hres}" -ge "641" ] && [ "${hres}" -lt "720" ]
     then
       setfont -C /dev/console ter-v14n.psf
     elif [ "${hres}" -ge "720" ] && [ "${hres}" -lt "1080" ]

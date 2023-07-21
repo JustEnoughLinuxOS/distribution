@@ -11,6 +11,7 @@ This document describes all available systems emulators and cores available for 
 |Arcade|Daphne (daphne)|1996|`daphne`|.daphne .DAPHNE .zip .ZIP|**hypseus:** hypseus (default)<br>**retroarch:** daphne<br>|
 |Arcade|Final Burn Neo (fbn)|1986|`fbneo`|.7z .zip .7Z .ZIP|**retroarch:** fbneo (default)<br>**retroarch:** mame2003_plus<br>**retroarch:** mame2010<br>**retroarch:** mame2015<br>**retroarch:** mame<br>**retroarch:** fbalpha2012<br>**retroarch:** fbalpha2019<br>|
 |Arcade|MAME (mame)|1948|`mame`|.7z .7Z .zip .ZIP|**retroarch:** mame2003_plus (default)<br>**retroarch:** mame2010<br>**retroarch:** mame2015<br>**retroarch:** mame<br>**retroarch:** fbneo<br>**retroarch:** fbalpha2012<br>**retroarch:** fbalpha2019<br>|
+|Arduboy|Arduboy (arduboy)|2014|`arduboy`|.hex .HEX|**retroarch:** arduous (default)<br>|
 |Atari|2600 (atari2600)|1977|`atari2600`|.a26 .A26 .bin .BIN .zip .ZIP .7z .7Z|**retroarch:** stella (default)<br>|
 |Atari|5200 (atari5200)|1982|`atari5200`|.rom .ROM .xfd .XFD .atr .ATR .atx .ATX .cdm .CDM .cas .CAS .car .CAR .bin .BIN .a52 .A52 .xex .XEX .zip .ZIP .7z .7Z|**retroarch:** a5200 (default)<br>**retroarch:** atari800<br>|
 |Atari|7800 (atari7800)|1986|`atari7800`|.a78 .A78 .bin .BIN .zip .ZIP .7z .7Z|**retroarch:** prosystem (default)<br>|
@@ -64,7 +65,7 @@ This document describes all available systems emulators and cores available for 
 |Nintendo|Game and Watch (gameandwatch)|1980|`gameandwatch`|.mgw .MGW .zip .ZIP .7z .7Z|**retroarch:** gw<br>|
 |Nintendo|Game Boy (gb)|1989|`gb`|.gb .GB .gbc .GBC .zip .ZIP .7z .7Z|**retroarch:** gambatte (default)<br>**retroarch:** sameboy<br>**retroarch:** gearboy<br>**retroarch:** tgbdual<br>**retroarch:** mgba<br>**retroarch:** vbam<br>|
 |Nintendo|Game Boy (Hacks) (gbh)|1989|`gbh`|.gb .GB .zip .ZIP .7z .7Z|**retroarch:** gambatte (default)<br>**retroarch:** sameboy<br>**retroarch:** gearboy<br>**retroarch:** tgbdual<br>**retroarch:** mgba<br>**retroarch:** vbam<br>|
-|Nintendo|Game Boy Advance (gba)|2001|`gba`|.gba .GBA .zip .ZIP .7z .7Z|**retroarch:** mgba (default)<br>**retroarch:** gbsp<br>**retroarch:** vbam<br>**retroarch:** vba_next<br>**retroarch:** beetle_gba<br>|
+|Nintendo|Game Boy Advance (gba)|2001|`gba`|.gba .GBA .zip .ZIP .7z .7Z|**retroarch:** mgba (default)<br>**retroarch:** gbsp<br>**retroarch:** vbam<br>**retroarch:** vba_next<br>**retroarch:** beetle_gba<br>**retroarch:** gpsp<br>|
 |Nintendo|Game Boy Advance (Hacks) (gbah)|2001|`gbah`|.gba .GBA .zip .ZIP .7z .7Z|**retroarch:** mgba (default)<br>**retroarch:** gbsp<br>**retroarch:** vbam<br>**retroarch:** vba_next<br>**retroarch:** beetle_gba<br>|
 |Nintendo|Game Boy Color (gbc)|1998|`gbc`|.gb .GB .gbc .GBC .zip .ZIP .7z .7Z|**retroarch:** gambatte (default)<br>**retroarch:** sameboy<br>**retroarch:** gearboy<br>**retroarch:** tgbdual<br>**retroarch:** mgba<br>**retroarch:** vbam<br>|
 |Nintendo|Game Boy Color (Hacks) (gbch)|1998|`gbch`|.gb .GB .gbc .GBC .zip .ZIP .7z .7Z|**retroarch:** gambatte (default)<br>**retroarch:** sameboy<br>**retroarch:** gearboy<br>**retroarch:** tgbdual<br>**retroarch:** mgba<br>**retroarch:** vbam<br>|

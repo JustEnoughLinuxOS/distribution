@@ -31,20 +31,16 @@ PKG_CMAKE_OPTS_TARGET=" -DUSE_SYSTEM_FFMPEG=OFF \
                         -DHEADLESS=OFF \
                         -DUSE_DISCORD=OFF"
 
-if [ ! "${OPENGL}" = "no" ]; then
+if [[ "${OPENGL_SUPPORT}" = "yes" ]] && [[ ! "${DEVICE}" = "S922X" ]]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd glew"
   PKG_CMAKE_OPTS_TARGET+=" -DUSING_FBDEV=OFF \
 			   -DUSING_GLES2=OFF"
-fi
 
-if [ "${OPENGLES_SUPPORT}" = yes ]; then
+elif [ "${OPENGLES_SUPPORT}" = "yes" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
   PKG_CMAKE_OPTS_TARGET+=" -DUSING_FBDEV=ON \
                            -DUSING_EGL=OFF \
-                           -DUSING_GLES2=ON \
-			   -DVULKAN=OFF \
-			   -DUSE_VULKAN_DISPLAY_KHR=OFF\
-			   -DUSING_X11_VULKAN=OFF"
+                           -DUSING_GLES2=ON"
 fi
 
 if [ "${VULKAN_SUPPORT}" = "yes" ]
@@ -52,10 +48,12 @@ then
   PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
   PKG_CMAKE_OPTS_TARGET+=" -DUSE_VULKAN_DISPLAY_KHR=ON \
                            -DVULKAN=ON \
-                           -DEGL_NO_X11=1
+                           -DEGL_NO_X11=1 \
                            -DMESA_EGL_NO_X11_HEADERS=1"
 else
-  PKG_CMAKE_OPTS_TARGET+=" -DVULKAN=OFF"
+  PKG_CMAKE_OPTS_TARGET+=" -DVULKAN=OFF \
+                           -DUSE_VULKAN_DISPLAY_KHR=OFF \
+                           -DUSING_X11_VULKAN=OFF"
 fi
 
 if [ "${DISPLAYSERVER}" = "wl" ]; then

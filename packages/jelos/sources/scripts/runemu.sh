@@ -22,7 +22,7 @@ LOGSDIR="/var/log"
 LOGFILE="exec.log"
 TBASH="/usr/bin/bash"
 RATMPCONF="/storage/.config/retroarch/retroarch.cfg"
-RAAPPENDCONF="/tmp/raappend.cfg"
+RAAPPENDCONF="/tmp/.retroarch.cfg"
 NETPLAY="No"
 SHADERTMP="/tmp/shader"
 OUTPUT_LOG="${LOGSDIR}/${LOGFILE}"
@@ -48,6 +48,8 @@ ROMNAME="$1"
 BASEROMNAME=${ROMNAME##*/}
 GAMEFOLDER="${ROMNAME//${BASEROMNAME}}"
 
+### Use performance mode to prepare to start the emulator.
+performance
 
 ### Determine if we're running a Libretro core and append the libretro suffix
 if [[ $EMULATOR = "retroarch" ]]; then
@@ -96,13 +98,6 @@ if [ -n "${NUMTHREADS}" ] &&
    [ ! ${NUMTHREADS} = "default" ]
 then
   onlinethreads ${NUMTHREADS} 0
-fi
-
-### Set the performance mode
-PERFORMANCE_MODE=$(get_setting "cpugovernor" "${PLATFORM}" "${ROMNAME##*/}")
-if [ ! "${PERFORMANCE_MODE}" = "auto" ]
-then
-  ${PERFORMANCE_MODE}
 fi
 
 ### Set the cores to use
@@ -288,7 +283,8 @@ else
 		### Check if we need retroarch 32 bits or 64 bits
 		if [[ "${CORE}" =~ pcsx_rearmed32 ]] || \
 	           [[ "${CORE}" =~ gpsp ]] || \
-	           [[ "${CORE}" =~ flycast32 ]]
+	           [[ "${CORE}" =~ flycast32 ]] || \
+	           [[ "${CORE}" =~ desmume ]]
 		then
                         export LIBGL_DRIVERS_PATH="/usr/lib32/dri"
                         export LD_LIBRARY_PATH="/usr/lib32"
@@ -328,6 +324,13 @@ else
                 ;;
         esac
 
+
+        ### Set the performance mode for emulation
+        PERFORMANCE_MODE=$(get_setting "cpugovernor" "${PLATFORM}" "${ROMNAME##*/}")
+        if [ ! "${PERFORMANCE_MODE}" = "default" ]
+        then
+            ${PERFORMANCE_MODE}
+        fi
 	if [[ "${CORE}" =~ "custom" ]] 
 	then
 	RUNTHIS='${EMUPERF} /usr/bin/${RABIN} -L /storage/.config/retroarch/cores/${EMU}.so --config ${RATMPCONF} --appendconfig ${RAAPPENDCONF} "${ROMNAME}"'
@@ -425,6 +428,13 @@ fi
 clear_screen
 $VERBOSE && log $0 "executing game: ${ROMNAME}"
 $VERBOSE && log $0 "script to execute: ${RUNTHIS}"
+
+### Set the performance mode for emulation
+PERFORMANCE_MODE=$(get_setting "cpugovernor" "${PLATFORM}" "${ROMNAME##*/}")
+if [ ! "${PERFORMANCE_MODE}" = "default" ]
+then
+    ${PERFORMANCE_MODE}
+fi
 # If the rom is a shell script just execute it, useful for DOSBOX and ScummVM scan scripts
 if [[ "${ROMNAME}" == *".sh" ]]; then
 	$VERBOSE && log $0 "Executing shell script ${ROMNAME}"
@@ -435,6 +445,9 @@ else
 	eval ${RUNTHIS} &>>${OUTPUT_LOG}
 	ret_error=$?
 fi
+
+### Switch back to performance mode to clean up
+performance
 
 clear_screen
 

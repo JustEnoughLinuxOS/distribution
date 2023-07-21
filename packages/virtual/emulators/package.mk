@@ -14,7 +14,7 @@ PKG_EMUS="flycast-sa gzdoom-sa hatarisa hypseus-singe hypseus-singe moonlight op
 PKG_RETROARCH="core-info libretro-database retroarch retroarch-assets retroarch-joypads retroarch-overlays     \
               slang-shaders"
 
-LIBRETRO_CORES="81-lr a5200-lr atari800-lr beetle-gba-lr beetle-lynx-lr beetle-ngp-lr beetle-pce-lr beetle-pce-fast-lr    \
+LIBRETRO_CORES="81-lr a5200-lr arduous-lr atari800-lr beetle-gba-lr beetle-lynx-lr beetle-ngp-lr beetle-pce-lr beetle-pce-fast-lr    \
                 beetle-pcfx-lr bsnes-lr bsnes-mercury-performance-lr beetle-supafaust-lr beetle-supergrafx-lr             \
                 beetle-vb-lr beetle-wswan-lr beetle-saturn-lr bluemsx-lr cannonball-lr cap32-lr crocods-lr daphne-lr      \
                 dinothawr-lr dosbox-svn-lr dosbox-pure-lr duckstation-lr easyrpg-lr fake08-lr fbalpha2012-lr              \
@@ -38,20 +38,20 @@ case "${DEVICE}" in
                       minivmac-lr play-lr"
   ;;
   RK358*)
-    [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
+    [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr gpsp-lr pcsx_rearmed-lr"
     PKG_EMUS+=" amiberry aethersx2-sa duckstation-sa pcsx_rearmed-lr box64 scummvmsa yabasanshiro-sa box64 portmaster"
     LIBRETRO_CORES+=" uae4arm beetle-psx-lr bsnes-hd-lr citra-lr dolphin-lr mame-lr"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
   RK3399)
-    [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 pcsx_rearmed-lr"
+    [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 desmume-lr gpsp-lr pcsx_rearmed-lr"
     PKG_EMUS+=" amiberry aethersx2-sa dolphin-sa drastic-sa duckstation-sa melonds-sa mupen64plus-sa box64 scummvmsa   \
                yabasanshiro-sa portmaster"
     LIBRETRO_CORES+=" uae4arm beetle-psx-lr bsnes-hd-lr dolphin-lr flycast-lr mame-lr pcsx_rearmed-lr"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
   RK356*)
-    [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
+    [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr gpsp-lr pcsx_rearmed-lr"
     PKG_DEPENDS_TARGET+=" common-shaders duckstation-sa glsl-shaders mupen64plus-sa scummvmsa box64 portmaster"
     PKG_EMUS+=" amiberry dolphin-sa drastic-sa yabasanshiro-sa"
     LIBRETRO_CORES+=" uae4arm"
@@ -65,7 +65,7 @@ case "${DEVICE}" in
     PKG_RETROARCH+=" retropie-shaders"
   ;;
   RK3326*)
-    [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="flycast-lr pcsx_rearmed-lr"
+    [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="flycast-lr gpsp-lr pcsx_rearmed-lr"
     PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders"
     PKG_EMUS+=" amiberry drastic-sa mupen64plus-sa scummvmsa yabasanshiro-sa portmaster"
     LIBRETRO_CORES+=" uae4arm flycast-lr"
@@ -162,6 +162,10 @@ makeinstall_target() {
     ;;
   esac
   add_es_system arcade
+
+  ### Arduboy
+  add_emu_core arduboy retroarch arduous true
+  add_es_system arduboy
 
   ### Atari 2600 Libretro
   add_emu_core atari2600 retroarch stella true
@@ -367,6 +371,11 @@ makeinstall_target() {
   add_emu_core gba retroarch vbam false
   add_emu_core gba retroarch vba_next false
   add_emu_core gba retroarch beetle_gba false
+  case ${DEVICE} in
+    RK3*)
+      add_emu_core gba retroarch gpsp false
+    ;;
+  esac
   add_es_system gba
 
   ### Nintendo GameBoy Advance Hacks
@@ -574,6 +583,7 @@ makeinstall_target() {
       add_emu_core nds drastic drastic-sa true
       add_emu_core nds retroarch melonds false
       add_emu_core nds melonds melonds-sa false
+      add_emu_core nds retroarch desmume false
     ;;
     *)
       add_emu_core nds drastic drastic-sa true
