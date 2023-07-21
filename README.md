@@ -77,7 +77,10 @@ limitations under the License.
 * Write the image to an SDCARD using an imaging tool.  Common imaging tools include [Balena Etcher](https://www.balena.io/etcher/), [Raspberry Pi Imager](https://www.raspberrypi.com/software/), and [Win32 Disk Imager](https://sourceforge.net/projects/win32diskimager/).  If you're skilled with the command line, dd works fine too.
 
 ## Installation
-* JELOS includes an installation tool.  The installation tool can be found in the tools menu.
+* JELOS is installed by restoring an image file and [Flashing](https://github.com/JustEnoughLinuxOS/distribution/tree/main#flashing) to a device's internal storage or an external sd card.
+* On x86 devices JELOS includes an installation tool.  The installation tool can be found in the tools menu, which is one of the systems listed within ES.
+* JELOS operating system is stored on an Ext4 partition that can be read by LINUX but is not natively readable on Windows. Currently it is not possible to access the primary JELOS Ext4 partition on Windows to transfer roms.
+* On devices that support a second sd card, the sd card can be formatted as Ext4, NTFS or exFAT. JELOS will automatically detect the second SD card on boot and configure the relevant folders for storing roms.
 
 ## Upgrading
 * Download and install the update online via the System Settings menu.
@@ -99,7 +102,7 @@ limitations under the License.
 * [Pull Request Template](/PULL_REQUEST_TEMPLATE.md)
 
 ### Documentation For Everyone
-* [Installation and Device Support](https://github.com/JustEnoughLinuxOS/distribution/tree/main#readme)
+* [Installation and Device Support](https://github.com/JustEnoughLinuxOS/distribution/tree/main#installation)
 * [Device Specific Documentation](/documentation/PER_DEVICE_DOCUMENTATION)
 * [Donating to JELOS](/documentation/GENERAL_DONATING_TO_JELOS.md)
 * [Frequently Asked Questions](/documentation/GENERAL_FREQUENTLY_ASKED_QUESTIONS.md)
