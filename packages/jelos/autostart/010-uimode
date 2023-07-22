@@ -4,7 +4,7 @@
 
 . /etc/profile
 
-tocon "Preparing the user interface..."
+tocon "Configuring user interface..."
 
 UIMODE=$(get_setting desktop.enabled)
 if [ "${UIMODE}" = "1" ] || \

@@ -443,6 +443,20 @@ set_consolefont() {
   fi
 }
 
+hdmi_con() {
+  if [ -f "/sys/class/extcon/hdmi/state" ]
+  then
+    HDMI="$(cat /sys/class/extcon/hdmi/state)"
+    if [ "${HDMI}" = "HDMI=1" ]
+    then
+      if [ -f "/sys/devices/virtual/graphics/fbcon/rotate" ]
+      then
+        echo 0 >/sys/devices/virtual/graphics/fbcon/rotate
+      fi
+    fi
+  fi
+}
+
 load_splash() {
   clear >/dev/console
   echo -en "\033[1000H\033[2K$(cat /sysroot/etc/issue)\n\n" >/dev/console
@@ -736,6 +750,8 @@ check_update() {
      ! [ -f "${UPDATE_TAR}" -o -f "${UPDATE_IMG_GZ}" -o -f "${UPDATE_IMG}" ]; then
     return 0
   fi
+
+  hdmi_con
 
   echo "${UPDATE_TAR} ${UPDATE_IMG} ${UPDATE_IMG_GZ}" 2>&1 | grep @DISTRONAME@ 2>&1 >/dev/null
   if [ "$?" -ne "0" ]
