@@ -116,7 +116,7 @@ limitations under the License.
 * [Setting Up P2P Networking With ZeroTier](/documentation/SETUP_P2P_ZEROTIER.md)
 * [Configure TailScale VPN](/documentation/SETUP_VPN_TAILSCALE.md)
 * [Setting Up Wireguard VPN](/documentation/SETUP_VPN_WIREGUARD.md)
-* [Creating Custom Shader Presets for Per Game / Per System Use](https://github.com/gannon345/distribution/blob/main/documentation/GENERAL_CUSTOM_SHADERS.md)
+* [Creating Custom Shader Presets for Per Game / Per System Use](https://github.com/JustEnoughLinuxOS/distribution/blob/main/documentation/GENERAL_CUSTOM_SHADERS.md))
 
 ## Credits
 Like any Linux distribution, this project is not the work of one person.  It is the work of many persons all over the world who have developed the open source bits without which this project could not exist.  Special thanks to CoreELEC, LibreELEC, and to developers and contributors across the open source community.
