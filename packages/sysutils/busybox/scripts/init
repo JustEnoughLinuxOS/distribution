@@ -443,20 +443,6 @@ set_consolefont() {
   fi
 }
 
-hdmi_con() {
-  if [ -f "/sys/class/extcon/hdmi/state" ]
-  then
-    HDMI="$(</sys/class/extcon/hdmi/state)"
-    if [ "${HDMI}" = "HDMI=1" ]
-    then
-      if [ -f "/sys/devices/virtual/graphics/fbcon/rotate" ]
-      then
-        echo 0 >/sys/devices/virtual/graphics/fbcon/rotate
-      fi
-    fi
-  fi
-}
-
 load_splash() {
   clear >/dev/console
   echo -en "\033[1000H\033[2K$(cat /sysroot/etc/issue)\n\n" >/dev/console
@@ -1173,7 +1159,6 @@ for BOOT_STEP in \
     set_consolefont \
     cleanup_flash \
     update_bootmenu \
-    hdmi_con \
     mount_sysroot \
     mount_storage \
     load_splash \
