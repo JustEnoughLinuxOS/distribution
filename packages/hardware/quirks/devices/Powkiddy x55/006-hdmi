@@ -6,9 +6,7 @@
 
 cat <<EOF >/storage/.config/profile.d/006-hdmi
 HDMI=\$(modetest 2>/dev/null | awk '/HDMI-/ {print \$3}')
-ROTATED=\$(</sys/devices/virtual/graphics/fbcon/rotate)
-if [ ! "\${HDMI}" = "connected" ] && \
-   [ "\${ROTATED}" = "3" ]
+if [ ! "\${HDMI}" = "connected" ]
 then
   SDL=\$(readlink -f /usr/lib/SDL2-rotated/libSDL2.so 2>/dev/null)
   export LD_PRELOAD="\${SDL}"
