@@ -44,4 +44,4 @@ then
   systemctl import-environment LANGUAGE
 fi
 
-emulationstation --log-path /var/log
+emulationstation --log-path /var/log --no-splash
