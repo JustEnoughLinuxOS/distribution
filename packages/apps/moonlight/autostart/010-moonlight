@@ -11,5 +11,5 @@ then
   cp /usr/config/moonlight/moonlight.conf /storage/.config/moonlight/moonlight.conf
 fi
 
-sed -i "s#@MWIDTH@#${FBWIDTH}#g" /storage/.config/moonlight/moonlight.conf
-sed -i "s#@MHEIGHT@#${FBHEIGHT}#g" /storage/.config/moonlight/moonlight.conf
+sed -i "s#@MWIDTH@#${FBWIDTH}#g;
+        s#@MHEIGHT@#${FBHEIGHT}#g" /storage/.config/moonlight/moonlight.conf

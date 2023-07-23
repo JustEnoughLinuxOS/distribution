@@ -10,12 +10,12 @@ PKG_DEPENDS_TARGET="toolchain libpcap"
 PKG_SHORTDESC="DeSmuME - Nintendo DS libretro"
 PKG_TOOLCHAIN="make"
 
-if [ ! "${OPENGL}" = "no" ]; then
+if [ "${OPENGL_SUPPORT}" = "yes" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
-fi
 
-if [ "${OPENGLES_SUPPORT}" = yes ]; then
+elif [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+  PKG_PATCH_DIRS+=" gles"
 fi
 
 

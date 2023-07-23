@@ -33,6 +33,7 @@ do
   log "Run ${script}"
   ${script} 2>&1 >>${BOOTLOG}
 done
+wait
 
 ### Run custom start scripts
 if [ -d "/storage/.config/autostart" ]
@@ -43,6 +44,7 @@ then
    ${script} 2>&1 >>${BOOTLOG}
   done
 fi
+wait
 
 tocon "Starting user interface..."
 log "Startup complete..."

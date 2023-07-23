@@ -4,10 +4,12 @@
 
 . /etc/profile
 
-if [ -d "/usr/lib/autostart/quirks/${QUIRK_DEVICE}/config" ] && \
-   [ ! -f ".quirkconfigs" ]
-then
-  tocon "Applying ${QUIRK_DEVICE} specific configuration..."
-  rsync -a --exclude={es_features.cfg,es_systems.cfg} /usr/lib/autostart/quirks/"${QUIRK_DEVICE}"/config/* /storage/.config/ 2>/dev/null
-  touch /storage/.quirkconfigs
-fi
+(
+  if [ -d "/usr/lib/autostart/quirks/${QUIRK_DEVICE}/config" ] && \
+     [ ! -f ".quirkconfigs" ]
+  then
+    tocon "Applying ${QUIRK_DEVICE} specific configuration..."
+    rsync -a --exclude={es_features.cfg,es_systems.cfg} /usr/lib/autostart/quirks/"${QUIRK_DEVICE}"/config/* /storage/.config/ 2>/dev/null
+    touch /storage/.quirkconfigs
+  fi
+) &

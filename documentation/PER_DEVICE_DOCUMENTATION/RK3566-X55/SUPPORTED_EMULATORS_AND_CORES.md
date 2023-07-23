@@ -59,7 +59,7 @@ This document describes all available systems emulators and cores available for 
 |NEC|TurboGrafx-16 (tg16)|1989|`tg16`|.pce .PCE .bin .BIN .zip .ZIP .7z .7Z|**retroarch:** beetle_pce_fast (default)<br>**retroarch:** beetle_pce<br>**retroarch:** beetle_supergrafx<br>|
 |NEC|TurboGrafx-CD (tg16cd)|1989|`tg16cd`|.cue .CUE .ccd .CCD .chd .CHD .toc .TOC .m3u .M3U|**retroarch:** beetle_pce_fast (default)<br>**retroarch:** beetle_pce<br>**retroarch:** beetle_supergrafx<br>|
 |Nesbox|TIC-80 (tic-80)|2017|`tic-80`|.tic .TIC|**retroarch:** tic80 (default)<br>|
-|Nintendo|DS (nds)|2005|`nds`|.nds .zip .NDS .ZIP .7z|**drastic:** drastic-sa (default)<br>**retroarch:** melonds<br>|
+|Nintendo|DS (nds)|2005|`nds`|.nds .zip .NDS .ZIP .7z|**drastic:** drastic-sa (default)<br>**retroarch:** melonds<br>**retroarch:** desmume<br>|
 |Nintendo|Famicom (famicom)|1983|`famicom`|.nes .NES .unif .UNIF .unf .UNF .zip .ZIP .7z .7Z|**retroarch:** nestopia (default)<br>**retroarch:** fceumm<br>**retroarch:** quicknes<br>**retroarch:** mesen<br>|
 |Nintendo|Famicom Disk System (fds)|1986|`fds`|.fds .FDS .zip .ZIP .7z .7Z|**retroarch:** nestopia (default)<br>**retroarch:** fceumm<br>**retroarch:** quicknes<br>|
 |Nintendo|Game and Watch (gameandwatch)|1980|`gameandwatch`|.mgw .MGW .zip .ZIP .7z .7Z|**retroarch:** gw<br>|
@@ -69,7 +69,7 @@ This document describes all available systems emulators and cores available for 
 |Nintendo|Game Boy Advance (Hacks) (gbah)|2001|`gbah`|.gba .GBA .zip .ZIP .7z .7Z|**retroarch:** mgba (default)<br>**retroarch:** gbsp<br>**retroarch:** vbam<br>**retroarch:** vba_next<br>**retroarch:** beetle_gba<br>|
 |Nintendo|Game Boy Color (gbc)|1998|`gbc`|.gb .GB .gbc .GBC .zip .ZIP .7z .7Z|**retroarch:** gambatte (default)<br>**retroarch:** sameboy<br>**retroarch:** gearboy<br>**retroarch:** tgbdual<br>**retroarch:** mgba<br>**retroarch:** vbam<br>|
 |Nintendo|Game Boy Color (Hacks) (gbch)|1998|`gbch`|.gb .GB .gbc .GBC .zip .ZIP .7z .7Z|**retroarch:** gambatte (default)<br>**retroarch:** sameboy<br>**retroarch:** gearboy<br>**retroarch:** tgbdual<br>**retroarch:** mgba<br>**retroarch:** vbam<br>|
-|Nintendo|GameCube (gamecube)|2001|`gamecube`|.gcm .GCM .iso .ISO .gcz .GCZ .ciso .CISO .wbfs .WBFS .rvz .RVZ .dol .DOL|**dolphin:** dolphin-sa-gc (default)<br>**primehack:** primehack<br>**retroarch:** dolphin<br>|
+|Nintendo|GameCube (gamecube)|2001|`gamecube`|.gcm .GCM .iso .ISO .gcz .GCZ .ciso .CISO .wbfs .WBFS .rvz .RVZ .dol .DOL|**dolphin:** dolphin-sa-gc (default)<br>**retroarch:** dolphin<br>|
 |Nintendo|MSU-1 (snesmsu1)|2012|`snesmsu1`|.smc .SMC .fig .FIG .sfc .SFC .swc .SWC .zip .ZIP .7z .7Z|**retroarch:** snes9x (default)<br>**retroarch:** beetle_supafaust<br>|
 |Nintendo|N64 (n64)|1996|`n64`|.z64 .Z64 .n64 .N64 .v64 .V64 .zip .ZIP .7z .7Z|**retroarch:** mupen64plus_next (default)<br>**retroarch:** mupen64plus<br>**retroarch:** parallel_n64<br>**mupen64plus-sa:** m64p_gliden64<br>**mupen64plus-sa:** m64p_gl64mk2<br>**mupen64plus-sa:** m64p_rice<br>|
 |Nintendo|NES (Hacks) (nesh)|1985|`nesh`|.nes .NES .unif .UNIF .unf .UNF .zip .ZIP .7z .7Z|**retroarch:** nestopia (default)<br>**retroarch:** fceumm<br>**retroarch:** quicknes<br>**retroarch:** mesen<br>|
