@@ -44,8 +44,8 @@ then
   done
 fi
 
+tocon "Starting user interface..."
 log "Startup complete..."
-tocon "Startup complete..."
 
 clear >/dev/console
 

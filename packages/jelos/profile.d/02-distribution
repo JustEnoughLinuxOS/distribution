@@ -12,7 +12,7 @@ J_CONF="${J_DIR}/configs/system.cfg"
 ES_CONF="/storage/.emulationstation/es_settings.cfg"
 JSLISTENCONF="${J_DIR}/configs/jslisten.cfg"
 
-get_setting() {
+function get_setting() {
   if [ ! -z "${3}" ]
   then
     ### Test to see if we have a game setting.
@@ -55,14 +55,14 @@ get_setting() {
   return
 }
 
-del_setting() {
+function del_setting() {
   if [[ "${1}" =~ ^[[:alnum:]] ]]
   then
     sed -i "/^${1}=/d" "${J_CONF}"
   fi
 }
 
-set_setting() {
+function set_setting() {
   if [[ "${1}" =~ ^[[:alnum:]] ]]
   then
     del_setting "${1}"
@@ -73,7 +73,7 @@ set_setting() {
   fi
 }
 
-set_audio() {
+function set_audio() {
   case ${1} in
   "default")
     AUDIO="alsa"
@@ -85,19 +85,45 @@ set_audio() {
   /usr/bin/rr_audio.sh ${AUDIO}
 }
 
-battery_percent() {
+function battery_percent() {
   awk 'BEGIN {FS="="} /POWER_SUPPLY_CAPACITY=/ {print $2}' /sys/class/power_supply/[Bb][Aa][Tt]*/uevent 2>/dev/null
 }
 
-get_es_setting() {
+function get_es_setting() {
   echo $(sed -n "s|\s*<${1} name=\"${2}\" value=\"\(.*\)\" />|\1|p" ${ES_CONF})
 }
 
-tocon() {
+function get_aspect_ratio() {
+  FBWIDTH=$(fbset | awk '/geometry/ {print $2}')
+  FBHEIGHT=$(fbset | awk '/geometry/ {print $3}')
+
+  ASPECT=$(printf "%.2f" $(echo "(${FBWIDTH} / ${FBHEIGHT})" | bc -l))
+
+  case ${ASPECT} in
+    1.50|0.67)
+      ASPECT="3:2"
+    ;;
+    1.33|0.75)
+      ASPECT="4:3"
+    ;;
+    1.67|0.60)
+      ASPECT="5:3"
+    ;;
+    1.76|0.56)
+      ASPECT="16:9"
+    ;;
+    1.60|0.62)
+      ASPECT="16:10"
+    ;;
+  esac
+  echo ${ASPECT}
+}
+
+function tocon() {
   echo -ne "\033[1000H\033[2K==> ${*}" >/dev/console
 }
 
-log() {
+function log() {
   SOURCE=${1//\/*\//}
   MESSAGE=${*#${1}}
   MESSAGE=${MESSAGE# }

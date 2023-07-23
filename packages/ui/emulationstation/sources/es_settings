@@ -44,3 +44,5 @@ then
   systemctl import-environment LANGUAGE
 fi
 
+systemctl import-environment LD_PRELOAD
+
