@@ -5,5 +5,5 @@
 . /etc/profile
 
 #Set gzdoom resolution
-sed -i '/vid_defheight=/c\vid_defheight=544' /storage/.config/gzdoom/gzdoom.ini
-sed -i '/vid_defwidth=/c\vid_defwidth=960' /storage/.config/gzdoom/gzdoom.ini
+sed -i '/vid_defheight=/c\vid_defheight=544;
+        /vid_defwidth=/c\vid_defwidth=960' /storage/.config/gzdoom/gzdoom.ini

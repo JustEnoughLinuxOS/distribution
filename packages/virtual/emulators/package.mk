@@ -406,11 +406,19 @@ makeinstall_target() {
 
   ### Nintendo GameCube
   case ${DEVICE} in
-    AMD64|RK358*|RK356*|S922X*|RK3399)
+    AMD64|RK356*|S922X*|RK3399)
       add_emu_core gamecube dolphin dolphin-sa-gc true
-      add_emu_core gamecube primehack primehack false
+    ;;
+  esac
+  case ${DEVICE} in
+    AMD64|RK358*|RK356*|S922X*|RK3399)
       add_emu_core gamecube retroarch dolphin false
       add_es_system gamecube
+    ;;
+  esac
+  case ${DEVICE} in
+    AMD64)
+      add_emu_core gamecube primehack primehack false
     ;;
   esac
 
