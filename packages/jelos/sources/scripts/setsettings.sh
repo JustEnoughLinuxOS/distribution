@@ -564,6 +564,10 @@ function set_autosave() {
         [1-3])
             log "Autosave enabled (${CHKAUTOSAVE})"
             add_setting "none" "savestate_directory" "${SNAPSHOTS}/${PLATFORM}"
+            if [ ! -d "${SNAPSHOTS}/${PLATFORM}" ]
+            then
+                mkdir "${SNAPSHOTS}/${PLATFORM}"
+            fi
             case ${AUTOSAVE} in
                 1)
                     log "Autosave active (${AUTOSAVE})"
