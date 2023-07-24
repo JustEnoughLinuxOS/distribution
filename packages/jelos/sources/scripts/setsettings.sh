@@ -250,7 +250,7 @@ function clear_setting() {
       log "Remove setting [${1}]"
       if [ ! -f "${TMP_CONFIG}.sed" ]
       then
-          echo -n 'sed -i "' >${TMP_CONFIG}.sed
+          echo -n 'sed -i "/^'${1}'/d;' >${TMP_CONFIG}.sed
       else
           echo -n ' /^'${1}'/d;' >>${TMP_CONFIG}.sed
       fi
