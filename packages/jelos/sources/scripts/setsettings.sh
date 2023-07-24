@@ -37,6 +37,10 @@ AUTOSAVE="${AUTOSAVE% --*}"
 SNAPSHOT="$@"
 SNAPSHOT="${SNAPSHOT#*--snapshot=*}"
 
+#Controllers
+CONTROLLERS="$@"
+CONTROLLERS="${CONTROLLERS#*--controllers=*}"
+
 ###
 ### Arrays containing various supported/non-supported attributes.
 ###
@@ -615,7 +619,7 @@ function set_analogsupport() {
             add_setting "none" "input_player1_analog_dpad_mode" "0"
         ;;
         *)
-            add_setting "analogue" "input_player1_analog_dpad_mode"
+            add_setting "analogue" "input_player1_analog_dpad_mode" "1"
         ;;
     esac
 }
@@ -743,17 +747,19 @@ function set_gambatte() {
     fi
 }
 
-function set_controllers() {
-    CONTROLLERS="$@"
-    CONTROLLERS="${CONTROLLERS#*--controllers=*}"
-
+function setup_controllers() {
     for i in $(seq 1 1 5)
     do
-        log "Controller setup (${1})"
+        log "Controller setup (${i})"
         if [[ "$CONTROLLERS" == *p${i}* ]]
         then
             PINDEX="${CONTROLLERS#*-p${i}index }"
             PINDEX="${PINDEX%% -p${i}guid*}"
+            log "Set up controller ($i) (${PINDEX})"
+            for setting in $(awk '/input_player'${i}'_/ {print $1}' ${RETROARCH_CONFIG})
+            do
+                clear_setting "${setting}"
+            done
             add_setting "none" "input_player${i}_joypad_index" "${PINDEX}"
             case ${PLATFORM} in
                 atari5200)
@@ -762,6 +768,7 @@ function set_controllers() {
             esac
         fi
     done
+    flush_settings
 }
 
 ###
@@ -773,6 +780,7 @@ function set_controllers() {
 ###
 
 set_retroarch_paths
+setup_controllers
 configure_hotkeys
 
 ###
@@ -806,7 +814,6 @@ flush_settings
 
 set_atari &
 set_gambatte &
-set_controllers &
 
 wait
 flush_settings
