@@ -304,6 +304,30 @@ function match() {
 ### Game data functions
 ###
 
+### Configure retroarch paths
+function set_retroarch_paths() {
+  for RETROARCH_PATH in assets_directory cache_directory            \
+                        cheat_database_path content_database_path   \
+                        content_database_path joypad_autoconfig_dir \
+                        libretro_directory libretro_info_path       \
+                        overlay_directory video_shader_dir
+  do
+    clear_setting "${RETROARCH_PATH}"
+  done
+  flush_settings
+  cat <<EOF >>${RETROARCH_CONFIG}
+assets_directory = "/tmp/assets"
+cache_directory = "/tmp/cache"
+cheat_database_path = "/tmp/database/cht"
+content_database_path = "/tmp/database/rdb"
+joypad_autoconfig_dir = "/tmp/joypads"
+libretro_directory = "/tmp/cores"
+libretro_info_path = "/tmp/cores"
+overlay_directory = "/tmp/overlays"
+video_shader_dir = "/tmp/shaders"
+EOF
+}
+
 ### Configure retroarch hotkeys
 function configure_hotkeys() {
     log "Configure hotkeys..."
@@ -540,6 +564,10 @@ function set_autosave() {
         [1-3])
             log "Autosave enabled (${CHKAUTOSAVE})"
             add_setting "none" "savestate_directory" "${SNAPSHOTS}/${PLATFORM}"
+            if [ ! -d "${SNAPSHOTS}/${PLATFORM}" ]
+            then
+                mkdir "${SNAPSHOTS}/${PLATFORM}"
+            fi
             case ${AUTOSAVE} in
                 1)
                     log "Autosave active (${AUTOSAVE})"
@@ -744,6 +772,7 @@ function set_controllers() {
 ### Functions that cannot be parallelized
 ###
 
+set_retroarch_paths
 configure_hotkeys
 
 ###
