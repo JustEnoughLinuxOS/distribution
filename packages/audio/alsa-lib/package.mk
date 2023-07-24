@@ -3,7 +3,7 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="alsa-lib"
-PKG_VERSION="1.2.8"
+PKG_VERSION="1.2.9"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.alsa-project.org/"
 PKG_URL="https://www.alsa-project.org/files/pub/lib/alsa-lib-${PKG_VERSION}.tar.bz2"
@@ -14,11 +14,10 @@ PKG_BUILD_FLAGS="+pic"
 
 case ${DEVICE} in
   RK356*)
-    PKG_CONFIGURE_OPTS_TARGET+=" --disable-ucm"
+    ::
   ;;
   *)
     PKG_DEPENDS_TARGET+=" alsa-ucm-conf"
-    PKG_CONFIGURE_OPTS_TARGET+=" --enable-ucm"
   ;;
 esac
 
