@@ -33,6 +33,20 @@ do
   log "Run ${script}"
   ${script} 2>&1 >>${BOOTLOG}
 done
+wait
+
+### Run device start scripts
+if [ -d "/usr/lib/autostart/${HW_DEVICE}" ]
+then
+  for script in "/usr/lib/autostart/${HW_DEVICE}"/*
+  do
+    log "Run ${script}"
+    if [ -f "${script}" ]
+    then
+      "${script}" 2>&1 >>${BOOTLOG}
+    fi
+  done
+fi
 
 ### Run custom start scripts
 if [ -d "/storage/.config/autostart" ]
@@ -43,9 +57,10 @@ then
    ${script} 2>&1 >>${BOOTLOG}
   done
 fi
+wait
 
+tocon "Starting user interface..."
 log "Startup complete..."
-tocon "Startup complete..."
 
 clear >/dev/console
 

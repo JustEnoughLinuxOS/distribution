@@ -4,7 +4,7 @@
 
 . /etc/profile
 
-tocon "Configuring backlight..."
+tocon "Configuring display..."
 
 ### Variables may need to be device specific here.
 BRIGHTNESS=$(get_setting system.brightness)
@@ -28,5 +28,17 @@ BRIGHTNESS_DEVICE="$(brightness device)"
 if [ -e "/sys/class/backlight/${BRIGHTNESS_DEVICE}/brightness" ]
 then
   printf "%.0f" $(echo "${BRIGHTNESS}") > /sys/class/backlight/${BRIGHTNESS_DEVICE}/brightness
+fi
+
+### Set the aspect ratio in ES.
+ASPECT=$(get_aspect_ratio)
+
+ES_CONFIG="/storage/.config/emulationstation/es_settings.cfg"
+ES_ASPECT="${ASPECT/:/-}"
+if [ "$(grep subset.aspect-ratio ${ES_CONFIG})" ]
+then
+  sed -i 's|<string name="subset.aspect-ratio".*$|<string name="subset.aspect-ratio" value="'${ES_ASPECT}'"/>|g' ${ES_CONFIG}
+else
+  sed -i '/<\/config>/i \\t<string name="subset.aspect-ratio" value="'${ES_ASPECT}'"/>' ${ES_CONFIG}
 fi
 

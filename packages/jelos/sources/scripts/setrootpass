@@ -26,7 +26,9 @@ set_setting root.password "${ROOTPASS}"
 
 # Restart syncthing if it was enabled.
 SYNCSTATUS=$(get_setting syncthing.enabled)
-if [ "${SYNCSTATUS}" = "1" ]
+SYNCACTIVE=$(systemctl status syncthing | awk '/active/ {print $2}')
+if [ "${SYNCSTATUS}" = "1" ] &&
+   [ "${SYNCACTIVE}" = "active" ]
 then
   systemctl restart syncthing >/dev/null 2>&1
 fi
