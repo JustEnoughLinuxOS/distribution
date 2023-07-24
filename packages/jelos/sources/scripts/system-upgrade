@@ -46,6 +46,12 @@ check_space() {
   fi
 }
 
+get_changelog() {
+  echo "Fetching change log."
+  echo -e "Change Log\n" >/storage/.cache/changelog
+  lynx --dump "${GIT_REPO}/releases/latest" | awk '/Assets [0-9]/ {exit}; /Change Log/{p++;if(p==1){next}}p;' >>/storage/.cache/changelog
+}
+
 ONLINE_STATUS=$(check_network)
 if [ ! "${ONLINE_STATUS}" == true ]
 then
@@ -94,6 +100,8 @@ then
 else
   echo "Verification successful..."
 fi
+
+get_changelog
 
 if [ "${FORCE}" == "1" ]
 then
