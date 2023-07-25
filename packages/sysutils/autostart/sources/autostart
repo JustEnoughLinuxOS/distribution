@@ -13,11 +13,27 @@ log() {
 
 performance 2>/dev/null
 
-if [ -d "/usr/lib/autostart/quirks/${QUIRK_DEVICE}" ]
+### Load platform specific quirks
+if [ -d "/usr/lib/autostart/quirks/platforms/${HW_DEVICE}" ]
+then
+  log "Run ${HW_DEVICE} quirks."
+  tocon "Applying ${HW_DEVICE} quirks..."
+  for script in "/usr/lib/autostart/quirks/platforms/${HW_DEVICE}"/*
+  do
+    log "Run ${script}"
+    if [ -f "${script}" ]
+    then
+      "${script}" 2>&1 >>${BOOTLOG}
+    fi
+  done
+fi
+
+### Load device specific quirks
+if [ -d "/usr/lib/autostart/quirks/devices/${QUIRK_DEVICE}" ]
 then
   log "Run ${QUIRK_DEVICE} quirks."
   tocon "Applying ${QUIRK_DEVICE} quirks..."
-  for script in "/usr/lib/autostart/quirks/${QUIRK_DEVICE}"/*
+  for script in "/usr/lib/autostart/quirks/devices/${QUIRK_DEVICE}"/*
   do
     log "Run ${script}"
     if [ -f "${script}" ]
@@ -61,8 +77,6 @@ wait
 
 tocon "Starting user interface..."
 log "Startup complete..."
-
-clear >/dev/console
 
 ### Re-source the profile so we fetch the correct UI_SERVICE variable.
 . /etc/profile

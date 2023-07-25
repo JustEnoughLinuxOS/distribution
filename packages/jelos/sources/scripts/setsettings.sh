@@ -195,6 +195,10 @@ declare -a LANG_CODES=( ["false"]="0"
 ###
 
 LOGGING=$(get_setting system.loglevel)
+if [ -z "${LOGGING}" ]
+then
+  LOGGING="none"
+fi
 
 ###
 ### Set up
