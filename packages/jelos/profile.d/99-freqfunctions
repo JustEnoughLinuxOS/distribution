@@ -87,7 +87,7 @@ set_gpu_gov() {
 set_amdgpu_perf() {
   for AMDGPU_PERF_DEVICE in $(find /sys/devices -name power_dpm_force_performance_level 2>/dev/null)
   do
-    echo $1 >${AMDGPU_PERF} 2>/dev/null
+    echo $1 >${AMDGPU_PERF_DEVICE} 2>/dev/null
   done
 }
 
