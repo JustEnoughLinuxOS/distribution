@@ -120,12 +120,9 @@ if [ -e "/usr/bin/overclock" ]
 then
   ### Set the overclock mode
   OVERCLOCK=$(get_setting "overclock" "${PLATFORM}" "${ROMNAME##*/}")
-  if [ ! "${OVERCLOCK}" = "system" ]
+  if [ ! -z "${OVERCLOCK}" ]
   then
-    if [ ! -z "${OVERCLOCK}" ] && [ -e "/usr/bin/overclock" ]
-    then
-      /usr/bin/overclock ${OVERCLOCK}
-    fi
+    /usr/bin/overclock ${OVERCLOCK}
   fi
 fi
 

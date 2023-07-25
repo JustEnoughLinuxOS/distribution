@@ -1,6 +1,6 @@
 #!/bin/bash
 # SPDX-License-Identifier: Apache-2.0
-# Copyright (C) 2022-present Fewtarius
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
 
 . /etc/profile
 
@@ -9,7 +9,7 @@ MYTDP=$(get_setting system.overclock)
 if [ -z "${MYTDP}" ]
 then
   # Set default TDP
-  set_setting system.overclock 15w
+  set_settings system.overclock 15w
 fi
 
 ### Set sleep mode to mem sleep (S3)
@@ -22,7 +22,7 @@ fi
 ### Set the default device configuration
 cat <<EOF >/storage/.config/profile.d/001-deviceconfig
 DEVICE_BASE_TDP="15w"
-DEVICE_LED_CONTROL=true
+DEVICE_LED_CONTROL=false
 DEVICE_VOLUMECTL=true
 DEVICE_PLAYBACK_PATH_SPK="SPK"
 DEVICE_PLAYBACK_PATH_HP="HP"

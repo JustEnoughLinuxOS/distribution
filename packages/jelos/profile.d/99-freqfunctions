@@ -10,6 +10,7 @@ get_threads() {
     echo ${THREAD}
   done
   echo all
+  echo default
 }
 
 set_online_threads() {
