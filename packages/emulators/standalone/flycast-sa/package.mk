@@ -13,18 +13,13 @@ PKG_LONGDESC="Flycast is a multiplatform Sega Dreamcast, Naomi and Atomiswave em
 PKG_TOOLCHAIN="cmake"
 PKG_PATCH_DIRS+="${DEVICE}"
 
-if [ ! "${OPENGL}" = "no" ]; then
+if [[ "${OPENGL_SUPPORT}" = "yes" ]] && [[ ! "${DEVICE}" = "S922X" ]]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
-  PKG_CMAKE_OPTS_TARGET+="  USE_OPENGL=ON"
-else
-  PKG_CMAKE_OPTS_TARGET+="  USE_OPENGL=OFF"
-fi
+  PKG_CMAKE_OPTS_TARGET+="  -USE_OPENGL=ON -DUSE_GLES=OFF"
 
-if [ "${OPENGLES_SUPPORT}" = yes ]; then
+elif [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
   PKG_CMAKE_OPTS_TARGET+=" -DUSE_GLES=ON"
-else
-  PKG_CMAKE_OPTS_TARGET+=" -DUSE_GLES=OFF"
 fi
 
 if [ "${VULKAN_SUPPORT}" = "yes" ]

@@ -4,37 +4,58 @@
 
 . /etc/profile
 
+###
+### On startup the device will run at the maximum TDP that
+### the CPU is capable of.  This is not desired behavior.
+###
+### 1. Check if we have a TDP setting, and set it.
+### 2. Check if we have a device default TDP, and set it.
+### 3. Use a common TDP down value used across multiple AMD CPUs.
+###
 if [ $# -eq 0 ] || [ "$1" == "boot" ]
 then
   PROFILE=$(get_setting system.overclock)
+  if [ -z "${PROFILE}" ] && \
+     [ -n "${DEVICE_BASE_TDP}" ]
+  then
+    PROFILE="${DEVICE_BASE_TDP}"
+  else
+    PROFILE="15w"
+  fi
 else
+  ### When run from ES or a shell, and the value of "off"
+  ### is passed, go back to the default TDP.  If not available
+  ### use our default of 15w.
   PROFILE=$1
+  if [ "${PROFILE}" = "off" ]
+  then
+    if [ -n "${DEVICE_BASE_TDP}" ]
+    then
+      PROFILE="${DEVICE_BASE_TDP}"
+    else
+      PROFILE="15w"
+    fi
+  fi
 fi
 
-### Default clocks when not using OC.
-WATTS="12000"
-
 case ${PROFILE} in
-  2w)
-    WATTS="2000"
+  2.5w)
+    WATTS="2500"
   ;;
-  4w)
-    WATTS="4000"
+  4.5w)
+    WATTS="4500"
   ;;
   6w)
     WATTS="6000"
   ;;
-  8w)
-    WATTS="8000"
-  ;;
-  10w)
-    WATTS="10000"
+  9w)
+    WATTS="9000"
   ;;
   12w)
     WATTS="12000"
   ;;
-  14w)
-    WATTS="14000"
+  15w)
+    WATTS="15000"
   ;;
   16w)
     WATTS="16000"
@@ -42,20 +63,17 @@ case ${PROFILE} in
   18w)
     WATTS="18000"
   ;;
-  20w)
-    WATTS="20000"
-  ;;
   22w)
     WATTS="22000"
   ;;
   24w)
     WATTS="24000"
   ;;
-  26w)
-    WATTS="26000"
-  ;;
   28w)
     WATTS="28000"
+  ;;
+  *)
+    exit 0
   ;;
 esac
 

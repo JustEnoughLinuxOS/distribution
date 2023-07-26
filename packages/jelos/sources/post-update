@@ -146,3 +146,9 @@ then
   mkdir -p /storage/.config/gmu/playlists
 fi
 cp -rf /usr/config/gmu/playlists/* /storage/.config/gmu/playlists/
+
+### Remove any input settings retroarch may have added.
+for setting in $(awk '/input_player'${i}'_/ {print $1}' /storage/.config/retroarch/retroarch.cfg)
+do
+  sed -i "/^${setting}/d" /storage/.config/retroarch/retroarch.cfg
+done

@@ -12,7 +12,8 @@ fi
 export QUIRK_DEVICE="$(echo ${QUIRK_DEVICE} | sed -e "s#[/]#-#g")"
 
 info_quirks() {
-  for QUIRK in /usr/lib/autostart/quirks/"${QUIRK_DEVICE}"/info.d/${1}/*
+  for QUIRK in /usr/lib/autostart/quirks/platforms/"${HW_DEVICE}"/info.d/${1}/* \
+               /usr/lib/autostart/quirks/devices/"${QUIRK_DEVICE}"/info.d/${1}/*
   do
     "${QUIRK}" 2>/dev/null
   done

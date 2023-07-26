@@ -127,10 +127,14 @@ declare -a NO_RUNAHEAD=(    atomiswave
 )
 
 declare -a NO_ANALOG=(  dreamcast
+                        gc
                         n64
+                        nds
+                        ps2
                         psp
                         pspminis
                         psx
+                        wii
                         wonderswan
                         wonderswancolor
 )
@@ -195,6 +199,10 @@ declare -a LANG_CODES=( ["false"]="0"
 ###
 
 LOGGING=$(get_setting system.loglevel)
+if [ -z "${LOGGING}" ]
+then
+  LOGGING="none"
+fi
 
 ###
 ### Set up
@@ -273,17 +281,7 @@ function add_setting() {
     if [ -z "${RETROARCH_VALUE}" ]& \
        [ ! "${1}" = "none" ]
     then
-            case ${OS_SETTING} in
-            0|false|none)
-                RETROARCH_VALUE="false"
-            ;;
-            1|true)
-                RETROARCH_VALUE="true"
-            ;;
-            *)
-                RETROARCH_VALUE="${OS_SETTING}"
-            ;;
-        esac
+        RETROARCH_VALUE="${OS_SETTING}"
     fi
     clear_setting "${RETROARCH_KEY}"
     echo "${RETROARCH_KEY} = \"${RETROARCH_VALUE}\"" >>${TMP_CONFIG}
@@ -472,10 +470,8 @@ function set_aspectratio() {
       *)
         for AR in ${!CORE_RATIOS[@]}
         do
-            log "Test [${ASPECT_RATIO}] (${CORE_RATIOS[${AR}]}) (${AR})"
             if [ "${CORE_RATIOS[${AR}]}" = "${ASPECT_RATIO}" ]
             then
-                log "Find aspect ratio [${ASPECT_RATIO}] (${CORE_RATIOS[${AR}]})"
                 add_setting "none" "aspect_ratio_index" "${AR}"
                 break
             fi
@@ -615,7 +611,7 @@ function set_audiolatency() {
 function set_analogsupport() {
     local HAS_ANALOG="$(match ${PLATFORM} ${NO_ANALOG[@]})"
     case ${HAS_ANALOG} in
-        0|false|none)
+        1)
             add_setting "none" "input_player1_analog_dpad_mode" "0"
         ;;
         *)
@@ -756,10 +752,6 @@ function setup_controllers() {
             PINDEX="${CONTROLLERS#*-p${i}index }"
             PINDEX="${PINDEX%% -p${i}guid*}"
             log "Set up controller ($i) (${PINDEX})"
-            for setting in $(awk '/input_player'${i}'_/ {print $1}' ${RETROARCH_CONFIG})
-            do
-                clear_setting "${setting}"
-            done
             add_setting "none" "input_player${i}_joypad_index" "${PINDEX}"
             case ${PLATFORM} in
                 atari5200)
@@ -776,7 +768,7 @@ function setup_controllers() {
 ###
 
 ###
-### Functions that cannot be parallelized
+### Functions that must be run without parallelization.
 ###
 
 set_retroarch_paths
