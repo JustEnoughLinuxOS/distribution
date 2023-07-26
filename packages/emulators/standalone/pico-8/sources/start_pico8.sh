@@ -25,14 +25,14 @@ cp -f /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/roms/pico-8
 
 if [ -e "/storage/roms/pico-8/${STATIC_BIN}" ]
 then
-  jslisten set "${STATIC_BIN}"
+  jslisten set "-9 ${STATIC_BIN}"
   /storage/roms/pico-8/${STATIC_BIN} -home -root_path /storage/roms/pico-8 -joystick 0 ${OPTIONS} "${CART}"
   exit
 fi
 
 if [ -e "/storage/roms/pico-8/pico8_dyn" ] || [ ! "$?" = 0 ]
 then
-  jslisten set "pico8_dyn"
+  jslisten set "-9 pico8_dyn"
   /storage/roms/pico-8/pico8_dyn -home -root_path /storage/roms/pico-8 -joystick 0 ${OPTIONS} "${CART}"
   exit
 else
