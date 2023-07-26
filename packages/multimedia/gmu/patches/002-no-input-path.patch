@@ -1,0 +1,13 @@
+diff --git a/src/frontends/sdl/sdl.c b/src/frontends/sdl/sdl.c
+index 7a31fc0..a6b114d 100644
+--- a/src/frontends/sdl/sdl.c
++++ b/src/frontends/sdl/sdl.c
+@@ -110,7 +110,7 @@ static void input_device_config(void)
+ 	gmu_core_config_acquire_lock();
+ 	inputconf = cfg_get_key_value(config, "SDL.InputConfigFile");
+ 	if (!inputconf) inputconf = "gmuinput.conf";
+-	snprintf(tmp, 255, "%s/%s", gmu_core_get_config_dir(), inputconf);
++	snprintf(tmp, 255, "%s", inputconf);
+ 	tmp[255] = '\0';
+ 	gmu_core_config_release_lock();
+ 	input_config_init(tmp);
