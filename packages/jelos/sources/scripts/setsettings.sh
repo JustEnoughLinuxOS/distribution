@@ -752,10 +752,6 @@ function setup_controllers() {
             PINDEX="${CONTROLLERS#*-p${i}index }"
             PINDEX="${PINDEX%% -p${i}guid*}"
             log "Set up controller ($i) (${PINDEX})"
-            for setting in $(awk '/input_player'${i}'_/ {print $1}' ${RETROARCH_CONFIG})
-            do
-                clear_setting "${setting}"
-            done
             add_setting "none" "input_player${i}_joypad_index" "${PINDEX}"
             case ${PLATFORM} in
                 atari5200)
@@ -772,7 +768,7 @@ function setup_controllers() {
 ###
 
 ###
-### Functions that cannot be parallelized
+### Functions that must be run without parallelization.
 ###
 
 set_retroarch_paths
