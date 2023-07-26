@@ -19,7 +19,7 @@ if [[ "${OPENGL_SUPPORT}" = "yes" ]] && [[ ! "${DEVICE}" = "S922X" ]]; then
 
 elif [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-  PKG_CMAKE_OPTS_TARGET+=" -DUSE_GLES=ON -DUSE_OPENGL=OFF"
+  PKG_CMAKE_OPTS_TARGET+=" -DUSE_GLES=ON"
 fi
 
 if [ "${VULKAN_SUPPORT}" = "yes" ]
