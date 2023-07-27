@@ -29,7 +29,7 @@ make_target() {
 
 post_makeinstall_target() {
   mkdir -p ${INSTALL}/usr/config/gmu/playlists
-  cp -f ${PKG_DIR}/config/gmu.conf ${INSTALL}/usr/config/gmu
+  cp -f ${PKG_DIR}/config/* ${INSTALL}/usr/config/gmu
 
   mkdir -p ${INSTALL}/usr/bin
   cp -f ${PKG_DIR}/scripts/start_gmu.sh ${INSTALL}/usr/bin
