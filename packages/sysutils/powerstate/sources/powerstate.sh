@@ -49,7 +49,7 @@ do
           gpu_performance_level auto
           pcie_aspm_policy default
           wake_events disabled
-          runtime_power_management on
+          runtime_power_management off
           /usr/bin/wifictl setpowersave
         ;;
       esac
