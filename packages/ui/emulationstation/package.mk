@@ -3,7 +3,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="emulationstation"
-PKG_VERSION="9e42208"
+PKG_VERSION="e79f16f231795523fdb4752726a2b2d5c3ee51d3"
 PKG_GIT_CLONE_BRANCH="main"
 PKG_REV="1"
 PKG_ARCH="any"
@@ -17,12 +17,11 @@ PKG_BUILD_FLAGS="-gold"
 GET_HANDLER_SUPPORT="git"
 PKG_PATCH_DIRS+="${DEVICE}"
 
-if [ ! "${OPENGL}" = "no" ]; then
+if [[ "${OPENGL_SUPPORT}" = "yes" ]] && [[ ! "${DEVICE}" = "S922X" ]]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu"
   PKG_CMAKE_OPTS_TARGET+=" -DGL=1"
-fi
 
-if [ ! "${OPENGLES_SUPPORT}" = no ]; then
+elif [ "${OPENGLES_SUPPORT}" = "yes" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
   PKG_CMAKE_OPTS_TARGET+=" -DGLES2=1"
 fi
