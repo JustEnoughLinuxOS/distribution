@@ -46,7 +46,7 @@ This document describes all available systems emulators and cores available for 
 |Lexaloffle|PICO-8 (pico-8)|2015|`pico-8`|.sh .p8 .png|**pico-8:** pico8 (default)<br>**retroarch:** fake08<br>|
 |Magnavox|Odyssey (odyssey2)|1979|`odyssey`|.bin .zip .7z|**retroarch:** o2em (default)<br>|
 |Mattel|Intellivision (intellivision)|1979|`intellivision`|.int .bin .rom .zip .7z|**retroarch:** freeintv (default)<br>|
-|Microsoft|MS-DOS (pc)|1981|`pc`|.com .bat .exe .doszZ|**retroarch:** dosbox_pure<br>**retroarch:** dosbox_svn<br>|
+|Microsoft|MS-DOS (pc)|1981|`pc`|.com .bat .exe .dosz|**retroarch:** dosbox_pure<br>**retroarch:** dosbox_svn<br>|
 |Microsoft|MSX (msx)|1983|`msx`|.dsk .mx1 .mx2 .rom .zip .7z .m3u|**retroarch:** bluemsx (default)<br>**retroarch:** fmsx<br>|
 |Microsoft|MSX2 (msx2)|1988|`msx2`|.dsk .mx1 .mx2 .rom .zip .7z .m3u|**retroarch:** bluemsx (default)<br>**retroarch:** fmsx<br>|
 |Milton Bradley|Vectrex (vectrex)|1982|`vectrex`|.bin .gam .vec .zip .7z|**retroarch:** vecx (default)<br>|
