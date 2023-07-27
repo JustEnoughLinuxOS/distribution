@@ -94,7 +94,7 @@ modules() {
 }
 
 quirks() {
-  for QUIRK in /usr/lib/autostart/quirks/platforms/"${HW_DEVICE}"/sleep.d/${1}/*
+  for QUIRK in /usr/lib/autostart/quirks/platforms/"${HW_DEVICE}"/sleep.d/${1}/* \
                /usr/lib/autostart/quirks/devices/"${QUIRK_DEVICE}"/sleep.d/${1}/*
   do
     "${QUIRK}" >/dev/null 2>&1
