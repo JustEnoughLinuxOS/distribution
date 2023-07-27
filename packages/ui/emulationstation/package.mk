@@ -3,7 +3,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="emulationstation"
-PKG_VERSION="9e42208"
+PKG_VERSION="e79f16f231795523fdb4752726a2b2d5c3ee51d3"
 PKG_GIT_CLONE_BRANCH="main"
 PKG_REV="1"
 PKG_ARCH="any"
