@@ -83,11 +83,6 @@ then
   mkdir -p ${CEMU_CONFIG_ROOT}/controllerProfiles
 fi
 
-if [ ! -e "${CEMU_CONFIG_ROOT}/controllerProfiles/controller0.xml" ]
-then
-  cp /usr/config/Cemu/controllerProfiles/controller0.xml ${CEMU_CONFIG_ROOT}/controllerProfiles/
-fi
-
 FILE=$(echo $@ | sed "s#^/.*/##g")
 FPS=$(get_setting show_fps wiiu "${FILE}")
 CON=$(get_setting wiiu_controller_profile wiiu "${FILE}")
@@ -96,10 +91,28 @@ if [ -z "${FPS}" ]
 then
   FPS="0"
 fi
-if [ -z "${CON}" ]
-then
-  CON="Wii U GamePad"
-fi
+
+case ${CON} in
+  "Wii U Pro Controller")
+     CONFILE="wii_u_pro_controller.xml"
+     CON="Wii U Pro Controller"
+  ;;
+  *)
+     ### Break these out when possible.
+     ### "Wii U GamePad"|"Wii U Classic Controller"|"Wiimote"
+     CONFILE="wii_u_gamepad.xml"
+     CON="Wii U GamePad"
+  ;;
+esac
+
+for CONTROLLER in /usr/config/Cemu/controllerProfiles/*
+do
+  LOCALFILE="$(basename ${CONTROLLER})"
+  if [ "${CONFILE}" = "${LOCALFILE}" ]
+  then
+      cp "${CONTROLLER}" "${CEMU_CONFIG_ROOT}/controllerProfiles/controller0.xml"
+  fi
+done
 
 UUID0="0_$(control-gen | awk 'BEGIN {FS="\""} /^DEVICE/ {print $2;exit}')"
 CONTROLLER0=$(cat /storage/.controller)
