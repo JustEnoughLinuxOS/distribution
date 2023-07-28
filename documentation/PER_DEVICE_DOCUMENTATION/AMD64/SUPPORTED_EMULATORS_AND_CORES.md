@@ -83,7 +83,7 @@ This document describes all available systems emulators and cores available for 
 |Nintendo|Super Nintendo (snes)|1991|`snes`|.smc .fig .sfc .swc .zip .7z|**retroarch:** snes9x (default)<br>**retroarch:** snes9x2010<br>**retroarch:** snes9x2002<br>**retroarch:** snes9x2005_plus<br>**retroarch:** beetle_supafaust<br>**retroarch:** bsnes<br>**retroarch:** bsnes_mercury_performance<br>**retroarch:** bsnes_hd_beta<br>|
 |Nintendo|Switch (switch)|2017|`switch`|.xci .nsp .nca .nso .nro|**yuzu:** yuzu-sa (default)<br>**ryujinx:** ryujinx-sa<br>|
 |Nintendo|Virtual Boy (virtualboy)|1995|`virtualboy`|.vb .zip .7z|**retroarch:** beetle_vb (default)<br>|
-|Nintendo|Wii (wii)|2006|`wii`|.gcm .iso .gcz .cisoO .wbfsS .rvz .dol .wad|**dolphin:** dolphin-sa-wii (default)<br>**primehack:** primehack<br>**retroarch:** dolphin<br>|
+|Nintendo|Wii (wii)|2006|`wii`|.gcm .iso .gcz .cisoO .wbfsS .rvz .dol .wad|**dolphin:** dolphin-sa-wii (default)<br>**retroarch:** dolphin<br>**primehack:** primehack<br>|
 |Nintendo|Wii U (wiiu)|2012|`wiiu`|.wud .wux .wua|**cemu:** cemu-sa (default)<br>|
 |Panasonic|3DO (3do)|1993|`3do`|.iso .bin .chd .cue|**retroarch:** opera (default)<br>|
 |Philips|VideoPac (videopac)|1978|`videopac`|.bin .zip .7z|**retroarch:** o2em (default)<br>|
