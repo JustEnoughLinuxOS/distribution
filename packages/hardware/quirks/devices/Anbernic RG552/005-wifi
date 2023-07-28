@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
+
+. /etc/profile
+
+# Set export GPIO for Wifi and enable
+if [ ! -d "/sys/class/gpio/gpio${DEVICE_WIFI}" ]; then
+  echo ${DEVICE_WIFI} > /sys/class/gpio/export
+  echo out > /sys/class/gpio/gpio${DEVICE_WIFI}/direction
+  echo 1 > /sys/class/gpio/gpio${DEVICE_WIFI}/value
+fi
