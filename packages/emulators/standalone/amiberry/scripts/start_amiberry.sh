@@ -18,9 +18,6 @@ BIOS_PATH="/storage/roms/bios"
 MAX_DRIVES=4
 i=0
 
-FBWIDTH=$(fbset | awk '/geometry/ {print $2}')
-FBHEIGHT=$(fbset | awk '/geometry/ {print $3}')
-
 echo "Amiberry Log" > "${AMIBERRY_LOG}"
 
 if [ ! -d "${AMIBERRY_TMP_DIR}" ]
@@ -68,8 +65,8 @@ AMIBERRY_SET_CONF() {
     cp ${AMIBERRY_CONFIG_DIR}/AmigaA500-default.uae "${AMIBERRY_TMP_CONFIG}"
   fi
   sed -i "s#@BIOS_PATH@#${BIOS_PATH}#g" ${AMIBERRY_TMP_CONFIG}
-  sed -i "s#gfx_width=.*\$#${FBWIDTH}#g" ${AMIBERRY_TMP_CONFIG}
-  sed -i "s#gfx_height=.*\$#${FBHEIGHT}#g" ${AMIBERRY_TMP_CONFIG}
+  sed -i "s#gfx_width=.*\$#$(fbwidth)#g" ${AMIBERRY_TMP_CONFIG}
+  sed -i "s#gfx_height=.*\$#$(fbheight)#g" ${AMIBERRY_TMP_CONFIG}
   find_gamepad 
 }
 
