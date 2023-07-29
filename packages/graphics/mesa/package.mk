@@ -16,6 +16,11 @@ case ${DEVICE} in
         PKG_URL="${PKG_SITE}.git"
         PKG_GIT_CLONE_BRANCH="csf"
   ;;
+  RK3399) #Upstream Mesa appears to be broken on the RK3399 build currently
+	PKG_VERSION="22.3.7"
+	PKG_SHA256="894ce2f4a1c2e76177cdd2284620192d0da3066b243eec2fbb1d7cf37f13042c"
+	PKG_URL="https://mesa.freedesktop.org/archive/mesa-${PKG_VERSION}.tar.xz"
+  ;;
   *)
 	PKG_VERSION="23.1.4"
 	PKG_SHA256="7261a17fb94867e3dc5a90d8a1f100fa04b0cbbde51d25302c0872b5e9a10959"
