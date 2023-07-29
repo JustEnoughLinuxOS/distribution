@@ -16,8 +16,8 @@ then
 fi
 
 
-FBHEIGHT=$(fbset | awk '/geometry/ {print $2}')
-FBWIDTH=$(fbset | awk '/geometry/ {print $3}')
+FBHEIGHT="$(fbheight)"
+FBWIDTH="$(fbwidth)"
 
 if [ ! -d "${GMUPATH}" ]
 then
