@@ -622,62 +622,68 @@ function set_analogsupport() {
 
 function set_tatemode() {
     log "Setup tate mode..."
-    local TATEMODE="$(game_setting tatemode)"
-    local MAME2003DIR="/storage/.config/retroarch/config/MAME 2003-Plus"
-    local MAME2003REMAPDIR="/storage/remappings/MAME 2003-Plus"
-    if [ ! -d "${MAME2003DIR}" ]
+    if [ "${CORE}" = "mame2003_plus" ]
     then
+        local TATEMODE="$(game_setting tatemode)"
+        local MAME2003DIR="/storage/.config/retroarch/config/MAME 2003-Plus"
+        local MAME2003REMAPDIR="/storage/remappings/MAME 2003-Plus"
+        if [ ! -d "${MAME2003DIR}" ]
+        then
             mkdir -p "${MAME2003DIR}"
-    fi
-    if [ ! -d "${MAME2003REMAPDIR}" ]
-    then
+        fi
+        if [ ! -d "${MAME2003REMAPDIR}" ]
+        then
             mkdir -p "${MAME2003REMAPDIR}"
+        fi
+        case ${TATEMODE} in
+            1|true)
+                cp "/usr/config/retroarch/TATE-MAME 2003-Plus.rmp" "${MAME2003REMAPDIR}/MAME 2003-Plus.rmp"
+                if [ "$(grep mame2003-plus_tate_mode "${MAME2003DIR}/MAME 2003-Plus.opt" > /dev/null 2>&1)" ]
+                then
+                    sed -i 's#mame2003-plus_tate_mode.*$#mame2003-plus_tate_mode = "enabled"#' "${MAME2003DIR}/MAME 2003-Plus.opt" 2>/dev/null
+                else
+                    echo 'mame2003-plus_tate_mode = "enabled"' > "${MAME2003DIR}/MAME 2003-Plus.opt"
+                fi
+            ;;
+            *)
+                if [ -e "${MAME2003DIR}/MAME 2003-Plus.opt" ]
+                then
+                    sed -i 's#mame2003-plus_tate_mode.*$#mame2003-plus_tate_mode = "disabled"#' "${MAME2003DIR}/MAME 2003-Plus.opt" 2>/dev/null
+                fi
+                if [ -e "${MAME2003REMAPDIR}/MAME 2003-Plus.rmp" ]
+                then
+                    rm -f "${MAME2003REMAPDIR}/MAME 2003-Plus.rmp"
+                fi
+            ;;
+        esac
     fi
-    case ${TATEMODE} in
-        1|true)
-            cp "/usr/config/retroarch/TATE-MAME 2003-Plus.rmp" "${MAME2003REMAPDIR}/MAME 2003-Plus.rmp"
-            if [ "$(grep mame2003-plus_tate_mode "${MAME2003DIR}/MAME 2003-Plus.opt" > /dev/null 2>&1)" ]
-            then
-                sed -i 's#mame2003-plus_tate_mode.*$#mame2003-plus_tate_mode = "enabled"#' "${MAME2003DIR}/MAME 2003-Plus.opt" 2>/dev/null
-            else
-                echo 'mame2003-plus_tate_mode = "enabled"' > "${MAME2003DIR}/MAME 2003-Plus.opt"
-            fi
-        ;;
-        *)
-            if [ -e "${MAME2003DIR}/MAME 2003-Plus.opt" ]
-            then
-                sed -i 's#mame2003-plus_tate_mode.*$#mame2003-plus_tate_mode = "disabled"#' "${MAME2003DIR}/MAME 2003-Plus.opt" 2>/dev/null
-            fi
-            if [ -e "${MAME2003REMAPDIR}/MAME 2003-Plus.rmp" ]
-            then
-                rm -f "${MAME2003REMAPDIR}/MAME 2003-Plus.rmp"
-            fi
-        ;;
-    esac
 }
 
 function set_n64opts() {
     log "Set up N64..."
-    local PARALLELN64DIR="/storage/.config/retroarch/config/ParaLLEl N64"
-    if [ ! -d "${PARALLELN64DIR}" ]
+    if [ "${CORE}" = "parallel_n64" ]
     then
-        mkdir -p "${PARALLELN64DIR}"
-    fi
+        local PARALLELN64DIR="/storage/.config/retroarch/config/ParaLLEl N64"
+        if [ ! -d "${PARALLELN64DIR}" ]
+        then
+            mkdir -p "${PARALLELN64DIR}"
+        fi
 
-    if [ ! -f "${PARALLELN64DIR}/ParaLLEl N64.opt" ]
-    then
-        cp "/usr/config/retroarch/ParaLLEl N64.opt" "${PARALLELN64DIR}/ParaLLEl N64.opt"
+        if [ ! -f "${PARALLELN64DIR}/ParaLLEl N64.opt" ]
+        then
+            cp "/usr/config/retroarch/ParaLLEl N64.opt" "${PARALLELN64DIR}/ParaLLEl N64.opt"
+        fi
+        local VIDEO_CORE="$(game_setting parallel_n64_video_core)"
+        sed -i '/parallel-n64-gfxplugin = /c\parallel-n64-gfxplugin = "'${VIDEO_CORE}'"' "${PARALLELN64DIR}/ParaLLEl N64.opt"
+        local SCREENSIZE="$(game_setting parallel_n64_internal_resolution)"
+        sed -i '/parallel-n64-screensize = /c\parallel-n64-screensize = "'${SCREENSOZE}'"' "${PARALLELN64DIR}/ParaLLEl N64.opt"
+        local GAMESPEED="$(game_setting parallel_n64_gamespeed)"
+        sed -i '/parallel-n64-framerate = /c\parallel-n64-framerate = "'${GAMESPEED}'"' "${PARALLELN64DIR}/ParaLLEl N64.opt"
+        local ACCURACY="$(game_setting parallel_n64_gfx_accuracy)"
+        sed -i '/parallel-n64-gfxplugin-accuracy = /c\parallel-n64-gfxplugin-accuracy = "'${ACCURACY}'"' "${PARALLELN64DIR}/ParaLLEl N64.opt"
+        local CONTROLLERPAK="$(game_setting parallel_n64_controller_pak)"
+        sed -i '/parallel-n64-pak1 = /c\parallel-n64-pak1 = "'${CONTROLLERPAK}'"' "${PARALLELN64DIR}/ParaLLEl N64.opt"
     fi
-    local VIDEO_CORE="$(game_setting parallel_n64_video_core)"
-    sed -i '/parallel-n64-gfxplugin = /c\parallel-n64-gfxplugin = "'${VIDEO_CORE}'"' "${PARALLELN64DIR}/ParaLLEl N64.opt"
-    local SCREENSIZE="$(game_setting parallel_n64_internal_resolution)"
-    sed -i '/parallel-n64-screensize = /c\parallel-n64-screensize = "'${SCREENSOZE}'"' "${PARALLELN64DIR}/ParaLLEl N64.opt"
-    local GAMESPEED="$(game_setting parallel_n64_gamespeed)"
-    sed -i '/parallel-n64-framerate = /c\parallel-n64-framerate = "'${GAMESPEED}'"' "${PARALLELN64DIR}/ParaLLEl N64.opt"
-    local ACCURACY="$(game_setting parallel_n64_gfx_accuracy)"
-    sed -i '/parallel-n64-gfxplugin-accuracy = /c\parallel-n64-gfxplugin-accuracy = "'${ACCURACY}'"' "${PARALLELN64DIR}/ParaLLEl N64.opt"
-    local CONTROLLERPAK="$(game_setting parallel_n64_controller_pak)"
-    sed -i '/parallel-n64-pak1 = /c\parallel-n64-pak1 = "'${CONTROLLERPAK}'"' "${PARALLELN64DIR}/ParaLLEl N64.opt"
 }
 
 function set_atari() {
