@@ -99,9 +99,29 @@ function get_es_setting() {
   echo $(sed -n "s|\s*<${1} name=\"${2}\" value=\"\(.*\)\" />|\1|p" ${ES_CONF})
 }
 
+function fbwidth() {
+  local ORIENTATION=$(</sys/devices/virtual/graphics/fbcon/rotate)
+  if [ "${ORIENTATION}" = "0" ]
+  then
+    fbset | awk '/geometry/ {print $2}'
+  else
+    fbset | awk '/geometry/ {print $3}'
+  fi
+}
+
+function fbheight() {
+  local ORIENTATION=$(</sys/devices/virtual/graphics/fbcon/rotate)
+  if [ "${ORIENTATION}" = "0" ]
+  then
+    fbset | awk '/geometry/ {print $3}'
+  else
+    fbset | awk '/geometry/ {print $2}'
+  fi
+}
+
 function get_aspect_ratio() {
-  FBWIDTH=$(fbset | awk '/geometry/ {print $2}')
-  FBHEIGHT=$(fbset | awk '/geometry/ {print $3}')
+  FBWIDTH=$(fbwidth)
+  FBHEIGHT=$(fbheight)
 
   ASPECT=$(printf "%.2f" $(echo "(${FBWIDTH} / ${FBHEIGHT})" | bc -l))
 

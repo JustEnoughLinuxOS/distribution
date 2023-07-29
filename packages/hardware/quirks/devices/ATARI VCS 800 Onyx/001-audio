@@ -5,7 +5,8 @@
 . /etc/profile
 
 MYDEVICE=$(get_setting system.audiodevice)
-if [ -z "${MYDEVICE}" ]
+if [ -z "${MYDEVICE}" ] || \
+   [ ! -e "/storage/.config/asound.conf" ]
 then
   ### Set the audio device
   set-audio set "HDMI (0:3)"
