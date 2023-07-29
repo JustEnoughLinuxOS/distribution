@@ -4,7 +4,7 @@
 # Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="mupen64plus-sa"
-PKG_VERSION="10ff8947930db2a4bfdc633da4f6afbd061a27cb"
+PKG_VERSION="f8adbe08805d9fe9171cb2e3078f383631d1331d"
 PKG_LICENSE="GPL"
 PKG_SITE="https://mupen64plus.org/"
 PKG_URL=""
