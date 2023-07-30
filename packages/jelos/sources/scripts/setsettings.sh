@@ -676,7 +676,7 @@ function set_n64opts() {
         local VIDEO_CORE="$(game_setting parallel_n64_video_core)"
         sed -i '/parallel-n64-gfxplugin = /c\parallel-n64-gfxplugin = "'${VIDEO_CORE}'"' "${PARALLELN64DIR}/ParaLLEl N64.opt"
         local SCREENSIZE="$(game_setting parallel_n64_internal_resolution)"
-        sed -i '/parallel-n64-screensize = /c\parallel-n64-screensize = "'${SCREENSOZE}'"' "${PARALLELN64DIR}/ParaLLEl N64.opt"
+        sed -i '/parallel-n64-screensize = /c\parallel-n64-screensize = "'${SCREENSIZE}'"' "${PARALLELN64DIR}/ParaLLEl N64.opt"
         local GAMESPEED="$(game_setting parallel_n64_gamespeed)"
         sed -i '/parallel-n64-framerate = /c\parallel-n64-framerate = "'${GAMESPEED}'"' "${PARALLELN64DIR}/ParaLLEl N64.opt"
         local ACCURACY="$(game_setting parallel_n64_gfx_accuracy)"
