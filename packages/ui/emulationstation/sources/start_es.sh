@@ -44,4 +44,6 @@ then
   systemctl import-environment LANGUAGE
 fi
 
+jslisten set "emulationstation"
+
 emulationstation --log-path /var/log --no-splash
