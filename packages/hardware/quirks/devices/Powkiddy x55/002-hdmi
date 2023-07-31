@@ -27,6 +27,9 @@ if [ ! "\${HDMI}" = "HDMI=1" ]
 then
   SDL=\$(readlink -f /usr/lib/SDL2-rotated/libSDL2.so 2>/dev/null)
   export LD_PRELOAD="\${SDL}"
+else
+  SDL=\$(readlink -f /usr/lib/libSDL2.so 2>/dev/null)
+  export LD_PRELOAD="\${SDL}"
 fi
 EOF
 

@@ -1,0 +1,2 @@
+### Change FB rotation when hdmi is connected (Powkiddy x55)
+ACTION=="change", SUBSYSTEM=="extcon", ATTRS{name}=="*hdmi*", RUN+="/usr/bin/hdmi_sense"
