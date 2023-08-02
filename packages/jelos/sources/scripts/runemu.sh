@@ -193,7 +193,7 @@ EOF
 function quit() {
 	$VERBOSE && log $0 "Cleaning up and exiting"
 	bluetooth enable
-	jslisten stop
+	jslisten set "emulationstation"
 	clear_screen
 	DEVICE_CPU_GOVERNOR=$(get_setting system.cpugovernor)
 	${DEVICE_CPU_GOVERNOR}

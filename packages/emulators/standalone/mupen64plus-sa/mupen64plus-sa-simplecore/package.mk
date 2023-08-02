@@ -1,8 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
+# Copyright (C) 2023 Nicholas Ricciuti (rishooty@gmail.com)
+# Copyright (C) 2023 Fewtarius (fewtarius@jelos.org)
 
 PKG_NAME="mupen64plus-sa-simplecore"
-PKG_VERSION="89ab4c78354abd921f19fdb99d6d815ac2f8263e"
+PKG_VERSION="6867e510d03ce91e67baf54116c1447033d12066"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/simple64/mupen64plus-core"
 PKG_URL="https://github.com/simple64/mupen64plus-core/archive/${PKG_VERSION}.tar.gz"
@@ -12,29 +14,31 @@ PKG_LONGDESC="Simple64's core"
 PKG_TOOLCHAIN="manual"
 PKG_GIT_CLONE_BRANCH="simple64"
 
-if [ ! "${OPENGL}" = "no" ]; then
-  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
-fi
-
 if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+fi
+
+if [ ! "${OPENGL}" = "no" ]; then
+  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+  export GLES="USE_GLES=0"
 fi
 
 make_target() {
   case ${ARCH} in
     arm|aarch64)
       export HOST_CPU=aarch64
-      BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
       sed -i 's/x86-64-v3/armv8-a/g' ${PKG_BUILD}/CMakeLists.txt
       ARM="-DARM=1"
     ;;
     x86_64)
       export HOST_CPU=x86_64
-      ARM=""
+      unset ARM
     ;;
   esac
+
+  export BINUTILS="$(get_build_dir binutils)/.${TARGET_NAME}"
   export NEW_DYNAREC=1
-  export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -pthread"
+  export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -pthread -D_REENTRANT"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
   export CROSS_COMPILE="${TARGET_PREFIX}"
   cd ${PKG_BUILD}
@@ -49,12 +53,4 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/local/lib
   cp ${PKG_BUILD}/build/libmupen64plus.so ${INSTALL}/usr/local/lib/libsimple64.so.2
   chmod 644 ${INSTALL}/usr/local/lib/libsimple64.so.2
-  rm -rf ${SYSROOT_PREFIX}/usr/local/include/simple64
-  mkdir -p ${SYSROOT_PREFIX}/usr/local/include/simple64
-  cp -rf ${PKG_BUILD}/src ${SYSROOT_PREFIX}/usr/local/include/simple64/
-  for header in ${SYSROOT_PREFIX}/usr/local/include/simple64/src/api/*h
-  do
-    ln -sf ${header} ${SYSROOT_PREFIX}/usr/local/include/simple64/
-  done
-  #mv ${PKG_BUILD}/src/api/m64p_*.h ${SYSROOT_PREFIX}/usr/local/include/simple64/
 }
