@@ -53,7 +53,7 @@ make_target() {
 
   case ${DEVICE} in
     AMD64|RK3588|S922X)
-      export APIDIR=$(get_build_dir mupen64plus-sa-simple64)/src/api
+      export APIDIR=$(get_build_dir mupen64plus-sa-simplecore)/src/api
       make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
       cp ${PKG_BUILD}/projects/unix/mupen64plus-video-rice.so ${PKG_BUILD}/projects/unix/mupen64plus-video-rice-simple.so
     ;;
