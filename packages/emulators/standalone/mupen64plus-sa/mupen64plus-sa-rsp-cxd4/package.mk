@@ -20,24 +20,23 @@ case ${DEVICE} in
   ;;
 esac
 
-if [ "${OPENGL_SUPPORT}" = "yes" ]
-then
-  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
-else
-  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-fi
+case ${DEVICE} in
+  AMD64)
+    PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+    export USE_GLES=0
+  ;;
+  *)
+    PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+    export USE_GLES=1
+  ;;
+esac
 
 make_target() {
-  if [ "${OPENGL_SUPPORT}" = "yes" ]
-  then
-    export USE_GLES=0
-  else
-    export USE_GLES=1
-  fi
 
   export HOST_CPU=${TARGET_ARCH} \
-         VFP_HARD=1 \
          NEW_DYNAREC=1 \
+         VFP_HARD=1 \
+         HLEVIDEO=1 \
          V=1 \
          VC=0 \
          OSD=0
@@ -45,10 +44,6 @@ make_target() {
   case ${TARGET_ARCH} in
     x86_64)
       export SUFFIX="-sse2"
-      export HLEVIDEO=1
-    ;;
-    *)
-      export HLEVIDEO=0
     ;;
   esac
 

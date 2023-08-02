@@ -14,24 +14,22 @@ PKG_SHORTDESC="mupen64plus"
 PKG_LONGDESC="Mupen64Plus Standalone"
 PKG_TOOLCHAIN="manual"
 
-if [ "${OPENGL_SUPPORT}" = "yes" ]
-then
-  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
-else
-  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-fi
+case ${DEVICE} in
+  AMD64)
+    PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+    export USE_GLES=0
+  ;;
+  *)
+    PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+    export USE_GLES=1
+  ;;
+esac
 
 make_target() {
-  if [ "${OPENGL_SUPPORT}" = "yes" ]
-  then
-    export USE_GLES=0
-  else
-    export USE_GLES=1
-  fi
 
   export HOST_CPU=${TARGET_ARCH} \
-         VFP_HARD=1 \
          NEW_DYNAREC=1 \
+         VFP_HARD=1 \
          V=1 \
          VC=0 \
          OSD=0
