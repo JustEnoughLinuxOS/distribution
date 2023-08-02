@@ -1,8 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
+# Copyright (C) 2023 Nicholas Ricciuti (rishooty@gmail.com)
+# Copyright (C) 2023 Fewtarius (fewtarius@jelos.org)
 
 PKG_NAME="mupen64plus-sa-ui-console"
-PKG_VERSION="335e826aead146bd6a47d557d78b746e77f337c8"
+PKG_VERSION="1340c4bdfc9ec53d3fccda5e085930dd79eb08b3"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/mupen64plus/mupen64plus-ui-console"
 PKG_URL="https://github.com/mupen64plus/mupen64plus-ui-console/archive/${PKG_VERSION}.tar.gz"
@@ -13,43 +15,46 @@ PKG_TOOLCHAIN="manual"
 
 case ${DEVICE} in
   AMD64|RK3588|S922X)
-    PKG_DEPENDS_TARGET="mupen64plus-sa-simplecore"
+    PKG_DEPENDS_TARGET+=" mupen64plus-sa-simplecore"
   ;;
 esac
 
-if [ ! "${OPENGL}" = "no" ]; then
+if [ "${OPENGL_SUPPORT}" = "yes" ]
+then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
-fi
-
-if [ "${OPENGLES_SUPPORT}" = yes ]; then
+else
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
 fi
 
 make_target() {
-  case ${ARCH} in
-    arm|aarch64)
-      export HOST_CPU=aarch64
-      BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
-      export USE_GLES=1
-    ;;
-    x86_64)
-      export HOST_CPU=x86_64
-      export USE_GLES=0
-    ;;
-  esac
-  export APIDIR=${SYSROOT_PREFIX}/usr/local/include/mupen64plus
-  export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -pthread"
+  if [ "${OPENGL_SUPPORT}" = "yes" ]
+  then
+    export USE_GLES=0
+  else
+    export USE_GLES=1
+  fi
+
+  export V=1 \
+         VC=0
+
+  export BINUTILS="$(get_build_dir binutils)/.${TARGET_NAME}"
+  export APIDIR=$(get_build_dir mupen64plus-sa-core)/src/api
+  export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -pthread -D_REENTRANT"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
   export CROSS_COMPILE="${TARGET_PREFIX}"
-  export V=1
-  export VC=0
+
   make -C projects/unix clean
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
   cp ${PKG_BUILD}/projects/unix/mupen64plus ${PKG_BUILD}/projects/unix/mupen64plus-base
-  export APIDIR=${SYSROOT_PREFIX}/usr/local/include/simple64
-  export CFLAGS="${CFLAGS} -DSIMPLECORE"
-  make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
-  cp ${PKG_BUILD}/projects/unix/mupen64plus ${PKG_BUILD}/projects/unix/mupen64plus-simple
+
+  case ${DEVICE} in
+    AMD64|RK3588|S922X)
+      export APIDIR=$(get_build_dir mupen64plus-sa-simple64)/src/api
+      export CFLAGS="${CFLAGS} -DSIMPLECORE"
+      make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
+      cp ${PKG_BUILD}/projects/unix/mupen64plus ${PKG_BUILD}/projects/unix/mupen64plus-simple
+    ;;
+  esac
 }
 
 makeinstall_target() {
@@ -61,11 +66,14 @@ makeinstall_target() {
   UICONSDIR=${UPREFIX}/share/icons/hicolor
   mkdir -p ${UBINDIR}
   cp ${PKG_BUILD}/projects/unix/mupen64plus-base ${UBINDIR}/mupen64plus
-  cp ${PKG_BUILD}/projects/unix/mupen64plus-simple ${UBINDIR}
-  #${STRIP} ${UBINDIR}/mupen64plus
-  #${STRIP} ${UBINDIR}/mupen64plus-simple
   chmod 0755 ${UBINDIR}/mupen64plus
-  chmod 0755 ${UBINDIR}/mupen64plus-simple
+
+  if [ -e "${PKG_BUILD}/projects/unix/mupen64plus-simple" ]
+  then
+    cp ${PKG_BUILD}/projects/unix/mupen64plus-simple ${UBINDIR}
+    chmod 0755 ${UBINDIR}/mupen64plus-simple
+  fi
+
   mkdir -p ${UMANDIR}/man6
   cp ${PKG_BUILD}/doc/mupen64plus.6 ${UMANDIR}/man6
   chmod 0644 ${UMANDIR}/man6/mupen64plus.6
