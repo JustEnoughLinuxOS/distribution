@@ -24,10 +24,7 @@ By default JELOS will detect your controller and configure RetroArch hotkeys aut
   * Back 5s: L1
   * Skip 60s: R2
   * Back 60s: L2
-  * Battery Status: L2+Vol-Up
-  * WIFI Toggle: L2+Vol-Down
-  * Brightness Up: R2+Vol-Up
-  * Brightness Down: R2+Vol-Down
+> Note: Force-Close is R1+Start+Select on some devices, this is normal behavior.
 
 # Per Device Hotkeys
 |Device|Brightness Up|Brightness Down|Battery Status|WIFI Toggle|
