@@ -14,25 +14,23 @@ PKG_LONGDESC="Mupen64Plus Standalone Console"
 PKG_TOOLCHAIN="manual"
 
 case ${DEVICE} in
-  AMD64|RK3588|S922X)
+  AMD64|RK3588|S922X|RK3399)
     PKG_DEPENDS_TARGET+=" mupen64plus-sa-simplecore"
   ;;
 esac
 
-if [ "${OPENGL_SUPPORT}" = "yes" ]
-then
-  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
-else
-  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-fi
+case ${DEVICE} in
+  AMD64)
+    PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+    export USE_GLES=0
+  ;;
+  *)
+    PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+    export USE_GLES=1
+  ;;
+esac
 
 make_target() {
-  if [ "${OPENGL_SUPPORT}" = "yes" ]
-  then
-    export USE_GLES=0
-  else
-    export USE_GLES=1
-  fi
 
   export V=1 \
          VC=0
@@ -48,7 +46,7 @@ make_target() {
   cp ${PKG_BUILD}/projects/unix/mupen64plus ${PKG_BUILD}/projects/unix/mupen64plus-base
 
   case ${DEVICE} in
-    AMD64|RK3588|S922X)
+    AMD64|RK3588|S922X|RK3399)
       export APIDIR=$(get_build_dir mupen64plus-sa-simplecore)/src/api
       export CFLAGS="${CFLAGS} -DSIMPLECORE"
       make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
