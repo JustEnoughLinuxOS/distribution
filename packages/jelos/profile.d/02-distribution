@@ -9,8 +9,21 @@ export SDL_GAMECONTROLLERCONFIG_FILE="/storage/.config/SDL-GameControllerDB/game
 
 J_DIR="/storage/.config/system"
 J_CONF="${J_DIR}/configs/system.cfg"
+J_CONF_LOCK="/tmp/.system.cfg.lock"
 ES_CONF="/storage/.emulationstation/es_settings.cfg"
 JSLISTENCONF="${J_DIR}/configs/jslisten.cfg"
+
+function tocon() {
+  echo -ne "\033[1000H\033[2K==> ${*}" >/dev/console
+}
+
+function log() {
+  SOURCE=${1//\/*\//}
+  MESSAGE=${*#${1}}
+  MESSAGE=${MESSAGE# }
+  logger -t ${SOURCE} "${MESSAGE}"
+  echo "$(date) ${SOURCE}: ${MESSAGE}" >>/var/log/messages
+}
 
 function get_setting() {
   if [ ! -z "${3}" ]
@@ -76,7 +89,6 @@ function set_setting() {
       echo "${1}=${2}" >> "${J_CONF}"
     fi
   fi
-  sort_settings
 }
 
 function set_audio() {
@@ -145,14 +157,3 @@ function get_aspect_ratio() {
   echo ${ASPECT}
 }
 
-function tocon() {
-  echo -ne "\033[1000H\033[2K==> ${*}" >/dev/console
-}
-
-function log() {
-  SOURCE=${1//\/*\//}
-  MESSAGE=${*#${1}}
-  MESSAGE=${MESSAGE# }
-  logger -t ${SOURCE} "${MESSAGE}"
-  echo "$(date) ${SOURCE}: ${MESSAGE}" >>/var/log/messages
-}
