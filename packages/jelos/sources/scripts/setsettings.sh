@@ -344,7 +344,8 @@ function configure_hotkeys() {
             for HKEYSETTING in input_enable_hotkey_btn input_bind_hold      \
                                input_exit_emulator_btn input_fps_toggle_btn \
                                input_menu_toggle_btn input_save_state_btn   \
-                               input_load_state_btn
+                               input_load_state_btn input_hold_fast_forward \
+                               input_toggle_fast_forward_btn
             do
                 clear_setting "${HKEYSETTING}"
             done
@@ -357,6 +358,7 @@ input_fps_toggle_btn = "${input_y_btn}"
 input_menu_toggle_btn = "${input_x_btn}"
 input_save_state_btn = "${input_r_btn}"
 input_load_state_btn = "${input_l_btn}"
+input_hold_fast_forward_btn = "${input_r2_btn}"
 EOF
             rm -f /tmp/"${MY_CONTROLLER}.cfg"
         fi
