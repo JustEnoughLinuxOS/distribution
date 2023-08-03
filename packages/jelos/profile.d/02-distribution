@@ -69,18 +69,35 @@ function get_setting() {
 }
 
 function del_setting() {
+  while [ -f "${J_CONF_LOCK}" ]
+  do
+    sleep .1
+  done
+  touch "${J_CONF_LOCK}"
   if [[ "${1}" =~ ^[[:alnum:]] ]]
   then
     sed -i "/^${1}=/d" "${J_CONF}"
   fi
+  rm -f "${J_CONF_LOCK}"
 }
 
 function sort_settings() {
+  while [ -f "${J_CONF_LOCK}" ]
+  do
+    sleep .1
+  done
+  touch "${J_CONF_LOCK}"
   cat "${J_CONF}" | grep ^[a-z0-9] | sort >"${J_CONF}.tmp"
   mv "${J_CONF}.tmp" "${J_CONF}"
+  rm -f "${J_CONF_LOCK}"
 }
 
 function set_setting() {
+  while [ -f "${J_CONF_LOCK}" ]
+  do
+    sleep .1
+  done
+  touch "${J_CONF_LOCK}"
   if [[ "${1}" =~ ^[[:alnum:]] ]]
   then
     del_setting "${1}"
@@ -89,6 +106,7 @@ function set_setting() {
       echo "${1}=${2}" >> "${J_CONF}"
     fi
   fi
+  rm -f "${J_CONF_LOCK}"
 }
 
 function set_audio() {
