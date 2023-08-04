@@ -22,8 +22,8 @@ case ${DEVICE} in
 	PKG_URL="https://mesa.freedesktop.org/archive/mesa-${PKG_VERSION}.tar.xz"
   ;;
   *)
-	PKG_VERSION="23.1.4"
-	PKG_SHA256="7261a17fb94867e3dc5a90d8a1f100fa04b0cbbde51d25302c0872b5e9a10959"
+	PKG_VERSION="23.1.5"
+	PKG_SHA256="3cf88576fdebf24fc4047067936131c90cb6541c27365996b79b661dec1fb153"
 	PKG_SITE="http://www.mesa3d.org/"
 	PKG_URL="https://mesa.freedesktop.org/archive/mesa-${PKG_VERSION}.tar.xz"
   ;;
