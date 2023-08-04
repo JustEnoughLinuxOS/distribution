@@ -23,11 +23,8 @@ M64PCONF="/storage/.config/mupen64plus/mupen64plus.cfg"
 TMP="/tmp/mupen64plus"
 GAMEDATA="/storage/.config/mupen64plus"
 
-RESOLUTION=$(batocera-resolution "currentResolution")
-RESA=${RESOLUTION%x*}
-RESB=${RESOLUTION#*x}
-SCREENWIDTH=$((RESA>=RESB ? RESA : RESB))
-SCREENHEIGHT=$((RESA<RESB ? RESA : RESB))
+SCREENWIDTH=$(fbwidth)
+SCREENHEIGHT=$(fbheight)
 
 if [[ ! -f "$GAMEDATA/custominput.ini" ]]; then
 	mkdir -p $GAMEDATA
@@ -53,7 +50,7 @@ else
 fi
 
 cp $M64PCONF $TMP
-SET_PARAMS="--set Core[SharedDataPath]=$TMP --set Video-Rice[ResolutionWidth]=$SCREENWIDTH"
+SET_PARAMS="--set Core[SharedDataPath]=$TMP --set Video-Rice[ResolutionWidth]=${SCREENWIDTH}"
 
 #Set the cores to use
 CORES=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
@@ -71,14 +68,14 @@ fi
 #Aspect Ratio
 	if [ "${ASPECT}" = "fullscreen" ]; then
 		# TODO: Set aspect ratio to fullscreen
-		SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$SCREENWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT --set Video-Parallel[ScreenWidth]=$SCREENWIDTH --set Video-Parallel[ScreenHeight]=$SCREENHEIGHT --set Video-Glide64mk2[aspect]=2 --set Video-GLideN64[AspectRatio]=3 --set Video-Parallel[WidescreenStretch]=False"
+		SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=${SCREENWIDTH} --set Video-General[ScreenHeight]=${SCREENHEIGHT} --set Video-Parallel[ScreenWidth]=${SCREENWIDTH} --set Video-Parallel[ScreenHeight]=${SCREENHEIGHT} --set Video-Glide64mk2[aspect]=2 --set Video-GLideN64[AspectRatio]=3 --set Video-Parallel[WidescreenStretch]=False"
 	else
 		# TODO: Set aspect ratio to 4:3
 		if [ "{$CORE}" = "m64p_rice" ]; then
 			GAMEWIDTH=$(((SCREENHEIGHT * 4) / 3))
-			SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$GAMEWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT"
+			SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=${GAMEWIDTH} --set Video-General[ScreenHeight]=${SCREENHEIGHT}"
 		else
-			SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=$SCREENWIDTH --set Video-General[ScreenHeight]=$SCREENHEIGHT --set Video-Parallel[ScreenWidth]=$SCREENWIDTH --set Video-Parallel[ScreenHeight]=$SCREENHEIGHT --set Video-Parallel[WidescreenStretch]=False --set Video-Glide64mk2[aspect]=0 --set Video-GLideN64[AspectRatio]=1"
+			SET_PARAMS="$SET_PARAMS --set Video-General[ScreenWidth]=${SCREENWIDTH} --set Video-General[ScreenHeight]=${SCREENHEIGHT} --set Video-Parallel[ScreenWidth]=${SCREENWIDTH} --set Video-Parallel[ScreenHeight]=${SCREENHEIGHT} --set Video-Parallel[WidescreenStretch]=False --set Video-Glide64mk2[aspect]=0 --set Video-GLideN64[AspectRatio]=1"
 		fi
 	fi
 
@@ -130,20 +127,20 @@ fi
 # Set the video plugin
 case $1 in
 	"rmg_parallel")
-		SET_PARAMS="$SET_PARAMS --gfx mupen64plus-video-parallel${SIMPLESUFFIX}"
+		SET_PARAMS="$SET_PARAMS --gfx mupen64plus-video-parallel${SIMPLESUFFIX}.so"
 		RSP="parallel"
 	;;
 	"m64p_gliden64")
-		SET_PARAMS="$SET_PARAMS --gfx mupen64plus-video-GLideN64${SIMPLESUFFIX}"
+		SET_PARAMS="$SET_PARAMS --gfx mupen64plus-video-GLideN64${SIMPLESUFFIX}.so"
 	;;
 	"m64p_gl64mk2")
-		SET_PARAMS="$SET_PARAMS --gfx mupen64plus-video-glide64mk2${SIMPLESUFFIX}"
+		SET_PARAMS="$SET_PARAMS --gfx mupen64plus-video-glide64mk2${SIMPLESUFFIX}.so"
 	;;
 	"m64p_rice")
-		SET_PARAMS="$SET_PARAMS --gfx mupen64plus-video-rice${SIMPLESUFFIX}"
+		SET_PARAMS="$SET_PARAMS --gfx mupen64plus-video-rice${SIMPLESUFFIX}.so"
 	;;
 	*)
-		SET_PARAMS="$SET_PARAMS --gfx mupen64plus-video-rice${SIMPLESUFFIX}"
+		SET_PARAMS="$SET_PARAMS --gfx mupen64plus-video-rice${SIMPLESUFFIX}.so"
 	;;
 esac
 

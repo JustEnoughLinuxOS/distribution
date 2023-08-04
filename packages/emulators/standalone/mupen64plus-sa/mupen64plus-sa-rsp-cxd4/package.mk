@@ -1,3 +1,8 @@
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
+# Copyright (C) 2023 Nicholas Ricciuti (rishooty@gmail.com)
+# Copyright (C) 2023 Fewtarius (fewtarius@jelos.org)
+
 PKG_NAME="mupen64plus-sa-rsp-cxd4"
 PKG_VERSION="0a4e30f56033396e3ba47ec0fdd7acea3522362a"
 PKG_LICENSE="GPLv2"
@@ -7,53 +12,59 @@ PKG_DEPENDS_TARGET="toolchain libpng SDL2 SDL2_net zlib freetype nasm:host mupen
 PKG_SHORTDESC="mupen64plus-rsp-cxd4"
 PKG_LONGDESC="Mupen64Plus Standalone RSP CXD4"
 PKG_TOOLCHAIN="manual"
+PKG_BUILD_FLAGS="-fpic"
 
 case ${DEVICE} in
-  AMD64|RK3588|S922X)
-    PKG_DEPENDS_TARGET="mupen64plus-sa-simplecore"
+  AMD64|RK3588|S922X|RK3399)
+    PKG_DEPENDS_TARGET+=" mupen64plus-sa-simplecore"
   ;;
 esac
 
-if [ ! "${OPENGL}" = "no" ]; then
-  PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
-fi
-
-if [ "${OPENGLES_SUPPORT}" = yes ]; then
-  PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-fi
+case ${DEVICE} in
+  AMD64)
+    PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+    export USE_GLES=0
+  ;;
+  *)
+    PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+    export USE_GLES=1
+  ;;
+esac
 
 make_target() {
-  case ${ARCH} in
-    arm|aarch64)
-      export HOST_CPU=aarch64
-      BINUTILS="$(get_build_dir binutils)/.aarch64-libreelec-linux-gnueabi"
-      export USE_GLES=1
-      CPPFLAGS="-DUSE_SSE2NEON"
-    ;;
+
+  export HOST_CPU=${TARGET_ARCH} \
+         NEW_DYNAREC=1 \
+         VFP_HARD=1 \
+         HLEVIDEO=1 \
+         V=1 \
+         VC=0 \
+         OSD=0
+
+  case ${TARGET_ARCH} in
     x86_64)
-      export HOST_CPU=x86_64
-      export USE_GLES=0
+      export SUFFIX="-sse2"
     ;;
   esac
-  export APIDIR=${SYSROOT_PREFIX}/usr/local/include/mupen64plus
-  export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -pthread"
+
+  export BINUTILS="$(get_build_dir binutils)/.${TARGET_NAME}"
+  export APIDIR=$(get_build_dir mupen64plus-sa-core)/src/api
+  export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -pthread -D_REENTRANT"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
   export CROSS_COMPILE="${TARGET_PREFIX}"
-  export V=1
-  export VC=0
+
   make -C projects/unix clean
-  PKG_MAKE_OPTS_TARGET+="HLEVIDEO=1"
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
-  if [ "${DEVICE}" = "AMD64" ]; then
-    SUFFIX="-sse2"
-  else
-    SUFFIX=""
-  fi
   cp ${PKG_BUILD}/projects/unix/mupen64plus-rsp-cxd4${SUFFIX}.so ${PKG_BUILD}/projects/unix/mupen64plus-rsp-cxd4-base.so
-  export APIDIR=${SYSROOT_PREFIX}/usr/local/include/simple64
-  PKG_MAKE_OPTS_TARGET+="cxd4VIDEO=1 HLEVIDEO=0"
-  make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
-  cp ${PKG_BUILD}/projects/unix/mupen64plus-rsp-cxd4${SUFFIX}.so ${PKG_BUILD}/projects/unix/mupen64plus-rsp-cxd4-simple.so
+
+  case ${DEVICE} in
+    AMD64|RK3588|S922X|RK3399)
+      PKG_MAKE_OPTS_TARGET+=" cxd4VIDEO=1"
+      export APIDIR=$(get_build_dir mupen64plus-sa-simplecore)/src/api
+      make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
+      cp ${PKG_BUILD}/projects/unix/mupen64plus-rsp-cxd4${SUFFIX}.so ${PKG_BUILD}/projects/unix/mupen64plus-rsp-cxd4-simple.so
+    ;;
+  esac
 }
 
 makeinstall_target() {
@@ -62,10 +73,12 @@ makeinstall_target() {
   UPLUGINDIR=${ULIBDIR}/mupen64plus
   mkdir -p ${UPLUGINDIR}
   cp ${PKG_BUILD}/projects/unix/mupen64plus-rsp-cxd4-base.so ${UPLUGINDIR}/mupen64plus-rsp-cxd4.so
-  #${STRIP} ${UPLUGINDIR}/mupen64plus-rsp-cxd4.so
   chmod 0644 ${UPLUGINDIR}/mupen64plus-rsp-cxd4.so
+
+  if [ -e "${PKG_BUILD}/projects/unix/mupen64plus-rsp-cxd4-simple.so" ]
+  then
     cp ${PKG_BUILD}/projects/unix/mupen64plus-rsp-cxd4-simple.so ${UPLUGINDIR}
-  #${STRIP} ${UPLUGINDIR}/mupen64plus-rsp-cxd4-simple.so
-  chmod 0644 ${UPLUGINDIR}/mupen64plus-rsp-cxd4-simple.so
+    chmod 0644 ${UPLUGINDIR}/mupen64plus-rsp-cxd4-simple.so
+  fi
 }
 

@@ -14,7 +14,7 @@ PKG_BUILD_FLAGS="+pic"
 
 case ${DEVICE} in
   RK356*)
-    ::
+    PKG_DEPENDS_TARGET+=""
   ;;
   *)
     PKG_DEPENDS_TARGET+=" alsa-ucm-conf"

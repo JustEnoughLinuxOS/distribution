@@ -6,8 +6,8 @@
 . /etc/profile
 jslisten set "mpv"
 
-FBHEIGHT=$(fbset | awk '/geometry/ {print $2}')
-FBWIDTH=$(fbset | awk '/geometry/ {print $3}')
+FBWIDTH="$(fbwidth)"
+FBHEIGHT="$(fbheight)"
 
 ASPECT=$(printf "%.2f" $(echo "(${FBWIDTH} / ${FBHEIGHT})" | bc -l))
 
