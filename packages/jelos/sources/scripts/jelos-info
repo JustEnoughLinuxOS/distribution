@@ -22,7 +22,7 @@ info_quirks() {
 ### short version (for osd)
 if test "$1" = "--short"
 then
-    BATT=$(cat /sys/class/power_supply/{BAT,bat}*/uevent 2>/dev/null | grep -E "^POWER_SUPPLY_CAPACITY=" | sed -e s+'^POWER_SUPPLY_CAPACITY='++ | sort -rn | head -1)
+    BATT=$(awk 'BEGIN {FS="="} /POWER_SUPPLY_CAPACITY=/ {print $2; exit}' /sys/class/power_supply/{BAT,bat}*/uevent 2>/dev/null)
     DT=$(date +%H:%M)
     if test -n "${BATT}"
     then
@@ -42,23 +42,7 @@ V_ARCH=$(uname -m)
 [[ "$V_CPUMODEL1" ]] || V_CPUMODEL1="${HW_CPU}"
 
 # battery
-BATT=$(cat /sys/class/power_supply/{BAT,bat}*/uevent 2>/dev/null | grep -E "^POWER_SUPPLY_CAPACITY=" | sed -e s+'^POWER_SUPPLY_CAPACITY='++ | sort -rn | head -1)
-
-# PAD Battery
-for PADBAT in /sys/class/power_supply/*/device/uevent
-do
-    # HID devices only
-    PADNAME=$(grep -E '^HID_NAME=' "${PADBAT}" | sed -e s+'^HID_NAME='++)
-    if test -n "${PADNAME}"
-    then
-	# parent of parent / uevent
-	BATTUEVENT=$(dirname "${PADBAT}")
-	BATTUEVENT=$(dirname "${BATTUEVENT}")/uevent
-	BATT=$(grep -E "^POWER_SUPPLY_CAPACITY=" "${BATTUEVENT}" | sed -e s+'^POWER_SUPPLY_CAPACITY='++ | sort -rn | head -1)
-	echo "${PADNAME}: ${BATT}%"
-    fi
-done
-
+BATT=$(awk 'BEGIN {FS="="} /POWER_SUPPLY_CAPACITY=/ {print $2; exit}' /sys/class/power_supply/{BAT,bat}*/uevent 2>/dev/null)
 
 case ${HW_ARCH} in
   aarch64)
