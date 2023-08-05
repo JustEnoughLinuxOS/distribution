@@ -484,7 +484,7 @@ msgstr "컬렉션"
 
 #, c-format
 msgid "REMOVE FROM %s"
-msgstr "%s에서 제거됨"
+msgstr "%s에서 제거"
 
 #, c-format
 msgid "ADD TO %s"
