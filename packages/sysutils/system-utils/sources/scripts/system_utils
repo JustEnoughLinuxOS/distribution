@@ -45,25 +45,30 @@ if [ "${1}" == "setaudio" ];then
 fi
 
 if [ "${1}" == "vol" ];then
-VOLSTEP=1
-if [ -n "${3}" ]; then
-  VOLSTEP="${3}"
+  CURRENTVOL=$(get_setting "audio.volume")
+  MAXVOL=100
+  MINVOL=0
+  VOLSTEP=10
+
+  [ "$CURRENTVOL" -ge "$MAXVOL" ] && CURRENTVOL="$MAXVOL"
+  [ "$CURRENTVOL" -le "$MINVOL" ] && CURRENTVOL="$MINVOL"
+
+  case ${2} in
+    "+")
+      STEPVOL=$(( $CURRENTVOL + $VOLSTEP ))
+    ;;
+    "-")
+      STEPVOL=$(( $CURRENTVOL - $VOLSTEP ))
+    ;;
+    *)
+      STEPVOL=${2}
+   ;;
+  esac
+
+  [ "$STEPVOL" -ge "$MAXVOL" ] && STEPVOL="$MAXVOL"
+  [ "$STEPVOL" -le "$MINVOL" ] && STEPVOL="$MINVOL"
+
+  amixer set "${DEVICE_AUDIO_MIXER}" ${STEPVOL}%
+  alsactl store -f /storage/.config/asound.state
+  set_setting "audio.volume" ${STEPVOL}
 fi
-
-CURRENTVOL=$(get_setting "audio.volume")
-MAXVOL=100
-MINVOL=0
-	if [ "${2}" == "+" ]; then
-		STEPVOL=$(($CURRENTVOL+$VOLSTEP))
-	elif [ "${2}" == "-" ]; then
-		STEPVOL=$(($CURRENTVOL-$VOLSTEP))
-	else
-		STEPVOL=${2}
-	fi
-	[ "$STEPVOL" -ge "$MAXVOL" ] && STEPVOL="$MAXVOL"
-	[ "$STEPVOL" -le "$MINVOL" ] && STEPVOL="$MINVOL"
-	amixer -M set "${DEVICE_AUDIO_MIXER}" ${STEPVOL}%
-	alsactl store -f /storage/.config/asound.state
-	set_setting "audio.volume" ${STEPVOL}
-  fi    
-
