@@ -1,0 +1,21 @@
+diff --git a/cmd/hwrev.c b/cmd/hwrev.c
+index 640397e1cb..f11de075e4 100644
+--- a/cmd/hwrev.c
++++ b/cmd/hwrev.c
+@@ -34,6 +34,16 @@ int do_hwrev(cmd_tbl_t *cmdtp, int flag, int argc, char * const argv[])
+ 		env_set("hwrev", "v10-go3");
+ 		env_set("dtb_name", "rk3326-odroidgo3-linux.dtb");
+ 	}
++        /* RG351V */
++        else if (check_range(490, 540, hwrev_adc)) {
++                env_set("hwrev", "rg351v");
++                env_set("dtb_name", "rk3326-anbernic-rg351v.dtb");
++        }
++        /* RG351MP */
++        else if (check_range(140, 190, hwrev_adc)) {
++                env_set("hwrev", "rg351mp");
++                env_set("dtb_name", "rk3326-anbernic-rg351mp.dtb");
++        }
+ 	/* engineer samples */
+ 	else {
+ 		env_set("hwrev", "v00");
