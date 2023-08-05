@@ -55,14 +55,10 @@ if [ -e /storage/.please_resize_me ] ; then
     StartProgress spinner "Resizing storage partition...   " "parted -s -a optimal -m ${DISK} resizepart ${PARTNUM} 100% &>/dev/null"
     StartProgress spinner "Checking storage file system... " "e2fsck -f -p ${PART} &>/dev/null"
     StartProgress spinner "Resizing storage file system... " "resize2fs ${PART} &>/dev/null"
+    StartProgress spinner "Checking storage file system... " "e2fsck -f -p ${PART} &>/dev/null"
+
     StartProgress countdown "Rebooting in 5s...     " 5 "NOW"
   fi
 fi
-
-# Remove all of the modules that may be loaded to see if /flash will cleanly unmount.
-for module in $(lsmod | awk '{print $1}')
-do
-  modprobe -r --remove-dependencies ${module} &>/dev/null
-done
-
-shutdown -r now &>/dev/null
+sync &>/dev/null
+reboot &>/dev/null
