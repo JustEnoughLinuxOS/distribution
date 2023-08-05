@@ -62,7 +62,7 @@ fi
 # Remove all of the modules that may be loaded to see if /flash will cleanly unmount.
 for module in $(lsmod | awk '{print $1}')
 do
-  rmmod ${module} 2>/dev/null
+  modprobe -r --remove-dependencies ${module} &>/dev/null
 done
 
 shutdown -r now &>/dev/null
