@@ -135,7 +135,7 @@ case $1 in
 
     BRIGHTNESS=$(get_setting system.brightness)
     log $0 "Restoring brightness to ${BRIGHTNESS}."
-    echo ${BRIGHTNESS} >/sys/class/backlight/$(brightness device)/brightness
+    brightness set ${BRIGHTNESS}
     quirks post
   ;;
 esac
