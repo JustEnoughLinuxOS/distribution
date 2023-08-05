@@ -150,6 +150,10 @@ function fbheight() {
   fi
 }
 
+function cpu_vendor() {
+  awk '/vendor_id/ {print $3;exit}' /proc/cpuinfo
+}
+
 function get_aspect_ratio() {
   FBWIDTH=$(fbwidth)
   FBHEIGHT=$(fbheight)
