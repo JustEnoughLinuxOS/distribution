@@ -1,0 +1,31 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2023-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+###
+### On startup the device will run at the default EPP,
+### this is desired behavior. Check if we have an EPP
+### setting, and set it.
+###
+
+if [ $# -eq 0 ] || [ "$1" == "boot" ]
+then
+  PROFILE=$(get_setting system.power.epp)
+  if [ -z "${PROFILE}" ]
+  then
+    PROFILE="balance_performance"
+  fi
+else
+  PROFILE=$1
+fi
+
+case ${PROFILE} in
+  *)
+    for POLICY in $(find /sys/devices/system/cpu/cpufreq -name policy[0-9]*)
+    do
+      echo ${PROFILE} >${POLICY}/energy_performance_preference 2>/dev/null
+    done
+  ;;
+esac
