@@ -262,11 +262,6 @@ then
 		"setup")
 			RUNTHIS='${TBASH} "${ROMNAME}"'
 		;;
-		"n64")
-			if [[ "$EMU" =~ "m64p" ]]; then
-				RUNTHIS='${TBASH} /usr/bin/start_mupen64plus.sh "${CORE}" "${ROMNAME}"'
-			fi
-		;;
                 "gamecube")
                         if [ "$EMU" = "dolphin-sa-gc" ]; then
                         RUNTHIS='${TBASH} /usr/bin/start_dolphin_gc.sh "${ROMNAME}"'
