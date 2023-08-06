@@ -8,7 +8,7 @@ BRIGHTNESS_PATH="${BRIGHTNESS_DEV%/brightness}"
 
 MIN=0
 MAX=$(<$(find /sys/class/backlight/*/ -name max_brightness -print -quit))
-STEP=$(( ${MAX} / 10 ))
+STEP="$(echo "scale=1; (${MAX} / 10)" | bc)"
 
 # Ensure set_setting exists in all contexts
 if ! type set_setting  &>/dev/null
@@ -28,27 +28,33 @@ getBrightness() {
 
 setBrightness() {
   echo "${1}" > ${BRIGHTNESS_DEV}
-  set_setting system.brightness "$(( ${1} / ${STEP} ))"
+  set_setting system.brightness "${2}"
 }
 
 stepUp() {
-  MYBRIGHTNESS=$(getBrightness)
-  NEWBRIGHTNESS=$((${MYBRIGHTNESS}+${STEP}))
-  if (( ${NEWBRIGHTNESS} > ${MAX} ))
+  CURRENT=$(get_setting system.brightness)
+  NEXT=$(( ${CURRENT} + 1 ))
+  if (( ${NEXT} > 10 ))
   then
-    NEWBRIGHTNESS=${MAX}
+    NEXT=10
   fi
-  setBrightness ${NEWBRIGHTNESS}
+
+  BRIGHTNESS=$(printf '%.0f' "$(echo "scale=1; ${STEP} * ${NEXT}" | bc)")
+
+  setBrightness ${BRIGHTNESS} ${NEXT}
 }
 
 stepDown() {
-  MYBRIGHTNESS=$(getBrightness)
-  NEWBRIGHTNESS=$((${MYBRIGHTNESS}-${STEP}))
-  if (( ${NEWBRIGHTNESS} < ${MIN} ))
+  CURRENT=$(get_setting system.brightness)
+  NEXT=$(( ${CURRENT} - 1 ))
+  if (( ${NEXT} < 0 ))
   then
-    NEWBRIGHTNESS=${MIN}
+    NEXT=0
   fi
-  setBrightness ${NEWBRIGHTNESS}
+
+  BRIGHTNESS=$(printf '%.0f' "$(echo "scale=1; ${STEP} * ${NEXT}" | bc)")
+
+  setBrightness ${BRIGHTNESS} ${NEXT}
 }
 
 case ${1} in
@@ -65,7 +71,7 @@ case ${1} in
           echo ${BRIGHTNESS_PATH}
         ;;
         "set")
-           setBrightness "$(( ${STEP} * ${2} ))"
+           setBrightness "$(printf '%.0f' "$(echo "scale=1; ${STEP} * ${2}" | bc)")" ${2}
         ;;
         *)
           echo $(getBrightness)
