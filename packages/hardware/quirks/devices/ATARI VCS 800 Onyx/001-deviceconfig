@@ -2,10 +2,32 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (C) 2022-present Fewtarius
 
+. /etc/profile
+
+### Set the default TDP if it isn't defined.
+MYTDP=$(get_setting system.overclock)
+if [ -z "${MYTDP}" ]
+then
+  # Set default TDP
+  set_setting system.overclock 15w
+fi
+
+### Set sleep mode to mem sleep (S3)
+MYSLEEPMODE=$(get_setting system.suspendmode)
+if [ -z "${MYSLEEPMODE}" ]
+then
+  /usr/bin/setsuspendmode mem
+fi
+
+### Set the default device configuration
 cat <<EOF >/storage/.config/profile.d/001-deviceconfig
-DEVICE_VOLUMECTL=true
+DEVICE_BASE_TDP="15w"
+DEVICE_LED_CONTROL=false
+DEVICE_VOLUMECTL=false
 DEVICE_PLAYBACK_PATH_SPK="SPK"
 DEVICE_PLAYBACK_PATH_HP="HP"
+DEVICE_FUNC_KEYA_MODIFIER="KEY_LEFTCTRL"
+DEVICE_FUNC_KEYB_MODIFIER="KEY_D"
 UI_SERVICE="weston.service"
 
 DEVICE_BRIGHTNESS="hardware"

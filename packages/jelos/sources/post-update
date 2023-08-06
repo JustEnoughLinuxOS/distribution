@@ -35,6 +35,11 @@ rsync -a --delete ${EXCLUDE} /usr/config/system/ /storage/.config/system/
 rsync -a --ignore-existing /usr/config/game /storage/.config/
 rsync -a /usr/config/modules /storage/.config/
 
+if [ -f "/storage/.config/emulationstation/resources/logo.png" ]
+then
+  rm -f /storage/.config/emulationstation/resources/logo.png
+fi
+
 echo "Sync modules..." >>${LOG}
 rsync -a /usr/config/modules/* /storage/.config/modules/
 cp -f /usr/config/retroarch/retroarch-core-options.cfg /storage/.config/retroarch/retroarch-core-options.cfg
@@ -141,3 +146,9 @@ then
   mkdir -p /storage/.config/gmu/playlists
 fi
 cp -rf /usr/config/gmu/playlists/* /storage/.config/gmu/playlists/
+
+### Remove any input settings retroarch may have added.
+for setting in $(awk '/input_player'${i}'_/ {print $1}' /storage/.config/retroarch/retroarch.cfg)
+do
+  sed -i "/^${setting}/d" /storage/.config/retroarch/retroarch.cfg
+done

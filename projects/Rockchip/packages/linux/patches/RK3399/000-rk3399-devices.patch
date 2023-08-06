@@ -21,19 +21,164 @@ diff -rupN linux.orig/Makefile linux/Makefile
  KBUILD_CFLAGS   += $(call cc-option,-Werror=designated-init)
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/Makefile linux/arch/arm64/boot/dts/rockchip/Makefile
 --- linux.orig/arch/arm64/boot/dts/rockchip/Makefile	2023-06-23 03:53:36.244094795 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/Makefile	2023-07-22 17:35:53.854832289 +0000
-@@ -46,6 +46,7 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-or
- dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-pinebook-pro.dtb
- dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-pinephone-pro.dtb
- dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-puma-haikou.dtb
-+dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-rg552-linux.dtb
- dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-roc-pc.dtb
- dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-roc-pc-mezzanine.dtb
- dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-roc-pc-plus.dtb
-diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts
---- linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts	2023-07-22 22:08:08.804900015 +0000
-@@ -0,0 +1,1353 @@
++++ linux/arch/arm64/boot/dts/rockchip/Makefile	2023-07-27 13:59:09.292214719 +0000
+@@ -21,6 +21,7 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3368-li
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3368-orion-r68-meta.dtb
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3368-px5-evb.dtb
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3368-r88.dtb
++dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-anbernic-rg552.dtb
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-eaidk-610.dtb
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-evb.dtb
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-ficus.dtb
+diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-anbernic-rg552-opp.dtsi linux/arch/arm64/boot/dts/rockchip/rk3399-anbernic-rg552-opp.dtsi
+--- linux.orig/arch/arm64/boot/dts/rockchip/rk3399-anbernic-rg552-opp.dtsi	1970-01-01 00:00:00.000000000 +0000
++++ linux/arch/arm64/boot/dts/rockchip/rk3399-anbernic-rg552-opp.dtsi	2023-07-27 12:34:27.790942738 +0000
+@@ -0,0 +1,141 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++/*
++ * Copyright (c) 2016-2017 Fuzhou Rockchip Electronics Co., Ltd
++ * Copyright (C) 2023 BrooksyTech (https://github.com/brooksytech)
++ */
++
++/ {
++	cluster0_opp: opp-table-0 {
++		compatible = "operating-points-v2";
++		opp-shared;
++
++		opp00 {
++			opp-hz = /bits/ 64 <816000000>;
++			opp-microvolt = <850000>;
++		};
++		opp01 {
++			opp-hz = /bits/ 64 <1008000000>;
++			opp-microvolt = <925000>;
++		};
++		opp02 {
++			opp-hz = /bits/ 64 <1200000000>;
++			opp-microvolt = <1000000>;
++		};
++		opp03 {
++			opp-hz = /bits/ 64 <1416000000>;
++			opp-microvolt = <1125000>;
++		};
++		opp-04 {
++			opp-hz = /bits/ 64 <1512000000>;
++			opp-microvolt = <1200000>;
++		};
++		opp-05 {
++			opp-hz = /bits/ 64 <1608000000>;
++			opp-microvolt = <1225000>;
++		};
++	};
++
++	cluster1_opp: opp-table-1 {
++		compatible = "operating-points-v2";
++		opp-shared;
++
++		opp00 {
++			opp-hz = /bits/ 64 <816000000>;
++			opp-microvolt = <825000>;
++		};
++		opp01 {
++			opp-hz = /bits/ 64 <1008000000>;
++			opp-microvolt = <875000>;
++		};
++		opp02 {
++			opp-hz = /bits/ 64 <1200000000>;
++			opp-microvolt = <950000>;
++		};
++		opp03 {
++			opp-hz = /bits/ 64 <1416000000>;
++			opp-microvolt = <1025000>;
++		};
++		opp04 {
++			opp-hz = /bits/ 64 <1608000000>;
++			opp-microvolt = <1100000>;
++		};
++		opp05 {
++			opp-hz = /bits/ 64 <1800000000>;
++			opp-microvolt = <1200000>;
++		};
++		opp-06 {
++			opp-hz = /bits/ 64 <1992000000>;
++			opp-microvolt = <1250000>;
++		};
++		opp-07 {
++			opp-hz = /bits/ 64 <2088000000>;
++			opp-microvolt = <1250000>;
++		};
++	};
++
++	gpu_opp_table: opp-table-2 {
++		compatible = "operating-points-v2";
++
++		opp00 {
++			opp-hz = /bits/ 64 <500000000>;
++			opp-microvolt = <875000>;
++		};
++		opp01 {
++			opp-hz = /bits/ 64 <600000000>;
++			opp-microvolt = <925000>;
++		};
++		opp02 {
++			opp-hz = /bits/ 64 <800000000>;
++			opp-microvolt = <1100000>;
++		};
++		opp03 {
++			opp-hz = /bits/ 64 <900000000>;
++			opp-microvolt = <1150000>;
++		};
++	};
++
++        dmc_opp_table: opp-table-3 {
++                compatible = "operating-points-v2";
++
++		opp00 {
++			opp-hz = /bits/ 64 <666000000>;
++			opp-microvolt = <900000>;
++		};
++		opp01 {
++			opp-hz = /bits/ 64 <856000000>;
++			opp-microvolt = <900000>;
++		};
++        };
++};
++
++&cpu_l0 {
++	operating-points-v2 = <&cluster0_opp>;
++};
++
++&cpu_l1 {
++	operating-points-v2 = <&cluster0_opp>;
++};
++
++&cpu_l2 {
++	operating-points-v2 = <&cluster0_opp>;
++};
++
++&cpu_l3 {
++	operating-points-v2 = <&cluster0_opp>;
++};
++
++&cpu_b0 {
++	operating-points-v2 = <&cluster1_opp>;
++};
++
++&cpu_b1 {
++	operating-points-v2 = <&cluster1_opp>;
++};
++
++&dmc {
++        operating-points-v2 = <&dmc_opp_table>;
++};
++
++&gpu {
++	operating-points-v2 = <&gpu_opp_table>;
++};
+diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-anbernic-rg552.dts linux/arch/arm64/boot/dts/rockchip/rk3399-anbernic-rg552.dts
+--- linux.orig/arch/arm64/boot/dts/rockchip/rk3399-anbernic-rg552.dts	1970-01-01 00:00:00.000000000 +0000
++++ linux/arch/arm64/boot/dts/rockchip/rk3399-anbernic-rg552.dts	2023-07-28 03:39:31.373986693 +0000
+@@ -0,0 +1,1329 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2017 Fuzhou Rockchip Electronics Co., Ltd.
@@ -48,7 +193,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +#include <dt-bindings/pwm/pwm.h>
 +#include <dt-bindings/usb/pd.h>
 +#include "rk3399.dtsi"
-+#include "rk3399-rg552-opp.dtsi"
++#include "rk3399-anbernic-rg552-opp.dtsi"
 +
 +/ {
 +	model = "Anbernic RG552";
@@ -278,13 +423,11 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +					gpios = <&gpio1 RK_PC4 GPIO_ACTIVE_HIGH>;
 +					label = "battery_green";
 +					default-state= "on";
-+				//	retain-state-suspended;
 +			};
 +
 +			led@2 {
 +					gpios = <&gpio3 RK_PD5 GPIO_ACTIVE_HIGH>;
 +					label = "battery_red";
-+				//	retain-state-suspended;
 +			};
 +
 +	};
@@ -346,7 +489,6 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +		status = "okay";
 +		compatible = "pwm-backlight";
 +		pwms = <&pwm0 0 25000 0>;
-+		//power-supply = <&vcc12v_dcin>;
 +		brightness-levels = <
 +		  0   1   2   3   4   5   6   7
 +		  8   9  10  11  12  13  14  15
@@ -414,7 +556,6 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +		#clock-cells = <0>;
 +	};
 +
-+	/* TODO: shouldn't be here */
 +	vcc12v_dcin: vcc12v-dcin {
 +		compatible = "regulator-fixed";
 +		regulator-name = "vcc12v_dcin";
@@ -545,7 +686,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +	vcc_wifi: vcc-wifi-regulator {
 +		compatible = "regulator-fixed";
 +		enable-active-high;
-+		gpio = <&gpio3 RK_PC1 GPIO_ACTIVE_HIGH>;
++		enable-gpios  = <&gpio3 RK_PC1 GPIO_ACTIVE_HIGH>;
++		gpio = <&gpio0 RK_PB5 GPIO_ACTIVE_HIGH>;
 +		pinctrl-names = "default";
 +		pinctrl-0 = <&wifi_pwr>;
 +		regulator-name = "wifi_enable";
@@ -662,6 +804,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +	pinctrl-0 = <&sdio0_clk &sdio0_cmd &sdio0_cd &sdio0_bus4>;
 +	sd-uhs-sdr104;
 +	vqmmc-supply = <&vcc3v0_touch>;
++	//vqmmc-supply = <&vcc_sdio>;
 +	status = "okay";
 +};
 +
@@ -851,13 +994,10 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +
 +			vcc1v8_dvp: LDO_REG1 {
 +				regulator-name = "vcc1v8_dvp";
-+				//regulator-always-on;
-+				//regulator-boot-on;
 +				regulator-min-microvolt = <1800000>;
 +				regulator-max-microvolt = <1800000>;
 +				regulator-state-mem {
-+					regulator-on-in-suspend;
-+					regulator-suspend-microvolt = <1800000>;
++					regulator-off-in-suspend;
 +				};
 +			};
 +
@@ -892,7 +1032,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +				regulator-max-microvolt = <3300000>;
 +				regulator-state-mem {
 +					regulator-on-in-suspend;
-+					regulator-suspend-microvolt = <3000000>;
++					regulator-suspend-microvolt = <3300000>;
 +				};
 +			};
 +
@@ -1023,8 +1163,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +
 +&i2c1 {
 +	clock-frequency = <100000>;
-+	i2c-scl-rising-time-ns = <300>;
-+	i2c-scl-falling-time-ns = <15>;
++	i2c-scl-rising-time-ns = <168>;
++	i2c-scl-falling-time-ns = <4>;
 +	status = "okay";
 +
 +	es8316: es8316@11 {
@@ -1058,6 +1198,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +		touchscreen-inverted-y;
 +		interrupt-parent = <&gpio3>;
 +		interrupts = <RK_PD7 IRQ_TYPE_EDGE_FALLING>;
++		AVDD28-supply = <&vcc3v0_touch>;
++		VDDIO-supply = <&vcc3v0_touch>;
 +	};
 +
 +	fusb0: typec-portc@22 {
@@ -1101,7 +1243,6 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +						remote-endpoint = <&tcphy0_typec_ss>;
 +					};
 +				};
-+				// displayport maybe?
 +			};
 +		};
 +	};
@@ -1179,12 +1320,6 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +
 +        };
 +
-+	sdio-pwrseq {
-+		wifi_enable_h: wifi-enable-h {
-+			rockchip,pins = <2 RK_PC1 RK_FUNC_GPIO &pcfg_pull_none>;
-+		};
-+	};
-+
 +	usb-typec {
 +		vcc5v0_typec_en: vcc5v0_typec_en {
 +			rockchip,pins = <1 RK_PA3 RK_FUNC_GPIO &pcfg_pull_up>;
@@ -1220,8 +1355,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +	};
 +
 +	wifi {
-+		wifi_pwr: wifi-pwr-en {
-+			rockchip,pins = <3 RK_PC1 RK_FUNC_GPIO &pcfg_pull_none>;
++		wifi_pwr: wifi-pwr {
++			rockchip,pins = <0 RK_PB5 RK_FUNC_GPIO &pcfg_pull_none>;
 +		};
 +	};
 +
@@ -1356,20 +1491,6 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +&usbdrd_dwc3_1 {
 +	status = "okay";
 +	dr_mode = "host";
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+
-+	wifi_card: device@1 {
-+		compatible = "usbbda,f179";
-+		reg = <1>;
-+		#size-cells = <0>;
-+		#address-cells = <2>;
-+
-+		interface@0 {
-+			compatible = "usbifbda,f179.config1.0";
-+			reg = <0 1>;
-+		};
-+	};
 +};
 +
 +&vopb {
@@ -1387,151 +1508,18 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-linux.dts linux/
 +&vopl_mmu {
 +	status = "okay";
 +};
-diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi
---- linux.orig/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3399-rg552-opp.dtsi	2023-07-22 17:35:53.870832792 +0000
-@@ -0,0 +1,141 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Copyright (c) 2016-2017 Fuzhou Rockchip Electronics Co., Ltd
-+ * Copyright (C) 2023 BrooksyTech (https://github.com/brooksytech)
-+ */
-+
-+/ {
-+	cluster0_opp: opp-table-0 {
-+		compatible = "operating-points-v2";
-+		opp-shared;
-+
-+		opp00 {
-+			opp-hz = /bits/ 64 <816000000>;
-+			opp-microvolt = <850000>;
-+		};
-+		opp01 {
-+			opp-hz = /bits/ 64 <1008000000>;
-+			opp-microvolt = <925000>;
-+		};
-+		opp02 {
-+			opp-hz = /bits/ 64 <1200000000>;
-+			opp-microvolt = <1000000>;
-+		};
-+		opp03 {
-+			opp-hz = /bits/ 64 <1416000000>;
-+			opp-microvolt = <1125000>;
-+		};
-+		opp-04 {
-+			opp-hz = /bits/ 64 <1512000000>;
-+			opp-microvolt = <1200000>;
-+		};
-+		opp-05 {
-+			opp-hz = /bits/ 64 <1608000000>;
-+			opp-microvolt = <1225000>;
-+		};
-+	};
-+
-+	cluster1_opp: opp-table-1 {
-+		compatible = "operating-points-v2";
-+		opp-shared;
-+
-+		opp00 {
-+			opp-hz = /bits/ 64 <816000000>;
-+			opp-microvolt = <825000>;
-+		};
-+		opp01 {
-+			opp-hz = /bits/ 64 <1008000000>;
-+			opp-microvolt = <875000>;
-+		};
-+		opp02 {
-+			opp-hz = /bits/ 64 <1200000000>;
-+			opp-microvolt = <950000>;
-+		};
-+		opp03 {
-+			opp-hz = /bits/ 64 <1416000000>;
-+			opp-microvolt = <1025000>;
-+		};
-+		opp04 {
-+			opp-hz = /bits/ 64 <1608000000>;
-+			opp-microvolt = <1100000>;
-+		};
-+		opp05 {
-+			opp-hz = /bits/ 64 <1800000000>;
-+			opp-microvolt = <1200000>;
-+		};
-+		opp-06 {
-+			opp-hz = /bits/ 64 <1992000000>;
-+			opp-microvolt = <1250000>;
-+		};
-+		opp-07 {
-+			opp-hz = /bits/ 64 <2088000000>;
-+			opp-microvolt = <1250000>;
-+		};
-+	};
-+
-+	gpu_opp_table: opp-table-2 {
-+		compatible = "operating-points-v2";
-+
-+		opp00 {
-+			opp-hz = /bits/ 64 <500000000>;
-+			opp-microvolt = <875000>;
-+		};
-+		opp01 {
-+			opp-hz = /bits/ 64 <600000000>;
-+			opp-microvolt = <925000>;
-+		};
-+		opp02 {
-+			opp-hz = /bits/ 64 <800000000>;
-+			opp-microvolt = <1100000>;
-+		};
-+		opp03 {
-+			opp-hz = /bits/ 64 <900000000>;
-+			opp-microvolt = <1150000>;
-+		};
-+	};
-+
-+        dmc_opp_table: opp-table-3 {
-+                compatible = "operating-points-v2";
-+
-+		opp00 {
-+			opp-hz = /bits/ 64 <666000000>;
-+			opp-microvolt = <900000>;
-+		};
-+		opp01 {
-+			opp-hz = /bits/ 64 <856000000>;
-+			opp-microvolt = <900000>;
-+		};
-+        };
-+};
-+
-+&cpu_l0 {
-+	operating-points-v2 = <&cluster0_opp>;
-+};
-+
-+&cpu_l1 {
-+	operating-points-v2 = <&cluster0_opp>;
-+};
-+
-+&cpu_l2 {
-+	operating-points-v2 = <&cluster0_opp>;
-+};
-+
-+&cpu_l3 {
-+	operating-points-v2 = <&cluster0_opp>;
-+};
-+
-+&cpu_b0 {
-+	operating-points-v2 = <&cluster1_opp>;
-+};
-+
-+&cpu_b1 {
-+	operating-points-v2 = <&cluster1_opp>;
-+};
-+
-+&dmc {
-+        operating-points-v2 = <&dmc_opp_table>;
-+};
-+
-+&gpu {
-+	operating-points-v2 = <&gpu_opp_table>;
-+};
+diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399.dtsi linux/arch/arm64/boot/dts/rockchip/rk3399.dtsi
+--- linux.orig/arch/arm64/boot/dts/rockchip/rk3399.dtsi	2023-06-23 03:53:36.256094988 +0000
++++ linux/arch/arm64/boot/dts/rockchip/rk3399.dtsi	2023-07-24 20:00:14.430068009 +0000
+@@ -1469,7 +1469,7 @@
+ 			<1000000000>,
+ 			 <150000000>,   <75000000>,
+ 			  <37500000>,
+-			 <100000000>,  <100000000>,
++			 <300000000>,  <100000000>,
+ 			  <50000000>, <600000000>,
+ 			 <100000000>,   <50000000>,
+ 			 <400000000>, <400000000>,
 diff -rupN linux.orig/drivers/gpio/gpio-rockchip.c linux/drivers/gpio/gpio-rockchip.c
 --- linux.orig/drivers/gpio/gpio-rockchip.c	2023-07-16 19:38:02.962868756 +0000
 +++ linux/drivers/gpio/gpio-rockchip.c	2023-07-22 17:35:57.766955315 +0000
@@ -1553,19 +1541,19 @@ diff -rupN linux.orig/drivers/gpio/gpio-rockchip.c linux/drivers/gpio/gpio-rockc
  		 * Triggering IRQ on both rising and falling edge
 diff -rupN linux.orig/drivers/gpu/drm/panel/Kconfig linux/drivers/gpu/drm/panel/Kconfig
 --- linux.orig/drivers/gpu/drm/panel/Kconfig	2023-06-23 03:53:39.968155272 +0000
-+++ linux/drivers/gpu/drm/panel/Kconfig	2023-07-22 17:35:58.626982361 +0000
++++ linux/drivers/gpu/drm/panel/Kconfig	2023-07-25 05:54:31.139292676 +0000
 @@ -588,6 +588,15 @@ config DRM_PANEL_SHARP_LS043T1LE01
  	  Say Y here if you want to enable support for Sharp LS043T1LE01 qHD
  	  (540x960) DSI panel as found on the Qualcomm APQ8074 Dragonboard
  
 +config DRM_PANEL_SHARP_LS054B3SX01
-+	bool "Sharp LS054B3SX01 1152x1080 video mode panel"
++	bool "Sharp LS054B3SX01 1152x1920 video mode panel"
 +	depends on OF
 +	depends on DRM_MIPI_DSI
 +	depends on BACKLIGHT_CLASS_DEVICE
 +	help
 +	  say Y here if you want to enable support for Sharp LS054B3SX01
-+	  1152x1080 panel as found in Anbernic RG552.
++	  1152x1920 panel as found in Anbernic RG552.
 +
  config DRM_PANEL_SHARP_LS060T1SX01
  	tristate "Sharp LS060T1SX01 FullHD video mode panel"
@@ -1583,8 +1571,8 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/Makefile linux/drivers/gpu/drm/panel
  obj-$(CONFIG_DRM_PANEL_SITRONIX_ST7703) += panel-sitronix-st7703.o
 diff -rupN linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c linux/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c
 --- linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c	2023-07-22 17:35:58.626982361 +0000
-@@ -0,0 +1,368 @@
++++ linux/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c	2023-07-25 14:36:58.284854285 +0000
+@@ -0,0 +1,360 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +/*
 + * Copyright (c) 2022 Maya Matuszczyk <maccraft123mc@gmail.com>
@@ -1694,11 +1682,7 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c linux/driv
 +			0x0F, 0x01, 0x02, 0x05, 0x00, 0x00, 0x00, 0x3A);
 +	dsi_dcs_write_seq(dsi, SHARP_LS054_SETMIPI,
 +			0x03, 0x82, 0xA0, 0xE5);
-+	//dsi_dcs_write_seq(dsi, SHARP_LS054_SETPTBA,
-+	//		0xCF, 0x00, 0x46, 0x00, 0x00, 0x00, 0x02, 0x54,
-+	//		0x04, 0x61, 0x1C, 0x8C);
 +
-+	
 +	ret = mipi_dsi_dcs_exit_sleep_mode(dsi);
 +	if (ret < 0)
 +	{
@@ -1735,7 +1719,7 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c linux/driv
 +		return 0;
 +
 +	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
-+	
++
 +	ret = regulator_enable(ctx->iovcc_supply);
 +	if (ret < 0)
 +		return ret;
@@ -1752,7 +1736,6 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c linux/driv
 +	if (ret < 0)
 +		goto err_on;
 +
-+	// TODO: move resetting into its own function
 +	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
 +
 +	msleep(200);
@@ -1762,12 +1745,11 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c linux/driv
 +		dev_err(dev, "Failed to initialize panel: %d\n", ret);
 +		goto err_on;
 +	}
-+	
++
 +	ctx->prepared = true;
 +
 +	return 0;
 +
-+	// TODO: make sure those labels are ok
 +err_on:
 +	regulator_disable(ctx->vsn_supply);
 +
@@ -1781,7 +1763,6 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c linux/driv
 +	return ret;
 +}
 +
-+// FIXME
 +static int sharp_ls054_unprepare(struct drm_panel *panel)
 +{
 +	struct sharp_ls054 *ctx = to_sharp_ls054(panel);
@@ -1819,7 +1800,6 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c linux/driv
 +	return 0;
 +}
 +
-+// FIXME: should we strive for perfect 60hz?
 +static const struct drm_display_mode sharp_ls054_mode = {
 +	.clock		= ((1152 + 64 + 4 + 32) * (1920 + 56 + 3 + 6) * 60) / 1000,
 +	.hdisplay	= 1152,
@@ -1830,8 +1810,8 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c linux/driv
 +	.vsync_start	= 1920 + 56,
 +	.vsync_end	= 1920 + 56 + 3,
 +	.vtotal		= 1920 + 56 + 3 + 6,
-+	.width_mm	= 70,
-+	.height_mm	= 117,
++	.width_mm	= 75,
++	.height_mm	= 132,
 +	.flags		= DRM_MODE_FLAG_NHSYNC | DRM_MODE_FLAG_NVSYNC,
 +};
 +
@@ -1846,10 +1826,11 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c linux/driv
 +		return -ENOMEM;
 +
 +	drm_mode_set_name(mode);
-+
 +	mode->type = DRM_MODE_TYPE_DRIVER | DRM_MODE_TYPE_PREFERRED;
++
 +	connector->display_info.width_mm = mode->width_mm;
 +	connector->display_info.height_mm = mode->height_mm;
++
 +	drm_mode_probed_add(connector, mode);
 +	drm_connector_set_panel_orientation(connector, ctx->orientation);
 +
@@ -1874,7 +1855,7 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c linux/driv
 +
 +	ctx->iovcc_supply = devm_regulator_get(dev, "iovcc");
 +	if (IS_ERR(ctx->iovcc_supply))
-+		return PTR_ERR(ctx->iovcc_supply); // TODO: replace with dev_err_probe
++		return PTR_ERR(ctx->iovcc_supply);
 +
 +	ctx->vsp_supply = devm_regulator_get(dev, "vsp");
 +	if (IS_ERR(ctx->vsp_supply))
@@ -1901,7 +1882,6 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c linux/driv
 +	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
 +			  MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_NO_EOT_PACKET |
 +			  MIPI_DSI_CLOCK_NON_CONTINUOUS | MIPI_DSI_MODE_VIDEO_HSE | MIPI_DSI_MODE_VIDEO_AUTO_VERT;
-+	// are all those flags really needed?
 +
 +	drm_panel_init(&ctx->panel, dev, &sharp_ls054_panel_funcs,
 +		       DRM_MODE_CONNECTOR_DSI);
@@ -1951,7 +1931,7 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c linux/driv
 +module_mipi_dsi_driver(sharp_ls054_driver);
 +
 +MODULE_AUTHOR("Maya Matuszczyk <maccraft123mc@gmail.com>");
-+MODULE_DESCRIPTION("Panel driver for Sharp LS054B3SX01 1152x1080 Video Mode DSI Panel");
++MODULE_DESCRIPTION("Panel driver for Sharp LS054B3SX01 1152x1920 Video Mode DSI Panel");
 +MODULE_LICENSE("GPL v2");
 diff -rupN linux.orig/drivers/input/Kconfig linux/drivers/input/Kconfig
 --- linux.orig/drivers/input/Kconfig	2023-06-23 03:53:40.600165543 +0000

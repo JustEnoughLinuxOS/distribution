@@ -4,7 +4,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="flycast-sa"
-PKG_VERSION="9c61006941daf5ee387480eacf95b9115950787c"
+PKG_VERSION="92a10ba0f0a5ca0d1ec9498962002f4cdcc8e7f6"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/flyinghead/flycast"
 PKG_URL="${PKG_SITE}.git"
@@ -13,18 +13,13 @@ PKG_LONGDESC="Flycast is a multiplatform Sega Dreamcast, Naomi and Atomiswave em
 PKG_TOOLCHAIN="cmake"
 PKG_PATCH_DIRS+="${DEVICE}"
 
-if [ ! "${OPENGL}" = "no" ]; then
+if [[ "${OPENGL_SUPPORT}" = "yes" ]] && [[ ! "${DEVICE}" = "S922X" ]]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
-  PKG_CMAKE_OPTS_TARGET+="  USE_OPENGL=ON"
-else
-  PKG_CMAKE_OPTS_TARGET+="  USE_OPENGL=OFF"
-fi
+  PKG_CMAKE_OPTS_TARGET+="  -USE_OPENGL=ON -DUSE_GLES=OFF"
 
-if [ "${OPENGLES_SUPPORT}" = yes ]; then
+elif [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
   PKG_CMAKE_OPTS_TARGET+=" -DUSE_GLES=ON"
-else
-  PKG_CMAKE_OPTS_TARGET+=" -DUSE_GLES=OFF"
 fi
 
 if [ "${VULKAN_SUPPORT}" = "yes" ]

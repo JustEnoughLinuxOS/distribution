@@ -11,7 +11,8 @@ then
 fi
 
 MYDEVICE=$(get_setting system.audiodevice)
-if [ -z "${MYDEVICE}" ]
+if [ -z "${MYDEVICE}" ] || \
+   [ ! -e "/storage/.config/asound.conf" ]
 then
   touch /storage/.config/modprobe.d/alsa-base.conf
   set-audio set "ROCKCHIP-HDMI0 (1:0)"

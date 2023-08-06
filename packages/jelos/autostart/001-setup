@@ -57,3 +57,6 @@ then
 else
   /usr/bin/setsuspendmode mem
 fi
+
+### Clean up settings
+sort_settings

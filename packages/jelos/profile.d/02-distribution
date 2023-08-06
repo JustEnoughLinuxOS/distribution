@@ -9,8 +9,21 @@ export SDL_GAMECONTROLLERCONFIG_FILE="/storage/.config/SDL-GameControllerDB/game
 
 J_DIR="/storage/.config/system"
 J_CONF="${J_DIR}/configs/system.cfg"
+J_CONF_LOCK="/tmp/.system.cfg.lock"
 ES_CONF="/storage/.emulationstation/es_settings.cfg"
 JSLISTENCONF="${J_DIR}/configs/jslisten.cfg"
+
+function tocon() {
+  echo -ne "\033[1000H\033[2K==> ${*}" >/dev/console
+}
+
+function log() {
+  SOURCE=${1//\/*\//}
+  MESSAGE=${*#${1}}
+  MESSAGE=${MESSAGE# }
+  logger -t ${SOURCE} "${MESSAGE}"
+  echo "$(date) ${SOURCE}: ${MESSAGE}" >>/var/log/messages
+}
 
 function get_setting() {
   if [ ! -z "${3}" ]
@@ -55,11 +68,33 @@ function get_setting() {
   return
 }
 
+function wait_lock() {
+  while true
+  do
+    if (set -o noclobber; echo "$$" > "${J_CONF_LOCK}") 2>/dev/null
+    then
+      trap 'rm -f "$lockfile"; exit $?' INT TERM EXIT
+      break
+    else
+     sleep 1
+    fi
+  done
+}
+
 function del_setting() {
+  wait_lock
   if [[ "${1}" =~ ^[[:alnum:]] ]]
   then
     sed -i "/^${1}=/d" "${J_CONF}"
   fi
+  rm -f "${J_CONF_LOCK}"
+}
+
+function sort_settings() {
+  wait_lock
+  cat "${J_CONF}" | grep ^[a-z0-9] | sort >"${J_CONF}.tmp"
+  mv "${J_CONF}.tmp" "${J_CONF}"
+  rm -f "${J_CONF_LOCK}"
 }
 
 function set_setting() {
@@ -68,7 +103,9 @@ function set_setting() {
     del_setting "${1}"
     if [ ! "${2}" = "default" ]
     then
+      wait_lock
       echo "${1}=${2}" >> "${J_CONF}"
+      rm -f "${J_CONF_LOCK}"
     fi
   fi
 }
@@ -93,9 +130,29 @@ function get_es_setting() {
   echo $(sed -n "s|\s*<${1} name=\"${2}\" value=\"\(.*\)\" />|\1|p" ${ES_CONF})
 }
 
+function fbwidth() {
+  local ORIENTATION=$(</sys/devices/virtual/graphics/fbcon/rotate)
+  if [ "${ORIENTATION}" = "0" ]
+  then
+    fbset | awk '/geometry/ {print $2}'
+  else
+    fbset | awk '/geometry/ {print $3}'
+  fi
+}
+
+function fbheight() {
+  local ORIENTATION=$(</sys/devices/virtual/graphics/fbcon/rotate)
+  if [ "${ORIENTATION}" = "0" ]
+  then
+    fbset | awk '/geometry/ {print $3}'
+  else
+    fbset | awk '/geometry/ {print $2}'
+  fi
+}
+
 function get_aspect_ratio() {
-  FBWIDTH=$(fbset | awk '/geometry/ {print $2}')
-  FBHEIGHT=$(fbset | awk '/geometry/ {print $3}')
+  FBWIDTH=$(fbwidth)
+  FBHEIGHT=$(fbheight)
 
   ASPECT=$(printf "%.2f" $(echo "(${FBWIDTH} / ${FBHEIGHT})" | bc -l))
 
@@ -117,16 +174,4 @@ function get_aspect_ratio() {
     ;;
   esac
   echo ${ASPECT}
-}
-
-function tocon() {
-  echo -ne "\033[1000H\033[2K==> ${*}" >/dev/console
-}
-
-function log() {
-  SOURCE=${1//\/*\//}
-  MESSAGE=${*#${1}}
-  MESSAGE=${MESSAGE# }
-  logger -t ${SOURCE} "${MESSAGE}"
-  echo "$(date) ${SOURCE}: ${MESSAGE}" >>/var/log/messages
 }

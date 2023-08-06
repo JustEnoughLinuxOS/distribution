@@ -37,6 +37,10 @@ AUTOSAVE="${AUTOSAVE% --*}"
 SNAPSHOT="$@"
 SNAPSHOT="${SNAPSHOT#*--snapshot=*}"
 
+#Controllers
+CONTROLLERS="$@"
+CONTROLLERS="${CONTROLLERS#*--controllers=*}"
+
 ###
 ### Arrays containing various supported/non-supported attributes.
 ###
@@ -123,10 +127,14 @@ declare -a NO_RUNAHEAD=(    atomiswave
 )
 
 declare -a NO_ANALOG=(  dreamcast
+                        gc
                         n64
+                        nds
+                        ps2
                         psp
                         pspminis
                         psx
+                        wii
                         wonderswan
                         wonderswancolor
 )
@@ -191,6 +199,10 @@ declare -a LANG_CODES=( ["false"]="0"
 ###
 
 LOGGING=$(get_setting system.loglevel)
+if [ -z "${LOGGING}" ]
+then
+  LOGGING="none"
+fi
 
 ###
 ### Set up
@@ -246,7 +258,7 @@ function clear_setting() {
       log "Remove setting [${1}]"
       if [ ! -f "${TMP_CONFIG}.sed" ]
       then
-          echo -n 'sed -i "' >${TMP_CONFIG}.sed
+          echo -n 'sed -i "/^'${1}'/d;' >${TMP_CONFIG}.sed
       else
           echo -n ' /^'${1}'/d;' >>${TMP_CONFIG}.sed
       fi
@@ -269,17 +281,7 @@ function add_setting() {
     if [ -z "${RETROARCH_VALUE}" ]& \
        [ ! "${1}" = "none" ]
     then
-            case ${OS_SETTING} in
-            0|false|none)
-                RETROARCH_VALUE="false"
-            ;;
-            1|true)
-                RETROARCH_VALUE="true"
-            ;;
-            *)
-                RETROARCH_VALUE="${OS_SETTING}"
-            ;;
-        esac
+        RETROARCH_VALUE="${OS_SETTING}"
     fi
     clear_setting "${RETROARCH_KEY}"
     echo "${RETROARCH_KEY} = \"${RETROARCH_VALUE}\"" >>${TMP_CONFIG}
@@ -342,7 +344,8 @@ function configure_hotkeys() {
             for HKEYSETTING in input_enable_hotkey_btn input_bind_hold      \
                                input_exit_emulator_btn input_fps_toggle_btn \
                                input_menu_toggle_btn input_save_state_btn   \
-                               input_load_state_btn
+                               input_load_state_btn input_hold_fast_forward \
+                               input_toggle_fast_forward_btn
             do
                 clear_setting "${HKEYSETTING}"
             done
@@ -355,6 +358,7 @@ input_fps_toggle_btn = "${input_y_btn}"
 input_menu_toggle_btn = "${input_x_btn}"
 input_save_state_btn = "${input_r_btn}"
 input_load_state_btn = "${input_l_btn}"
+input_hold_fast_forward_btn = "${input_r2_btn}"
 EOF
             rm -f /tmp/"${MY_CONTROLLER}.cfg"
         fi
@@ -468,10 +472,8 @@ function set_aspectratio() {
       *)
         for AR in ${!CORE_RATIOS[@]}
         do
-            log "Test [${ASPECT_RATIO}] (${CORE_RATIOS[${AR}]}) (${AR})"
             if [ "${CORE_RATIOS[${AR}]}" = "${ASPECT_RATIO}" ]
             then
-                log "Find aspect ratio [${ASPECT_RATIO}] (${CORE_RATIOS[${AR}]})"
                 add_setting "none" "aspect_ratio_index" "${AR}"
                 break
             fi
@@ -611,73 +613,79 @@ function set_audiolatency() {
 function set_analogsupport() {
     local HAS_ANALOG="$(match ${PLATFORM} ${NO_ANALOG[@]})"
     case ${HAS_ANALOG} in
-        0|false|none)
+        1)
             add_setting "none" "input_player1_analog_dpad_mode" "0"
         ;;
         *)
-            add_setting "analogue" "input_player1_analog_dpad_mode"
+            add_setting "analogue" "input_player1_analog_dpad_mode" "1"
         ;;
     esac
 }
 
 function set_tatemode() {
     log "Setup tate mode..."
-    local TATEMODE="$(game_setting tatemode)"
-    local MAME2003DIR="/storage/.config/retroarch/config/MAME 2003-Plus"
-    local MAME2003REMAPDIR="/storage/remappings/MAME 2003-Plus"
-    if [ ! -d "${MAME2003DIR}" ]
+    if [ "${CORE}" = "mame2003_plus" ]
     then
+        local TATEMODE="$(game_setting tatemode)"
+        local MAME2003DIR="/storage/.config/retroarch/config/MAME 2003-Plus"
+        local MAME2003REMAPDIR="/storage/remappings/MAME 2003-Plus"
+        if [ ! -d "${MAME2003DIR}" ]
+        then
             mkdir -p "${MAME2003DIR}"
-    fi
-    if [ ! -d "${MAME2003REMAPDIR}" ]
-    then
+        fi
+        if [ ! -d "${MAME2003REMAPDIR}" ]
+        then
             mkdir -p "${MAME2003REMAPDIR}"
+        fi
+        case ${TATEMODE} in
+            1|true)
+                cp "/usr/config/retroarch/TATE-MAME 2003-Plus.rmp" "${MAME2003REMAPDIR}/MAME 2003-Plus.rmp"
+                if [ "$(grep mame2003-plus_tate_mode "${MAME2003DIR}/MAME 2003-Plus.opt" > /dev/null 2>&1)" ]
+                then
+                    sed -i 's#mame2003-plus_tate_mode.*$#mame2003-plus_tate_mode = "enabled"#' "${MAME2003DIR}/MAME 2003-Plus.opt" 2>/dev/null
+                else
+                    echo 'mame2003-plus_tate_mode = "enabled"' > "${MAME2003DIR}/MAME 2003-Plus.opt"
+                fi
+            ;;
+            *)
+                if [ -e "${MAME2003DIR}/MAME 2003-Plus.opt" ]
+                then
+                    sed -i 's#mame2003-plus_tate_mode.*$#mame2003-plus_tate_mode = "disabled"#' "${MAME2003DIR}/MAME 2003-Plus.opt" 2>/dev/null
+                fi
+                if [ -e "${MAME2003REMAPDIR}/MAME 2003-Plus.rmp" ]
+                then
+                    rm -f "${MAME2003REMAPDIR}/MAME 2003-Plus.rmp"
+                fi
+            ;;
+        esac
     fi
-    case ${TATEMODE} in
-        1|true)
-            cp "/usr/config/retroarch/TATE-MAME 2003-Plus.rmp" "${MAME2003REMAPDIR}/MAME 2003-Plus.rmp"
-            if [ "$(grep mame2003-plus_tate_mode "${MAME2003DIR}/MAME 2003-Plus.opt" > /dev/null 2>&1)" ]
-            then
-                sed -i 's#mame2003-plus_tate_mode.*$#mame2003-plus_tate_mode = "enabled"#' "${MAME2003DIR}/MAME 2003-Plus.opt" 2>/dev/null
-            else
-                echo 'mame2003-plus_tate_mode = "enabled"' > "${MAME2003DIR}/MAME 2003-Plus.opt"
-            fi
-        ;;
-        *)
-            if [ -e "${MAME2003DIR}/MAME 2003-Plus.opt" ]
-            then
-                sed -i 's#mame2003-plus_tate_mode.*$#mame2003-plus_tate_mode = "disabled"#' "${MAME2003DIR}/MAME 2003-Plus.opt" 2>/dev/null
-            fi
-            if [ -e "${MAME2003REMAPDIR}/MAME 2003-Plus.rmp" ]
-            then
-                rm -f "${MAME2003REMAPDIR}/MAME 2003-Plus.rmp"
-            fi
-        ;;
-    esac
 }
 
 function set_n64opts() {
     log "Set up N64..."
-    local PARALLELN64DIR="/storage/.config/retroarch/config/ParaLLEl N64"
-    if [ ! -d "${PARALLELN64DIR}" ]
+    if [ "${CORE}" = "parallel_n64" ]
     then
-        mkdir -p "${PARALLELN64DIR}"
-    fi
+        local PARALLELN64DIR="/storage/.config/retroarch/config/ParaLLEl N64"
+        if [ ! -d "${PARALLELN64DIR}" ]
+        then
+            mkdir -p "${PARALLELN64DIR}"
+        fi
 
-    if [ ! -f "${PARALLELN64DIR}/ParaLLEl N64.opt" ]
-    then
-        cp "/usr/config/retroarch/ParaLLEl N64.opt" "${PARALLELN64DIR}/ParaLLEl N64.opt"
+        if [ ! -f "${PARALLELN64DIR}/ParaLLEl N64.opt" ]
+        then
+            cp "/usr/config/retroarch/ParaLLEl N64.opt" "${PARALLELN64DIR}/ParaLLEl N64.opt"
+        fi
+        local VIDEO_CORE="$(game_setting parallel_n64_video_core)"
+        sed -i '/parallel-n64-gfxplugin = /c\parallel-n64-gfxplugin = "'${VIDEO_CORE}'"' "${PARALLELN64DIR}/ParaLLEl N64.opt"
+        local SCREENSIZE="$(game_setting parallel_n64_internal_resolution)"
+        sed -i '/parallel-n64-screensize = /c\parallel-n64-screensize = "'${SCREENSIZE}'"' "${PARALLELN64DIR}/ParaLLEl N64.opt"
+        local GAMESPEED="$(game_setting parallel_n64_gamespeed)"
+        sed -i '/parallel-n64-framerate = /c\parallel-n64-framerate = "'${GAMESPEED}'"' "${PARALLELN64DIR}/ParaLLEl N64.opt"
+        local ACCURACY="$(game_setting parallel_n64_gfx_accuracy)"
+        sed -i '/parallel-n64-gfxplugin-accuracy = /c\parallel-n64-gfxplugin-accuracy = "'${ACCURACY}'"' "${PARALLELN64DIR}/ParaLLEl N64.opt"
+        local CONTROLLERPAK="$(game_setting parallel_n64_controller_pak)"
+        sed -i '/parallel-n64-pak1 = /c\parallel-n64-pak1 = "'${CONTROLLERPAK}'"' "${PARALLELN64DIR}/ParaLLEl N64.opt"
     fi
-    local VIDEO_CORE="$(game_setting parallel_n64_video_core)"
-    sed -i '/parallel-n64-gfxplugin = /c\parallel-n64-gfxplugin = "'${VIDEO_CORE}'"' "${PARALLELN64DIR}/ParaLLEl N64.opt"
-    local SCREENSIZE="$(game_setting parallel_n64_internal_resolution)"
-    sed -i '/parallel-n64-screensize = /c\parallel-n64-screensize = "'${SCREENSOZE}'"' "${PARALLELN64DIR}/ParaLLEl N64.opt"
-    local GAMESPEED="$(game_setting parallel_n64_gamespeed)"
-    sed -i '/parallel-n64-framerate = /c\parallel-n64-framerate = "'${GAMESPEED}'"' "${PARALLELN64DIR}/ParaLLEl N64.opt"
-    local ACCURACY="$(game_setting parallel_n64_gfx_accuracy)"
-    sed -i '/parallel-n64-gfxplugin-accuracy = /c\parallel-n64-gfxplugin-accuracy = "'${ACCURACY}'"' "${PARALLELN64DIR}/ParaLLEl N64.opt"
-    local CONTROLLERPAK="$(game_setting parallel_n64_controller_pak)"
-    sed -i '/parallel-n64-pak1 = /c\parallel-n64-pak1 = "'${CONTROLLERPAK}'"' "${PARALLELN64DIR}/ParaLLEl N64.opt"
 }
 
 function set_atari() {
@@ -743,17 +751,15 @@ function set_gambatte() {
     fi
 }
 
-function set_controllers() {
-    CONTROLLERS="$@"
-    CONTROLLERS="${CONTROLLERS#*--controllers=*}"
-
+function setup_controllers() {
     for i in $(seq 1 1 5)
     do
-        log "Controller setup (${1})"
+        log "Controller setup (${i})"
         if [[ "$CONTROLLERS" == *p${i}* ]]
         then
             PINDEX="${CONTROLLERS#*-p${i}index }"
             PINDEX="${PINDEX%% -p${i}guid*}"
+            log "Set up controller ($i) (${PINDEX})"
             add_setting "none" "input_player${i}_joypad_index" "${PINDEX}"
             case ${PLATFORM} in
                 atari5200)
@@ -762,6 +768,7 @@ function set_controllers() {
             esac
         fi
     done
+    flush_settings
 }
 
 ###
@@ -769,10 +776,11 @@ function set_controllers() {
 ###
 
 ###
-### Functions that cannot be parallelized
+### Functions that must be run without parallelization.
 ###
 
 set_retroarch_paths
+setup_controllers
 configure_hotkeys
 
 ###
@@ -806,7 +814,6 @@ flush_settings
 
 set_atari &
 set_gambatte &
-set_controllers &
 
 wait
 flush_settings

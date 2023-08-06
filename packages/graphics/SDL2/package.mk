@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="SDL2"
-PKG_VERSION="2.26.5"
+PKG_VERSION="2.28.1"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.libsdl.org/"
 PKG_URL="https://www.libsdl.org/release/SDL2-${PKG_VERSION}.tar.gz"
@@ -55,7 +55,7 @@ then
   PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER}"
   PKG_CMAKE_OPTS_TARGET+=" -DSDL_WAYLAND=ON \
                            -DVIDEO_WAYLAND=ON \
-                           -DVIDEO_WAYLAND_QT_TOUCH=OFF \
+                           -DVIDEO_WAYLAND_QT_TOUCH=ON \
                            -DWAYLAND_SHARED=ON \
                            -DVIDEO_X11=OFF \
                            -DSDL_X11=OFF"

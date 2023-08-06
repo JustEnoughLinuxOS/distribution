@@ -45,4 +45,4 @@ then
 fi
 
 systemctl import-environment LD_PRELOAD
-
+jslisten set "emulationstation"
