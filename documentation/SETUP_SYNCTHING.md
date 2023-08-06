@@ -1,11 +1,10 @@
 # Syncthing
 Syncthing is a tool that lets you synchronize the contents of folders across multiple devices. It is different from cloud storage in that devices are updated directly with the latest changes from their peer(s) whenever they are online at the same time.
-In JELOS you may use it to:
-* Keep your ROM library synchronized between your computer and JELOS device(s),
-* Keep all your handhelds synchronized,
-* Automatically copy savegames as they are created and seamlessly continue playing on another device,
-* Keep a copy of your configuration files for easier editing,
-* ...and lots more.
+Some things you can use it for with JELOS:
+* Keep your game library synchronized between your computer and JELOS device(s),
+* Keep all your handhelds synchronized (including those that run Android),
+* Copy savegames as they are created and seamlessly continue playing on another device,
+* Keep a copy of your configuration files for easier editing.
 
 ## Setup
 
@@ -55,6 +54,11 @@ RetroArch differentiates between *saves*, i.e. the battery or memory card storag
 * RetroArch uses two separate folders for *saves* and *states*. This makes it easy to choose whether you want to synchronize only saves, states, or both.
 * In the RetroArch settings under "Saving", you can tell RetroArch to sort saves and states into subfolders based on content directory or core name. It is highly recommended to make use of this to reduce the risk of accidentally overwriting an incompatible save or state.
 * Make regular backups of your save folders.
+
+### Synchronizing with Android
+* For Android-based handhelds people seem to be recommending the [Syncthing-Fork from F-Droid](https://f-droid.org/en/packages/com.github.catfriend1.syncthingandroid).
+* Keeping Syncthing running in the background may severely impact your battery life and reduce standby time. Check out [these tips](https://github.com/Catfriend1/syncthing-android/wiki/Info-on-battery-optimization-and-settings-affecting-battery-usage) to help you balance battery life and synchronization times.
+* Using cross-platform versions of emulators is much more likely to introduce incompatibilities so be extra careful when syncing save games.
 
 ## Further Documentation
 For any questions and advanced configuration, be sure to check out the full documentation at https://docs.syncthing.net/index.html.
