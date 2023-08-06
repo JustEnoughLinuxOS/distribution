@@ -11,7 +11,7 @@ Some things you can use it for with JELOS:
 ### Setup on JELOS
 * Make sure you are connected to a WiFi network before continuing.
 * Go to "Network Settings" and set "Enable Syncthing" to "on". Make a note of your device's IP address, as well as the root password in the System Settings menu.
-* On a computer or mobile device in the same network, open a browser and point it to "a.b.c.d:8384" where "a.b.c.d" is the IP address of your JELOS device.
+* On a computer or mobile device in the same network, open a browser and point it to "http://a.b.c.d:8384" where "a.b.c.d" is the IP address of your JELOS device.
 * When prompted for a user name and password, enter "root" as user and the password you noted earlier.
 * You should now be directed to a configuration page running on your JELOS device - we'll come back to this shortly.
 
@@ -58,7 +58,7 @@ RetroArch differentiates between *saves*, i.e. the battery or memory card storag
 ### Synchronizing with Android
 * For Android-based handhelds people seem to be recommending the [Syncthing-Fork from F-Droid](https://f-droid.org/en/packages/com.github.catfriend1.syncthingandroid).
 * Keeping Syncthing running in the background may severely impact your battery life and reduce standby time. Check out [these tips](https://github.com/Catfriend1/syncthing-android/wiki/Info-on-battery-optimization-and-settings-affecting-battery-usage) to help you balance battery life and synchronization times.
-* Using cross-platform versions of emulators is much more likely to introduce incompatibilities so be extra careful when syncing save games.
+* Using cross-platform versions of emulators is much more likely to introduce incompatibilities so be extra careful when syncing savegames.
 
 ## Further Documentation
 For any questions and advanced configuration, be sure to check out the full documentation at https://docs.syncthing.net/index.html.
