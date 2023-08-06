@@ -68,7 +68,7 @@ if [ "${1}" == "vol" ];then
   [ "$STEPVOL" -ge "$MAXVOL" ] && STEPVOL="$MAXVOL"
   [ "$STEPVOL" -le "$MINVOL" ] && STEPVOL="$MINVOL"
 
-  amixer set "${DEVICE_AUDIO_MIXER}" ${STEPVOL}%
+  amixer -M set "${DEVICE_AUDIO_MIXER}" ${STEPVOL}%
   alsactl store -f /storage/.config/asound.state
   set_setting "audio.volume" ${STEPVOL}
 fi
