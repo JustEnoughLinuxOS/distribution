@@ -11,10 +11,17 @@
 GPIO=$(cat /sys/class/gpio/gpio${DEVICE_JACK}/value)
 [[ "$GPIO" == "0" ]] && set_setting "audio.device" "headphone" || set_setting "audio.device" "speakers"
 
-if [ -e "/storage/.config/system/configs/system.cfg" ]; then
-/usr/bin/system_utils setaudio $(get_setting "audio.device")
+STARTUP_DEVICE=$(get_setting "audio.device")
+case "${2}" in
+    "headphone")
+        amixer -M cset name='Playback Path' ${DEVICE_PLAYBACK_PATH_HP}
+    ;;
+    "auto"|"speakers"|*)
+        amixer -M cset name='Playback Path' ${DEVICE_PLAYBACK_PATH_SPK}
+    ;;
+esac
+
 /usr/bin/volume $(get_setting "audio.volume")
-fi
 
 # Headphone sensing 
 DEVICE="${DEVICE_HEADPHONE_DEV}"
