@@ -2,6 +2,7 @@
 Syncthing is a tool that lets you synchronize the contents of folders across multiple devices. It is different from cloud storage in that devices are updated directly with the latest changes from their peer(s) whenever they are online at the same time.
 In JELOS you may use it to:
 * Keep your ROM library synchronized between your computer and JELOS device(s),
+* Keep all your handhelds synchronized,
 * Automatically copy savegames as they are created and seamlessly continue playing on another device,
 * Keep a copy of your configuration files for easier editing,
 * ...and lots more.
