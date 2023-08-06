@@ -111,15 +111,16 @@ function set_setting() {
 }
 
 function set_audio() {
-  case ${1} in
-  "default")
-    AUDIO="alsa"
-  ;;
-  *)
-    AUDIO=${1}
-  ;;
-  esac
-  /usr/bin/rr_audio.sh ${AUDIO}
+  echo
+#  case ${1} in
+#  "default")
+#    AUDIO="alsa"
+#  ;;
+#  *)
+#    AUDIO=${1}
+#  ;;
+#  esac
+#  /usr/bin/rr_audio.sh ${AUDIO}
 }
 
 function battery_percent() {

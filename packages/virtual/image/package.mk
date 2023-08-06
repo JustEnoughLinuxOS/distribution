@@ -48,6 +48,7 @@ else
 
   # Sound support
   [ "${ALSA_SUPPORT}" = "yes" ] && PKG_DEPENDS_TARGET+=" alsa"
+  [ "${PIPEWIRE_SUPPORT}" = "yes" ] && PKG_DEPENDS_TARGET+=" pipewire wireplumber"
 fi
 
 [ "${DISPLAYSERVER}" = "wl" ] && PKG_DEPENDS_TARGET+=" weston"
