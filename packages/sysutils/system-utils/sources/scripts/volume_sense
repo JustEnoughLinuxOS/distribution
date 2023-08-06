@@ -148,7 +148,7 @@ mkcontroller 2>/dev/null ||:
             fi
           else
             # Default to 'volume' if Fn a or b is not pressed
-            COMMAND="/usr/bin/system_utils vol"
+            COMMAND="/usr/bin/volume"
             UP="+"
             DOWN="-"
             REPEAT_MOD=${VOLUME_REPEAT_MOD}
