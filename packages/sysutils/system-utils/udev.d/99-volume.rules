@@ -4,3 +4,4 @@
 
 ACTION=="add|change", SUBSYSTEM=="input", KERNEL=="event*", RUN+="/usr/bin/killall volume_sense"
 ACTION=="remove", SUBSYSTEM=="input", KERNEL=="event*", RUN+="/usr/bin/killall volume_sense"
+ACTION=="add|change", KERNEL=="hci*", RUN+="/usr/bin/killall volume_sense"
