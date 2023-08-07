@@ -13,8 +13,18 @@ then
   systemctl start pipewire
 fi
 
+### Configures device detection and auto switching.
+###
+### These should be loaded by pipewire-pulse.conf but they fail
+### to load there.
 pactl load-module module-udev-detect &>/dev/null
 pactl load-module module-switch-on-connect &>/dev/null
+
+### Set the default audio path, needed for some devices
+if [ ! -z "${DEVICE_PLAYBACK_PATH_SPK}" ]
+then
+  amixer cset name='Playback Path' ${DEVICE_PLAYBACK_PATH_SPK}
+fi
 
 VOLUME=$(get_setting audio.volume)
 if [[ -z ${VOLUME} ]]
