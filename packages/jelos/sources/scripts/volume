@@ -31,8 +31,10 @@ then
 elif (( ${VOLUME} > ${MAX_VOLUME} ))
 then
   VOLUME=${MAX_VOLUME}
+elif [ -z "${VOLUME}"
+then
+  VOLUME=60
 fi
 
 amixer set "${DEVICE_AUDIO_MIXER}" ${VOLUME}%
-alsactl store -f /storage/.config/asound.state
 set_setting "audio.volume" ${VOLUME}
