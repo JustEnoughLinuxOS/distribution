@@ -110,19 +110,6 @@ function set_setting() {
   fi
 }
 
-function set_audio() {
-  echo
-#  case ${1} in
-#  "default")
-#    AUDIO="alsa"
-#  ;;
-#  *)
-#    AUDIO=${1}
-#  ;;
-#  esac
-#  /usr/bin/rr_audio.sh ${AUDIO}
-}
-
 function battery_percent() {
   awk 'BEGIN {FS="="} /POWER_SUPPLY_CAPACITY=/ {print $2}' /sys/class/power_supply/[Bb][Aa][Tt]*/uevent 2>/dev/null
 }

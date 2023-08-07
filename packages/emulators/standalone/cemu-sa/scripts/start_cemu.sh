@@ -7,7 +7,6 @@
 . /etc/profile
 
 # Ensure we're using pulseaudio
-rr_audio.sh pulseaudio
 export SDL_AUDIODRIVER=pulseaudio
 jslisten set "-9 cemu"
 
@@ -126,4 +125,3 @@ xmlstarlet ed --inplace -u "//emulated_controller/controller/display_name" -v "$
 
 # Run the emulator
 cemu -g "$@"
-rr_audio.sh alsa
