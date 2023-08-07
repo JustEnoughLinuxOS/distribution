@@ -2,7 +2,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (C) 2023-present Fewtarius (https://github.com/fewtarius)
 
-. /etc/profile
+# Minimal OS variable loading for performance
+. /etc/profile.d/02-distribution
 
 if [ ! -f "/storage/.config/moonlight/moonlight.conf" ]
 then
