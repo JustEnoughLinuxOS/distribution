@@ -1,0 +1,14 @@
+diff -rupN pipewire.orig/src/daemon/pipewire-pulse.conf.in pipewire/src/daemon/pipewire-pulse.conf.in
+--- pipewire.orig/src/daemon/pipewire-pulse.conf.in	2023-08-07 01:36:39.320782246 +0000
++++ pipewire/src/daemon/pipewire-pulse.conf.in	2023-08-07 02:21:20.232536476 +0000
+@@ -49,7 +49,9 @@ context.modules = [
+ # Extra scripts can be started here. Setup in default.pa can be moved in
+ # a script or in pulse.cmd below
+ context.exec = [
+-    #{ path = "pactl"        args = "load-module module-always-sink" }
++    { path = "pactl"        args = "load-module module-always-sink" }
++    { path = "pactl"        args = "load-module module-udev-detect" }
++    { path = "pactl"        args = "load-module module-switch-on-connect" }
+     #{ path = "pactl"        args = "upload-sample my-sample.wav my-sample" }
+     #{ path = "/usr/bin/sh"  args = "~/.config/pipewire/default.pw" }
+ ]

@@ -110,7 +110,7 @@ set_SDL_audiodriver() {
   if [ ${RR_AUDIO_BACKEND} = "PulseAudio" ]; then
     export SDL_AUDIODRIVER=pulseaudio
   else
-    export SDL_AUDIODRIVER=alsa
+    export SDL_AUDIODRIVER=pulseaudio
   fi
   echo "Set-Audio: SDL2 set environment variable SDL_AUDIODRIVER="${SDL_AUDIODRIVER}
 }

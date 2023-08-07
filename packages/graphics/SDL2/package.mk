@@ -108,6 +108,7 @@ pre_configure_target(){
                          -DCLOCK_GETTIME=OFF \
                          -DRPATH=OFF \
                          -DRENDER_D3D=OFF \
+                         -DPIPEWIRE=ON \
                          -DPULSEAUDIO=ON"
 }
 

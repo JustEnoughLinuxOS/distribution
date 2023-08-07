@@ -152,3 +152,9 @@ for setting in $(awk '/input_player'${i}'_/ {print $1}' /storage/.config/retroar
 do
   sed -i "/^${setting}/d" /storage/.config/retroarch/retroarch.cfg
 done
+
+### Switch to pulse for pipewire
+sed -i "s~alsathread~pulse~g" /storage/.config/retroarch/retroarch.cfg
+
+### Remove stale asound bits
+rm -f /storage/.config/asound*
