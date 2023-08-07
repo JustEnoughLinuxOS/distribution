@@ -1,0 +1,40 @@
+#!/bin/sh
+
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2023-present Fewtarius
+
+
+# Source minimal predefined functions and variables
+# to ensure as much performance as possible.
+. /etc/profile.d/02-distribution
+
+VOLUME=$(get_setting "audio.volume")
+MAX_VOLUME=100
+MIN_VOLUME=0
+STEP=10
+
+case ${1} in
+  "+"|"up")
+    VOLUME=$(( ${VOLUME} + ${STEP} ))
+  ;;
+  "-"|"down")
+    VOLUME=$(( ${VOLUME} - ${STEP} ))
+  ;;
+  *)
+    VOLUME=${1}
+  ;;
+esac
+
+if (( ${VOLUME} < ${MIN_VOLUME} ))
+then
+  VOLUME=${MIN_VOLUME}
+elif (( ${VOLUME} > ${MAX_VOLUME} ))
+then
+  VOLUME=${MAX_VOLUME}
+elif [ -z "${VOLUME}"
+then
+  VOLUME=60
+fi
+
+amixer set "${DEVICE_AUDIO_MIXER}" ${VOLUME}%
+set_setting "audio.volume" ${VOLUME}

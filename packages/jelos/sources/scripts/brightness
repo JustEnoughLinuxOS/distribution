@@ -2,6 +2,9 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2020-present Fewtarius
 
+## Load minimal distribution settings to improve
+## performance.
+. /etc/profile.d/02-distribution
 
 BRIGHTNESS_DEV="$(find /sys/class/backlight/*/ -name brightness -print -quit)"
 BRIGHTNESS_PATH="${BRIGHTNESS_DEV%/brightness}"
@@ -9,12 +12,6 @@ BRIGHTNESS_PATH="${BRIGHTNESS_DEV%/brightness}"
 MIN=0
 MAX=$(<$(find /sys/class/backlight/*/ -name max_brightness -print -quit))
 STEP="$(echo "scale=1; (${MAX} / 10)" | bc)"
-
-# Ensure set_setting exists in all contexts
-if ! type set_setting  &>/dev/null
-then
-  source /etc/profile
-fi
 
 if [ ! -f "${BRIGHTNESS_DEV}" ]
 then
