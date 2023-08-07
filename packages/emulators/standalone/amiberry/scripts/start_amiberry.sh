@@ -39,9 +39,6 @@ find_gamepad() {
   echo "Gamepad used ${GAMEPAD}" >> "${AMIBERRY_LOG}"
 }
 
-# Set SDL audio driver to alsa
-SDL_AUDIODRIVER=alsa
-
 # Which file should amiberry load?
 echo "Trying to boot this game:" "$1" >> ${AMIBERRY_LOG}
 

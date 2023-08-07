@@ -17,6 +17,7 @@ fi
 ###
 ### These should be loaded by pipewire-pulse.conf but they fail
 ### to load there.
+
 pactl load-module module-udev-detect &>/dev/null
 pactl load-module module-switch-on-connect &>/dev/null
 
@@ -30,6 +31,9 @@ VOLUME=$(get_setting audio.volume)
 if [[ -z ${VOLUME} ]]
 then
   VOLUME="60"
+elif [[ -n "${DEVICE_VOLUME}" ]]
+then
+  VOLUME="${DEVICE_VOLUME}"
 fi
 
 /usr/bin/volume ${VOLUME}

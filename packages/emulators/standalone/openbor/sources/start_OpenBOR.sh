@@ -39,7 +39,7 @@ SAVES="${CONFIGDIR}/Saves"
 
 # Run OpenBOR in the config folder
   cd "${CONFIGDIR}"
-  SDL_AUDIODRIVER=alsa OpenBOR
+  OpenBOR
 
 # We stop the fake keyboard
   killall gptokeyb &

@@ -10,5 +10,4 @@ then
 fi
 
 ARG=${1//[\\]/}
-export SDL_AUDIODRIVER=alsa
 x128 -sounddev alsa -sdl2renderer opengles2 "${ARG}"

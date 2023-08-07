@@ -5,6 +5,5 @@
 . /etc/profile
 
 ARG=${1//[\\]/}
-export SDL_AUDIODRIVER=alsa
 echo "[${ARG}]"
 minivmac
