@@ -10,27 +10,6 @@
 export SDL_AUDIODRIVER=pulseaudio
 jslisten set "-9 cemu"
 
-BTTIMEOUT=10
-BTTESTCOUNT=0
-BTTEST=$(amixer -D bluealsa controls >/dev/null 2>&1)
-if [ $? = 0 ]
-then
-  while true
-  do
-    PASINK=$(pactl info | grep 'Default Sink:' | cut -d ' ' -f 3)
-    if [[ "${PASINK}" =~ ^bluez ]]
-    then
-      break
-    elif [ ${BTTESTCOUNT} = ${BTTIMEOUT} ]
-    then
-      unset PASINK
-      break
-    fi
-    sleep .5
-    BTTESTCOUNT=$(( ${BTTESTCOUNT} + 1 ))
-  done
-fi
-
 if [ -z "${PASINK}" ]
 then
   PASINK=$(pactl info | grep 'Default Sink:' | cut -d ' ' -f 3)

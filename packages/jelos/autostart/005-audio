@@ -7,16 +7,11 @@
 
 tocon "Configuring Audio..."
 
-STATE=$(systemctl isactive pipewire)
-if [ "${STATE}" = "inactive" ]
-then
-  systemctl start pipewire
-fi
-
-### Configures device detection and auto switching.
-###
-### These should be loaded by pipewire-pulse.conf but they fail
-### to load there.
+#STATE=$(systemctl isactive pipewire)
+#if [ "${STATE}" = "inactive" ]
+#then
+#  systemctl start pipewire
+#fi
 
 pactl load-module module-udev-detect &>/dev/null
 pactl load-module module-switch-on-connect &>/dev/null

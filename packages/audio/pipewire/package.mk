@@ -93,6 +93,6 @@ post_install() {
   # note that the pipewire user is added to the audio and video groups in systemd/package.mk
   # todo: maybe there is a better way to add users to groups in the future?
 
-  enable_service pipewire.socket
-  enable_service pipewire.service
+#  enable_service pipewire.socket
+#  enable_service pipewire.service
 }
