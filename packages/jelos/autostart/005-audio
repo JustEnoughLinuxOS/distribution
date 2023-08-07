@@ -5,7 +5,16 @@
 # Minimal OS variable loading for performance
 . /etc/profile.d/02-distribution
 
-tocon "Restoring volume..."
+tocon "Configuring Audio..."
+
+STATE=$(systemctl isactive pipewire)
+if [ "${STATE}" = "inactive" ]
+then
+  systemctl start pipewire
+fi
+
+pactl load-module module-udev-detect &>/dev/null
+pactl load-module module-switch-on-connect &>/dev/null
 
 VOLUME=$(get_setting audio.volume)
 if [[ -z ${VOLUME} ]]
