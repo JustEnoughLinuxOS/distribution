@@ -158,3 +158,9 @@ sed -i "s~alsathread~pulse~g" /storage/.config/retroarch/retroarch.cfg
 
 ### Remove stale asound bits
 rm -f /storage/.config/asound*
+
+### Flycast needs to switch to pulseaudio
+if [ -e "/storage/.config/flycast/emu.cfg" ]
+then
+  cp -f /usr/config/flycast/emu.cfg /storage/.config/flycast/emu.cfg
+fi
