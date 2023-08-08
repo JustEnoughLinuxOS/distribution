@@ -82,17 +82,10 @@ pre_configure_target() {
   export TARGET_LDFLAGS="${TARGET_LDFLAGS} -lncursesw -ltinfow"
 }
 
-post_makeinstall_target() {
-  # connect to the system bus
-  sed '/^\[Service\]/a Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/dbus/system_bus_socket' -i ${INSTALL}/usr/lib/systemd/system/pipewire.service
-}
-
 post_install() {
-  add_user pipewire x 982 980 "pipewire-daemon" "/var/run/pipewire" "/bin/sh"
-  add_group pipewire 980
-  # note that the pipewire user is added to the audio and video groups in systemd/package.mk
-  # todo: maybe there is a better way to add users to groups in the future?
 
-#  enable_service pipewire.socket
-#  enable_service pipewire.service
+  enable_service pipewire.socket
+  enable_service pipewire.service
+  enable_service pipewire-pulse.socket
+  enable_service pipewire-pulse.service
 }

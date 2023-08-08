@@ -7,14 +7,11 @@
 
 tocon "Configuring Audio..."
 
-#STATE=$(systemctl isactive pipewire)
-#if [ "${STATE}" = "inactive" ]
-#then
-#  systemctl start pipewire
-#fi
-
-pactl load-module module-udev-detect &>/dev/null
-pactl load-module module-switch-on-connect &>/dev/null
+STATE=$(systemctl isactive pipewire-pulse)
+if [ "${STATE}" = "inactive" ]
+then
+  systemctl start pipewire-pulse
+fi
 
 ### Set the default audio path, needed for some devices
 if [ ! -z "${DEVICE_PLAYBACK_PATH_SPK}" ]
