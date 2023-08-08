@@ -4,6 +4,7 @@
 
 . /etc/os-release
 
+export XDG_RUNTIME_DIR=/var/run/0-runtime-dir
 export PATH="/usr/bin:/usr/local/bin:/storage/bin:${PATH}"
 export SDL_GAMECONTROLLERCONFIG_FILE="/storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt"
 

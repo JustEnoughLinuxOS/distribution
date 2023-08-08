@@ -164,3 +164,19 @@ if [ -e "/storage/.config/flycast/emu.cfg" ]
 then
   cp -f /usr/config/flycast/emu.cfg /storage/.config/flycast/emu.cfg
 fi
+
+### Set the default output to Master for pipewire
+ES_SETTINGS="/storage/.config/emulationstation/es_settings.cfg"
+
+function set_es_path() {
+  AUDIODEVICE=${1}
+  sed -i '/^.*<string name="AudioDevice".*$/d' ${ES_SETTINGS}
+  if [ -e "/storage/.config/profile.d/99-mixer" ]
+  then
+    rm "/storage/.config/profile.d/99-mixer"
+  fi
+  sed -i '/^.*AudioCard.*$/a \\t<string name="AudioDevice" value="'"${AUDIODEVICE}"'" \/>' ${ES_SETTINGS}
+  echo "DEVICE_AUDIO_MIXER=\"${AUDIODEVICE}\"" >/storage/.config/profile.d/99-mixer
+}
+
+set_es_path "Master"

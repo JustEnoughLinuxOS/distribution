@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2021-present Fewtarius
+
+# Source predefined functions and variables
+. /etc/profile
+
+HDMI_DEVICE="/sys/class/drm/card0/card0-HDMI-A-1"
+HDMI_STATUS=$(cat ${HDMI_DEVICE}/status)
+
+case ${HDMI_STATUS} in
+  connected)
+    DEFAULT_SINK=$(pactl list short sinks | awk '/hdmi/ {print $2; exit}')
+  ;;
+  *)
+    DEFAULT_SINK=$(pactl list short sinks | awk '! /hdmi/ {print $2; exit}')
+  ;;
+esac
+
+pactl set-default-sink ${DEFAULT_SINK}
