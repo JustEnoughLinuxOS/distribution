@@ -154,7 +154,7 @@ do
 done
 
 ### Switch to pulse for pipewire
-sed -i "s~alsathread~pulse~g" /storage/.config/retroarch/retroarch.cfg
+sed -i 's~^audio_driver = .*$~audio_driver = "pulse"~g' /storage/.config/retroarch/retroarch.cfg
 
 ### Remove stale asound bits
 rm -f /storage/.config/asound*
