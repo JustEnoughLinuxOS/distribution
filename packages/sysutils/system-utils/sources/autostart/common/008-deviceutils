@@ -32,9 +32,9 @@ fi
 if [ "${DEVICE_HAS_HDMI}" == "true" ]
 then
   tocon "Starting hdmi service..."
-  nohup systemctl start hdmi &
+  nohup systemctl start video &
 else
-  nohup systemctl stop hdmi &
+  nohup systemctl stop video &
 fi
 
 if [ "${DEVICE_BATTERY_LED_STATUS}" == "true" ]
