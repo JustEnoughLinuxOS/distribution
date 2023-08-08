@@ -13,12 +13,19 @@ then
   systemctl start pipewire-pulse
 fi
 
+DEFAULT_ID=$(pactl list short cards | awk '! /hdmi/ {print $1; exit}')
 DEFAULT_SINK=$(pactl list short sinks | awk '! /hdmi/ {print $2; exit}')
+
 if [ ! -z "${DEFAULT_SINK}" ]
 then
   ### Set the default sink ignoring HDMI
   pactl set-default-sink ${DEFAULT_SINK}
   pactl set-default-source ${DEFAULT_SINK}.monitor
+fi
+
+if [ ! -z "${DEVICE_PIPEWIRE_PROFILE}" ]
+then
+  pactl set-card-profile ${DEFAULT_ID} ${DEVICE_PIPEWIRE_PROFILE}
 fi
 
 ### Set the default audio path, needed for some devices
