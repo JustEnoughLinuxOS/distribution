@@ -13,6 +13,9 @@ then
   systemctl start pipewire-pulse
 fi
 
+### Auto switch between internal and bluetooth devices
+pactl load-module module-switch-on-connect
+
 DEFAULT_ID=$(pactl list short cards | awk '! /hdmi/ {print $1; exit}')
 DEFAULT_SINK=$(pactl list short sinks | awk '! /hdmi/ {print $2; exit}')
 

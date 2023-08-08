@@ -19,7 +19,7 @@ else
   BLUEZ_CONFIG="--disable-debug"
 fi
 
-BLUEZ_CONFIG+=" --enable-monitor --enable-test"
+BLUEZ_CONFIG+=" --enable-monitor --enable-test --enable-sap --enable-a2dp --enable-avrcp --enable-hid --enable-bap --enable-mcp --enable-vcp"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --disable-silent-rules \
