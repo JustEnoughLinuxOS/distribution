@@ -99,6 +99,7 @@ post_makeinstall_target() {
   echo "/usr/lib/pulseaudio" >${INSTALL}/etc/ld.so.conf.d/${ARCH}-lib-pulseaudio.conf
 }
 
-post_install() {
-  enable_service pulseaudio.service
-}
+# Deprecated by pipewire
+#post_install() {
+#  enable_service pulseaudio.service
+#}

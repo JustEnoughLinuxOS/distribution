@@ -1,6 +1,6 @@
-diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/Makefile linux/arch/arm64/boot/dts/amlogic/Makefile
---- linux.orig/arch/arm64/boot/dts/amlogic/Makefile	2023-07-27 06:50:53.000000000 +0000
-+++ linux/arch/arm64/boot/dts/amlogic/Makefile	2023-07-31 20:45:46.823026932 +0000
+diff -rupN linux-6.1.43.orig/arch/arm64/boot/dts/amlogic/Makefile linux-6.1.43/arch/arm64/boot/dts/amlogic/Makefile
+--- linux-6.1.43.orig/arch/arm64/boot/dts/amlogic/Makefile	2023-08-08 14:41:53.226215087 +0000
++++ linux-6.1.43/arch/arm64/boot/dts/amlogic/Makefile	2023-08-08 14:52:18.868761586 +0000
 @@ -12,8 +12,10 @@ dtb-$(CONFIG_ARCH_MESON) += meson-g12b-a
  dtb-$(CONFIG_ARCH_MESON) += meson-g12b-gsking-x.dtb
  dtb-$(CONFIG_ARCH_MESON) += meson-g12b-gtking-pro.dtb
@@ -12,83 +12,30 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/Makefile linux/arch/arm64/boot
  dtb-$(CONFIG_ARCH_MESON) += meson-g12b-s922x-khadas-vim3.dtb
  dtb-$(CONFIG_ARCH_MESON) += meson-g12b-ugoos-am6.dtb
  dtb-$(CONFIG_ARCH_MESON) += meson-gxbb-kii-pro.dtb
-diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi linux/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi
---- linux.orig/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi	2023-07-27 06:50:53.000000000 +0000
-+++ linux/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi	2023-07-31 20:44:01.736864154 +0000
-@@ -61,18 +61,6 @@
- 	gpu_opp_table: opp-table-gpu {
- 		compatible = "operating-points-v2";
+diff -rupN linux-6.1.43.orig/arch/arm64/boot/dts/amlogic/meson-g12b.dtsi linux-6.1.43/arch/arm64/boot/dts/amlogic/meson-g12b.dtsi
+--- linux-6.1.43.orig/arch/arm64/boot/dts/amlogic/meson-g12b.dtsi	2023-08-08 14:41:53.226215087 +0000
++++ linux-6.1.43/arch/arm64/boot/dts/amlogic/meson-g12b.dtsi	2023-08-08 14:52:18.868761586 +0000
+@@ -105,6 +105,8 @@
  
--		opp-124999998 {
--			opp-hz = /bits/ 64 <124999998>;
--			opp-microvolt = <800000>;
--		};
--		opp-249999996 {
--			opp-hz = /bits/ 64 <249999996>;
--			opp-microvolt = <800000>;
--		};
--		opp-285714281 {
--			opp-hz = /bits/ 64 <285714281>;
--			opp-microvolt = <800000>;
--		};
- 		opp-399999994 {
- 			opp-hz = /bits/ 64 <399999994>;
- 			opp-microvolt = <800000>;
-@@ -1693,7 +1681,7 @@
- 					#address-cells = <1>;
- 					#size-cells = <0>;
- 
--					internal_ephy: ethernet-phy@8 {
-+					internal_ephy: ethernet_phy@8 {
- 						compatible = "ethernet-phy-id0180.3301",
- 							     "ethernet-phy-ieee802.3-c22";
- 						interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
-@@ -1884,6 +1872,15 @@
- 						};
- 					};
- 
-+					uart_ao_b_pins: uart-b-ao {
-+						mux {
-+							groups = "uart_ao_b_tx_8",
-+								 "uart_ao_b_rx_9";
-+							function = "uart_ao_b";
-+							bias-disable;
-+						};
-+					};
-+
- 					uart_ao_a_pins: uart-a-ao {
- 						mux {
- 							groups = "uart_ao_a_tx",
-@@ -2394,14 +2391,20 @@
+ 		l2: l2-cache0 {
+ 			compatible = "cache";
++			cache-level = <2>;
++			cache-unified;
  		};
+ 	};
+ };
+@@ -137,5 +139,6 @@
+ };
  
- 		mali: gpu@ffe40000 {
--			compatible = "amlogic,meson-g12a-mali", "arm,mali-bifrost";
--			reg = <0x0 0xffe40000 0x0 0x40000>;
-+			compatible = "arm,mali-midgard";
-+			reg = <0x0 0xffe40000 0x0 0x40000>,
-+                    <0 0xFFD01000 0 0x01000>,
-+                    <0 0xFF800000 0 0x01000>,
-+                    <0 0xFF63c000 0 0x01000>,
-+                    <0 0xFFD01000 0 0x01000>;
-+
- 			interrupt-parent = <&gic>;
--			interrupts = <GIC_SPI 162 IRQ_TYPE_LEVEL_HIGH>,
-+			interrupts = <GIC_SPI 160 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 161 IRQ_TYPE_LEVEL_HIGH>,
--				     <GIC_SPI 160 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "job", "mmu", "gpu";
-+				     <GIC_SPI 162 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "GPU", "MMU", "JOB";
- 			clocks = <&clkc CLKID_MALI>;
-+			clock-names = "clk_mali";
- 			resets = <&reset RESET_DVALIN_CAPB3>, <&reset RESET_DVALIN>;
- 			operating-points-v2 = <&gpu_opp_table>;
- 			#cooling-cells = <2>;
-diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts linux/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
---- linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts	2023-07-31 20:44:01.736864154 +0000
-@@ -0,0 +1,955 @@
+ &mali {
+-	dma-coherent;
++	system-coherency = <0>;
++	power_policy = "always_on";
+ };
+diff -rupN linux-6.1.43.orig/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts linux-6.1.43/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
+--- linux-6.1.43.orig/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts	1970-01-01 00:00:00.000000000 +0000
++++ linux-6.1.43/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts	2023-08-08 15:08:21.360458390 +0000
+@@ -0,0 +1,995 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2022 Neil Armstrong <narmstrong@kernel.org>
@@ -360,7 +307,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
 +
 +	sound {
 +		compatible = "amlogic,axg-sound-card";
-+		model = "Odroid GO Ultra";
++		model = "ODROID-GO-ULTRA";
 +		audio-aux-devs = <&tdmout_b>;
 +		audio-routing =	"TDMOUT_B IN 0", "FRDDR_A OUT 1",
 +				"TDM_B Playback", "TDMOUT_B OUT";
@@ -378,8 +325,28 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
 +			sound-dai = <&frddr_a>;
 +		};
 +
-+		/* 8ch hdmi interface */
 +		dai-link-1 {
++			sound-dai = <&frddr_b>;
++		};
++
++		dai-link-2 {
++			sound-dai = <&frddr_c>;
++		};
++
++		dai-link-3 {
++			sound-dai = <&toddr_a>;
++		};
++
++		dai-link-4 {
++			sound-dai = <&toddr_b>;
++		};
++
++		dai-link-5 {
++			sound-dai = <&toddr_c>;
++		};
++
++		/* 8ch hdmi interface */
++		dai-link-6 {
 +			sound-dai = <&tdmif_b>;
 +			dai-format = "i2s";
 +			dai-tdm-slot-tx-mask-0 = <1 1>;
@@ -937,6 +904,26 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
 +	status = "okay";
 +};
 +
++&frddr_b {
++	status = "okay";
++};
++
++&frddr_c {
++	status = "okay";
++};
++
++&toddr_a {
++	status = "okay";
++};
++
++&toddr_b {
++	status = "okay";
++};
++
++&toddr_c {
++	status = "okay";
++};
++
 +&periphs_pinctrl {
 +	keypad_gpio_pins: keypad-gpio {
 +		mux {
@@ -1044,10 +1031,10 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
 +	status = "okay";
 +	phy-supply = <&usb_host>;
 +};
-diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3.dts linux/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3.dts
---- linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3.dts	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3.dts	2023-07-31 20:44:01.736864154 +0000
-@@ -0,0 +1,941 @@
+diff -rupN linux-6.1.43.orig/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3.dts linux-6.1.43/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3.dts
+--- linux-6.1.43.orig/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3.dts	1970-01-01 00:00:00.000000000 +0000
++++ linux-6.1.43/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3.dts	2023-08-08 15:07:57.527122694 +0000
+@@ -0,0 +1,981 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2022 Neil Armstrong <narmstrong@kernel.org>
@@ -1320,7 +1307,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-
 +
 +	sound {
 +		compatible = "amlogic,axg-sound-card";
-+		model = "Odroid GO Ultra";
++		model = "RGB10-MAX3";
 +		audio-aux-devs = <&tdmout_b>;
 +		audio-routing =	"TDMOUT_B IN 0", "FRDDR_A OUT 1",
 +				"TDM_B Playback", "TDMOUT_B OUT";
@@ -1338,8 +1325,28 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-
 +			sound-dai = <&frddr_a>;
 +		};
 +
-+		/* 8ch hdmi interface */
 +		dai-link-1 {
++			sound-dai = <&frddr_b>;
++		};
++
++		dai-link-2 {
++			sound-dai = <&frddr_c>;
++		};
++
++		dai-link-3 {
++			sound-dai = <&toddr_a>;
++		};
++
++		dai-link-4 {
++			sound-dai = <&toddr_b>;
++		};
++
++		dai-link-5 {
++			sound-dai = <&toddr_c>;
++		};
++
++		/* 8ch hdmi interface */
++		dai-link-6 {
 +			sound-dai = <&tdmif_b>;
 +			dai-format = "i2s";
 +			dai-tdm-slot-tx-mask-0 = <1 1>;
@@ -1882,6 +1889,26 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-
 +	status = "okay";
 +};
 +
++&frddr_b {
++	status = "okay";
++};
++
++&frddr_c {
++	status = "okay";
++};
++
++&toddr_a {
++	status = "okay";
++};
++
++&toddr_b {
++	status = "okay";
++};
++
++&toddr_c {
++	status = "okay";
++};
++
 +&periphs_pinctrl {
 +	keypad_gpio_pins: keypad-gpio {
 +		mux {
@@ -1989,9 +2016,9 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-
 +	status = "okay";
 +	phy-supply = <&usb_host>;
 +};
-diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-s922x.dtsi linux/arch/arm64/boot/dts/amlogic/meson-g12b-s922x.dtsi
---- linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-s922x.dtsi	2023-07-27 06:50:53.000000000 +0000
-+++ linux/arch/arm64/boot/dts/amlogic/meson-g12b-s922x.dtsi	2023-07-31 20:44:01.736864154 +0000
+diff -rupN linux-6.1.43.orig/arch/arm64/boot/dts/amlogic/meson-g12b-s922x.dtsi linux-6.1.43/arch/arm64/boot/dts/amlogic/meson-g12b-s922x.dtsi
+--- linux-6.1.43.orig/arch/arm64/boot/dts/amlogic/meson-g12b-s922x.dtsi	2023-08-08 14:41:53.226215087 +0000
++++ linux-6.1.43/arch/arm64/boot/dts/amlogic/meson-g12b-s922x.dtsi	2023-08-08 14:52:18.868761586 +0000
 @@ -11,6 +11,16 @@
  		compatible = "operating-points-v2";
  		opp-shared;
@@ -2026,29 +2053,82 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-s922x.dtsi linux/ar
  		opp-1000000000 {
  			opp-hz = /bits/ 64 <1000000000>;
  			opp-microvolt = <771000>;
-diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b.dtsi linux/arch/arm64/boot/dts/amlogic/meson-g12b.dtsi
---- linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b.dtsi	2023-07-27 06:50:53.000000000 +0000
-+++ linux/arch/arm64/boot/dts/amlogic/meson-g12b.dtsi	2023-07-31 20:44:01.736864154 +0000
-@@ -105,6 +105,8 @@
+diff -rupN linux-6.1.43.orig/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi linux-6.1.43/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi
+--- linux-6.1.43.orig/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi	2023-08-08 14:41:53.226215087 +0000
++++ linux-6.1.43/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi	2023-08-08 14:52:18.868761586 +0000
+@@ -61,18 +61,6 @@
+ 	gpu_opp_table: opp-table-gpu {
+ 		compatible = "operating-points-v2";
  
- 		l2: l2-cache0 {
- 			compatible = "cache";
-+			cache-level = <2>;
-+			cache-unified;
+-		opp-124999998 {
+-			opp-hz = /bits/ 64 <124999998>;
+-			opp-microvolt = <800000>;
+-		};
+-		opp-249999996 {
+-			opp-hz = /bits/ 64 <249999996>;
+-			opp-microvolt = <800000>;
+-		};
+-		opp-285714281 {
+-			opp-hz = /bits/ 64 <285714281>;
+-			opp-microvolt = <800000>;
+-		};
+ 		opp-399999994 {
+ 			opp-hz = /bits/ 64 <399999994>;
+ 			opp-microvolt = <800000>;
+@@ -1693,7 +1681,7 @@
+ 					#address-cells = <1>;
+ 					#size-cells = <0>;
+ 
+-					internal_ephy: ethernet-phy@8 {
++					internal_ephy: ethernet_phy@8 {
+ 						compatible = "ethernet-phy-id0180.3301",
+ 							     "ethernet-phy-ieee802.3-c22";
+ 						interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
+@@ -1884,6 +1872,15 @@
+ 						};
+ 					};
+ 
++					uart_ao_b_pins: uart-b-ao {
++						mux {
++							groups = "uart_ao_b_tx_8",
++								 "uart_ao_b_rx_9";
++							function = "uart_ao_b";
++							bias-disable;
++						};
++					};
++
+ 					uart_ao_a_pins: uart-a-ao {
+ 						mux {
+ 							groups = "uart_ao_a_tx",
+@@ -2394,14 +2391,20 @@
  		};
- 	};
- };
-@@ -137,5 +139,6 @@
- };
  
- &mali {
--	dma-coherent;
-+	system-coherency = <0>;
-+	power_policy = "always_on";
- };
-diff -rupN linux.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c linux/drivers/gpu/drm/drm_panel_orientation_quirks.c
---- linux.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c	2023-07-27 06:50:53.000000000 +0000
-+++ linux/drivers/gpu/drm/drm_panel_orientation_quirks.c	2023-07-31 20:44:01.736864154 +0000
+ 		mali: gpu@ffe40000 {
+-			compatible = "amlogic,meson-g12a-mali", "arm,mali-bifrost";
+-			reg = <0x0 0xffe40000 0x0 0x40000>;
++			compatible = "arm,mali-midgard";
++			reg = <0x0 0xffe40000 0x0 0x40000>,
++                    <0 0xFFD01000 0 0x01000>,
++                    <0 0xFF800000 0 0x01000>,
++                    <0 0xFF63c000 0 0x01000>,
++                    <0 0xFFD01000 0 0x01000>;
++
+ 			interrupt-parent = <&gic>;
+-			interrupts = <GIC_SPI 162 IRQ_TYPE_LEVEL_HIGH>,
++			interrupts = <GIC_SPI 160 IRQ_TYPE_LEVEL_HIGH>,
+ 				     <GIC_SPI 161 IRQ_TYPE_LEVEL_HIGH>,
+-				     <GIC_SPI 160 IRQ_TYPE_LEVEL_HIGH>;
+-			interrupt-names = "job", "mmu", "gpu";
++				     <GIC_SPI 162 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "GPU", "MMU", "JOB";
+ 			clocks = <&clkc CLKID_MALI>;
++			clock-names = "clk_mali";
+ 			resets = <&reset RESET_DVALIN_CAPB3>, <&reset RESET_DVALIN>;
+ 			operating-points-v2 = <&gpu_opp_table>;
+ 			#cooling-cells = <2>;
+diff -rupN linux-6.1.43.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c linux-6.1.43/drivers/gpu/drm/drm_panel_orientation_quirks.c
+--- linux-6.1.43.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c	2023-08-08 14:41:53.722241084 +0000
++++ linux-6.1.43/drivers/gpu/drm/drm_panel_orientation_quirks.c	2023-08-08 14:52:18.868761586 +0000
 @@ -461,7 +461,7 @@ EXPORT_SYMBOL(drm_get_panel_orientation_
  /* There are no quirks for non x86 devices yet */
  int drm_get_panel_orientation_quirk(int width, int height)
@@ -2058,43 +2138,9 @@ diff -rupN linux.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c linux/drive
  }
  EXPORT_SYMBOL(drm_get_panel_orientation_quirk);
  
-diff -rupN linux.orig/drivers/input/Kconfig linux/drivers/input/Kconfig
---- linux.orig/drivers/input/Kconfig	2023-07-27 06:50:53.000000000 +0000
-+++ linux/drivers/input/Kconfig	2023-07-31 20:44:01.736864154 +0000
-@@ -51,6 +51,19 @@ config INPUT_FF_MEMLESS
- 	  To compile this driver as a module, choose M here: the
- 	  module will be called ff-memless.
- 
-+config INPUT_POLLDEV
-+	tristate "Polled input device skeleton"
-+	help
-+	  Say Y here if you are using a driver for an input
-+	  device that periodically polls hardware state. This
-+	  option is only useful for out-of-tree drivers since
-+	  in-tree drivers select it automatically.
-+
-+	  If unsure, say N.
-+
-+	  To compile this driver as a module, choose M here: the
-+	  module will be called input-polldev.
-+
- config INPUT_SPARSEKMAP
- 	tristate "Sparse keymap support library"
- 	help
-diff -rupN linux.orig/drivers/input/Makefile linux/drivers/input/Makefile
---- linux.orig/drivers/input/Makefile	2023-07-27 06:50:53.000000000 +0000
-+++ linux/drivers/input/Makefile	2023-07-31 20:44:01.736864154 +0000
-@@ -10,6 +10,7 @@ input-core-y := input.o input-compat.o i
- input-core-y += touchscreen.o
- 
- obj-$(CONFIG_INPUT_FF_MEMLESS)	+= ff-memless.o
-+obj-$(CONFIG_INPUT_POLLDEV)	+= input-polldev.o
- obj-$(CONFIG_INPUT_SPARSEKMAP)	+= sparse-keymap.o
- obj-$(CONFIG_INPUT_MATRIXKMAP)	+= matrix-keymap.o
- obj-$(CONFIG_INPUT_VIVALDIFMAP)	+= vivaldi-fmap.o
-diff -rupN linux.orig/drivers/input/input-polldev.c linux/drivers/input/input-polldev.c
---- linux.orig/drivers/input/input-polldev.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux/drivers/input/input-polldev.c	2023-07-31 20:44:01.736864154 +0000
+diff -rupN linux-6.1.43.orig/drivers/input/input-polldev.c linux-6.1.43/drivers/input/input-polldev.c
+--- linux-6.1.43.orig/drivers/input/input-polldev.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-6.1.43/drivers/input/input-polldev.c	2023-08-08 14:52:18.868761586 +0000
 @@ -0,0 +1,362 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +/*
@@ -2458,36 +2504,9 @@ diff -rupN linux.orig/drivers/input/input-polldev.c linux/drivers/input/input-po
 +	input_unregister_device(dev->input);
 +}
 +EXPORT_SYMBOL(input_unregister_polled_device);
-diff -rupN linux.orig/drivers/input/joystick/Kconfig linux/drivers/input/joystick/Kconfig
---- linux.orig/drivers/input/joystick/Kconfig	2023-07-27 06:50:53.000000000 +0000
-+++ linux/drivers/input/joystick/Kconfig	2023-07-31 20:44:01.736864154 +0000
-@@ -344,6 +344,12 @@ config JOYSTICK_MAPLE
- 	  To compile this as a module choose M here: the module will be called
- 	  maplecontrol.
- 
-+config JOYSTICK_ODROID_GOU
-+       tristate "ODROID-Go-Ultra joypad driver"
-+       depends on INPUT_POLLDEV
-+       help
-+         Made for ODROID-GO-Ultra.
-+
- config JOYSTICK_PSXPAD_SPI
- 	tristate "PlayStation 1/2 joypads via SPI interface"
- 	depends on SPI
-diff -rupN linux.orig/drivers/input/joystick/Makefile linux/drivers/input/joystick/Makefile
---- linux.orig/drivers/input/joystick/Makefile	2023-07-27 06:50:53.000000000 +0000
-+++ linux/drivers/input/joystick/Makefile	2023-07-31 20:44:01.736864154 +0000
-@@ -25,6 +25,7 @@ obj-$(CONFIG_JOYSTICK_JOYDUMP)		+= joydu
- obj-$(CONFIG_JOYSTICK_MAGELLAN)		+= magellan.o
- obj-$(CONFIG_JOYSTICK_MAPLE)		+= maplecontrol.o
- obj-$(CONFIG_JOYSTICK_N64)		+= n64joy.o
-+obj-$(CONFIG_JOYSTICK_ODROID_GOU)	+= odroid-gou-joypad.o
- obj-$(CONFIG_JOYSTICK_PSXPAD_SPI)	+= psxpad-spi.o
- obj-$(CONFIG_JOYSTICK_PXRC)		+= pxrc.o
- obj-$(CONFIG_JOYSTICK_QWIIC)		+= qwiic-joystick.o
-diff -rupN linux.orig/drivers/input/joystick/amlogic-saradc.h linux/drivers/input/joystick/amlogic-saradc.h
---- linux.orig/drivers/input/joystick/amlogic-saradc.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux/drivers/input/joystick/amlogic-saradc.h	2023-07-31 20:44:01.736864154 +0000
+diff -rupN linux-6.1.43.orig/drivers/input/joystick/amlogic-saradc.h linux-6.1.43/drivers/input/joystick/amlogic-saradc.h
+--- linux-6.1.43.orig/drivers/input/joystick/amlogic-saradc.h	1970-01-01 00:00:00.000000000 +0000
++++ linux-6.1.43/drivers/input/joystick/amlogic-saradc.h	2023-08-08 14:52:18.900763547 +0000
 @@ -0,0 +1,32 @@
 +/*
 + * include/dt-bindings/iio/adc/amlogic-saradc.h
@@ -2521,9 +2540,36 @@ diff -rupN linux.orig/drivers/input/joystick/amlogic-saradc.h linux/drivers/inpu
 +#define SARADC_CH_NUM 8
 +
 +#endif
-diff -rupN linux.orig/drivers/input/joystick/odroid-gou-joypad.c linux/drivers/input/joystick/odroid-gou-joypad.c
---- linux.orig/drivers/input/joystick/odroid-gou-joypad.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux/drivers/input/joystick/odroid-gou-joypad.c	2023-07-31 20:44:01.736864154 +0000
+diff -rupN linux-6.1.43.orig/drivers/input/joystick/Kconfig linux-6.1.43/drivers/input/joystick/Kconfig
+--- linux-6.1.43.orig/drivers/input/joystick/Kconfig	2023-08-08 14:41:53.818246116 +0000
++++ linux-6.1.43/drivers/input/joystick/Kconfig	2023-08-08 14:52:18.872761831 +0000
+@@ -344,6 +344,12 @@ config JOYSTICK_MAPLE
+ 	  To compile this as a module choose M here: the module will be called
+ 	  maplecontrol.
+ 
++config JOYSTICK_ODROID_GOU
++       tristate "ODROID-Go-Ultra joypad driver"
++       depends on INPUT_POLLDEV
++       help
++         Made for ODROID-GO-Ultra.
++
+ config JOYSTICK_PSXPAD_SPI
+ 	tristate "PlayStation 1/2 joypads via SPI interface"
+ 	depends on SPI
+diff -rupN linux-6.1.43.orig/drivers/input/joystick/Makefile linux-6.1.43/drivers/input/joystick/Makefile
+--- linux-6.1.43.orig/drivers/input/joystick/Makefile	2023-08-08 14:41:53.818246116 +0000
++++ linux-6.1.43/drivers/input/joystick/Makefile	2023-08-08 14:52:18.872761831 +0000
+@@ -25,6 +25,7 @@ obj-$(CONFIG_JOYSTICK_JOYDUMP)		+= joydu
+ obj-$(CONFIG_JOYSTICK_MAGELLAN)		+= magellan.o
+ obj-$(CONFIG_JOYSTICK_MAPLE)		+= maplecontrol.o
+ obj-$(CONFIG_JOYSTICK_N64)		+= n64joy.o
++obj-$(CONFIG_JOYSTICK_ODROID_GOU)	+= odroid-gou-joypad.o
+ obj-$(CONFIG_JOYSTICK_PSXPAD_SPI)	+= psxpad-spi.o
+ obj-$(CONFIG_JOYSTICK_PXRC)		+= pxrc.o
+ obj-$(CONFIG_JOYSTICK_QWIIC)		+= qwiic-joystick.o
+diff -rupN linux-6.1.43.orig/drivers/input/joystick/odroid-gou-joypad.c linux-6.1.43/drivers/input/joystick/odroid-gou-joypad.c
+--- linux-6.1.43.orig/drivers/input/joystick/odroid-gou-joypad.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-6.1.43/drivers/input/joystick/odroid-gou-joypad.c	2023-08-08 14:52:18.900763547 +0000
 @@ -0,0 +1,926 @@
 +/*----------------------------------------------------------------------------*/
 +#include <linux/kernel.h>
@@ -3451,9 +3497,43 @@ diff -rupN linux.orig/drivers/input/joystick/odroid-gou-joypad.c linux/drivers/i
 +MODULE_ALIAS("platform:" DRV_NAME);
 +
 +/*----------------------------------------------------------------------------*/
-diff -rupN linux.orig/drivers/mfd/rk808.c linux/drivers/mfd/rk808.c
---- linux.orig/drivers/mfd/rk808.c	2023-07-27 06:50:53.000000000 +0000
-+++ linux/drivers/mfd/rk808.c	2023-07-31 20:44:01.736864154 +0000
+diff -rupN linux-6.1.43.orig/drivers/input/Kconfig linux-6.1.43/drivers/input/Kconfig
+--- linux-6.1.43.orig/drivers/input/Kconfig	2023-08-08 14:41:53.818246116 +0000
++++ linux-6.1.43/drivers/input/Kconfig	2023-08-08 14:52:18.868761586 +0000
+@@ -51,6 +51,19 @@ config INPUT_FF_MEMLESS
+ 	  To compile this driver as a module, choose M here: the
+ 	  module will be called ff-memless.
+ 
++config INPUT_POLLDEV
++	tristate "Polled input device skeleton"
++	help
++	  Say Y here if you are using a driver for an input
++	  device that periodically polls hardware state. This
++	  option is only useful for out-of-tree drivers since
++	  in-tree drivers select it automatically.
++
++	  If unsure, say N.
++
++	  To compile this driver as a module, choose M here: the
++	  module will be called input-polldev.
++
+ config INPUT_SPARSEKMAP
+ 	tristate "Sparse keymap support library"
+ 	help
+diff -rupN linux-6.1.43.orig/drivers/input/Makefile linux-6.1.43/drivers/input/Makefile
+--- linux-6.1.43.orig/drivers/input/Makefile	2023-08-08 14:41:53.818246116 +0000
++++ linux-6.1.43/drivers/input/Makefile	2023-08-08 14:52:18.868761586 +0000
+@@ -10,6 +10,7 @@ input-core-y := input.o input-compat.o i
+ input-core-y += touchscreen.o
+ 
+ obj-$(CONFIG_INPUT_FF_MEMLESS)	+= ff-memless.o
++obj-$(CONFIG_INPUT_POLLDEV)	+= input-polldev.o
+ obj-$(CONFIG_INPUT_SPARSEKMAP)	+= sparse-keymap.o
+ obj-$(CONFIG_INPUT_MATRIXKMAP)	+= matrix-keymap.o
+ obj-$(CONFIG_INPUT_VIVALDIFMAP)	+= vivaldi-fmap.o
+diff -rupN linux-6.1.43.orig/drivers/mfd/rk808.c linux-6.1.43/drivers/mfd/rk808.c
+--- linux-6.1.43.orig/drivers/mfd/rk808.c	2023-08-08 14:41:53.926251777 +0000
++++ linux-6.1.43/drivers/mfd/rk808.c	2023-08-08 14:52:18.900763547 +0000
 @@ -81,12 +81,47 @@ static bool rk817_is_volatile_reg(struct
  	return false;
  }
@@ -3590,9 +3670,9 @@ diff -rupN linux.orig/drivers/mfd/rk808.c linux/drivers/mfd/rk808.c
  };
  
  static const struct regmap_irq rk805_irqs[] = {
-diff -rupN linux.orig/drivers/power/reset/Kconfig linux/drivers/power/reset/Kconfig
---- linux.orig/drivers/power/reset/Kconfig	2023-07-27 06:50:53.000000000 +0000
-+++ linux/drivers/power/reset/Kconfig	2023-07-31 20:44:01.736864154 +0000
+diff -rupN linux-6.1.43.orig/drivers/power/reset/Kconfig linux-6.1.43/drivers/power/reset/Kconfig
+--- linux-6.1.43.orig/drivers/power/reset/Kconfig	2023-08-08 14:41:54.142263098 +0000
++++ linux-6.1.43/drivers/power/reset/Kconfig	2023-08-08 14:52:18.900763547 +0000
 @@ -141,6 +141,13 @@ config POWER_RESET_OCELOT_RESET
  	help
  	  This driver supports restart for Microsemi Ocelot SoC and similar.
@@ -3607,9 +3687,9 @@ diff -rupN linux.orig/drivers/power/reset/Kconfig linux/drivers/power/reset/Kcon
  config POWER_RESET_OXNAS
  	bool "OXNAS SoC restart driver"
  	depends on ARCH_OXNAS
-diff -rupN linux.orig/drivers/power/reset/Makefile linux/drivers/power/reset/Makefile
---- linux.orig/drivers/power/reset/Makefile	2023-07-27 06:50:53.000000000 +0000
-+++ linux/drivers/power/reset/Makefile	2023-07-31 20:44:01.736864154 +0000
+diff -rupN linux-6.1.43.orig/drivers/power/reset/Makefile linux-6.1.43/drivers/power/reset/Makefile
+--- linux-6.1.43.orig/drivers/power/reset/Makefile	2023-08-08 14:41:54.142263098 +0000
++++ linux-6.1.43/drivers/power/reset/Makefile	2023-08-08 14:52:18.904763792 +0000
 @@ -17,6 +17,7 @@ obj-$(CONFIG_POWER_RESET_MT6323) += mt63
  obj-$(CONFIG_POWER_RESET_OXNAS) += oxnas-restart.o
  obj-$(CONFIG_POWER_RESET_QCOM_PON) += qcom-pon.o
@@ -3618,9 +3698,9 @@ diff -rupN linux.orig/drivers/power/reset/Makefile linux/drivers/power/reset/Mak
  obj-$(CONFIG_POWER_RESET_PIIX4_POWEROFF) += piix4-poweroff.o
  obj-$(CONFIG_POWER_RESET_LTC2952) += ltc2952-poweroff.o
  obj-$(CONFIG_POWER_RESET_QNAP) += qnap-poweroff.o
-diff -rupN linux.orig/drivers/power/reset/odroid-go-ultra-poweroff.c linux/drivers/power/reset/odroid-go-ultra-poweroff.c
---- linux.orig/drivers/power/reset/odroid-go-ultra-poweroff.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux/drivers/power/reset/odroid-go-ultra-poweroff.c	2023-07-31 20:44:01.736864154 +0000
+diff -rupN linux-6.1.43.orig/drivers/power/reset/odroid-go-ultra-poweroff.c linux-6.1.43/drivers/power/reset/odroid-go-ultra-poweroff.c
+--- linux-6.1.43.orig/drivers/power/reset/odroid-go-ultra-poweroff.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-6.1.43/drivers/power/reset/odroid-go-ultra-poweroff.c	2023-08-08 14:52:18.904763792 +0000
 @@ -0,0 +1,177 @@
 +// SPDX-License-Identifier: GPL-2.0+
 +/*
@@ -3799,9 +3879,9 @@ diff -rupN linux.orig/drivers/power/reset/odroid-go-ultra-poweroff.c linux/drive
 +MODULE_AUTHOR("Neil Armstrong <neil.armstrong@linaro.org>");
 +MODULE_DESCRIPTION("Odroid Go Ultra poweroff driver");
 +MODULE_LICENSE("GPL");
-diff -rupN linux.orig/drivers/power/supply/Kconfig linux/drivers/power/supply/Kconfig
---- linux.orig/drivers/power/supply/Kconfig	2023-07-27 06:50:53.000000000 +0000
-+++ linux/drivers/power/supply/Kconfig	2023-07-31 20:44:01.736864154 +0000
+diff -rupN linux-6.1.43.orig/drivers/power/supply/Kconfig linux-6.1.43/drivers/power/supply/Kconfig
+--- linux-6.1.43.orig/drivers/power/supply/Kconfig	2023-08-08 14:41:54.142263098 +0000
++++ linux-6.1.43/drivers/power/supply/Kconfig	2023-08-08 14:52:18.904763792 +0000
 @@ -918,4 +918,12 @@ config BATTERY_UG3105
  	  device is off or suspended, the functionality of this driver is
  	  limited to reporting capacity only.
@@ -3815,17 +3895,17 @@ diff -rupN linux.orig/drivers/power/supply/Kconfig linux/drivers/power/supply/Kc
 +	  This driver can give support for Rk818 Charger Interface.
 +
  endif # POWER_SUPPLY
-diff -rupN linux.orig/drivers/power/supply/Makefile linux/drivers/power/supply/Makefile
---- linux.orig/drivers/power/supply/Makefile	2023-07-27 06:50:53.000000000 +0000
-+++ linux/drivers/power/supply/Makefile	2023-07-31 20:44:01.736864154 +0000
+diff -rupN linux-6.1.43.orig/drivers/power/supply/Makefile linux-6.1.43/drivers/power/supply/Makefile
+--- linux-6.1.43.orig/drivers/power/supply/Makefile	2023-08-08 14:41:54.142263098 +0000
++++ linux-6.1.43/drivers/power/supply/Makefile	2023-08-08 14:52:18.904763792 +0000
 @@ -110,3 +110,4 @@ obj-$(CONFIG_BATTERY_ACER_A500)	+= acer_
  obj-$(CONFIG_BATTERY_SURFACE)	+= surface_battery.o
  obj-$(CONFIG_CHARGER_SURFACE)	+= surface_charger.o
  obj-$(CONFIG_BATTERY_UG3105)	+= ug3105_battery.o
 +obj-$(CONFIG_CHARGER_RK818)	+= rk818_charger.o rk818_battery.o
-diff -rupN linux.orig/drivers/power/supply/rk818_battery.c linux/drivers/power/supply/rk818_battery.c
---- linux.orig/drivers/power/supply/rk818_battery.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux/drivers/power/supply/rk818_battery.c	2023-07-31 20:44:01.736864154 +0000
+diff -rupN linux-6.1.43.orig/drivers/power/supply/rk818_battery.c linux-6.1.43/drivers/power/supply/rk818_battery.c
+--- linux-6.1.43.orig/drivers/power/supply/rk818_battery.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-6.1.43/drivers/power/supply/rk818_battery.c	2023-08-08 14:52:18.904763792 +0000
 @@ -0,0 +1,3498 @@
 +/*
 + * rk818 battery driver
@@ -7325,9 +7405,9 @@ diff -rupN linux.orig/drivers/power/supply/rk818_battery.c linux/drivers/power/s
 +MODULE_LICENSE("GPL");
 +MODULE_ALIAS("platform:rk818-battery");
 +MODULE_AUTHOR("chenjh<chenjh@rock-chips.com>");
-diff -rupN linux.orig/drivers/power/supply/rk818_battery.h linux/drivers/power/supply/rk818_battery.h
---- linux.orig/drivers/power/supply/rk818_battery.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux/drivers/power/supply/rk818_battery.h	2023-07-31 20:44:01.736864154 +0000
+diff -rupN linux-6.1.43.orig/drivers/power/supply/rk818_battery.h linux-6.1.43/drivers/power/supply/rk818_battery.h
+--- linux-6.1.43.orig/drivers/power/supply/rk818_battery.h	1970-01-01 00:00:00.000000000 +0000
++++ linux-6.1.43/drivers/power/supply/rk818_battery.h	2023-08-08 14:52:18.904763792 +0000
 @@ -0,0 +1,168 @@
 +/*
 + * rk818_battery.h: fuel gauge driver structures
@@ -7497,9 +7577,9 @@ diff -rupN linux.orig/drivers/power/supply/rk818_battery.h linux/drivers/power/s
 +int rk818_bat_temp_notifier_unregister(struct notifier_block *nb);
 +
 +#endif
-diff -rupN linux.orig/drivers/power/supply/rk818_charger.c linux/drivers/power/supply/rk818_charger.c
---- linux.orig/drivers/power/supply/rk818_charger.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux/drivers/power/supply/rk818_charger.c	2023-07-31 20:44:01.736864154 +0000
+diff -rupN linux-6.1.43.orig/drivers/power/supply/rk818_charger.c linux-6.1.43/drivers/power/supply/rk818_charger.c
+--- linux-6.1.43.orig/drivers/power/supply/rk818_charger.c	1970-01-01 00:00:00.000000000 +0000
++++ linux-6.1.43/drivers/power/supply/rk818_charger.c	2023-08-08 14:52:18.908764037 +0000
 @@ -0,0 +1,726 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +/*
@@ -8227,9 +8307,9 @@ diff -rupN linux.orig/drivers/power/supply/rk818_charger.c linux/drivers/power/s
 +MODULE_LICENSE("GPL");
 +MODULE_ALIAS("platform:rk818-charger");
 +MODULE_AUTHOR("Ondřej Jirman <megi@xff.cz>");
-diff -rupN linux.orig/drivers/video/fbdev/simplefb.c linux/drivers/video/fbdev/simplefb.c
---- linux.orig/drivers/video/fbdev/simplefb.c	2023-07-27 06:50:53.000000000 +0000
-+++ linux/drivers/video/fbdev/simplefb.c	2023-07-31 20:44:01.736864154 +0000
+diff -rupN linux-6.1.43.orig/drivers/video/fbdev/simplefb.c linux-6.1.43/drivers/video/fbdev/simplefb.c
+--- linux-6.1.43.orig/drivers/video/fbdev/simplefb.c	2023-08-08 14:41:54.294271065 +0000
++++ linux-6.1.43/drivers/video/fbdev/simplefb.c	2023-08-08 14:52:18.908764037 +0000
 @@ -12,6 +12,7 @@
   * Copyright (C) 1996 Paul Mackerras
   */
@@ -8304,9 +8384,9 @@ diff -rupN linux.orig/drivers/video/fbdev/simplefb.c linux/drivers/video/fbdev/s
  };
  
  module_platform_driver(simplefb_driver);
-diff -rupN linux.orig/include/linux/input-polldev.h linux/include/linux/input-polldev.h
---- linux.orig/include/linux/input-polldev.h	1970-01-01 00:00:00.000000000 +0000
-+++ linux/include/linux/input-polldev.h	2023-07-31 20:56:31.356416991 +0000
+diff -rupN linux-6.1.43.orig/include/linux/input-polldev.h linux-6.1.43/include/linux/input-polldev.h
+--- linux-6.1.43.orig/include/linux/input-polldev.h	1970-01-01 00:00:00.000000000 +0000
++++ linux-6.1.43/include/linux/input-polldev.h	2023-08-08 14:52:18.908764037 +0000
 @@ -0,0 +1,58 @@
 +/* SPDX-License-Identifier: GPL-2.0-only */
 +#ifndef _INPUT_POLLDEV_H
@@ -8366,9 +8446,9 @@ diff -rupN linux.orig/include/linux/input-polldev.h linux/include/linux/input-po
 +void input_unregister_polled_device(struct input_polled_dev *dev);
 +
 +#endif
-diff -rupN linux.orig/include/linux/mfd/rk808.h linux/include/linux/mfd/rk808.h
---- linux.orig/include/linux/mfd/rk808.h	2023-07-27 06:50:53.000000000 +0000
-+++ linux/include/linux/mfd/rk808.h	2023-07-31 20:50:30.731134898 +0000
+diff -rupN linux-6.1.43.orig/include/linux/mfd/rk808.h linux-6.1.43/include/linux/mfd/rk808.h
+--- linux-6.1.43.orig/include/linux/mfd/rk808.h	2023-08-08 14:41:54.382275678 +0000
++++ linux-6.1.43/include/linux/mfd/rk808.h	2023-08-08 14:52:18.908764037 +0000
 @@ -138,6 +138,8 @@ enum rk818_reg {
  	RK818_ID_OTG_SWITCH,
  };
@@ -8479,9 +8559,9 @@ diff -rupN linux.orig/include/linux/mfd/rk808.h linux/include/linux/mfd/rk808.h
  
  #define TEMP115C			0x0c
  #define TEMP_HOTDIE_MSK			0x0c
-diff -rupN linux.orig/sound/soc/meson/axg-card.c linux/sound/soc/meson/axg-card.c
---- linux.orig/sound/soc/meson/axg-card.c	2023-07-27 06:50:53.000000000 +0000
-+++ linux/sound/soc/meson/axg-card.c	2023-07-31 20:44:01.736864154 +0000
+diff -rupN linux-6.1.43.orig/sound/soc/meson/axg-card.c linux-6.1.43/sound/soc/meson/axg-card.c
+--- linux-6.1.43.orig/sound/soc/meson/axg-card.c	2023-08-08 14:41:54.614287838 +0000
++++ linux-6.1.43/sound/soc/meson/axg-card.c	2023-08-08 14:52:18.908764037 +0000
 @@ -59,6 +59,13 @@ static int axg_card_tdm_dai_init(struct
  		(struct axg_dai_link_tdm_data *)priv->link_data[rtd->num];
  	struct snd_soc_dai *codec_dai;

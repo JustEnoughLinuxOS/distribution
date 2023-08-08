@@ -207,7 +207,6 @@ function quit() {
 	clear_screen
 	DEVICE_CPU_GOVERNOR=$(get_setting system.cpugovernor)
 	${DEVICE_CPU_GOVERNOR}
-	set_audio default
 	exit $1
 }
 

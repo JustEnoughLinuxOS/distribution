@@ -4,6 +4,7 @@
 
 . /etc/os-release
 
+export XDG_RUNTIME_DIR=/var/run/0-runtime-dir
 export PATH="/usr/bin:/usr/local/bin:/storage/bin:${PATH}"
 export SDL_GAMECONTROLLERCONFIG_FILE="/storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt"
 
@@ -108,18 +109,6 @@ function set_setting() {
       rm -f "${J_CONF_LOCK}"
     fi
   fi
-}
-
-function set_audio() {
-  case ${1} in
-  "default")
-    AUDIO="alsa"
-  ;;
-  *)
-    AUDIO=${1}
-  ;;
-  esac
-  /usr/bin/rr_audio.sh ${AUDIO}
 }
 
 function battery_percent() {

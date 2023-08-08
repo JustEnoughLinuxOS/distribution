@@ -14,8 +14,6 @@ HATARI_LOG="/var/log/hatari.log"
 MAX_DRIVES=2
 i=0
 
-export SDL_AUDIODRIVER=alsa
-
 # create symlink to hatari config dir
 if [ ! -L $HATARI_DIR_HOME ]; then
   rm -rf $HATARI_DIR_HOME

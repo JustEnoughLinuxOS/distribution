@@ -1,0 +1,22 @@
+[Unit]
+Description=PipeWire PulseAudio Service
+Requires=pipewire-pulse.socket
+After=pipewire.service wireplumber.service
+
+[Service]
+User=root
+Type=simple
+ExecStart=/usr/bin/pipewire-pulse
+Restart=on-failure
+RuntimeDirectory=pipewire
+RuntimeDirectoryPreserve=yes
+ExecStartPre=/bin/mkdir -p /var/run/0-runtime-dir/pulse
+Environment=PIPEWIRE_RUNTIME_DIR=%t/pipewire
+Environment=XDG_RUNTIME_DIR=/var/run/0-runtime-dir
+Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/dbus/system_bus_socket
+Environment=HOME=/storage
+# Environment=PIPEWIRE_DEBUG=4
+
+[Install]
+Also=pipewire-pulse.socket
+WantedBy=default.target
