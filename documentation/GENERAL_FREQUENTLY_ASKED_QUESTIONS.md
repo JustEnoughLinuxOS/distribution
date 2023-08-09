@@ -40,11 +40,13 @@ JELOS branding is licensed for non-commercial use only.  Even if approved to be 
 * Emulators and game engines are configured on a per device basis and are automatically documented at build time.  Documentation can be found at the following URL:
   * [Per Device Documentation](/documentation/PER_DEVICE_DOCUMENTATION)
 
-### I'm using an Intel or AMD based device and I have no sound.
-* Press Start, select System Settings, select your audio output device, save, then choose an available audio path.
-
 ### Sound suddenly stopped working on my device!
-* Log in over ssh, delete /storage/.config/asound*, and reboot the device.
+* Log in over ssh, and run the following steps.
+```
+systemctl stop pipewire-pulse pipewire-pulse.socket pipewire pipewire.socket wireplumber
+rm -rf /storage/.local/state /storage/.config/pulse
+reboot
+```
 
 ### EmuStation displays duplicate game titles. How can I disable a file extension to remove the duplicates? (e.g. display only ```.cue``` and don't display ```.bin``` files for PlayStation)
 
