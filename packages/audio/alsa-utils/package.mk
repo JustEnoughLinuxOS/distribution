@@ -20,14 +20,10 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-alsaconf \
                            --disable-nls \
                            --disable-rst2man \
                            --disable-xmlto"
-case ${DEVICE} in
-  RK356*)
-    ::
-  ;;
-  *)
+if [[ ! "${DEVICE}" =~ RK356 ]]
+then 
     PKG_DEPENDS_TARGET+=" alsa-ucm-conf"
-  ;;
-esac
+fi
 
 post_makeinstall_target() {
   rm -rf ${INSTALL}/lib ${INSTALL}/var

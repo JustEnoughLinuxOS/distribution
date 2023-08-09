@@ -28,10 +28,6 @@ volumectl() {
   fi
 }
 
-alsastate() {
-  alsactl ${1} -f /storage/.config/asound.state >/dev/null 2>&1
-}
-
 powerstate() {
   if [ "$(get_setting system.powersave)" = 1 ]
   then
@@ -103,7 +99,6 @@ quirks() {
 
 case $1 in
   pre)
-    alsastate store
     headphones stop
     volumectl stop
     bluetooth stop
@@ -116,7 +111,6 @@ case $1 in
   ;;
   post)
     ledcontrol
-    alsastate restore
     modules start
     powerstate start
     headphones start

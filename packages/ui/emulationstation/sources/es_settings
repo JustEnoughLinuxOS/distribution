@@ -6,8 +6,7 @@
 # Source predefined functions and variables
 . /etc/profile
 
-set_audio alsa
-export SDL_AUDIODRIVER=alsa
+export SDL_AUDIODRIVER=pulseaudio
 
 TZ=$(get_setting system.timezone)
 echo -n "TIMEZONE=${TZ}" > /storage/.cache/timezone

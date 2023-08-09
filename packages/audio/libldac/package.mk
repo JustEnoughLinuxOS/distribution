@@ -1,18 +1,11 @@
-# SPDX-License-Identifier: Apache-2.0
-# Copyright (C) 2022-present Marek Moeckel (wansti@discarded-ideas.org)
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2021-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libldac"
-PKG_VERSION="af2dd23979453bcd1cad7c4086af5fb421a955c5"
-PKG_LICENSE="Apache2"
-PKG_SITE="https://github.com/EHfive/ldacBT"
-PKG_URL="${PKG_SITE}.git"
-PKG_DEPENDS_TARGET="toolchain"
-PKG_LONGDESC="LDAC bluetooth audio codec"
-PKG_TOOLCHAIN="cmake-make"
-GET_HANDLER_SUPPORT="git"
-
-post_makeinstall_target() {
-    cp -P -r ${INSTALL}/usr/lib/* ${SYSROOT_PREFIX}/usr/lib/
-    cp -P -r ${INSTALL}/usr/include/* ${SYSROOT_PREFIX}/usr/include/
-    rm -rf ${INSTALL}/usr/lib/pkgconfig
-}
+PKG_VERSION="82b6a1abee84787b8fa167efe20290073f60db2d"
+PKG_SHA256="d61edcd3bfc4b71123136895fe71e7ba974f4a91f16a158f0ec8d5eb1913c51a"
+PKG_LICENSE="Apache"
+PKG_SITE="https://android.googlesource.com/platform/external/libldac"
+PKG_URL="https://github.com/brucehw/libldac/archive/${PKG_VERSION}.tar.gz"
+PKG_LONGDESC="LDAC Bluetooth encoder library"
+PKG_TOOLCHAIN="manual"

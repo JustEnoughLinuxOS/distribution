@@ -58,11 +58,6 @@ This configuration file contains basic information for JELOS that cannot current
 * KEYA/B_MODIFIER - `evtest`.
 * PATH_SPK/HP - `amixer`.
 
-#### 001-audio
-Audio is not detected automatically in JELOS currently, and requires a quirk to configure it on startup.  To test and identify the proper configuration for your device use the following method.
-* Configure Audio using the "System Settings" menu in EmulationStation.
-  * `set-audio get` and `set-audio esget`
-
 #### 002-fancontrol
 Not all devices have methods available to control the fan.  The following can help determine if yours can be controlled.
 * `find /sys/devices -name pwm*` and evaluate if fan control is available.

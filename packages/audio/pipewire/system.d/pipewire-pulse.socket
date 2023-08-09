@@ -1,0 +1,10 @@
+[Unit]
+Description=PipeWire PulseAudio
+Conflicts=pulseaudio.socket
+
+[Socket]
+Priority=6
+ListenStream=%t/pulse/native
+
+[Install]
+WantedBy=sockets.target

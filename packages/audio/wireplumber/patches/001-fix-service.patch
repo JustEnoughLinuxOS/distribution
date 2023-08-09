@@ -1,0 +1,39 @@
+diff -rupN wireplumber.orig/src/systemd/system/wireplumber.service.in wireplumber/src/systemd/system/wireplumber.service.in
+--- wireplumber.orig/src/systemd/system/wireplumber.service.in	2023-08-07 22:20:40.224986070 +0000
++++ wireplumber/src/systemd/system/wireplumber.service.in	2023-08-07 22:37:50.340093097 +0000
+@@ -5,19 +5,16 @@ BindsTo=pipewire.service
+ Conflicts=pipewire-media-session.service
+ 
+ [Service]
+-LockPersonality=yes
+-MemoryDenyWriteExecute=yes
+-NoNewPrivileges=yes
+-RestrictNamespaces=yes
+-SystemCallArchitectures=native
+-SystemCallFilter=@system-service
+ Type=simple
+ AmbientCapabilities=CAP_SYS_NICE
+ ExecStart=@WP_BINARY@
+ Restart=on-failure
+-User=pipewire
++User=root
+ Environment=PIPEWIRE_RUNTIME_DIR=%t/pipewire
+ Environment=GIO_USE_VFS=local
++Environment=XDG_RUNTIME_DIR=/var/run/0-runtime-dir
++Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/dbus/system_bus_socket
++Environment=HOME=/storage
+ 
+ [Install]
+ WantedBy=pipewire.service
+diff -rupN wireplumber.orig/src/systemd/system/wireplumber@.service.in wireplumber/src/systemd/system/wireplumber@.service.in
+--- wireplumber.orig/src/systemd/system/wireplumber@.service.in	2023-08-07 22:20:40.224986070 +0000
++++ wireplumber/src/systemd/system/wireplumber@.service.in	2023-08-07 22:37:43.927743110 +0000
+@@ -20,7 +20,7 @@ Type=simple
+ AmbientCapabilities=CAP_SYS_NICE
+ ExecStart=@WP_BINARY@ -c %i.conf
+ Restart=on-failure
+-User=pipewire
++User=root
+ Environment=PIPEWIRE_RUNTIME_DIR=%t/pipewire
+ Environment=GIO_USE_VFS=local
+ 

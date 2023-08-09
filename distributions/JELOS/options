@@ -38,7 +38,10 @@
   GLIBC_LOCALES="yes"
 
 # build and install PulseAudio support (yes / no)
-  PULSEAUDIO_SUPPORT="yes"
+  PULSEAUDIO_SUPPORT="no"
+
+# build and install pipewire support (yes / no)
+  PIPEWIRE_SUPPORT="yes"
 
 # Define package sets to clean based on the type of build being executed.
 # This should be updated to be more dynamic in the future.

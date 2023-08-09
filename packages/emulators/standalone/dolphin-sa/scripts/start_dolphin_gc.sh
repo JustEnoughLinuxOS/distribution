@@ -6,6 +6,9 @@
 . /etc/profile
 jslisten set "-9 dolphin-emu-nogui"
 
+systemctl stop pipewire-pulse
+export SDL_AUDIODRIVER=alsa
+
 #Check if dolphin-emu exists in .config
 if [ ! -d "/storage/.config/dolphin-emu" ]; then
     mkdir -p "/storage/.config/dolphin-emu"
@@ -244,3 +247,6 @@ ln -sf /storage/.config/dolphin-emu /storage/.local/share/dolphin-emu
 
 #Run Dolphin emulator
 ${EMUPERF} /usr/bin/dolphin-emu-nogui -p @DOLPHIN_PLATFORM@ -a HLE -e "${1}"
+
+unset SDL_AUDIODRIVER
+systemctl start pipewire-pulse

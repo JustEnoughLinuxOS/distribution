@@ -10,6 +10,5 @@ then
 fi
 
 ARG=${1//[\\]/}
-export SDL_AUDIODRIVER=alsa
 echo "[${ARG}]"
 xvic -sounddev alsa -sdl2renderer opengles2 "${ARG}"
