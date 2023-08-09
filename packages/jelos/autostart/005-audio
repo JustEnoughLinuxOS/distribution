@@ -16,20 +16,8 @@ fi
 ### Auto switch between internal and bluetooth devices
 pactl load-module module-switch-on-connect
 
-DEFAULT_ID=$(pactl list short cards | awk '! /hdmi/ {print $1; exit}')
-DEFAULT_SINK=$(pactl list short sinks | awk '! /hdmi/ {print $2; exit}')
-
-if [ ! -z "${DEFAULT_SINK}" ]
-then
-  ### Set the default sink ignoring HDMI
-  pactl set-default-sink ${DEFAULT_SINK}
-  pactl set-default-source ${DEFAULT_SINK}.monitor
-fi
-
-if [ ! -z "${DEVICE_PIPEWIRE_PROFILE}" ]
-then
-  pactl set-card-profile ${DEFAULT_ID} ${DEVICE_PIPEWIRE_PROFILE}
-fi
+### Set up audio routing (Internal or HDMI)
+/usr/bin/hdmi_sense
 
 ### Set the default audio path, needed for some devices
 if [ ! -z "${DEVICE_PLAYBACK_PATH_SPK}" ]
