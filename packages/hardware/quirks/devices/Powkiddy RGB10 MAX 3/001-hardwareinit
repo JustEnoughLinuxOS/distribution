@@ -15,3 +15,7 @@ cat <<EOF >/storage/.config/sleep.conf.d/sleep.conf
 AllowSuspend=no
 SuspendState=freeze
 EOF
+
+### Set sound properties
+amixer -q sset 'FRDDR_A SINK 1 SEL' 'OUT 1'
+amixer -q sset 'FRDDR_A SRC 1 EN' 'on'
