@@ -1,0 +1,40 @@
+diff --git a/src/main.conf b/src/main.conf
+index d108934a8..f90820314 100644
+--- a/src/main.conf
++++ b/src/main.conf
+@@ -60,7 +60,7 @@
+ # or both Multiple Profiles Single Device (MPSD) and Multiple Profiles Multiple
+ # Devices (MPMD) configurations.
+ # Possible values: "off", "single", "multiple"
+-#MultiProfile = off
++MultiProfile = multiple
+ 
+ # Permanently enables the Fast Connectable setting for adapters that
+ # support it. When enabled other devices can connect faster to us,
+@@ -100,7 +100,7 @@
+ # Specify the policy to the JUST-WORKS repairing initiated by peer
+ # Possible values: "never", "confirm", "always"
+ # Defaults to "never"
+-#JustWorksRepairing = never
++JustWorksRepairing = always
+ 
+ # How long to keep temporary devices around
+ # The value is in seconds. Default is 30.
+@@ -109,7 +109,7 @@
+ 
+ # Enables the device to issue an SDP request to update known services when
+ # profile is connected. Defaults to true.
+-#RefreshDiscovery = true
++RefreshDiscovery = true
+ 
+ # Default Secure Connections setting.
+ # Enables the Secure Connections setting for adapters that support it. It
+@@ -318,7 +318,7 @@
+ # AutoEnable defines option to enable all controllers when they are found.
+ # This includes adapters present on start as well as adapters that are plugged
+ # in later on. Defaults to 'true'.
+-#AutoEnable=true
++AutoEnable=true
+ 
+ # Audio devices that were disconnected due to suspend will be reconnected on
+ # resume. ResumeDelay determines the delay between when the controller
