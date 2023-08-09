@@ -6,7 +6,7 @@
 # Source predefined functions and variables
 . /etc/profile
 
-export SDL_AUDIODRIVER=pulseaudio
+export SDL_AUDIODRIVER=pipewire
 
 TZ=$(get_setting system.timezone)
 echo -n "TIMEZONE=${TZ}" > /storage/.cache/timezone
