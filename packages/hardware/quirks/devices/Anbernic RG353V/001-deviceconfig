@@ -15,10 +15,6 @@ DEVICE_HEADPHONE_DEV="/dev/input/by-path/platform-rk817-sound-event"
 DEVICE_BRIGHTNESS="70"
 UI_SERVICE="emustation.service"
 
-# Kernel Modules
-DEVICE_INTERNAL_WIFI=true
-DEVICE_WIFI_MODULE="MT7601U"
-
 # GPIOS
 DEVICE_WIFI="5"
 DEVICE_LED="77"

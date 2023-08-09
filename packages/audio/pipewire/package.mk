@@ -18,7 +18,8 @@ if [ "${BLUETOOTH_SUPPORT}" = "yes" ]; then
                           -Dbluez5-backend-hsphfpd=enabled \
                           -Dbluez5-codec-aptx=enabled \
                           -Dbluez5-codec-ldac=enabled \
-                          -Dbluez5-codec-aac=enabled"
+                          -Dbluez5-codec-aac=enabled \
+-Dbluez5-codec-opus=enabled"
 else
   PKG_PIPEWIRE_BLUETOOTH="-Dbluez5=disabled"
 fi
