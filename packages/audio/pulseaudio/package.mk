@@ -11,13 +11,6 @@ PKG_URL="http://www.freedesktop.org/software/pulseaudio/releases/${PKG_NAME}-${P
 PKG_DEPENDS_TARGET="toolchain alsa-lib dbus libcap libsndfile libtool openssl soxr speexdsp systemd glib:host glib"
 PKG_LONGDESC="PulseAudio is a sound system for POSIX OSes, meaning that it is a proxy for your sound applications."
 
-if [ "${BLUETOOTH_SUPPORT}" = "yes" ]; then
-  PKG_DEPENDS_TARGET+=" sbc bluez"
-  PKG_PULSEAUDIO_BLUETOOTH="-Dbluez5=enabled"
-else
-  PKG_PULSEAUDIO_BLUETOOTH="-Dbluez5=disabled"
-fi
-
 if [ "${AVAHI_DAEMON}" = "yes" ]; then
   PKG_DEPENDS_TARGET+=" avahi"
   PKG_PULSEAUDIO_AVAHI="-Davahi=enabled"
@@ -44,10 +37,8 @@ PKG_MESON_OPTS_TARGET="-Ddaemon=true \
                        -Dalsa=enabled \
                        -Dasyncns=disabled \
                        ${PKG_PULSEAUDIO_AVAHI} \
-                       ${PKG_PULSEAUDIO_BLUETOOTH} \
+                       -Dbluez5=disabled
                        -Dbluez5-gstreamer=disabled \
-                       -Dbluez5-native-headset=true \
-                       -Dbluez5-ofono-headset=true \
                        -Ddbus=enabled \
                        -Delogind=disabled \
                        -Dfftw=disabled \
