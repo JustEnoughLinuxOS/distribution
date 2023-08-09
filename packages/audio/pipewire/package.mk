@@ -10,7 +10,7 @@ PKG_DEPENDS_TARGET="toolchain libpthread-stubs dbus ncurses alsa-lib pulseaudio 
 PKG_LONGDESC="PipeWire is a server and user space API to deal with multimedia pipeline"
 
 if [ "${BLUETOOTH_SUPPORT}" = "yes" ]; then
-  PKG_DEPENDS_TARGET+=" bluez sbc ldacBT libfreeaptx"
+  PKG_DEPENDS_TARGET+=" bluez sbc ldacBT libfreeaptx fdk-aac"
   PKG_PIPEWIRE_BLUETOOTH="-Dbluez5=enabled \
                           -Dbluez5-backend-hsp-native=disabled \
                           -Dbluez5-backend-hfp-native=disabled \
