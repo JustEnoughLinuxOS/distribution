@@ -206,6 +206,9 @@ ln -sf /storage/.config/yuzu /storage/.local/share/yuzu
 #Set QT Platform to Wayland-EGL
 export QT_QPA_PLATFORM=wayland-egl
 
+#Yuzu won't work with the pipewire driver yet
+export SDL_AUDIODRIVER=pulseaudio
+
 jslisten set "-9 yuzu"
 
 #Run Yuzu emulator

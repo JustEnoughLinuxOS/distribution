@@ -6,8 +6,7 @@
 # Source environment variables
 . /etc/profile
 
-# Ensure we're using pulseaudio
-export SDL_AUDIODRIVER=pulseaudio
+export SDL_AUDIODRIVER=pipewire
 jslisten set "-9 cemu"
 
 if [ -z "${PASINK}" ]
