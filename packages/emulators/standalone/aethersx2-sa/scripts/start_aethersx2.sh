@@ -162,6 +162,6 @@ fi
   export QT_QPA_PLATFORM=wayland
 
 #Run Aethersx2 emulator
-  export SDL_AUDIODRIVER=pipewire
+  export SDL_AUDIODRIVER=pulseaudio
   jslisten set "-9 aethersx2"
   ${EMUPERF} /usr/bin/@APPIMAGE@ -fullscreen "${1}"
