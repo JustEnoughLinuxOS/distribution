@@ -15,10 +15,10 @@ do
       CONNECTED=$(bluetoothctl devices Connected | grep ${DEVICE} >/dev/null 2>&1)
       if [ ! $? = 0 ]
       then
-        echo "connect ${DEVICE}" | bluetoothctl --timeout 2 >/dev/null 2>&1
+        echo "connect ${DEVICE}" | bluetoothctl --timeout 5 >/dev/null 2>&1
       fi
-      sleep .5
+      sleep .2
     done
   fi
-  sleep 3
+  sleep 5
 done
