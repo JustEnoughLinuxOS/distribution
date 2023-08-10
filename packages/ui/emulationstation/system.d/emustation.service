@@ -5,7 +5,7 @@ ConditionPathExists=/var/lock/start.games
 [Service]
 Environment=XDG_RUNTIME_DIR=/var/run/0-runtime-dir
 Environment=HOME=/storage
-Environment=SDL_AUDIODRIVER=pipewire
+Environment=SDL_AUDIODRIVER=pulseaudio
 ExecStartPre=/usr/bin/es_settings
 ExecStart=/usr/bin/emulationstation --log-path /var/log --no-splash
 KillMode=process
