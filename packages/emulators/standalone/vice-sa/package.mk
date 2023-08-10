@@ -13,7 +13,7 @@ PKG_PRIORITY="optional"
 PKG_SECTION="emulators"
 PKG_SHORTDESC="Commodore 8-bit Emulator"
 PKG_LONGDESC="Commodore 8-bit Emulator"
-PKG_CONFIGURE_OPTS_TARGET+=" --disable-pdf-docs --enable-gtk3ui=no"
+PKG_CONFIGURE_OPTS_TARGET+=" --disable-pdf-docs --enable-gtk3ui=no --without-alsa --with-pulse --enable-sdl2ui"
 
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
@@ -30,10 +30,15 @@ pre_configure_target() {
 
 post_makeinstall_target() {
   mkdir -p ${INSTALL}/usr/config/vice
-  if [ -d "${PKG_DIR}/config/${DEVICE}" ]
+  if [ -d "${PKG_DIR}/configs" ]
   then
-    cp -f ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/config/vice
+    cp -f ${PKG_DIR}/configs/* ${INSTALL}/usr/config/vice
   fi
-  cp -f ${PKG_DIR}/sources/* ${INSTALL}/usr/bin
+
+  for sc in x128 x64sc xplus4 xvic
+  do
+    cp -f ${PKG_DIR}/sources/start_vice.sh ${INSTALL}/usr/bin/start_${sc}.sh
+    sed -i "s~@EMU@~${sc}~g" ${INSTALL}/usr/bin/start_${sc}.sh
+  done
   chmod 0755 ${INSTALL}/usr/bin/*
 }

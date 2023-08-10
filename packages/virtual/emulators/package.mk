@@ -244,7 +244,7 @@ makeinstall_target() {
 
   ### Commodore VIC-20
   add_emu_core vic20 retroarch vice_xvic true
-  add_emu_core vic20 vicesa vice_xvic false
+  add_emu_core vic20 vicesa xvic false
   add_es_system vic20
 
   ### Capcom Playsystem 1
