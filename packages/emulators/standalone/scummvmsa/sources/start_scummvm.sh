@@ -63,6 +63,8 @@ case $1 in
 
   *)
     GAME=$(cat "${GAME}")
+    systemctl start fluidsynth
     eval /usr/bin/scummvm --fullscreen --joystick=0 --themepath=/usr/config/scummvm/themes "${GAME}"
+    systemctl stop fluidsynth
   ;;
 esac
