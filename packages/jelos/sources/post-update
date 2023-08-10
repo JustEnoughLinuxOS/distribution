@@ -165,6 +165,12 @@ then
   cp -f /usr/config/flycast/emu.cfg /storage/.config/flycast/emu.cfg
 fi
 
+### Dolphin needs to switch to pulseaudio
+if [ -e "/storage/.config/dolphin-emu/Dolphin.ini" ]
+then
+  sed -i 's/Backend = ALSA/Backend = Pulse/g' /storage/.config/dolphin-emu/Dolphin.ini
+fi
+
 ### Set the default output to Master for pipewire
 ES_SETTINGS="/storage/.config/emulationstation/es_settings.cfg"
 
