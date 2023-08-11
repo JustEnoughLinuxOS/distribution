@@ -2,7 +2,7 @@
 # Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="beetle-psx-lr"
-PKG_VERSION="379793f1005b1d8810b99f81fe7b5f9126831c89"
+PKG_VERSION="9d07ee164ce18d5c98a12c1fb48d637306d4e8ee"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://git.libretro.com/libretro/beetle-psx-libretro"
 PKG_URL="${PKG_SITE}.git"
