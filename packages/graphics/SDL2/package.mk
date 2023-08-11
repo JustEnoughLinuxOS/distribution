@@ -12,12 +12,6 @@ PKG_LONGDESC="Simple DirectMedia Layer is a cross-platform development library d
 PKG_DEPENDS_HOST="toolchain:host distutilscross:host"
 PKG_PATCH_DIRS+="${DEVICE}"
 
-case ${ARCH} in
-  arm|aarch64)
-    PKG_DEPENDS_TARGET+=" SDL2-rotated"
-  ;;
-esac
-
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu"
   PKG_CMAKE_OPTS_TARGET+=" -DSDL_OPENGL=ON \

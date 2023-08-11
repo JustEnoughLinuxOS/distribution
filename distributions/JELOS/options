@@ -37,9 +37,6 @@
 # Install glibc locales to the build (yes / no)
   GLIBC_LOCALES="yes"
 
-# build and install PulseAudio support (yes / no)
-  PULSEAUDIO_SUPPORT="no"
-
 # build and install pipewire support (yes / no)
   PIPEWIRE_SUPPORT="yes"
 

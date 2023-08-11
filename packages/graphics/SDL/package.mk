@@ -89,9 +89,8 @@ fi
     PKG_CONFIGURE_OPTS_TARGET+=" --enable-video-wayland --enable-video-wayland-qt-touch --enable-wayland-shared"
   fi
 
-if [ "$PULSEAUDIO_SUPPORT" = yes ]; then
-  PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} pulseaudio"
-
+if [ "${PIPEWIRE_SUPPORT}" = yes ]; then
+  PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} alsa pulseaudio pipewire"
   PKG_CONFIGURE_OPTS_TARGET="${PKG_CONFIGURE_OPTS_TARGET} --enable-pulseaudio --enable-pulseaudio-shared"
 else
   PKG_CONFIGURE_OPTS_TARGET="${PKG_CONFIGURE_OPTS_TARGET} --disable-pulseaudio --disable-pulseaudio-shared"
