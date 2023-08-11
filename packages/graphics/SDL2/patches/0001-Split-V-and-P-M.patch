@@ -1,7 +1,7 @@
-From 7c4b7b8f46a3d688fe34c30741e260fa08a70813 Mon Sep 17 00:00:00 2001
+From b1b9120bdb797b0eda78a367385b178fb711cb7c Mon Sep 17 00:00:00 2001
 From: Fewtarius <fewtarius@gmail.com>
 Date: Sun, 4 Apr 2021 09:42:49 -0400
-Subject: [PATCH] Split V and P/M
+Subject: [PATCH 1/7] Split V and P/M
 
 ---
  .../packages/SDL2/patches/0003-no-cursor.patch       | 12 ++++++++++++
@@ -10,7 +10,7 @@ Subject: [PATCH] Split V and P/M
 
 diff --git a/projects/Rockchip/devices/RG351P/packages/SDL2/patches/0003-no-cursor.patch b/projects/Rockchip/devices/RG351P/packages/SDL2/patches/0003-no-cursor.patch
 new file mode 100644
-index 00000000..d912a67a
+index 000000000..d912a67aa
 --- /dev/null
 +++ b/projects/Rockchip/devices/RG351P/packages/SDL2/patches/0003-no-cursor.patch
 @@ -0,0 +1,12 @@
@@ -27,5 +27,5 @@ index 00000000..d912a67a
 +     return (0);
 + }
 -- 
-2.25.1
+2.20.1
 

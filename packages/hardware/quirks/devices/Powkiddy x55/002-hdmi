@@ -18,22 +18,5 @@ hdmi_con() {
   fi
 }
 
-###
-### Test for an HDMI connection and if there is none, configure the system to use
-### a rotation patched SDL2.
-cat <<EOF >/storage/.config/profile.d/006-hdmi
-HDMI="\$(cat /sys/class/extcon/hdmi/state)"
-if [ ! "\${HDMI}" = "HDMI=1" ]
-then
-  SDL=\$(readlink -f /usr/lib/SDL2-rotated/libSDL2.so 2>/dev/null)
-  export LD_PRELOAD="\${SDL}"
-else
-  SDL=\$(readlink -f /usr/lib/libSDL2.so 2>/dev/null)
-  export LD_PRELOAD="\${SDL}"
-fi
-EOF
-
-chmod 0755 /storage/.config/profile.d/006-hdmi
-
 ### If hdmi is connected, set the framebuffer rotation back to normal.
 hdmi_con
