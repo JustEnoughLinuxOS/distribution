@@ -4,7 +4,7 @@
 
 . /etc/profile
 
-AUDIOTEST=$(ps -ef | grep [p]ulseaudio)
+AUDIOTEST=$(ps -ef | grep [p]ipewire)
 if [ ! $? = 0 ]
 then
   PLAYCMD="aplay -q"
