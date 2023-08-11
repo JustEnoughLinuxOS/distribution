@@ -186,3 +186,10 @@ function set_es_path() {
 }
 
 set_es_path "Master"
+
+### Set default audio latency
+LATENCY=$(get_setting global.audiolatency)
+if [ -z "${LATENCY}" ]
+then
+  set_setting global.audiolatency 32
+fi
