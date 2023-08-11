@@ -13,7 +13,7 @@ elif [ "${CORES}" = "big" ]
 then
   EMUPERF="${FAST_CORES}"
 else
-/storage/.config/ppsspp/PSP/SYSTEM/ppsspp.ini  ### All..
+  ### All..
   unset EMUPERF
 fi
 
