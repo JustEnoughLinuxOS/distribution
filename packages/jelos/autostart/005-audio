@@ -4,6 +4,7 @@
 
 # Minimal OS variable loading for performance
 . /etc/profile.d/02-distribution
+. /storage/.config/profile.d/001-deviceconfig
 
 tocon "Configuring Audio..."
 
