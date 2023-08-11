@@ -17,7 +17,7 @@ ProtectControlGroups=true
 # end of automatic additions
 # required in order for the above sandboxing options to work on a user unit
 PrivateUsers=yes
-Type=notify
+Type=simple
 NotifyAccess=main
 EnvironmentFile=-%h/.config/fluidsynth
 ExecStart=/usr/bin/fluidsynth -is -a sdl2 /usr/share/soundfonts/GeneralUser.sf2
