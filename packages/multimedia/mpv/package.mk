@@ -27,7 +27,7 @@ pre_configure_target() {
 
 configure_target() {
   cd ${PKG_BUILD}
-  ${PKG_BUILD}/waf configure --enable-sdl2 --enable-sdl2-gamepad --disable-pulse --disable-libbluray ${PKG_WAF_OPTS}
+  ${PKG_BUILD}/waf configure --enable-sdl2 --enable-sdl2-gamepad --enable-pulse --disable-libbluray ${PKG_WAF_OPTS}
 }
 
 make_target() {

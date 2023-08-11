@@ -168,7 +168,7 @@ fi
 ### Dolphin needs to switch to pulseaudio
 if [ -e "/storage/.config/dolphin-emu/Dolphin.ini" ]
 then
-  sed -i 's/Backend = ALSA/Backend = Pulse/g' /storage/.config/dolphin-emu/Dolphin.ini
+  sed -i 's/Backend =.*$/Backend = Pulse/g' /storage/.config/dolphin-emu/Dolphin.ini
 fi
 
 ### Set the default output to Master for pipewire
