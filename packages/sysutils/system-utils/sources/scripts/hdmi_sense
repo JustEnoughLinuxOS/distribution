@@ -1,0 +1,39 @@
+#!/bin/bash
+
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2023-present Fewtarius
+
+# Source predefined functions and variables
+. /etc/profile
+
+for HDMI in /sys/class/drm/card0/card0-HDMI-A-[0-9]/status
+do
+  HDMI_STATE=$(<${HDMI})
+  case ${HDMI_STATE} in
+    connected)
+      DEFAULT_SINK=$(pactl list short sinks | awk '/hdmi/ {print $2; exit}')
+      break
+    ;;
+  esac
+done
+
+if [ -z "${DEFAULT_SINK}" ]
+then
+  DEFAULT_ID=$(pactl list short cards | awk '! /hdmi/ {print $1; exit}')
+  DEFAULT_SINK=$(pactl list short sinks | awk '! /hdmi/ {print $2; exit}')
+
+  if [ ! -z "${DEFAULT_SINK}" ]
+  then
+    ### Set the default sink ignoring HDMI
+    pactl set-default-sink ${DEFAULT_SINK}
+    pactl set-default-source ${DEFAULT_SINK}.monitor
+  fi
+
+  if [ ! -z "${DEVICE_PIPEWIRE_PROFILE}" ]
+  then
+    pactl set-card-profile ${DEFAULT_ID} ${DEVICE_PIPEWIRE_PROFILE}
+  fi
+
+fi
+
+pactl set-default-sink ${DEFAULT_SINK}

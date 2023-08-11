@@ -116,15 +116,25 @@ fi
 ### We need the original system cooling profile later so get it now!
 COOLINGPROFILE=$(get_setting cooling.profile)
 
-if [ -e "/usr/bin/overclock" ]
-then
-  ### Set the overclock mode
-  OVERCLOCK=$(get_setting "overclock" "${PLATFORM}" "${ROMNAME##*/}")
-  if [ ! -z "${OVERCLOCK}" ]
-  then
-    /usr/bin/overclock ${OVERCLOCK}
-  fi
-fi
+### Set CPU TDP (AMD) or EPP (Intel)
+CPU_VENDOR=$(cpu_vendor)
+case ${CPU_VENDOR} in
+  AuthenticAMD)
+    ### Set the overclock mode
+    OVERCLOCK=$(get_setting "overclock" "${PLATFORM}" "${ROMNAME##*/}")
+    if [ ! -z "${OVERCLOCK}" ]
+    then
+      /usr/bin/overclock ${OVERCLOCK}
+    fi
+  ;;
+  GenuineIntel)
+    EPP=$(get_setting "power.epp" "${PLATFORM}" "${ROMNAME##*/}")
+    if [ ! -z ${EPP} ]
+    then
+      /usr/bin/set_epp ${EPP}
+    fi
+  ;;
+esac
 
 GPUPERF=$(get_setting "gpuperf" "${PLATFORM}" "${ROMNAME##*/}")
 if [ ! -z ${GPUPERF} ]
@@ -197,7 +207,6 @@ function quit() {
 	clear_screen
 	DEVICE_CPU_GOVERNOR=$(get_setting system.cpugovernor)
 	${DEVICE_CPU_GOVERNOR}
-	set_audio default
 	exit $1
 }
 
@@ -241,11 +250,6 @@ then
 	case ${PLATFORM} in
 		"setup")
 			RUNTHIS='${TBASH} "${ROMNAME}"'
-		;;
-		"n64")
-			if [[ "$EMU" =~ "m64p" ]]; then
-				RUNTHIS='${TBASH} /usr/bin/start_mupen64plus.sh "${CORE}" "${ROMNAME}"'
-			fi
 		;;
                 "gamecube")
                         if [ "$EMU" = "dolphin-sa-gc" ]; then
@@ -457,19 +461,31 @@ else
 	onlinethreads all 1
 fi
 
-### Restore the overclock mode
-if [ -e "/usr/bin/overclock" ]
+### Restore CPU TDP (AMD) or EPP (Intel)
+CPU_VENDOR=$(cpu_vendor)
+case ${CPU_VENDOR} in
+  AuthenticAMD)
+    ### Set the overclock mode
+    OVERCLOCK=$(get_setting "system.overclock")
+    if [ ! -z "${OVERCLOCK}" ]
+    then
+      /usr/bin/overclock ${OVERCLOCK}
+    fi
+  ;;
+  GenuineIntel)
+    EPP=$(get_setting "system.power.epp")
+    if [ ! -z ${EPP} ]
+    then
+      /usr/bin/set_epp ${EPP}
+    fi
+  ;;
+esac
+
+### Restore cooling profile.
+if [ "${DEVICE_HAS_FAN}" = "true" ]
 then
-	OVERCLOCK=$(get_setting "system.overclock")
-	if [ ! -z "${OVERCLOCK}" ]
-	then
-		/usr/bin/overclock ${OVERCLOCK}
-		if [ "${DEVICE_HAS_FAN}" = "true" ]
-		then
-			set_setting cooling.profile ${COOLINGPROFILE}
-			systemctl restart fancontrol
-		fi
-	fi
+  set_setting cooling.profile ${COOLINGPROFILE}
+  systemctl restart fancontrol
 fi
 
 GPUPERF=$(get_setting "system.gpuperf")

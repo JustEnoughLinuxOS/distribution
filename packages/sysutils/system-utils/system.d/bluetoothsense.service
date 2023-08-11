@@ -3,10 +3,11 @@ Description=Bluetooth Sense
 Before=jelos.target
 
 [Service]
+Environment=XDG_RUNTIME_DIR=/var/run/0-runtime-dir
 Environment=HOME=/storage
-EnvironmentFile=/etc/profile
 ExecStart=/usr/bin/bluetooth_sense
 Restart=on-failure
+Type=simple
 
 [Install]
 WantedBy=multi-user.target

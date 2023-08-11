@@ -30,7 +30,6 @@ ln -sf /storage/roms/bios/rpcs3/dev_flash /storage/.config/rpcs3/dev_flash
 	/usr/bin/rpcs3
   else
 	export QT_QPA_PLATFORM=xcb
-	rr_audio.sh pulseaudio
 	export SDL_AUDIODRIVER=pulseaudio
         jslisten set "-9 rpcs3"
 	/usr/bin/rpcs3 --no-gui "${1}"

@@ -2,15 +2,48 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
 
-. /etc/profile
+# Minimal OS variable loading for performance
+. /etc/profile.d/02-distribution
 
-tocon "Configuring system TDP..."
+CPU_VENDOR=$(cpu_vendor)
 
-# If there is no defined overclock, make sure it's "off".
-OVERCLOCK=$(get_setting system.overclock)
-if [ -z ${OVERCLOCK} ]
-then
-  set_setting system.overclock off
-fi
+case ${CPU_VENDOR} in
+  AuthenticAMD)
+    tocon "Configuring system TDP..."
+    # If there is no defined overclock, make sure it's "off".
+    OVERCLOCK=$(get_setting system.overclock)
+    if [ -z ${OVERCLOCK} ]
+    then
+      set_setting system.overclock off
+    fi
+    /usr/bin/overclock boot
+  ;;
+  GenuineIntel)
+    tocon "Configuring system EPP..."
 
-/usr/bin/overclock boot
+    ###
+    ### Enable dynamic boost.
+    ###
+
+    if [ -f "/sys/devices/system/cpu/intel_pstate/hwp_dynamic_boost" ]
+    then
+      echo 1 >/sys/devices/system/cpu/intel_pstate/hwp_dynamic_boost
+    fi
+
+    ###
+    ### Energy Performance Preference isn't writeable if pstates are in
+    ### active mode.
+    ###
+
+    if [ -f "/sys/devices/system/cpu/intel_pstate/status" ]
+    then
+      echo passive >/sys/devices/system/cpu/intel_pstate/status
+    fi
+
+    EPP=$(get_setting system.power.epp)
+    if [ ! -z ${EPP} ]
+    then
+      /usr/bin/set_epp
+    fi
+  ;;
+esac

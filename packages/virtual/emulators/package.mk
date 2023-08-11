@@ -244,7 +244,7 @@ makeinstall_target() {
 
   ### Commodore VIC-20
   add_emu_core vic20 retroarch vice_xvic true
-  add_emu_core vic20 vicesa vice_xvic false
+  add_emu_core vic20 vicesa xvic false
   add_es_system vic20
 
   ### Capcom Playsystem 1
@@ -584,10 +584,7 @@ makeinstall_target() {
   add_emu_core n64 retroarch mupen64plus_next true
   add_emu_core n64 retroarch mupen64plus false
   add_emu_core n64 retroarch parallel_n64 false
-  # add_emu_core n64 mupen64plus-sa rmg_parallel false
-  add_emu_core n64 mupen64plus-sa m64p_gliden64 false
-  add_emu_core n64 mupen64plus-sa m64p_gl64mk2 false
-  add_emu_core n64 mupen64plus-sa m64p_rice false
+  add_emu_core n64 mupen64plus mupen64plus-sa false
   add_es_system n64
 
   ### Nintendo DS

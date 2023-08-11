@@ -4,6 +4,7 @@
 
 . /etc/os-release
 
+export XDG_RUNTIME_DIR=/var/run/0-runtime-dir
 export PATH="/usr/bin:/usr/local/bin:/storage/bin:${PATH}"
 export SDL_GAMECONTROLLERCONFIG_FILE="/storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt"
 
@@ -110,18 +111,6 @@ function set_setting() {
   fi
 }
 
-function set_audio() {
-  case ${1} in
-  "default")
-    AUDIO="alsa"
-  ;;
-  *)
-    AUDIO=${1}
-  ;;
-  esac
-  /usr/bin/rr_audio.sh ${AUDIO}
-}
-
 function battery_percent() {
   awk 'BEGIN {FS="="} /POWER_SUPPLY_CAPACITY=/ {print $2}' /sys/class/power_supply/[Bb][Aa][Tt]*/uevent 2>/dev/null
 }
@@ -148,6 +137,10 @@ function fbheight() {
   else
     fbset | awk '/geometry/ {print $2}'
   fi
+}
+
+function cpu_vendor() {
+  awk '/vendor_id/ {print $3;exit}' /proc/cpuinfo
 }
 
 function get_aspect_ratio() {

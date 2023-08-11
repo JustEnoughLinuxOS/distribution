@@ -40,5 +40,5 @@ post_makeinstall_target() {
 
 post_install() {
   #enable_service bluealsa.service
-  enable_service bluealsa-defaults.service
+  #enable_service bluealsa-defaults.service
 }

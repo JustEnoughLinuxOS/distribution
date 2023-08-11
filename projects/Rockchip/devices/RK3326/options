@@ -70,7 +70,7 @@
     WINDOWMANAGER="weston"
   
   # kernel serial console
-    EXTRA_CMDLINE="quiet rootwait console=tty0 fbcon=rotate:3 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
+    EXTRA_CMDLINE="quiet rootwait console=tty0 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
 
   # additional packages to install
     ADDITIONAL_PACKAGES=""
@@ -104,7 +104,7 @@
     PULSEAUDIO_SUPPORT="yes"
  
   # build and install bluetooth support (yes / no)
-    BLUETOOTH_SUPPORT="no"
+    BLUETOOTH_SUPPORT="yes"
 
   # build and install Avahi (Zeroconf) daemon (yes / no)
     AVAHI_DAEMON="no"

@@ -50,6 +50,8 @@ PKG_CMAKE_OPTS_TARGET+=" -DENABLE_HEADLESS=ON \
                          -DBUILD_SHARED_LIBS=OFF \
                          -DUSE_MGBA=OFF \
                          -DLINUX_LOCAL_DEV=ON \
+                         -DENABLE_PULSEAUDIO=ON \
+                         -DENABLE_ALSA=ON \
                          -DENABLE_TESTS=OFF \
                          -DENABLE_LLVM=OFF \
                          -DENABLE_ANALYTICS=OFF \

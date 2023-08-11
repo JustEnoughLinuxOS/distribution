@@ -6,9 +6,9 @@
 
 if [ -e "/sys/firmware/devicetree/base/model" ]
 then
-  QUIRK_DEVICE=$(cat /sys/firmware/devicetree/base/model 2>/dev/null)
+  QUIRK_DEVICE=$(tr -d '\0' </sys/firmware/devicetree/base/model 2>/dev/null)
 else
-  QUIRK_DEVICE="$(cat /sys/class/dmi/id/sys_vendor 2>/dev/null) $(cat /sys/class/dmi/id/product_name 2>/dev/null)"
+  QUIRK_DEVICE="$(tr -d '\0' </sys/class/dmi/id/sys_vendor 2>/dev/null) $(tr -d '\0' </sys/class/dmi/id/product_name 2>/dev/null)"
 fi
 QUIRK_DEVICE="$(echo ${QUIRK_DEVICE} | sed -e "s#[/]#-#g")"
 
@@ -26,10 +26,6 @@ volumectl() {
     log $0 "Volume control: ${1}"
     systemctl ${1} volume >/dev/null 2>&1
   fi
-}
-
-alsastate() {
-  alsactl ${1} -f /storage/.config/asound.state >/dev/null 2>&1
 }
 
 powerstate() {
@@ -103,7 +99,6 @@ quirks() {
 
 case $1 in
   pre)
-    alsastate store
     headphones stop
     volumectl stop
     bluetooth stop
@@ -116,7 +111,6 @@ case $1 in
   ;;
   post)
     ledcontrol
-    alsastate restore
     modules start
     powerstate start
     headphones start
@@ -135,7 +129,7 @@ case $1 in
 
     BRIGHTNESS=$(get_setting system.brightness)
     log $0 "Restoring brightness to ${BRIGHTNESS}."
-    echo ${BRIGHTNESS} >/sys/class/backlight/$(brightness device)/brightness
+    brightness set ${BRIGHTNESS}
     quirks post
   ;;
 esac

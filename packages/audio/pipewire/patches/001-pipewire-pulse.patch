@@ -1,0 +1,72 @@
+diff -rupN pipewire.orig/src/daemon/pipewire-pulse.conf.in pipewire/src/daemon/pipewire-pulse.conf.in
+--- pipewire.orig/src/daemon/pipewire-pulse.conf.in	2023-08-07 01:36:39.320782246 +0000
++++ pipewire/src/daemon/pipewire-pulse.conf.in	2023-08-07 22:04:21.956983916 +0000
+@@ -89,11 +89,11 @@ pulse.properties = {
+         #"tcp:[::]:9999"                    # IPv6 on all addresses
+         #"tcp:127.0.0.1:8888"               # IPv4 on a single address
+         #
+-        #{ address = "tcp:4713"             # address
+-        #  max-clients = 64                 # maximum number of clients
+-        #  listen-backlog = 32              # backlog in the server listen queue
+-        #  client.access = "restricted"     # permissions for clients
+-        #}
++        { address = "tcp:127.0.0.1:4713"             # address
++          max-clients = 64                 # maximum number of clients
++          listen-backlog = 32              # backlog in the server listen queue
++          client.access = "allowed"     # permissions for clients
++        }
+     ]
+     #server.dbus-name       = "org.pulseaudio.Server"
+     #pulse.min.req          = 128/48000     # 2.7ms
+diff -rupN pipewire.orig/src/daemon/systemd/system/pipewire.service.in pipewire/src/daemon/systemd/system/pipewire.service.in
+--- pipewire.orig/src/daemon/systemd/system/pipewire.service.in	2023-08-07 01:36:39.320782246 +0000
++++ pipewire/src/daemon/systemd/system/pipewire.service.in	2023-08-07 22:19:22.589017591 +0000
+@@ -15,21 +15,24 @@ Description=PipeWire Multimedia Service
+ Requires=pipewire.socket
+ 
+ [Service]
+-LockPersonality=yes
+-MemoryDenyWriteExecute=yes
+-NoNewPrivileges=yes
+-RestrictNamespaces=yes
+-SystemCallArchitectures=native
+-SystemCallFilter=@system-service
++Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/dbus/system_bus_socket
++User=root
+ Type=simple
+-AmbientCapabilities=CAP_SYS_NICE
+-ExecStart=@PW_BINARY@
++ExecStart=/usr/bin/pipewire
+ Restart=on-failure
+ RuntimeDirectory=pipewire
+ RuntimeDirectoryPreserve=yes
+-User=pipewire
+ Environment=PIPEWIRE_RUNTIME_DIR=%t/pipewire
++# Add if you need debugging
++# Environment=PIPEWIRE_DEBUG=4
++
++# These hardcoded runtime and dbus paths must stay this way for a system service
++# as the User= is not resolved here 8(
++## NOTE we do not change PIPEWIRE_RUNTIME_DIR as this is the system socket dir...
++Environment=XDG_RUNTIME_DIR=/var/run/0-runtime-dir
++Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/dbus/system_bus_socket
++Environment=HOME=/storage
+ 
+ [Install]
+-Also=pipewire.socket
++Also=pipewire-pulse.socket
+ WantedBy=default.target
+diff -rupN pipewire.orig/src/daemon/systemd/system/pipewire.socket pipewire/src/daemon/systemd/system/pipewire.socket
+--- pipewire.orig/src/daemon/systemd/system/pipewire.socket	2023-08-07 01:36:39.320782246 +0000
++++ pipewire/src/daemon/systemd/system/pipewire.socket	2023-08-07 22:38:25.418008336 +0000
+@@ -4,8 +4,8 @@ Description=PipeWire Multimedia System S
+ [Socket]
+ Priority=6
+ ListenStream=%t/pipewire/pipewire-0
+-SocketUser=pipewire
+-SocketGroup=pipewire
++SocketUser=root
++SocketGroup=root
+ SocketMode=0660
+ 
+ [Install]

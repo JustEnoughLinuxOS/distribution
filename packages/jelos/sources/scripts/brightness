@@ -2,74 +2,75 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2020-present Fewtarius
 
-BRIGHTNESS_DEV="$(ls /sys/class/backlight | head -n 1)"
+## Load minimal distribution settings to improve
+## performance.
+. /etc/profile.d/02-distribution
 
-MIN=1
-MAX=$(cat /sys/class/backlight/${BRIGHTNESS_DEV}/max_brightness)
-if [ "${MAX}" = 255 ]
-then
-  STEP=17
-else
-  STEP=6
-fi
+BRIGHTNESS_DEV="$(find /sys/class/backlight/*/ -name brightness -print -quit)"
+BRIGHTNESS_PATH="${BRIGHTNESS_DEV%/brightness}"
 
-if [[ -n "$2" ]]; then
-  STEP=$2
-fi
+MIN=0
+MAX=$(<$(find /sys/class/backlight/*/ -name max_brightness -print -quit))
+STEP="$(echo "scale=1; (${MAX} / 10)" | bc)"
 
-# Ensure set_setting exists in all contexts
-if ! type set_setting  &>/dev/null
-then
-  source /etc/profile
-fi
-
-if [ ! -f /sys/class/backlight/${BRIGHTNESS_DEV}/brightness ]
+if [ ! -f "${BRIGHTNESS_DEV}" ]
 then
   echo "ERROR: There is no BRIGHTNESS object to manage."
   exit 1
 fi
 
+getBrightness() {
+  echo $(<${BRIGHTNESS_DEV})
+}
+
+setBrightness() {
+  echo "${1}" > ${BRIGHTNESS_DEV}
+  set_setting system.brightness "${2}"
+}
+
 stepUp() {
-  getBrightness
-  MYBRIGHTNESS=$?
-  NEWBRIGHTNESS=$((${MYBRIGHTNESS}+${STEP}))
-  if (( ${NEWBRIGHTNESS} > ${MAX} ))
+  CURRENT=$(get_setting system.brightness)
+  NEXT=$(( ${CURRENT} + 1 ))
+  if (( ${NEXT} > 10 ))
   then
-    NEWBRIGHTNESS=${MAX}
+    NEXT=10
   fi
-  echo "${NEWBRIGHTNESS}" > /sys/class/backlight/${BRIGHTNESS_DEV}/brightness
-  set_setting system.brightness ${NEWBRIGHTNESS}
+
+  BRIGHTNESS=$(printf '%.0f' "$(echo "scale=1; ${STEP} * ${NEXT}" | bc)")
+
+  setBrightness ${BRIGHTNESS} ${NEXT}
 }
 
 stepDown() {
-  getBrightness
-  MYBRIGHTNESS=$?
-  NEWBRIGHTNESS=$((${MYBRIGHTNESS}-${STEP}))
-  if (( ${NEWBRIGHTNESS} < ${MIN} ))
+  CURRENT=$(get_setting system.brightness)
+  NEXT=$(( ${CURRENT} - 1 ))
+  if (( ${NEXT} < 0 ))
   then
-    NEWBRIGHTNESS=${MIN}
+    NEXT=0
   fi
-  echo "${NEWBRIGHTNESS}" > /sys/class/backlight/${BRIGHTNESS_DEV}/brightness
-  set_setting system.brightness ${NEWBRIGHTNESS}
-}
-getBrightness() {
-  local BRIGHTNESS=$(cat /sys/class/backlight/${BRIGHTNESS_DEV}/brightness)
-  return ${BRIGHTNESS}
-}
 
+  BRIGHTNESS=$(printf '%.0f' "$(echo "scale=1; ${STEP} * ${NEXT}" | bc)")
+
+  setBrightness ${BRIGHTNESS} ${NEXT}
+}
 
 case ${1} in
         "up")
-	  stepUp ${BRIGHTNESS}
+          stepUp
         ;;
         "down")
-          stepDown ${BRIGHTNESS}
+          stepDown
         ;;
         "device")
           echo ${BRIGHTNESS_DEV}
         ;;
+        "path")
+          echo ${BRIGHTNESS_PATH}
+        ;;
+        "set")
+           setBrightness "$(printf '%.0f' "$(echo "scale=1; ${STEP} * ${2}" | bc)")" ${2}
+        ;;
         *)
-	  getBrightness
-	  echo $?
-	;;
+          echo $(getBrightness)
+        ;;
 esac

@@ -111,6 +111,7 @@ limitations under the License.
 
 ### Using JELOS
 * [Setting Up Cloud Drives](/documentation/SETUP_CLOUD_DRIVES.md)
+* [Setting Up Syncthing](/documentation/SETUP_SYNCTHING.md)
 * [Game Engines and Launch Files](/documentation/SETUP_GAME_ENGINES_AND_LAUNCH_FILES.md)
 * [Configuring Moonlight Streaming](/documentation/SETUP_MOONLIGHT_STREAMING.md)
 * [Setting Up P2P Networking With ZeroTier](/documentation/SETUP_P2P_ZEROTIER.md)
