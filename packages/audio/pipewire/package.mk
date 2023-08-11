@@ -65,7 +65,7 @@ PKG_MESON_OPTS_TARGET="-Ddocs=disabled \
                        -Dpw-cat=enabled \
                        -Dudev=enabled \
                        -Dudevrulesdir=/usr/lib/udev/rules.d \
-                       -Dsdl2=enabled \
+                       -Dsdl2=disabled \
                        -Dsndfile=enabled \
                        -Dlibpulse=enabled \
                        -Droc=disabled \
