@@ -955,4 +955,7 @@ makeinstall_target() {
 
   mkdir -p ${INSTALL}/usr/lib/tmpfiles.d
   cp -f ${ESTMP}/${DISTRO}-system-dirs.conf ${INSTALL}/usr/lib/tmpfiles.d
+
+  mkdir -p ${INSTALL}/usr/bin
+  cp ${PKG_DIR}/scripts/mkcontroller ${INSTALL}/usr/bin
 }

@@ -25,8 +25,6 @@ PKG_FONTS="terminus-font corefonts"
 
 PKG_MULTIMEDIA="ffmpeg vlc mpv gmu"
 
-PKG_BLUETOOTH="bluez pygobject"
-
 PKG_SOUND="espeak libao"
 
 PKG_SYNC="synctools"
@@ -41,14 +39,13 @@ then
   ENABLE_32BIT=no
   PKG_DEPENDS_TARGET+=" ${PKG_TOOLS} ${PKG_FONTS}"
 else
-  PKG_DEPENDS_TARGET+=" ${PKG_TOOLS} ${PKG_FONTS} ${PKG_SOUND} ${PKG_BLUETOOTH} ${PKG_SYNC} ${PKG_GRAPHICS} ${PKG_UI} ${PKG_UI_TOOLS} ${PKG_MULTIMEDIA} misc-packages"
+  PKG_DEPENDS_TARGET+=" ${PKG_TOOLS} ${PKG_FONTS} ${PKG_SOUND} ${PKG_SYNC} ${PKG_GRAPHICS} ${PKG_UI} ${PKG_UI_TOOLS} ${PKG_MULTIMEDIA} misc-packages"
 
   # GL demos and tools
   [ "${OPENGL_SUPPORT}" = "yes" ]&& PKG_DEPENDS_TARGET+=" mesa-demos glmark2"
 
   # Sound support
-  [ "${ALSA_SUPPORT}" = "yes" ] && PKG_DEPENDS_TARGET+=" alsa"
-  [ "${PIPEWIRE_SUPPORT}" = "yes" ] && PKG_DEPENDS_TARGET+=" pipewire wireplumber"
+  [ "${PIPEWIRE_SUPPORT}" = "yes" ] && PKG_DEPENDS_TARGET+=" alsa pulseaudio pipewire wireplumber"
 fi
 
 [ "${DISPLAYSERVER}" = "wl" ] && PKG_DEPENDS_TARGET+=" weston"
