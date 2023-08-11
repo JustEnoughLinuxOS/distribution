@@ -63,8 +63,7 @@ show_config() {
   config_message="${config_message}\n\n Misc. hardware configuration:"
   config_message="${config_message}\n ${dashes}${dashes}"
 
-  config_message="${config_message}\n - ALSA support:\t\t\t $ALSA_SUPPORT"
-  config_message="${config_message}\n - Pulseaudio support:\t\t\t $PULSEAUDIO_SUPPORT"
+  config_message="${config_message}\n - Pipewire support:\t\t\t $PIPEWIRE_SUPPORT"
   config_message="${config_message}\n - Bluetooth support:\t\t\t $BLUETOOTH_SUPPORT"
 
   for config_driver in $ADDITIONAL_DRIVERS; do
