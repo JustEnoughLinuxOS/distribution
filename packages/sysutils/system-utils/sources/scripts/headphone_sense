@@ -11,13 +11,19 @@
 GPIO=$(cat /sys/class/gpio/gpio${DEVICE_JACK}/value)
 [[ "$GPIO" == "0" ]] && set_setting "audio.device" "headphone" || set_setting "audio.device" "speakers"
 
+### Set the default audio path, needed for some devices
+if [ -z "${DEVICE_PLAYBACK_PATH}" ]
+then
+  DEVICE_PLAYBACK_PATH="Playback Path"
+fi
+
 STARTUP_DEVICE=$(get_setting "audio.device")
 case "${2}" in
     "headphone")
-        amixer -M cset name='Playback Path' ${DEVICE_PLAYBACK_PATH_HP}
+        amixer -M cset name=${DEVICE_PLAYBACK_PATH} ${DEVICE_PLAYBACK_PATH_HP}
     ;;
     "auto"|"speakers"|*)
-        amixer -M cset name='Playback Path' ${DEVICE_PLAYBACK_PATH_SPK}
+        amixer -M cset name=${DEVICE_PLAYBACK_PATH} ${DEVICE_PLAYBACK_PATH_SPK}
     ;;
 esac
 
@@ -32,11 +38,11 @@ HP_OFF='*(SW_HEADPHONE_INSERT), value 1*'
 evtest "${DEVICE}" | while read line; do
     case $line in
 	(${HP_ON})
-	amixer cset name='Playback Path' ${DEVICE_PLAYBACK_PATH_HP}
+	amixer cset name=${DEVICE_PLAYBACK_PATH} ${DEVICE_PLAYBACK_PATH_HP}
 	set_setting "audio.device" "headphone"
 	;;
 	(${HP_OFF})
-	amixer cset name='Playback Path' ${DEVICE_PLAYBACK_PATH_SPK}
+	amixer cset name=${DEVICE_PLAYBACK_PATH} ${DEVICE_PLAYBACK_PATH_SPK}
 	set_setting "audio.device" "speakers"
 	;;
     esac
