@@ -4,6 +4,7 @@
 
 # Minimal OS variable loading for performance
 . /etc/profile.d/02-distribution
+. /storage/.config/profile.d/001-deviceconfig
 
 tocon "Configuring Audio..."
 
@@ -22,7 +23,11 @@ pactl load-module module-switch-on-connect
 ### Set the default audio path, needed for some devices
 if [ ! -z "${DEVICE_PLAYBACK_PATH_SPK}" ]
 then
-  amixer cset name='Playback Path' ${DEVICE_PLAYBACK_PATH_SPK}
+  if [ -z "${DEVICE_PLAYBACK_PATH}" ]
+  then
+    DEVICE_PLAYBACK_PATH="Playback Path"
+  fi
+  amixer cset name="${DEVICE_PLAYBACK_PATH}" ${DEVICE_PLAYBACK_PATH_SPK}
 fi
 
 VOLUME=$(get_setting audio.volume)

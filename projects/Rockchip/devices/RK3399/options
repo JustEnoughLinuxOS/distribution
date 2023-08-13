@@ -97,9 +97,6 @@
   # Disable 32BIT support
     ENABLE_32BIT="true"
 
-  # build and install PulseAudio support (yes / no)
-    PULSEAUDIO_SUPPORT="yes"
- 
   # build and install bluetooth support (yes / no)
     BLUETOOTH_SUPPORT="yes"
 

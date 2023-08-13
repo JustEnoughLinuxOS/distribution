@@ -1,7 +1,17 @@
-diff -rupN SDL2.orig/src/video/kmsdrm/SDL_kmsdrmmouse.c SDL2/src/video/kmsdrm/SDL_kmsdrmmouse.c
---- SDL2.orig/src/video/kmsdrm/SDL_kmsdrmmouse.c	2023-07-01 17:04:05.000000000 +0000
-+++ SDL2/src/video/kmsdrm/SDL_kmsdrmmouse.c	2023-07-26 10:27:12.232726116 +0000
-@@ -150,6 +150,7 @@ static int KMSDRM_DumpCursorToBO(SDL_Vid
+From f00e8526825f14b8f6706afeabcbbfe7acfec057 Mon Sep 17 00:00:00 2001
+From: Johnny on Flame <johnnyonflame@hotmail.com>
+Date: Sun, 6 Aug 2023 20:58:34 +0000
+Subject: [PATCH 4/7] KMSDRM: Rotate the cursor
+
+---
+ src/video/kmsdrm/SDL_kmsdrmmouse.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
+
+diff --git a/src/video/kmsdrm/SDL_kmsdrmmouse.c b/src/video/kmsdrm/SDL_kmsdrmmouse.c
+index 955045a7e..4c445ecf1 100644
+--- a/src/video/kmsdrm/SDL_kmsdrmmouse.c
++++ b/src/video/kmsdrm/SDL_kmsdrmmouse.c
+@@ -150,6 +150,7 @@ static int KMSDRM_DumpCursorToBO(SDL_VideoDisplay *display, SDL_Cursor *cursor)
      uint8_t *src_row;
  
      int i;
@@ -9,7 +19,7 @@ diff -rupN SDL2.orig/src/video/kmsdrm/SDL_kmsdrmmouse.c SDL2/src/video/kmsdrm/SD
      int ret;
  
      if (curdata == NULL || !dispdata->cursor_bo) {
-@@ -170,8 +171,10 @@ static int KMSDRM_DumpCursorToBO(SDL_Vid
+@@ -170,8 +171,10 @@ static int KMSDRM_DumpCursorToBO(SDL_VideoDisplay *display, SDL_Cursor *cursor)
  
      /* Copy from the cursor buffer to a buffer that we can dump to the GBM BO. */
      for (i = 0; i < curdata->h; i++) {
@@ -22,7 +32,7 @@ diff -rupN SDL2.orig/src/video/kmsdrm/SDL_kmsdrmmouse.c SDL2/src/video/kmsdrm/SD
      }
  
      /* Dump the cursor buffer to our GBM BO. */
-@@ -370,6 +373,7 @@ static int KMSDRM_WarpMouseGlobal(int x,
+@@ -370,6 +373,7 @@ static int KMSDRM_WarpMouseGlobal(int x, int y)
  
          SDL_Window *window = mouse->focus;
          SDL_DisplayData *dispdata = (SDL_DisplayData *)SDL_GetDisplayForWindow(window)->driverdata;
@@ -30,7 +40,7 @@ diff -rupN SDL2.orig/src/video/kmsdrm/SDL_kmsdrmmouse.c SDL2/src/video/kmsdrm/SD
  
          /* Update internal mouse position. */
          SDL_SendMouseMotion(mouse->focus, mouse->mouseID, 0, x, y);
-@@ -378,7 +382,7 @@ static int KMSDRM_WarpMouseGlobal(int x,
+@@ -378,7 +382,7 @@ static int KMSDRM_WarpMouseGlobal(int x, int y)
          if (dispdata->cursor_bo) {
              int ret = 0;
  
@@ -39,7 +49,7 @@ diff -rupN SDL2.orig/src/video/kmsdrm/SDL_kmsdrmmouse.c SDL2/src/video/kmsdrm/SD
  
              if (ret) {
                  SDL_SetError("drmModeMoveCursor() failed.");
-@@ -432,13 +436,14 @@ static void KMSDRM_MoveCursor(SDL_Cursor
+@@ -432,13 +436,14 @@ static void KMSDRM_MoveCursor(SDL_Cursor *cursor)
  
          SDL_Window *window = mouse->focus;
          SDL_DisplayData *dispdata = (SDL_DisplayData *)SDL_GetDisplayForWindow(window)->driverdata;
@@ -55,4 +65,6 @@ diff -rupN SDL2.orig/src/video/kmsdrm/SDL_kmsdrmmouse.c SDL2/src/video/kmsdrm/SD
  
          if (ret) {
              SDL_SetError("drmModeMoveCursor() failed.");
-Binary files SDL2.orig/src/video/kmsdrm/.SDL_kmsdrmmouse.c.rej.swp and SDL2/src/video/kmsdrm/.SDL_kmsdrmmouse.c.rej.swp differ
+-- 
+2.20.1
+
