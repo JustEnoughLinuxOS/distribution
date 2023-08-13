@@ -78,6 +78,9 @@ fi
 ### perhaps rewrite to use ^ functionality
 [[ ${PLATFORM} = "ports" ]] && RETROARCH="yes"
 
+# Make sure netplay isn't defined before we start our tests/configuration.
+del_setting netplay.mode
+
 # check if we started as host for a game
 if [[ "$arguments" == *"--host"* ]]; then
 	NETPLAY="${arguments##*--host}"  # read from --host onwards
