@@ -341,11 +341,11 @@ function configure_hotkeys() {
             cp /tmp/joypads/"${MY_CONTROLLER}.cfg" /tmp
             sed -i "s# = #=#g" /tmp/"${MY_CONTROLLER}.cfg"
             source /tmp/"${MY_CONTROLLER}.cfg"
-            for HKEYSETTING in input_enable_hotkey_btn input_bind_hold      \
-                               input_exit_emulator_btn input_fps_toggle_btn \
-                               input_menu_toggle_btn input_save_state_btn   \
-                               input_load_state_btn input_hold_fast_forward \
-                               input_toggle_fast_forward_btn
+            for HKEYSETTING in input_enable_hotkey_btn input_bind_hold            \
+                               input_exit_emulator_btn input_fps_toggle_btn       \
+                               input_menu_toggle_btn input_save_state_btn         \
+                               input_load_state_btn input_toggle_fast_forward_btn \
+                               input_rewind_btn
             do
                 clear_setting "${HKEYSETTING}"
             done
@@ -358,7 +358,8 @@ input_fps_toggle_btn = "${input_y_btn}"
 input_menu_toggle_btn = "${input_x_btn}"
 input_save_state_btn = "${input_r_btn}"
 input_load_state_btn = "${input_l_btn}"
-input_hold_fast_forward_btn = "${input_r2_btn}"
+input_toggle_fast_forward_btn = "${input_r2_btn}"
+input_rewind_btn = "${input_l2_btn}"
 EOF
             rm -f /tmp/"${MY_CONTROLLER}.cfg"
         fi
@@ -408,34 +409,44 @@ function set_netplay() {
     if [ "${USE_NETPLAY}" = 1 ]
     then
         add_setting "retroachievements.hardcore" "cheevos_hardcore_mode_enable" "false"
-        add_setting "netplay.frames" "netplay_delay_frames"
-        add_setting "netplay.nickname" "netplay_nickname"
-        add_setting "netplay.spectator" "netplay_spectator_mode_enable"
+        add_setting "global.netplay.nickname" "netplay_nickname"
+        add_setting "global.netplay.password" "netplay_password"
         add_setting "netplay_public_announce" "netplay_public_announce"
         local NETPLAY_MODE=$(game_setting "netplay.mode")
         case ${NETPLAY_MODE} in
             host)
                 add_setting "none" "netplay_mode" "false"
                 add_setting "none" "netplay_client_swap_input" "false"
-                add_setting "netplay.port" "netplay_ip_port"
+                add_setting "global.netplay.port" "netplay_ip_port"
+		echo -n " --host"
             ;;
             client)
+                local NETPLAY_HOST_IP=$(get_setting global.netplay.host)
                 add_setting "none" "netplay_mode" "true"
                 add_setting "none" "netplay_client_swap_input" "true"
-                add_setting "netplay.client.ip" "netplay_ip_address"
-                add_setting "netplay.client.port" "netplay_ip_port"
+                add_setting "global.netplay.port" "netplay_ip_port"
+                if [ ! -z "${NETPLAY_HOST_IP}" ]
+                then
+                  add_setting "none" "netplay_ip_address" "${NETPLAY_HOST_IP}"
+                  echo -n " --connect ${NETPLAY_HOST_IP}"
+                fi
             ;;
         esac
-        local NETPLAY_RELAY=$(game_setting netplay.relay)
-        case $(NETPLAY_RELAY) in
-            none|false|0)
-                add_setting "none" "netplay_use_mitm_server" "false"
-            ;;
-            *)
-                add_setting "none" "netplay_use_mitm_server" "true"
-                add_setting "none" "netplay_mitm_server" "${NETPLAY_RELAY}"
-            ;; 
-        esac
+        local NETPLAY_RELAY=$(game_setting global.netplay.relay)
+        if [ -n "${NETPLAY_RELAY}" ]
+        then
+          case $(NETPLAY_RELAY) in
+              none|false|0)
+                  add_setting "none" "netplay_use_mitm_server" "false"
+              ;;
+              *)
+                  add_setting "none" "netplay_use_mitm_server" "true"
+                  add_setting "none" "netplay_mitm_server" "${NETPLAY_RELAY}"
+              ;; 
+          esac
+        else
+            add_setting "none" "netplay_use_mitm_server" "false"
+        fi
     else
         add_setting "none" "netplay" "false"
     fi
@@ -503,7 +514,7 @@ function set_shader() {
         *)
             add_setting "none" "video_shader_enable" "true"
             add_setting "none" "video_shader" "${SHADER}"
-            echo "--set-shader /tmp/shaders/${SHADER}"
+            echo -n " --set-shader /tmp/shaders/${SHADER}"
         ;;
     esac
 }
@@ -559,35 +570,39 @@ function set_savestates() {
 }
 
 function set_autosave() {
-    local CHKAUTOSAVE="$(game_setting autosave)"
-    local SETLOADSTATE=false
-    local SETSAVESTATE=false
-    case ${CHKAUTOSAVE} in
-        [1-3])
-            log "Autosave enabled (${CHKAUTOSAVE})"
-            add_setting "none" "savestate_directory" "${SNAPSHOTS}/${PLATFORM}"
-            if [ ! -d "${SNAPSHOTS}/${PLATFORM}" ]
-            then
-                mkdir "${SNAPSHOTS}/${PLATFORM}"
-            fi
-            case ${AUTOSAVE} in
-                1)
-                    log "Autosave active (${AUTOSAVE})"
-                    SETSAVESTATE="true"
-                    if [ ! -z "${SNAPSHOT}" ]
-                    then
-                        log "Autosave snapshot enabled (${SNAPSHOT})"
-                        add_setting "none" "state_slot" "${SNAPSHOT}"
-                        SETLOADSTATE="true"
-                    else
-                        SETLOADSTATE="false"
-                    fi
+    local SETAUTOSAVE=false
+
+    # argument overrides user setting
+    case ${AUTOSAVE} in
+        0)
+            SETAUTOSAVE=false
+        ;;
+        1)
+            SETAUTOSAVE=true
+        ;;
+        *)
+            local AUTOSAVE_SETTING="$(game_setting autosave)"
+            case ${AUTOSAVE_SETTING} in
+                [1-3])
+                    SETAUTOSAVE=true
                 ;;
             esac
         ;;
     esac
-    add_setting "none" "savestate_auto_load" "${SETLOADSTATE}"
-    add_setting "none" "savestate_auto_save" "${SETSAVESTATE}"
+        
+    add_setting "none" "savestate_directory" "${SNAPSHOTS}/${PLATFORM}"
+    if [ ! -d "${SNAPSHOTS}/${PLATFORM}" ]
+    then
+        mkdir "${SNAPSHOTS}/${PLATFORM}"
+    fi
+
+    if [ ! -z "${SNAPSHOT}" ]
+    then
+        add_setting "none" "state_slot" "${SNAPSHOT}"
+    fi
+
+    add_setting "none" "savestate_auto_load" "${SETAUTOSAVE}"
+    add_setting "none" "savestate_auto_save" "${SETAUTOSAVE}"
 }
 
 function set_runahead() {

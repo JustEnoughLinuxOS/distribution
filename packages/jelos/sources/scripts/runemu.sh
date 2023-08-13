@@ -24,7 +24,7 @@ TBASH="/usr/bin/bash"
 RATMPCONF="/storage/.config/retroarch/retroarch.cfg"
 RAAPPENDCONF="/tmp/.retroarch.cfg"
 NETPLAY="No"
-SHADERTMP="/tmp/shader"
+SETSETTINGS_TMP="/tmp/shader"
 OUTPUT_LOG="${LOGSDIR}/${LOGFILE}"
 ### Do not change the variables below as it may break things.
 MYNAME=$(basename "$0")
@@ -83,6 +83,7 @@ if [[ "$arguments" == *"--host"* ]]; then
 	NETPLAY="${arguments##*--host}"  # read from --host onwards
 	NETPLAY="${NETPLAY%%--nick*}"  # until --nick is found
 	NETPLAY="--host $NETPLAY --nick"
+        set_setting netplay.mode host
 fi
 
 # check if we are trying to connect to a client on netplay
@@ -90,6 +91,12 @@ if [[ "$arguments" == *"--connect"* ]]; then
 	NETPLAY="${arguments##*--connect}"  # read from --connect onwards
 	NETPLAY="${NETPLAY%%--nick*}"  # until --nick is found
 	NETPLAY="--connect $NETPLAY --nick"
+        set_setting netplay.mode client
+fi
+
+# check if we are trying to connect as spectator on netplay
+if [[ "$arguments" == *"--netplaymode spectator"* ]]; then
+    set_setting "netplay.mode" "spectator"
 fi
 
 ### Offline all but the number of cores we need for this game if configured.
@@ -153,10 +160,6 @@ then
     systemctl restart fancontrol
   fi
 fi
-
-# Disable netplay by default
-set_setting "netplay.client.ip" "disable"
-set_setting "netplay.client.port" "disable"
 
 ### Function Library
 
@@ -359,26 +362,6 @@ else
 
 #	CORE=${EMU%%_*}
 
-	### Configure netplay
-	if [[ ${NETPLAY} != "No" ]]; then
-		NETPLAY_NICK=$(get_setting netplay.nickname)
-		[[ -z "$NETPLAY_NICK" ]] && NETPLAY_NICK="${uuidgen | awk 'BEGIN {FS="-"} {print toupper($1)}'}"
-		set_setting netplay.nickname ${NETPLAY_NICK}
-
-		if [[ "${NETPLAY}" == *"connect"* ]]; then
-			NETPLAY_PORT="${arguments##*--port }"  # read from -netplayport  onwards
-			NETPLAY_PORT="${NETPLAY_PORT%% *}"  # until a space is found
-			NETPLAY_IP="${arguments##*--connect }"  # read from -netplayip  onwards
-			NETPLAY_IP="${NETPLAY_IP%% *}"  # until a space is found
-			set_setting "netplay.client.ip" "${NETPLAY_IP}"
-			set_setting "netplay.client.port" "${NETPLAY_PORT}"
-			RUNTHIS=$(echo ${RUNTHIS} | sed "s|--config|--connect ${NETPLAY_IP}\|${NETPLAY_PORT} --nick ${NETPLAY_NICK} --config|")
-		else
-			RUNTHIS=$(echo ${RUNTHIS} | sed "s|--config|${NETPLAY} --nick ${NETPLAY_NICK} --config|")
-		fi
-
-	fi
-
 	# Platform specific configurations
         case ${PLATFORM} in
                 "atomiswave")
@@ -397,33 +380,27 @@ else
         esac
 fi
 
-if [ -e "${SHADERTMP}" ]
+if [ -e "${SETSETTINGS_TMP}" ]
 then
-	rm -f "${SHADERTMP}"
+	rm -f "${SETSETTINGS_TMP}"
 fi
 
 if [[ ${PLATFORM} == "ports" ]]; then
-	(/usr/bin/setsettings.sh "${PLATFORM}" "${PORTSCRIPT}" "${CORE}" --controllers="${CONTROLLERCONFIG}" --autosave="${AUTOSAVE}" --snapshot="${SNAPSHOT}" >${SHADERTMP}) &
+	(/usr/bin/setsettings.sh "${PLATFORM}" "${PORTSCRIPT}" "${CORE}" --controllers="${CONTROLLERCONFIG}" --autosave="${AUTOSAVE}" --snapshot="${SNAPSHOT}" >${SETSETTINGS_TMP})
 else
-	(/usr/bin/setsettings.sh "${PLATFORM}" "${ROMNAME}" "${CORE}" --controllers="${CONTROLLERCONFIG}" --autosave="${AUTOSAVE}" --snapshot="${SNAPSHOT}" >${SHADERTMP}) &
+	(/usr/bin/setsettings.sh "${PLATFORM}" "${ROMNAME}" "${CORE}" --controllers="${CONTROLLERCONFIG}" --autosave="${AUTOSAVE}" --snapshot="${SNAPSHOT}" >${SETSETTINGS_TMP})
 fi
-SETSETTINGS_PID=$!
 
-clear_screen
-
-### Wait for background jobs to complete before continuing.
-wait ${SETSETTINGS_PID}  #Don't wait for show splash
-
-### If setsettings wrote data in the background, grab it and assign it to SHADERSET
-if [ -e "${SHADERTMP}" ]
+### If setsettings wrote data in the background, grab it and assign it to EXTRAOPTS
+if [ -e "${SETSETTINGS_TMP}" ]
 then
-	SHADERSET=$(cat ${SHADERTMP})
-	rm -f ${SHADERTMP}
-	$VERBOSE && log $0 "Shader set to ${SHADERSET}"
+	EXTRAOPTS=$(cat ${SETSETTINGS_TMP})
+	rm -f ${SETSETTINGS_TMP}
+	$VERBOSE && log $0 "Extra Options: ${EXTRAOPTS}"
 fi
 
-if [[ ${SHADERSET} != 0 ]]; then
-	RUNTHIS=$(echo ${RUNTHIS} | sed "s|--config|${SHADERSET} --config|")
+if [[ ${EXTRAOPTS} != 0 ]]; then
+	RUNTHIS=$(echo ${RUNTHIS} | sed "s|--config|${EXTRAOPTS} --config|")
 fi
 
 clear_screen
