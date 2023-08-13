@@ -1,0 +1,22 @@
+diff --git a/src/platform/sdl/main.cpp b/src/platform/sdl/main.cpp
+index 432d984..96d4848 100644
+--- a/src/platform/sdl/main.cpp
++++ b/src/platform/sdl/main.cpp
+@@ -216,7 +216,7 @@ void load_keymap() {
+   toml::value data;
+ 
+   try {
+-    data = toml::parse("keymap.toml");
++    data = toml::parse("/storage/.config/nanoboyadvance/keymap.toml");
+   } catch (std::exception& ex) {
+     Log<Warn>("SDL: failed to load keymap configuration.");
+     return;
+@@ -290,7 +290,7 @@ void init(int argc, char** argv) {
+   if (argc >= 1) {
+     fs::current_path(fs::absolute(argv[0]).replace_filename(fs::path{ }));
+   }
+-  g_config->Load("config.toml");
++  g_config->Load("/storage/.config/nanoboyadvance/config.toml");
+   parse_arguments(argc, argv);
+   load_keymap();
+   SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_GAMECONTROLLER);
