@@ -421,7 +421,14 @@ function set_netplay() {
 		echo -n " --host"
             ;;
             client)
-                local NETPLAY_HOST_IP=$(get_setting global.netplay.host)
+                local ADHOC_NETWORK=$(get_setting network.adhoc.enabled)
+
+                if [ "${ADHOC_NETWORK}" = "1" ]
+                then
+                    local NETPLAY_HOST_IP="192.168.1.1"
+                else
+                    local NETPLAY_HOST_IP=$(get_setting global.netplay.host)
+                fi
                 add_setting "none" "netplay_mode" "true"
                 add_setting "none" "netplay_client_swap_input" "true"
                 add_setting "global.netplay.port" "netplay_ip_port"

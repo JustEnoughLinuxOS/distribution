@@ -88,5 +88,5 @@ post_install() {
   add_user system x 430 430 "service" "/var/run/connman" "/bin/sh"
   add_group system 430
 
-  enable_service connman.service
+  #enable_service connman.service
 }

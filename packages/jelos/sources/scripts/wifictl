@@ -29,7 +29,13 @@ else
   PSK="$(get_setting wifi.key)" 2>/dev/null
 fi
 
-WIFICFG="/storage/.cache/connman/wifi.config"
+###
+### Basic WIFI properties used across the tool.
+###
+
+WIFI_CFG="/storage/.cache/connman/wifi.config"
+WIFI_TYPE=$(get_setting network.adhoc.enabled)
+ADHOC_FREQ="5280"
 
 # lists all wifi services in service=ssid format
 list_wifi() {
@@ -60,8 +66,8 @@ get_wifi_state() {
 }
 
 check_wifi() {
-  SSID_CHK=$(grep "${SSID}" ${WIFICFG} 2>/dev/null)
-  KEY_CHK=$(grep "${PSK}" ${WIFICFG} 2>/dev/null)
+  SSID_CHK=$(grep "${SSID}" ${WIFI_CFG} 2>/dev/null)
+  KEY_CHK=$(grep "${PSK}" ${WIFI_CFG} 2>/dev/null)
   STATE=$(get_wifi_state)
   if [ -n "${SSID_CHK}" ] && \
      [ -n "${KEY_CHK}" ] && \
@@ -72,23 +78,74 @@ check_wifi() {
 }
 
 connect_wifi() {
-  NETCHECK=$(systemctl status connman >/dev/null 2>&1)
-  if [ ! "$?" = "0" ]
+
+  ### Make sure the service is available
+  NETCHECK=$(systemctl is-actove connman >/dev/null 2>&1)
+  if [ "${NETCHECK}" = "inactive" ]
   then
-    systemctl start connman
+    systemctl restart connman >/dev/null 2>&1
+    systemctl restart wpa_supplicant 2>&1
   fi
+
+  ### If we aren't already online. Go online.
   STATE=$(get_wifi_state)
   if [ ! "${STATE}" = "online" ]
   then
     connmanctl enable wifi 2>/dev/null
   fi
-  rfkill unblock wifi 2>/dev/null
-  connmanctl connect $(get_wifi_service "${SSID}")
+
   set_powersave 2>/dev/null
 }
 
+connect_adhoc() {
+  local CLIENT=$(get_setting wifi.adhoc.id)
+  rfkill unblock wifi
+
+  ### Set the WIFI type to ad-hoc
+  iw dev wlan0 del
+  iw phy phy0 interface add wlan0 type ibss
+
+  ### Start the interfaece
+  ip link set wlan0 up >/dev/null 2>&1
+
+  ### Create / join the adhoc network
+  iw wlan0 ibss join ${SSID}-adhoc ${ADHOC_FREQ} >/dev/null 2>&1
+
+  iw wlan0 connect ${SSID}-adhoc
+
+  ### Enable security
+  cat <<EOF >/storage/.cache/.adhoc.conf
+ap_scan=2
+
+network={
+    ssid="${SSID}-adhoc"
+    mode=1
+    frequency=${ADHOC_FREQ}
+    proto=RSN
+    key_mgmt=WPA-PSK
+    pairwise=CCMP
+    group=CCMP
+    psk="${PSK}"
+}
+EOF
+
+  wpa_supplicant -B -i wlan0 -c /storage/.cache/.adhoc.conf -D nl80211,wext
+
+  ### Set our IP
+  ip addr add 192.168.0.${CLIENT}/24 dev wlan0 >/dev/null 2>&1
+}
+
+disconnect_adhoc() {
+  ip addr flush dev wlan0 >/dev/null 2>&1
+  ip link set wlan0 down >/dev/null 2>&1
+  killall wpa_supplicant
+  ### Set the WIFI type to ad-hoc
+  iw dev wlan0 del
+  iw phy phy0 interface add wlan0 type managed
+}
+
 set_profile() {
-  cat > "${WIFICFG}" <<EOF
+  cat > "${WIFI_CFG}" <<EOF
 [service_${OS_NAME}_default]
 Type = wifi
 Name = ${SSID}
@@ -98,15 +155,32 @@ EOF
 
 case "${1}" in
   enable)
-    check_wifi
+    case ${WIFI_TYPE} in
+      1)
+        systemctl stop wpa_supplicant >/dev/null 2>&1
+        systemctl stop connman >/dev/null 2>&1
+        connect_adhoc >/dev/null 2>&1
+      ;;
+      *)
+        check_wifi >/dev/null 2>&1
+        disconnect_adhoc >/dev/null 2>&1
+        set_profile >/dev/null 2>&1
+        connect_wifi >/dev/null 2>&1
+      ;;
+    esac
     set_setting wifi.enabled 1
-    set_profile
-    connect_wifi 
   ;;
   disable)
+    case ${WIFI_TYPE} in
+      1)
+        disconnect_adhoc >/dev/null 2>&1
+      ;;
+      *)
+        connmanctl disable wifi >/dev/null 2>&1
+        rm -f "${WIFI_CFG}" 2>/dev/null
+      ;;
+    esac
     rfkill block wifi
-    connmanctl disable wifi
-    rm -f "${WIFICFG}" 2>/dev/null
     set_setting wifi.enabled 0
   ;;
   reconnect)
@@ -114,7 +188,6 @@ case "${1}" in
     /usr/bin/wifictl enable
   ;;
   list)
-    #connmanctl services | cut -b 5- | awk '/wifi/ {sub(/\s+wifi_.*$/,"",$0);print}' | sort | uniq
     list_wifi | awk '{sub(/\S+=/,"",$0);print}'
   ;;
   scan)
@@ -134,4 +207,3 @@ case "${1}" in
     set_profile
   ;;
 esac
-
