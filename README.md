@@ -55,10 +55,10 @@ limitations under the License.
 
 ## Documentation
 ### Documentation For Developers
-* [Adding Hardware Quirks](/documentation/DEVEL_ADD_HARDWARE_QUIRKS.md)
 * [Building The Distribution](/documentation/DEVEL_BUILDING_JELOS.md)
 * [Contributor Code of Conduct](/CODE_OF_CONDUCT.md)
 * [Contributing to JELOS](/CONTRIBUTING.md)
+* [Adding Hardware Quirks](/documentation/DEVEL_ADD_HARDWARE_QUIRKS.md)
 * [Creating Packages](/documentation/DEVEL_CREATING_PACKAGES.md)
 * [Pull Request Template](/PULL_REQUEST_TEMPLATE.md)
 
