@@ -23,8 +23,37 @@ Just Enough Linux Operating System (JELOS) is an immutable Linux distribution fo
 The JELOS community utilizes Discord for discussion, if you would like to join us please use the link below.
 *  [https://discord.gg/seTxckZjJy](https://discord.gg/seTxckZjJy)
 
-## Documentation
+## Licenses
+JELOS is a Linux distribution that is made up of many open-source components.  Components are provided under their respective licenses.  This distribution includes components licensed for non-commercial use only.
 
+### JELOS Branding
+JELOS branding and images are licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
+
+#### You are free to
+* Share — copy and redistribute the material in any medium or format
+* Adapt — remix, transform, and build upon the material
+
+#### Under the following terms
+* Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
+* NonCommercial — You may not use the material for commercial purposes.
+* ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
+
+### JELOS Software
+Copyright 2021-present Fewtarius
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+## Documentation
 ### Documentation For Developers
 * [Adding Hardware Quirks](/documentation/DEVEL_ADD_HARDWARE_QUIRKS.md)
 * [Building The Distribution](/documentation/DEVEL_BUILDING_JELOS.md)
@@ -85,55 +114,23 @@ JELOS supports a variety of ARM and Intel/AMD based devices<sup>1</sup>.
 
 > <sup>3</sup> To boot JELOS on Ayaneo devices, hold LC and volume up and press the power button, continue holding "LC" and volume up until the Ayaneo logo appears.  Select the storage device with JELOS from the boot menu using the Ayaneo button, and then press volume up to boot the distribution.
 
-## Licenses
-JELOS is a Linux distribution that is made up of many open-source components.  Components are provided under their respective licenses.  This distribution includes components licensed for non-commercial use only.
-
-### JELOS Branding
-JELOS branding and images are licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
-
-#### You are free to
-* Share — copy and redistribute the material in any medium or format
-* Adapt — remix, transform, and build upon the material
-
-#### Under the following terms
-* Attribution — You must give appropriate credit, provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
-* NonCommercial — You may not use the material for commercial purposes.
-* ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
-
-### JELOS Software
-Copyright 2021-present Fewtarius
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-## Flashing
-* Download the latest [version of JELOS](https://github.com/JustEnoughLinuxOS/distribution/releases) (.img.gz) for your device.
-* Decompress the image.
-* Write the image to an SDCARD using an imaging tool.  Common imaging tools include [Balena Etcher](https://www.balena.io/etcher/), [Raspberry Pi Imager](https://www.raspberrypi.com/software/), and [Win32 Disk Imager](https://sourceforge.net/projects/win32diskimager/).  If you're skilled with the command line, dd works fine too.
-
 ## Installation
 * JELOS is installed by restoring an image file and [Flashing](https://github.com/JustEnoughLinuxOS/distribution/tree/main#flashing) to a device's internal storage or an external sd card.
 * On x86 devices JELOS includes an installation tool.  The installation tool can be found in the tools menu, which is one of the systems listed within ES.
 * JELOS operating system is stored on an Ext4 partition that can be read by LINUX but is not natively readable on Windows. Currently it is not possible to access the primary JELOS Ext4 partition on Windows to transfer roms.
 * On devices that support a second sd card, the sd card can be formatted as Ext4, FAT32, or exFAT. JELOS will automatically detect the second SD card on boot and configure the relevant folders for storing roms.
+* External services are disabled by default in release builds.  When enabled, the username for ssh and samba access is "root".  The root password is generated during every boot, it can be found in the System Settings menu.
 
-## Upgrading
+### Flashing
+* Download the latest [version of JELOS](https://github.com/JustEnoughLinuxOS/distribution/releases) (.img.gz) for your device.
+* Decompress the image.
+* Write the image to an SDCARD using an imaging tool.  Common imaging tools include [Balena Etcher](https://www.balena.io/etcher/), [Raspberry Pi Imager](https://www.raspberrypi.com/software/), and [Win32 Disk Imager](https://sourceforge.net/projects/win32diskimager/).  If you're skilled with the command line, dd works fine too.
+
+### Upgrading
 * Download and install the update online via the System Settings menu.
 * Download the latest [version of JELOS](https://github.com/JustEnoughLinuxOS/distribution/releases) (.tar) for your device.
 * Copy the update to your device over the network to your device's update share.
 * Reboot the device, and the update will begin automatically.
-
-## Network Access
-* External services are disabled by default in stable builds.  When enabled, the username for ssh and samba access is "root".  The root password is generated during every boot, it can be found in the System Settings menu.
 
 ## Credits
 Like any Linux distribution, this project is not the work of one person.  It is the work of many persons all over the world who have developed the open source bits without which this project could not exist.  Special thanks to CoreELEC, LibreELEC, and to developers and contributors across the open source community.
