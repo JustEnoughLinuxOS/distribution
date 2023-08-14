@@ -13,73 +13,73 @@ GET_HANDLER_SUPPORT="git"
 
 PKG_PATCH_DIRS+=" ${DEVICE}"
 
+PKG_CONFIGURE_OPTS_TARGET="   --disable-qt \
+                              --enable-alsa \
+                              --enable-udev \
+                              --disable-opengl1 \
+                              --disable-opengl \
+                              --disable-opengles \
+                              --disable-opengles3 \
+                              --disable-opengles3_2 \
+                              --disable-wayland \
+                              --disable-x11 \
+                              --enable-zlib \
+                              --enable-freetype \
+                              --disable-discord \
+                              --disable-vg \
+                              --disable-sdl \
+                              --enable-sdl2 \
+                              --enable-ffmpeg"
+
+case ${DEVICE} in
+  RK3566-X55)
+    PKG_DEPENDS_TARGET+=" librga libgo2"
+    PKG_CONFIGURE_OPTS_TARGET+=" --enable-odroidgo2"
+  ;;
+  *)
+    PKG_CONFIGURE_OPTS_TARGET+=" --disable-odroidgo2"
+  ;;
+esac
+
+case ${ARCH} in
+  arm)
+    PKG_CONFIGURE_OPTS_TARGET+=" --enable-neon"
+  ;;
+    aarch64)
+    PKG_CONFIGURE_OPTS_TARGET+=" --disable-neon"
+  ;;
+esac
+
+if [ "${DISPLAYSERVER}" = "wl" ]; then
+  PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER}"
+  PKG_CONFIGURE_OPTS_TARGET+=" --enable-wayland"
+fi
+
+if [ ! "${OPENGL}" = "no" ]; then
+    PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+    PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengl"
+else
+    PKG_CONFIGURE_OPTS_TARGET+=" --disable-opengl"
+fi
+
+if [ "${OPENGLES_SUPPORT}" = yes ] && \
+   [[ ! "${ARCH}" =~ i*86|x86_64 ]]; then
+    PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+    PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengles --enable-opengles3 --enable-opengles3_2 --enable-kms"
+else
+    PKG_CONFIGURE_OPTS_TARGET+=" --disable-opengles --disable-opengles3 --disable-opengles3_2"
+fi
+
+if [ "${VULKAN_SUPPORT}" = "yes" ]
+then
+    PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
+    PKG_CONFIGURE_OPTS_TARGET+=" --enable-vulkan --enable-vulkan_display"
+fi
+
 pre_configure_target() {
   CFLAGS+=" -DUDEV_TOUCH_SUPPORT"
   CXXFLAGS+=" -DUDEV_TOUCH_SUPPORT"
   TARGET_CONFIGURE_OPTS=""
-  PKG_CONFIGURE_OPTS_TARGET="	--disable-qt \
-				--enable-alsa \
-				--enable-udev \
-				--disable-opengl1 \
-				--disable-opengl \
-				--disable-opengles \
-				--disable-opengles3 \
-				--disable-opengles3_2 \
-				--disable-wayland \
-				--disable-x11 \
-				--enable-zlib \
-				--enable-freetype \
-				--disable-discord \
-				--disable-vg \
-				--disable-sdl \
-				--enable-sdl2 \
-				--enable-ffmpeg"
-
-  case ${DEVICE} in
-    RK3566-X55)
-      PKG_DEPENDS_TARGET+=" librga libgo2"
-      PKG_CONFIGURE_OPTS_TARGET+=" --enable-odroidgo2"
-    ;;
-    *)
-      PKG_CONFIGURE_OPTS_TARGET+=" --disable-odroidgo2"
-    ;;
-  esac
-
-  case ${ARCH} in
-    arm)
-      PKG_CONFIGURE_OPTS_TARGET+=" --enable-neon"
-    ;;
-    aarch64)
-      PKG_CONFIGURE_OPTS_TARGET+=" --disable-neon"
-    ;;
-    *)
-  esac
-
-  if [ "${DISPLAYSERVER}" = "wl" ]; then
-    PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER}"
-    PKG_CONFIGURE_OPTS_TARGET+=" --enable-wayland"
-  fi
-
-  if [ ! "${OPENGL}" = "no" ]; then
-      PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
-      PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengl"
-  else
-      PKG_CONFIGURE_OPTS_TARGET+=" --disable-opengl"
-  fi
-
-  if [ "${OPENGLES_SUPPORT}" = yes ] && \
-     [[ ! "${ARCH}" =~ i*86|x86_64 ]]; then
-      PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-      PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengles --enable-opengles3 --enable-opengles3_2 --enable-kms"
-  else
-      PKG_CONFIGURE_OPTS_TARGET+=" --disable-opengles --disable-opengles3 --disable-opengles3_2"
-  fi
-
-  if [ "${VULKAN_SUPPORT}" = "yes" ]
-  then
-      PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
-      PKG_CONFIGURE_OPTS_TARGET+=" --enable-vulkan --enable-vulkan_display"
-  fi
 
   cd ${PKG_BUILD}
 }
