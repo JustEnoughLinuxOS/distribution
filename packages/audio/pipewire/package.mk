@@ -83,7 +83,9 @@ pre_configure_target() {
 }
 
 post_install() {
-
+  mkdir -p ${INSTALL}/etc/alsa/conf.d
+  ln -sf /usr/share/alsa/alsa.conf.d/50-pipewire.conf ${INSTALL}/etc/alsa/conf.d/50-pipewire.conf
+  ln -sf /usr/share/alsa/alsa.conf.d/99-pipewire-default.conf ${INSTALL}/etc/alsa/conf.d/99-pipewire-default.conf
   enable_service pipewire.socket
   enable_service pipewire.service
   enable_service pipewire-pulse.socket

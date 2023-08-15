@@ -27,7 +27,7 @@ then
   then
     DEVICE_PLAYBACK_PATH="Playback Path"
   fi
-  amixer cset name="${DEVICE_PLAYBACK_PATH}" ${DEVICE_PLAYBACK_PATH_SPK}
+  amixer -c 0 cset name="${DEVICE_PLAYBACK_PATH}" ${DEVICE_PLAYBACK_PATH_SPK}
 fi
 
 VOLUME=$(get_setting audio.volume)
