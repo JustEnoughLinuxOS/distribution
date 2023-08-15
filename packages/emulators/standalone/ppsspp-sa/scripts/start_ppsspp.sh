@@ -106,4 +106,5 @@ fi
 
 ARG=${1//[\\]/}
 jslisten set "-9 ppsspp"
+export SDL_AUDIODRIVER=alsa
 ${EMUPERF} ppsspp --pause-menu-exit "${ARG}"
