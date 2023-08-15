@@ -5,10 +5,18 @@
 
 . /etc/profile
 
-if [ ! -d "" ]
-then
-  mkdir -p "/storage/.cache/connman"
-fi
+###
+### Basic WIFI properties used across the tool.
+###
+
+CFG_ROOT="/storage/.cache"
+WIFI_CFG="${CFG_ROOT}/connman/wifi.config"
+HOSTAPD_CFG="${CFG_ROOT}/.hostapd.conf"
+WIFI_TYPE=$(get_setting network.adhoc.enabled)
+NETWORK_ADDRESS="192.168.80"
+ADHOC_CLIENT_ID=$(get_setting wifi.adhoc.id)
+WIFI_DEV="wlan0"
+DEFAULT_CHAN="6"
 
 ### ES won't save the configuration in time
 ### for it to be useable by the script, so
@@ -22,6 +30,11 @@ else
   SSID="$(get_setting wifi.ssid)" 2>/dev/null
 fi
 
+if [ ! "${WIFI_TYPE}" = "0" ]
+then
+  SSID="${SSID}_np"
+fi
+
 if [ ! -z "${3}" ]
 then
   PSK="${3}"
@@ -29,13 +42,21 @@ else
   PSK="$(get_setting wifi.key)" 2>/dev/null
 fi
 
-###
-### Basic WIFI properties used across the tool.
-###
+if [ ! -d "" ]
+then
+  mkdir -p "${CFG_ROOT}/connman"
+fi
 
-WIFI_CFG="/storage/.cache/connman/wifi.config"
-WIFI_TYPE=$(get_setting network.adhoc.enabled)
-ADHOC_FREQ="5280"
+ADHOC_CHAN=$(get_setting wifi.adhoc.channel)
+if [ -z "${ADHOC_CHAN}" ]
+then
+  ADHOC_CHAN="${DEFAULT_CHAN}"
+  set_setting wifi.adhoc.channel ${DEFAULT_CHAN}
+fi
+
+###
+### Functions...
+###
 
 # lists all wifi services in service=ssid format
 list_wifi() {
@@ -53,134 +74,107 @@ set_powersave() {
   if [ "${ENABLED}" = "1" ]
   then
     log $0 "Enabling WIFI power saving."
-    iw wlan0 set power_save on 2>/dev/null
+    iw ${WIFI_DEV} set power_save on 2>/dev/null
   else
     log $0 "Disabling WIFI power saving."
-    iw wlan0 set power_save off 2>/dev/null
+    iw ${WIFI_DEV} set power_save off 2>/dev/null
   fi
 }
 
-get_wifi_state() {
-  STATE=$(connmanctl state | awk '/State/ {print $3}' 2>/dev/null)
-  echo ${STATE}
-}
-
-check_wifi() {
-  SSID_CHK=$(grep "${SSID}" ${WIFI_CFG} 2>/dev/null)
-  KEY_CHK=$(grep "${PSK}" ${WIFI_CFG} 2>/dev/null)
-  STATE=$(get_wifi_state)
-  if [ -n "${SSID_CHK}" ] && \
-     [ -n "${KEY_CHK}" ] && \
-     [ "${STATE}" = "online" ]
-  then
-    exit 0
-  fi
+wifi_service() {
+  for SERVICE in wpa_supplicant connman-vpn connman
+  do
+    systemctl ${1} ${SERVICE}
+  done
 }
 
 connect_wifi() {
-
-  ### Make sure the service is available
-  NETCHECK=$(systemctl is-actove connman >/dev/null 2>&1)
-  if [ "${NETCHECK}" = "inactive" ]
-  then
-    systemctl restart connman >/dev/null 2>&1
-    systemctl restart wpa_supplicant 2>&1
-  fi
-
-  ### If we aren't already online. Go online.
-  STATE=$(get_wifi_state)
-  if [ ! "${STATE}" = "online" ]
-  then
-    connmanctl enable wifi 2>/dev/null
-  fi
-
+  systemctl restart connman 2>/dev/null
+  connmanctl enable wifi 2>/dev/null
   set_powersave 2>/dev/null
 }
 
-connect_adhoc() {
-  local CLIENT=$(get_setting wifi.adhoc.id)
+create_adhoc() {
+  wifi_service stop
   rfkill unblock wifi
 
-  ### Set the WIFI type to ad-hoc
-  iw dev wlan0 del
-  iw phy phy0 interface add wlan0 type ibss
-
-  ### Start the interfaece
-  ip link set wlan0 up >/dev/null 2>&1
-
-  ### Create / join the adhoc network
-  iw wlan0 ibss join ${SSID}-adhoc ${ADHOC_FREQ} >/dev/null 2>&1
-
-  iw wlan0 connect ${SSID}-adhoc
-
-  ### Enable security
-  cat <<EOF >/storage/.cache/.adhoc.conf
-ap_scan=2
-
-network={
-    ssid="${SSID}-adhoc"
-    mode=1
-    frequency=${ADHOC_FREQ}
-    proto=RSN
-    key_mgmt=WPA-PSK
-    pairwise=CCMP
-    group=CCMP
-    psk="${PSK}"
-}
+  cat <<EOF >${HOSTAPD_CFG}
+interface=${WIFI_DEV}
+auth_algs=1
+channel=${ADHOC_CHAN}
+wpa=2
+wpa_key_mgmt=WPA-PSK
+wpa_pairwise=CCMP
+rsn_pairwise=CCMP
+wpa_passphrase=${PSK}
+ssid=${SSID}
 EOF
 
-  wpa_supplicant -B -i wlan0 -c /storage/.cache/.adhoc.conf -D nl80211,wext
+  sysctl -w net.ipv4.ip_forward=1
+
+  ### Flush any existing IP
+  ip addr flush dev ${WIFI_DEV}
 
   ### Set our IP
-  ip addr add 192.168.0.${CLIENT}/24 dev wlan0 >/dev/null 2>&1
+  ip addr add ${NETWORK_ADDRESS}.${ADHOC_CLIENT_ID}/24 dev ${WIFI_DEV} >/dev/null 2>&1
+
+  systemctl start hostapd
+
+  exit 0
 }
 
-disconnect_adhoc() {
-  ip addr flush dev wlan0 >/dev/null 2>&1
-  ip link set wlan0 down >/dev/null 2>&1
-  killall wpa_supplicant
-  ### Set the WIFI type to ad-hoc
-  iw dev wlan0 del
-  iw phy phy0 interface add wlan0 type managed
+destroy_adhoc() {
+  ip addr flush dev ${WIFI_DEV}
+  ip link set ${WIFI_DEV} down
+  systemctl stop hostapd
 }
 
 set_profile() {
+  wifi_service stop
   cat > "${WIFI_CFG}" <<EOF
+[Settings]
+AutoConnect = true
+
 [service_${OS_NAME}_default]
 Type = wifi
 Name = ${SSID}
 Passphrase = ${PSK}
 EOF
+
+  if [ "${WIFI_TYPE}" = "1" ]
+  then
+    cat >> "${WIFI_CFG}" <<EOF
+Security = wpa
+IPv4 = ${NETWORK_ADDRESS}.${ADHOC_CLIENT_ID}/255.255.255.0/255.255.255.254
+IPv6 = off
+EOF
+  fi
+
+  rm -rf ${CFG_ROOT}/connman/wifi_*
+  wifi_service restart
 }
 
 case "${1}" in
   enable)
-    case ${WIFI_TYPE} in
-      1)
-        systemctl stop wpa_supplicant >/dev/null 2>&1
-        systemctl stop connman >/dev/null 2>&1
-        connect_adhoc >/dev/null 2>&1
-      ;;
-      *)
-        check_wifi >/dev/null 2>&1
-        disconnect_adhoc >/dev/null 2>&1
-        set_profile >/dev/null 2>&1
-        connect_wifi >/dev/null 2>&1
-      ;;
-    esac
+    set_profile >/dev/null 2>&1
+    if [ "${WIFI_TYPE}" = "1" ] && \
+       [ "${ADHOC_CLIENT_ID}" = "1" ]
+    then
+      create_adhoc >/dev/null 2>&1
+    else
+      destroy_adhoc >/dev/null 2>&1
+    fi
+    connect_wifi >/dev/null 2>&1
     set_setting wifi.enabled 1
   ;;
   disable)
-    case ${WIFI_TYPE} in
-      1)
-        disconnect_adhoc >/dev/null 2>&1
-      ;;
-      *)
-        connmanctl disable wifi >/dev/null 2>&1
-        rm -f "${WIFI_CFG}" 2>/dev/null
-      ;;
-    esac
-    rfkill block wifi
+    if [ "${WIFI_TYPE}" = "1" ]
+    then
+      destroy_adhoc >/dev/null 2>&1
+    fi
+    connmanctl disable wifi >/dev/null 2>&1
+    rfkill block wifi >/dev/null 2>&1
+    rm -f "${WIFI_CFG}" 2>/dev/null
     set_setting wifi.enabled 0
   ;;
   reconnect)
@@ -189,6 +183,9 @@ case "${1}" in
   ;;
   list)
     list_wifi | awk '{sub(/\S+=/,"",$0);print}'
+  ;;
+  channels)
+    iw list | awk '/[0-9] MHz \[/ && ! /disabled|radar|no IR/ { gsub(/^.*\[/,""); gsub(/\].*$/,""); print}'
   ;;
   scan)
     connmanctl scan wifi 2>/dev/null
