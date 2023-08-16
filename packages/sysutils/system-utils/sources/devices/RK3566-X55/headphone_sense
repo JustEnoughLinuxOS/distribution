@@ -16,14 +16,14 @@ do
   then
     case ${HEADPHONE_STATE} in
       0)
-        amixer cset name='Playback Path' ${DEVICE_PLAYBACK_PATH_SPK} >/dev/null 2>&1
-        amixer cset name='MUTE' 1 >/dev/null 2>&1
-        amixer cset name='MUTE' 0 >/dev/null 2>&1
+        amixer -c 0 cset name='Playback Path' ${DEVICE_PLAYBACK_PATH_SPK} >/dev/null 2>&1
+        amixer -c 0 cset name='MUTE' 1 >/dev/null 2>&1
+        amixer -c 0 cset name='MUTE' 0 >/dev/null 2>&1
       ;;
       1)
-        amixer cset name='Playback Path' ${DEVICE_PLAYBACK_PATH_HP} >/dev/null 2>&1
-        amixer cset name='MUTE' 1 >/dev/null 2>&1
-        amixer cset name='MUTE' 0 >/dev/null 2>&1
+        amixer -c 0 cset name='Playback Path' ${DEVICE_PLAYBACK_PATH_HP} >/dev/null 2>&1
+        amixer -c 0 cset name='MUTE' 1 >/dev/null 2>&1
+        amixer -c 0 cset name='MUTE' 0 >/dev/null 2>&1
       ;;
     esac
   fi
