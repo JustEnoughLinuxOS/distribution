@@ -125,7 +125,7 @@ case $1 in
 
     DEVICE_VOLUME=$(get_setting "audio.volume" 2>/dev/null)
     log $0 "Restoring volume to ${DEVICE_VOLUME}%."
-    amixer -M set "${DEVICE_AUDIO_MIXER}" ${DEVICE_VOLUME}%
+    amixer -c 0 -M set "${DEVICE_AUDIO_MIXER}" ${DEVICE_VOLUME}%
 
     BRIGHTNESS=$(get_setting system.brightness)
     log $0 "Restoring brightness to ${BRIGHTNESS}."
