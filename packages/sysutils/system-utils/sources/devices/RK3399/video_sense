@@ -28,15 +28,15 @@ do
           sed -i 's/pcm "hw:1,0"/pcm "hw:0,0"/' /storage/.config/asound.conf
             case ${HP_GPIO} in
               "1")
-                amixer cset name='Speaker Switch' ${DEVICE_PLAYBACK_PATH_HP}
-                amixer set 'Headphone' '67%'
-                amixer set 'Playback Polarity' Normal
+                amixer -c 0 cset name='Speaker Switch' ${DEVICE_PLAYBACK_PATH_HP}
+                amixer -c 0 set 'Headphone' '67%'
+                amixer -c 0 set 'Playback Polarity' Normal
                 set_setting "audio.device" "headphone"
               ;;
               *)
-                amixer cset name='Speaker Switch' ${DEVICE_PLAYBACK_PATH_SPK}
-                amixer set 'Headphone' '100%'
-                amixer set 'Playback Polarity' 'R Invert'
+                amixer -c 0 cset name='Speaker Switch' ${DEVICE_PLAYBACK_PATH_SPK}
+                amixer -c 0 set 'Headphone' '100%'
+                amixer -c 0 set 'Playback Polarity' 'R Invert'
                 set_setting "audio.device" "speakers"
               ;;
             esac

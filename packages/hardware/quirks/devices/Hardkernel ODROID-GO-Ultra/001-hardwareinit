@@ -17,5 +17,5 @@ SuspendState=freeze
 EOF
 
 ### Set sound properties
-amixer -q sset 'FRDDR_A SINK 1 SEL' 'OUT 1'
-amixer -q sset 'FRDDR_A SRC 1 EN' 'on'
+amixer -c 0 -q sset 'FRDDR_A SINK 1 SEL' 'OUT 1'
+amixer -c 0 -q sset 'FRDDR_A SRC 1 EN' 'on'

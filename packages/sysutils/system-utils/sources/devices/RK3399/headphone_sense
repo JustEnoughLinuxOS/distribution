@@ -9,15 +9,15 @@
 HP_GPIO=$(cat /sys/class/gpio/gpio${DEVICE_JACK}/value)
   case ${HP_GPIO} in
     "1")
-      amixer cset name='Speaker Switch' ${DEVICE_PLAYBACK_PATH_HP}
-      amixer set 'Headphone' '67%'
-      amixer set 'Playback Polarity' Normal
+      amixer -c 0 cset name='Speaker Switch' ${DEVICE_PLAYBACK_PATH_HP}
+      amixer -c 0 set 'Headphone' '67%'
+      amixer -c 0 set 'Playback Polarity' Normal
       set_setting "audio.device" "headphone"
     ;;
     *)
-      amixer cset name='Speaker Switch' ${DEVICE_PLAYBACK_PATH_SPK}
-      amixer set 'Headphone' '100%'
-      amixer set 'Playback Polarity' 'R Invert'
+      amixer -c 0 cset name='Speaker Switch' ${DEVICE_PLAYBACK_PATH_SPK}
+      amixer -c 0 set 'Headphone' '100%'
+      amixer -c 0 set 'Playback Polarity' 'R Invert'
       set_setting "audio.device" "speakers"
     ;;
   esac
@@ -31,15 +31,15 @@ HP_ON='*(SW_HEADPHONE_INSERT), value 1*'
 evtest "${DEVICE}" | while read line; do
     case $line in
     (${HP_ON})
-      amixer cset name='Speaker Switch' ${DEVICE_PLAYBACK_PATH_HP}
-      amixer set 'Headphone' '67%'
-      amixer set 'Playback Polarity' Normal
+      amixer -c 0 cset name='Speaker Switch' ${DEVICE_PLAYBACK_PATH_HP}
+      amixer -c 0 set 'Headphone' '67%'
+      amixer -c 0 set 'Playback Polarity' Normal
       set_setting "audio.device" "headphone"
     ;;
     (${HP_OFF})
-      amixer cset name='Speaker Switch' ${DEVICE_PLAYBACK_PATH_SPK}
-      amixer set 'Headphone' '100%'
-      amixer set 'Playback Polarity' 'R Invert'
+      amixer -c 0 cset name='Speaker Switch' ${DEVICE_PLAYBACK_PATH_SPK}
+      amixer -c 0 set 'Headphone' '100%'
+      amixer -c 0 set 'Playback Polarity' 'R Invert'
       set_setting "audio.device" "speakers"
     ;;
     esac
