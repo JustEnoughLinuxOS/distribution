@@ -334,6 +334,10 @@ EOF
 function configure_hotkeys() {
     log "Configure hotkeys..."
     local MY_CONTROLLER=$(cat /storage/.controller)
+
+    ### Remove any input settings retroarch may have added.
+    sed -i '/input_player[0-9]/d' ${RETROARCH_CONFIG}
+
     if [ "$(get_setting system.autohotkeys)" == "1" ]
     then
         if [ -e "/tmp/joypads/${MY_CONTROLLER}.cfg" ]
@@ -345,6 +349,7 @@ function configure_hotkeys() {
                                input_exit_emulator_btn input_fps_toggle_btn       \
                                input_menu_toggle_btn input_save_state_btn         \
                                input_load_state_btn input_toggle_fast_forward_btn \
+                               input_toggle_fast_forward_axis input_rewind_axis   \
                                input_rewind_btn
             do
                 clear_setting "${HKEYSETTING}"
@@ -358,9 +363,26 @@ input_fps_toggle_btn = "${input_y_btn}"
 input_menu_toggle_btn = "${input_x_btn}"
 input_save_state_btn = "${input_r_btn}"
 input_load_state_btn = "${input_l_btn}"
+EOF
+            if [ -n "${input_r2_btn}" ] && \
+               [ -n "${input_l2_btn}" ]
+            then
+                cat <<EOF >>${RETROARCH_CONFIG}
+input_toggle_fast_forward_axis = "nul"
 input_toggle_fast_forward_btn = "${input_r2_btn}"
+input_rewind_axis = "nul"
 input_rewind_btn = "${input_l2_btn}"
 EOF
+            elif [ -n "${input_r2_axis}" ] && \
+                 [ -n "${input_l2_axis}" ]
+            then
+                cat <<EOF >>${RETROARCH_CONFIG}
+input_toggle_fast_forward_axis = "${input_r2_axis}"
+input_toggle_fast_forward_btn = "nul"
+input_rewind_axis = "${input_l2_axis}"
+input_rewind_btn = "nul"
+EOF
+            fi
             rm -f /tmp/"${MY_CONTROLLER}.cfg"
         fi
     fi
@@ -378,6 +400,10 @@ function set_ra_menudriver() {
 
 function set_fps() {
     add_setting "showFPS" "fps_show"
+}
+
+function set_config_save() {
+    add_setting "config_save_on_exit" "false"
 }
 
 function set_cheevos() {
@@ -803,6 +829,7 @@ configure_hotkeys
 ###
 
 set_ra_menudriver &
+set_config_save &
 set_fps &
 set_cheevos &
 set_netplay &
