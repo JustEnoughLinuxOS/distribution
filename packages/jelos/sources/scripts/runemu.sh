@@ -293,8 +293,10 @@ else
 	           [[ "${CORE}" =~ flycast32 ]] || \
 	           [[ "${CORE}" =~ desmume ]]
 		then
-                        export LIBGL_DRIVERS_PATH="/usr/lib32/dri"
-                        export LD_LIBRARY_PATH="/usr/lib32"
+			export LD_LIBRARY_PATH="/usr/lib32"
+			export SPA_PLUGIN_DIR="/usr/lib32/spa-0.2"
+			export PIPEWIRE_MODULE_DIR="/usr/lib32/pipewire-0.3/"
+			export LIBGL_DRIVERS_PATH="/usr/lib32/dri"
 			export RABIN="retroarch32"
 		fi
 	fi
