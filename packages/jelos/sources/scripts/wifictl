@@ -30,7 +30,7 @@ else
   SSID="$(get_setting wifi.ssid)" 2>/dev/null
 fi
 
-if [ ! "${WIFI_TYPE}" = "0" ]
+if [ "${WIFI_TYPE}" = "1" ]
 then
   SSID="${SSID}_np"
 fi
