@@ -91,6 +91,7 @@ wifi_service() {
 connect_wifi() {
   systemctl restart connman 2>/dev/null
   connmanctl enable wifi 2>/dev/null
+  connmanctl connect $(connmanctl services 2>&1 | awk '/\s'${SSID}'\s/ {gsub(/^\*[A-z][A-z]/,""); print $2}') 2>/dev/null
   set_powersave 2>/dev/null
 }
 
