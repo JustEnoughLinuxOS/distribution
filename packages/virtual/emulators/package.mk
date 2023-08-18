@@ -104,6 +104,9 @@ makeinstall_target() {
   ### Add music directory
   add_system_dir /storage/roms/music
 
+  ### Add save states directory
+  add_system_dir /storage/roms/savestates
+
   ### Apply documentation header
   start_system_doc
 
