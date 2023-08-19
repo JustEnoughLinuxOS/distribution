@@ -150,6 +150,9 @@ function get_aspect_ratio() {
   ASPECT=$(printf "%.2f" $(echo "(${FBWIDTH} / ${FBHEIGHT})" | bc -l))
 
   case ${ASPECT} in
+    1.00)
+      ASPECT="1:1"
+    ;;
     1.50|0.67)
       ASPECT="3:2"
     ;;
