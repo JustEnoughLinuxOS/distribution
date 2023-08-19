@@ -149,7 +149,7 @@ case "${RSP}" in
 	"parallel")
 		SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-parallel$SIMPLESUFFIX.so"
 	;;
-	"cxd4")
+	"hle")
 		SET_PARAMS="$SET_PARAMS --rsp mupen64plus-rsp-hle$SIMPLESUFFIX.so"
 	;;
 	*)
