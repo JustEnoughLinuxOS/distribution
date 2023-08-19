@@ -149,6 +149,7 @@ cp -rf /usr/config/gmu/playlists/* /storage/.config/gmu/playlists/
 
 ### Switch back to alsathread
 sed -i 's~^audio_driver = .*$~audio_driver = "alsathread"~g' /storage/.config/retroarch/retroarch.cfg
+sed -i 's~^microphone_driver = .*$~microphone_driver = "alsathread"~g' /storage/.config/retroarch/retroarch.cfg
 
 ### Remove stale asound bits
 rm -f /storage/.config/asound*
