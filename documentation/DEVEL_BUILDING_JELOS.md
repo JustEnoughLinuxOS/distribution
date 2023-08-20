@@ -152,7 +152,7 @@ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin dock
 Next, build the version of JELOS for your device.  See the table above for dependencies. 
 
 ```
-make AMD64
+make docker-AMD64
 ```
 
 ### Building a single package
