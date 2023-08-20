@@ -21,7 +21,7 @@
 ################################################################################
 
 PKG_NAME="vice-lr"
-PKG_VERSION="341dd731a43599891aca921c95addd767d1cc778"
+PKG_VERSION="662c85f25d08580a9d89556bf1410d191db0a085"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"

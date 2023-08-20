@@ -9,7 +9,8 @@
 ###
 
 SYSTEM_CONFIG="/storage/.config/system/configs/system.cfg"
-RETROARCH_CONFIG="/storage/.config/retroarch/retroarch.cfg"
+RETROARCH_PATH="/storage/.config/retroarch"
+RETROARCH_CONFIG="${RETROARCH_PATH}/retroarch.cfg"
 RETROARCH_TEMPLATE="/usr/config/retroarch/retroarch.cfg"
 
 ROMS_DIR="/storage/roms"
@@ -27,6 +28,7 @@ LOCK_FILE="/tmp/.retroarch.lock"
 PLATFORM=${1,,}
 ROM="${2##*/}"
 CORE=${3,,}
+
 
 #Autosave
 AUTOSAVE="$@"
@@ -308,13 +310,13 @@ function match() {
 
 ### Configure retroarch paths
 function set_retroarch_paths() {
-  for RETROARCH_PATH in assets_directory cache_directory            \
-                        cheat_database_path content_database_path   \
-                        content_database_path joypad_autoconfig_dir \
-                        libretro_directory libretro_info_path       \
-                        overlay_directory video_shader_dir
+  for RPATH in assets_directory cache_directory            \
+               cheat_database_path content_database_path   \
+               content_database_path joypad_autoconfig_dir \
+               libretro_directory libretro_info_path       \
+               overlay_directory video_shader_dir
   do
-    clear_setting "${RETROARCH_PATH}"
+    clear_setting "${RPATH}"
   done
   flush_settings
   cat <<EOF >>${RETROARCH_CONFIG}
@@ -334,6 +336,10 @@ EOF
 function configure_hotkeys() {
     log "Configure hotkeys..."
     local MY_CONTROLLER=$(cat /storage/.controller)
+
+    ### Remove any input settings retroarch may have added.
+    sed -i '/input_player[0-9]/d' ${RETROARCH_CONFIG}
+
     if [ "$(get_setting system.autohotkeys)" == "1" ]
     then
         if [ -e "/tmp/joypads/${MY_CONTROLLER}.cfg" ]
@@ -345,6 +351,7 @@ function configure_hotkeys() {
                                input_exit_emulator_btn input_fps_toggle_btn       \
                                input_menu_toggle_btn input_save_state_btn         \
                                input_load_state_btn input_toggle_fast_forward_btn \
+                               input_toggle_fast_forward_axis input_rewind_axis   \
                                input_rewind_btn
             do
                 clear_setting "${HKEYSETTING}"
@@ -358,9 +365,26 @@ input_fps_toggle_btn = "${input_y_btn}"
 input_menu_toggle_btn = "${input_x_btn}"
 input_save_state_btn = "${input_r_btn}"
 input_load_state_btn = "${input_l_btn}"
+EOF
+            if [ -n "${input_r2_btn}" ] && \
+               [ -n "${input_l2_btn}" ]
+            then
+                cat <<EOF >>${RETROARCH_CONFIG}
+input_toggle_fast_forward_axis = "nul"
 input_toggle_fast_forward_btn = "${input_r2_btn}"
+input_rewind_axis = "nul"
 input_rewind_btn = "${input_l2_btn}"
 EOF
+            elif [ -n "${input_r2_axis}" ] && \
+                 [ -n "${input_l2_axis}" ]
+            then
+                cat <<EOF >>${RETROARCH_CONFIG}
+input_toggle_fast_forward_axis = "${input_r2_axis}"
+input_toggle_fast_forward_btn = "nul"
+input_rewind_axis = "${input_l2_axis}"
+input_rewind_btn = "nul"
+EOF
+            fi
             rm -f /tmp/"${MY_CONTROLLER}.cfg"
         fi
     fi
@@ -378,6 +402,10 @@ function set_ra_menudriver() {
 
 function set_fps() {
     add_setting "showFPS" "fps_show"
+}
+
+function set_config_save() {
+    add_setting "config_save_on_exit" "false"
 }
 
 function set_cheevos() {
@@ -405,30 +433,130 @@ function set_cheevos() {
 }
 
 function set_netplay() {
-    local USE_NETPLAY=$(game_setting "netplay")
+    USE_NETPLAY=$(game_setting "netplay")
     if [ "${USE_NETPLAY}" = 1 ]
     then
+        add_setting "none" "savestate_auto_load" "false"
+        add_setting "none" "savestate_auto_save" "false"
         add_setting "retroachievements.hardcore" "cheevos_hardcore_mode_enable" "false"
         add_setting "global.netplay.nickname" "netplay_nickname"
         add_setting "global.netplay.password" "netplay_password"
         add_setting "netplay_public_announce" "netplay_public_announce"
         local NETPLAY_MODE=$(game_setting "netplay.mode")
+        local NETPLAY_PORT=$(game_setting "global.netplay.port")
         case ${NETPLAY_MODE} in
             host)
                 add_setting "none" "netplay_mode" "false"
                 add_setting "none" "netplay_client_swap_input" "false"
-                add_setting "global.netplay.port" "netplay_ip_port"
-		echo -n " --host"
+                add_setting "global.netplay.port" "netplay_ip_port" "${NETPLAY_PORT}"
+                case ${CORE} in
+                    gambatte)
+                        log "Configuring gameboy link server."
+                        if [ ! -d "${RETROARCH_PATH}/config/Gambatte" ]
+                        then
+                            mkdir -p "${RETROARCH_PATH}/config/Gambatte"
+                        fi
+                        local GAMBATTE_CONF="${RETROARCH_PATH}/config/Gambatte/Gambatte.opt"
+                        ### Rework this to use add_setting and be configurable in ES.
+                        sed -i '/gambatte_gb_link_mode/d; \
+                                /gambatte_gb_link_network_port/d' ${GAMBATTE_CONF}
+                        cat <<EOF >>${GAMBATTE_CONF}
+gambatte_gb_link_mode = "Network Server"
+gambatte_gb_link_network_port = "$(( ${NETPLAY_PORT} + 1 ))"
+EOF
+                    ;;
+                    tgbdual)
+                        log "Configuring tgbdual for network play"
+                        if [ ! -d "${RETROARCH_PATH}/config/TGB Dual" ]
+                        then
+                            mkdir -p "${RETROARCH_PATH}/config/TGB Dual"
+                        fi
+                        local TGBDUAL_CONF="${RETROARCH_PATH}/config/TGB Dual/TGB Dual.opt"
+                        sed -i '/tgbdual_gblink_enable/d; \
+                                /tgbdual_single_screen_mp/d; \
+                                /tgbdual_switch_screens/d' "${TGBDUAL_CONF}"
+                        cat <<EOF >>"${TGBDUAL_CONF}"
+tgbdual_gblink_enable = "enabled"
+tgbdual_single_screen_mp = "player 1 only"
+tgbdual_switch_screens = "normal"
+EOF
+                        echo -n " --host"
+                    ;;
+                    *)
+                        echo -n " --host"
+                    ;;
+                esac
             ;;
             client)
                 local NETPLAY_HOST_IP=$(get_setting global.netplay.host)
-                add_setting "none" "netplay_mode" "true"
-                add_setting "none" "netplay_client_swap_input" "true"
-                add_setting "global.netplay.port" "netplay_ip_port"
+                add_setting "global.netplay.port" "${NETPLAY_PORT}"
                 if [ ! -z "${NETPLAY_HOST_IP}" ]
                 then
-                  add_setting "none" "netplay_ip_address" "${NETPLAY_HOST_IP}"
-                  echo -n " --connect ${NETPLAY_HOST_IP}"
+                    add_setting "none" "netplay_ip_address" "${NETPLAY_HOST_IP}"
+                    case ${CORE} in
+                        gambatte)
+                            log "Configuring gameboy link client."
+                            if [ ! -d "${RETROARCH_PATH}/config/Gambatte" ]
+                            then
+                                mkdir -p "${RETROARCH_PATH}/config/Gambatte"
+                            fi
+                            add_setting "none" "netplay_mode" "false"
+                            add_setting "none" "netplay_client_swap_input" "false"
+                            local GAMBATTE_CONF="${RETROARCH_PATH}/config/Gambatte/Gambatte.opt"
+                            sed -i '/gambatte_gb_link_mode/d; \
+                                    /gambatte_gb_link_network_port/d' ${GAMBATTE_CONF}
+                            cat <<EOF >>${GAMBATTE_CONF}
+gambatte_gb_link_mode = "Network Client"
+gambatte_gb_link_network_port = "$(( ${NETPLAY_PORT} + 1 ))"
+EOF
+
+                            sed -i '/gambatte_gb_link_network_server_ip_/d'  ${GAMBATTE_CONF}
+
+                            local IPARRAY=(${NETPLAY_HOST_IP//./ })
+                            for ELEM in ${IPARRAY[*]}
+                            do
+                                ADDR="${ADDR}$(printf "%03d" "${ELEM}")"
+                            done
+
+                            local COUNT=1
+                            for (( i=0; i<${#ADDR}; i++ ));
+                            do
+                                cat <<EOF >>${GAMBATTE_CONF}
+gambatte_gb_link_network_server_ip_${COUNT} = "${ADDR:$i:1}"
+EOF
+                                COUNT=$(( ${COUNT} + 1 ))
+                            done
+                        ;;
+                        tgbdual)
+                            log "Configuring tgbdual for network play"
+                            if [ ! -d "${RETROARCH_PATH}/config/TGB Dual" ]
+                            then
+                                mkdir -p "${RETROARCH_PATH}/config/TGB Dual"
+                            fi
+                            local TGBDUAL_CONF="${RETROARCH_PATH}/config/TGB Dual/TGB Dual.opt"
+                            local PLAYER=$(get_setting wifi.adhoc.id)
+                            if [ -z "${PLAYER}" ]
+                            then
+                                PLAYER=2
+                            fi
+                            sed -i '/tgbdual_gblink_enable/d; \
+                                    /tgbdual_single_screen_mp/d; \
+                                    /tgbdual_switch_screens/d' "${TGBDUAL_CONF}"
+                            cat <<EOF >"${TGBDUAL_CONF}"
+tgbdual_gblink_enable = "enabled"
+tgbdual_single_screen_mp = "player ${PLAYER} only"
+tgbdual_switch_screens = "normal"
+EOF
+                            add_setting "none" "netplay_mode" "true"
+                            add_setting "none" "netplay_client_swap_input" "true"
+                            echo -n " --connect ${NETPLAY_HOST_IP}"
+                        ;;
+                        *)
+                            add_setting "none" "netplay_mode" "true"
+                            add_setting "none" "netplay_client_swap_input" "true"
+                            echo -n " --connect ${NETPLAY_HOST_IP}"
+                        ;;
+                    esac
                 fi
             ;;
         esac
@@ -642,7 +770,7 @@ function set_tatemode() {
     if [ "${CORE}" = "mame2003_plus" ]
     then
         local TATEMODE="$(game_setting tatemode)"
-        local MAME2003DIR="/storage/.config/retroarch/config/MAME 2003-Plus"
+        local MAME2003DIR="${RETROARCH_PATH}/config/MAME 2003-Plus"
         local MAME2003REMAPDIR="/storage/remappings/MAME 2003-Plus"
         if [ ! -d "${MAME2003DIR}" ]
         then
@@ -680,7 +808,7 @@ function set_n64opts() {
     log "Set up N64..."
     if [ "${CORE}" = "parallel_n64" ]
     then
-        local PARALLELN64DIR="/storage/.config/retroarch/config/ParaLLEl N64"
+        local PARALLELN64DIR="${RETROARCH_PATH}/config/ParaLLEl N64"
         if [ ! -d "${PARALLELN64DIR}" ]
         then
             mkdir -p "${PARALLELN64DIR}"
@@ -708,7 +836,7 @@ function set_atari() {
     if [ "${CORE}" = "atari800" ]
     then
         ATARICONF="/storage/.config/system/configs/atari800.cfg"
-        ATARI800CONF="/storage/.config/retroarch/config/Atari800/Atari800.opt"
+        ATARI800CONF="${RETROARCH_PATH}/config/Atari800/Atari800.opt"
         if [ ! -f "$ATARI800CONF" ]
         then
             touch "$ATARI800CONF"
@@ -736,10 +864,10 @@ function set_atari() {
 }
 
 function set_gambatte() {
-    log "Set up Gambatte (FIXME)..."
+    log "Set up Gambatte..."
     if [ "${CORE}" = "gambatte" ]
     then
-        GAMBATTECONF="/storage/.config/retroarch/config/Gambatte/Gambatte.opt"
+        GAMBATTECONF="${RETROARCH_PATH}/config/Gambatte/Gambatte.opt"
         if [ ! -f "GAMBATTECONF" ]
         then
             echo 'gambatte_gbc_color_correction = "disabled"' > ${GAMBATTECONF}
@@ -748,21 +876,24 @@ function set_gambatte() {
             sed -i "/gambatte_gb_internal_palette =/d" ${GAMBATTECONF}
         fi
         local RENDERER=$(game_setting renderer.colorization)
-        case ${RENDERER} in
-            0|false|none)
-                echo 'gambatte_gb_colorization = "disabled"' >> ${GAMBATTECONF}
-            ;;
-            "Best Guess")
-                echo 'gambatte_gb_colorization = "auto"' >> ${GAMBATTECONF}
-            ;;
-            GBC|SGB)
-                echo 'gambatte_gb_colorization = "'${RENDERER}'"' >> ${GAMBATTECONF}
-            ;;
-            *)
-                echo 'gambatte_gb_colorization = "internal"' >> ${GAMBATTECONF}
-                echo 'gambatte_gb_internal_palette = "'${RENDERER}'"' >> ${GAMBATTECONF}
-            ;;
-        esac
+	if [ -n "${RENDERER}" ]
+        then
+            case ${RENDERER} in
+                0|false|none)
+                    echo 'gambatte_gb_colorization = "disabled"' >> ${GAMBATTECONF}
+                ;;
+                "Best Guess")
+                    echo 'gambatte_gb_colorization = "auto"' >> ${GAMBATTECONF}
+                ;;
+                GBC|SGB)
+                    echo 'gambatte_gb_colorization = "'${RENDERER}'"' >> ${GAMBATTECONF}
+                ;;
+                *)
+                    echo 'gambatte_gb_colorization = "internal"' >> ${GAMBATTECONF}
+                    echo 'gambatte_gb_internal_palette = "'${RENDERER}'"' >> ${GAMBATTECONF}
+                ;;
+            esac
+        fi
     fi
 }
 
@@ -799,13 +930,23 @@ setup_controllers
 configure_hotkeys
 
 ###
+### Game specific functions
+###
+
+set_atari &
+set_gambatte &
+
+wait
+flush_settings
+
+###
 ### Functions that can execute in parallel.
 ###
 
 set_ra_menudriver &
+set_config_save &
 set_fps &
 set_cheevos &
-set_netplay &
 set_translation &
 set_aspectratio &
 set_filtering &
@@ -816,6 +957,7 @@ set_filter &
 set_rewind &
 set_savestates &
 set_autosave &
+set_netplay &
 set_runahead &
 set_audiolatency &
 set_analogsupport &
@@ -824,12 +966,6 @@ set_n64opts &
 
 ### Sed operations are expensive, so they are staged and executed as
 ### a single process when all forks complete.
-wait
-flush_settings
-
-set_atari &
-set_gambatte &
-
 wait
 flush_settings
 
