@@ -3,7 +3,8 @@
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="fuse"
-PKG_VERSION="3.16.1"
+PKG_VERSION="2.9.9"
+PKG_SHA256="d0e69d5d608cc22ff4843791ad097f554dd32540ddc9bed7638cc6fea7c1b4b5"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/libfuse/libfuse/"
 PKG_URL="https://github.com/libfuse/libfuse/releases/download/${PKG_NAME}-${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.gz"
@@ -11,13 +12,14 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="FUSE provides a simple interface for userspace programs to export a virtual filesystem to the Linux kernel."
 # fuse fails to build with GOLD linker on gcc-4.9
 PKG_BUILD_FLAGS="-gold"
+PKG_TOOLCHAIN="autotools"
 
-PKG_MESON_OPTS_TARGET+="-Dudevrulesdir=/usr/lib/udev \
-                        -Dinitscriptdir= \
-                        -Dtests=false \
-                        -Dexamples=false"
-                        
-post_makeinstall_target() {
-  ln -sf fusermount3 ${INSTALL}/usr/bin/fusermount
-  ln -sf mount.fuse3 ${INSTALL}/usr/sbin/mount.fuse
-}
+PKG_CONFIGURE_OPTS_TARGET="MOUNT_FUSE_PATH=/usr/sbin \
+                           UDEV_RULES_PATH=/usr/lib/udev \
+                           --enable-lib \
+                           --enable-util \
+                           --disable-example \
+                           --enable-mtab \
+                           --disable-rpath \
+                           --with-gnu-ld"
+
