@@ -7,7 +7,7 @@ PKG_ARCH="aarch64"
 PKG_LICENSE="LGPL"
 PKG_SITE="https://www.aethersx2.com"
 PKG_URL="${PKG_SITE}/archive/desktop/linux/AetherSX2-${PKG_VERSION}.AppImage"
-PKG_DEPENDS_TARGET="toolchain qt5 libgpg-error"
+PKG_DEPENDS_TARGET="toolchain qt5 libgpg-error fuse2"
 PKG_LONGDESC="Arm PS2 Emulator appimage"
 PKG_TOOLCHAIN="manual"
 

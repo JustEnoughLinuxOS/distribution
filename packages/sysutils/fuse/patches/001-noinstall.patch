@@ -1,0 +1,13 @@
+diff -rupN fuse-3.16.1.orig/util/meson.build fuse-3.16.1/util/meson.build
+--- fuse-3.16.1.orig/util/meson.build	2023-08-19 14:31:45.825870616 +0000
++++ fuse-3.16.1/util/meson.build	2023-08-19 14:31:23.468678346 +0000
+@@ -26,9 +26,3 @@ if udevrulesdir == ''
+   warning('could not determine udevdir, udev.rules will not be installed')
+ endif
+ 
+-meson.add_install_script('install_helper.sh',
+-                         join_paths(get_option('prefix'), get_option('sysconfdir')),
+-                         join_paths(get_option('prefix'), get_option('bindir')),
+-                         udevrulesdir,
+-                         '@0@'.format(get_option('useroot')),
+-                         get_option('initscriptdir'))
