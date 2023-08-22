@@ -30,16 +30,20 @@ else
   SSID="$(get_setting wifi.ssid)" 2>/dev/null
 fi
 
-if [ "${WIFI_TYPE}" = "1" ]
-then
-  SSID="${SSID}_np"
-fi
-
 if [ ! -z "${3}" ]
 then
   PSK="${3}"
 else
   PSK="$(get_setting wifi.key)" 2>/dev/null
+fi
+
+
+if [ "${WIFI_TYPE}" = "1" ]
+then
+  #SSID="${SSID}_np"
+  GENERATED=($(md5sum /etc/os-release))
+  SSID="${GENERATED[0]:0:10}"
+  PSK="${GENERATED[0]: -10}"
 fi
 
 if [ ! -d "" ]
