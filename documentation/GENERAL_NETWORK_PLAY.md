@@ -54,5 +54,5 @@ JELOS supports GameLink play for GameBoy and GameBoy Color.  To use, on each dev
 
 |Core|Features|
 |----|----|
-|TGBDual * Recommended|Support for multiplayer GameLink play, including battle/trading."|
+|TGBDual * Recommended|Support for multiplayer GameLink play, including battle/trading.|
 |Gambatte|Support for multiplayer GameLink play.|
