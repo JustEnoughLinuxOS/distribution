@@ -49,6 +49,7 @@ pre_makeinstall_target() {
 post_makeinstall_target() {
   (
   mv ${INSTALL}/storage/.config/vim/vim/vimrc_example.vim ${INSTALL}/usr/config/vim/vimrc
+  mv ${INSTALL}/storage/.config/vim/vim/defaults.vim ${INSTALL}/usr/config/vim/defaults.vim
   rm -r ${INSTALL}/storage/
   )
 }
