@@ -1,0 +1,52 @@
+diff --git a/core/linux-dist/main.cpp b/core/linux-dist/main.cpp
+index e970f880a..2b2567c32 100644
+--- a/core/linux-dist/main.cpp
++++ b/core/linux-dist/main.cpp
+@@ -113,9 +113,9 @@ void common_linux_setup();
+ // $HOME/.config/flycast on linux
+ std::string find_user_config_dir()
+ {
+-#ifdef __SWITCH__
+-	flycast::mkdir("/flycast", 0755);
+-	return "/flycast/";
++#ifdef __unix__
++	flycast::mkdir("/storage/.config/flycast", 0755);
++	return "/storage/.config/flycast/";
+ #else
+ 	std::string xdg_home;
+ 	if (nowide::getenv("XDG_CONFIG_HOME") != nullptr)
+@@ -147,9 +147,9 @@ std::string find_user_config_dir()
+ // $HOME/.local/share/flycast on linux
+ std::string find_user_data_dir()
+ {
+-#ifdef __SWITCH__
+-	flycast::mkdir("/flycast/data", 0755);
+-	return "/flycast/data/";
++#ifdef __unix__
++	flycast::mkdir("/storage/roms/dreamcast/data", 0755);
++	return "/storage/roms/dreamcast/data/";
+ #else
+ 	std::string xdg_home;
+ 	if (nowide::getenv("XDG_DATA_HOME") != nullptr)
+@@ -208,8 +208,8 @@ std::vector<std::string> find_system_config_dirs()
+ {
+ 	std::vector<std::string> dirs;
+ 
+-#ifdef __SWITCH__
+-	dirs.push_back("/flycast/");
++#ifdef __unix__
++	dirs.push_back("/storage/.config/flycast/");
+ #else
+ 	std::string xdg_home;
+ 	if (nowide::getenv("XDG_CONFIG_HOME") != nullptr)
+@@ -256,8 +256,8 @@ std::vector<std::string> find_system_data_dirs()
+ {
+ 	std::vector<std::string> dirs;
+ 
+-#ifdef __SWITCH__
+-	dirs.push_back("/flycast/data/");
++#ifdef __unix__
++	dirs.push_back("/storage/roms/dreamcast/data/");
+ #else
+ 	std::string xdg_home;
+ 	if (nowide::getenv("XDG_DATA_HOME") != nullptr)
