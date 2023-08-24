@@ -2,7 +2,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="gzip"
-PKG_VERSION="1.12"
+PKG_VERSION="1.13"
 PKG_LICENSE="GPL"
 PKG_SITE="https://ftp.gnu.org/gnu/gzip"
 PKG_URL="https://ftp.gnu.org/gnu/gzip/${PKG_NAME}-${PKG_VERSION}.tar.xz"

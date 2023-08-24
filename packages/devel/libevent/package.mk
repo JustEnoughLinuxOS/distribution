@@ -2,8 +2,7 @@
 # Copyright (C) 2018-present Team CoreELEC (https://coreelec.org)
 
 PKG_NAME="libevent"
-PKG_VERSION="2.1.11-stable"
-PKG_SHA256="a65bac6202ea8c5609fd5c7e480e6d25de467ea1917c08290c521752f147283d"
+PKG_VERSION="2.1.12-stable"
 PKG_LICENSE="BSD"
 PKG_SITE="https://libevent.org"
 PKG_URL="https://github.com/libevent/libevent/releases/download/release-${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.gz"

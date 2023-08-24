@@ -20,7 +20,7 @@ case ${DEVICE} in
   *)
     PKG_SITE="https://github.com/ptitSeb/gl4es"
     PKG_URL="${PKG_SITE}.git"
-    PKG_VERSION="22eaac79757b0e4fe011deef9cc0596ba35c22b0"
+    PKG_VERSION="bfcdd3a"
   ;;
 esac
 

@@ -28,7 +28,7 @@ pre_make_target() {
   fi
 
   PKG_MAKE_OPTS_TARGET="GIT_REV=${PKG_VERSION:0:7} \
-                        HAVE_FFMPEG_STATIC=1 \
+                        HAVE_FFMPEG_STATIC=0 \
                         FFMPEG_DISABLE_VDPAU=1 \
                         HAVE_FFMPEG_CROSSCOMPILE=1 \
                         FFMPEG_XC_CPU=${TARGET_CPU} \
