@@ -9,7 +9,7 @@ Just Enough Linux Operating System (JELOS) is an immutable Linux distribution fo
 * Fine grain control for battery life or performance.
 * Includes support for playing Music and Video.
 * Bluetooth audio and controller support.
-* Supports HDMI audio and video out.
+* Support for HDMI audio and video out, and USB audio.
 * Device to device and device to cloud sync with Syncthing and rclone.
 * VPN support with Wireguard, Tailscale, and ZeroTier.
 * Includes built-in support for scraping and retroachievements.
@@ -69,6 +69,7 @@ limitations under the License.
 * [Frequently Asked Questions](/documentation/GENERAL_FREQUENTLY_ASKED_QUESTIONS.md)
 * [Hotkeys and Button Codes](/documentation/GENERAL_HOTKEYS_AND_BUTTON_CODES.md)
 * [Optimizing Performance and Battery Life](/documentation/GENERAL_PERFORMANCE_AND_BATTERY.md)
+* [Network Play](/documentation/GENERAL_NETWORK_PLAY.md)
 
 ### Using JELOS
 * [Setting Up Cloud Drives](/documentation/SETUP_CLOUD_DRIVES.md)
