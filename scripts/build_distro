@@ -43,6 +43,14 @@ then
       make ${DEVICE_ROOT}
     fi
 
+    # Ensure the DEVICE_ROOT is built before DEVICE
+    if [ ! -d "build.${DISTRO}-${DEVICE_ROOT}.${ARCH}" ]
+    then
+        echo "ERROR: Can't find build root build.${DISTRO}-${DEVICE_ROOT}.${ARCH}"
+        echo "You need to build ${DEVICE_ROOT} before ${DEVICE}"
+        exit 1
+    fi
+
     # Link back to the DEVICE_ROOT so we can re-use the build directory to save space.
     if [ ! -L "build.${DISTRO}-${DEVICE}.${ARCH}" ]
     then
@@ -54,14 +62,6 @@ then
        [ ! -L "sources-${DEVICE}" ]
     then
       ln -sf sources-${DEVICE_ROOT} sources-${DEVICE}
-    fi
-  else
-    # Ensure the DEVICE_ROOT is built before DEVICE
-    if [ ! -d "build.${DISTRO}-${DEVICE_ROOT}.${ARCH}" ]
-    then
-        echo "ERROR: Can't find build root build.${DISTRO}-${DEVICE_ROOT}.${ARCH}"
-        echo "You need to build ${DEVICE_ROOT} before ${DEVICE}"
-        exit 1
     fi
   fi
 
