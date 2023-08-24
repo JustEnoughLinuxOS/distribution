@@ -37,13 +37,7 @@ then
       rm -rf build.${DISTRO}-${DEVICE}.${ARCH}
     fi
 
-    if [ ! -d "build.${DISTRO}-${DEVICE_ROOT}.${ARCH}" ]
-    then
-      echo "Building the device root (${DEVICE_ROOT})."
-      make ${DEVICE_ROOT}
-    fi
-
-    # Ensure the DEVICE_ROOT is built before DEVICE
+    # Ensure the DEVICE_ROOT is built before DEVICE
     if [ ! -d "build.${DISTRO}-${DEVICE_ROOT}.${ARCH}" ]
     then
         echo "ERROR: Can't find build root build.${DISTRO}-${DEVICE_ROOT}.${ARCH}"
