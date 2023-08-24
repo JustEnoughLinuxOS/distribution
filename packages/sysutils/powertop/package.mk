@@ -2,7 +2,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="powertop"
-PKG_VERSION="b6d1569203f32ec1c2aaa065d05961c552a76a6f"
+PKG_VERSION="24a96ea894b1e8916664a6aa35f5c77d3167fcf9"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/fenrus75/powertop"

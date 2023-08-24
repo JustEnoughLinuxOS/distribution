@@ -3,8 +3,8 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libX11"
-PKG_VERSION="1.8.1"
-PKG_SHA256="1bc41aa1bbe01401f330d76dfa19f386b79c51881c7bbfee9eb4e27f22f2d9f7"
+PKG_VERSION="1.8.6"
+PKG_SHA256="59535b7cc6989ba806a022f7e8533b28c4397b9d86e9d07b6df0c0703fa25cc9"
 PKG_LICENSE="OSS"
 PKG_SITE="https://www.x.org/"
 PKG_URL="https://xorg.freedesktop.org/archive/individual/lib/${PKG_NAME}-${PKG_VERSION}.tar.xz"
@@ -13,7 +13,7 @@ PKG_LONGDESC="LibX11 is the main X11 library containing all the client-side code
 PKG_TOOLCHAIN="autotools"
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-loadable-i18n \
-                           --enable-loadable-xcursor \
+                           --disable-loadable-xcursor \
                            --enable-xthreads \
                            --disable-xcms \
                            --enable-xlocale \

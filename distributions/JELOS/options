@@ -158,8 +158,12 @@
 
 # Default size of system partition, in MB, eg. 512
   SYSTEM_SIZE=2048
+
 # Default system partition offset, in sectors, eg. 2048
   SYSTEM_PART_START=8192
+
+# Size of storage partition, in MB. Must be >=32
+  STORAGE_SIZE=32
 
 # Default supported get handlers (archive, git, file etc.)
   GET_HANDLER_SUPPORT="archive git file"

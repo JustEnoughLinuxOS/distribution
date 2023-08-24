@@ -2,8 +2,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="glfw"
-PKG_VERSION="dd8a678a66f1967372e5a5e3deac41ebf65ee127"
-PKG_SHA256="4bc4f4efd561ed063aa654b4867f1cebed9044c7711b401693ddda19634ebf99"
+PKG_VERSION="3eaf125"
 PKG_ARCH="any"
 PKG_LICENSE="zlib"
 PKG_DEPENDS_TARGET="toolchain expat libdrm libxkbcommon libXrandr libXinerama libXcursor libXi Mako:host "

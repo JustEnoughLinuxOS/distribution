@@ -4,7 +4,7 @@
 # Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="configtools"
-PKG_VERSION="63acb96f92473ceb5e21d873d7c0aee266b3d6d3"
+PKG_VERSION="d4e37b5868ef910e3e52744c34408084bb13051c"
 PKG_LICENSE="GPL"
 PKG_SITE="http://git.savannah.gnu.org/cgit/config.git"
 PKG_URL="http://git.savannah.gnu.org/cgit/config.git/snapshot/config-${PKG_VERSION}.tar.gz"

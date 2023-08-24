@@ -12,4 +12,4 @@ PKG_DEPENDS_TARGET="toolchain xorgproto libXt libXmu libX11 libXext"
 PKG_LONGDESC="XPM pixmap libary"
 PKG_BUILD_FLAGS="+pic"
 
-PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --enable-xthreads"
+PKG_CONFIGURE_OPTS_TARGET="--disable-static --enable-shared --enable-xthreads"

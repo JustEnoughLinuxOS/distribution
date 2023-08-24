@@ -3,11 +3,11 @@
 # Copyright (C) 2020-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="encodings"
-PKG_VERSION="1.0.5"
-PKG_SHA256="bd96e16143a044b19e87f217cf6a3763a70c561d1076aad6f6d862ec41774a31"
+PKG_VERSION="1.0.7"
+PKG_SHA256="3a39a9f43b16521cdbd9f810090952af4f109b44fa7a865cd555f8febcea70a4"
 PKG_LICENSE="OSS"
-PKG_SITE="http://www.X.org"
-PKG_URL="http://xorg.freedesktop.org/archive/individual/font/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
+PKG_SITE="https://www.X.org"
+PKG_URL="https://xorg.freedesktop.org/archive/individual/font/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain util-macros font-util:host"
 PKG_LONGDESC="X font encoding meta files."
 

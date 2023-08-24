@@ -13,5 +13,5 @@ PKG_LONGDESC="Athena libary"
 PKG_BUILD_FLAGS="+pic"
 
 pre_configure_target() {
-  PKG_CONFIGURE_OPTS_TARGET="--enable-static --disable-shared --enable-xthreads"
+  PKG_CONFIGURE_OPTS_TARGET="--disable-static --enable-shared --enable-xthreads"
 }
