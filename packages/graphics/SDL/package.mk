@@ -17,7 +17,7 @@
 ################################################################################
 
 PKG_NAME="SDL"
-PKG_VERSION="d6200ed"
+PKG_VERSION="52c7140"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.libsdl.org/"

@@ -4,7 +4,7 @@
 # Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="xz"
-PKG_VERSION="5.4.3"
+PKG_VERSION="5.4.4"
 PKG_LICENSE="GPL"
 PKG_SITE="https://tukaani.org/xz/"
 PKG_URL="https://tukaani.org/xz/${PKG_NAME}-${PKG_VERSION}.tar.xz"

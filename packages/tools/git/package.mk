@@ -3,7 +3,7 @@
 # Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="git"
-PKG_VERSION="2.39.3"
+PKG_VERSION="2.42.0"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://git-scm.com/"
