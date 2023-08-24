@@ -22,17 +22,6 @@ then
   PKG_CLEAN+=" ${CLEAN_EMU_32BIT}"
 fi
 
-# Device RK3566-X55 needs a built RK3466 root
-if [ "${DEVICE}" = "RK3566-X55" ]
-then
-    if [ ! -d "build.${DISTRO}-RK3566.${ARCH}" ]
-    then
-        echo "ERROR: Can't find build root build.${DISTRO}-RK3566.${ARCH}"
-        echo "You need to build RK3566 before RK3566-X55"
-        exit 1
-    fi
-fi
-
 # If DEVICE_ROOT is defined and not the device being built, make sure that the
 # build folder is a link to root rather than a folder.
 
@@ -65,6 +54,14 @@ then
        [ ! -L "sources-${DEVICE}" ]
     then
       ln -sf sources-${DEVICE_ROOT} sources-${DEVICE}
+    fi
+  else
+    # Ensure the DEVICE_ROOT is built before DEVICE
+    if [ ! -d "build.${DISTRO}-${DEVICE_ROOT}.${ARCH}" ]
+    then
+        echo "ERROR: Can't find build root build.${DISTRO}-${DEVICE_ROOT}.${ARCH}"
+        echo "You need to build ${DEVICE_ROOT} before ${DEVICE}"
+        exit 1
     fi
   fi
 
