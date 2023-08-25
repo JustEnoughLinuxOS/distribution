@@ -17,7 +17,7 @@ make_target() {
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/{lib,share}
-  tar -xvJf ${PKG_BUILD}/mali.tar.xz -C ${INSTALL}/usr
-  mv ${INSTALL}/usr/lib/${TARGET_ARCH}-linux-gnu/* ${INSTALL}/usr/lib
-  rmdir ${INSTALL}/usr/lib/${TARGET_ARCH}-linux-gnu
+  tar -xvJf ${PKG_BUILD}/mali.tar.xz -C ${INSTALL}
+  mv ${INSTALL}/lib/${TARGET_ARCH}-linux-gnu/* ${INSTALL}/usr/lib
+  rm -r ${INSTALL}/lib
 }
