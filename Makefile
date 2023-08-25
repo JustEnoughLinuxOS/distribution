@@ -51,6 +51,11 @@ RK3566-X55:
 	DEVICE_ROOT=RK3566 PROJECT=Rockchip DEVICE=RK3566-X55 ARCH=arm ./scripts/build_distro
 	DEVICE_ROOT=RK3566 PROJECT=Rockchip DEVICE=RK3566-X55 ARCH=aarch64 ./scripts/build_distro
 
+RK3566-ML:
+	unset DEVICE_ROOT
+	PROJECT=Rockchip DEVICE=RK3566-ML ARCH=arm ./scripts/build_distro
+	PROJECT=Rockchip DEVICE=RK3566-ML ARCH=aarch64 ./scripts/build_distro
+
 RK3326:
 	unset DEVICE_ROOT
 	PROJECT=Rockchip DEVICE=RK3326 ARCH=arm ./scripts/build_distro

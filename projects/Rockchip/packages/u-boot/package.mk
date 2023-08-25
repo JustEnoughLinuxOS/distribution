@@ -31,6 +31,10 @@ case ${DEVICE} in
     PKG_VERSION="0e26e35cb18a80005b7de45c95858c86a2f7f41e"
     PKG_GIT_CLONE_BRANCH="odroidgoA-v2017.09"
   ;;
+  *ML)
+    PKG_URL="https://github.com/u-boot/u-boot.git"
+    PKG_VERSION="e508b93"
+  ;;
 esac
 
 PKG_IS_KERNEL_PKG="yes"

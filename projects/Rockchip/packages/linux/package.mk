@@ -30,6 +30,10 @@ case ${DEVICE} in
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="main"
   ;;
+  *ML)
+    PKG_VERSION="6.5-rc7"
+    PKG_URL="https://git.kernel.org/torvalds/t/${PKG_NAME}-${PKG_VERSION}.tar.gz"
+  ;;
   *X55)
     PKG_URL="${PKG_SITE}/rk3566-x55-kernel.git"
     PKG_VERSION="a514c4665"
