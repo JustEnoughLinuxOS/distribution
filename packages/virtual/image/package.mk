@@ -48,7 +48,17 @@ else
   [ "${PIPEWIRE_SUPPORT}" = "yes" ] && PKG_DEPENDS_TARGET+=" alsa pulseaudio pipewire wireplumber"
 fi
 
-[ "${DISPLAYSERVER}" = "wl" ] && PKG_DEPENDS_TARGET+=" weston"
+if [ "${DISPLAYSERVER}" = "wl" ]
+then
+  case ${DEVICE} in
+    S922X)
+      PKG_DEPENDS_TARGET+=" weston11"
+    ;;
+    *)
+      PKG_DEPENDS_TARGET+=" weston"
+    ;;
+  esac
+fi
 
 # Device is an emulation focused device
 [ "${EMULATION_DEVICE}" = "yes" ] && PKG_DEPENDS_TARGET+=" emulators gamesupport"

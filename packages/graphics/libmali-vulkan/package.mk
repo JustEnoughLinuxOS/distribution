@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="libmali-vulkan"
-PKG_VERSION="r44p0-01eac0"
+PKG_VERSION="r40p0-01eac0"
 PKG_LICENSE="mali_driver"
 PKG_ARCH="arm aarch64"
 PKG_SITE="https://developer.arm.com/downloads/-/mali-drivers/user-space"
@@ -17,7 +17,7 @@ make_target() {
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/{lib,share}
-  tar -xvJf ${PKG_BUILD}/mali.tar.xz -C ${INSTALL}/usr
-  mv ${INSTALL}/usr/lib/${TARGET_ARCH}-linux-gnu/* ${INSTALL}/usr/lib
-  rmdir ${INSTALL}/usr/lib/${TARGET_ARCH}-linux-gnu
+  tar -xvJf ${PKG_BUILD}/mali.tar.xz -C ${INSTALL}
+  mv ${INSTALL}/lib/${TARGET_ARCH}-linux-gnu/* ${INSTALL}/usr/lib
+  rm -r ${INSTALL}/lib
 }
