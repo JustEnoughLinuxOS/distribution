@@ -2,7 +2,7 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="weston"
-PKG_VERSION="12.0.1"
+PKG_VERSION="12.0.2"
 
 PKG_LICENSE="MIT"
 PKG_SITE="https://wayland.freedesktop.org/"
