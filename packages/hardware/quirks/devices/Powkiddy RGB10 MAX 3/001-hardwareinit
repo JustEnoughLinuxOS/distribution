@@ -16,6 +16,13 @@ AllowSuspend=no
 SuspendState=freeze
 EOF
 
+### Ignore power button presses for now, until we can finish up fixing sleep.
+cat <<EOF >~/.config/logind.conf.d/login.conf
+[Login]
+HandlePowerKey=ignore
+HandleSuspendKey=ignore
+EOF
+
 ### Set sound properties
 amixer -c 0 -q sset 'FRDDR_A SINK 1 SEL' 'OUT 1'
 amixer -c 0 -q sset 'FRDDR_A SRC 1 EN' 'on'
