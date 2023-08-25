@@ -11,5 +11,5 @@ PKG_LONGDESC="strace is a diagnostic, debugging and instructional userspace util
 PKG_TOOLCHAIN="autotools"
 
 if [ "${TARGET_ARCH}" = x86_64 -o "${TARGET_ARCH}" = "aarch64" ]; then
-  PKG_CONFIGURE_OPTS_TARGET="--enable-mpers=no"
+  PKG_CONFIGURE_OPTS_TARGET="--enable-mpers=no --enable-bundled"
 fi
