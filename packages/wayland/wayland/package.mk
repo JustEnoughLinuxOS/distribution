@@ -4,7 +4,6 @@
 PKG_NAME="wayland"
 PKG_LICENSE="OSS"
 PKG_SITE="https://wayland.freedesktop.org/"
-PKG_URL="https://gitlab.freedesktop.org/wayland/wayland/-/releases/${PKG_VERSION}/downloads/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_HOST="libffi:host expat:host libxml2:host"
 PKG_DEPENDS_TARGET="toolchain wayland:host libffi expat libxml2"
 PKG_LONGDESC="a display server protocol"
@@ -19,6 +18,8 @@ case ${DEVICE} in
     PKG_SHA256="1540af1ea698a471c2d8e9d288332c7e0fd360c8f1d12936ebb7e7cbc2425842"
   ;;
 esac
+
+PKG_URL="https://gitlab.freedesktop.org/wayland/wayland/-/releases/${PKG_VERSION}/downloads/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 
 PKG_MESON_OPTS_HOST="-Dlibraries=false \
                      -Dscanner=true \
