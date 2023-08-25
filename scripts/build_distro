@@ -37,10 +37,12 @@ then
       rm -rf build.${DISTRO}-${DEVICE}.${ARCH}
     fi
 
+    # Ensure the DEVICE_ROOT is built before DEVICE
     if [ ! -d "build.${DISTRO}-${DEVICE_ROOT}.${ARCH}" ]
     then
-      echo "Building the device root (${DEVICE_ROOT})."
-      make ${DEVICE_ROOT}
+        echo "ERROR: Can't find build root build.${DISTRO}-${DEVICE_ROOT}.${ARCH}"
+        echo "You need to build ${DEVICE_ROOT} before ${DEVICE}"
+        exit 1
     fi
 
     # Link back to the DEVICE_ROOT so we can re-use the build directory to save space.
