@@ -23,7 +23,7 @@ LIBRETRO_CORES="81-lr a5200-lr arduous-lr atari800-lr beetle-gba-lr beetle-lynx-
                 gw-lr handy-lr hatari-lr mame2000-lr mame2003-plus-lr mame2010-lr mame2015-lr melonds-lr meowpc98-lr      \
                 mesen-lr mgba-lr mojozork-lr mrboom-lr mupen64plus-lr mupen64plus-nx-lr neocd_lr nestopia-lr np2kai-lr    \
                 nxengine-lr o2em-lr opera-lr parallel-n64-lr pcsx_rearmed-lr picodrive-lr pokemini-lr potator-lr          \
-                prboom-lr prosystem-lr ppsspp-lr puae-lr px68k-lr quasi88-lr quicknes-lr race-lr reminiscence-lr          \
+                prboom-lr prosystem-lr ppsspp-lr puae-lr puae2021-lr px68k-lr quasi88-lr quicknes-lr race-lr reminiscence-lr          \
                 sameboy-lr sameduck-lr scummvm-lr smsplus-gx-lr snes9x-lr snes9x2002-lr snes9x2005_plus-lr snes9x2010-lr  \
                 stella-lr stella-2014-lr swanstation-lr tic80-lr tgbdual-lr tyrquake-lr uzem-lr vba-next-lr               \
                 vbam-lr vecx-lr vice-lr yabasanshiro-lr virtualjaguar-lr xmil-lr xrick-lr"
@@ -128,7 +128,16 @@ makeinstall_target() {
   esac
 
   ### Commodore Amiga
-  add_emu_core amiga retroarch puae true
+  case ${DEVICE} in
+    RK35*|RK3326|RK3399)
+      add_emu_core amiga retroarch puae2021 true
+      add_emu_core amiga retroarch puae false
+    ;;
+    *)
+      add_emu_core amiga retroarch puae true
+      add_emu_core amiga retroarch puae2021 false
+    ;;
+  esac
   case ${TARGET_ARCH} in
     aarch64)
       add_emu_core amiga amiberry amiberry false
@@ -138,7 +147,16 @@ makeinstall_target() {
   add_es_system amiga
 
   ### Commodore Amiga CD32
-  add_emu_core amigacd32 retroarch puae true
+  case ${DEVICE} in
+    RK35*|RK3326|RK3399)
+      add_emu_core amigacd32 retroarch puae2021 true
+      add_emu_core amigacd32 retroarch puae false
+    ;;
+    *)
+      add_emu_core amigacd32 retroarch puae true
+      add_emu_core amigacd32 retroarch puae2021 false
+    ;;
+  esac
   case ${TARGET_ARCH} in
     aarch64)
       add_emu_core amigacd32 retroarch uae4arm false
