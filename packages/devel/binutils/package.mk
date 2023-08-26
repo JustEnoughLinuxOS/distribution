@@ -4,7 +4,7 @@
 # Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="binutils"
-PKG_VERSION="2.40"
+PKG_VERSION="2.41"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.gnu.org/software/binutils/"
 PKG_URL="https://ftp.gnu.org/gnu/binutils/${PKG_NAME}-${PKG_VERSION}.tar.xz"

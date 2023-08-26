@@ -5,7 +5,6 @@
 
 PKG_NAME="dbus-python"
 PKG_VERSION="1.3.2"
-PKG_SHA256="ad67819308618b5069537be237f8e68ca1c7fcc95ee4a121fe6845b1418248f8"
 PKG_LICENSE="GPL"
 PKG_SITE="https://freedesktop.org/wiki/Software/dbus"
 PKG_URL="https://dbus.freedesktop.org/releases/dbus-python/${PKG_NAME}-${PKG_VERSION}.tar.gz"

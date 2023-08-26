@@ -5,7 +5,7 @@
 # Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="libcap"
-PKG_VERSION="2.68"
+PKG_VERSION="2.69"
 PKG_LICENSE="GPL"
 PKG_SITE="https://git.kernel.org/pub/scm/libs/libcap/libcap.git/log/"
 PKG_URL="https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/${PKG_NAME}-${PKG_VERSION}.tar.xz"

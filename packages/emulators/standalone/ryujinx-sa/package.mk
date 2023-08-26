@@ -2,13 +2,12 @@
 # Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="ryujinx-sa"
-PKG_VERSION="1.1.748"
-#DON'T UPDATE!, BROKEN BEYOND THIS VERSION!
+PKG_VERSION="1.1.999"
 PKG_ARCH="x86_64"
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/Ryujinx"
 PKG_URL="${PKG_SITE}/release-channel-master/releases/download/${PKG_VERSION}/ryujinx-${PKG_VERSION}-linux_x64.tar.gz"
-PKG_DEPENDS_TARGET="toolchain librsvg SDL2 openal-soft"
+PKG_DEPENDS_TARGET="toolchain librsvg SDL2 openal-soft icu"
 PKG_LONGDESC="Ryujinx - Nintendo Switch Emulator"
 PKG_TOOLCHAIN="manual"
 

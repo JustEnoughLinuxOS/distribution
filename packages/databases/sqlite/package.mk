@@ -4,7 +4,7 @@
 # Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="sqlite"
-PKG_VERSION="3.41.2"
+PKG_VERSION="3.42.0"
 PKG_VERSION_SQLITE="${PKG_VERSION/./}00"
 PKG_LICENSE="PublicDomain"
 PKG_SITE="https://www.sqlite.org/"

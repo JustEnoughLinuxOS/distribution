@@ -3,12 +3,11 @@
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libxkbcommon"
-PKG_VERSION="1.4.1"
-PKG_SHA256="943c07a1e2198026d8102b17270a1f406e4d3d6bbc4ae105b9e1b82d7d136b39"
+PKG_VERSION="1.5.0"
 PKG_LICENSE="MIT"
 PKG_SITE="https://xkbcommon.org"
 PKG_URL="https://xkbcommon.org/download/${PKG_NAME}-${PKG_VERSION}.tar.xz"
-PKG_DEPENDS_TARGET="toolchain xkeyboard-config libxml2"
+PKG_DEPENDS_TARGET="toolchain xkeyboard-config libxml2 libXau libxcb wayland"
 PKG_LONGDESC="xkbcommon is a library to handle keyboard descriptions."
 
 PKG_MESON_OPTS_TARGET="-Denable-docs=false"
@@ -26,7 +25,9 @@ else
 fi
 
 pre_configure_target() {
-  if [ "${DISPLAYSERVER}" = "x11" ]; then
-    TARGET_LDFLAGS="${LDFLAGS} -lXau -lxcb"
-  fi
+  case ${DISPLAYSERVER} in
+    "x11"|"wl")
+      TARGET_LDFLAGS="${LDFLAGS} -lXau -lxcb"
+    ;;
+  esac
 }

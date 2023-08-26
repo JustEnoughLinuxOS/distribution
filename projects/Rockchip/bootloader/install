@@ -12,14 +12,16 @@ RKSPI_LOADER=${INSTALL}/usr/share/bootloader/rkspi_loader.img
 generate_rkspi_loader() {
         echo "spi: create rkspi_loader.img..."
         dd if=/dev/zero of=$RKSPI_LOADER bs=1M count=0 seek=16
-        parted -s $RKSPI_LOADER mklabel gpt
-        parted -s $RKSPI_LOADER unit s mkpart idbloader 64 7167
-        parted -s $RKSPI_LOADER unit s mkpart vnvm 7168 7679
-        parted -s $RKSPI_LOADER unit s mkpart reserved_space 7680 8063
-        parted -s $RKSPI_LOADER unit s mkpart reserved1 8064 8127
-        parted -s $RKSPI_LOADER unit s mkpart uboot_env 8128 8191
-        parted -s $RKSPI_LOADER unit s mkpart reserved2 8192 16383
-        parted -s $RKSPI_LOADER unit s mkpart uboot 16384 32734
+        # When running as a non-root user, /sbin & /usr/sbin are excluded from $PATH
+        PATH=/sbin:/usr/sbin:$PATH PARTED_CMD="$(which parted)"
+        ${PARTED_CMD} -s $RKSPI_LOADER mklabel gpt
+        ${PARTED_CMD} -s $RKSPI_LOADER unit s mkpart idbloader 64 7167
+        ${PARTED_CMD} -s $RKSPI_LOADER unit s mkpart vnvm 7168 7679
+        ${PARTED_CMD} -s $RKSPI_LOADER unit s mkpart reserved_space 7680 8063
+        ${PARTED_CMD} -s $RKSPI_LOADER unit s mkpart reserved1 8064 8127
+        ${PARTED_CMD} -s $RKSPI_LOADER unit s mkpart uboot_env 8128 8191
+        ${PARTED_CMD} -s $RKSPI_LOADER unit s mkpart reserved2 8192 16383
+        ${PARTED_CMD} -s $RKSPI_LOADER unit s mkpart uboot 16384 32734
         echo "spi: write idbloader.img to rkspi_loader.img..."
         dd if=${PKG_BUILD}/idbloader.img of=$RKSPI_LOADER seek=64 conv=notrunc
         echo "spi: write uboot.itb to rkspi_loader.img..."

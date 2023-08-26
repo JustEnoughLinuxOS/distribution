@@ -4,7 +4,7 @@
 # Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="libhdhomerun"
-PKG_VERSION="b0e5d5f5c8e2bf37dea34beb014e08ebb598ebf6"
+PKG_VERSION="bc207f2"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.silicondust.com"
 PKG_URL="https://github.com/Silicondust/libhdhomerun/archive/${PKG_VERSION}.tar.gz"
