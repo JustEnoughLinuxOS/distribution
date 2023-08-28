@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="citra-sa"
-PKG_VERSION="64f26948fe2c2076857731621934be82a6ea3e93"
+PKG_VERSION="8d45390ed38fe82c50d788fe1ebbbfe86369b975"
 PKG_LICENSE="MPLv2"
 PKG_SITE="https://github.com/JustEnoughLinuxOS/citra-canary"
 PKG_URL="${PKG_SITE}.git"
