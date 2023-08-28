@@ -976,9 +976,9 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
 +                                 <0>,
 +                                 <&clkc CLKID_VCLK2_DIV1>,
 +                                 <&clkc CLKID_GP0_PLL>;
-+        assigned-clock-rates =   <330000000>,
++        assigned-clock-rates =   <344976000>,
 +                                 <0>,
-+                                 <330000000>,
++                                 <344976000>,
 +                                 <0>,
 +                                 <0>;
 +
@@ -1975,9 +1975,9 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-
 +                                 <0>,
 +                                 <&clkc CLKID_VCLK2_DIV1>,
 +                                 <&clkc CLKID_GP0_PLL>;
-+        assigned-clock-rates =   <330000000>,
++        assigned-clock-rates =   <344976000>,
 +                                 <0>,
-+                                 <330000000>,
++                                 <344976000>,
 +                                 <0>,
 +                                 <0>;
 +
