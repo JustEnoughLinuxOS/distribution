@@ -20,7 +20,7 @@
 ################################################################################
 
 PKG_NAME="tic80-lr"
-PKG_VERSION="335c45f23e7262b1fe4503319af7c214b5ff2575"
+PKG_VERSION="7ea81e2e66671e0748cb256610dcbe1bf7bb47ee"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/nesbox/TIC-80"

@@ -15,12 +15,16 @@
 if [ $# -eq 0 ] || [ "$1" == "boot" ]
 then
   PROFILE=$(get_setting system.overclock)
-  if [ -z "${PROFILE}" ] && \
-     [ -n "${DEVICE_BASE_TDP}" ]
+  if [ -n "${PROFILE}" ]
   then
-    PROFILE="${DEVICE_BASE_TDP}"
+    PROFILE="${PROFILE}"
   else
-    PROFILE="15w"
+    if [ -n "${DEVICE_BASE_TDP}" ]
+    then
+      PROFILE="${DEVICE_BASE_TDP}"
+    else
+      PROFILE="15w"
+    fi
   fi
 else
   ### When run from ES or a shell, and the value of "off"
@@ -78,3 +82,4 @@ case ${PROFILE} in
 esac
 
 ryzenadj --tctl-temp=97 --stapm-limit=${WATTS} --fast-limit=${WATTS} --stapm-time=500 --slow-limit=${WATTS} --slow-time=30 --vrmmax-current=70000
+set_setting system.overclock ${PROFILE}
