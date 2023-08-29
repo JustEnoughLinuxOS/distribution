@@ -31,9 +31,15 @@ PKG_CONFIGURE_OPTS_TARGET="   --disable-qt \
                               --enable-sdl2 \
                               --enable-ffmpeg"
 
+case ${PROJECT} in
+  Rockchip)
+    PKG_DEPENDS_TARGET+=" librga"
+  ;;
+esac
+
 case ${DEVICE} in
   RK3566-X55)
-    PKG_DEPENDS_TARGET+=" librga libgo2"
+    PKG_DEPENDS_TARGET+=" libgo2"
     PKG_CONFIGURE_OPTS_TARGET+=" --enable-odroidgo2"
   ;;
   *)

@@ -88,6 +88,12 @@ if [ "${TARGET_ARCH}" = "x86_64" ]; then
   PKG_DEPENDS_TARGET+=" nasm:host"
 fi
 
+case ${PROJECT} in
+  Rockchip)
+    PKG_DEPENDS_TARGET+=" rkmpp"
+  ;;
+esac
+
 if target_has_feature "(neon|sse)"; then
   PKG_DEPENDS_TARGET+=" dav1d"
   PKG_NEED_UNPACK+=" $(get_pkg_directory dav1d)"
