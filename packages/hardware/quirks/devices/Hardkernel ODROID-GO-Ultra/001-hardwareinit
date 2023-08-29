@@ -28,9 +28,10 @@ amixer -c 0 -q sset 'FRDDR_A SINK 1 SEL' 'OUT 1'
 amixer -c 0 -q sset 'FRDDR_A SRC 1 EN' 'on'
 
 ### Set correct audio output device at boot.
-SETTINGS="/storage/.config/system/configs/system.cfg"
-if ! grep -q headphone.enabled=1 "$SETTINGS"; then
-  amixer -c0 sset "Playback Mux" "SPK"
-else
+HEADPHONE_ENABLE="$(get_setting headphone.enabled)"
+if [ "${HEADPHONE_ENABLE}" = "1" ]
+then
   amixer -c0 sset "Playback Mux" "HP"
+else
+  amixer -c0 sset "Playback Mux" "SPK"
 fi
