@@ -129,10 +129,10 @@ jobs:
             ## Documentation
 
             ### Documentation For Developers
-            * [Adding Hardware Quirks](/documentation/DEVEL_ADD_HARDWARE_QUIRKS.md)
             * [Building The Distribution](/documentation/DEVEL_BUILDING_JELOS.md)
             * [Contributor Code of Conduct](/CODE_OF_CONDUCT.md)
             * [Contributing to JELOS](/CONTRIBUTING.md)
+            * [Adding Hardware Quirks](/documentation/DEVEL_ADD_HARDWARE_QUIRKS.md)
             * [Creating Packages](/documentation/DEVEL_CREATING_PACKAGES.md)
             * [Pull Request Template](/PULL_REQUEST_TEMPLATE.md)
 
@@ -143,14 +143,17 @@ jobs:
             * [Frequently Asked Questions](/documentation/GENERAL_FREQUENTLY_ASKED_QUESTIONS.md)
             * [Hotkeys and Button Codes](/documentation/GENERAL_HOTKEYS_AND_BUTTON_CODES.md)
             * [Optimizing Performance and Battery Life](/documentation/GENERAL_PERFORMANCE_AND_BATTERY.md)
+            * [Network Play](/documentation/GENERAL_NETWORK_PLAY.md)
 
             ### Using JELOS
             * [Setting Up Cloud Drives](/documentation/SETUP_CLOUD_DRIVES.md)
+            * [Setting Up Syncthing](/documentation/SETUP_SYNCTHING.md)
             * [Game Engines and Launch Files](/documentation/SETUP_GAME_ENGINES_AND_LAUNCH_FILES.md)
             * [Configuring Moonlight Streaming](/documentation/SETUP_MOONLIGHT_STREAMING.md)
             * [Setting Up P2P Networking With ZeroTier](/documentation/SETUP_P2P_ZEROTIER.md)
             * [Configure TailScale VPN](/documentation/SETUP_VPN_TAILSCALE.md)
             * [Setting Up Wireguard VPN](/documentation/SETUP_VPN_WIREGUARD.md)
+            * [Creating Custom Shader Presets for Per Game / Per System Use](https://github.com/JustEnoughLinuxOS/distribution/blob/main/documentation/GENERAL_CUSTOM_SHADERS.md)
 
           artifacts: "release/*"
           prerelease: false
