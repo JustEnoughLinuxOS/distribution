@@ -1,0 +1,12 @@
+diff --git a/vita3k/https/CMakeLists.txt b/vita3k/https/CMakeLists.txt
+index f64456bd..e9555080 100644
+--- a/vita3k/https/CMakeLists.txt
++++ b/vita3k/https/CMakeLists.txt
+@@ -6,5 +6,6 @@ add_library(
+ )
+
+ target_include_directories(https PUBLIC include)
+-target_include_directories(https PRIVATE ${OPENSSL_INCLUDE_DIR})
++target_include_directories(https PRIVATE crypto ssl)
+ target_link_libraries(https PUBLIC util)
++target_link_libraries(https PRIVATE crypto ssl)
