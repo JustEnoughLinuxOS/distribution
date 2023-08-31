@@ -39,4 +39,7 @@ pre_configure_target() {
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin
   mkdir -p ${INSTALL}/usr/config/vita3k
+  cp -rf ${PKG_BUILD}/external/bin/Vita3K ${INSTALL}/usr/bin/
+  cp -rf ${PKG_BUILD}/external/bin/* ${INSTALL}/usr/config/vita3k/
+  rm -rf ${INSTALL}/usr/config/vita3k/Vita3K
 }
