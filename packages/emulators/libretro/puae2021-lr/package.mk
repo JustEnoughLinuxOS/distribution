@@ -1,6 +1,8 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
+#      Copyright (C) 2020      351ELEC team (https://github.com/fewtarius/351ELEC)
+#      Copyright (C) 2023-present Ilmenit
 #
 #  This Program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -18,33 +20,28 @@
 #  http://www.gnu.org/copyleft/gpl.html
 ################################################################################
 
-PKG_NAME="handy-lr"
-PKG_VERSION="0559d3397f689ea453b986311aeac8dbd33afb0b"
+PKG_NAME="puae2021-lr"
+PKG_VERSION="94b2edfbb5949bc361862fd518cd7f36a16e0b45"
 PKG_REV="1"
 PKG_ARCH="any"
-PKG_LICENSE="Zlib"
-PKG_SITE="https://github.com/libretro/libretro-handy"
-PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
+PKG_LICENSE="GPL"
+PKG_SITE="https://github.com/libretro/libretro-uae"
+PKG_URL="${PKG_SITE}.git"
+PKG_GIT_CLONE_BRANCH="2.6.1"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
-PKG_SHORTDESC="K. Wilkins' Atari Lynx emulator Handy for libretro"
-PKG_LONGDESC="Handy is an Atari Lynx Emulator for Windows 95/98/NT/2000. Handy was the original name of the Lynx project that was started at Epyx and then finished by Atari."
-PKG_IS_ADDON="no"
+PKG_SHORTDESC="PUAE 2021 libretro port of UAE"
+PKG_LONGDESC="PUAE 2021 libretro port of UAE"
 PKG_TOOLCHAIN="make"
-PKG_AUTORECONF="no"
 
-case ${ARCH} in
-  aarch64)
-    PKG_MAKE_OPTS_TARGET=" platform=emuelec"
-  ;;
-  arm)
-    PKG_MAKE_OPTS_TARGET=" platform=classic_armv8_a35"
-  ;;
-esac
-
+pre_configure_target() {
+  if [ "${ARCH}" == "arm" ]; then
+    CFLAGS="${CFLAGS} -DARM -marm"
+  fi
+}
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
-  cp handy_libretro.so ${INSTALL}/usr/lib/libretro/
+  cp puae2021_libretro.so ${INSTALL}/usr/lib/libretro/
 }
