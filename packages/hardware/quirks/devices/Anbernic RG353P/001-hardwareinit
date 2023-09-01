@@ -16,3 +16,4 @@ then
   /usr/bin/setsuspendmode freeze
 fi
 
+echo s2idle >/sys/power/mem_sleep
