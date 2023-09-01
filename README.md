@@ -106,6 +106,7 @@ JELOS supports a variety of ARM and Intel/AMD based devices<sup>1</sup>.
 |Indiedroid|Nova|Rockchip RK3588S / Mali G610 (ARMv8-A)|Rockchip 5.10 BSP Linux|Panfrost|Weston + EmulationStation|
 |Orange Pi|Orange Pi 5|Rockchip RK3588S / Mali G610 (ARMv8-A)|Rockchip 5.10 BSP Linux|Panfrost|Weston + EmulationStation|
 |Powkiddy|RGB10 Max 3 Pro|Amlogic A311D / Mali G52 M4 (ARMv8-A)|Mainline Linux|Mali|Weston + EmulationStation|
+|Powkiddy| RGB30 | Rockchip RK3566 (ARM) | Rockchip BSP 4.19 | Mali | KMS/DRM + EmulationStation |
 |Powkiddy| RK2023 | Rockchip RK3566 (ARM) | Rockchip BSP 4.19 | Mali | KMS/DRM + EmulationStation |
 |Powkiddy| x55 | Rockchip RK3566 (ARM) | Rockchip BSP 4.19 | Mali | KMS/DRM + EmulationStation |
 
