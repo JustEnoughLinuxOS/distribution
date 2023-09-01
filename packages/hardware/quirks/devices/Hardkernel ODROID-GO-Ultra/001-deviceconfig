@@ -15,7 +15,7 @@ DEVICE_BRIGHTNESS="128"
 UI_SERVICE="weston.service"
 
 # GPIOS
-DEVICE_TEMP_SENSOR="$(find /sys/devices/pci*/* -path "*/nvme" -prune -o -name temp1_input -print)"
+DEVICE_TEMP_SENSOR=("/sys/devices/virtual/thermal/thermal_zone0/temp" "/sys/devices/virtual/thermal/thermal_zone3/temp" "/sys/devices/virtual/thermal/thermal_zone2/temp")
 
 # FREQ Governors
 CPU_FREQ=("/sys/devices/system/cpu/cpufreq/policy0" "/sys/devices/system/cpu/cpufreq/policy2")

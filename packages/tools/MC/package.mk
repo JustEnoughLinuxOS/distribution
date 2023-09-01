@@ -2,7 +2,7 @@
 # Copyright (C) 2011-present AlexELEC (http://alexelec.in.ua)
 
 PKG_NAME="MC"
-PKG_VERSION="4.8.29"
+PKG_VERSION="4.8.30"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.midnight-commander.org/"
 PKG_URL="http://ftp.midnight-commander.org/mc-${PKG_VERSION}.tar.xz"

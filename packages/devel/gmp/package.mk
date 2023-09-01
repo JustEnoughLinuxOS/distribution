@@ -3,8 +3,7 @@
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="gmp"
-PKG_VERSION="6.2.1"
-PKG_SHA256="fd4829912cddd12f84181c3451cc752be224643e87fac497b69edddadc49b4f2"
+PKG_VERSION="6.3.0"
 PKG_LICENSE="LGPLv3+"
 PKG_SITE="http://gmplib.org/"
 PKG_URL="https://gmplib.org/download/gmp/${PKG_NAME}-${PKG_VERSION}.tar.xz"

@@ -52,6 +52,7 @@ declare -a HAS_CHEEVOS=(    arcade
                             atari7800
                             atarilynx
                             colecovision
+                            dreamcast
                             famicom
                             fbn
                             fds

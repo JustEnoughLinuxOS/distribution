@@ -4,7 +4,7 @@
 # Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="pyudev"
-PKG_VERSION="96df1bd"
+PKG_VERSION="5e00141"
 PKG_LICENSE="OSS"
 PKG_SITE="https://github.com/pyudev/pyudev"
 PKG_URL="https://github.com/pyudev/pyudev/archive/${PKG_VERSION}.tar.gz"

@@ -8,27 +8,11 @@ PKG_SITE="https://ffmpeg.org"
 PKG_DEPENDS_TARGET="toolchain zlib bzip2 openssl speex"
 PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert and stream audio and video."
 
-PKG_VERSION="4.4.1"
-PKG_SHA256="eadbad9e9ab30b25f5520fbfde99fae4a92a1ae3c0257a8d68569a4651e30e02"
+PKG_VERSION="6.0"
 PKG_URL="http://ffmpeg.org/releases/ffmpeg-${PKG_VERSION}.tar.xz"
 PKG_PATCH_DIRS="kodi libreelec"
 
-case "${PROJECT}" in
-  Amlogic)
-    PKG_VERSION="f9638b6331277e53ecd9276db5fe6dcd91d44c57"
-    PKG_FFMPEG_BRANCH="dev/4.4/rpi_import_1"
-    PKG_SHA256="3b42cbffd15d95d59e402475fcdb1aaac9ae6a8404a521b95d1fe79c6b2baad4"
-    PKG_URL="https://github.com/jc-kynesim/rpi-ffmpeg/archive/${PKG_VERSION}.tar.gz"
-    PKG_PATCH_DIRS="libreelec dav1d"
-    ;;
-  RPi)
-    PKG_FFMPEG_RPI="--disable-mmal --disable-rpi --enable-sand"
-    PKG_PATCH_DIRS+=" rpi"
-    ;;
-  *)
-    PKG_PATCH_DIRS+=" v4l2-request v4l2-drmprime"
-    ;;
-esac
+PKG_PATCH_DIRS+=" v4l2-request v4l2-drmprime"
 
 post_unpack() {
   # Fix FFmpeg version
@@ -103,6 +87,12 @@ fi
 if [ "${TARGET_ARCH}" = "x86_64" ]; then
   PKG_DEPENDS_TARGET+=" nasm:host"
 fi
+
+case ${PROJECT} in
+  Rockchip)
+    PKG_DEPENDS_TARGET+=" rkmpp"
+  ;;
+esac
 
 if target_has_feature "(neon|sse)"; then
   PKG_DEPENDS_TARGET+=" dav1d"

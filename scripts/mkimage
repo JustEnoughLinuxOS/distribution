@@ -2,8 +2,7 @@
 
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-# Copyright (C) 2016-2018 Team LibreELEC (https://libreelec.tv)
-# Copyright (C) 2018-present Team CoreELEC (https://coreelec.org)
+# Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 # Copyright (C) 2022-present Fewtarius
 # Copyright (C) 2022-present UnofficialOS
 
@@ -13,7 +12,7 @@
 ################################################################################
 
 # set variables
-LE_TMP=$(mktemp -d)
+LE_TMP=$(mktemp -d -p ${TARGET_IMG})
 SAVE_ERROR="${LE_TMP}/save_error"
 . projects/${PROJECT}/devices/${DEVICE}/options
 
@@ -22,10 +21,13 @@ if [ -z "${SYSTEM_SIZE}" -o -z "${SYSTEM_PART_START}" ]; then
   exit 1
 fi
 
-STORAGE_SIZE=32 # STORAGE_SIZE must be >= 32 !
+if [ "${PARTITION_TABLE}" = "gpt" ]; then
+  DISK_GPT_PADDING=1
+else
+  DISK_GPT_PADDING=0
+fi
 
 DISK_START_PADDING=$(( (${SYSTEM_PART_START} + 2048 - 1) / 2048 ))
-DISK_GPT_PADDING=1
 DISK_SIZE=$(( ${DISK_START_PADDING} + ${SYSTEM_SIZE} + ${STORAGE_SIZE} + ${DISK_GPT_PADDING} ))
 DISK_BASENAME="${TARGET_IMG}/${IMAGE_NAME}"
 if [ -n "${SUBDEVICE}" ]; then
@@ -55,12 +57,16 @@ show_error() {
 trap cleanup SIGINT
 
 # create an image
-echo -e "\nimage: creating file $(basename ${DISK})..."
-dd if=/dev/zero of="${DISK}" bs=1M count="${DISK_SIZE}" conv=fsync >"${SAVE_ERROR}" 2>&1 || show_error
+echo -e "\nimage: creating sparse file for disk image ${DISK##*/}..."
+dd if=/dev/zero of="${DISK}" bs=1M count=0 seek="${DISK_SIZE}" conv=fsync >"${SAVE_ERROR}" 2>&1 || show_error
 
-echo "image: creating partition table (${PARTITION_TABLE})..."
+# write a disklabel
+echo "image: creating ${PARTITION_TABLE} partition table..."
 parted -s "${DISK}" mklabel ${PARTITION_TABLE}
 sync
+
+# create partitions
+echo "image: creating partitions..."
 
 if [ "${PARTITION_TABLE}" = "gpt" ] && [ "${BOOTLOADER}" = "u-boot" ]
 then
@@ -69,9 +75,10 @@ then
   parted -s "${DISK}" unit s mkpart ${TRUST_LABEL} 24576 32767 >/dev/null 2>&1
 fi
 
-# create part1
-echo "image: creating part1..."
 SYSTEM_PART_END=$(( ${SYSTEM_PART_START} + (${SYSTEM_SIZE} * 1024 * 1024 / 512) - 1 ))
+STORAGE_PART_START=$(( ${SYSTEM_PART_END} + 1 ))
+STORAGE_PART_END=$(( ${STORAGE_PART_START} + (${STORAGE_SIZE} * 1024 * 1024 / 512) - 1 ))
+
 if [ "${PARTITION_TABLE}" = "gpt" ]; then
   echo "image: Create boot partition."
   parted -s "${DISK}" -a min unit s mkpart boot fat32 ${SYSTEM_PART_START} ${SYSTEM_PART_END}
@@ -80,12 +87,7 @@ else
   parted -s "${DISK}" -a min unit s mkpart primary fat32 ${SYSTEM_PART_START} ${SYSTEM_PART_END}
   parted -s "${DISK}" set 1 boot on
 fi
-sync
 
-# create part2
-echo "image: creating part2..."
-STORAGE_PART_START=$(( ${SYSTEM_PART_END} + 1 ))
-STORAGE_PART_END=$(( ${STORAGE_PART_START} + (${STORAGE_SIZE} * 1024 * 1024 / 512) - 1 ))
 if [ "${PARTITION_TABLE}" = "gpt" ]; then
     echo "image: Create storage partition."
     parted -s "${DISK}" -a min unit s mkpart storage ext4 ${STORAGE_PART_START} ${STORAGE_PART_END}
@@ -95,27 +97,58 @@ if [ "${PARTITION_TABLE}" = "gpt" ]; then
 fi
 sync
 
-# set partition 3 as boot for u-boot.
 if [ "${PARTITION_TABLE}" = "gpt" ] && [ "${BOOTLOADER}" = "u-boot" ]; then
-  echo "image: Set jelos partition as boot"
+  echo "image: Set OS partition as boot"
   parted -s "${DISK}" set 3 boot on
 fi
 sync
 
-# create filesystem on part1
-echo "image: creating filesystem on part1..."
-OFFSET=$(( ${SYSTEM_PART_START} * 512 ))
-HEADS=4
-TRACKS=32
-SECTORS=$(( ${SYSTEM_SIZE} * 1024 * 1024 / 512 / ${HEADS} / ${TRACKS} ))
+echo "image: creating sparse file for part2..."
+STORAGE_PART_COUNT=$(( ${STORAGE_PART_END} - ${STORAGE_PART_START} + 1 ))
+sync
+dd if="${DISK}" of="${LE_TMP}/part2.ext4" bs=512 count=0 seek="${STORAGE_PART_COUNT}" conv=fsync >"${SAVE_ERROR}" 2>&1 || show_error
+
+# create filesystem on part2
+echo "image: creating filesystem on part2..."
+mke2fs -F -q -t ext4 -m 0 "${LE_TMP}/part2.ext4"
+tune2fs -L "${DISTRO_DISKLABEL}" -U ${UUID_STORAGE} "${LE_TMP}/part2.ext4" >"${SAVE_ERROR}" 2>&1 || show_error
+e2fsck -n "${LE_TMP}/part2.ext4" >"${SAVE_ERROR}" 2>&1 || show_error
+sync
+
+# add resize mark
+mkdir "${LE_TMP}/part2.fs"
+touch "${LE_TMP}/part2.fs/.please_resize_me"
+echo "image: populating filesystem on part2..."
+populatefs -U -d "${LE_TMP}/part2.fs" "${LE_TMP}/part2.ext4" >"${SAVE_ERROR}" 2>&1 || show_error
+sync
+e2fsck -n "${LE_TMP}/part2.ext4" >"${SAVE_ERROR}" 2>&1 || show_error
+
+# merge part2 into disk image
+echo "image: merging part2 into disk image..."
+dd if="${LE_TMP}/part2.ext4" of="${DISK}" bs=512 seek="${STORAGE_PART_START}" conv=fsync,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
+
+# create disk image for virtual appliance
+if [ "${PROJECT}" = "Generic" ]; then
+  echo "image: creating open virtual appliance..."
+  # duplicate ${DISK} so anything we do to it directly doesn't effect original
+  dd if="${DISK}" of="${DISK_BASENAME}.tmp" bs=1M conv=fsync >"${SAVE_ERROR}" 2>&1 || show_error
+fi
+
+# create part1 to format and copy files
+echo "image: creating sparse file for part1..."
+SYSTEM_PART_COUNT=$(( ${SYSTEM_PART_END} - ${SYSTEM_PART_START} + 1 ))
+sync
+dd if=/dev/zero of="${LE_TMP}/part1.fat" bs=512 count=0 seek="${SYSTEM_PART_COUNT}" conv=fsync >"${SAVE_ERROR}" 2>&1 || show_error
 
 shopt -s expand_aliases  # enables alias expansion in script
-alias mformat="mformat -i ${DISK}@@${OFFSET} -h ${HEADS} -t ${TRACKS} -s ${SECTORS}"
-alias mcopy="mcopy -i ${DISK}@@${OFFSET}"
-alias mmd="mmd -i ${DISK}@@${OFFSET}"
+alias mcopy='mcopy -i "${LE_TMP}/part1.fat" -o'
+alias mmd='mmd -i "${LE_TMP}/part1.fat"'
+
+# create filesystem on part1
+echo "image: creating filesystem on part1..."
 
 if [ "${BOOTLOADER}" = "syslinux" -o "${BOOTLOADER}" = "bcm2835-bootloader" -o "${BOOTLOADER}" = "u-boot" ]; then
-  mformat -v "${DISTRO_BOOTLABEL}" -N "${UUID_SYSTEM//-/}" ::
+  mformat -i "${LE_TMP}/part1.fat" -v "${DISTRO_BOOTLABEL}" -N "${UUID_SYSTEM//-/}" :: >"${SAVE_ERROR}" 2>&1 || show_error
 fi
 sync
 
@@ -146,7 +179,7 @@ EOF
 
   # install syslinux
   echo "image: installing syslinux to part1..."
-  syslinux.mtools --offset "${OFFSET}" -i "${DISK}"
+  syslinux.mtools -i "${LE_TMP}/part1.fat" >"${SAVE_ERROR}" 2>&1 || show_error
 
   # copy files
   echo "image: copying files to part1..."
@@ -230,56 +263,32 @@ elif [ "${BOOTLOADER}" = "u-boot" ]; then
   exit
 fi # bootloader
 
-# extract part2 from image to format and copy files
-echo "image: extracting part2 from image..."
-STORAGE_PART_COUNT=$(( ${STORAGE_PART_END} - ${STORAGE_PART_START} + 1 ))
-sync
-dd if="${DISK}" of="${LE_TMP}/part2.ext4" bs=512 skip="${STORAGE_PART_START}" count="${STORAGE_PART_COUNT}" conv=fsync >"${SAVE_ERROR}" 2>&1 || show_error
-
-# create filesystem on part2
-echo "image: creating filesystem on part2..."
-mke2fs -F -q -t ext4 -m 0 "${LE_TMP}/part2.ext4"
-tune2fs -L "${DISTRO_DISKLABEL}" -U ${UUID_STORAGE} "${LE_TMP}/part2.ext4" >"${SAVE_ERROR}" 2>&1 || show_error
-e2fsck -n "${LE_TMP}/part2.ext4" >"${SAVE_ERROR}" 2>&1 || show_error
-sync
-
-# add resize mark
-mkdir "${LE_TMP}/part2.fs"
-touch "${LE_TMP}/part2.fs/.please_resize_me"
-echo "image: populating filesystem on part2..."
-populatefs -U -d "${LE_TMP}/part2.fs" "${LE_TMP}/part2.ext4" >"${SAVE_ERROR}" 2>&1 || show_error
-sync
-e2fsck -n "${LE_TMP}/part2.ext4" >"${SAVE_ERROR}" 2>&1 || show_error
-
-# merge part2 back to disk image
-echo "image: merging part2 back to image..."
-dd if="${LE_TMP}/part2.ext4" of="${DISK}" bs=512 seek="${STORAGE_PART_START}" conv=fsync,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
-
-# extract part1 from image to run fsck
-echo "image: extracting part1 from image..."
-SYSTEM_PART_COUNT=$(( ${SYSTEM_PART_END} - ${SYSTEM_PART_START} + 1 ))
-sync
-dd if="${DISK}" of="${LE_TMP}/part1.fat" bs=512 skip="${SYSTEM_PART_START}" count="${SYSTEM_PART_COUNT}" conv=fsync >"${SAVE_ERROR}" 2>&1 || show_error
+# run fsck
 echo "image: checking filesystem on part1..."
+sync
 fsck.fat -n "${LE_TMP}/part1.fat" >"${SAVE_ERROR}" 2>&1 || show_error
 
-# create virtual image
+# merge part1 into disk image
+echo "image: merging part1 into disk image..."
+dd if="${LE_TMP}/part1.fat" of="${DISK}" bs=512 seek="${SYSTEM_PART_START}" conv=fsync,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
+
+# finalize virtual appliance
 if [ "${PROJECT}" = "Generic" ]; then
-  echo "image: creating open virtual appliance..."
-  # duplicate ${DISK} so anything we do to it directly doesn't effect original
-  dd if="${DISK}" of="${DISK_BASENAME}.tmp" bs=1M >"${SAVE_ERROR}" 2>&1 || show_error
   # change syslinux default to 'run'
-  echo "image: modifying fs on part1 for open virtual appliance..."
+  echo "image: modifying files on part1 for open virtual appliance..."
   sed -e "/DEFAULT/ s/installer/run/" -i "${LE_TMP}/syslinux.cfg"
   sed -e "/set default=/s/\"Installer\"/\"Run\"/" -i "${LE_TMP}/grub.cfg"
-  # FIXME: an unalias should work here, but it does not; call mcopy directly
-  "${TOOLCHAIN}"/bin/mcopy -i "${LE_TMP}/part1.fat" -o "${LE_TMP}/syslinux.cfg" ::
-  "${TOOLCHAIN}"/bin/mcopy -i "${LE_TMP}/part1.fat" -o "${LE_TMP}/grub.cfg" ::/EFI/BOOT
+  mcopy "${LE_TMP}/syslinux.cfg" :: >"${SAVE_ERROR}" 2>&1 || show_error
+  mcopy "${LE_TMP}/grub.cfg" ::/EFI/BOOT >"${SAVE_ERROR}" 2>&1 || show_error
   sync
-  # merge modified part1 back to tmp disk image
-  echo "image: merging part1 back to open virtual appliance..."
+  # run fsck
+  echo "image: checking filesystem on part1..."
+  fsck.fat -n "${LE_TMP}/part1.fat" >"${SAVE_ERROR}" 2>&1 || show_error
+  # merge modified part1 into tmp disk image
+  echo "image: merging part1 into open virtual appliance..."
   dd if="${LE_TMP}/part1.fat" of="${DISK_BASENAME}.tmp" bs=512 seek="${SYSTEM_PART_START}" conv=fsync,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
   # create vmdk from tmp ${DISK}
+  echo "image: creating vmdk for open virtual appliance..."
   qemu-img convert -O vmdk -o subformat=streamOptimized "${DISK_BASENAME}.tmp" "${DISK_BASENAME}.vmdk"
   # generate ovf from template
   sed -e "s,@DISTRO@,${DISTRO},g" -e "s,@DISK@,${IMAGE_NAME},g" \
@@ -288,27 +297,23 @@ if [ "${PROJECT}" = "Generic" ]; then
   # combine ovf and vmdk into official ova
   tar -C "${TARGET_IMG}" -cf "${DISK_BASENAME}.ova" "${IMAGE_NAME}.ovf" "${IMAGE_NAME}.vmdk"
   # create sha256 checksum of ova image
-  ( cd "${TARGET_IMG}"
+  (
+    cd "${TARGET_IMG}"
     sha256sum "${IMAGE_NAME}.ova" > "${IMAGE_NAME}.ova.sha256"
   )
-  echo "image: cleaning up..."
+  echo "image: cleaning up open virtual appliance..."
   # remove tmp ${DISK}, vmdk and ovf
   rm "${DISK_BASENAME}.tmp" "${DISK_BASENAME}.vmdk" "${DISK_BASENAME}.ovf"
-  # set owner
-  [ -n "${SUDO_USER}" ] && chown "${SUDO_USER}:" "${DISK_BASENAME}.ova"
 fi
 
 # gzip
 echo "image: compressing..."
 pigz --best --force "${DISK}"
 
-# set owner
-if [ -n "${SUDO_USER}" ]; then
-  chown "${SUDO_USER}:" "${DISK}.gz"
-fi
 # create sha256 checksum of image
-( cd "${TARGET_IMG}"
-  sha256sum $(basename "${DISK}").gz > $(basename "${DISK}").gz.sha256
+(
+  cd "${TARGET_IMG}"
+  sha256sum "${DISK##*/}.gz" > "${DISK##*/}.gz.sha256"
 )
 
 if [ -n "${LOCAL_SSH_KEYS_FILE}" ] || \

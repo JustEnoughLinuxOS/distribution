@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
+# Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="taglib"
-PKG_VERSION="1.12"
-PKG_SHA256="7fccd07669a523b07a15bd24c8da1bbb92206cb19e9366c3692af3d79253b703"
+PKG_VERSION="1.13.1"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://taglib.github.com/"
-PKG_URL="http://taglib.github.io/releases/${PKG_NAME}-${PKG_VERSION}.tar.gz"
+PKG_URL="https://taglib.org/releases/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain cmake:host zlib"
 PKG_LONGDESC="TagLib is a library for reading and editing the meta-data of several popular audio formats."
 

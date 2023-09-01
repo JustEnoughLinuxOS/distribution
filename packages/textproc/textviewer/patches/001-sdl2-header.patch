@@ -1,0 +1,13 @@
+diff --git a/imgui_impl_sdl.h b/imgui_impl_sdl.h
+index 38a73b6..670561e 100644
+--- a/imgui_impl_sdl.h
++++ b/imgui_impl_sdl.h
+@@ -17,7 +17,7 @@
+ #pragma once
+ #include "imgui.h"      // IMGUI_IMPL_API
+ 
+-#include <SDL_gamecontroller.h>
++#include <SDL2/SDL_gamecontroller.h>
+ 
+ #include <vector>
+ 

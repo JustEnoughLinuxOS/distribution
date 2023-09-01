@@ -4,7 +4,7 @@
 # Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="nettle"
-PKG_VERSION="3.8.1"
+PKG_VERSION="3.9.1"
 PKG_LICENSE="GPL2"
 PKG_SITE="http://www.lysator.liu.se/~nisse/nettle"
 PKG_URL="http://ftpmirror.gnu.org/gnu/nettle/nettle-${PKG_VERSION}.tar.gz"

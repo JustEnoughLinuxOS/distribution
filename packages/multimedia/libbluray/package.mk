@@ -3,8 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libbluray"
-PKG_VERSION="1.3.3"
-PKG_SHA256="58ff52cdcee64c55dcc3c777a1c39fb41abd951b927978e4d2b6811b9193a488"
+PKG_VERSION="1.3.4"
 PKG_LICENSE="LGPL"
 PKG_SITE="https://www.videolan.org/developers/libbluray.html"
 PKG_URL="http://download.videolan.org/pub/videolan/libbluray/${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.bz2"

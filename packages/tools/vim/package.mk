@@ -3,7 +3,7 @@
 # Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="vim"
-PKG_VERSION="9.0.1528"
+PKG_VERSION="9.0.1778"
 PKG_LICENSE="VIM"
 PKG_SITE="http://www.vim.org/"
 PKG_URL="https://github.com/vim/vim/archive/v${PKG_VERSION}.tar.gz"
@@ -21,7 +21,6 @@ PKG_CONFIGURE_OPTS_TARGET="vim_cv_getcwd_broken=no \
                            vim_cv_tty_mode=0620 \
                            ac_cv_sizeof_int=4 \
                            ac_cv_small_wchar_t=no \
-                           --datarootdir=/storage/.config/vim \
                            --disable-canberra \
                            --disable-nls \
                            --enable-selinux=no \
@@ -48,7 +47,6 @@ pre_makeinstall_target() {
 
 post_makeinstall_target() {
   (
-  mv ${INSTALL}/storage/.config/vim/vim/vimrc_example.vim ${INSTALL}/usr/config/vim/vimrc
-  rm -r ${INSTALL}/storage/
+  mv ${INSTALL}/usr/share/vim/vimrc_example.vim ${INSTALL}/usr/share/vim/vimrc
   )
 }

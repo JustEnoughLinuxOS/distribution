@@ -1,9 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2019-present Peter Vicman (peter.vicman@gmail.com)
 # Copyright (C) 2022-present Fewtarius
-
 PKG_NAME="jdk-zulu"
-PKG_VERSION="18.32.13-ca-jdk18.0.2.1"
+PKG_VERSION="20.32.11-ca-jdk20.0.2"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://www.azul.com/products/zulu-enterprise/"
 
