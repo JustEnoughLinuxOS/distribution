@@ -1218,8 +1218,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-
 +		io-channels = <&saradc 0>, <&saradc 1>, <&saradc 2>, <&saradc 3>;
 +		io-channel-names = "key-RY", "key-RX", "key-LY", "key-LX";
 +		button-adc-scale = <4>;
-+		button-adc-deadzone = <600>;
-+		button-adc-fuzz = <32>;
++		button-adc-deadzone = <350>;
++		button-adc-fuzz = <64>;
 +		button-adc-flat = <32>;
 +		abs_x-p-tuning = <350>;
 +		abs_x-n-tuning = <350>;
