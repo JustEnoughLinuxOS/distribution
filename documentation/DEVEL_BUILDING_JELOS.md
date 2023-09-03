@@ -8,7 +8,7 @@ JELOS is a fairly unique distribution as it is *built to order* and only enough 
 ## Preparing the Build Machine
 Building JELOS requires a host with 200GB of free space for a single device, or 1TB of free space for a full world build.  
 
-**Expect your first build to take on the order of ten hours.  You will need a stable internet connection, since hundreds of packages will be downloaded from their source.**  Download errors often produce build failures with misleading error messages.
+**Expect your first build to take on the order of ten hours.  You will need a stable internet connection, since hundreds of packages will be downloaded from their source.**  Download errors often produce build failures with misleading error messages.  If this happens to you, see the Troubleshooting section below.
 
 After a clean build, all subsequent builds will go much faster (minutes) since 99% of the build work is cached.
 
@@ -217,6 +217,14 @@ export CHEEVOS_DEV_LOGIN="z=RETROACHIEVEMENTSUSERNAME&y=APIKEYID"
 ```
 CLEAN_PACKAGES="linux ppsspp-sa" make AMD64
 ```
+
+## Troubleshooting
+The very first build after a fresh checkout is the hardest.  Give yourself sufficient time to generate the first build and work through any failures before attempting to modify JELOS.
+- Download errors produce misleading failure messages.  Beware of chasing red herrings.  A network failure is much more likely than a bug in the makefile, given how frequently it is tested by the CI system and other devs.
+- Try cleaning the failed package (see above) and building again.
+- If you suspect a download failure, manually delete the relevant package(s) from the `sources` and `build.JELOS-...` directories, to force a full package re-download and re-build.
+- Exhaust all options before using `make clean` since this deletes the build cache and takes hours to regenerate.
+- As a very last resort, delete the entire local repository and start over.
 
 ## Modifying JELOS
 Before modifying JELOS, be sure you can successfully build the unmodified `main` or `dev` branch (see above).  Establish a baseline of success before introducing changes to the JELOS source.
