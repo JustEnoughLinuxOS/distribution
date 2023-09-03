@@ -5,9 +5,10 @@
 
 JELOS is a fairly unique distribution as it is *built to order* and only enough of the operating system and applications are built for the purpose of booting and executing emulators and ports.  Developers and others who would like to contribute to our project should read and agree to the [Contributor Covenant Code of Conduct](https://github.com/JustEnoughLinuxOS/distribution/blob/main/CODE_OF_CONDUCT.md) and [Contributing to JELOS](https://github.com/JustEnoughLinuxOS/distribution/blob/main/CONTRIBUTING.md) guides before submitting your first contribution.
 
+## Preparing the Build Machine
 Building JELOS requires an Ubuntu 22.04 host with 200GB of free space for a single device, or 1TB of free space for a full world build.  Other Linux distributions may be used when building using Docker, however this is untested and unsupported.
 
-### Docker
+### Docker Builds
 ```
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 sudo chmod a+r /etc/apt/keyrings/docker.gpg
@@ -22,10 +23,9 @@ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin dock
 ```
 > Docker installation reference (source): https://docs.docker.com/engine/install/ubuntu/
 
-### Building Manually
+### Manual Builds
 To build JELOS manually, you will need several prerequisite host packages installed.
 
-#### Distribution Packages
 ```
 sudo apt install gcc make git unzip wget \
                 xz-utils libsdl2-dev libsdl2-mixer-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev \
@@ -37,7 +37,7 @@ sudo apt install gcc make git unzip wget \
                 qemu-user-binfmt zstd parted imagemagick qemu-user-static ca-certificates curl gnupg
 ```
 
-### Cloning the JELOS Sources
+## JELOS Source Files
 To build JELOS, start by cloning the project git repository.
 
 ```
@@ -60,7 +60,7 @@ cd distribution
 git checkout dev
 ```
 
-## Filesystem Structure
+### Filesystem Structure
 We have a simple filesystem structure adopted from parent distributions CoreELEC, LibreELEC, etc.
 
 ```
@@ -134,7 +134,7 @@ The tools directory contains utility scripts that can be used during the develop
 
 ## Building JELOS
 
-### Building with Docker
+### Building Device Images
 Building JELOS is easy, the fastest and most recommended method is to instruct the build to use Docker, this is only known to work on a Linux system.  To build JELOS with Docker use the table below.
 
 | Devices | Dependency | Docker Command |
@@ -155,7 +155,7 @@ Next, build the version of JELOS for your device.  See the table above for depen
 make AMD64
 ```
 
-### Rightsized builds
+### Rightsized Builds
 JELOS supports various build variables which alter the behavior of the distribution for specific purposes including debugging, or hosting containers.  The options are defined below and are passed on the make command line.  Ex. `BASE_ONLY=true make docker-RK3566`.
 
 |Build Option|Setting|Function|
@@ -167,7 +167,7 @@ JELOS supports various build variables which alter the behavior of the distribut
 
 > Note: <sup>1</sup> this property will change to yes/no for consistency in a future release.
 
-### Special env variables
+### Special env Variables
 For development builds, you can use the following env variables to customize the image or change build time functionality. To make them globally available to the builds, add them to ${HOME}/.JELOS/options.
 |Variable|Function|
 |----|----|
@@ -179,7 +179,7 @@ For development builds, you can use the following env variables to customize the
 |CHEEVOS_DEV_LOGIN|Login information for retroachievements.org.|
 |CLEAN_PACKAGES|Allows specifying packages to clean during a build.|
 
-#### SSH keys
+#### SSH Keys
 ```
 export LOCAL_SSH_KEYS_FILE=~/.ssh/jelos/authorized_keys
 ```
@@ -202,12 +202,14 @@ export GAMESDB_APIKEY="APIKEY"
 export CHEEVOS_DEV_LOGIN="z=RETROACHIEVEMENTSUSERNAME&y=APIKEYID"
 ```
 
-#### Cleaning additional packages
+#### Cleaning Additional Packages
 ```
 CLEAN_PACKAGES="linux ppsspp-sa" make AMD64
 ```
 
-### Building a single package
+## Modifying JELOS
+
+### Building a Single Package
 It is also possible to build individual packages.
 ```
 DEVICE=AMD64 ARCH=x86_64 ./scripts/clean busybox
@@ -215,7 +217,7 @@ DEVICE=AMD64 ARCH=x86_64 ./scripts/build busybox
 ```
 > Note: An EmulationStation package standalone build requires additional steps because its source code located in a separate repository, see instructions inside, [link](https://github.com/JustEnoughLinuxOS/distribution/blob/main/packages/ui/emulationstation/package.mk).
 
-### Creating a patch for a package
+### Creating a Patch for a Package
 It is common to have imported package source code modifed to fit the use case. It's recommended to use a special shell script to built it in case you need to iterate over it. See below.
 
 ```
@@ -230,7 +232,7 @@ mkdir -p ../../packages/network/wireguard-linux-compat/patches/AMD64
 diff -rupN wireguard-linux-compat wireguard-linux-compat.orig >../../packages/network/wireguard-linux-compat/patches/AMD64/mychanges.patch
 ```
 
-### Creating a patch for a package using git
+### Creating a Patch for a Package Using git
 If you are working with a git repository, building a patch for the distribution is simple.  Rather than using `diff`, use `git diff`.
 ```
 cd sources/emulationstation/emulationstation-098226b/
@@ -244,7 +246,7 @@ git diff >../../packages/ui/emulationstation/patches/005-mypatch.patch
 
 After patch is generated, one can rebuild an individual package, see section above. The build system will automatically pick up patch files from `patches` directory. For testing, one can either copy the built binary to the console or burn the whole image on SD card.
 
-### Building an image with your patch
+### Building an Image with Your Patch
 If you already have a build for your device made using the above process, it's simple to shortcut the build process and create an image to test your changes quickly using the process below.
 ```
 # Update the package version for a new package, or apply your patch as above.
