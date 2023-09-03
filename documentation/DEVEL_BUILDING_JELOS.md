@@ -24,8 +24,17 @@ echo \
 
 sudo apt update
 sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+sudo groupadd docker
+sudo usermod -aG docker $USER
+newgrp docker
+
+docker run hello-world
+
 ```
-> Docker installation reference (source): https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
+> Docker installation reference (source): [Install using the apt repository](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository) and [Linux post-installation steps](https://docs.docker.com/engine/install/linux-postinstall/).
+
+The final command should produce a message indicating that Docker is properly installed.  If you encounter any errors, see the reference links above.
 
 ### Manual Builds
 To build JELOS manually, you will need several prerequisite host packages installed.
