@@ -141,24 +141,24 @@ The tools directory contains utility scripts that can be used during the develop
 ## Building JELOS
 
 ### Building Device Images
-Building JELOS is easy, the fastest and most recommended method is to instruct the build to use Docker, this is only known to work on a Linux system.  To build JELOS with Docker use the table below.
+Building JELOS is easy.  From the root of your local repository, issue one of the `make` commands listed below, depending on the desired device and whether you are using Docker.
 
-| Devices | Dependency | Docker Command |
-| ---- | ---- | ---- |
-|AMD64||```make docker-AMD64```|
-|RK3588||```make docker-RK3588```|
-|RK3326||```make docker-RK3326```|
-|RK3566||```make docker-RK3566```|
-|RK3566-X55|RK3566|```make docker-RK3566-X55```|
-|S922X||```make docker-S922X```|
-|ALL DEVICES||```make docker-world```|
+| Devices | Dependency | Docker Command | Manual Command |
+| ---- | ---- | ---- | ---- |
+|AMD64||```make docker-AMD64```|```make AMD64```|
+|RK3588||```make docker-RK3588```|```make RK3588```|
+|RK3326||```make docker-RK3326```|```make RK3326```|
+|RK3566||```make docker-RK3566```|```make RK3566```|
+|RK3566-X55|RK3566|```make docker-RK3566-X55```|```make RK3566-X55```|
+|S922X||```make docker-S922X```|```make S922X```|
+|ALL DEVICES||```make docker-world```|```make world```|
 
 > Devices that list a dependency require you to build the dependency first, since that build will be used as the root of the device you are building.
 
-Next, build the version of JELOS for your device.  See the table above for dependencies. 
+For example, the following command uses Docker to build the AMD64 image.  
 
 ```
-make AMD64
+make docker-AMD64
 ```
 
 ### Rightsized Builds
