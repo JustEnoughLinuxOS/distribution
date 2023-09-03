@@ -30,25 +30,13 @@ sudo usermod -aG docker $USER
 newgrp docker
 
 docker run hello-world
-
 ```
 > Docker installation reference (source): [Install using the apt repository](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository) and [Linux post-installation steps](https://docs.docker.com/engine/install/linux-postinstall/).
 
 The final command should produce a message indicating that Docker is properly installed.  If you encounter any errors, see the reference links above.
 
 ### Manual Builds
-To build JELOS manually, you will need several prerequisite host packages installed.
-
-```
-sudo apt install gcc make git unzip wget \
-                xz-utils libsdl2-dev libsdl2-mixer-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev \
-                rapidjson-dev libasound2-dev libgl1-mesa-dev build-essential libboost-all-dev cmake fonts-droid-fallback \
-                libvlc-dev libvlccore-dev vlc-bin texinfo premake4 golang libssl-dev curl patchelf \
-                xmlstarlet patchutils gawk gperf xfonts-utils default-jre python-is-python3 xsltproc libjson-perl \
-                lzop libncurses5-dev device-tree-compiler u-boot-tools rsync p7zip libparse-yapp-perl \
-                zip binutils-aarch64-linux-gnu dos2unix p7zip-full libvpx-dev bsdmainutils bc meson p7zip-full \
-                qemu-user-binfmt zstd parted imagemagick qemu-user-static ca-certificates curl gnupg
-```
+To build JELOS manually, you will first need to install all packages listed in the [Dockerfile](../Dockerfile).
 
 ## JELOS Source Files
 After preparing the build machine, clone the project git repository onto it.
