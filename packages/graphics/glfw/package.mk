@@ -26,8 +26,13 @@ fi
 
 if [ "${DISPLAYSERVER}" = "wl" ]; then
 	PKG_DEPENDS_TARGET+=" wayland wayland-protocols libglvnd"
+	PKG_NEED_UNPACK="$(get_pkg_directory wayland)"
 	PKG_CMAKE_OPTS_TARGET+=" -DGLFW_BUILD_WAYLAND=ON"
 fi
+
+post_unpack() {
+  sed -i "s|\${WAYLAND_CLIENT_PKGDATADIR}|${TOOLCHAIN}/share/wayland|" ${PKG_BUILD}/src/CMakeLists.txt
+}
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/
