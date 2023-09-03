@@ -35,7 +35,6 @@ post_makeinstall_target() {
   # install config & wallpaper
   mkdir -p ${INSTALL}/usr/share/sway
     cp ${PKG_DIR}/config/* ${INSTALL}/usr/share/sway
-    find_file_path "splash/splash-2160.png" && cp ${FOUND_PATH} ${INSTALL}/usr/share/sway/libreelec-wallpaper-2160.png
 
   # clean up
   safe_remove ${INSTALL}/etc
