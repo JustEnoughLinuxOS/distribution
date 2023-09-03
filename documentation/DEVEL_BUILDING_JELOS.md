@@ -233,7 +233,7 @@ The very first build after a fresh checkout is the hardest.  Give yourself suffi
 Before modifying JELOS, be sure you can successfully build the unmodified `main` or `dev` branch (see above).  Establish a baseline of success before introducing changes to the JELOS source.
 
 ### Building a Single Package
-It is also possible to build individual packages.
+When modifying individual packages, it's useful to regularly verify the build-ability of your changes.  Rather than rebuild an entire device image, it is much faster to simply rebuild a single package using the following commands:
 ```
 DEVICE=AMD64 ARCH=x86_64 ./scripts/clean busybox
 DEVICE=AMD64 ARCH=x86_64 ./scripts/build busybox
