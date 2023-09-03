@@ -10,6 +10,10 @@ Building JELOS requires an Ubuntu 22.04 host with 200GB of free space for a sing
 
 ### Docker Builds
 ```
+sudo apt update
+sudo apt install ca-certificates curl gnupg
+
+sudo install -m 0755 -d /etc/apt/keyrings
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
 sudo chmod a+r /etc/apt/keyrings/docker.gpg
 
@@ -21,7 +25,7 @@ echo \
 sudo apt update
 sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
-> Docker installation reference (source): https://docs.docker.com/engine/install/ubuntu/
+> Docker installation reference (source): https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository
 
 ### Manual Builds
 To build JELOS manually, you will need several prerequisite host packages installed.
