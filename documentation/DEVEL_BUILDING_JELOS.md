@@ -6,9 +6,14 @@
 JELOS is a fairly unique distribution as it is *built to order* and only enough of the operating system and applications are built for the purpose of booting and executing emulators and ports.  Developers and others who would like to contribute to our project should read and agree to the [Contributor Covenant Code of Conduct](https://github.com/JustEnoughLinuxOS/distribution/blob/main/CODE_OF_CONDUCT.md) and [Contributing to JELOS](https://github.com/JustEnoughLinuxOS/distribution/blob/main/CONTRIBUTING.md) guides before submitting your first contribution.
 
 ## Preparing the Build Machine
-Building JELOS requires an Ubuntu 22.04 host with 200GB of free space for a single device, or 1TB of free space for a full world build.  Other Linux distributions may be used when building using Docker; however this is untested and unsupported.
+Building JELOS requires a host with 200GB of free space for a single device, or 1TB of free space for a full world build.  
 
 ### Docker Builds
+**Docker is the easiest and most reliable way to build JELOS.**  You need no previous experience with Docker; you merely need to install it on your build machine.  Newcomers to the project are strongly recommended to use this approach.
+
+We recommend using Ubuntu 22.04 for the host machine, as this is well-tested and known to work.  Other distributions and operating systems might also work for Docker builds, but are untested and unsupported.
+
+Install Docker using the following commands:
 ```
 sudo apt update
 sudo apt install ca-certificates curl gnupg
@@ -36,7 +41,7 @@ docker run hello-world
 The final command should produce a message indicating that Docker is properly installed.  If you encounter any errors, see the reference links above.
 
 ### Manual Builds
-To build JELOS manually, you will first need to install all packages listed in the [Dockerfile](../Dockerfile).
+Manual builds (outside of Docker) are only recommended for developers with specific needs that cannot be met by the Docker approach.  The host configuration should match the Docker container as closely as possible, running Ubuntu 22.04 with all packages listed in the [Dockerfile](../Dockerfile).
 
 ## JELOS Source Files
 After preparing the build machine, clone the project git repository onto it.
