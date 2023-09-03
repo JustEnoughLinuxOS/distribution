@@ -686,16 +686,16 @@ function set_rewind() {
 
 function set_savestates() {
     local SAVESTATES="$(game_setting incrementalsavestates)"
+    local MAXINCREMENTALSAVES="$(game_setting maxincrementalsaves)"
     case ${SAVESTATES} in
         0|false|none)
             add_setting "none" "savestate_auto_index" "false"
-            add_setting "none" "savestate_max_keep" "50"
         ;;
         *)
             add_setting "none" "savestate_auto_index" "true"
-            add_setting "none" "savestate_max_keep" "0"
         ;;
     esac
+    add_setting "none" "savestate_max_keep" "${MAXINCREMENTALSAVES}"
 }
 
 function set_autosave() {
