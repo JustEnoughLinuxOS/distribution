@@ -218,8 +218,11 @@ export CHEEVOS_DEV_LOGIN="z=RETROACHIEVEMENTSUSERNAME&y=APIKEYID"
 
 #### Cleaning Additional Packages
 ```
+make docker-shell
 CLEAN_PACKAGES="linux ppsspp-sa" make AMD64
+exit
 ```
+The first and last lines should be omitted if building manually.
 
 ## Troubleshooting
 The very first build after a fresh checkout is the hardest.  Give yourself sufficient time to generate the first build and work through any failures before attempting to modify JELOS.
@@ -235,9 +238,13 @@ Before modifying JELOS, be sure you can successfully build the unmodified `main`
 ### Building a Single Package
 When modifying individual packages, it's useful to regularly verify the build-ability of your changes.  Rather than rebuild an entire device image, it is much faster to simply rebuild a single package using the following commands:
 ```
+make docker-shell
 DEVICE=AMD64 ARCH=x86_64 ./scripts/clean busybox
 DEVICE=AMD64 ARCH=x86_64 ./scripts/build busybox
+exit
 ```
+The first and last lines should be omitted if building manually.
+
 > Note: An EmulationStation package standalone build requires additional steps because its source code is located in a separate repository.  See instructions [here](https://github.com/JustEnoughLinuxOS/distribution/blob/main/packages/ui/emulationstation/package.mk).
 
 ### Creating a Patch for a Package
@@ -272,6 +279,8 @@ After the patch is generated, rebuild an individual package by following the sec
 ### Building an Image with Your Patch
 If you already have a build for your device made using the above process, it's simple to shortcut the build process and create an image to test your changes quickly using the process below.
 ```
+make docker-shell
+
 # Update the package version for a new package, or apply your patch as above.
 vim/emacs/vscode/notepad.exe
 # Export the variables needed to complete your build.  We'll assume you are building AMD64; update the device to match your configuration.
@@ -285,4 +294,7 @@ export PROJECT=PC ARCH=x86_64 DEVICE=AMD64
 ./scripts/install emulationstation
 # Generate an image with your new package.
 ./scripts/image mkimage
+
+exit
 ```
+The first and last lines should be omitted if building manually.
