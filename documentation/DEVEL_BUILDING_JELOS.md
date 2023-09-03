@@ -8,6 +8,10 @@ JELOS is a fairly unique distribution as it is *built to order* and only enough 
 ## Preparing the Build Machine
 Building JELOS requires a host with 200GB of free space for a single device, or 1TB of free space for a full world build.  
 
+**Expect your first build to take on the order of ten hours.  You will need a stable internet connection, since hundreds of packages will be downloaded from their source.**  Download errors often produce build failures with misleading error messages.
+
+After a clean build, all subsequent builds will go much faster (minutes) since 99% of the build work is cached.
+
 ### Docker Builds
 **Docker is the easiest and most reliable way to build JELOS.**  You need no previous experience with Docker; you merely need to install it on your build machine.  Newcomers to the project are strongly recommended to use this approach.
 
@@ -215,6 +219,7 @@ CLEAN_PACKAGES="linux ppsspp-sa" make AMD64
 ```
 
 ## Modifying JELOS
+Before modifying JELOS, be sure you can successfully build the unmodified `main` or `dev` branch (see above).  Establish a baseline of success before introducing changes to the JELOS source.
 
 ### Building a Single Package
 It is also possible to build individual packages.
