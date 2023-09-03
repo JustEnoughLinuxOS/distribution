@@ -5,6 +5,60 @@
 
 JELOS is a fairly unique distribution as it is *built to order* and only enough of the operating system and applications are built for the purpose of booting and executing emulators and ports.  Developers and others who would like to contribute to our project should read and agree to the [Contributor Covenant Code of Conduct](https://github.com/JustEnoughLinuxOS/distribution/blob/main/CODE_OF_CONDUCT.md) and [Contributing to JELOS](https://github.com/JustEnoughLinuxOS/distribution/blob/main/CONTRIBUTING.md) guides before submitting your first contribution.
 
+Building JELOS requires an Ubuntu 22.04 host with 200GB of free space for a single device, or 1TB of free space for a full world build.  Other Linux distributions may be used when building using Docker, however this is untested and unsupported.
+
+### Docker
+```
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+sudo chmod a+r /etc/apt/keyrings/docker.gpg
+
+echo \
+  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+> Docker installation reference (source): https://docs.docker.com/engine/install/ubuntu/
+
+### Building Manually
+To build JELOS manually, you will need several prerequisite host packages installed.
+
+#### Distribution Packages
+```
+sudo apt install gcc make git unzip wget \
+                xz-utils libsdl2-dev libsdl2-mixer-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev \
+                rapidjson-dev libasound2-dev libgl1-mesa-dev build-essential libboost-all-dev cmake fonts-droid-fallback \
+                libvlc-dev libvlccore-dev vlc-bin texinfo premake4 golang libssl-dev curl patchelf \
+                xmlstarlet patchutils gawk gperf xfonts-utils default-jre python-is-python3 xsltproc libjson-perl \
+                lzop libncurses5-dev device-tree-compiler u-boot-tools rsync p7zip libparse-yapp-perl \
+                zip binutils-aarch64-linux-gnu dos2unix p7zip-full libvpx-dev bsdmainutils bc meson p7zip-full \
+                qemu-user-binfmt zstd parted imagemagick qemu-user-static ca-certificates curl gnupg
+```
+
+### Cloning the JELOS Sources
+To build JELOS, start by cloning the project git repository.
+
+```
+cd ~
+git clone https://github.com/JustEnoughLinuxOS/distribution.git
+```
+
+### Selecting the Desired Branch
+Once you have cloned the repo, you will want to determine if you want to build the main branch which is more stable, or the development branch which is unstable but hosts our newest features.
+
+|Branch|Purpose|
+|----|----|
+|main|Stable JELOS sources|
+|dev|Unstable JELOS sources|
+
+To check out our development branch, cd into the project directory and checkout `dev`.
+
+```
+cd distribution
+git checkout dev
+```
 
 ## Filesystem Structure
 We have a simple filesystem structure adopted from parent distributions CoreELEC, LibreELEC, etc.
@@ -79,30 +133,6 @@ As the distribution is being built, package source are fetched and hosted in thi
 The tools directory contains utility scripts that can be used during the development process, including a simple tool to burn an image to a usb drive or sdcard.
 
 ## Building JELOS
-Building JELOS requires an Ubuntu 22.04 host with 200GB of free space for a single device, or 1TB of free space for a full world build.  Other Linux distributions may be used when building using Docker, however this is untested and unsupported.
-
-### Cloning the JELOS Sources
-To build JELOS, start by cloning the project git repository.
-
-```
-cd ~
-git clone https://github.com/JustEnoughLinuxOS/distribution.git
-```
-
-### Selecting the Desired Branch
-Once you have cloned the repo, you will want to determine if you want to build the main branch which is more stable, or the development branch which is unstable but hosts our newest features.
-
-|Branch|Purpose|
-|----|----|
-|main|Stable JELOS sources|
-|dev|Unstable JELOS sources|
-
-To check out our development branch, cd into the project directory and checkout `dev`.
-
-```
-cd distribution
-git checkout dev
-```
 
 ### Building with Docker
 Building JELOS is easy, the fastest and most recommended method is to instruct the build to use Docker, this is only known to work on a Linux system.  To build JELOS with Docker use the table below.
@@ -119,49 +149,11 @@ Building JELOS is easy, the fastest and most recommended method is to instruct t
 
 > Devices that list a dependency require the dependency to be built first as that build will be used as the root of the device you are building.  This will be done automatically by the build tooling when you start a build for your device.
 
-### Building Manually
-To build JELOS manually, you will need several prerequisite host packages installed.
-
-#### Distribution Packages
-```
-sudo apt install gcc make git unzip wget \
-                xz-utils libsdl2-dev libsdl2-mixer-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev \
-                rapidjson-dev libasound2-dev libgl1-mesa-dev build-essential libboost-all-dev cmake fonts-droid-fallback \
-                libvlc-dev libvlccore-dev vlc-bin texinfo premake4 golang libssl-dev curl patchelf \
-                xmlstarlet patchutils gawk gperf xfonts-utils default-jre python-is-python3 xsltproc libjson-perl \
-                lzop libncurses5-dev device-tree-compiler u-boot-tools rsync p7zip libparse-yapp-perl \
-                zip binutils-aarch64-linux-gnu dos2unix p7zip-full libvpx-dev bsdmainutils bc meson p7zip-full \
-                qemu-user-binfmt zstd parted imagemagick qemu-user-static ca-certificates curl gnupg
-```
-
-### Docker
-```
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-sudo chmod a+r /etc/apt/keyrings/docker.gpg
-
-echo \
-  "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-sudo apt update
-sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-```
-> Docker installation reference (source): https://docs.docker.com/engine/install/ubuntu/
-
 Next, build the version of JELOS for your device.  See the table above for dependencies. 
 
 ```
 make AMD64
 ```
-
-### Building a single package
-It is also possible to build individual packages.
-```
-DEVICE=AMD64 ARCH=x86_64 ./scripts/clean busybox
-DEVICE=AMD64 ARCH=x86_64 ./scripts/build busybox
-```
-> Note: An EmulationStation package standalone build requires additional steps because its source code located in a separate repository, see instructions inside, [link](https://github.com/JustEnoughLinuxOS/distribution/blob/main/packages/ui/emulationstation/package.mk).
 
 ### Rightsized builds
 JELOS supports various build variables which alter the behavior of the distribution for specific purposes including debugging, or hosting containers.  The options are defined below and are passed on the make command line.  Ex. `BASE_ONLY=true make docker-RK3566`.
@@ -214,6 +206,14 @@ export CHEEVOS_DEV_LOGIN="z=RETROACHIEVEMENTSUSERNAME&y=APIKEYID"
 ```
 CLEAN_PACKAGES="linux ppsspp-sa" make AMD64
 ```
+
+### Building a single package
+It is also possible to build individual packages.
+```
+DEVICE=AMD64 ARCH=x86_64 ./scripts/clean busybox
+DEVICE=AMD64 ARCH=x86_64 ./scripts/build busybox
+```
+> Note: An EmulationStation package standalone build requires additional steps because its source code located in a separate repository, see instructions inside, [link](https://github.com/JustEnoughLinuxOS/distribution/blob/main/packages/ui/emulationstation/package.mk).
 
 ### Creating a patch for a package
 It is common to have imported package source code modifed to fit the use case. It's recommended to use a special shell script to built it in case you need to iterate over it. See below.
