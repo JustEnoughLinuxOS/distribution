@@ -47,6 +47,9 @@ The final command should produce a message indicating that Docker is properly in
 ### Manual Builds
 Manual builds (outside of Docker) are only recommended for developers with specific needs that cannot be met by the Docker approach.  The host configuration should match the Docker container as closely as possible, running Ubuntu 22.04 with all packages listed in the [Dockerfile](../Dockerfile).
 
+### Virtual Machines
+If you must use a virtual machine for your build platform, keep in mind that results vary.  There have been some anecdotes of success with VMware Workstation (Player and Pro) and failure with VirtualBox and WSL.  These reports are not definitive, but something to keep in mind if you must use a VM.
+
 ## JELOS Source Files
 After preparing the build machine, clone the project git repository onto it.
 
