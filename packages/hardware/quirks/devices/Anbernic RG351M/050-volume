@@ -1,0 +1,8 @@
+#!/bin/sh
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /storage/.config/profile.d/001-device_config
+
+### RG351P/M has a volume rocker, so the internal volume should always be 100%.
+amixer -c 0 set "Master" "${DEVICE_VOLUME}%"
