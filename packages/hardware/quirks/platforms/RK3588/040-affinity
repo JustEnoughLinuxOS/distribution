@@ -1,0 +1,9 @@
+#!/bin/sh
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2022-present Fewtarius
+# Copyright (C) 2022-present Brooksytech
+
+cat <<EOF >/storage/.config/profile.d/040-affinity
+SLOW_CORES="taskset -c 0-3"
+FAST_CORES="taskset -c 4-7"
+EOF

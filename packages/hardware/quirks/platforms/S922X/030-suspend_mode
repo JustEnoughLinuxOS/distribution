@@ -1,0 +1,18 @@
+#!/bin/sh
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2022-present Fewtarius
+
+### Sleep is currently broken, so we'll disable it.
+
+cat <<EOF >/storage/.config/sleep.conf.d/sleep.conf
+[Sleep]
+AllowSuspend=no
+SuspendState=freeze
+EOF
+
+### Ignore power button presses for now, until we can finish up fixing sleep.
+cat <<EOF >~/.config/logind.conf.d/login.conf
+[Login]
+HandlePowerKey=ignore
+HandleSuspendKey=ignore
+EOF

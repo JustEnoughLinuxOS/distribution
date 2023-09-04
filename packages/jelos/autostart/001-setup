@@ -12,10 +12,15 @@ fi
 
 if [ ! -d "/tmp/cache" ]
 then
-  mkdir /tmp/cache
+  mkdir -p /tmp/cache
 fi
 
 ln -sf /tmp/cache /storage/cache/.cores
+
+if [ ! -d "/storage/.config/profile.d" ]
+then
+  mkdir -p /storage/.config/profile.d
+fi
 
 ### Inspect the system config and revert
 ### to last known good state if corrupt.
