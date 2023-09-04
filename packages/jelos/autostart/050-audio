@@ -29,10 +29,10 @@ then
 fi
 
 VOLUME=$(get_setting audio.volume)
-if [[ -z ${VOLUME} ]]
+if [ -z ${VOLUME} ]
 then
   VOLUME="60"
-elif [[ -n "${DEVICE_VOLUME}" ]]
+elif [ -n "${DEVICE_VOLUME}" ]
 then
   VOLUME="${DEVICE_VOLUME}"
 fi
