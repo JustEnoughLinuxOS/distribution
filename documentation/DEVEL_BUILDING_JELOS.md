@@ -222,7 +222,7 @@ make docker-shell
 CLEAN_PACKAGES="linux ppsspp-sa" make AMD64
 exit
 ```
-The first and last lines should be omitted if building manually.
+The first and last lines should be omitted if building outside of Docker.
 
 ## Troubleshooting
 The very first build after a fresh checkout is the hardest.  Give yourself sufficient time to generate the first build and work through any failures before attempting to modify JELOS.
@@ -239,11 +239,12 @@ Before modifying JELOS, be sure you can successfully build the unmodified `main`
 When modifying individual packages, it's useful to regularly verify the build-ability of your changes.  Rather than rebuild an entire device image, it is much faster to simply rebuild a single package using the following commands:
 ```
 make docker-shell
-DEVICE=AMD64 ARCH=x86_64 ./scripts/clean busybox
-DEVICE=AMD64 ARCH=x86_64 ./scripts/build busybox
+export PROJECT=PC DEVICE=AMD64 ARCH=x86_64
+./scripts/clean busybox
+./scripts/build busybox
 exit
 ```
-The first and last lines should be omitted if building manually.
+The first and last lines should be omitted if building outside of Docker.  PROJECT is one of `Amlogic`, `PC`, or `Rockchip` (i.e. the subdirectories of the project directory).
 
 > Note: An EmulationStation package standalone build requires additional steps because its source code is located in a separate repository.  See instructions [here](https://github.com/JustEnoughLinuxOS/distribution/blob/main/packages/ui/emulationstation/package.mk).
 
@@ -285,7 +286,7 @@ make docker-shell
 vim/emacs/vscode/notepad.exe
 # Export the variables needed to complete your build.  We'll assume you are building AMD64; update the device to match your configuration.
 export OS_VERSION=$(date +%Y%m%d) BUILD_DATE=$(date)
-export PROJECT=PC ARCH=x86_64 DEVICE=AMD64
+export PROJECT=PC DEVICE=AMD64 ARCH=x86_64
 # Clean the package you are building.
 ./scripts/clean emulationstation
 # Build the package.
@@ -297,4 +298,4 @@ export PROJECT=PC ARCH=x86_64 DEVICE=AMD64
 
 exit
 ```
-The first and last lines should be omitted if building manually.
+The first and last lines should be omitted if building outside of Docker.
