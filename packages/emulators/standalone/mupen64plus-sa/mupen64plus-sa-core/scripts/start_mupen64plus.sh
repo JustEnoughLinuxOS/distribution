@@ -81,9 +81,9 @@ fi
 
 # Native Res Factor (Upscaling)
 if [ "${VPLUGIN}" = "gliden64" ]; then
-    sed -i "/UseNativeResolutionFactor/c\UseNativeResolutionFactor = ${IRES}" ${TMP}/mupen64plus.cfg
+    SET_PARAMS+=" --set Video-GLideN64[UseNativeResolutionFactor]=${IRES}"
 elif [ "${VPLUGIN}" = "rmg_parallel" ]; then
-    sed -i "/Upscaling/c\Upscaling = ${IRES}" ${TMP}/mupen64plus.cfg
+    SET_PARAMS+=" --set Video-Parallel[Upscaling]=${IRES}"
 fi
 
 # Input Config
@@ -96,7 +96,10 @@ else
 fi
 
 # Controller Pak
-sed -i "0,/plugin =/c\plugin = ${PAK}" ${TMP}/mupen64plus.cfg
+SET_PARAMS+=" --set Input-SDL-Control1[plugin]=${PAK}"
+SET_PARAMS+=" --set Input-SDL-Control2[plugin]=${PAK}"
+SET_PARAMS+=" --set Input-SDL-Control3[plugin]=${PAK}"
+SET_PARAMS+=" --set Input-SDL-Control4[plugin]=${PAK}"
 
 # Show FPS
 # Get configuration from system.cfg
