@@ -64,5 +64,9 @@ ln -sf /usr/share/locale /storage/.config/emulationstation/locale >>/var/log/con
 ### Add items below this line that are safe to remove after a period of time.
 ################################################################################
 
-### REMOVE AFTER THE UPDATE
-rm -f /storage/.config/profile.d/*
+### Added 090423 as a helper for the quirks refactor.
+if [ ! -d "/storage/.config/profile_backup" ]
+then
+  mkdir /storage/.config/profile_backup
+  mv /storage/.config/profile.d/* /storage/.config/profile_backup
+fi
