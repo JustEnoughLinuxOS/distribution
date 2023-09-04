@@ -64,14 +64,5 @@ ln -sf /usr/share/locale /storage/.config/emulationstation/locale >>/var/log/con
 ### Add items below this line that are safe to remove after a period of time.
 ################################################################################
 
-for COMPONENT in 001-deviceconfig \
-                 99-jslisten \
-                 999-export \
-                 98-controller \
-                 99-mixer \
-do
-  if [ -e "/storage/.config/profile.d/${COMPONENT}" ]
-  then
-    rm -f /storage/.config/profile.d/${COMPONENT}
-  fi
-done
+### REMOVE AFTER THE UPDATE
+rm -f /storage/.config/profile.d/*
