@@ -61,7 +61,7 @@ This configuration file contains basic information for JELOS that cannot current
 #### 002-fancontrol
 Not all devices have methods available to control the fan.  The following can help determine if yours can be controlled.
 * `find /sys/devices -name pwm*` and evaluate if fan control is available.
-* DEVICE_HAS_FAN=false if manual control cannot be enabled.
+* DEVICE_HAS_FAN="false" if manual control cannot be enabled.
 
 #### Additional Quirks
 Your device may need additional quirks to function correctly or for optimization. Ask in the JELOS discord if you need additional guidance.
