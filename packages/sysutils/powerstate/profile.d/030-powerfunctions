@@ -95,11 +95,13 @@ runtime_power_management() {
   if [ "${RTPM}" = "1" ] &&
      [ "${POWERSAVEENABLED}" = "1" ]
   then
-    find /sys/devices -type f -name control -print0 2>/dev/null | \
+    find /sys/devices/{platform,pci*} -type f -name control -print0 2>/dev/null | \
     while read -r -d '' DEVICE
     do
       echo ${1} >"${DEVICE}" 2>/dev/null
+      echo ${2} >"${DEVICE/control/autosuspend_delay_ms}" 2>/dev/null
     done
+
   fi
 }
 

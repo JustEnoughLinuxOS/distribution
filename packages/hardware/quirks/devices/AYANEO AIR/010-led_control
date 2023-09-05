@@ -3,5 +3,5 @@
 # Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
 
 cat <<EOF >/storage/.config/profile.d/010-led_control
-DEVICE_LED_CONTROL=true
+DEVICE_LED_CONTROL="true"
 EOF
