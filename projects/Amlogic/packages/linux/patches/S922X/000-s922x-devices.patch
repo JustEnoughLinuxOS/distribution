@@ -976,9 +976,9 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
 +                                 <0>,
 +                                 <&clkc CLKID_VCLK2_DIV1>,
 +                                 <&clkc CLKID_GP0_PLL>;
-+        assigned-clock-rates =   <330000000>,
++        assigned-clock-rates =   <344976000>,
 +                                 <0>,
-+                                 <330000000>,
++                                 <344976000>,
 +                                 <0>,
 +                                 <0>;
 +
@@ -1218,8 +1218,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-
 +		io-channels = <&saradc 0>, <&saradc 1>, <&saradc 2>, <&saradc 3>;
 +		io-channel-names = "key-RY", "key-RX", "key-LY", "key-LX";
 +		button-adc-scale = <4>;
-+		button-adc-deadzone = <600>;
-+		button-adc-fuzz = <32>;
++		button-adc-deadzone = <350>;
++		button-adc-fuzz = <64>;
 +		button-adc-flat = <32>;
 +		abs_x-p-tuning = <350>;
 +		abs_x-n-tuning = <350>;
@@ -1975,9 +1975,9 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-
 +                                 <0>,
 +                                 <&clkc CLKID_VCLK2_DIV1>,
 +                                 <&clkc CLKID_GP0_PLL>;
-+        assigned-clock-rates =   <330000000>,
++        assigned-clock-rates =   <344976000>,
 +                                 <0>,
-+                                 <330000000>,
++                                 <344976000>,
 +                                 <0>,
 +                                 <0>;
 +

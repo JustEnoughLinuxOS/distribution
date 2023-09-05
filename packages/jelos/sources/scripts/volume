@@ -6,7 +6,7 @@
 
 # Source minimal predefined functions and variables
 # to ensure as much performance as possible.
-. /etc/profile.d/02-distribution
+. /etc/profile.d/001-functions
 
 VOLUME=$(get_setting "audio.volume")
 MAX_VOLUME=100

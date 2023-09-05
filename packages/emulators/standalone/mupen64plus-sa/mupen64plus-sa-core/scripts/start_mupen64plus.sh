@@ -104,15 +104,15 @@ fi
 	if [ "${FPS}" = "true" ]; then
 		export LIBGL_SHOW_FPS="1"
 		export GALLIUM_HUD="cpu+GPU-load+fps"
-		# sed -i '/ShowFPS = (False|True)/c\ShowFPS = True' $TMP/mupen64plus.cfg
-		# sed -i '/ShowFPS = (0|1)/c\ShowFPS = 1' $TMP/mupen64plus.cfg
-		# sed -i '/show_fps/c\show_fps = 1' $TMP/mupen64plus.cfg
+		SET_PARAMS="$SET_PARAMS --set Video-GLideN64[ShowFPS]=True"
+		#SET_PARAMS="$SET_PARAMS --set Video-Glide64mk2[show_fps]=1"
+		#SET_PARAMS="$SET_PARAMS --set Video-Rice[ShowFPS]=True"
 	else
 		export LIBGL_SHOW_FPS="0"
 		export GALLIUM_HUD="off"
-		# sed -i '/ShowFPS = (False|True)/c\ShowFPS = False' $TMP/mupen64plus.cfg
-		# sed -i '/ShowFPS = (0|1)/c\ShowFPS = 0' $TMP/mupen64plus.cfg
-		# sed -i '/show_fps/c\show_fps = 0' $TMP/mupen64plus.cfg
+		SET_PARAMS="$SET_PARAMS --set Video-GLideN64[ShowFPS]=False"
+		#SET_PARAMS="$SET_PARAMS --set Video-Glide64mk2[show_fps]=0"
+		#SET_PARAMS="$SET_PARAMS --set Video-Rice[ShowFPS]=False"
 	fi
 
 # SIMPLECORE, decide which executable to use for simple64

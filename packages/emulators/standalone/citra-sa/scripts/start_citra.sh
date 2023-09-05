@@ -6,9 +6,19 @@
 . /etc/profile
 jslisten set "-9 citra"
 
+#load gptokeyb support files
+control-gen_init.sh
+source /storage/.config/gptokeyb/control.ini
+get_controls
+
 if [ ! -d "/storage/.config/citra-emu" ]; then
     mkdir -p "/storage/.config/citra-emu"
         cp -r "/usr/config/citra-emu" "/storage/.config/"
+fi
+
+#Make sure citra gptk config exists
+if [ ! -f "/storage/.config/citra-emu/citra.gptk" ]; then
+        cp -r "/usr/config/citra-emu/citra.gptk" "/storage/.config/citra-emu/citra.gptk"
 fi
 
 #Move sdmc & nand to 3ds roms folder
@@ -30,6 +40,7 @@ ln -sf /storage/roms/3ds/citrasa/nand /storage/.config/citra-emu/nand
    #Emulation Station Features
    GAME=$(echo "${1}"| sed "s#^/.*/##")
    CPU=$(get_setting cpu_speed 3ds "${GAME}")
+   EMOUSE=$(get_setting emulate_mouse 3ds "${GAME}")
    RENDERER=$(get_setting graphics_backend 3ds "${GAME}")
    RES=$(get_setting resolution_scale 3ds "${GAME}")
    ROTATE=$(get_setting rotate_screen 3ds "${GAME}")
@@ -135,4 +146,11 @@ rm -rf /storage/.local/share/citra-emu
 ln -sfv /storage/.config/citra-emu /storage/.local/share/citra-emu
 
 #Run Citra Emulator
+if [ "$EMOUSE" = "0" ]
+then
   /usr/bin/citra "${1}"
+else
+  $GPTOKEYB "citra" -c "/storage/.config/citra-emu/citra.gptk" &
+  /usr/bin/citra "${1}"
+  kill -9 $(pidof gptokeyb)
+fi

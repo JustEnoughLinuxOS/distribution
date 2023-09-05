@@ -1,0 +1,1 @@
+echo none > /sys/class/leds/blue\:/trigger

@@ -3,7 +3,7 @@
 # Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="retroarch"
-PKG_VERSION="0cc88ed0795eaa7099ab7f64a4cc4588211d2a54"
+PKG_VERSION="83ae1876b2748a098dbf5a767126aefe9accfa7c"
 PKG_SITE="https://github.com/libretro/RetroArch"
 PKG_URL="${PKG_SITE}.git"
 PKG_LICENSE="GPLv3"
@@ -31,9 +31,15 @@ PKG_CONFIGURE_OPTS_TARGET="   --disable-qt \
                               --enable-sdl2 \
                               --enable-ffmpeg"
 
+case ${PROJECT} in
+  Rockchip)
+    PKG_DEPENDS_TARGET+=" librga"
+  ;;
+esac
+
 case ${DEVICE} in
   RK3566-X55)
-    PKG_DEPENDS_TARGET+=" librga libgo2"
+    PKG_DEPENDS_TARGET+=" libgo2"
     PKG_CONFIGURE_OPTS_TARGET+=" --enable-odroidgo2"
   ;;
   *)

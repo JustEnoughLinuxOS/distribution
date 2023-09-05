@@ -9,7 +9,7 @@ RUN apt update  \
       libvlc-dev libvlccore-dev vlc-bin texinfo premake4 golang libssl-dev curl patchelf \
       xmlstarlet patchutils gawk gperf xfonts-utils default-jre python3 python-is-python3 xsltproc libjson-perl \
       lzop libncurses5-dev device-tree-compiler u-boot-tools rsync p7zip libparse-yapp-perl \
-      zip binutils-aarch64-linux-gnu dos2unix p7zip-full libvpx-dev bsdmainutils bc meson p7zip-full \
+      zip binutils-aarch64-linux-gnu p7zip-full libvpx-dev bsdmainutils bc meson p7zip-full \
       qemu-user-binfmt zstd parted imagemagick \
       && apt autoremove --purge -y \
       && apt clean -y \

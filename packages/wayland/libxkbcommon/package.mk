@@ -7,7 +7,7 @@ PKG_VERSION="1.5.0"
 PKG_LICENSE="MIT"
 PKG_SITE="https://xkbcommon.org"
 PKG_URL="https://xkbcommon.org/download/${PKG_NAME}-${PKG_VERSION}.tar.xz"
-PKG_DEPENDS_TARGET="toolchain xkeyboard-config libxml2 libXau libxcb"
+PKG_DEPENDS_TARGET="toolchain xkeyboard-config libxml2 libXau libxcb wayland"
 PKG_LONGDESC="xkbcommon is a library to handle keyboard descriptions."
 
 PKG_MESON_OPTS_TARGET="-Denable-docs=false"

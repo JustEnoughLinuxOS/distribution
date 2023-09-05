@@ -3,7 +3,7 @@
 # Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
 
 # Minimal OS variable loading for performance
-. /etc/profile.d/02-distribution
+. /etc/profile.d/001-functions
 
 if [ -d "/storage/cache/.cores" ]
 then
@@ -12,10 +12,15 @@ fi
 
 if [ ! -d "/tmp/cache" ]
 then
-  mkdir /tmp/cache
+  mkdir -p /tmp/cache
 fi
 
 ln -sf /tmp/cache /storage/cache/.cores
+
+if [ ! -d "/storage/.config/profile.d" ]
+then
+  mkdir -p /storage/.config/profile.d
+fi
 
 ### Inspect the system config and revert
 ### to last known good state if corrupt.

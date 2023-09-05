@@ -8,6 +8,9 @@
 ###
 ### Basic WIFI properties used across the tool.
 ###
+### Usage:
+###     wifictl command [ssid] [psk]
+###
 
 CFG_ROOT="/storage/.cache"
 WIFI_CFG="${CFG_ROOT}/connman/wifi.config"
@@ -45,7 +48,7 @@ then
   PSK="${GENERATED[0]: -10}"
 fi
 
-if [ ! -d "" ]
+if [ ! -d "${CFG_ROOT}/connman" ]
 then
   mkdir -p "${CFG_ROOT}/connman"
 fi
@@ -142,8 +145,15 @@ AutoConnect = true
 [service_${OS_NAME}_default]
 Type = wifi
 Name = ${SSID}
+EOF
+
+  # Only add a PSK if one is provided, in order to connect to
+  # open networks.
+  if [ ! -z "${PSK}" ] ; then
+    cat >> "${WIFI_CFG}" <<EOF
 Passphrase = ${PSK}
 EOF
+  fi
 
   if [ "${WIFI_TYPE}" = "1" ]
   then

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Minimal OS variable loading for performance
-. /etc/profile.d/02-distribution
+. /etc/profile.d/001-functions
 
 (
   if [ "$(get_setting bluetooth.enabled)" == "1" ]
