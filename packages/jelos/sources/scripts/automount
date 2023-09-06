@@ -34,6 +34,10 @@ mount_games() {
          [ -e "${1}" ] && \
          [ ! -e "/storage/.please_resize_me" ]
       then
+        ### Udevil shouldn't mount it this early, but just in-case.
+        umount /var/media/*
+        log $0 "FSCK ${1}"
+        fsck -Mly ${1}
         log $0 "Mounting ${1} on /storage/roms"
         /usr/bin/busybox mount ${1} /storage/roms >/dev/null 2>&1
         /usr/bin/systemd-tmpfiles --create /usr/lib/tmpfiles.d/JELOS-system-dirs.conf >/dev/null 2>&1
