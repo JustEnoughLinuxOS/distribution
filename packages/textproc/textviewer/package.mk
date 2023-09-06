@@ -6,7 +6,7 @@ PKG_VERSION="a01d9c23db92b0757b3e9b1ff11e040337d945c3"
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/lethal-guitar/TvTextViewer"
 PKG_URL="${PKG_SITE}.git"
-PKG_DEPENDS_TARGET="toolchain SDL2"
+PKG_DEPENDS_TARGET="toolchain dos2unix:host SDL2"
 PKG_SHORTDESC="Full-screen text viewer tool with gamepad controls"
 PKG_TOOLCHAIN="make"
 GET_HANDLER_SUPPORT="git"
@@ -20,7 +20,7 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
 fi
 
 pre_patch() {
-  find $(echo "${PKG_BUILD}" | cut -f1 -d\ ) -type f -exec dos2unix -q {} \;
+  find $(echo "${PKG_BUILD}" | cut -f1 -d\ ) -type f -exec ${TOOLCHAIN}/bin/dos2unix -q {} \;
 }
 
 pre_configure_target() {
