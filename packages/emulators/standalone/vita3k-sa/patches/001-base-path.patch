@@ -9,7 +9,7 @@ index 4439ad9b6e..c26b84ff82 100644
 -    root_paths.set_base_path(string_utils::utf_to_wide(SDL_GetBasePath()));
 -    root_paths.set_pref_path(string_utils::utf_to_wide(SDL_GetPrefPath(org_name, app_name)));
 +    root_paths.set_base_path(string_utils::utf_to_wide("/storage/.config/vita3k/"));
-+    root_paths.set_pref_path(string_utils::utf_to_wide("/storage/.config/vita3k/saves/"));
++    root_paths.set_pref_path(string_utils::utf_to_wide("/storage/psvita/vita3k/"));
  
      // Create default preference path for safety
      if (!fs::exists(root_paths.get_pref_path()))

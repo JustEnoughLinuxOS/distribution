@@ -42,4 +42,10 @@ makeinstall_target() {
   cp -rf ${PKG_BUILD}/external/bin/Vita3K ${INSTALL}/usr/bin/
   cp -rf ${PKG_BUILD}/external/bin/* ${INSTALL}/usr/config/vita3k/
   rm -rf ${INSTALL}/usr/config/vita3k/Vita3K
+  cp ${PKG_DIR}/scripts/* ${INSTALL}/usr/bin
+  chmod 0755 ${INSTALL}/usr/bin/*
+
+  mkdir -p ${INSTALL}/usr/config/vita3k/launcher
+  cp ${PKG_DIR}/scripts/start_vita3k.sh ${INSTALL}/usr/config/vita3k/launcher/Start\ Vita3K.sh
+  chmod 0755 ${INSTALL}/usr/config/vita3k/launcher/Start\ Vita3K.sh
 }
