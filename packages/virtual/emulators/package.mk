@@ -33,7 +33,7 @@ case "${DEVICE}" in
   AMD64)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="lutris-wine"
     PKG_EMUS+=" amiberry cemu-sa citra-sa dolphin-sa duckstation-sa melonds-sa minivmacsa mupen64plus-sa                  \
-               nanoboyadvance-sa pcsx2-sa primehack rpcs3-sa ryujinx-sa scummvmsa xemu-sa yuzu-sa"
+               nanoboyadvance-sa pcsx2-sa primehack rpcs3-sa ryujinx-sa scummvmsa vita3k-sa xemu-sa yuzu-sa"
     LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr citra-lr desmume-lr dolphin-lr flycast-lr lrps2-lr mame-lr minivmac-lr    \
                      play-lr"
   ;;
@@ -752,6 +752,14 @@ makeinstall_target() {
   add_emu_core pspminis ppsspp ppsspp-sa true
   add_emu_core pspminis retroarch ppsspp false
   add_es_system pspminis
+
+  ### Sony Playstation Vita
+  case ${TARGET_ARCH} in
+    x86_64)
+      add_emu_core psvita vita3k vita3k-sa true
+      add_es_system psvita
+    ;;
+  esac
 
   ### Nintendo Pokemon Mini
   add_emu_core pokemini retroarch pokemini true
