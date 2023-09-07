@@ -7,7 +7,7 @@ PKG_NAME="u-boot"
 PKG_ARCH="arm aarch64"
 PKG_SITE="https://github.com/JustEnoughLinuxOS"
 PKG_LICENSE="GPL"
-PKG_DEPENDS_TARGET="toolchain swig:host glibc rkbin openssl"
+PKG_DEPENDS_TARGET="toolchain Python3 swig:host glibc rkbin openssl"
 PKG_LONGDESC="Rockchip U-Boot is a bootloader for embedded systems."
 GET_HANDLER_SUPPORT="git"
 PKG_PATCH_DIRS+="${DEVICE}"
@@ -76,7 +76,7 @@ make_target() {
       gpt)
         echo "Building for GPT (${UBOOT_DTB})..."
         DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 make mrproper
-        DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 make tools ${UBOOT_CONFIG} BL31=${PKG_BL31} ${PKG_LOADER} u-boot.dtb u-boot.itb
+        DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 make ${UBOOT_CONFIG} BL31=${PKG_BL31} ${PKG_LOADER} u-boot.dtb u-boot.itb tools
         DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 _python_sysroot="${TOOLCHAIN}" _python_prefix=/ _python_exec_prefix=/ make HOSTCC="${HOST_CC}" HOSTLDFLAGS="-L${TOOLCHAIN}/lib" HOSTSTRIP="true" CONFIG_MKIMAGE_DTC_PATH="scripts/dtc/dtc"
       ;;
       msdos)
