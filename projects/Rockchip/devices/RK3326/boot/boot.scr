@@ -1,6 +1,6 @@
 odroidgoa-uboot-config
 
-setenv bootargs "boot=UUID=@BOOT_UUID@ disk=UUID=@DISK_UUID@ @EXTRA_CMDLINE@
+setenv bootargs "boot=UUID=@BOOT_UUID@ disk=UUID=@DISK_UUID@ @EXTRA_CMDLINE@"
 
 setenv loadaddr "@PKG_LOAD_ADDR@"
 setenv dtb_loadaddr "@DTB_LOAD_ADDR@"
