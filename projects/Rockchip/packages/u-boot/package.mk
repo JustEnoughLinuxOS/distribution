@@ -56,6 +56,7 @@ post_patch() {
 
 make_target() {
   setup_pkg_config_host
+  export PKG_RKBIN="$(get_build_dir rkbin)"
   . ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
   if [ -z "${UBOOT_CONFIG}" ]; then
     echo "UBOOT_CONFIG must be set to build an image"
@@ -76,9 +77,8 @@ make_target() {
     case ${PARTITION_TABLE} in
       gpt)
         echo "Building for GPT (${UBOOT_DTB})..."
-        export PKG_RKBIN="$(get_build_dir rkbin)"
         export BL31="${PKG_BL31}"
-        export ROCKCHIP_TPL="${PKG_RKBIN}/${PKG_DATAFILE}"
+        export ROCKCHIP_TPL="${PKG_DATAFILE}"
         DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 make mrproper
         DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 make ${UBOOT_CONFIG} ${PKG_LOADER} u-boot.dtb u-boot.img tools
         DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 _python_sysroot="${TOOLCHAIN}" _python_prefix=/ _python_exec_prefix=/ make HOSTCC="${HOST_CC}" HOSTLDFLAGS="-L${TOOLCHAIN}/lib" HOSTSTRIP="true" CONFIG_MKIMAGE_DTC_PATH="scripts/dtc/dtc"
