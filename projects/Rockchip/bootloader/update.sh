@@ -65,12 +65,12 @@ for all_conf in $CONFS; do
       -i $BOOT_ROOT/extlinux/${conf}
 done
 
-if [ -f $SYSTEM_ROOT/usr/share/bootloader/boot.ini ]; then
-  echo "Updating boot.ini..."
-  cp -p $SYSTEM_ROOT/usr/share/bootloader/boot.ini $BOOT_ROOT/boot.ini &>/dev/null
+if [ -f $SYSTEM_ROOT/usr/share/bootloader/boot.scr ]; then
+  echo "Updating boot.scr..."
+  cp -p $SYSTEM_ROOT/usr/share/bootloader/boot.scr $BOOT_ROOT/boot.scr &>/dev/null
     sed -e "s/@BOOT_UUID@/$BOOT_UUID/" \
       -e "s/@DISK_UUID@/$DISK_UUID/" \
-      -i $BOOT_ROOT/boot.ini
+      -i $BOOT_ROOT/boot.scr
 fi
 
 # update device tree

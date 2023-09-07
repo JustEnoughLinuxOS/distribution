@@ -86,39 +86,20 @@ fi
   ;;
 esac
 
-
+#Create boot.scr
 if [ "${BOOT_INI}" == true ]
 then
-  echo "boot: create boot.ini..."
-  cat >${INSTALL}/usr/share/bootloader/boot.ini <<EOF
-odroidgoa-uboot-config   
- 
-setenv bootargs "boot=UUID=@BOOT_UUID@ disk=UUID=@DISK_UUID@ ${EXTRA_CMDLINE}"
-
-setenv loadaddr "0x02000000"
-setenv dtb_loadaddr "0x01f00000"
- 
-load mmc 1:1 \${loadaddr} KERNEL
-
-if test \${hwrev} = 'v11'; then
-  if gpio input c22; then
-    load mmc 1:1 \${dtb_loadaddr} rk3326-odroid-go2-v11.dtb
-  else 
-    load mmc 1:1 \${dtb_loadaddr} rk3326-anbernic-rg351m.dtb
+  echo "image: create boot.scr..."
+  if [ -e "${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/boot/boot.scr" ]
+  then
+    cp ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/boot/boot.scr ${INSTALL}/usr/share/bootloader/boot.scr
+    sed -i "s~@EXTRA_CMDLINE@~${EXTRA_CMDLINE}~g" ${INSTALL}/usr/share/bootloader/boot.scr
+    sed -i "s~@PKG_LOAD_ADDR@~${PKG_LOAD_ADDR}~g" ${INSTALL}/usr/share/bootloader/boot.scr
+    sed -i "s~@DTB_LOAD_ADDR@~${DTB_LOAD_ADDR}~g" ${INSTALL}/usr/share/bootloader/boot.scr
+  else
+    echo "ERROR: No boot.scr found in ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/boot/."
+    exit 1
   fi
-elif test \${hwrev} = 'v10-go3'; then
-  load mmc 1:1 \${dtb_loadaddr} rk3326-odroid-go3.dtb
-elif test \${hwrev} = 'v10'; then
-  load mmc 1:1 \${dtb_loadaddr} rk3326-odroid-go2.dtb
-elif test \${hwrev} = 'rg351v'; then
-  load mmc 1:1 \${dtb_loadaddr} rk3326-anbernic-rg351v.dtb
-elif test \${hwrev} = 'rg351mp'; then
-  load mmc 1:1 \${dtb_loadaddr} rk3326-anbernic-rg351mp.dtb
-fi
-
-booti \${loadaddr} - \${dtb_loadaddr}
-
-EOF
 fi
 
 if [ "${EXT_LINUX_CONF}" == true ]
