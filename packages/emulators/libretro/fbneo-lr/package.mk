@@ -4,7 +4,7 @@
 # Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="fbneo-lr"
-PKG_VERSION="3a04b5738fb3b09b0a2bd3c82d66a126b62ed77c"
+PKG_VERSION="49fedb7560d3cd8bda029fc7066760c9fc595c65"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="Non-commercial"

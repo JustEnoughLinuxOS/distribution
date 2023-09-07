@@ -3,7 +3,7 @@
 # Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="retroarch"
-PKG_VERSION="83ae1876b2748a098dbf5a767126aefe9accfa7c"
+PKG_VERSION="f565879d5b01aa7cbb6f903eb2b7e0ff7855b949"
 PKG_SITE="https://github.com/libretro/RetroArch"
 PKG_URL="${PKG_SITE}.git"
 PKG_LICENSE="GPLv3"
