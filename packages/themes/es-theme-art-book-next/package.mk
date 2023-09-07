@@ -4,7 +4,7 @@
 # Copyright (C) 2021 Fewtarius
 
 PKG_NAME="es-theme-art-book-next"
-PKG_VERSION="f8c18db7824cabda52e762214e6b526835cf92dc"
+PKG_VERSION="0e6b7fe75bb83c367bfb57703a7390fcd529dd1e"
 PKG_ARCH="any"
 PKG_LICENSE="CUSTOM"
 PKG_SITE="https://github.com/anthonycaccese/art-book-next-jelos"
