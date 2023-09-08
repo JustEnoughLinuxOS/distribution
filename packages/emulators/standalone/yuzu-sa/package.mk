@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="yuzu-sa"
-PKG_VERSION="a8c4f01f6ca040672e85faaf42a8ef12d373dd65"
+PKG_VERSION="bbfd9eb428c7b1c811a3a041d62a7d4c94cafa07"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/yuzu-emu/yuzu"
