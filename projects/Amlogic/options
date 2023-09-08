@@ -64,4 +64,4 @@
     DRIVER_ADDONS_SUPPORT="no"
 
   # debug tty path
-    DEBUG_TTY="/dev/ttyS2"
+    DEBUG_TTY="/dev/ttyAML0"
