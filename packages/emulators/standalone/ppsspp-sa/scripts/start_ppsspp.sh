@@ -22,6 +22,7 @@ fi
   FSKIP=$(get_setting frame_skip psp "${GAME}")
   FPS=$(get_setting show_fps psp "${GAME}")
   IRES=$(get_setting internal_resolution psp "${GAME}")
+  GRENDERER=$(get_setting graphics_backend psp "${GAME}")
   SKIPB=$(get_setting skip_buffer_effects psp "${GAME}")
   VSYNC=$(get_setting vsync psp "${GAME}")
 
@@ -55,6 +56,19 @@ fi
                 sed -i '/AutoFrameSkip =/c\AutoFrameSkip = True' /storage/.config/ppsspp/PSP/SYSTEM/ppsspp.ini
         fi
 
+
+  #Graphics Backend
+        #Default to OpenGL / GLES if no option is set.
+        sed -i '/^GraphicsBackend =/c\GraphicsBackend = 0 (OPENGL)' /storage/.config/ppsspp/PSP/SYSTEM/ppsspp.ini
+
+        if [ "$GRENDERER" = "opengl" ]
+        then
+                sed -i '/^GraphicsBackend =/c\GraphicsBackend = 0 (OPENGL)' /storage/.config/ppsspp/PSP/SYSTEM/ppsspp.ini
+        fi
+        if [ "$GRENDERER" = "vulkan" ]
+        then
+                sed -i '/^GraphicsBackend =/c\GraphicsBackend = 3 (VULKAN)' /storage/.config/ppsspp/PSP/SYSTEM/ppsspp.ini
+        fi
 
   #Internal Resolution
         if [ "$IRES" = "1" ]
