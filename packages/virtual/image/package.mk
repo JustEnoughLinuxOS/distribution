@@ -19,7 +19,7 @@ PKG_UI="emulationstation es-themes jslisten textviewer"
 
 PKG_UI_TOOLS="fileman fbgrab"
 
-PKG_GRAPHICS="imagemagick splash"
+PKG_GRAPHICS="imagemagick"
 
 PKG_FONTS="terminus-font corefonts"
 
@@ -46,18 +46,6 @@ else
 
   # Sound support
   [ "${PIPEWIRE_SUPPORT}" = "yes" ] && PKG_DEPENDS_TARGET+=" alsa pulseaudio pipewire wireplumber"
-fi
-
-if [ "${DISPLAYSERVER}" = "wl" ]
-then
-  case ${DEVICE} in
-    S922X)
-      PKG_DEPENDS_TARGET+=" weston11"
-    ;;
-    *)
-      PKG_DEPENDS_TARGET+=" weston"
-    ;;
-  esac
 fi
 
 # Device is an emulation focused device

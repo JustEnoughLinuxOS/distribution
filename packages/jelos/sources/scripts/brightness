@@ -4,7 +4,7 @@
 
 ## Load minimal distribution settings to improve
 ## performance.
-. /etc/profile.d/02-distribution
+. /etc/profile.d/001-functions
 
 BRIGHTNESS_DEV="$(find /sys/class/backlight/*/ -name brightness -print -quit)"
 BRIGHTNESS_PATH="${BRIGHTNESS_DEV%/brightness}"

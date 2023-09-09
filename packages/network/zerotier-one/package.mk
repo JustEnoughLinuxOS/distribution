@@ -30,7 +30,5 @@ makeinstall_target() {
     install -Dm755 ${PKG_DIR}/scripts/zerotier-join.sh ${INSTALL}/usr/sbin/
     mkdir -p ${INSTALL}/usr/lib/systemd/system
     install -Dm644 ${PKG_DIR}/system.d/zerotier-one.service ${INSTALL}/usr/lib/systemd/system/
-    mkdir -p ${INSTALL}/etc/profile.d/
-    install -Dm755 ${PKG_DIR}/profile.d/95-zerotier ${INSTALL}/etc/profile.d/
 }
 

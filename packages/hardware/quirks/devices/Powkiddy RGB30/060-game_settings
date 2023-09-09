@@ -1,0 +1,12 @@
+#!/bin/sh
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2023-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile.d/001-functions
+
+SETTING=$(get_setting pico-8.integerscale)
+if [ -z ${SETTING} ]
+then
+  set_setting pico-8.integerscale 1
+fi
+

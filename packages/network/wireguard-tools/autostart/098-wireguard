@@ -3,7 +3,7 @@
 # Copyright (C) 2021-present kkoshelev (https://github.com/kkoshelev)
 
 # Minimal OS variable loading for performance
-. /etc/profile.d/02-distribution
+. /etc/profile.d/001-functions
 
 (
   if [ "$(get_setting wireguard.up)" == "1" ]

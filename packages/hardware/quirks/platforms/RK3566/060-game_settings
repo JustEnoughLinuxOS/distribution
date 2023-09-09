@@ -1,0 +1,16 @@
+#!/bin/sh
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2023-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile.d/001-functions
+
+### Set the default performance scaling mode for a few systems.
+for SYSTEM in dreamcast n64 psp saturn
+do
+  SETTING=$(get_setting ${SYSTEM})
+  if [ -z ${SETTING} ]
+  then
+    set_setting ${SYSTEM}.cpugovernor performance
+  fi
+done
+

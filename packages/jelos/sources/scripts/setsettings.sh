@@ -475,12 +475,25 @@ EOF
                         local TGBDUAL_CONF="${RETROARCH_PATH}/config/TGB Dual/TGB Dual.opt"
                         sed -i '/tgbdual_gblink_enable/d; \
                                 /tgbdual_single_screen_mp/d; \
-                                /tgbdual_switch_screens/d' "${TGBDUAL_CONF}"
+                                /tgbdual_switch_screens/d; \
+                                /tgbdual_audio_output/d' "${TGBDUAL_CONF}"
                         cat <<EOF >>"${TGBDUAL_CONF}"
 tgbdual_gblink_enable = "enabled"
 tgbdual_single_screen_mp = "player 1 only"
 tgbdual_switch_screens = "normal"
+tgbdual_audio_output = "Game Boy #1"
 EOF
+                        echo -n " --host"
+                    ;;
+                    genesis_plus_gx)
+                        log "Configure genesis_plus_gx 4 way play."
+                        add_setting "none" "input_libretro_device_p2" "1025"
+                        echo -n " --host"
+                    ;;
+
+                    snes9x)
+                        log "Configure snes9x multitap."
+                        add_setting "none" "input_libretro_device_p2" "257"
                         echo -n " --host"
                     ;;
                     *)
@@ -542,11 +555,13 @@ EOF
                             fi
                             sed -i '/tgbdual_gblink_enable/d; \
                                     /tgbdual_single_screen_mp/d; \
-                                    /tgbdual_switch_screens/d' "${TGBDUAL_CONF}"
+                                    /tgbdual_switch_screens/d; \
+                                    /tgbdual_audio_output/d' "${TGBDUAL_CONF}"
                             cat <<EOF >"${TGBDUAL_CONF}"
 tgbdual_gblink_enable = "enabled"
 tgbdual_single_screen_mp = "player ${PLAYER} only"
 tgbdual_switch_screens = "normal"
+tgbdual_audio_output = "Game Boy #${PLAYER}"
 EOF
                             add_setting "none" "netplay_mode" "true"
                             add_setting "none" "netplay_client_swap_input" "true"
@@ -686,16 +701,16 @@ function set_rewind() {
 
 function set_savestates() {
     local SAVESTATES="$(game_setting incrementalsavestates)"
+    local MAXINCREMENTALSAVES="$(game_setting maxincrementalsaves)"
     case ${SAVESTATES} in
         0|false|none)
             add_setting "none" "savestate_auto_index" "false"
-            add_setting "none" "savestate_max_keep" "50"
         ;;
         *)
             add_setting "none" "savestate_auto_index" "true"
-            add_setting "none" "savestate_max_keep" "0"
         ;;
     esac
+    add_setting "none" "savestate_max_keep" "${MAXINCREMENTALSAVES}"
 }
 
 function set_autosave() {
