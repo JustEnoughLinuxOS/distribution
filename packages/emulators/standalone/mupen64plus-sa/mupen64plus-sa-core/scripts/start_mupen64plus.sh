@@ -19,20 +19,21 @@ PAK=$(get_setting controller_pak n64 "${GAME}")
 CON=$(get_setting input_configuration n64 "${GAME}")
 VPLUGIN=$(get_setting video_plugin n64 "${GAME}")
 SHARE="/usr/local/share/mupen64plus"
-M64PCONF="/storage/.config/mupen64plus/mupen64plus.cfg"
-TMP="/tmp/mupen64plus"
 GAMEDATA="/storage/.config/mupen64plus"
+M64PCONF="${GAMEDATA}/mupen64plus.cfg"
+CUSTOMINP="${GAMEDATA}/custominput.ini"
+TMP="/tmp/mupen64plus"
 
 SCREENWIDTH=$(fbwidth)
 SCREENHEIGHT=$(fbheight)
 
-if [[ ! -f "${GAMEDATA}/custominput.ini" ]]; then
+if [[ ! -f "${CUSTOMINP}" ]]; then
     mkdir -p ${GAMEDATA}
-    cp ${SHARE}/default.ini ${GAMEDATA}/custominput.ini
+    cp ${SHARE}/default.ini ${CUSTOMINP}
 fi
 
 if [[ ! -f "${M64PCONF}" ]]; then
-    mkdir -p /storage/.config/mupen64plus
+    mkdir -p ${GAMEDATA}
     cp ${SHARE}/mupen64plus.cfg* ${M64PCONF}
 fi
 
@@ -41,7 +42,7 @@ mkdir -p ${TMP}
 
 # Input Config
 if [ "${CON}" = "custom" ]; then
-    cp ${GAMEDATA}/custominput.ini ${TMP}/InputAutoCfg.ini
+    cp ${CUSTOMINP} ${TMP}/InputAutoCfg.ini
 elif [ "${CON}" = "standard" ]; then
     cp ${SHARE}/default.ini ${TMP}/InputAutoCfg.ini
 else
