@@ -101,7 +101,7 @@ if [ "${ASPECT}" = "fullscreen" ]; then
     SET_PARAMS+=" --set Video-GLideN64[AspectRatio]=3"
     SET_PARAMS+=" --set Video-Glide64mk2[aspect]=2"
 else
-    if [ "${VPLUGIN}" = "rice" ]; then
+    if [ -z "${VPLUGIN}" ] || [ "${VPLUGIN}" = "rice" ]; then
         GAMEWIDTH=$(((SCREENHEIGHT * 4) / 3))
         SET_PARAMS+=" --set Video-General[ScreenWidth]=${GAMEWIDTH}"
     else
