@@ -6,31 +6,26 @@
 PKG_NAME="u-boot"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/hardkernel/"
-PKG_DEPENDS_TARGET="toolchain swig:host rkbin amlogic-boot-fip"
-PKG_LONGDESC="U-Boot is a bootloader for embedded systems."
-GET_HANDLER_SUPPORT="git"
+PKG_SITE="https://www.denx.de/wiki/U-Boot"
+PKG_DEPENDS_TARGET="toolchain swig:host amlogic-boot-fip"
+PKG_LONGDESC="Das U-Boot is a cross-platform bootloader for embedded systems."
+PKG_STAMP="${UBOOT_CONFIG}"
+
 PKG_PATCH_DIRS+="${DEVICE}"
 
 case ${DEVICE} in
   S922X)
-    PKG_URL="${PKG_SITE}/u-boot.git"
     PKG_VERSION="9235942906216dc529c1e96f67dd2364a94d0738"
-    PKG_GIT_CLONE_BRANCH="odroidgoU-v2015.01"
+    PKG_URL="https://github.com/hardkernel/${PKG_NAME}/archive/${PKG_VERSION}.tar.gz"
   ;;
   *)
-    PKG_URL="https://github.com/u-boot/u-boot.git"
     PKG_VERSION="10f8eec3e0f948005b208869a9ec26b1bf896f86"
+    PKG_URL="https://github.com/${PKG_NAME}/${PKG_NAME}/archive/${PKG_VERSION}.tar.gz"
   ;;
 esac
 
-PKG_IS_KERNEL_PKG="yes"
-PKG_STAMP="${UBOOT_CONFIG}"
-
-[ -n "${ATF_PLATFORM}" ] && PKG_DEPENDS_TARGET+=" atf"
-
-PKG_NEED_UNPACK="${PROJECT}_DIR/${PROJECT}/bootloader"
-[ -n "${DEVICE}" ] && PKG_NEED_UNPACK+=" ${PROJECT}_DIR/${PROJECT}/devices/${DEVICE}/bootloader"
+PKG_NEED_UNPACK="${PROJECT_DIR}/${PROJECT}/bootloader"
+[ -n "${DEVICE}" ] && PKG_NEED_UNPACK+=" ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/bootloader"
 
 post_patch() {
   if [ -n "${UBOOT_CONFIG}" ] && find_file_path bootloader/config; then
@@ -46,14 +41,8 @@ make_target() {
   if [ -z "${UBOOT_CONFIG}" ]; then
     echo "UBOOT_CONFIG must be set to build an image"
   else
-    if [ -e "${PROJECT_DIR}/projects/${PROJECT}/devices/${DEVICE}/u-boot/${UBOOT_CONFIG}" ]
-    then
-      cp ${PROJECT_DIR}/projects/${PROJECT}/devices/${DEVICE}/u-boot/${UBOOT_CONFIG} configs
-    fi
     [ "${BUILD_WITH_DEBUG}" = "yes" ] && PKG_DEBUG=1 || PKG_DEBUG=0
-    cd ${PKG_BUILD}
     echo "Building for MBR (${UBOOT_DTB})..."
-    [ -n "${ATF_PLATFORM}" ] &&  cp -av $(get_build_dir atf)/bl31.bin .
     DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm make mrproper
     DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm make ${UBOOT_CONFIG}
     DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm _python_sysroot="${TOOLCHAIN}" _python_prefix=/ _python_exec_prefix=/ make HOSTCC="$HOST_CC" HOSTLDFLAGS="-L${TOOLCHAIN}/lib" HOSTSTRIP="true" CONFIG_MKIMAGE_DTC_PATH="scripts/dtc/dtc"
