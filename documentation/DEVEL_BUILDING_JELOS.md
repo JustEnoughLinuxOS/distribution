@@ -295,3 +295,21 @@ export PROJECT=PC DEVICE=AMD64 ARCH=x86_64
 exit
 ```
 The first and last lines should be omitted if building outside of Docker.
+
+### Pushing Modified Images to a Device
+You can of course reflash the SD card with the modified image.
+
+Alternatively, you may install the image through the JELOS update mechanism, which retains your ES and emulator settings.  If the device is networked and reachable from the build machine, this can be done as follows.
+```
+# Replace with your device values
+HOST=192.168.0.123
+DEVICE=RK3566
+ARCH=aarch64
+
+# Assume today is the same UTC day that the image was built
+TIMESTAMP=$(date -u +%Y%m%d)
+
+SSH_OPTS="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+scp ${SSH_OPTS} ~/distribution/release/JELOS-${DEVICE}.${ARCH}-${TIMESTAMP}.tar root@${HOST}:~/.update && \
+    ssh ${SSH_OPTS} root@{HOST} reboot
+```
