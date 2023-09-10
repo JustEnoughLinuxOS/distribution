@@ -39,6 +39,15 @@ fi
 rm -rf ${TMP}
 mkdir -p ${TMP}
 
+# Input Config
+if [ "${CON}" = "custom" ]; then
+    cp ${GAMEDATA}/custominput.ini ${TMP}/InputAutoCfg.ini
+elif [ "${CON}" = "standard" ]; then
+    cp ${SHARE}/default.ini ${TMP}/InputAutoCfg.ini
+else
+    cp ${SHARE}/default.ini ${TMP}/InputAutoCfg.ini
+fi
+
 # Unzip or copy the rom to the working directory
 if [ $(echo $1 | grep -i .zip | wc -l) -eq 1 ]; then
     #unpack the zip file
@@ -50,9 +59,6 @@ else
 fi
 
 cp ${M64PCONF} ${TMP}
-SET_PARAMS=""
-SET_PARAMS+=" --set Core[SharedDataPath]=${TMP}"
-SET_PARAMS+=" --set Video-Rice[ResolutionWidth]=${SCREENWIDTH}"
 
 # Set the cores to use
 CORES=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
@@ -67,10 +73,29 @@ else
     unset EMUPERF
 fi
 
+SET_PARAMS=""
+SET_PARAMS+=" --set Core[SharedDataPath]=${TMP}"
+
+# SIMPLECORE, decide which executable to use for simple64
+if [ "${SIMPLECORE}" = "simple" ]; then
+    SIMPLESUFFIX="-simple"
+    SET_PARAMS+=" --set Core[R4300Emulator]=1"
+else
+    SIMPLESUFFIX=""
+    SET_PARAMS+=" --set Core[R4300Emulator]=2"
+fi
+
+# Controller Pak
+SET_PARAMS+=" --set Input-SDL-Control1[plugin]=${PAK}"
+SET_PARAMS+=" --set Input-SDL-Control2[plugin]=${PAK}"
+SET_PARAMS+=" --set Input-SDL-Control3[plugin]=${PAK}"
+SET_PARAMS+=" --set Input-SDL-Control4[plugin]=${PAK}"
+
 # Aspect Ratio
 SET_PARAMS+=" --set Video-General[ScreenHeight]=${SCREENHEIGHT}"
 SET_PARAMS+=" --set Video-Parallel[ScreenWidth]=${SCREENWIDTH}"
 SET_PARAMS+=" --set Video-Parallel[ScreenHeight]=${SCREENHEIGHT}"
+SET_PARAMS+=" --set Video-Rice[ResolutionWidth]=${SCREENWIDTH}"
 if [ "${ASPECT}" = "fullscreen" ]; then
     # TODO: Set aspect ratio to fullscreen
     SET_PARAMS+=" --set Video-General[ScreenWidth]=${SCREENWIDTH}"
@@ -94,21 +119,6 @@ fi
 SET_PARAMS+=" --set Video-GLideN64[UseNativeResolutionFactor]=${IRES}"
 SET_PARAMS+=" --set Video-Parallel[Upscaling]=${IRES}"
 
-# Input Config
-if [ "${CON}" = "custom" ]; then
-    cp ${GAMEDATA}/custominput.ini ${TMP}/InputAutoCfg.ini
-elif [ "${CON}" = "standard" ]; then
-    cp ${SHARE}/default.ini ${TMP}/InputAutoCfg.ini
-else
-    cp ${SHARE}/default.ini ${TMP}/InputAutoCfg.ini
-fi
-
-# Controller Pak
-SET_PARAMS+=" --set Input-SDL-Control1[plugin]=${PAK}"
-SET_PARAMS+=" --set Input-SDL-Control2[plugin]=${PAK}"
-SET_PARAMS+=" --set Input-SDL-Control3[plugin]=${PAK}"
-SET_PARAMS+=" --set Input-SDL-Control4[plugin]=${PAK}"
-
 # Show FPS
 # Get configuration from system.cfg
 if [ "${FPS}" = "true" ]; then
@@ -123,15 +133,6 @@ else
     SET_PARAMS+=" --set Video-GLideN64[ShowFPS]=False"
     #SET_PARAMS+=" --set Video-Glide64mk2[show_fps]=0"
     #SET_PARAMS+=" --set Video-Rice[ShowFPS]=False"
-fi
-
-# SIMPLECORE, decide which executable to use for simple64
-if [ "${SIMPLECORE}" = "simple" ]; then
-    SIMPLESUFFIX="-simple"
-    SET_PARAMS+=" --set Core[R4300Emulator]=1"
-else
-    SIMPLESUFFIX=""
-    SET_PARAMS+=" --set Core[R4300Emulator]=2"
 fi
 
 # Set the video plugin
