@@ -15,7 +15,7 @@ PKG_NEED_UNPACK="${LINUX_DEPENDS} $(get_pkg_directory busybox)"
 PKG_LONGDESC="This package builds the kernel for Amlogic devices"
 PKG_IS_KERNEL_PKG="yes"
 PKG_STAMP="${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD}"
-PKG_PATCH_DIRS+="${DEVICE}"
+PKG_PATCH_DIRS+="common ${DEVICE}"
 
 case ${DEVICE} in
   S922X*)
