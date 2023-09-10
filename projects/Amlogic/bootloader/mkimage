@@ -64,8 +64,13 @@ then
 
 mkdir -p "${LE_TMP}/extlinux"
 
-  echo "image: Set FTD to ${DEVICE_DTB}..."
-  FDTMODE="FDT /${DEVICE_DTB}.dtb"
+  if [ "${BOOT_FIP}" = "odroid-n2" ]; then
+    echo "image: Set FDTDIR to /..."
+    FDTMODE="FDTDIR /"
+  else
+    echo "image: Set FDT to ${DEVICE_DTB}..."
+    FDTMODE="FDT /${DEVICE_DTB}.dtb"
+  fi
 
 echo "image: Set extlinux.conf..."
 cat << EOF > "${LE_TMP}/extlinux/extlinux.conf"
