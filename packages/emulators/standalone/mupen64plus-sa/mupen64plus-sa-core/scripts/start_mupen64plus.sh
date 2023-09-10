@@ -8,7 +8,7 @@
 
 jslisten set "-9 mupen64plus"
 
-# Emulation Station Features
+# Emulation Station features
 GAME=$(echo "${1}"| sed "s#^/.*/##")
 SCREENWIDTH=$(fbwidth)
 SCREENHEIGHT=$(fbheight)
@@ -20,28 +20,30 @@ FPS=$(get_setting show_fps n64 "${GAME}")
 PAK=$(get_setting controller_pak n64 "${GAME}")
 CON=$(get_setting input_configuration n64 "${GAME}")
 VPLUGIN=$(get_setting video_plugin n64 "${GAME}")
+CORES=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
 
+# File locations
 SHARE="/usr/local/share/mupen64plus"
 GAMEDATA="/storage/.config/mupen64plus"
 M64PCONF="${GAMEDATA}/mupen64plus.cfg"
 CUSTOMINP="${GAMEDATA}/custominput.ini"
 TMP="/tmp/mupen64plus"
 
+# Clean and create directories
 rm -rf ${TMP}
 mkdir -p ${TMP}
 mkdir -p ${GAMEDATA}
 
+# Copy files to GAMEDATA
 if [[ ! -f "${M64PCONF}" ]]; then
     cp ${SHARE}/mupen64plus.cfg* ${M64PCONF}
 fi
-
 if [[ ! -f "${CUSTOMINP}" ]]; then
     cp ${SHARE}/default.ini ${CUSTOMINP}
 fi
 
+# Copy files to TMP
 cp ${M64PCONF} ${TMP}
-
-# Input Config
 if [ "${CON}" = "custom" ]; then
     cp ${CUSTOMINP} ${TMP}/InputAutoCfg.ini
 elif [ "${CON}" = "standard" ]; then
@@ -49,10 +51,8 @@ elif [ "${CON}" = "standard" ]; then
 else
     cp ${SHARE}/default.ini ${TMP}/InputAutoCfg.ini
 fi
-
-# Unzip or copy the rom to the working directory
 if [ $(echo $1 | grep -i .zip | wc -l) -eq 1 ]; then
-    #unpack the zip file
+    # Unzip the game ROM if needed
     unzip -q -o "$1" -d ${TMP}
     ROM=$(unzip -Zl -1 "$1")
 else
@@ -60,23 +60,20 @@ else
     ROM="${GAME}"
 fi
 
-# Set the cores to use
-CORES=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
-if [ "${CORES}" = "little" ]
-then
+# CPU core settings
+if [ "${CORES}" = "little" ]; then
     EMUPERF="${SLOW_CORES}"
-elif [ "${CORES}" = "big" ]
-then
+elif [ "${CORES}" = "big" ]; then
     EMUPERF="${FAST_CORES}"
 else
-    ### All..
     unset EMUPERF
 fi
 
+# Configure Mupen64Plus-SA parameters
 SET_PARAMS=""
-SET_PARAMS+=" --set Core[SharedDataPath]=${TMP}"
 
-# SIMPLECORE, decide which executable to use for simple64
+# Emulator core settings
+SET_PARAMS+=" --set Core[SharedDataPath]=${TMP}"
 if [ "${SIMPLECORE}" = "simple" ]; then
     SIMPLESUFFIX="-simple"
     SET_PARAMS+=" --set Core[R4300Emulator]=1"
@@ -85,25 +82,25 @@ else
     SET_PARAMS+=" --set Core[R4300Emulator]=2"
 fi
 
-# Controller Pak
+# Input settings
 SET_PARAMS+=" --set Input-SDL-Control1[plugin]=${PAK}"
 SET_PARAMS+=" --set Input-SDL-Control2[plugin]=${PAK}"
 SET_PARAMS+=" --set Input-SDL-Control3[plugin]=${PAK}"
 SET_PARAMS+=" --set Input-SDL-Control4[plugin]=${PAK}"
 
-# Aspect Ratio
+# Video settings
 SET_PARAMS+=" --set Video-General[ScreenHeight]=${SCREENHEIGHT}"
 SET_PARAMS+=" --set Video-Parallel[ScreenWidth]=${SCREENWIDTH}"
 SET_PARAMS+=" --set Video-Parallel[ScreenHeight]=${SCREENHEIGHT}"
+SET_PARAMS+=" --set Video-Parallel[Upscaling]=${IRES}"
+SET_PARAMS+=" --set Video-GLideN64[UseNativeResolutionFactor]=${IRES}"
 SET_PARAMS+=" --set Video-Rice[ResolutionWidth]=${SCREENWIDTH}"
 if [ "${ASPECT}" = "fullscreen" ]; then
-    # TODO: Set aspect ratio to fullscreen
     SET_PARAMS+=" --set Video-General[ScreenWidth]=${SCREENWIDTH}"
-    SET_PARAMS+=" --set Video-Glide64mk2[aspect]=2"
-    SET_PARAMS+=" --set Video-GLideN64[AspectRatio]=3"
     SET_PARAMS+=" --set Video-Parallel[WidescreenStretch]=False"
+    SET_PARAMS+=" --set Video-GLideN64[AspectRatio]=3"
+    SET_PARAMS+=" --set Video-Glide64mk2[aspect]=2"
 else
-    # TODO: Set aspect ratio to 4:3
     if [ "${VPLUGIN}" = "rice" ]; then
         GAMEWIDTH=$(((SCREENHEIGHT * 4) / 3))
         SET_PARAMS+=" --set Video-General[ScreenWidth]=${GAMEWIDTH}"
@@ -111,16 +108,9 @@ else
         SET_PARAMS+=" --set Video-General[ScreenWidth]=${SCREENWIDTH}"
     fi
     SET_PARAMS+=" --set Video-Parallel[WidescreenStretch]=False"
-    SET_PARAMS+=" --set Video-Glide64mk2[aspect]=0"
     SET_PARAMS+=" --set Video-GLideN64[AspectRatio]=1"
+    SET_PARAMS+=" --set Video-Glide64mk2[aspect]=0"
 fi
-
-# Native Res Factor (Upscaling)
-SET_PARAMS+=" --set Video-GLideN64[UseNativeResolutionFactor]=${IRES}"
-SET_PARAMS+=" --set Video-Parallel[Upscaling]=${IRES}"
-
-# Show FPS
-# Get configuration from system.cfg
 if [ "${FPS}" = "true" ]; then
     export LIBGL_SHOW_FPS="1"
     export GALLIUM_HUD="cpu+GPU-load+fps"
@@ -172,6 +162,7 @@ esac
 SET_PARAMS+=" --input mupen64plus-input-sdl${SIMPLESUFFIX}.so"
 SET_PARAMS+=" --audio mupen64plus-audio-sdl${SIMPLESUFFIX}.so"
 
+# Echo the command line options to the log for debugging
 echo ${SET_PARAMS}
 
 ${EMUPERF} /usr/local/bin/mupen64plus${SIMPLESUFFIX} --configdir ${TMP} ${SET_PARAMS} "${TMP}/${ROM}"
