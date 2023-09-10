@@ -1,0 +1,11 @@
+--- a/board/amlogic/odroid-n2/odroid-n2.c
++++ b/board/amlogic/odroid-n2/odroid-n2.c
+@@ -63,7 +63,7 @@
+ {
+ 	char s[128];
+ 
+-	snprintf(s, sizeof(s), "amlogic/meson-%s-odroid-%s.dtb", soc, variant);
++	snprintf(s, sizeof(s), "meson-%s-odroid-%s.dtb", soc, variant);
+ 	env_set("fdtfile", s);
+ }
+ 
