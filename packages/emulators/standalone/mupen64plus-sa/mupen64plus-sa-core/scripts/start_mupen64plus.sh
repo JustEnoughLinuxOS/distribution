@@ -68,12 +68,12 @@ else
 fi
 
 # Aspect Ratio
+SET_PARAMS+=" --set Video-General[ScreenHeight]=${SCREENHEIGHT}"
+SET_PARAMS+=" --set Video-Parallel[ScreenWidth]=${SCREENWIDTH}"
+SET_PARAMS+=" --set Video-Parallel[ScreenHeight]=${SCREENHEIGHT}"
 if [ "${ASPECT}" = "fullscreen" ]; then
     # TODO: Set aspect ratio to fullscreen
     SET_PARAMS+=" --set Video-General[ScreenWidth]=${SCREENWIDTH}"
-    SET_PARAMS+=" --set Video-General[ScreenHeight]=${SCREENHEIGHT}"
-    SET_PARAMS+=" --set Video-Parallel[ScreenWidth]=${SCREENWIDTH}"
-    SET_PARAMS+=" --set Video-Parallel[ScreenHeight]=${SCREENHEIGHT}"
     SET_PARAMS+=" --set Video-Glide64mk2[aspect]=2"
     SET_PARAMS+=" --set Video-GLideN64[AspectRatio]=3"
     SET_PARAMS+=" --set Video-Parallel[WidescreenStretch]=False"
@@ -82,24 +82,17 @@ else
     if [ "${VPLUGIN}" = "rice" ]; then
         GAMEWIDTH=$(((SCREENHEIGHT * 4) / 3))
         SET_PARAMS+=" --set Video-General[ScreenWidth]=${GAMEWIDTH}"
-        SET_PARAMS+=" --set Video-General[ScreenHeight]=${SCREENHEIGHT}"
     else
         SET_PARAMS+=" --set Video-General[ScreenWidth]=${SCREENWIDTH}"
-        SET_PARAMS+=" --set Video-General[ScreenHeight]=${SCREENHEIGHT}"
-        SET_PARAMS+=" --set Video-Parallel[ScreenWidth]=${SCREENWIDTH}"
-        SET_PARAMS+=" --set Video-Parallel[ScreenHeight]=${SCREENHEIGHT}"
-        SET_PARAMS+=" --set Video-Parallel[WidescreenStretch]=False"
-        SET_PARAMS+=" --set Video-Glide64mk2[aspect]=0"
-        SET_PARAMS+=" --set Video-GLideN64[AspectRatio]=1"
     fi
+    SET_PARAMS+=" --set Video-Parallel[WidescreenStretch]=False"
+    SET_PARAMS+=" --set Video-Glide64mk2[aspect]=0"
+    SET_PARAMS+=" --set Video-GLideN64[AspectRatio]=1"
 fi
 
 # Native Res Factor (Upscaling)
-if [ "${VPLUGIN}" = "gliden64" ]; then
-    SET_PARAMS+=" --set Video-GLideN64[UseNativeResolutionFactor]=${IRES}"
-elif [ "${VPLUGIN}" = "rmg_parallel" ]; then
-    SET_PARAMS+=" --set Video-Parallel[Upscaling]=${IRES}"
-fi
+SET_PARAMS+=" --set Video-GLideN64[UseNativeResolutionFactor]=${IRES}"
+SET_PARAMS+=" --set Video-Parallel[Upscaling]=${IRES}"
 
 # Input Config
 if [ "${CON}" = "custom" ]; then
