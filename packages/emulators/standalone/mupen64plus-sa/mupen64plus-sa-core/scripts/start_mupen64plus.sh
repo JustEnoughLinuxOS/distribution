@@ -50,7 +50,9 @@ else
 fi
 
 cp ${M64PCONF} ${TMP}
-SET_PARAMS="--set Core[SharedDataPath]=${TMP} --set Video-Rice[ResolutionWidth]=${SCREENWIDTH}"
+SET_PARAMS=""
+SET_PARAMS+=" --set Core[SharedDataPath]=${TMP}"
+SET_PARAMS+=" --set Video-Rice[ResolutionWidth]=${SCREENWIDTH}"
 
 # Set the cores to use
 CORES=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
@@ -68,14 +70,27 @@ fi
 # Aspect Ratio
 if [ "${ASPECT}" = "fullscreen" ]; then
     # TODO: Set aspect ratio to fullscreen
-    SET_PARAMS+=" --set Video-General[ScreenWidth]=${SCREENWIDTH} --set Video-General[ScreenHeight]=${SCREENHEIGHT} --set Video-Parallel[ScreenWidth]=${SCREENWIDTH} --set Video-Parallel[ScreenHeight]=${SCREENHEIGHT} --set Video-Glide64mk2[aspect]=2 --set Video-GLideN64[AspectRatio]=3 --set Video-Parallel[WidescreenStretch]=False"
+    SET_PARAMS+=" --set Video-General[ScreenWidth]=${SCREENWIDTH}"
+    SET_PARAMS+=" --set Video-General[ScreenHeight]=${SCREENHEIGHT}"
+    SET_PARAMS+=" --set Video-Parallel[ScreenWidth]=${SCREENWIDTH}"
+    SET_PARAMS+=" --set Video-Parallel[ScreenHeight]=${SCREENHEIGHT}"
+    SET_PARAMS+=" --set Video-Glide64mk2[aspect]=2"
+    SET_PARAMS+=" --set Video-GLideN64[AspectRatio]=3"
+    SET_PARAMS+=" --set Video-Parallel[WidescreenStretch]=False"
 else
     # TODO: Set aspect ratio to 4:3
     if [ "${VPLUGIN}" = "rice" ]; then
         GAMEWIDTH=$(((SCREENHEIGHT * 4) / 3))
-        SET_PARAMS+=" --set Video-General[ScreenWidth]=${GAMEWIDTH} --set Video-General[ScreenHeight]=${SCREENHEIGHT}"
+        SET_PARAMS+=" --set Video-General[ScreenWidth]=${GAMEWIDTH}"
+        SET_PARAMS+=" --set Video-General[ScreenHeight]=${SCREENHEIGHT}"
     else
-        SET_PARAMS+=" --set Video-General[ScreenWidth]=${SCREENWIDTH} --set Video-General[ScreenHeight]=${SCREENHEIGHT} --set Video-Parallel[ScreenWidth]=${SCREENWIDTH} --set Video-Parallel[ScreenHeight]=${SCREENHEIGHT} --set Video-Parallel[WidescreenStretch]=False --set Video-Glide64mk2[aspect]=0 --set Video-GLideN64[AspectRatio]=1"
+        SET_PARAMS+=" --set Video-General[ScreenWidth]=${SCREENWIDTH}"
+        SET_PARAMS+=" --set Video-General[ScreenHeight]=${SCREENHEIGHT}"
+        SET_PARAMS+=" --set Video-Parallel[ScreenWidth]=${SCREENWIDTH}"
+        SET_PARAMS+=" --set Video-Parallel[ScreenHeight]=${SCREENHEIGHT}"
+        SET_PARAMS+=" --set Video-Parallel[WidescreenStretch]=False"
+        SET_PARAMS+=" --set Video-Glide64mk2[aspect]=0"
+        SET_PARAMS+=" --set Video-GLideN64[AspectRatio]=1"
     fi
 fi
 
