@@ -277,23 +277,19 @@ git diff >../../packages/ui/emulationstation/patches/005-mypatch.patch
 
 After the patch is generated, rebuild an individual package by following the section above. The build system will automatically pick up patch files from the `patches` directory. For testing, one can either copy the built binary to the console or burn the whole image on SD card.
 
-### Building an Image with Your Patch
+### Building a Modified Image
 If you already have a build for your device made using the above process, it's simple to shortcut the build process and create an image to test your changes quickly using the process below.
 ```
 make docker-shell
 
 # Update the package version for a new package, or apply your patch as above.
 vim/emacs/vscode/notepad.exe
-# Export the variables needed to complete your build.  We'll assume you are building AMD64; update the device to match your configuration.
+
 export OS_VERSION=$(date +%Y%m%d) BUILD_DATE=$(date)
 export PROJECT=PC DEVICE=AMD64 ARCH=x86_64
-# Clean the package you are building.
 ./scripts/clean emulationstation
-# Build the package.
 ./scripts/build emulationstation
-# Install the package into the build root.
 ./scripts/install emulationstation
-# Generate an image with your new package.
 ./scripts/image mkimage
 
 exit
