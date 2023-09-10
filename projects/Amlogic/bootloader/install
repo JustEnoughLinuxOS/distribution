@@ -11,7 +11,7 @@ case "${DEVICE}" in
   ;;
   *)
     echo "uboot: encrypting u-boot.bin with fip..."
-    cp -av build/u-boot.bin ${FIP_DIR}/
+    cp -av u-boot.bin ${FIP_DIR}/
     cd ${FIP_DIR}
     ./build-fip.sh ${BOOT_FIP} u-boot.bin ${INSTALL}/usr/share/bootloader/
   ;;
