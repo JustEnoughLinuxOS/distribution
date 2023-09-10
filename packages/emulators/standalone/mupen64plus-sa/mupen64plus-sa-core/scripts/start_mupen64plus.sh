@@ -10,6 +10,8 @@ jslisten set "-9 mupen64plus"
 
 # Emulation Station Features
 GAME=$(echo "${1}"| sed "s#^/.*/##")
+SCREENWIDTH=$(fbwidth)
+SCREENHEIGHT=$(fbheight)
 ASPECT=$(get_setting game_aspect_ratio n64 "${GAME}")
 IRES=$(get_setting internal_resolution n64 "${GAME}")
 RSP=$(get_setting rsp_plugin n64 "${GAME}")
@@ -18,27 +20,26 @@ FPS=$(get_setting show_fps n64 "${GAME}")
 PAK=$(get_setting controller_pak n64 "${GAME}")
 CON=$(get_setting input_configuration n64 "${GAME}")
 VPLUGIN=$(get_setting video_plugin n64 "${GAME}")
+
 SHARE="/usr/local/share/mupen64plus"
 GAMEDATA="/storage/.config/mupen64plus"
 M64PCONF="${GAMEDATA}/mupen64plus.cfg"
 CUSTOMINP="${GAMEDATA}/custominput.ini"
 TMP="/tmp/mupen64plus"
 
-SCREENWIDTH=$(fbwidth)
-SCREENHEIGHT=$(fbheight)
-
-if [[ ! -f "${CUSTOMINP}" ]]; then
-    mkdir -p ${GAMEDATA}
-    cp ${SHARE}/default.ini ${CUSTOMINP}
-fi
+rm -rf ${TMP}
+mkdir -p ${TMP}
+mkdir -p ${GAMEDATA}
 
 if [[ ! -f "${M64PCONF}" ]]; then
-    mkdir -p ${GAMEDATA}
     cp ${SHARE}/mupen64plus.cfg* ${M64PCONF}
 fi
 
-rm -rf ${TMP}
-mkdir -p ${TMP}
+if [[ ! -f "${CUSTOMINP}" ]]; then
+    cp ${SHARE}/default.ini ${CUSTOMINP}
+fi
+
+cp ${M64PCONF} ${TMP}
 
 # Input Config
 if [ "${CON}" = "custom" ]; then
@@ -58,8 +59,6 @@ else
     cp "$1" ${TMP}
     ROM="${GAME}"
 fi
-
-cp ${M64PCONF} ${TMP}
 
 # Set the cores to use
 CORES=$(get_setting "cores" "${PLATFORM}" "${ROMNAME##*/}")
