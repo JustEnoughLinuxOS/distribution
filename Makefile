@@ -43,6 +43,11 @@ S922X:
 	PROJECT=Amlogic DEVICE=S922X ARCH=arm ./scripts/build_distro
 	PROJECT=Amlogic DEVICE=S922X ARCH=aarch64 ./scripts/build_distro
 
+S922X-N2:
+	DEVICE_ROOT=S922X PROJECT=Amlogic DEVICE=S922X-N2 ARCH=arm ./scripts/build_distro
+	DEVICE_ROOT=S922X PROJECT=Amlogic DEVICE=S922X-N2 ARCH=aarch64 ./scripts/build_distro
+	unset DEVICE_ROOT
+
 RK3566:
 	DEVICE_ROOT=RK3566 PROJECT=Rockchip DEVICE=RK3566 ARCH=arm ./scripts/build_distro
 	DEVICE_ROOT=RK3566 PROJECT=Rockchip DEVICE=RK3566 ARCH=aarch64 ./scripts/build_distro
