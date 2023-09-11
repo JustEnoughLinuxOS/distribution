@@ -11,7 +11,7 @@ PKG_LONGDESC="OpenGL 2.x functionality for GLES2.0 accelerated Hardware"
 PKG_TOOLCHAIN="cmake-make"
 
 case ${DEVICE} in
-  S922X)
+  S922X*)
     PKG_SITE="https://github.com/JohnnyonFlame/gl4es"
     PKG_URL="${PKG_SITE}.git"
     PKG_VERSION="17a7876ae76eb7b50ff375d80abd35018e58a50d"

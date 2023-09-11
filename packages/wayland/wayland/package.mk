@@ -9,7 +9,7 @@ PKG_DEPENDS_TARGET="toolchain wayland:host libffi expat libxml2"
 PKG_LONGDESC="a display server protocol"
 
 case ${DEVICE} in
-  S922X)
+  S922X*)
     PKG_VERSION="1.21.0"
     PKG_SHA256="6dc64d7fc16837a693a51cfdb2e568db538bfdc9f457d4656285bb9594ef11ac"
   ;;

@@ -178,7 +178,7 @@ makeinstall_target() {
   add_emu_core arcade retroarch fbalpha2012 false
   add_emu_core arcade retroarch fbalpha2019 false
   case ${DEVICE} in
-    AMD64|RK3588|S922X|RK3399)
+    AMD64|RK3588|S922X*|RK3399)
       add_emu_core arcade retroarch mame false
     ;;
   esac
@@ -222,7 +222,7 @@ makeinstall_target() {
       add_emu_core atomiswave flycast flycast-sa false
       add_emu_core atomiswave retroarch flycast true
     ;;
-    S922X)
+    S922X*)
       add_emu_core atomiswave retroarch flycast2021 false
       add_emu_core atomiswave flycast flycast-sa true
       add_emu_core atomiswave retroarch flycast false
@@ -324,7 +324,7 @@ makeinstall_target() {
       add_emu_core dreamcast flycast flycast-sa false
       add_emu_core dreamcast retroarch flycast true
     ;;
-    S922X)
+    S922X*)
       add_emu_core dreamcast retroarch flycast2021 false
       add_emu_core dreamcast flycast flycast-sa true
       add_emu_core dreamcast retroarch flycast false
@@ -570,7 +570,7 @@ makeinstall_target() {
       add_emu_core naomi flycast flycast-sa false
       add_emu_core naomi retroarch flycast true
     ;;
-    S922X)
+    S922X*)
       add_emu_core naomi retroarch flycast2021 false
       add_emu_core naomi flycast flycast-sa true
       add_emu_core naomi retroarch flycast false
@@ -725,7 +725,7 @@ makeinstall_target() {
       add_emu_core ps2 pcsx2 pcsx2-sa false
       add_es_system ps2
     ;;
-    RK3588|S922X|RK3399)
+    RK3588|S922X*|RK3399)
       add_emu_core ps2 aethersx2 aethersx2-sa true
       add_es_system ps2
     ;;

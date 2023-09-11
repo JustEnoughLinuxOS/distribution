@@ -14,7 +14,7 @@ PKG_LONGDESC="Mupen64Plus Standalone Console"
 PKG_TOOLCHAIN="manual"
 
 case ${DEVICE} in
-  AMD64|RK3588|S922X|RK3399)
+  AMD64|RK3588|S922X*|RK3399)
     PKG_DEPENDS_TARGET+=" mupen64plus-sa-simplecore"
   ;;
 esac
@@ -46,7 +46,7 @@ make_target() {
   cp ${PKG_BUILD}/projects/unix/mupen64plus ${PKG_BUILD}/projects/unix/mupen64plus-base
 
   case ${DEVICE} in
-    AMD64|RK3588|S922X|RK3399)
+    AMD64|RK3588|S922X*|RK3399)
       export APIDIR=$(get_build_dir mupen64plus-sa-simplecore)/src/api
       export CFLAGS="${CFLAGS} -DSIMPLECORE"
       make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
