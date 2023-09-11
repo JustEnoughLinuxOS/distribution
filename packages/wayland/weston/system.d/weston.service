@@ -1,7 +1,7 @@
 [Unit]
 Description=Weston Launcher
 Before=graphical.target
-After=multi-user.target
+After=multi-user.target jelos-automount.service
 ConditionKernelCommandLine=!installer
 
 [Service]
