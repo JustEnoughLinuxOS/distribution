@@ -3044,34 +3044,34 @@ diff -rupN linux.orig/drivers/input/joystick/odroid-gou-joypad.c linux/drivers/i
 +	int nbtn;
 +
 +	for (nbtn = 0; nbtn < joypad->chan_count; nbtn++) {
-+		struct bt_adc *adc = &joypad->adcs[nbtn];
++		struct bt_adc *adcx = &joypad->adcs[nbtn];
 +
-+		adc->value = joypad_adc_read(joypad, adc);
-+		if (!adc->value) {
++		adcx->value = joypad_adc_read(joypad, adcx);
++		if (!adcx->value) {
 +			dev_err(joypad->dev, "%s : saradc channels[%d]!\n",
 +				__func__, nbtn);
 +			continue;
 +		}
-+		adc->value = adc->value - adc->cal;
++		adcx->value = adcx->value - adcx->cal;
 +
 +		/* Joystick Deadzone check */
 +		if (joypad->bt_adc_deadzone) {
-+			if (abs(adc->value) < joypad->bt_adc_deadzone)
-+				adc->value = 0;
++			if (abs(adcx->value) < joypad->bt_adc_deadzone)
++				adcx->value = 0;
 +		}
 +
 +		/* adc data tuning */
-+		if (adc->tuning_n && adc->value < 0)
-+			adc->value = ADC_DATA_TUNING(adc->value, adc->tuning_n);
-+		if (adc->tuning_p && adc->value > 0)
-+			adc->value = ADC_DATA_TUNING(adc->value, adc->tuning_p);
++		if (adcx->tuning_n && adcx->value < 0)
++			adcx->value = ADC_DATA_TUNING(adcx->value, adcx->tuning_n);
++		if (adcx->tuning_p && adcx->value > 0)
++			adcx->value = ADC_DATA_TUNING(adcx->value, adcx->tuning_p);
 +
-+		adc->value = adc->value > adc->max ? adc->max : adc->value;
-+		adc->value = adc->value < adc->min ? adc->min : adc->value;
++		adcx->value = adcx->value > adcx->max ? adcx->max : adcx->value;
++		adcx->value = adcx->value < adcx->min ? adcx->min : adcx->value;
 +
 +		input_report_abs(poll_dev->input,
-+			adc->report_type,
-+			adc->invert ? adc->value * (-1) : adc->value);
++			adcx->report_type,
++			adcx->invert ? adcx->value * (-1) : adcx->value);
 +	}
 +	input_sync(poll_dev->input);
 +}
