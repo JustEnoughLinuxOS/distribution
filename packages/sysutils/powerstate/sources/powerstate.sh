@@ -38,6 +38,7 @@ do
           pcie_aspm_policy powersave
           wake_events enabled
           runtime_power_management auto 5
+          scsi_link_power_management med_power_with_dipm
           /usr/bin/wifictl setpowersave
 
         ;;
@@ -50,6 +51,7 @@ do
           pcie_aspm_policy default
           wake_events disabled
           runtime_power_management on 0
+          scsi_link_power_management ""
           /usr/bin/wifictl setpowersave
         ;;
       esac
