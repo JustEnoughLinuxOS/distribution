@@ -10,11 +10,15 @@ FAN_PWM="${DEVICE_PWM_FAN}"
 
 log $0 "Setting profile to ${COOLING_PROFILE}"
 
-log $0 "Enabling fan control."
-if [ -e "${DEVICE_PWM_FAN}_enable" ]
-then
-  echo 1 >${DEVICE_PWM_FAN}_enable
-fi
+function set_control() {
+  log $0 "Set fan control to ${1}"
+  if [ -e "${DEVICE_PWM_FAN}_enable" ]
+  then
+    echo ${1} >${DEVICE_PWM_FAN}_enable
+  fi
+}
+
+trap "set_control 0 && exit 0" SIGHUP SIGINT SIGQUIT SIGABRT
 
 if [ -e "/storage/.config/fancontrol.conf" ] && [ "${COOLING_PROFILE}" = "custom" ]
 then
@@ -22,10 +26,10 @@ then
   source /storage/.config/fancontrol.conf
   if [ ! $? = 0 ]
   then
-    WARN="Custom fan profile could not be loaded, defaulting to quiet."
+    WARN="Custom fan profile could not be loaded, defaulting to auto."
     log $0 "${WARN}"
-    COOLING_PROFILE="quiet"
-    set_setting cooling.profile quiet
+    COOLING_PROFILE="auto"
+    set_setting cooling.profile auto
   fi
 fi
 
@@ -40,12 +44,20 @@ then
   then
     SPEEDS=(255 192 128 96)
     TEMPS=(65000 55000 45000 0)
-  else
+  elif [ "${COOLING_PROFILE}" = "quiet" ]
+  then
     # Quiet.
     SPEEDS=(255 192 128 96 64 48 32)
     TEMPS=(70000 60000 55000 50000 49000 47000 0)
+  else
+    # auto
+    set_control 0 >/dev/null 2>&1
+    exit 0
   fi
 fi
+
+log $0 "Enabling fan control."
+set_control 1 >/dev/null 2>&1
 
 while true
 do
@@ -67,8 +79,5 @@ do
   sleep 2
 done
 
-if [ -e "${DEVICE_PWM_FAN}_enable" ]
-then
-  log $0 "Disabling fan control."
-  echo 0 >${DEVICE_PWM_FAN}_enable
-fi
+log $0 "Disabling fan control."
+set_control 0 >/dev/null 2>&1

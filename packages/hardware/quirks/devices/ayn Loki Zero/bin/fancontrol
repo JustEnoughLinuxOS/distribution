@@ -4,8 +4,7 @@
 
 . /etc/profile
 
-#DEBUG=false
-DEBUG=true
+DEBUG=false
 COOLING_PROFILE=$(get_setting "cooling.profile")
 
 log $0 "Setting profile to ${COOLING_PROFILE}"
@@ -17,19 +16,16 @@ function set_control() {
 
 trap "set_control 0x01 && exit 0" SIGHUP SIGINT SIGQUIT SIGABRT
 
-log $0 "Enabling fan control."
-set_control 0x00 >/dev/null 2>&1
-
 if [ -e "/storage/.config/fancontrol.conf" ] && [ "${COOLING_PROFILE}" = "custom" ]
 then
   log $0 "Loading configuration file" 2>/dev/null
   source /storage/.config/fancontrol.conf
   if [ ! $? = 0 ]
   then
-    WARN="Custom fan profile could not be loaded, defaulting to quiet."
+    WARN="Custom fan profile could not be loaded, defaulting to auto."
     log $0 "${WARN}"
-    COOLING_PROFILE="quiet"
-    set_setting cooling.profile quiet
+    COOLING_PROFILE="auto"
+    set_setting cooling.profile auto
   fi
 fi
 
@@ -44,12 +40,19 @@ then
   then
     SPEEDS=(128 96 72 64 48)
     TEMPS=(70000 65000 60000 55000 0)
-  else
-    # Quiet.
+  elif [ "${COOLING_PROFILE}" = "quiet" ]
+  then
     SPEEDS=(128 96 64 48 32)
     TEMPS=(70000 65000 60000 55000 0)
+  else
+    # auto
+    set_control 0x01 >/dev/null 2>&1
+    exit 0
   fi
 fi
+
+log $0 "Enabling fan control."
+set_control 0x00 >/dev/null 2>&1
 
 while true
 do
