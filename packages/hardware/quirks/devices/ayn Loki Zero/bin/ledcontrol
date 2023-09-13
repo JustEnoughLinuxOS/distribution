@@ -96,4 +96,11 @@ case $1 in
   default)
     del_setting led.color
   ;;
+  *)
+    COLOR=$(get_setting led.color)
+    if [ ! -z "${COLOR}" ]
+    then
+      ledcontrol ${COLOR}
+    fi
+  ;;
 esac
