@@ -101,7 +101,20 @@ runtime_power_management() {
       echo ${1} >"${DEVICE}" 2>/dev/null
       echo ${2} >"${DEVICE/control/autosuspend_delay_ms}" 2>/dev/null
     done
+  fi
+}
 
+scsi_link_power_management() {
+  POWERSAVEENABLED=$(get_setting system.powersave)
+  RTPM=$(get_setting system.power.rtpm)
+  if [ "${RTPM}" = "1" ] &&
+     [ "${POWERSAVEENABLED}" = "1" ]
+  then
+    find /sys/class/scsi_host/host*/ -type f -name link_power_management_policy -print0 2>/dev/null | \
+    while read -r -d '' DEVICE
+    do
+      echo "${1}" >"${DEVICE}" 2>/dev/null
+    done
   fi
 }
 

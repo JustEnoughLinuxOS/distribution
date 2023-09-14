@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
+
+# Source predefined functions and variables
+. /etc/profile
+
+### Set correct audio output device at boot.
+HEADPHONE_STATE=$(cat /sys/kernel/debug/gpio | grep HEADPHONE)
+if [[ "${HEADPHONE_STATE}" == *"hi"* ]]; then
+  amixer -c0 sset "${DEVICE_PLAYBACK_PATH}" "${DEVICE_PLAYBACK_PATH_HP}"
+  set_setting "audio.device" "headphone"
+else
+ amixer -c0 sset "${DEVICE_PLAYBACK_PATH}" "${DEVICE_PLAYBACK_PATH_SPK}"
+ set_setting "audio.device" "speakers"
+fi
+
+
+# Headphone sensing
+DEVICE="${DEVICE_HEADPHONE_DEV}"
+
+HP_ON='*(SW_HEADPHONE_INSERT), value 1*'
+HP_OFF='*(SW_HEADPHONE_INSERT), value 0*'
+
+evtest "${DEVICE}" | while read line; do
+    case $line in
+        (${HP_ON})
+        amixer -c0 sset "${DEVICE_PLAYBACK_PATH}" "${DEVICE_PLAYBACK_PATH_HP}"
+        set_setting "audio.device" "headphone"
+        ;;
+        (${HP_OFF})
+        amixer -c0 sset "${DEVICE_PLAYBACK_PATH}" "${DEVICE_PLAYBACK_PATH_SPK}"
+        set_setting "audio.device" "speakers"
+        ;;
+    esac
+done
