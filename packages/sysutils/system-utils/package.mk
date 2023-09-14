@@ -28,7 +28,7 @@ makeinstall_target() {
     if [ -d "${PKG_DIR}/sources/autostart/${DEVICE}" ]
     then
       mkdir -p ${INSTALL}/usr/lib/autostart/${DEVICE}
-      cp ${PKG_DIR}/sources/autostart/${DEVICE}/002-overclock ${INSTALL}/usr/lib/autostart/${DEVICE}
+      cp ${PKG_DIR}/sources/autostart/${DEVICE}/* ${INSTALL}/usr/lib/autostart/${DEVICE}
       chmod 0755 ${INSTALL}/usr/lib/autostart/${DEVICE}/*
     fi
   fi

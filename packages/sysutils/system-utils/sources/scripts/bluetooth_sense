@@ -16,6 +16,10 @@ do
       if [ -z "${CONNECTED}" ]
       then
         /usr/bin/bluetoothctl --timeout 5 connect ${DEVICE} >/dev/null 2>&1
+        if [ "$?" = "0" ]
+        then
+          volume $(get_setting "audio.volume")
+        fi
       fi
       sleep .5
     done
