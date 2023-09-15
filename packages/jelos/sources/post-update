@@ -93,3 +93,13 @@ if [ -z "${LATENCY}" ]
 then
   set_setting global.audiolatency 32
 fi
+
+### 20230915 - Apply a rewind global if it doesn't exist.
+REWIND=$(get_setting global.rewind)
+if [ -z "${REWIND}" ]
+then
+  set_setting global.rewind 0
+fi
+
+### 20230915 - Delete any stale alsa configs.
+rm -f /storage/.config/asound*
