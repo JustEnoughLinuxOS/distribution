@@ -346,10 +346,8 @@ else
 
         ### Set the performance mode for emulation
         PERFORMANCE_MODE=$(get_setting "cpugovernor" "${PLATFORM}" "${ROMNAME##*/}")
-        if [ ! "${PERFORMANCE_MODE}" = "default" ]
-        then
-            ${PERFORMANCE_MODE}
-        fi
+        ${PERFORMANCE_MODE}
+
 	if [[ "${CORE}" =~ "custom" ]] 
 	then
 	RUNTHIS='${EMUPERF} /usr/bin/${RABIN} -L /storage/.config/retroarch/cores/${EMU}.so --config ${RATMPCONF} --appendconfig ${RAAPPENDCONF} "${ROMNAME}"'
@@ -424,10 +422,7 @@ $VERBOSE && log $0 "script to execute: ${RUNTHIS}"
 
 ### Set the performance mode for emulation
 PERFORMANCE_MODE=$(get_setting "cpugovernor" "${PLATFORM}" "${ROMNAME##*/}")
-if [ ! "${PERFORMANCE_MODE}" = "default" ]
-then
-    ${PERFORMANCE_MODE}
-fi
+${PERFORMANCE_MODE}
 # If the rom is a shell script just execute it, useful for DOSBOX and ScummVM scan scripts
 if [[ "${ROMNAME}" == *".sh" ]]; then
 	$VERBOSE && log $0 "Executing shell script ${ROMNAME}"

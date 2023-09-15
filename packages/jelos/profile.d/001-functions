@@ -27,7 +27,7 @@ function log() {
 }
 
 function get_setting() {
-  if [ ! -z "${3}" ]
+  if [ -n "${3}" ]
   then
     ### Test to see if we have a game setting.
     VAR="$2\[\"$(echo ${3} | sed 's/\W/\\&/g')\"]\.$1"
@@ -47,9 +47,9 @@ function get_setting() {
     fi
   fi
 
-  if [ -z "${3}" ] && [ ! -z "${2}" ]
+  if [ -z "${3}" ] && [ -n "${2}" ]
   then
-    ### Check to see if we have a system setting.
+    ### Check to see if we have a global setting.
     LOCAL=$(awk -F: '/^'"${2}.${1}"'=/ {  st = index($0,"=");print substr($0,st+1);exit}' ${J_CONF})
     if [ ! -z "${LOCAL}" ]
     then
@@ -58,11 +58,20 @@ function get_setting() {
     fi
   fi
 
-  ### Check to see if we have a global setting and account for legacy "global."
+  ### Check to see if we have a "system." global setting.
+  SYSTEM=$(awk -F: '/^system.'"${1}"='/ { st = index($0,"=");print substr($0,st+1);exit}' ${J_CONF})
+  if [ -n "${SYSTEM}" ]
+  then
+    echo ${SYSTEM}
+    return
+  fi
+
+  ### Check to see if we have a "global." global setting."
   LOCAL=$(awk -F: '/^'"${1}"='/ { st = index($0,"=");print substr($0,st+1);exit}' ${J_CONF})
   if [ -z "${LOCAL}" ]
   then
     awk -F: '/^global.'"${1}"='/ { st = index($0,"=");print substr($0,st+1);exit}' ${J_CONF}
+    return
   else
     echo ${LOCAL}
   fi
