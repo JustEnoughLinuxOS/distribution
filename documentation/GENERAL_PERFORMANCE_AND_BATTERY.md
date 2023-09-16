@@ -8,11 +8,13 @@ Optimizing for performance will have significant impact on battery life, however
 ### Recommended Global Settings
 
 #### AMD / Intel based devices
+
 |Enabled CPU Threads|Cooling Profile|Max TDP|Scaling Governor|Enhanced Power Saving|WIFI Power Saving|
 |----|----|----|----|----|
 |All|Moderate|18w|Balanced|Off|Off|
 
 #### ARM based devices
+
 |Enabled CPU Threads|Cooling Profile|Scaling Governor|Enhanced Power Saving|WIFI Power Saving|
 |----|----|----|----|----|
 |All|Moderate<sup>1</sup>|Balanced|Off|Off|
@@ -40,15 +42,13 @@ Enable Enhanced Power Saving, and enable all options.  If the device has undesir
 |4|Quiet<sup>1</sup>|4.5w|Powersave|Battery Focus|On|On|
 
 #### ARM based devices
-
 |Enabled CPU Threads|Cooling Profile|CPU Governor|Enhanced Power Saving|WIFI Power Saving|
-|----|----|----|----|----|----|
+|----|----|----|----|----|
 |4|Quiet<sup>1</sup>|Powersave|Battery Focus|On|On|
 
 #### AMD / Intel Recommended Settings Per System
-
 |Manufacturer|System|Enabled CPU Threads|Cooling Profile|Max TDP|Scaling Governor|GPU Performance Profile<sup>1</sup>|Enhanced Power Saving|WIFI Power Saving|
-|----|----|----|----|----|----|----|----|
+|----|----|----|----|----|----|----|----|----|
 |Microsoft|Xbox|6|Quiet|22w|Schedutil|Balanced|On|On|
 |Nintendo|GameCube, Wii|4|Quiet|15W|Schedutil|Balanced|On|On|
 |Nintendo|Wii U, Switch|6|Moderate|22w|Schedutil|Balanced|On|On|
@@ -57,7 +57,7 @@ Enable Enhanced Power Saving, and enable all options.  If the device has undesir
 
 #### ARM Devices
 |Manufacturer|System|Enabled CPU Threads|Cooling Profile|Scaling Governor|Enhanced Power Saving|WIFI Power Saving|
-|----|----|----|----|----|----|
+|----|----|----|----|----|----|----|
 |Nintendo|64|All|Moderate<sup>1</sup>|Performance|On|On|
 |Nintendo|GameCube, Wii|All|Moderate<sup>1</sup>|Performance|On|On|
 |Sega|Saturn, Dreamcast|All|Moderate<sup>1</sup>|Performance|On|On|
