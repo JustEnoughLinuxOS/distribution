@@ -3,31 +3,66 @@
 # Performance and Battery Life Optimizations
 
 ## Optimizing Performance
-Optimizing for performance will have significant impact on battery life, however it will provide the best experience for more demanding emulators.  Begin by disabling `Enhanced Power Saving` in the `System Settings` menu.
+Optimizing for performance will have significant impact on battery life, however it will provide the best experience for more demanding emulators.
 
 ### Recommended Global Settings
 
-|Enabled CPU Threads|Cooling Profile|Max TDP|CPU Governor|GPU Power Savings Mode<sup>1</sup>|WIFI Power Saving|
-|----|----|----|----|----|----|
-|All|Moderate|18w|Performance|Unavailable|Off|
+#### AMD / Intel based devices
+
+|Enabled CPU Threads|Cooling Profile|Max TDP|Scaling Governor|Enhanced Power Saving|WIFI Power Saving|
+|----|----|----|----|----|
+|All|Moderate|18w|Balanced|Off|Off|
+
+#### ARM based devices
+
+|Enabled CPU Threads|Cooling Profile|Scaling Governor|Enhanced Power Saving|WIFI Power Saving|
+|----|----|----|----|----|
+|All|Moderate<sup>1</sup>|Balanced|Off|Off|
+
+> Note: It's recommended to reboot the device after disabling Enhanced Power Saving.
 
 ## Optimizing Battery Life
-JELOS includes an `Enhanced Power Saving` mode which is available in the `System Settings` menu.  This mode tunes your device for power saving, but does not enable options that may affect performance.  The table below provides general recommendations to achieve the best possible battery life.  Additional adjustments may need to be made to individual emulators or games for the best balance of performance and battery life.
+JELOS includes an `Enhanced Power Saving` mode which is available in the `System Settings` menu.  This option provides a variety of sub options that when enabled tune your device for optimal battery life without immediately sacrificing performance.
 
-### Recommended Global Settings
+|Feature|Function|May Affect Stability|
+|----|----|----|
+|CPU Power Saving|Tunes the CPU/SoC to preference battery life over performance.|No|
+GPU Performance Profile<sup>1</sup>|User configurable to force the GPU into the preferred performance state|No|
+Audio Power Saving|Enables the audio device to operate in a low power mode.|No|
+PCIE Active State Power Management|Forces a low power state for PCI and PCIe connections.|Yes|
+Enable Wake Events|Enables PCI wakeup signalling to allow devices to enter low power states.|Yes|
+Runtime Power Management|Enables USB idle power management, and configures usb devices to autosuspend.|Yes|
 
-|Enabled CPU Threads|Cooling Profile|Max TDP|CPU Governor|GPU Power Savings Mode<sup>1</sup>|WIFI Power Saving|
-|----|----|----|----|----|----|
-|2|Quiet|Default|Powersave|Low|On|
+### Recommended Settings For Optimal Battery Life
+Enable Enhanced Power Saving, and enable all options.  If the device has undesired behavior, disable the options that may effect stability and reboot the device.
 
-### Recommended Settings Per System
-The table below provides recommended settings per system, however emulating newer systems will still have significant drain.
+#### AMD / Intel based devices
+|Enabled CPU Threads|Cooling Profile|Max TDP|Scaling Governor|GPU Performance Profile|Enhanced Power Saving|WIFI Power Saving|
+|----|----|----|----|----|----|----|
+|4|Quiet<sup>1</sup>|4.5w|Powersave|Battery Focus|On|On|
 
-|Manufacturer|System|Enabled CPU Threads|Cooling Profile|Max TDP|CPU Governor|GPU Power Savings Mode<sup>1</sup>|WIFI Power Saving|
-|----|----|----|----|----|----|----|----|
-|Nintendo|GameCube, Wii|2|Quiet|Default|Schedutil|Auto|On|
-|Nintendo|Wii U, Switch|6|Quiet|18w|Schedutil|Auto|On|
-|Sony|PS2|4|Quiet|18w|Schedutil|Auto|On|
-|Sony|PSP|2|Quiet|Default|Powersave|Auto|On|
+#### ARM based devices
+|Enabled CPU Threads|Cooling Profile|CPU Governor|Enhanced Power Saving|WIFI Power Saving|
+|----|----|----|----|----|
+|4|Quiet<sup>1</sup>|Powersave|Battery Focus|On|On|
 
-> <sup>1</sup> Only available when "Enhanced Power Saving" is enabled.
+#### AMD / Intel Recommended Settings Per System
+|Manufacturer|System|Enabled CPU Threads|Cooling Profile|Max TDP|Scaling Governor|GPU Performance Profile<sup>1</sup>|Enhanced Power Saving|WIFI Power Saving|
+|----|----|----|----|----|----|----|----|----|
+|Microsoft|Xbox|6|Quiet|22w|Schedutil|Balanced|On|On|
+|Nintendo|GameCube, Wii|4|Quiet|15W|Schedutil|Balanced|On|On|
+|Nintendo|Wii U, Switch|6|Moderate|22w|Schedutil|Balanced|On|On|
+|Sony|PS2|4|Quiet|18w|Schedutil|Balanced|On|
+|Sony|PSP|2|Quiet|9w|Powersave|Battery Focus|On|On|
+
+#### ARM Devices
+|Manufacturer|System|Enabled CPU Threads|Cooling Profile|Scaling Governor|Enhanced Power Saving|WIFI Power Saving|
+|----|----|----|----|----|----|----|
+|Nintendo|64|All|Moderate<sup>1</sup>|Performance|On|On|
+|Nintendo|GameCube, Wii|All|Moderate<sup>1</sup>|Performance|On|On|
+|Sega|Saturn, Dreamcast|All|Moderate<sup>1</sup>|Performance|On|On|
+|Sony|PSP|All|Moderate<sup>1</sup>|Performance|On|On|
+
+Note: Emulating 6th generation and newer consoles will result in lower runtimes as they require significant power draw.
+
+> <sup>1</sup> Only available when "Enhanced Power Saving" is enabled or if the feature is supported.
