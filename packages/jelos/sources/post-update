@@ -103,3 +103,6 @@ fi
 
 ### 20230915 - Delete any stale alsa configs.
 rm -f /storage/.config/asound*
+
+### 20230916 - Disable Retrarch's built in image viewer so fake-08 blobs are opened correctly.  Thanks to christianhaitian and jtothebell.
+sed -i 's~builtin_imageviewer_enable.*$~builtin_imageviewer_enable = "false"~g' /storage/.config/retroarch/retroarch.cfg
