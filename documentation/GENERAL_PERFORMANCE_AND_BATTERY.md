@@ -1,6 +1,7 @@
 &nbsp;&nbsp;<img src="https://raw.githubusercontent.com/JustEnoughLinuxOS/distribution/dev/distributions/JELOS/logos/jelos-logo.png" width=192>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![Latest Version](https://img.shields.io/github/release/JustEnoughLinuxOS/distribution.svg?color=5998FF&label=latest%20version&style=flat-square)](https://github.com/JustEnoughLinuxOS/distribution/releases/latest) [![Activity](https://img.shields.io/github/commit-activity/m/JustEnoughLinuxOS/distribution?color=5998FF&style=flat-square)](https://github.com/JustEnoughLinuxOS/distribution/commits) [![Pull Requests](https://img.shields.io/github/issues-pr-closed/JustEnoughLinuxOS/distribution?color=5998FF&style=flat-square)](https://github.com/JustEnoughLinuxOS/distribution/pulls) [![Discord Server](https://img.shields.io/discord/948029830325235753?color=5998FF&label=chat&style=flat-square)](https://discord.gg/seTxckZjJy)
 #
 # Performance and Battery Life Optimizations
+JELOS provides a variety of knobs and switches that allow the user to optimize for battery life or performance globally, and on a per system and per game basis.  For emulating 6th generation and later systems, we recommend installing JELOS on internal storage if available to reduce IO bottlenecks reading and writing shader cache.
 
 ## Optimizing Performance
 Optimizing for performance will have significant impact on battery life, however it will provide the best experience for more demanding emulators.
