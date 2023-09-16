@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="parallel-n64-lr"
-PKG_VERSION="aadcb195565a661f6267b23236f4f0d15449c729"
+PKG_VERSION="49eadb4da85f7e3bd59b60f61e8fd5dbfb9f07d5"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/parallel-n64"
