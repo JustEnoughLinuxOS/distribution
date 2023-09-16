@@ -61,6 +61,12 @@ else
                            -DSDL_X11=OFF"
 fi
 
+case ${PROJECT} in
+  Rockchip)
+    PKG_DEPENDS_TARGET+=" librga"
+  ;;
+esac
+
 pre_configure_target(){
   export LDFLAGS="${LDFLAGS} -ludev"
   PKG_CMAKE_OPTS_TARGET+="-DSDL_STATIC=OFF \
