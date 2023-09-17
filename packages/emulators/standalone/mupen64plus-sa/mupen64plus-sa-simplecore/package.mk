@@ -42,10 +42,11 @@ make_target() {
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
   export CROSS_COMPILE="${TARGET_PREFIX}"
   cd ${PKG_BUILD}
+  sed -i 's~<SDL_net.h>~<SDL2/SDL_net.h>~g' src/main/netplay.c
   rm -rf build
   mkdir build
   cd build
-  cmake -G Ninja ${ARM} -DCMAKE_FIND_ROOT_PATH="${SYSROOT_PREFIX}" -DCMAKE_BUILD_TYPE="Release" ..
+  cmake -G Ninja ${ARM} -DCMAKE_BUILD_TYPE="Release" ..
   VERBOSE=1 cmake --build .
 }
 
