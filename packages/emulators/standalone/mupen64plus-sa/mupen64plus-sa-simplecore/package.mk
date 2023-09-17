@@ -45,7 +45,7 @@ make_target() {
   rm -rf build
   mkdir build
   cd build
-  cmake -G Ninja ${ARM} -DCMAKE_FIND_ROOT_PATH="${SYSROOT_PREFIX}" -DCMAKE_BUILD_TYPE="Release" ..
+  cmake -G Ninja ${ARM} -DCMAKE_BUILD_TYPE="Release" ..
   VERBOSE=1 cmake --build .
 }
 
