@@ -33,22 +33,21 @@ then
   fi
 fi
 
-
 if [ ! "${COOLING_PROFILE}" = "custom" ]
 then
   if [ "${COOLING_PROFILE}" = "aggressive" ]
   then
-    SPEEDS=(255 225 195)
-    TEMPS=(55000 45000 0)
+    SPEEDS=(255 225 192)
+    TEMPS=(70000 65000 0)
   elif [ "${COOLING_PROFILE}" = "moderate" ]
   then
     SPEEDS=(255 192 128 96)
-    TEMPS=(65000 55000 45000 0)
+    TEMPS=(75000 70000 65000 0)
   elif [ "${COOLING_PROFILE}" = "quiet" ]
   then
     # Quiet.
     SPEEDS=(255 192 128 96 64 48 32)
-    TEMPS=(70000 60000 55000 50000 49000 47000 0)
+    TEMPS=(75000 70000 65000 60000 55000 50000 0)
   else
     # auto
     set_control 0 >/dev/null 2>&1
