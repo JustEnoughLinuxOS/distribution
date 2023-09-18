@@ -46,6 +46,8 @@ pre_configure_target() {
                          -D ENABLE_SDL=ON \
                          -D ENABLE_CUBEB=ON \
                          -D ENABLE_WXWIDGETS=ON \
+                         -D CMAKE_BUILD_TYPE=Release \
+                         -D ENABLE_FERAL_GAMEMODE=OFF \
                          -Wno-dev"
 
   # Wayland Support
