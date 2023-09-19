@@ -64,11 +64,17 @@ do
   then
     BATLEFT=$(battery_percent)
     AUDIBLEALERT=$(get_setting system.battery.warning)
-    if (( "${BATLEFT}" < "25" )) &&
-       [ "${AUDIBLEALERT}" = "1" ]
+    if (( "${BATLEFT}" < "25" ))
     then
-      say "BATTERY AT ${BATLEFT}%"
-      BATCNT=0
+      if [ "${DEVICE_LED_CONTROL}" = "true" ]
+      then
+        led_flash red
+        BATCNT=0
+      elif [ "${AUDIBLEALERT}" = "1" ]
+      then
+        say "BATTERY AT ${BATLEFT}%"
+        BATCNT=0
+      fi
     fi
   fi
   BATCNT=$(( ${BATCNT} + 1 ))
