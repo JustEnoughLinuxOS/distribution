@@ -48,10 +48,45 @@ function off() {
   ec_save
 }
 
+function intensity() {
+  printf "0x%X\n" $((${1} / ${2}))
+}
+
+GETBRIGHTNESS=$(get_setting led.brightness)
+if [ ! -z "${2}" ]
+then
+  LEDBRIGHTNESS=${2}
+  debug_out "Arg[2]: ${2}"
+elif [ ! -z "${GETBRIGHTNESS}" ]
+then
+  LEDBRIGHTNESS=${GETBRIGHTNESS}
+  debug_out "GETBRIGHTESS: ${GETBRIGHTNESS}"
+else
+  debug_out "NO SETTING: max"
+  LEDBRIGHTNESS=mid
+  set_setting led.brightness max
+fi
+
+case ${LEDBRIGHTNESS} in
+  max)
+    LEDBRIGHTNESS=1
+    set_setting led.brightness max
+  ;;
+  mid)
+    LEDBRIGHTNESS=2
+    set_setting led.brightness mid
+  ;;
+  min)
+    LEDBRIGHTNESS=4
+    set_setting led.brightness min
+  ;;
+esac
+
 case $1 in
   red)
     off
-    ec_set ${RGB_RED} 0xFF
+    COLOR=$(intensity 0xFF ${LEDBRIGHTNESS})
+    ec_set ${RGB_RED} ${COLOR}
     ec_set ${RGB_GREEN} 0x00
     ec_set ${RGB_BLUE} 0x00
     ec_save
@@ -59,33 +94,37 @@ case $1 in
   ;;
   green)
     off
+    COLOR=$(intensity 0xFF ${LEDBRIGHTNESS})
     ec_set ${RGB_RED} 0x00
-    ec_set ${RGB_GREEN} 0xFF
+    ec_set ${RGB_GREEN} ${COLOR}
     ec_set ${RGB_BLUE} 0x00
     ec_save
     set_setting led.color green
   ;;
   blue)
     off
+    COLOR=$(intensity 0xFF ${LEDBRIGHTNESS})
     ec_set ${RGB_RED} 0x00
     ec_set ${RGB_GREEN} 0x00
-    ec_set ${RGB_BLUE} 0xFF
+    ec_set ${RGB_BLUE} ${COLOR}
     ec_save
     set_setting led.color blue
   ;;
   teal)
     off
+    COLOR=$(intensity 0x80 ${LEDBRIGHTNESS})
     ec_set ${RGB_RED} 0x00
-    ec_set ${RGB_GREEN} 0x80
-    ec_set ${RGB_BLUE} 0x80
+    ec_set ${RGB_GREEN} ${COLOR}
+    ec_set ${RGB_BLUE} ${COLOR}
     ec_save
     set_setting led.color teal
   ;;
   purple)
     off
-    ec_set ${RGB_RED} 0x80
+    COLOR=$(intensity 0x80 ${LEDBRIGHTNESS})
+    ec_set ${RGB_RED} ${COLOR}
     ec_set ${RGB_GREEN} 0x00
-    ec_set ${RGB_BLUE} 0x80
+    ec_set ${RGB_BLUE} ${COLOR}
     ec_save
     set_setting led.color purple
   ;;
@@ -95,6 +134,9 @@ case $1 in
   ;;
   default)
     del_setting led.color
+  ;;
+  brightness)
+    set_setting led.brightness ${2}
   ;;
   *)
     COLOR=$(get_setting led.color)
