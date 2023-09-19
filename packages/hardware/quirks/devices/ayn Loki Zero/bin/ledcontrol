@@ -148,6 +148,7 @@ case $1 in
   ;;
   default)
     del_setting led.color
+    ec_set ${RGB_MODE} 0x00
   ;;
   brightness)
     set_setting led.brightness ${2}
