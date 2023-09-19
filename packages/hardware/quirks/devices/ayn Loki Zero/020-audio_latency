@@ -2,6 +2,8 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
 
+. /etc/profile.d/001-functions
+
 AUDIO_LATENCY=$(get_setting audiolatency)
 if [ -z "${AUDIO_LATENCY}" ]
 then
