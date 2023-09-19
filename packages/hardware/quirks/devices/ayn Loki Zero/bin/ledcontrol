@@ -23,6 +23,7 @@ RGB_GREEN="0xB1"
 RGB_BLUE="0xB2"
 RGB_MODE="0xB3"
 RGB_SAVE="0xAA"
+RGB_IDLE="0x55"
 
 ECTOOL="/usr/sbin/ectool"
 DEBUG=false
@@ -32,6 +33,19 @@ function debug_out() {
 }
 
 function ec_save() {
+  TIMEOUT=0
+  while true
+  do
+    STATE="0x$(${ECTOOL} -r ${RGB_MODE})"
+    if [ "${STATE^^}" == "${RGB_SAVE}" ] || \
+       [ "${STATE}" == "${RGB_IDLE}" ] || \
+       [ "${TIMEOUT}" == 5 ]
+    then
+      break
+    fi
+    sleep .5
+    TIMEOUT=$(( TIMEOUT + 1 ))
+  done
   ${ECTOOL} -w ${RGB_MODE} -z ${RGB_SAVE} >/dev/null 2>&1
 }
 
