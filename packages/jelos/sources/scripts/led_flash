@@ -1,0 +1,22 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2023-present Fewtarius
+
+. /etc/profile
+
+COLOR=$(get_setting led.color)
+BRI=$(get_setting led.brightness)
+
+ledcontrol off
+ledcontrol brightness mid
+
+for i in $(seq 1 1 3)
+do
+  sleep 1
+  ledcontrol ${1}
+  sleep 1
+  ledcontrol off
+done
+
+ledcontrol ${COLOR}
+ledcontrol brightness ${BRI}
