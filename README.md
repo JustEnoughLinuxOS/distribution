@@ -80,18 +80,17 @@ All other software is provided under each component's respective license.  These
 
 * [Installing JELOS](https://jelos.org/play/install/)
 * [Updating JELOS](https://jelos.org/play/update/)
+* [Controls](https://jelos.org/play/controls/)
+* [Netplay](https://jelos.org/play/netplay/)
+* [Configuring Moonlight](https://jelos.org/systems/moonlight/)
 * [Device Specific Documentation](/documentation/PER_DEVICE_DOCUMENTATION)
-* [Hotkeys and Button Codes](https://jelos.org/play/hotkeys/)
-* [Game Engines and Launch Files](/documentation/SETUP_GAME_ENGINES_AND_LAUNCH_FILES.md)
-* [Creating Custom Shader Presets for Per Game / Per System Use](/documentation/GENERAL_CUSTOM_SHADERS.md)
-* [Optimizing Performance and Battery Life](/documentation/GENERAL_PERFORMANCE_AND_BATTERY.md)
-* [Network Play](/documentation/GENERAL_NETWORK_PLAY.md)
-* [Setting Up Cloud Drives](/documentation/SETUP_CLOUD_DRIVES.md)
-* [Setting Up Syncthing](/documentation/SETUP_SYNCTHING.md)
-* [Configuring Moonlight Streaming](/documentation/SETUP_MOONLIGHT_STREAMING.md)
-* [Setting Up P2P Networking With ZeroTier](/documentation/SETUP_P2P_ZEROTIER.md)
-* [Configure TailScale VPN](/documentation/SETUP_VPN_TAILSCALE.md)
-* [Setting Up Wireguard VPN](/documentation/SETUP_VPN_WIREGUARD.md)
+
+### Configure
+
+* [Optimizations](https://jelos.org/configure/optimizations/)
+* [Shaders](https://jelos.org/configure/shaders/)
+* [Cloud Sync](https://jelos.org/configure/cloud-sync/)
+* [VPN](https://jelos.org/configure/vpn/)
 
 ### Other
 
