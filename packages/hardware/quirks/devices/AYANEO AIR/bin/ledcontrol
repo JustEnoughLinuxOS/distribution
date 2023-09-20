@@ -4,7 +4,7 @@
 
 #
 # A simple tool to manipulate the controller LEDs using ectool, thanks to
-# Maya (https://github.com/Maccraft123) for reverse engineering.
+# Maya Matuszczyk (https://github.com/Maccraft123) for reverse engineering.
 #
 # Schema:
 #
