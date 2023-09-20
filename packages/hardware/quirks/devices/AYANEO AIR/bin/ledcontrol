@@ -98,9 +98,9 @@ then
   LEDBRIGHTNESS=${GETBRIGHTNESS}
   debug_out "GETBRIGHTESS: ${GETBRIGHTNESS}"
 else
-  debug_out "NO SETTING: max"
-  LEDBRIGHTNESS=max
-  set_setting led.brightness max
+  debug_out "NO SETTING: min"
+  LEDBRIGHTNESS=min
+  set_setting led.brightness min
 fi
 
 case ${LEDBRIGHTNESS} in
