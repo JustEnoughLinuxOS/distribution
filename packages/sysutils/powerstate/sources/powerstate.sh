@@ -31,7 +31,7 @@ do
           then
             GPUPROFILE="auto"
           fi
-          ledcontrol
+          ledcontrol $(get_setting led.color)
           audio_powersave 1
           cpu_perftune battery
           gpu_performance_level ${GPUPROFILE}
@@ -44,7 +44,7 @@ do
         ;;
         *)
           log $0 "Switching to performance mode."
-          ledcontrol
+          ledcontrol $(get_setting led.color)
           audio_powersave 0
           cpu_perftune performance
           gpu_performance_level auto
