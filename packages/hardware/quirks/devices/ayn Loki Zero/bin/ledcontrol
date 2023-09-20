@@ -142,6 +142,15 @@ case $1 in
     ec_save
     set_setting led.color purple
   ;;
+  white)
+    off
+    COLOR=$(intensity 0x80 ${LEDBRIGHTNESS})
+    ec_set ${RGB_RED} ${COLOR}
+    ec_set ${RGB_GREEN} ${COLOR}
+    ec_set ${RGB_BLUE} ${COLOR}
+    ec_save
+    set_setting led.color purple
+  ;;
   off)
     off
     set_setting led.color off
