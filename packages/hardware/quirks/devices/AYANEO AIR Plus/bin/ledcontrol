@@ -58,7 +58,7 @@ function led_state() {
   done
 }
 
-led_enable() {
+function led_enable() {
   led_state 0x37
   led_ack
 
@@ -164,7 +164,7 @@ led_enable() {
 
 }
 
-led_color() {
+function led_color() {
   # Zone 1
   led_open
     led_ctl 0xB3 ${1}
