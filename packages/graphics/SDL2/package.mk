@@ -64,6 +64,7 @@ fi
 case ${PROJECT} in
   Rockchip)
     PKG_DEPENDS_TARGET+=" librga"
+    PKG_DEPENDS_HOST+=" librga"
   ;;
 esac
 
