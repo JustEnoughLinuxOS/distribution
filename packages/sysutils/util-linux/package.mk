@@ -61,9 +61,11 @@ if [ "${SWAP_SUPPORT}" = "yes" ]; then
   PKG_CONFIGURE_OPTS_TARGET+=" --enable-swapon"
 fi
 
-PKG_CONFIGURE_OPTS_HOST="--enable-static \
-                         --disable-shared \
-                         ${UTILLINUX_CONFIG_DEFAULT} \
+PKG_CONFIGURE_OPTS_HOST="--enable-shared \
+                         --disable-static \
+                         ${UTILLINUX_CONFIG_TARGET} \
+                         --disable-makeinstall-chown \
+                         --disable-makeinstall-setuid \
                          --enable-uuidgen \
                          --enable-rename \
                          --enable-libuuid"
