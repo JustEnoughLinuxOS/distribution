@@ -1,21 +1,25 @@
-FROM ubuntu:22.04
+FROM ubuntu:jammy
 
-RUN apt update  \
-    && DEBIAN_FRONTEND=noninteractive \
-      apt install -y \
-      gcc make git unzip wget \
-      xz-utils libsdl2-dev libsdl2-mixer-dev libfreeimage-dev libfreetype6-dev libcurl4-openssl-dev \
-      rapidjson-dev libasound2-dev libgl1-mesa-dev build-essential libboost-all-dev cmake fonts-droid-fallback \
-      libvlc-dev libvlccore-dev vlc-bin texinfo premake4 golang libssl-dev curl patchelf \
-      xmlstarlet patchutils gawk gperf xfonts-utils default-jre python3 python-is-python3 xsltproc libjson-perl \
-      lzop libncurses5-dev u-boot-tools rsync p7zip libparse-yapp-perl \
-      zip binutils-aarch64-linux-gnu p7zip-full libvpx-dev bsdmainutils bc meson p7zip-full \
-      qemu-user-binfmt zstd parted imagemagick \
-      && apt autoremove --purge -y \
-      && apt clean -y \
-      && rm -rf /var/lib/apt/lists/*
+ARG DEBIAN_FRONTEND=noninteractive
 
-RUN adduser --disabled-password --gecos '' docker
+RUN apt-get update \
+ && apt-get dist-upgrade -y \
+ && apt-get install -y locales sudo
+
+RUN locale-gen en_US.UTF-8 \
+ && update-locale LANG=en_US.UTF-8 LANGUAGE=en_US:en
+ENV LANG=en_US.UTF-8 \
+    LANGUAGE=en_US:en \
+    LC_ALL=en_US.UTF-8
+
+RUN adduser --disabled-password --gecos '' docker \
+ && adduser docker sudo \
+ && echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+RUN apt-get install -y \
+    bc default-jre file gawk gcc git golang-go gperf libjson-perl libncurses5-dev \
+    libparse-yapp-perl libxml-parser-perl lzop make patchutils python-is-python3 \
+    python3 unzip wget xfonts-utils xsltproc zip zstd
 
 RUN mkdir -p /work && chown docker /work
 

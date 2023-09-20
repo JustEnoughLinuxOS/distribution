@@ -2,6 +2,10 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (C) 2023-present Fewtarius
 
+# A simple tool to manipulate the controller LEDs using outb, thanks
+# in large part to Maya Matuszczyk (https://github.com/Maccraft123)
+# for help with reverse engineering.
+
 . /etc/profile
 
 OUTB="/usr/bin/outb"
@@ -165,84 +169,100 @@ function led_enable() {
 }
 
 function led_color() {
-  # Zone 1
+  # Zone 1 (Left Stick)
   led_open
-    led_ctl 0xB3 ${1}
+    led_ctl 0xB3 ${1} # Quadrant 1
   led_ack
+
   led_open
     led_ctl 0xB4 ${2}
   led_ack
+
   led_open
     led_ctl 0xB5 ${3}
   led_ack
 
   led_open
-    led_ctl 0xB6 ${1}
+    led_ctl 0xB6 ${1} # Quadrant 2
   led_ack
+
   led_open
     led_ctl 0xB7 ${2}
   led_ack
+
   led_open
     led_ctl 0xB8 ${3}
   led_ack
 
   led_open
-    led_ctl 0xB9 ${1}
+    led_ctl 0xB9 ${1} # Quadrant 3
   led_ack
+
   led_open
     led_ctl 0xBA ${2}
   led_ack
+
   led_open
     led_ctl 0xBB ${3}
   led_ack
 
   led_open
-    led_ctl 0xBC ${1} 
+    led_ctl 0xBC ${1} # Quadrant 4
   led_ack
+
   led_open
     led_ctl 0xBD ${2}
   led_ack
+
   led_open
     led_ctl 0xBE ${3}
   led_ack
 
-  # Zone 2
+  # Zone 2 (Right Stick)
   led_open
-    led_ctl 0x73 ${1}
+    led_ctl 0x73 ${1} # Quadrant 1
   led_ack
+
   led_open
     led_ctl 0x74 ${2}
   led_ack
+
   led_open
     led_ctl 0x75 ${3}
   led_ack
 
   led_open
-    led_ctl 0x76 ${1}
+    led_ctl 0x76 ${1} # Quadrant 2
   led_ack
+
   led_open
     led_ctl 0x77 ${2}
   led_ack
+
   led_open
     led_ctl 0x78 ${3}
   led_ack
 
   led_open
-    led_ctl 0x79 ${1}
+    led_ctl 0x79 ${1} # Quadrant 3
   led_ack
+
   led_open
     led_ctl 0x7A ${2}
   led_ack
+
   led_open
     led_ctl 0x7B ${3}
   led_ack
 
   led_open
-    led_ctl 0x7C ${1}
+    led_ctl 0x7C ${1} # Quadrant 4
   led_ack
+
   led_open
     led_ctl 0x7D ${2}
   led_ack
+
   led_open
     led_ctl 0x7E ${3}
   led_ack
@@ -262,9 +282,9 @@ then
   LEDBRIGHTNESS=${GETBRIGHTNESS}
   debug_out "GETBRIGHTESS: ${GETBRIGHTNESS}"
 else
-  debug_out "NO SETTING: max"
-  LEDBRIGHTNESS=mid
-  set_setting led.brightness max
+  debug_out "NO SETTING: min"
+  LEDBRIGHTNESS=min
+  set_setting led.brightness min
 fi
 
 case ${LEDBRIGHTNESS} in
@@ -273,11 +293,11 @@ case ${LEDBRIGHTNESS} in
     set_setting led.brightness max
   ;;
   mid)
-    LEDBRIGHTNESS=2
+    LEDBRIGHTNESS=4
     set_setting led.brightness mid
   ;;
   min)
-    LEDBRIGHTNESS=4
+    LEDBRIGHTNESS=8
     set_setting led.brightness min
   ;;
 esac
@@ -286,61 +306,66 @@ case ${1} in
   off)
     led_state 0x31
     set_setting led.color off
-    exit
   ;;
   on)
     led_state 0x37
     set_setting led.color on
+    led_enable
   ;;
   red)
     COLOR=$(intensity 0xFF ${LEDBRIGHTNESS})
     ledcontrol off
     led_color ${COLOR} 0x00 0x00
     set_setting led.color red
+    led_enable
   ;;
   green)
     COLOR=$(intensity 0xFF ${LEDBRIGHTNESS})
     ledcontrol off
     led_color 0x00 ${COLOR} 0x00
     set_setting led.color green
+    led_enable
   ;;
   blue)
     COLOR=$(intensity 0xFF ${LEDBRIGHTNESS})
     ledcontrol off
     led_color 0x00 0x00 ${COLOR}
     set_setting led.color blue
+    led_enable
   ;;
   teal)
     COLOR=$(intensity 0xFF ${LEDBRIGHTNESS})
     ledcontrol off
     led_color 0x00 ${COLOR} ${COLOR}
     set_setting led.color teal
+    led_enable
   ;;
   purple)
     COLOR=$(intensity 0xFF ${LEDBRIGHTNESS})
     ledcontrol off
     led_color ${COLOR} 0x00 ${COLOR}
     set_setting led.color purple
+    led_enable
   ;;
   white)
     COLOR=$(intensity 0xFF ${LEDBRIGHTNESS})
     ledcontrol off
     led_color ${COLOR} ${COLOR} ${COLOR}
     set_setting led.color white
+    led_enable
   ;;
   default)
     del_setting led.color
   ;;
   brightness)
     set_setting led.brightness ${2}
+    ledcontrol $(get_setting led.color)
   ;;
   *)
     COLOR=$(get_setting led.color)
     if [ ! -z "${COLOR}" ]
     then
       ledcontrol ${COLOR}
-      exit 0
     fi
   ;;
 esac
-led_enable
