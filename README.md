@@ -103,32 +103,32 @@ JELOS supports a variety of ARM and Intel/AMD based devices.
 
 | Manufacturer | Device | CPU / Architecture | Kernel | GL driver | Interface |
 | -- | -- | -- | -- | -- | -- |
-| Anbernic | [RG351P/M](http://jelos.org/supported-devices/anbernic/rg351pm) | Rockchip RK3326 (ARM) | Mainline Linux | Panfrost | Weston + Emulation Station |
-| Anbernic | [RG353P](http://jelos.org/supported-devices/anbernic/rg353pmvvs) | Rockchip RK3566 (ARM) | Rockchip BSP 4.19 | Mali | KMS/DRM + Emulation Station |
-| Anbernic | [RG353M](http://jelos.org/supported-devices/anbernic/rg353pmvvs) | Rockchip RK3566 (ARM) | Rockchip BSP 4.19 | Mali | KMS/DRM + Emulation Station |
-| Anbernic | [RG353V](http://jelos.org/supported-devices/anbernic/rg353pmvvs) | Rockchip RK3566 (ARM) | Rockchip BSP 4.19 | Mali | KMS/DRM + Emulation Station |
-| Anbernic | [RG353VS](http://jelos.org/supported-devices/anbernic/rg353pmvvs) | Rockchip RK3566 (ARM) | Rockchip BSP 4.19 | Mali | KMS/DRM + Emulation Station |
-| Anbernic | [RG503](http://jelos.org/supported-devices/anbernic/rg503) | Rockchip RK3566 (ARM) | Rockchip BSP 4.19 | Mali | KMS/DRM + Emulation Station |
-| Anbernic | [RG552](http://jelos.org/supported-devices/anbernic/rg552) | Rockchip RK3399 (ARM) | Mainline Linux | Panfrost | Weston + Emulation Station |
-| Anbernic | [Win600](http://jelos.org/supported-devices/anbernic/win600) | AMD Athlon Silver 3050e (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station | 
-| AOKZOE | [A1 Pro](http://jelos.org/supported-devices/aokzoe/a1-pro) | AMD 7840u (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
-| Atari | [VCS](http://jelos.org/supported-devices/atari/vcs) | AMD Ryzen R1606G (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
-| AYANEO | [Air / Air Pro](http://jelos.org/supported-devices/ayaneo/air) | Amd Ryzen 5 5560U / AMD Ryzen 7 5825U (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
-| AYANEO | [Air Plus](http://jelos.org/supported-devices/ayaneo/air-plus) | Amd Ryzen 7 6800U / (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
-| AYANEO | [AYANEO 2](http://jelos.org/supported-devices/ayaneo/ayaneo-2) | Amd Ryzen 7 6800U / (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
-| Ayn | [Loki Zero](http://jelos.org/supported-devices/ayn/loki-zero) | AMD Athlon Silver 3050e (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
-| Ayn | [Loki Max](http://jelos.org/supported-devices/ayn/loki-max) | Amd Ryzen 7 6800U / (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
-| GPD | [Win 4](http://jelos.org/supported-devices/gpd/win4) | Amd Ryzen 7 6800U / (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
-| GPD | [Win Max 2 (2022)](http://jelos.org/supported-devices/gpd/win-max-2) | Amd Ryzen 7 6800U / (x86_64) | Mainline Linux| Radeonsi | Weston + Emulation Station |
-| Hardkernel | [Odroid Go Advance](http://jelos.org/supported-devices/hardkernel/odroid-go-advance) | Rockchip RK3326 (ARM) | Mainline Linux | Panfrost | Weston + Emulation Station |
-| Hardkernel | [Odroid Go Super](http://jelos.org/supported-devices/hardkernel/odroid-go-super) | Rockchip RK3326 (ARM) | Mainline Linux | Panfrost | Weston + Emulation Station |
-| Hardkernel | [Odroid Go Ultra](http://jelos.org/supported-devices/hardkernel/odroid-go-ultra) | Amlogic S922X / Mali G52 M6 (ARMv8-A) | Mainline Linux | Mali | Weston + Emulation Station |
-| Indiedroid | [Nova](http://jelos.org/supported-devices/indiedroid/nova) | Rockchip RK3588S / Mali G610 (ARMv8-A) | Rockchip 5.10 BSP Linux | Panfrost | Weston + Emulation Station |
-| Orange Pi | [Orange Pi 5](http://jelos.org/supported-devices/orange-pi/orange-pi-5) | Rockchip RK3588S / Mali G610 (ARMv8-A) | Rockchip 5.10 BSP Linux | Panfrost | Weston + Emulation Station |
-| Powkiddy | [RGB10 Max 3 Pro](http://jelos.org/supported-devices/powkiddy/rgb10-max-3-pro) | Amlogic A311D / Mali G52 M4 (ARMv8-A) | Mainline Linux | Mali | Weston + Emulation Station |
-| Powkiddy | [RGB30](http://jelos.org/supported-devices/powkiddy/rgb30) | Rockchip RK3566 (ARM) | Rockchip BSP 4.19 | Mali | KMS/DRM + Emulation Station |
-| Powkiddy | [RK2023](http://jelos.org/supported-devices/powkiddy/rk2023) | Rockchip RK3566 (ARM) | Rockchip BSP 4.19 | Mali | KMS/DRM + Emulation Station |
-| Powkiddy | [x55](http://jelos.org/supported-devices/powkiddy/x55) | Rockchip RK3566 (ARM) | Rockchip BSP 4.19 | Mali | KMS/DRM + Emulation Station |
+| Anbernic | [RG351P/M](http://jelos.org/devices/anbernic/rg351pm) | Rockchip RK3326 (ARM) | Mainline Linux | Panfrost | Weston + Emulation Station |
+| Anbernic | [RG353P](http://jelos.org/devices/anbernic/rg353pmvvs) | Rockchip RK3566 (ARM) | Rockchip BSP 4.19 | Mali | KMS/DRM + Emulation Station |
+| Anbernic | [RG353M](http://jelos.org/devices/anbernic/rg353pmvvs) | Rockchip RK3566 (ARM) | Rockchip BSP 4.19 | Mali | KMS/DRM + Emulation Station |
+| Anbernic | [RG353V](http://jelos.org/devices/anbernic/rg353pmvvs) | Rockchip RK3566 (ARM) | Rockchip BSP 4.19 | Mali | KMS/DRM + Emulation Station |
+| Anbernic | [RG353VS](http://jelos.org/devices/anbernic/rg353pmvvs) | Rockchip RK3566 (ARM) | Rockchip BSP 4.19 | Mali | KMS/DRM + Emulation Station |
+| Anbernic | [RG503](http://jelos.org/devices/anbernic/rg503) | Rockchip RK3566 (ARM) | Rockchip BSP 4.19 | Mali | KMS/DRM + Emulation Station |
+| Anbernic | [RG552](http://jelos.org/devices/anbernic/rg552) | Rockchip RK3399 (ARM) | Mainline Linux | Panfrost | Weston + Emulation Station |
+| Anbernic | [Win600](http://jelos.org/devices/anbernic/win600) | AMD Athlon Silver 3050e (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station | 
+| AOKZOE | [A1 Pro](http://jelos.org/devices/aokzoe/a1-pro) | AMD 7840u (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
+| Atari | [VCS](http://jelos.org/devices/atari/vcs) | AMD Ryzen R1606G (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
+| AYANEO | [Air / Air Pro](http://jelos.org/devices/ayaneo/air) | Amd Ryzen 5 5560U / AMD Ryzen 7 5825U (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
+| AYANEO | [Air Plus](http://jelos.org/devices/ayaneo/air-plus) | Amd Ryzen 7 6800U / (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
+| AYANEO | [AYANEO 2](http://jelos.org/devices/ayaneo/ayaneo-2) | Amd Ryzen 7 6800U / (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
+| Ayn | [Loki Zero](http://jelos.org/devices/ayn/loki-zero) | AMD Athlon Silver 3050e (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
+| Ayn | [Loki Max](http://jelos.org/devices/ayn/loki-max) | Amd Ryzen 7 6800U / (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
+| GPD | [Win 4](http://jelos.org/devices/gpd/win4) | Amd Ryzen 7 6800U / (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
+| GPD | [Win Max 2 (2022)](http://jelos.org/devices/gpd/win-max-2) | Amd Ryzen 7 6800U / (x86_64) | Mainline Linux| Radeonsi | Weston + Emulation Station |
+| Hardkernel | [Odroid Go Advance](http://jelos.org/devices/hardkernel/odroid-go-advance) | Rockchip RK3326 (ARM) | Mainline Linux | Panfrost | Weston + Emulation Station |
+| Hardkernel | [Odroid Go Super](http://jelos.org/devices/hardkernel/odroid-go-super) | Rockchip RK3326 (ARM) | Mainline Linux | Panfrost | Weston + Emulation Station |
+| Hardkernel | [Odroid Go Ultra](http://jelos.org/devices/hardkernel/odroid-go-ultra) | Amlogic S922X / Mali G52 M6 (ARMv8-A) | Mainline Linux | Mali | Weston + Emulation Station |
+| Indiedroid | [Nova](http://jelos.org/devices/indiedroid/nova) | Rockchip RK3588S / Mali G610 (ARMv8-A) | Rockchip 5.10 BSP Linux | Panfrost | Weston + Emulation Station |
+| Orange Pi | [Orange Pi 5](http://jelos.org/devices/orange-pi/orange-pi-5) | Rockchip RK3588S / Mali G610 (ARMv8-A) | Rockchip 5.10 BSP Linux | Panfrost | Weston + Emulation Station |
+| Powkiddy | [RGB10 Max 3 Pro](http://jelos.org/devices/powkiddy/rgb10-max-3-pro) | Amlogic A311D / Mali G52 M4 (ARMv8-A) | Mainline Linux | Mali | Weston + Emulation Station |
+| Powkiddy | [RGB30](http://jelos.org/devices/powkiddy/rgb30) | Rockchip RK3566 (ARM) | Rockchip BSP 4.19 | Mali | KMS/DRM + Emulation Station |
+| Powkiddy | [RK2023](http://jelos.org/devices/powkiddy/rk2023) | Rockchip RK3566 (ARM) | Rockchip BSP 4.19 | Mali | KMS/DRM + Emulation Station |
+| Powkiddy | [x55](http://jelos.org/devices/powkiddy/x55) | Rockchip RK3566 (ARM) | Rockchip BSP 4.19 | Mali | KMS/DRM + Emulation Station |
 
 > [!NOTE]
 > While not technically supported, JELOS is also known to work well on a variety of generic x86_64 devices including gaming PCs, mini PCs, and laptop computers.
