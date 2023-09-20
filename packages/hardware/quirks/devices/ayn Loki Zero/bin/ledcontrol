@@ -161,6 +161,7 @@ case $1 in
   ;;
   brightness)
     set_setting led.brightness ${2}
+    ledcontrol $(get_setting led.color)
   ;;
   *)
     COLOR=$(get_setting led.color)
