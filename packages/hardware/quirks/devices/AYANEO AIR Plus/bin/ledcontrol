@@ -339,6 +339,7 @@ case ${1} in
     if [ ! -z "${COLOR}" ]
     then
       ledcontrol ${COLOR}
+      exit 0
     fi
   ;;
 esac
