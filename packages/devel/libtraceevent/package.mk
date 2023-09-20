@@ -7,9 +7,13 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://git.kernel.org/pub/scm/libs/libtrace/${PKG_NAME}.git/log/"
 PKG_URL="https://git.kernel.org/pub/scm/libs/libtrace/${PKG_NAME}.git/snapshot/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
-PKG_DEPENDS_TARGET="toolchain libtraceevent:host linux:host"
+PKG_DEPENDS_TARGET="toolchain libtraceevent:host"
 PKG_LONGDESC="Provides APIs to access kernel tracepoint events."
 #PKG_BUILD_FLAGS="+pic"
+
+pre_configure_host() {
+  LDFLAGS="${LDFLAGS} -ldl"
+}
 
 makeinstall_host() {
   mkdir -p ${TOOLCHAIN}/lib
