@@ -97,7 +97,7 @@ All other software is provided under each component's respective license.  These
 * [Frequently Asked Questions](https://jelos.org/faqs/)
 * [Donating to JELOS](https://jelos.org/donations/)
 
-## Supported Devices
+## Device Support
 
 JELOS supports a variety of ARM and Intel/AMD based devices.
 
