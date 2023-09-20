@@ -2,6 +2,10 @@
 # SPDX-License-Identifier: Apache-2.0
 # Copyright (C) 2023-present Fewtarius
 
+# A simple tool to manipulate the controller LEDs using outb, thanks
+# in large part to Maya (https://github.com/Maccraft123) for help with
+# reverse engineering.
+
 . /etc/profile
 
 OUTB="/usr/bin/outb"
