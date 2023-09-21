@@ -70,22 +70,25 @@ esac
 
 pre_configure_target(){
 
-  ###
-  ### Patching here is necessary to allow SDL2 to be built for
-  ### use by host builds without requiring additional unnecessary
-  ### packages to also be built (and break) during the build.
-  ###
-  ### It may be better served as a hook in scripts/build.
-  ###
+  if [ -n "${PKG_PATCH_DIRS_TARGET}" ]
+  then
+    ###
+    ### Patching here is necessary to allow SDL2 to be built for
+    ### use by host builds without requiring additional unnecessary
+    ### packages to also be built (and break) during the build.
+    ###
+    ### It may be better served as a hook in scripts/build.
+    ###
 
-  cd $(get_build_dir SDL2)
-  for PATCH in ${PKG_DIR}/patches/${PKG_PATCH_DIRS_TARGET}/*
-  do
-    patch -p1 <${PATCH}
-  done
-  cd -
+    cd $(get_build_dir SDL2)
+    for PATCH in ${PKG_DIR}/patches/${PKG_PATCH_DIRS_TARGET}/*
+    do
+      patch -p1 <${PATCH}
+    done
+    cd -
 
-  ### End
+    ### End
+  fi
 
   export LDFLAGS="${LDFLAGS} -ludev"
   PKG_CMAKE_OPTS_TARGET+="-DSDL_STATIC=OFF \
