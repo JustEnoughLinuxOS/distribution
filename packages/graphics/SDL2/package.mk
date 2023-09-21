@@ -80,12 +80,15 @@ pre_configure_target(){
     ### It may be better served as a hook in scripts/build.
     ###
 
-    cd $(get_build_dir SDL2)
-    for PATCH in ${PKG_DIR}/patches/${PKG_PATCH_DIRS_TARGET}/*
-    do
-      patch -p1 <${PATCH}
-    done
-    cd -
+    if [ -d "${PKG_DIR}/patches/${PKG_PATCH_DIRS_TARGET}" ]
+    then
+      cd $(get_build_dir SDL2)
+      for PATCH in ${PKG_DIR}/patches/${PKG_PATCH_DIRS_TARGET}/*
+      do
+        patch -p1 <${PATCH}
+      done
+      cd -
+    fi
 
     ### End
   fi
