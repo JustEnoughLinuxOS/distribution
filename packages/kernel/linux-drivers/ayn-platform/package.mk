@@ -2,7 +2,7 @@
 # Copyright (C) 2023-present Fewtarius
 
 PKG_NAME="ayn-platform"
-PKG_VERSION="b4510f8ca54511d5b28b9a4f81119f45ba0d23e0"
+PKG_VERSION="7a9b0ee47143a268cc62553551dd8886f6aa4ae8"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/ShadowBlip/ayn-platform"
 PKG_URL="${PKG_SITE}.git"

@@ -21,8 +21,6 @@ PKG_MESON_OPTS_TARGET="-Dintrospection=disabled \
                        -Dtests=false"
 
 post_makeinstall_target() {
-  # connect to the system bus
-  sed '/^\[Service\]/a Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/dbus/system_bus_socket' -i ${INSTALL}/usr/lib/systemd/system/wireplumber.service
 
   # ref https://gitlab.freedesktop.org/pipewire/wireplumber/-/commit/0da29f38181e391160fa8702623050b8544ec775
   cat > ${INSTALL}/usr/share/wireplumber/main.lua.d/89-disable-session-dbus-dependent-features.lua << EOF
