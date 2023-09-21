@@ -19,7 +19,7 @@ RUN adduser --disabled-password --gecos '' docker \
 RUN apt-get install -y \
     bc default-jre file gawk gcc git golang-go gperf libjson-perl libncurses5-dev \
     libparse-yapp-perl libxml-parser-perl lzop make patchutils python-is-python3 \
-    python3 unzip wget curl xfonts-utils xsltproc zip zstd
+    python3 parted unzip wget curl xfonts-utils xsltproc zip zstd
 
 RUN mkdir -p /work && chown docker /work
 
