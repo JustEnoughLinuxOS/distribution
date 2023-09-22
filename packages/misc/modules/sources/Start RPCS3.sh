@@ -5,6 +5,6 @@
 
 source /etc/profile
 
-jslisten set "retroarch"
+jslisten set "rpcs3"
 
-/usr/bin/retroarch --appendconfig /usr/config/retroarch/retroarch64bit-append.cfg
+/usr/bin/rpcs3 >/dev/null 2>&1
