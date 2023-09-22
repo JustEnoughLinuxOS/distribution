@@ -5,7 +5,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 . /etc/profile
-jslisten set "killall FileMan"
+jslisten set "FileMan"
 
 if [ -e "/sys/firmware/devicetree/base/model" ]
 then
