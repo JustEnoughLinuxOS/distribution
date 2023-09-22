@@ -5,6 +5,6 @@
 
 source /etc/profile
 
-jslisten set "retroarch"
+jslisten set "yuzu"
 
-/usr/bin/retroarch --appendconfig /usr/config/retroarch/retroarch64bit-append.cfg
+/usr/bin/yuzu >/dev/null 2>&1

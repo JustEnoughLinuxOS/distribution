@@ -5,6 +5,6 @@
 
 source /etc/profile
 
-jslisten set "retroarch"
+jslisten set "xemu-sa"
 
-/usr/bin/retroarch --appendconfig /usr/config/retroarch/retroarch64bit-append.cfg
+/usr/bin/xemu-sa >/dev/null 2>&1

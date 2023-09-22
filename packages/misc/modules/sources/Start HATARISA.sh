@@ -5,6 +5,6 @@
 
 source /etc/profile
 
-jslisten set "retroarch"
+jslisten set "hatarisa"
 
-/usr/bin/retroarch --appendconfig /usr/config/retroarch/retroarch64bit-append.cfg
+/usr/bin/hatarisa >/dev/null 2>&1
