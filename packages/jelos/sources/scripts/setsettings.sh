@@ -113,7 +113,6 @@ declare -a NO_REWIND=(  atomiswave
                         odyssey2
                         psp
                         pspminis
-                        psx
                         saturn
                         sega32x
                         zxspectrum
