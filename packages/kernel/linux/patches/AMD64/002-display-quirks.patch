@@ -53,7 +53,7 @@ diff -rupN linux.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c linux/drive
 +                  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "AOKZOE A1 Pro"),
 +                },
 +		.driver_data = (void *)&lcd1200x1920_leftside_up,
-+        }, {    /* AYN Loki Max */
++        }, {    /* AYN Loki Zero, Max, Max Pro */
 +                .matches = {
 +                  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "ayn"),
 +                  DMI_MATCH(DMI_PRODUCT_NAME, "Loki"),
