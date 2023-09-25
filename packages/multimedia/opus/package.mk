@@ -18,11 +18,11 @@ PKG_BUILD_FLAGS="+pic"
 #  PKG_FIXED_POINT="--disable-fixed-point"
 #fi
 
-#if [ "${TARGET_ARCH}" = "x86_64" ]; then
+if [ "${TARGET_ARCH}" = "x86_64" ]; then
   PKG_SHARED_LIBRARY="--enable-shared"
-#else
-#  PKG_SHARED_LIBRARY="--disable-shared"
-#fi
+else
+  PKG_SHARED_LIBRARY="--disable-shared"
+fi
 
 PKG_CONFIGURE_OPTS_TARGET="--enable-static \
                            $PKG_SHARED_LIBRARY \
