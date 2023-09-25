@@ -3,10 +3,8 @@
 
 PKG_NAME="citra-sa"
 PKG_VERSION="a034c54f91495e6c987e3c3d221c7f7615d60a56"
-#PKG_VERSION="8d45390ed38fe82c50d788fe1ebbbfe86369b975"
 PKG_LICENSE="MPLv2"
-PKG_SITE="https://github.com/citra-emu/citra-canary"
-#PKG_SITE="https://github.com/JustEnoughLinuxOS/citra-canary"
+PKG_SITE="https://github.com/JustEnoughLinuxOS/citra-canary"
 PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain ffmpeg mesa SDL2 boost zlib libusb boost zstd control-gen"
 PKG_LONGDESC="Citra 3DS emulator"
