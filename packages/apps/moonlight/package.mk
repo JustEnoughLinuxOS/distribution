@@ -1,14 +1,15 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2020-present Fewtarius
+# Copyright (C) 2023-present Noxwell
 
 PKG_NAME="moonlight"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
-PKG_DEPENDS_TARGET="toolchain opus SDL2 libevdev alsa curl enet avahi libvdpau libcec ffmpeg"
 PKG_SHORTDESC="Moonlight is an open source implementation of NVIDIA's GameStream, as used by the NVIDIA Shield, but built for Linux."
 
 case ${DEVICE} in
   AMD64)
+    PKG_DEPENDS_TARGET="toolchain opus SDL2 libevdev alsa curl enet avahi libvdpau libcec ffmpeg qt5 SDL2_ttf"
     PKG_SITE="https://github.com/moonlight-stream/moonlight-qt"
     PKG_URL="${PKG_SITE}.git"
     PKG_VERSION="fee54a9d765d6121c831cdaac90aff490824231f"
@@ -22,12 +23,9 @@ case ${DEVICE} in
     make_target() {
       make release
     }
-
-    post_makeinstall_target() {
-      rm ${INSTALL}/usr/share/moonlight/gamecontrollerdb.txt 
-    }
   ;;
   *)
+    PKG_DEPENDS_TARGET="toolchain opus SDL2 libevdev alsa curl enet avahi libvdpau libcec ffmpeg"
     PKG_SITE="https://github.com/moonlight-stream/moonlight-embedded"
     PKG_URL="${PKG_SITE}.git"
     PKG_VERSION="36c1636f3c77345e6439f848def9a4f917e25834"
