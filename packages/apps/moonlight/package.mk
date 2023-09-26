@@ -23,6 +23,11 @@ case ${DEVICE} in
     make_target() {
       make release
     }
+
+    post_makeinstall_target() {
+      mkdir -p ${INSTALL}/usr/bin
+      cp ${PKG_BUILD}/app/moonlight ${INSTALL}/usr/bin/
+    }
   ;;
   *)
     PKG_SITE="https://github.com/moonlight-stream/moonlight-embedded"
