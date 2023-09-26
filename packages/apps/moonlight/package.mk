@@ -2,14 +2,46 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="moonlight"
-PKG_VERSION="36c1636f3c77345e6439f848def9a4f917e25834"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
-PKG_SITE="https://github.com/moonlight-stream/moonlight-embedded"
-PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain opus SDL2 libevdev alsa curl enet avahi libvdpau libcec ffmpeg"
-PKG_SHORTDESC="Moonlight Embedded is an open source implementation of NVIDIA's GameStream, as used by the NVIDIA Shield, but built for Linux."
-PKG_TOOLCHAIN="cmake"
+PKG_SHORTDESC="Moonlight is an open source implementation of NVIDIA's GameStream, as used by the NVIDIA Shield, but built for Linux."
+
+case ${DEVICE} in
+  AMD64)
+    PKG_SITE="https://github.com/moonlight-stream/moonlight-qt"
+    PKG_URL="${PKG_SITE}.git"
+    PKG_VERSION="fee54a9d765d6121c831cdaac90aff490824231f"
+    PKG_TOOLCHAIN="manual"
+
+    pre_make_target() {
+      git submodule update --init --recursive
+      qmake "CONFIG+=embedded" moonlight-qt.pro
+    }
+
+    make_target() {
+      make release
+    }
+
+    post_makeinstall_target() {
+      rm ${INSTALL}/usr/share/moonlight/gamecontrollerdb.txt 
+    }
+  ;;
+  *)
+    PKG_SITE="https://github.com/moonlight-stream/moonlight-embedded"
+    PKG_URL="${PKG_SITE}.git"
+    PKG_VERSION="36c1636f3c77345e6439f848def9a4f917e25834"
+    PKG_TOOLCHAIN="cmake"
+    
+    post_makeinstall_target() {
+      mkdir -p ${INSTALL}/usr/config/moonlight
+      cp -R ${PKG_BUILD}/moonlight.conf ${INSTALL}/usr/config/moonlight
+      rm ${INSTALL}/usr/etc/moonlight.conf 
+      rm ${INSTALL}/usr/share/moonlight/gamecontrollerdb.txt 
+    }
+  ;;
+esac
+
 GET_HANDLER_SUPPORT="git"
 PKG_PATCH_DIRS+="${DEVICE}"
 
@@ -30,10 +62,3 @@ if [ "${VULKAN_SUPPORT}" = "yes" ]
   then
   PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
 fi
-
-post_makeinstall_target() {
-  mkdir -p ${INSTALL}/usr/config/moonlight
-    cp -R ${PKG_BUILD}/moonlight.conf ${INSTALL}/usr/config/moonlight
-    rm ${INSTALL}/usr/etc/moonlight.conf 
-    rm ${INSTALL}/usr/share/moonlight/gamecontrollerdb.txt 
-}
