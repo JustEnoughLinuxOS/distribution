@@ -1,0 +1,13 @@
+diff --git a/es-app/src/guis/GuiMoonlight.cpp b/es-app/src/guis/GuiMoonlight.cpp
+index e6ca2c1..0d62971 100644
+--- a/es-app/src/guis/GuiMoonlight.cpp
++++ b/es-app/src/guis/GuiMoonlight.cpp
+@@ -151,7 +151,7 @@ bool MoonlightClient::UpdateMoonlightGames() {
+     app_file << "#!/bin/bash" << std::endl;
+     app_file << ". /etc/profile" << std::endl;
+     app_file << "jslisten set \"moonlight\"" << std::endl;
+-    app_file << "moonlight stream -app \"" << title << "\" -platform sdl " << server_ip_ << std::endl;
++    app_file << "QT_QPA_PLATFORM=wayland moonlight stream " << server_ip_ << title << std::endl;
+     app_file.close();
+ 
+     // Write box art image
