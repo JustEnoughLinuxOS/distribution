@@ -5,10 +5,11 @@ PKG_NAME="moonlight"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SHORTDESC="Moonlight is an open source implementation of NVIDIA's GameStream, as used by the NVIDIA Shield, but built for Linux."
+PKG_DEPENDS_TARGET="toolchain opus SDL2 libevdev alsa curl enet avahi libvdpau libcec ffmpeg"
 
 case ${DEVICE} in
   AMD64)
-    PKG_DEPENDS_TARGET="toolchain opus SDL2 libevdev alsa curl enet avahi libvdpau libcec ffmpeg qt5 SDL2_ttf"
+    PKG_DEPENDS_TARGET+=" qt5 SDL2_ttf"
     PKG_SITE="https://github.com/moonlight-stream/moonlight-qt"
     PKG_URL="${PKG_SITE}.git"
     PKG_VERSION="fee54a9d765d6121c831cdaac90aff490824231f"
@@ -24,7 +25,6 @@ case ${DEVICE} in
     }
   ;;
   *)
-    PKG_DEPENDS_TARGET="toolchain opus SDL2 libevdev alsa curl enet avahi libvdpau libcec ffmpeg"
     PKG_SITE="https://github.com/moonlight-stream/moonlight-embedded"
     PKG_URL="${PKG_SITE}.git"
     PKG_VERSION="36c1636f3c77345e6439f848def9a4f917e25834"
