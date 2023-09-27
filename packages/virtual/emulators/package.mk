@@ -39,7 +39,8 @@ case "${DEVICE}" in
   ;;
   RK358*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 desmume-lr flycast-lr gpsp-lr pcsx_rearmed-lr"
-    PKG_EMUS+=" amiberry aethersx2-sa dolphin-sa duckstation-sa nanoboyadvance-sa box64 scummvmsa yabasanshiro-sa portmaster"
+    PKG_EMUS+=" amiberry aethersx2-sa dolphin-sa drastic-sa duckstation-sa melonds-sa nanoboyadvance-sa box64 scummvmsa   \
+               yabasanshiro-sa portmaster"
     LIBRETRO_CORES+=" uae4arm beetle-psx-lr bsnes-hd-lr citra-lr dolphin-lr mame-lr pcsx_rearmed-lr"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
@@ -621,6 +622,12 @@ makeinstall_target() {
     RK3399)
       add_emu_core nds drastic drastic-sa true
       add_emu_core nds retroarch melonds false
+      add_emu_core nds melonds melonds-sa false
+      add_emu_core nds retroarch desmume false
+    ;;
+    RK3588)
+      add_emu_core nds drastic drastic-sa false
+      add_emu_core nds retroarch melonds true
       add_emu_core nds melonds melonds-sa false
       add_emu_core nds retroarch desmume false
     ;;

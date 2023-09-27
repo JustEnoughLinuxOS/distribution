@@ -60,7 +60,7 @@ This document describes all available systems emulators and cores available for 
 |NEC|TurboGrafx-16 (tg16)|1989|`tg16`|.pce .bin .zip .7z|**retroarch:** beetle_pce_fast (default)<br>**retroarch:** beetle_pce<br>**retroarch:** beetle_supergrafx<br>|
 |NEC|TurboGrafx-CD (tg16cd)|1989|`tg16cd`|.cue .ccd .chd .toc .m3u|**retroarch:** beetle_pce_fast (default)<br>**retroarch:** beetle_pce<br>**retroarch:** beetle_supergrafx<br>|
 |Nesbox|TIC-80 (tic-80)|2017|`tic-80`|.tic|**retroarch:** tic80 (default)<br>|
-|Nintendo|DS (nds)|2005|`nds`|.nds .zip .7z|**drastic:** drastic-sa (default)<br>**retroarch:** melonds<br>**retroarch:** desmume<br>|
+|Nintendo|DS (nds)|2005|`nds`|.nds .zip .7z|**drastic:** drastic-sa<br>**retroarch:** melonds (default)<br>**melonds:** melonds-sa<br>**retroarch:** desmume<br>|
 |Nintendo|Famicom (famicom)|1983|`famicom`|.nes .unif .unf .zip .7z|**retroarch:** nestopia (default)<br>**retroarch:** fceumm<br>**retroarch:** quicknes<br>**retroarch:** mesen<br>|
 |Nintendo|Famicom Disk System (fds)|1986|`fds`|.fds .zip .7z|**retroarch:** nestopia (default)<br>**retroarch:** fceumm<br>**retroarch:** quicknes<br>|
 |Nintendo|Game and Watch (gameandwatch)|1980|`gameandwatch`|.mgw .zip .7z|**retroarch:** gw<br>|
