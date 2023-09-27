@@ -4,7 +4,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="flycast-sa"
-PKG_VERSION="213bc70e2d4bf14052af94255557792b4b14a0f4"
+PKG_VERSION="f75a16f40c4a1fb9d15e79bbd86b92366129010b"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/flyinghead/flycast"
 PKG_URL="${PKG_SITE}.git"

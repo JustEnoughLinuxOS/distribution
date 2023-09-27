@@ -5,6 +5,6 @@
 
 source /etc/profile
 
-jslisten set "retroarch"
+jslisten set "pcsx2-sa"
 
-/usr/bin/retroarch --appendconfig /usr/config/retroarch/retroarch64bit-append.cfg
+/usr/bin/pcsx2-sa >/dev/null 2>&1

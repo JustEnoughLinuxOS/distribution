@@ -21,10 +21,16 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
 fi
 
+if [ "${VULKAN_SUPPORT}" = "yes" ]; then
+  PKG_MAKE_OPTS_TARGET+=" HAVE_PARALLEL=1"
+fi
+
 case ${DEVICE} in
   RK3*|S922X*)
-    PKG_MAKE_OPTS_TARGET=" platform=${DEVICE}"
+    PKG_MAKE_OPTS_TARGET+=" platform=${DEVICE}"
   ;;
+  AMD64)
+    PKG_MAKE_OPTS_TARGET+=" HAVE_PARALLEL_RSP=1"
 esac
 
 makeinstall_target() {

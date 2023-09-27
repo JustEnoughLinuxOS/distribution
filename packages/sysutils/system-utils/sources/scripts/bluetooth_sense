@@ -16,10 +16,28 @@ do
       if [ -z "${CONNECTED}" ]
       then
         /usr/bin/bluetoothctl --timeout 5 connect ${DEVICE} >/dev/null 2>&1
-        if [ "$?" = "0" ]
-        then
-          volume $(get_setting "audio.volume")
-        fi
+        sleep .5
+        COUNT=0
+        while true
+        do
+          COUNT=$(( COUNT + 1))
+          CONNECTED=$(/usr/bin/bluetoothctl devices Connected 2>&1 | grep ${DEVICE} 2>/dev/null)
+          if [ -n "${CONNECTED}" ]
+          then
+            ISAUDIO=$(bluetoothctl info ${DEVICE} | awk '/UUID: Audio/ {print $2}')
+            if [ -n "${ISAUDIO}" ]
+            then
+              volume $(get_setting "audio.volume")
+              pactl set-port-latency-offset $(pactl list cards short | grep -E -o bluez.*[[:space:]]) headset-output 100000
+            fi
+            break
+          fi
+          if [ "${COUNT}" = 10 ]
+          then
+            break
+          fi
+          sleep .5
+        done
       fi
       sleep .5
     done

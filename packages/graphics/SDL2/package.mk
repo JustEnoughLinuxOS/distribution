@@ -7,10 +7,10 @@ PKG_VERSION="2.28.2"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.libsdl.org/"
 PKG_URL="https://www.libsdl.org/release/SDL2-${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_TARGET="toolchain alsa-lib systemd dbus pulseaudio libdrm"
+PKG_DEPENDS_HOST="toolchain"
+PKG_DEPENDS_TARGET="toolchain alsa-lib systemd dbus pulseaudio libdrm SDL2:host"
 PKG_LONGDESC="Simple DirectMedia Layer is a cross-platform development library designed to provide low level access to audio, keyboard, mouse, joystick, and graphics hardware."
 PKG_DEPENDS_HOST="toolchain:host distutilscross:host"
-PKG_PATCH_DIRS+="${DEVICE}"
 
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu"
@@ -64,11 +64,35 @@ fi
 case ${PROJECT} in
   Rockchip)
     PKG_DEPENDS_TARGET+=" librga"
-    PKG_DEPENDS_HOST+=" librga"
+    PKG_PATCH_DIRS_TARGET+="${DEVICE}"
   ;;
 esac
 
 pre_configure_target(){
+
+  if [ -n "${PKG_PATCH_DIRS_TARGET}" ]
+  then
+    ###
+    ### Patching here is necessary to allow SDL2 to be built for
+    ### use by host builds without requiring additional unnecessary
+    ### packages to also be built (and break) during the build.
+    ###
+    ### It may be better served as a hook in scripts/build.
+    ###
+
+    if [ -d "${PKG_DIR}/patches/${PKG_PATCH_DIRS_TARGET}" ]
+    then
+      cd $(get_build_dir SDL2)
+      for PATCH in ${PKG_DIR}/patches/${PKG_PATCH_DIRS_TARGET}/*
+      do
+        patch -p1 <${PATCH}
+      done
+      cd -
+    fi
+
+    ### End
+  fi
+
   export LDFLAGS="${LDFLAGS} -ludev"
   PKG_CMAKE_OPTS_TARGET+="-DSDL_STATIC=OFF \
                          -DLIBC=ON \
