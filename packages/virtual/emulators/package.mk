@@ -39,7 +39,7 @@ case "${DEVICE}" in
   ;;
   RK358*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 desmume-lr flycast-lr gpsp-lr pcsx_rearmed-lr"
-    PKG_EMUS+=" amiberry aethersx2-sa duckstation-sa nanoboyadvance-sa box64 scummvmsa yabasanshiro-sa box64 portmaster"
+    PKG_EMUS+=" amiberry aethersx2-sa dolphin-sa duckstation-sa nanoboyadvance-sa box64 scummvmsa yabasanshiro-sa portmaster"
     LIBRETRO_CORES+=" uae4arm beetle-psx-lr bsnes-hd-lr citra-lr dolphin-lr mame-lr pcsx_rearmed-lr"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
@@ -444,13 +444,9 @@ makeinstall_target() {
       add_emu_core gamecube primehack primehack false
       add_es_system gamecube
     ;;
-    RK3566|S922X*|RK3399)
+    RK35*|S922X*|RK3399)
       add_emu_core gamecube dolphin dolphin-sa-gc true
       add_emu_core gamecube retroarch dolphin false
-      add_es_system gamecube
-    ;;
-    RK3588)
-      add_emu_core gamecube retroarch dolphin true
       add_es_system gamecube
     ;;
   esac
@@ -463,14 +459,10 @@ makeinstall_target() {
       add_emu_core wii primehack primehack false
       add_es_system wii
     ;;
-    RK3566|S922X*|RK3399)
+    RK35*|S922X*|RK3399)
       add_emu_core wii dolphin dolphin-sa-wii true
       add_emu_core wii retroarch dolphin false
-      add_es_system wii 
-    ;;
-    RK3588)
-      add_emu_core wii retroarch dolphin true
-      add_es_system wii 
+      add_es_system wii
     ;;
   esac
 
