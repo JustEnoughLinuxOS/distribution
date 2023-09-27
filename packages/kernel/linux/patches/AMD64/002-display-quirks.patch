@@ -65,6 +65,12 @@ diff -rupN linux.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c linux/drive
 +                  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "Loki Zero"),
 +                },
 +                .driver_data = (void *)&lcd1080x1920_leftside_up,
+ 		 }, {    /* AYN Loki MiniPro */
++                .matches = {
++                  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "ayn"),
++                  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "Loki MiniPro"),
++                },
++                .driver_data = (void *)&lcd1080x1920_leftside_up,
  	}, {	/* Chuwi HiBook (CWI514) */
  		.matches = {
  			DMI_MATCH(DMI_BOARD_VENDOR, "Hampoo"),
