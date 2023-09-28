@@ -59,7 +59,7 @@ PKG_CMAKE_OPTS_TARGET+=" -DENABLE_HEADLESS=ON \
                          -DENABLE_QT=OFF \
                          -DENCODE_FRAMEDUMPS=OFF \
                          -DENABLE_CLI_TOOL=OFF \
-                         -DENABLE_X11=ON"
+                         -DENABLE_X11=OFF"
 
 
 makeinstall_target() {
@@ -79,9 +79,6 @@ post_install() {
     case ${DEVICE} in
       RK356*)
         DOLPHIN_PLATFORM="drm"
-      ;;
-      RK3588)
-        DOLPHIN_PLATFORM="x11"
       ;;
       *)
         DOLPHIN_PLATFORM="wayland"
