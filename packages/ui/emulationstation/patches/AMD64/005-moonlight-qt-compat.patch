@@ -1,0 +1,86 @@
+diff --git a/es-app/src/guis/GuiMoonlight.cpp b/es-app/src/guis/GuiMoonlight.cpp
+index e6ca2c1..45f315d 100644
+--- a/es-app/src/guis/GuiMoonlight.cpp
++++ b/es-app/src/guis/GuiMoonlight.cpp
+@@ -36,6 +36,39 @@ class MoonlightClient {
+   std::string server_ip_;
+ };
+ 
++// Compat function for moonlight-qt (SSL extraction)
++void extractCerts() {
++  std::ifstream stream("/storage/.config/Moonlight Game Streaming Project/Moonlight.conf");
++  std::string dummyLine;
++  std::string certString1;
++  std::string certString2;
++  getline(stream, dummyLine);
++  getline(stream, certString1);
++  getline(stream, certString2);
++  certString1.erase(0, 24);
++  certString1.erase(certString1.size()-2);
++  certString2.erase(0, 16);
++  certString2.erase(certString2.size()-2);
++  std::ofstream file1("/storage/clientTMP");
++  file1 << certString1;
++  ApiSystem::executeScript("echo -e $(cat /storage/clientTMP) > '/storage/.cache/Moonlight Game Streaming Project/client.pem'");
++  ApiSystem::executeScript("rm '/storage/clientTMP'");
++  std::ofstream file2("/storage/keyTMP");
++  file2 << certString2;
++  ApiSystem::executeScript("echo -e $(cat /storage/keyTMP) > '/storage/.cache/Moonlight Game Streaming Project/key.pem'");
++  ApiSystem::executeScript("rm '/storage/keyTMP'");
++}
++
++// Compat function for moonlight-qt (SSL file existence check)
++bool existCerts (const std::string& name) {
++  if (FILE *file = fopen(name.c_str(), "r")) {
++      fclose(file);
++      return true;
++  } else {
++      return false;
++  }   
++}
++
+ std::string MoonlightClient::CreateNewGuid() {
+   srand(time(NULL));
+ 
+@@ -61,7 +94,11 @@ std::string MoonlightClient::MakeUrl(
+ }
+ 
+ std::string MoonlightClient::MakeRequest(const std::string& url, std::string* filename) {
+-  const std::string cert_path = "/storage/.cache/moonlight/";
++  const std::string cert_path = "/storage/.cache/Moonlight Game Streaming Project/";
++
++  if (existCerts("/storage/.cache/Moonlight Game Streaming Project/client.pem") == false) {
++    extractCerts();
++  }
+ 
+   HttpReqOptions opts;
+   opts.clientCert = cert_path + "client.pem";
+@@ -150,8 +187,7 @@ bool MoonlightClient::UpdateMoonlightGames() {
+     std::ofstream app_file("/storage/roms/moonlight/" + filename + ".sh");
+     app_file << "#!/bin/bash" << std::endl;
+     app_file << ". /etc/profile" << std::endl;
+-    app_file << "jslisten set \"moonlight\"" << std::endl;
+-    app_file << "moonlight stream -app \"" << title << "\" -platform sdl " << server_ip_ << std::endl;
++    app_file << "QT_QPA_PLATFORM=wayland moonlight stream " << server_ip_ << " " << title << std::endl;
+     app_file.close();
+ 
+     // Write box art image
+@@ -214,7 +250,7 @@ GuiMoonlight::GuiMoonlight(Window* window)
+     std::string server_ip = SystemConf::getInstance()->get("moonlight.host");
+ 
+     char cmd[1024];
+-    snprintf(cmd, sizeof cmd, "moonlight pair -pin %s %s", pin, server_ip.c_str());
++    snprintf(cmd, sizeof cmd, "QT_QPA_PLATFORM=wayland moonlight pair -pin %s %s", pin, server_ip.c_str());
+ 		ApiSystem::executeScript(cmd, [server_ip, window](std::string line) {
+       std::string new_server_ip;
+       if (ParseServerIp(line, &new_server_ip) && server_ip != new_server_ip) {
+@@ -229,7 +265,8 @@ GuiMoonlight::GuiMoonlight(Window* window)
+ 	});
+ 
+   addEntry(_("UNPAIR WITH SERVER"), false, [this, window] {
+-		runSystemCommand("rm -r ~/.cache/moonlight", "", nullptr);
++		runSystemCommand("rm -r '/storage/.cache/Moonlight Game Streaming Project'", "", nullptr);
++                runSystemCommand("rm -r '/storage/.config/Moonlight Game Streaming Project'", "", nullptr);
+ 	});
+ 
+ 	addGroup(_("SETTINGS"));
