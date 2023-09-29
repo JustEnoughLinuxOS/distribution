@@ -60,7 +60,7 @@ index e6ca2c1..b852110 100644
      app_file << ". /etc/profile" << std::endl;
      app_file << "jslisten set \"moonlight\"" << std::endl;
 -    app_file << "moonlight stream -app \"" << title << "\" -platform sdl " << server_ip_ << std::endl;
-+    app_file << "QT_QPA_PLATFORM=wayland moonlight stream " << server_ip_ << " " << title << " --quit-after" << std::endl;
++    app_file << "QT_QPA_PLATFORM=wayland moonlight stream " << server_ip_ << " \"" << title << "\" --quit-after" << std::endl;
      app_file.close();
  
      // Write box art image
