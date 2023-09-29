@@ -26,7 +26,11 @@ case ${DEVICE} in
 
     post_makeinstall_target() {
       mkdir -p ${INSTALL}/usr/bin
-      cp ${PKG_BUILD}/app/moonlight ${INSTALL}/usr/bin/
+      mkdir -p ${INSTALL}/usr/config/modules
+      cp ${PKG_BUILD}/app/${PKG_NAME} ${INSTALL}/usr/bin/
+      cp -rf ${PKG_DIR}/sources/start_moonlight.sh ${INSTALL}/usr/bin/
+      chmod 755 ${INSTALL}/usr/bin/*
+      cp ${INSTALL}/usr/bin/start_moonlight.sh ${INSTALL}/usr/config/modules/Start\ Moonlight.sh
     }
   ;;
   *)
@@ -36,12 +40,10 @@ case ${DEVICE} in
     PKG_TOOLCHAIN="cmake"
     
     post_makeinstall_target() {
-      mkdir -p ${INSTALL}/usr/bin
-      mkdir -p ${INSTALL}/usr/config/modules
-      cp ${PKG_BUILD}/app/${PKG_NAME} ${INSTALL}/usr/bin/
-      cp -rf ${PKG_DIR}/sources/start_moonlight.sh ${INSTALL}/usr/bin/
-      chmod 755 ${INSTALL}/usr/bin/*
-      cp ${INSTALL}/usr/bin/start_moonlight.sh ${INSTALL}/usr/config/modules/Start\ Moonlight.sh
+      mkdir -p ${INSTALL}/usr/config/moonlight
+      cp -R ${PKG_BUILD}/moonlight.conf ${INSTALL}/usr/config/moonlight
+      rm ${INSTALL}/usr/etc/moonlight.conf 
+      rm ${INSTALL}/usr/share/moonlight/gamecontrollerdb.txt 
     }
   ;;
 esac
