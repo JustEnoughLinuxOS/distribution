@@ -724,8 +724,8 @@ makeinstall_target() {
   ### Sony Playstation 2
   case ${DEVICE} in
     AMD64)
-      add_emu_core ps2 retroarch pcsx2 true
-      add_emu_core ps2 pcsx2 pcsx2-sa false
+      add_emu_core ps2 pcsx2 pcsx2-sa true
+      add_emu_core ps2 retroarch pcsx2 false
       add_es_system ps2
     ;;
     RK3588|S922X|RK3399)
