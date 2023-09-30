@@ -70,7 +70,7 @@
     WINDOWMANAGER="weston"
 
   # kernel serial console
-    EXTRA_CMDLINE="quiet rootwait console=ttyUSB0,1500000 console=tty0 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
+    EXTRA_CMDLINE="quiet rootwait earlycon=uart8250,mmio32,0xfe660000 console=ttyS2,1500000n8 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20 initcall_blacklist=uvc_init log_buf_len=1M nopkmute debugging"
 
   # additional packages to install
   #  ADDITIONAL_PACKAGES=""
@@ -117,6 +117,7 @@
 
   # build and install OpenVPN support (yes / no)
     OPENVPN_SUPPORT="no"
+    WIREGUARD_SUPPORT="no"
 
   # build and install ZeroTier support (yes / no)
     ZEROTIER_SUPPORT="yes"

@@ -74,6 +74,7 @@ do
   then
     echo "image: copy device trees to image..."
     mcopy -o "${DTB}.dtb" ::
+    mcopy -o "${DTB}.dtb" ::/rockchip/
   fi
 done
 
