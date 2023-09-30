@@ -1,3 +1,16 @@
+diff --git a/es-app/src/SystemScreenSaver.cpp b/es-app/src/SystemScreenSaver.cpp
+index e37b6c9..8b75358 100644
+--- a/es-app/src/SystemScreenSaver.cpp
++++ b/es-app/src/SystemScreenSaver.cpp
+@@ -184,7 +184,7 @@ void SystemScreenSaver::stopScreenSaver()
+ 	if ( screensaver_behavior == "black" )
+ 	{
+ 		auto sysbright = SystemConf::getInstance()->get("system.brightness");
+-		BrightnessControl::getInstance()->setBrightness(stoi(sysbright) * 10);
++		BrightnessControl::getInstance()->setBrightness(stoi(sysbright));
+ 	}
+ 
+ 	if (mLoadingNext)
 diff --git a/es-app/src/guis/GuiMenu.cpp b/es-app/src/guis/GuiMenu.cpp
 index a327ea0..c67dc02 100644
 --- a/es-app/src/guis/GuiMenu.cpp
@@ -17,7 +30,7 @@ index a327ea0..c67dc02 100644
  
  		s->addWithLabel(_("BRIGHTNESS"), brightnessComponent);
 diff --git a/es-core/src/BrightnessControl.cpp b/es-core/src/BrightnessControl.cpp
-index 706358f..5dd2995 100644
+index 706358f..ea38de1 100644
 --- a/es-core/src/BrightnessControl.cpp
 +++ b/es-core/src/BrightnessControl.cpp
 @@ -7,6 +7,7 @@
@@ -28,16 +41,18 @@ index 706358f..5dd2995 100644
  
  std::string BACKLIGHT_PATH = std::string(getShOutput(R"(/usr/bin/brightness path)"));
  std::string BACKLIGHT_BRIGHTNESS_NAME = BACKLIGHT_PATH + "/brightness";
-@@ -69,7 +70,7 @@ int BrightnessControl::getBrightness() const
+@@ -69,7 +70,9 @@ int BrightnessControl::getBrightness() const
  
      close(fd);
  
 -    value = (uint32_t)((value / (float)max * 100.0f) + 0.5f);
-+    value = (uint32_t)(11-exp(((max+0.5-value)/max)*log(11)) + 0.5f);
++    SystemConf::getInstance()->loadSystemConf();
++		auto sysbright = SystemConf::getInstance()->get("system.brightness");
++    value = stoi(sysbright);
      return value;
  }
  
-@@ -82,8 +83,8 @@ void BrightnessControl::setBrightness(int value)
+@@ -82,8 +85,8 @@ void BrightnessControl::setBrightness(int value)
      if (value < 0)
          value = 0;
  
@@ -48,7 +63,7 @@ index 706358f..5dd2995 100644
  
      int fd;
      int max = 100;
-@@ -109,8 +110,8 @@ void BrightnessControl::setBrightness(int value)
+@@ -109,8 +112,8 @@ void BrightnessControl::setBrightness(int value)
      if (fd < 0)
          return;
  
