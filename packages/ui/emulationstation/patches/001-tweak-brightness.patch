@@ -1,0 +1,61 @@
+diff --git a/es-app/src/guis/GuiMenu.cpp b/es-app/src/guis/GuiMenu.cpp
+index a327ea0..c67dc02 100644
+--- a/es-app/src/guis/GuiMenu.cpp
++++ b/es-app/src/guis/GuiMenu.cpp
+@@ -1180,11 +1180,11 @@ void GuiMenu::openSystemSettings_batocera()
+ 	{
+ 		// brightness
+ 		int brightness = BrightnessControl::getInstance()->getBrightness();
+-		auto brightnessComponent = std::make_shared<SliderComponent>(mWindow, 0.f, 100.f, 10.f, "%");
++		auto brightnessComponent = std::make_shared<SliderComponent>(mWindow, 0.f, 10.f, 1.f, "/10");
+ 		brightnessComponent->setValue(brightness);
+ 		brightnessComponent->setOnValueChanged([](const float &newVal) {
+ 			BrightnessControl::getInstance()->setBrightness((int)Math::round(newVal));
+-                        SystemConf::getInstance()->set("system.brightness", std::to_string((int)Math::round(newVal) / 10));
++                        SystemConf::getInstance()->set("system.brightness", std::to_string((int)newVal));
+ 		});
+ 
+ 		s->addWithLabel(_("BRIGHTNESS"), brightnessComponent);
+diff --git a/es-core/src/BrightnessControl.cpp b/es-core/src/BrightnessControl.cpp
+index 706358f..5dd2995 100644
+--- a/es-core/src/BrightnessControl.cpp
++++ b/es-core/src/BrightnessControl.cpp
+@@ -7,6 +7,7 @@
+ #include <SystemConf.h>
+ #include <unistd.h>
+ #include "platform.h"
++#include <math.h>
+ 
+ std::string BACKLIGHT_PATH = std::string(getShOutput(R"(/usr/bin/brightness path)"));
+ std::string BACKLIGHT_BRIGHTNESS_NAME = BACKLIGHT_PATH + "/brightness";
+@@ -69,7 +70,7 @@ int BrightnessControl::getBrightness() const
+ 
+     close(fd);
+ 
+-    value = (uint32_t)((value / (float)max * 100.0f) + 0.5f);
++    value = (uint32_t)(11-exp(((max+0.5-value)/max)*log(11)) + 0.5f);
+     return value;
+ }
+ 
+@@ -82,8 +83,8 @@ void BrightnessControl::setBrightness(int value)
+     if (value < 0)
+         value = 0;
+ 
+-    if (value > 100)
+-        value = 100;
++    if (value > 10)
++        value = 10;
+ 
+     int fd;
+     int max = 100;
+@@ -109,8 +110,8 @@ void BrightnessControl::setBrightness(int value)
+     if (fd < 0)
+         return;
+ 
+-    float percent = (value / 100.0f * (float)max) + 0.5f;
+-    sprintf(buffer, "%d\n", (uint32_t)percent);
++    float val = (max - (max * (log(11-value)/log(11)))) + 0.5f;
++    sprintf(buffer, "%d\n", (uint32_t)val);
+ 
+     count = write(fd, buffer, strlen(buffer));
+     if (count < 0)
