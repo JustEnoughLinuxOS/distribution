@@ -8,15 +8,16 @@
 
 BRIGHTNESS_DEV="$(find /sys/class/backlight/*/ -name brightness -print -quit)"
 BRIGHTNESS_PATH="${BRIGHTNESS_DEV%/brightness}"
+BRIGHTNESS_TABLE=($(get_setting brightness_table))
+if [ -z $BRIGHTNESS_TABLE ]; then
+  BRIGHTNESS_TABLE="0 0.04 0.08 0.13 0.19 0.25 0.33 0.42 0.54 0.71 1"
+  set_setting brightness_table "$BRIGHTNESS_TABLE"
+fi
+NUM_STEPS=${#BRIGHTNESS_TABLE[@]}
 
-MIN=0
 MAX=$(<$(find /sys/class/backlight/*/ -name max_brightness -print -quit))
-NUM_STEPS=10
-eqn() {
-  echo "(l(1.0+$NUM_STEPS-$NEXT)/l(1.0+$NUM_STEPS))"
-}
 compute() {
-  echo "x=$MAX+0.5-(($MAX-$MIN)*$(eqn$1)); scale=0; x/1" | bc -l
+  echo "${BRIGHTNESS_TABLE[$NEXT]} * $MAX" | bc -l
 }
 
 if [ ! -f "${BRIGHTNESS_DEV}" ]
@@ -37,12 +38,16 @@ setBrightness() {
 stepUp() {
   CURRENT=$(get_setting system.brightness)
   NEXT=$(( ${CURRENT} + 1 ))
-  if (( ${NEXT} > 10 ))
+  if (( ${NEXT} >= $NUM_STEPS ))
   then
-    NEXT=10
+    NEXT=$(( $NUM_STEPS - 1 ))
   fi
 
   BRIGHTNESS=$(printf '%.0f' "$(compute)")
+  if (($BRIGHTNESS > $MAX ))
+  then
+    BRIGHTNESS=$MAX
+  fi
 
   setBrightness ${BRIGHTNESS} ${NEXT}
 }
@@ -75,7 +80,7 @@ case ${1} in
         ;;
         "set")
           NEXT=${2}
-           setBrightness "$(printf '%.0f' "$(compute)")" ${2}
+          setBrightness "$(printf '%.0f' "$(compute)")" ${2}
         ;;
         *)
           echo $(getBrightness)
