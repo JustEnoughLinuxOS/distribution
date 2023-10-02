@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
-diff --git a/src/frontend-common/platform_misc_unix.cpp b/src/frontend-common/platform_misc_unix.cpp
+diff --git a/src/util/platform_misc_unix.cpp b/src/util/platform_misc_unix.cpp
 index 1f7ae9ec..e0487476 100644
---- a/src/frontend-common/platform_misc_unix.cpp
-+++ b/src/frontend-common/platform_misc_unix.cpp
+--- a/src/util/platform_misc_unix.cpp
++++ b/src/util/platform_misc_unix.cpp
 @@ -24,12 +24,12 @@ static bool SetScreensaverInhibitX11(bool inhibit, const WindowInfo& wi)
    char* argv[4] = {command.GetWriteableCharArray(), operation.GetWriteableCharArray(), id.GetWriteableCharArray(),
                     nullptr};
