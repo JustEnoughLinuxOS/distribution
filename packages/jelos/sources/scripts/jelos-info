@@ -103,10 +103,13 @@ echo "CPU: ${V_CPUMODEL1} (${V_CPUNB} Cores)"
 
 # temperature
 # Unit: millidegree Celsius
-TEMPE=$(printf "%.0f" $(awk '{ total += $1; count++ } END { print total/count }' ${DEVICE_TEMP_SENSOR} 2>/dev/null) 2>/dev/null | sed -e s+"[0-9][0-9][0-9]$"++)
-if [ -n "${TEMPE}" ]
+if [ -n "${DEVICE_TEMP_SENSOR}" ]
 then
-  echo "CPU TEMPERATURE: ${TEMPE}°"
+  TEMPE=$(printf "%.0f" $(awk '{ total += $1; count++ } END { print total/count }' ${DEVICE_TEMP_SENSOR} 2>/dev/null) 2>/dev/null | sed -e s+"[0-9][0-9][0-9]$"++)
+  if [ -n "${TEMPE}" ]
+  then
+    echo "CPU TEMPERATURE: ${TEMPE}.."
+  fi
 fi
 
 if [ "${DEVICE_HAS_FAN}" = "true" ]
