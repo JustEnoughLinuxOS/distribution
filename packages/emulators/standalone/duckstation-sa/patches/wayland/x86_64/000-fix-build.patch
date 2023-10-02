@@ -1,0 +1,22 @@
+diff -rupN duckstation-sa.orig/src/duckstation-nogui/wayland_nogui_platform.cpp duckstation-sa/src/duckstation-nogui/wayland_nogui_platform.cpp
+--- duckstation-sa.orig/src/duckstation-nogui/wayland_nogui_platform.cpp	2023-09-28 19:52:20.630654047 +0000
++++ duckstation-sa/src/duckstation-nogui/wayland_nogui_platform.cpp	2023-09-28 19:52:43.891283524 +0000
+@@ -7,7 +7,6 @@
+ #include "common/string_util.h"
+ #include "common/threading.h"
+ #include "core/host.h"
+-#include "core/host_settings.h"
+ #include "nogui_host.h"
+ #include "nogui_platform.h"
+ 
+diff -rupN duckstation-sa.orig/src/duckstation-nogui/x11_nogui_platform.h duckstation-sa/src/duckstation-nogui/x11_nogui_platform.h
+--- duckstation-sa.orig/src/duckstation-nogui/x11_nogui_platform.h	2023-09-28 19:52:20.630654047 +0000
++++ duckstation-sa/src/duckstation-nogui/x11_nogui_platform.h	2023-09-28 19:53:51.529094295 +0000
+@@ -12,7 +12,6 @@
+ #include "common/string_util.h"
+ #include "common/threading.h"
+ #include "core/host.h"
+-#include "core/host_settings.h"
+ #include "nogui_host.h"
+ #include "nogui_platform.h"
+ 
