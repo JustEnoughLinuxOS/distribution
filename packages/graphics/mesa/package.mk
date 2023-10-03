@@ -10,13 +10,13 @@ PKG_TOOLCHAIN="meson"
 PKG_PATCH_DIRS+=" ${DEVICE}"
 
 case ${DEVICE} in
- RK35*)
+ RK3588)
         PKG_VERSION="120202c675749c5ef81ae4c8cdc30019b4de08f4"
         PKG_SITE="https://gitlab.com/panfork/mesa"
         PKG_URL="${PKG_SITE}.git"
         PKG_GIT_CLONE_BRANCH="csf"
   ;;
-  RK3399) #Upstream Mesa appears to be broken on the RK3399 build currently
+  RK3399|RK3566*) #Upstream Mesa appears to be broken on the RK3399 build currently
 	PKG_VERSION="22.3.7"
 	PKG_SHA256="894ce2f4a1c2e76177cdd2284620192d0da3066b243eec2fbb1d7cf37f13042c"
 	PKG_URL="https://mesa.freedesktop.org/archive/mesa-${PKG_VERSION}.tar.xz"
