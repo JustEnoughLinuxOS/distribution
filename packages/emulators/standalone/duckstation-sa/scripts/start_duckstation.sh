@@ -21,7 +21,7 @@ if [ -d "/storage/.config/duckstation/savestates" ]; then
 fi
 ln -sfv "/storage/roms/savestates/psx" "/storage/.config/duckstation/savestates"
 
-#Copy gamecontroller db file from the device. 
+#Copy gamecontroller db file from the device.
 cp -rf /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/.config/duckstation/database/gamecontrollerdb.txt
 cp -rf /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/.config/duckstation/resources/gamecontrollerdb.txt
 
@@ -37,6 +37,24 @@ else
   ### All..
   unset EMUPERF
 fi
+
+  #Emulation Station Features
+  GAME=$(echo "${1}"| sed "s#^/.*/##")
+  RENDERER=$(get_setting graphics_backend psx "${GAME}")
+
+  #Video Backend
+	if [ "$RENDERER" = "opengl" ]
+	then
+  		sed -i '/^Renderer =/c\Renderer = OpenGL' /storage/.config/duckstation/settings.ini
+	fi
+        if [ "$RENDERER" = "vulkan" ]
+        then
+                sed -i '/^Renderer =/c\Renderer = Vulkan' /storage/.config/duckstation/settings.ini
+        fi
+        if [ "$RENDERER" = "software" ]
+        then
+                sed -i '/^Renderer =/c\Renderer = Software' /storage/.config/duckstation/settings.ini
+        fi
 
 #Run Duckstation
 ${EMUPERF} duckstation-nogui -fullscreen -settings "/storage/.config/duckstation/settings.ini" -- "${1}" > /dev/null 2>&1
