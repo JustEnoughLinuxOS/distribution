@@ -1,134 +1,168 @@
 <?xml version="1.0"?>
 <gameList>
-
-	<game>
-		<path>./cloud_backup.sh</path>
-		<name>Cloud Backup</name>
-		<desc>Backup your saves to a cloud drive.</desc>
-		<developer>JELOS</developer>
-		<publisher>JELOS</publisher>
-		<rating>1.0</rating>
-		<releasedate>2022</releasedate>
-		<genre>Script</genre>
-		<thumbnail>./downloaded_images/rclone-thumb.png</thumbnail>
-		<image>./downloaded_images/rclone-back.png</image>
-	</game>
-
-	<game>
-		<path>./cloud_restore.sh</path>
-		<name>Cloud Restore</name>
-		<desc>Restores your saves from a cloud drive.</desc>
-		<developer>JELOS</developer>
-		<publisher>JELOS</publisher>
-		<rating>1.0</rating>
-		<releasedate>2022</releasedate>
-		<genre>Script</genre>
-		<thumbnail>./downloaded_images/rclone-thumb.png</thumbnail>
-		<image>./downloaded_images/rclone-back.png</image>
-	</game>
-
-        <game>
-                <path>./fileman.sh</path>
-                <name>File Manager</name>
-                <desc>Single panel file manager</desc>
-                <developer>Tardigrade and JELOS</developer>
-                <publisher>JELOS</publisher>
-                <rating>1.0</rating>
-                <releasedate>2022</releasedate>
-                <genre>Script</genre>
-                <thumbnail>./downloaded_images/filemanager-thumb.png</thumbnail>
-                <image>./downloaded_images/filemanager.png</image>
-        </game>
-
-        <game>
-                <path>./Install JELOS.sh</path>
-                <name>Install JELOS</name>
-                <desc>Install JELOS to local storage</desc>
-                <developer>JELOS</developer>
-                <publisher>JELOS</publisher>
-                <rating>1.0</rating>
-                <releasedate>2022</releasedate>
-                <genre>Script</genre>
-                <thumbnail>./downloaded_images/jelos-thumb.png</thumbnail>
-                <image>./downloaded_images/jelos-image.png</image>
-        </game>
-
-	<game>
-		<path>./Start PortMaster.sh</path>
-		<name>Start PortMaster</name>
-		<desc>Portmaster</desc>
-		<developer>JELOS</developer>
-		<publisher>JELOS</publisher>
-		<rating>1.0</rating>
-		<releasedate>2023</releasedate>		
-		<genre>Script</genre>
-		<image>./downloaded_images/ports-image.png</image>
-		<thumbnail>./downloaded_images/ports-thumb.png</thumbnail>
-	</game>
-	
-	<game>
-		<path>./Start PPSSPP.sh</path>
-		<name>Start PPSSPP</name>
-		<desc>Run the PPSSPP emulator without starting a game.</desc>
-		<developer>JELOS</developer>
-		<publisher>JELOS</publisher>
-		<rating>1.0</rating>
-		<releasedate>2021</releasedate>
-		<genre>Script</genre>
-		<thumbnail>./downloaded_images/ppsspp-thumb.png</thumbnail>
-		<image>./downloaded_images/ppsspp.png</image>
-	</game>
-
-	<game>
-		<path>./Start ScummVM.sh</path>
-		<name>Start ScummVM</name>
-		<desc>Run the ScummVM emulator without starting a game.</desc>
-		<developer>JELOS</developer>
-		<publisher>JELOS</publisher>
-		<rating>1.0</rating>
-		<releasedate>2021</releasedate>
-		<genre>Script</genre>
-		<thumbnail>./downloaded_images/scummvm-thumb.png</thumbnail>
-		<image>./downloaded_images/scummvm.png</image>
-	</game>
-
-        <game>
-                <path>./Start 32bit Retroarch.sh</path>
-                <name>Start 32bit RetroArch</name>
-                <desc>Run 32bit RetroArch</desc>
-                <developer>JELOS</developer>
-                <publisher>JELOS</publisher>
-                <rating>1.0</rating>
-                <releasedate>2021</releasedate>
-                <genre>Script</genre>
-                <thumbnail>./downloaded_images/retroarch32-thumb.png</thumbnail>
-                <image>./downloaded_images/retroarch32.png</image>
-        </game>
-
-	<game>
-		<path>./Start 64bit Retroarch.sh</path>
-		<name>Start 64bit RetroArch</name>
-		<desc>Run 64bit RetroArch</desc>
-		<developer>JELOS</developer>
-		<publisher>JELOS</publisher>
-		<rating>1.0</rating>
-		<releasedate>2021</releasedate>
-		<genre>Script</genre>
-		<thumbnail>./downloaded_images/retroarch64-thumb.png</thumbnail>
-		<image>./downloaded_images/retroarch64.png</image>
-	</game>
-
-	<game>
-		<path>./Remove ._ Files.sh</path>
-		<name>Run Remove ._ Files</name>
-		<desc>Removes hidden ._ files created by the MacOS filesystem</desc>
-		<developer>JELOS</developer>
-		<publisher>JELOS</publisher>
-		<rating>1.0</rating>
-		<releasedate>2021</releasedate>
-		<genre>Script</genre>
-		<thumbnail>./downloaded_images/clean-thumb.png</thumbnail>
-		<image>./downloaded_images/clean.png</image>
-	</game>
-
+    <game>
+        <path>./fileman.sh</path>
+        <name>File Manager</name>
+        <desc>Enables you to browse the JELOS filesystem and manage files directly on your device.  You can also use this tool to copy files from external drives to your JELOS filesystem.</desc>
+        <developer>Tardigrade and JELOS</developer>
+        <publisher>JELOS</publisher>
+        <rating>5.0</rating>
+        <releasedate>2022</releasedate>
+        <genre>Script</genre>
+        <image>./images/file-manager.svg</image>
+    </game>
+    <game>
+        <path>./Install JELOS.sh</path>
+        <name>Install JELOS</name>
+        <desc>Use this utility to install JELOS to the local storage on your device.  Note: This process will wipe the drive that you choose to install JELOS on.</desc>
+        <developer>JELOS</developer>
+        <publisher>JELOS</publisher>
+        <rating>5.0</rating>
+        <releasedate>2022</releasedate>
+        <genre>Script</genre>
+        <image>./images/install-jelos.svg</image>
+    </game>
+    <game>
+        <path>./Start PortMaster.sh</path>
+        <name>PortMaster</name>
+        <desc>PortMaster is a simple tool that allows you to download various game ports that are available for 351Elec, ArkOS, JelOS, RetroOZ, and TheRA for ARM based devices.  You can find details at github.com/christianhaitian/PortMaster</desc>
+        <developer>JELOS</developer>
+        <publisher>JELOS</publisher>
+        <rating>5.0</rating>
+        <releasedate>2022</releasedate>         
+        <genre>Script</genre>
+        <image>./images/portmaster.svg</image>
+    </game>
+    <game>
+        <path>./cloud_backup.sh</path>
+        <name>RCLONE Backup</name>
+        <desc>Backup your saves to a cloud drive using RCLONE. Please make sure you have followed the steps at jelos.org to set up RCLONE first.</desc>
+        <developer>JELOS</developer>
+        <publisher>JELOS</publisher>
+        <rating>5.0</rating>
+        <releasedate>2022</releasedate>
+        <genre>Script</genre>
+        <image>./images/rclone-backup.svg</image>
+    </game>
+    <game>
+        <path>./cloud_restore.sh</path>
+        <name>RCLONE Restore</name>
+        <desc>Restores your saves from a cloud drive using RCLONE. Please make sure you have followed the steps at jelos.org to set up RCLONE first.</desc>
+        <developer>JELOS</developer>
+        <publisher>JELOS</publisher>
+        <rating>5.0</rating>
+        <releasedate>2022</releasedate>
+        <genre>Script</genre>
+        <image>./images/rclone-restore.svg</image>
+    </game>
+    <game>
+        <path>./Remove ._ Files.sh</path>
+        <name>Remove ._ Files</name>
+        <desc>This tool can be run to remove hidden ._ files created by the MacOS filesystem</desc>
+        <developer>JELOS</developer>
+        <publisher>JELOS</publisher>
+        <rating>5.0</rating>
+        <releasedate>2021</releasedate>
+        <genre>Script</genre>
+        <image>./images/remove-mac-files.svg</image>
+    </game>
+    <game>
+        <path>./Start CEMU.sh</path>
+        <name>Start Cemu</name>
+        <desc>Opens the Cemu GUI (WiiU) to enable global configuration changes to be made directly to the emulator. It's recommended to have a mouse and keyboard available to modify settings.</desc>
+        <developer>JELOS</developer>
+        <publisher>JELOS</publisher>
+        <rating>5.0</rating>
+        <releasedate>2023</releasedate>
+        <genre>Script</genre>
+        <image>./images/cemu.svg</image>
+    </game>
+    <game>
+        <path>./Start PCSX2.sh</path>
+        <name>Start PCSX2</name>
+        <desc>Opens the PCSX2 GUI (PS2) to enable global configuration changes to be made directly to the emulator. It's recommended to have a mouse and keyboard available to modify settings.</desc>
+        <developer>JELOS</developer>
+        <publisher>JELOS</publisher>
+        <rating>5.0</rating>
+        <releasedate>2021</releasedate>
+        <genre>Script</genre>
+        <image>./images/pcsx2.svg</image>
+    </game>
+    <game>
+        <path>./Start PPSSPP.sh</path>
+        <name>Start PPSSPP</name>
+        <desc>Opens the PPSSPP GUI (PSP) to enable global configuration changes to be made directly to the emulator.</desc>
+        <developer>JELOS</developer>
+        <publisher>JELOS</publisher>
+        <rating>5.0</rating>
+        <releasedate>2021</releasedate>
+        <genre>Script</genre>
+        <image>./images/ppsspp.svg</image>
+    </game>
+    <game>
+        <path>./Start 32bit Retroarch.sh</path>
+        <name>Start RetroArch (32-bit)</name>
+        <desc>Opens the RetroArch GUI (32-bit version) to enable global configuration changes to be made directly to the emulator.</desc>
+        <developer>JELOS</developer>
+        <publisher>JELOS</publisher>
+        <rating>5.0</rating>
+        <releasedate>2021</releasedate>
+        <genre>Script</genre>
+        <image>./images/retroarch-32.svg</image>
+    </game>
+    <game>
+        <path>./Start 64bit Retroarch.sh</path>
+        <name>Start RetroArch (64-bit)</name>
+        <desc>Opens the RetroArch GUI (64-bit version) to enable global configuration changes to be made directly to the emulator.</desc>
+        <developer>JELOS</developer>
+        <publisher>JELOS</publisher>
+        <rating>5.0</rating>
+        <releasedate>2021</releasedate>
+        <genre>Script</genre>
+        <image>./images/retroarch-64.svg</image>
+    </game>
+    <game>
+        <path>./Start RPCS3.sh</path>
+        <name>Start RPCS3</name>
+        <desc>Opens the RPCS3 GUI (PS3) to enable configuration changes to be made directly to the emulator. You can use this to set up firmware, update controls and install packages. It's recommended to have a mouse and keyboard available to modify settings.</desc>
+        <developer>JELOS</developer>
+        <publisher>JELOS</publisher>
+        <rating>5.0</rating>
+        <releasedate>2021</releasedate>
+        <genre>Script</genre>
+        <image>./images/rpcs3.svg</image>
+    </game>
+    <game>
+        <path>./Start ScummVM.sh</path>
+        <name>Start ScummVM</name>
+        <desc>Opens the ScummVM GUI to enable global configuration changes to be made directly to the emulator. It's recommended to have a mouse and keyboard available to modify settings.</desc>
+        <developer>JELOS</developer>
+        <publisher>JELOS</publisher>
+        <rating>5.0</rating>
+        <releasedate>2021</releasedate>
+        <genre>Script</genre>
+        <image>./images/scummvm.svg</image>
+    </game>
+    <game>
+        <path>./Start Xemu.sh</path>
+        <name>Start Xemu</name>
+        <desc>Opens the Xemu GUI (Xbox) to enable global configuration changes to be made directly to the emulator. It's recommended to have a mouse and keyboard available to modify settings.</desc>
+        <developer>JELOS</developer>
+        <publisher>JELOS</publisher>
+        <rating>5.0</rating>
+        <releasedate>2023</releasedate>
+        <genre>Script</genre>
+        <image>./images/xemu.svg</image>
+    </game>
+    <game>
+        <path>./Start Yuzu.sh</path>
+        <name>Start Yuzu</name>
+        <desc>Opens the Yuzu GUI (Switch) to enable global configuration changes to be made directly to the emulator. It's recommended to have a mouse and keyboard available to modify settings.</desc>
+        <developer>JELOS</developer>
+        <publisher>JELOS</publisher>
+        <rating>5.0</rating>
+        <releasedate>2023</releasedate>
+        <genre>Script</genre>
+        <image>./images/yuzu.svg</image>
+    </game>
 </gameList>
