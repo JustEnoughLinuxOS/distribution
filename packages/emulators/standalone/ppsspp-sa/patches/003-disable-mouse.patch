@@ -1,8 +1,8 @@
 diff --git a/SDL/SDLMain.cpp b/SDL/SDLMain.cpp
-index 27695ec2d..e761cb8e8 100644
+index dae1b6934..ea2230533 100644
 --- a/SDL/SDLMain.cpp
 +++ b/SDL/SDLMain.cpp
-@@ -803,12 +803,7 @@ static void ProcessSDLEvent(SDL_Window *window, const SDL_Event &event, InputSta
+@@ -817,12 +817,7 @@ static void ProcessSDLEvent(SDL_Window *window, const SDL_Event &event, InputSta
  				g_Config.iWindowWidth = new_width;
  				g_Config.iWindowHeight = new_height;
  			}
@@ -16,15 +16,13 @@ index 27695ec2d..e761cb8e8 100644
  			break;
  		}
  
-@@ -1444,10 +1439,7 @@ int main(int argc, char *argv[]) {
- #if !defined(MOBILE_DEVICE)
- 		if (lastUIState != GetUIState()) {
- 			lastUIState = GetUIState();
--			if (lastUIState == UISTATE_INGAME && g_Config.UseFullScreen() && !g_Config.bShowTouchControls)
--				SDL_ShowCursor(SDL_DISABLE);
--			if (lastUIState != UISTATE_INGAME || !g_Config.UseFullScreen())
--				SDL_ShowCursor(SDL_ENABLE);
-+			SDL_ShowCursor(SDL_DISABLE);
- 		}
- #endif
+@@ -1435,9 +1430,7 @@ int main(int argc, char *argv[]) {
+ 		printf("Init from thread error: '%s'\n", error_message.c_str());
+ 	}
  
+-#ifdef MOBILE_DEVICE
+ 	SDL_ShowCursor(SDL_DISABLE);
+-#endif
+ 
+ 	// Ensure that the swap interval is set after context creation (needed for kmsdrm)
+ 	SDL_GL_SetSwapInterval(1);

@@ -40,6 +40,7 @@ get_graphicdrivers() {
   if listcontains "${GRAPHIC_DRIVERS}" "crocus"; then
     GALLIUM_DRIVERS+=" crocus"
     XORG_DRIVERS+=" intel"
+    VULKAN_DRIVERS_MESA+=" intel_hasvk"
     COMPOSITE_SUPPORT="yes"
     VAAPI_SUPPORT="yes"
   fi

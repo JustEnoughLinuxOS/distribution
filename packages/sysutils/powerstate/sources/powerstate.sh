@@ -31,25 +31,27 @@ do
           then
             GPUPROFILE="auto"
           fi
-          ledcontrol
+          ledcontrol $(get_setting led.color)
           audio_powersave 1
           cpu_perftune battery
           gpu_performance_level ${GPUPROFILE}
           pcie_aspm_policy powersave
           wake_events enabled
           runtime_power_management auto 5
+          scsi_link_power_management med_power_with_dipm
           /usr/bin/wifictl setpowersave
 
         ;;
         *)
           log $0 "Switching to performance mode."
-          ledcontrol
+          ledcontrol $(get_setting led.color)
           audio_powersave 0
           cpu_perftune performance
           gpu_performance_level auto
           pcie_aspm_policy default
           wake_events disabled
           runtime_power_management on 0
+          scsi_link_power_management ""
           /usr/bin/wifictl setpowersave
         ;;
       esac
@@ -62,11 +64,17 @@ do
   then
     BATLEFT=$(battery_percent)
     AUDIBLEALERT=$(get_setting system.battery.warning)
-    if (( "${BATLEFT}" < "25" )) &&
-       [ "${AUDIBLEALERT}" = "1" ]
+    if (( "${BATLEFT}" < "25" ))
     then
-      say "BATTERY AT ${BATLEFT}%"
-      BATCNT=0
+      if [ "${DEVICE_LED_CONTROL}" = "true" ]
+      then
+        led_flash red
+        BATCNT=0
+      elif [ "${AUDIBLEALERT}" = "1" ]
+      then
+        say "BATTERY AT ${BATLEFT}%"
+        BATCNT=0
+      fi
     fi
   fi
   BATCNT=$(( ${BATCNT} + 1 ))

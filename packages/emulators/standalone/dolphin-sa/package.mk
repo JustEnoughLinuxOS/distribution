@@ -35,7 +35,10 @@ fi
 
 if [ "${DISPLAYSERVER}" = "wl" ]; then
   PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER} xorg-server xrandr libXi"
-  PKG_CMAKE_OPTS_TARGET+="     -DENABLE_WAYLAND=ON"
+  PKG_CMAKE_OPTS_TARGET+="     -DENABLE_WAYLAND=ON \
+                               -DENABLE_X11=ON"
+else
+    PKG_CMAKE_OPTS_TARGET+="     -DENABLE_X11=OFF"
 fi
 
 if [ "${VULKAN_SUPPORT}" = "yes" ]
@@ -58,8 +61,7 @@ PKG_CMAKE_OPTS_TARGET+=" -DENABLE_HEADLESS=ON \
                          -DENABLE_LTO=ON \
                          -DENABLE_QT=OFF \
                          -DENCODE_FRAMEDUMPS=OFF \
-                         -DENABLE_CLI_TOOL=OFF \
-                         -DENABLE_X11=OFF"
+                         -DENABLE_CLI_TOOL=OFF"
 
 
 makeinstall_target() {
@@ -79,6 +81,9 @@ post_install() {
     case ${DEVICE} in
       RK356*)
         DOLPHIN_PLATFORM="drm"
+      ;;
+      RK3588)
+        DOLPHIN_PLATFORM="x11"
       ;;
       *)
         DOLPHIN_PLATFORM="wayland"

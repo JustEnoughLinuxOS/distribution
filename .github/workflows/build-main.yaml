@@ -103,7 +103,7 @@ jobs:
             |**Anbernic RG351P/M, ODROID Go Advance, ODROID Go Super**|[JELOS-RK3326.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3326.aarch64-${{ steps.version.outputs.version }}.img.gz)|[documentation](/documentation/PER_DEVICE_DOCUMENTATION/RK3326/)|
             |**Anbernic RG353P/M/V/VS, RG503, Powkiddy RK2023, RGB30**|[JELOS-RK3566.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3566.aarch64-${{ steps.version.outputs.version }}.img.gz)|[documentation](/documentation/PER_DEVICE_DOCUMENTATION/RK3566/)|
             |**Anbernic RG552**|[JELOS-RK3399.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3399.aarch64-${{ steps.version.outputs.version }}.img.gz)|[documentation](/documentation/PER_DEVICE_DOCUMENTATION/RK3399/)|
-            |**Atari VCS, AOKZOE, Ayaneo, GPD, and other x86_64 devices**|[JELOS-AMD64.x86_64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-AMD64.x86_64-${{ steps.version.outputs.version }}.img.gz)|[documentation](/documentation/PER_DEVICE_DOCUMENTATION/AMD64/)|
+            |**Atari VCS, AOKZOE, Ayaneo, Ayn, GPD, and other x86_64 devices**|[JELOS-AMD64.x86_64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-AMD64.x86_64-${{ steps.version.outputs.version }}.img.gz)|[documentation](/documentation/PER_DEVICE_DOCUMENTATION/AMD64/)|
             |**Hardkernel ODROID Go Ultra, Powkiddy RGB10 Max 3 Pro**|[JELOS-S922X.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-S922X.aarch64-${{ steps.version.outputs.version }}.img.gz)|[documentation](/documentation/PER_DEVICE_DOCUMENTATION/S922X/)|
             |**Orange Pi 5, and Indiedroid Nova**|[JELOS-RK3588.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3588.aarch64-${{ steps.version.outputs.version }}.img.gz)|[documentation](/documentation/PER_DEVICE_DOCUMENTATION/RK3588/)|
             |**Powkiddy x55**|[JELOS-RK3566-X55.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3566-X55.aarch64-${{ steps.version.outputs.version }}.img.gz)|[documentation](/documentation/PER_DEVICE_DOCUMENTATION/RK3566-X55/)|
@@ -121,39 +121,43 @@ jobs:
             |**Anbernic RG351P/M, ODROID Go Advance, ODROID Go Super**|[JELOS-RK3326.aarch64-${{ steps.version.outputs.version }}.tar](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3326.aarch64-${{ steps.version.outputs.version }}.tar)|
             |**Anbernic RG353P/M/V/VS, RG503, Powkiddy RK2023, RGB30**|[JELOS-RK3566.aarch64-${{ steps.version.outputs.version }}.tar](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3566.aarch64-${{ steps.version.outputs.version }}.tar)|
             |**Anbernic RG552**|[JELOS-RK3399.aarch64-${{ steps.version.outputs.version }}.tar](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3399.aarch64-${{ steps.version.outputs.version }}.tar)|
-            |****Atari VCS, AOKZOE, Ayaneo, GPD, and other x86_64 devices****|[JELOS-AMD64.x86_64-${{ steps.version.outputs.version }}.tar](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-AMD64.x86_64-${{ steps.version.outputs.version }}.tar)|
+            |****Atari VCS, AOKZOE, Ayaneo, Ayn, GPD, and other x86_64 devices****|[JELOS-AMD64.x86_64-${{ steps.version.outputs.version }}.tar](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-AMD64.x86_64-${{ steps.version.outputs.version }}.tar)|
             |**Hardkernel ODROID Go Ultra, Powkiddy RGB10 Max 3 Pro**|[JELOS-S922X.aarch64-${{ steps.version.outputs.version }}.tar](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-S922X.aarch64-${{ steps.version.outputs.version }}.tar)|
             |**Orange Pi 5, and Indiedroid Nova**|[JELOS-RK3588.aarch64-${{ steps.version.outputs.version }}.tar](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3588.aarch64-${{ steps.version.outputs.version }}.tar)|
             |**Powkiddy x55**|[JELOS-RK3566-X55.aarch64-${{ steps.version.outputs.version }}.tar](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3566-X55.aarch64-${{ steps.version.outputs.version }}.tar)|
 
             ## Documentation
 
-            ### Documentation For Developers
-            * [Building The Distribution](/documentation/DEVEL_BUILDING_JELOS.md)
-            * [Contributor Code of Conduct](/CODE_OF_CONDUCT.md)
-            * [Contributing to JELOS](/CONTRIBUTING.md)
-            * [Adding Hardware Quirks](/documentation/DEVEL_ADD_HARDWARE_QUIRKS.md)
-            * [Creating Packages](/documentation/DEVEL_CREATING_PACKAGES.md)
+            ### Contribute
+
+            * [Building JELOS](https://jelos.org/contribute/build/)
+            * [Code of Conduct](https://jelos.org/contribute/code-of-conduct/)
+            * [Contributing to JELOS](https://jelos.org/contribute/)
+            * [Modifying JELOS](https://jelos.org/contribute/modify/)
+            * [Adding Hardware Quirks](https://jelos.org/contribute/quirks/)
+            * [Creating Packages](https://jelos.org/contribute/packages/)
             * [Pull Request Template](/PULL_REQUEST_TEMPLATE.md)
 
-            ### Documentation For Everyone
-            * [Installation and Device Support](https://github.com/JustEnoughLinuxOS/distribution/tree/main#readme)
-            * [Device Specific Documentation](/documentation/PER_DEVICE_DOCUMENTATION)
-            * [Donating to JELOS](/documentation/GENERAL_DONATING_TO_JELOS.md)
-            * [Frequently Asked Questions](/documentation/GENERAL_FREQUENTLY_ASKED_QUESTIONS.md)
-            * [Hotkeys and Button Codes](/documentation/GENERAL_HOTKEYS_AND_BUTTON_CODES.md)
-            * [Optimizing Performance and Battery Life](/documentation/GENERAL_PERFORMANCE_AND_BATTERY.md)
-            * [Network Play](/documentation/GENERAL_NETWORK_PLAY.md)
+            ### Play
 
-            ### Using JELOS
-            * [Setting Up Cloud Drives](/documentation/SETUP_CLOUD_DRIVES.md)
-            * [Setting Up Syncthing](/documentation/SETUP_SYNCTHING.md)
-            * [Game Engines and Launch Files](/documentation/SETUP_GAME_ENGINES_AND_LAUNCH_FILES.md)
-            * [Configuring Moonlight Streaming](/documentation/SETUP_MOONLIGHT_STREAMING.md)
-            * [Setting Up P2P Networking With ZeroTier](/documentation/SETUP_P2P_ZEROTIER.md)
-            * [Configure TailScale VPN](/documentation/SETUP_VPN_TAILSCALE.md)
-            * [Setting Up Wireguard VPN](/documentation/SETUP_VPN_WIREGUARD.md)
-            * [Creating Custom Shader Presets for Per Game / Per System Use](https://github.com/JustEnoughLinuxOS/distribution/blob/main/documentation/GENERAL_CUSTOM_SHADERS.md)
+            * [Installing JELOS](https://jelos.org/play/install/)
+            * [Updating JELOS](https://jelos.org/play/update/)
+            * [Controls](https://jelos.org/play/controls/)
+            * [Netplay](https://jelos.org/play/netplay/)
+            * [Configuring Moonlight](https://jelos.org/systems/moonlight/)
+            * [Device Specific Documentation](/documentation/PER_DEVICE_DOCUMENTATION)
+
+            ### Configure
+
+            * [Optimizations](https://jelos.org/configure/optimizations/)
+            * [Shaders](https://jelos.org/configure/shaders/)
+            * [Cloud Sync](https://jelos.org/configure/cloud-sync/)
+            * [VPN](https://jelos.org/configure/vpn/)
+
+            ### Other
+
+            * [Frequently Asked Questions](https://jelos.org/faqs/)
+            * [Donating to JELOS](https://jelos.org/donations/)
 
           artifacts: "release/*"
           prerelease: false

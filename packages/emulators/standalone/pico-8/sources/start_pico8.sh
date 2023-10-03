@@ -5,6 +5,15 @@
 # Source predefined functions and variables
 . /etc/profile
 
+case ${HW_ARCH} in
+  aarch64)
+    STATIC_BIN="pico8_64"
+  ;;
+  *)
+    STATIC_BIN="pico8"
+  ;;
+esac
+
 if [ ! -z "${1}" ] && [ -s "${1}" ]
 then
   OPTIONS="-run"
@@ -13,12 +22,10 @@ else
   OPTIONS="-splore"
 fi
 
-if [ "${HW_ARCH}" = "aarch64" ]
+INTEGER_SCALE=$(get_setting pico-8.integerscale)
+if [ "${INTEGER_SCALE}" = "1" ]
 then
-  STATIC_BIN="pico8_64"
-elif [ "${HW_ARCH}" = "x86_64" ]
-then
-  STATIC_BIN="pico8"
+  OPTIONS="${OPTIONS} -pixel_perfect 1"
 fi
 
 cp -f /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/roms/pico-8/sdl_controllers.txt

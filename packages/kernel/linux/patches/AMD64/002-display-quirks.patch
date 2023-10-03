@@ -1,7 +1,6 @@
-diff --git a/drivers/gpu/drm/drm_panel_orientation_quirks.c b/drivers/gpu/drm/drm_panel_orientation_quirks.c
-index 0cb646cb04ee..1045ffe447ad 100644
---- a/drivers/gpu/drm/drm_panel_orientation_quirks.c
-+++ b/drivers/gpu/drm/drm_panel_orientation_quirks.c
+diff -rupN linux.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c linux/drivers/gpu/drm/drm_panel_orientation_quirks.c
+--- linux.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c	2023-09-02 07:14:38.000000000 +0000
++++ linux/drivers/gpu/drm/drm_panel_orientation_quirks.c	2023-09-09 03:24:49.178775423 +0000
 @@ -133,6 +133,12 @@ static const struct drm_dmi_panel_orient
  	.orientation = DRM_MODE_PANEL_ORIENTATION_RIGHT_UP,
  };
@@ -54,12 +53,12 @@ index 0cb646cb04ee..1045ffe447ad 100644
 +                  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "AOKZOE A1 Pro"),
 +                },
 +		.driver_data = (void *)&lcd1200x1920_leftside_up,
-+        }, {    /* AYN Loki Max */
++        }, {    /* AYN Loki Zero, Max, Max Pro */
 +                .matches = {
 +                  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "ayn"),
-+                  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "Loki Max"),
++                  DMI_MATCH(DMI_PRODUCT_NAME, "Loki"),
 +                },
-+		.driver_data = (void *)&lcd1080x1920_leftside_up,
++                .driver_data = (void *)&lcd1080x1920_leftside_up,
  	}, {	/* Chuwi HiBook (CWI514) */
  		.matches = {
  			DMI_MATCH(DMI_BOARD_VENDOR, "Hampoo"),

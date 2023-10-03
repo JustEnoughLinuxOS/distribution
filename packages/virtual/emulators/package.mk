@@ -23,9 +23,9 @@ LIBRETRO_CORES="81-lr a5200-lr arduous-lr atari800-lr beetle-gba-lr beetle-lynx-
                 gw-lr handy-lr hatari-lr mame2000-lr mame2003-plus-lr mame2010-lr mame2015-lr melonds-lr meowpc98-lr      \
                 mesen-lr mgba-lr mojozork-lr mrboom-lr mupen64plus-lr mupen64plus-nx-lr neocd_lr nestopia-lr np2kai-lr    \
                 nxengine-lr o2em-lr opera-lr parallel-n64-lr pcsx_rearmed-lr picodrive-lr pokemini-lr potator-lr          \
-                prboom-lr prosystem-lr ppsspp-lr puae-lr puae2021-lr px68k-lr quasi88-lr quicknes-lr race-lr reminiscence-lr          \
+                prosystem-lr ppsspp-lr puae-lr puae2021-lr px68k-lr quasi88-lr quicknes-lr race-lr reminiscence-lr        \
                 sameboy-lr sameduck-lr scummvm-lr smsplus-gx-lr snes9x-lr snes9x2002-lr snes9x2005_plus-lr snes9x2010-lr  \
-                stella-lr stella-2014-lr swanstation-lr tic80-lr tgbdual-lr tyrquake-lr uzem-lr vba-next-lr               \
+                stella-lr stella-2014-lr swanstation-lr tic80-lr tgbdual-lr uzem-lr vba-next-lr                           \
                 vbam-lr vecx-lr vice-lr yabasanshiro-lr virtualjaguar-lr xmil-lr xrick-lr"
 
 ### Emulators or cores for specific devices
@@ -39,7 +39,8 @@ case "${DEVICE}" in
   ;;
   RK358*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 desmume-lr flycast-lr gpsp-lr pcsx_rearmed-lr"
-    PKG_EMUS+=" amiberry aethersx2-sa duckstation-sa nanoboyadvance-sa box64 scummvmsa yabasanshiro-sa box64 portmaster"
+    PKG_EMUS+=" amiberry aethersx2-sa dolphin-sa drastic-sa duckstation-sa melonds-sa nanoboyadvance-sa box64 scummvmsa   \
+               yabasanshiro-sa portmaster"
     LIBRETRO_CORES+=" uae4arm beetle-psx-lr bsnes-hd-lr citra-lr dolphin-lr mame-lr pcsx_rearmed-lr"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
@@ -364,6 +365,10 @@ makeinstall_target() {
   add_emu_core fbn retroarch fbalpha2019 false
   add_es_system fbn
 
+  ### iD Software game engines
+  add_emu_core idtech retroarch idtech
+  add_es_system idtech
+
   ### Nintendo Game and Watch
   add_emu_core gameandwatch retroarch gw
   add_es_system gameandwatch
@@ -440,13 +445,9 @@ makeinstall_target() {
       add_emu_core gamecube primehack primehack false
       add_es_system gamecube
     ;;
-    RK3566|S922X*|RK3399)
+    RK35*|S922X*|RK3399)
       add_emu_core gamecube dolphin dolphin-sa-gc true
       add_emu_core gamecube retroarch dolphin false
-      add_es_system gamecube
-    ;;
-    RK3588)
-      add_emu_core gamecube retroarch dolphin true
       add_es_system gamecube
     ;;
   esac
@@ -459,14 +460,10 @@ makeinstall_target() {
       add_emu_core wii primehack primehack false
       add_es_system wii
     ;;
-    RK3566|S922X*|RK3399)
+    RK35*|S922X*|RK3399)
       add_emu_core wii dolphin dolphin-sa-wii true
       add_emu_core wii retroarch dolphin false
-      add_es_system wii 
-    ;;
-    RK3588)
-      add_emu_core wii retroarch dolphin true
-      add_es_system wii 
+      add_es_system wii
     ;;
   esac
 
@@ -628,6 +625,12 @@ makeinstall_target() {
       add_emu_core nds melonds melonds-sa false
       add_emu_core nds retroarch desmume false
     ;;
+    RK3588)
+      add_emu_core nds drastic drastic-sa false
+      add_emu_core nds retroarch melonds true
+      add_emu_core nds melonds melonds-sa false
+      add_emu_core nds retroarch desmume false
+    ;;
     RK3*)
       add_emu_core nds drastic drastic-sa true
       add_emu_core nds retroarch melonds false
@@ -721,8 +724,8 @@ makeinstall_target() {
   ### Sony Playstation 2
   case ${DEVICE} in
     AMD64)
-      add_emu_core ps2 retroarch pcsx2 true
-      add_emu_core ps2 pcsx2 pcsx2-sa false
+      add_emu_core ps2 pcsx2 pcsx2-sa true
+      add_emu_core ps2 retroarch pcsx2 false
       add_es_system ps2
     ;;
     RK3588|S922X|RK3399)

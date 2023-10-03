@@ -113,7 +113,6 @@ declare -a NO_REWIND=(  atomiswave
                         odyssey2
                         psp
                         pspminis
-                        psx
                         saturn
                         sega32x
                         zxspectrum
@@ -688,13 +687,19 @@ function set_filter() {
 
 function set_rewind() {
     local REWIND="$(game_setting rewind)"
-    local HAS_REWIND="$(match ${CORE} ${NO_REWIND[@]})"
-    case ${HAS_REWIND} in
-        0)
-            add_setting "none" "rewind_enable" "false"
+    case ${REWIND} in
+        1)
+            case $(match ${PLATFORM} ${NO_REWIND[@]}) in
+                0)
+                    add_setting "none" "rewind_enable" "true"
+                ;;
+                *)
+                    add_setting "none" "rewind_enable" "false"
+                ;;
+            esac
         ;;
         *)
-            add_setting "none" "rewind_enable" "true"
+            add_setting "none" "rewind_enable" "false"
         ;;
     esac
 }

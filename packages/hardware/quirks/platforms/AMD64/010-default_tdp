@@ -11,4 +11,3 @@ then
   # Set default TDP
   set_setting system.overclock 15w
 fi
-EOF

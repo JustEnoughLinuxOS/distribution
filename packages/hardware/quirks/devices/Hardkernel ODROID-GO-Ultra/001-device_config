@@ -1,0 +1,12 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+cat <<EOF >/storage/.config/profile.d/001-deviceconfig
+DEVICE_FAKE_JACKSENSE="true"
+DEVICE_HEADPHONE_DEV="/dev/input/by-path/platform-hp-detect-switch-event"
+DEVICE_VOLUMECTL="true"
+DEVICE_POWER_LED="false"
+DEVICE_BRIGHTNESS="128"
+DEVICE_TEMP_SENSOR=("/sys/devices/virtual/thermal/thermal_zone0/temp" "/sys/devices/virtual/thermal/thermal_zone3/temp" "/sys/devices/virtual/thermal/thermal_zone2/temp")
+EOF

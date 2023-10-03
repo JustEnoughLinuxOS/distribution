@@ -36,6 +36,7 @@ This document describes all available systems emulators and cores available for 
 |Commodore|VIC-20 (vic20)|1980|`vic20`|.20 .a0 .b0 .d64 .d71 .d80 .d81 .d82 .g64 .g41 .x64 .t64 .tap .prg .p00 .crt .bin .gz .d6z .d7z .d8z .g6z .g4z .x6z .cmd .m3u .vsf .nib .nbz .zip|**retroarch:** vice_xvic (default)<br>**vicesa:** xvic<br>|
 |Fairchild|Channel F (channelf)|1976|`channelf`|.bin .chf .zip .7z|**retroarch:** freechaf (default)<br>|
 |id Software|Doom (doom)|1993|`doom`|.doom|**gzdoom:** gzdoom-sa (default)<br>|
+|id Software|iDtech (idtech)|1991|`idtech`|.sh|**retroarch:** idtech<br>|
 |Infocom|Z-Machine (zmachine)|1979|`zmachine`|.dat .z1 .z2 .z3 .z4 .z5 .z6 .zip|**retroarch:** mojozork (default)<br>|
 |JELOS|Moonlight Game Streaming (moonlight)|2021|`moonlight`|.sh||
 |JELOS|MPlayer (mplayer)|unknown|`mplayer`|.mp4 .mkv .avi .mov .wmv .m3u .mpg .ytb .twi .sh .mp3 .aac .mka .dts .flac .ogg .m4a .ac3 .opus .wav .wv .eac33 .thd|**mplayer:** mplayer (default)<br>|
@@ -69,6 +70,7 @@ This document describes all available systems emulators and cores available for 
 |Nintendo|Game Boy Advance (Hacks) (gbah)|2001|`gbah`|.gba .zip .7z|**retroarch:** mgba (default)<br>**retroarch:** gbsp<br>**retroarch:** vbam<br>**retroarch:** vba_next<br>**retroarch:** beetle_gba<br>|
 |Nintendo|Game Boy Color (gbc)|1998|`gbc`|.gb .gbc .zip .7z|**retroarch:** gambatte (default)<br>**retroarch:** sameboy<br>**retroarch:** gearboy<br>**retroarch:** tgbdual<br>**retroarch:** mgba<br>**retroarch:** vbam<br>|
 |Nintendo|Game Boy Color (Hacks) (gbch)|1998|`gbch`|.gb .gbc .zip .7z|**retroarch:** gambatte (default)<br>**retroarch:** sameboy<br>**retroarch:** gearboy<br>**retroarch:** tgbdual<br>**retroarch:** mgba<br>**retroarch:** vbam<br>|
+|Nintendo|GameCube (gamecube)|2001|`gamecube`|.gcm .iso .gcz .ciso .wbfs .rvz .dol|**dolphin:** dolphin-sa-gc (default)<br>**retroarch:** dolphin<br>|
 |Nintendo|MSU-1 (snesmsu1)|2012|`snesmsu1`|.smc .fig .sfc .swc .zip .7z|**retroarch:** snes9x (default)<br>**retroarch:** beetle_supafaust<br>|
 |Nintendo|N64 (n64)|1996|`n64`|.z64 .n64 .v64 .zip .7z|**retroarch:** mupen64plus_next (default)<br>**retroarch:** mupen64plus<br>**retroarch:** parallel_n64<br>**mupen64plus:** mupen64plus-sa<br>|
 |Nintendo|NES (Hacks) (nesh)|1985|`nesh`|.nes .unif .unf .zip .7z|**retroarch:** nestopia (default)<br>**retroarch:** fceumm<br>**retroarch:** quicknes<br>**retroarch:** mesen<br>|
@@ -79,6 +81,7 @@ This document describes all available systems emulators and cores available for 
 |Nintendo|Super Nintendo (Hacks) (snesh)|1991|`snesh`|.smc .fig .sfc .swc .zip .7z|**retroarch:** snes9x (default)<br>**retroarch:** snes9x2010<br>**retroarch:** snes9x2002<br>**retroarch:** snes9x2005_plus<br>**retroarch:** beetle_supafaust<br>**retroarch:** bsnes<br>**retroarch:** bsnes_mercury_performance<br>**retroarch:** bsnes_hd_beta<br>|
 |Nintendo|Super Nintendo (snes)|1991|`snes`|.smc .fig .sfc .swc .zip .7z|**retroarch:** snes9x (default)<br>**retroarch:** snes9x2010<br>**retroarch:** snes9x2002<br>**retroarch:** snes9x2005_plus<br>**retroarch:** beetle_supafaust<br>**retroarch:** bsnes<br>**retroarch:** bsnes_mercury_performance<br>**retroarch:** bsnes_hd_beta<br>|
 |Nintendo|Virtual Boy (virtualboy)|1995|`virtualboy`|.vb .zip .7z|**retroarch:** beetle_vb (default)<br>|
+|Nintendo|Wii (wii)|2006|`wii`|.gcm .iso .gcz .ciso .wbfs .rvz .dol .wad|**dolphin:** dolphin-sa-wii (default)<br>**retroarch:** dolphin<br>|
 |Panasonic|3DO (3do)|1993|`3do`|.iso .bin .chd .cue|**retroarch:** opera (default)<br>|
 |Philips|VideoPac (videopac)|1978|`videopac`|.bin .zip .7z|**retroarch:** o2em (default)<br>|
 |Sammy|Atomiswave (atomiswave)|2003|`atomiswave`|.lst .bin .dat .zip .7z|**retroarch:** flycast2021<br>**retroarch:** flycast32 (default)<br>**retroarch:** flycast<br>**flycast:** flycast-sa<br>|

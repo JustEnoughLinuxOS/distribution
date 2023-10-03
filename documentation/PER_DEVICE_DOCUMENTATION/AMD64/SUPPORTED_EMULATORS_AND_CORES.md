@@ -36,6 +36,7 @@ This document describes all available systems emulators and cores available for 
 |Commodore|VIC-20 (vic20)|1980|`vic20`|.20 .a0 .b0 .d64 .d71 .d80 .d81 .d82 .g64 .g41 .x64 .t64 .tap .prg .p00 .crt .bin .gz .d6z .d7z .d8z .g6z .g4z .x6z .cmd .m3u .vsf .nib .nbz .zip|**retroarch:** vice_xvic (default)<br>**vicesa:** xvic<br>|
 |Fairchild|Channel F (channelf)|1976|`channelf`|.bin .chf .zip .7z|**retroarch:** freechaf (default)<br>|
 |id Software|Doom (doom)|1993|`doom`|.doom|**gzdoom:** gzdoom-sa (default)<br>|
+|id Software|iDtech (idtech)|1991|`idtech`|.sh|**retroarch:** idtech<br>|
 |Infocom|Z-Machine (zmachine)|1979|`zmachine`|.dat .z1 .z2 .z3 .z4 .z5 .z6 .zip|**retroarch:** mojozork (default)<br>|
 |JELOS|Moonlight Game Streaming (moonlight)|2021|`moonlight`|.sh||
 |JELOS|MPlayer (mplayer)|unknown|`mplayer`|.mp4 .mkv .avi .mov .wmv .m3u .mpg .ytb .twi .sh .mp3 .aac .mka .dts .flac .ogg .m4a .ac3 .opus .wav .wv .eac33 .thd|**mplayer:** mplayer (default)<br>|
@@ -111,7 +112,7 @@ This document describes all available systems emulators and cores available for 
 |SNK|Neo Geo Pocket (ngp)|1998|`ngp`|.ngc .ngp .zip .7z|**retroarch:** beetle_ngp (default)<br>**retroarch:** race<br>|
 |SNK|Neo Geo Pocket Color (ngpc)|1999|`ngpc`|.ngc .zip .7z|**retroarch:** beetle_ngp (default)<br>**retroarch:** race<br>|
 |Sony|PlayStation (psx)|1994|`psx`|.bin .cue .img .mdf .pbp .toc .cbn .m3u .ccd .chd .iso|**retroarch:** beetle_psx (default)<br>**Duckstation:** duckstation-sa<br>**retroarch:** duckstation<br>**retroarch:** swanstation<br>|
-|Sony|PlayStation 2 (ps2)|2000|`ps2`|.iso .mdf .nrg .bin .img .dump .gz .cso .chd|**retroarch:** pcsx2 (default)<br>**pcsx2:** pcsx2-sa<br>|
+|Sony|PlayStation 2 (ps2)|2000|`ps2`|.iso .mdf .nrg .bin .img .dump .gz .cso .chd|**pcsx2:** pcsx2-sa (default)<br>**retroarch:** pcsx2<br>|
 |Sony|PlayStation 3 (ps3)|2006|`ps3`|.ps3 .bin|**rpcs3:** rpcs3-sa (default)<br>|
 |Sony|PlayStation Portable (psp)|2004|`psp`|.iso .cso .pbp|**ppsspp:** ppsspp-sa (default)<br>**retroarch:** ppsspp<br>|
 |Sony|PlayStation Vita (psvita)|2011|`launcher`|.sh|**vita3k:** vita3k-sa (default)<br>|
