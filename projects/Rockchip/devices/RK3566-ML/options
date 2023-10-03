@@ -70,8 +70,12 @@
   # Windowmanager to use (fluxbox / weston / no)
     WINDOWMANAGER="weston"
 
+  # debug tty path
+    DEBUG_TTY="/dev/ttyS2"
+
   # kernel serial console
-    EXTRA_CMDLINE="quiet rootwait earlycon=uart8250,mmio32,0xfe660000 console=ttyS2,1500000n8 console=tty0 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20 initcall_blacklist=uvc_init log_buf_len=1M"
+    #EXTRA_CMDLINE="quiet rootwait earlycon=uart8250,mmio32,0xfe660000 console=ttyS2,1500000n8 console=tty0 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20 initcall_blacklist=uvc_init log_buf_len=1M"
+    EXTRA_CMDLINE="quiet rootwait console=ttyS2,1500000n8 console=tty0 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
 
   # additional packages to install
   #  ADDITIONAL_PACKAGES=""
@@ -85,7 +89,7 @@
   # for a list of additional drivers see packages/linux-drivers
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-  #  ADDITIONAL_DRIVERS="RTL8821AU RTL8821CU RTL88x2BU"
+    ADDITIONAL_DRIVERS="RTL8821AU RTL8821CU RTL88x2BU"
 
   # build and install driver addons (yes / no)
     DRIVER_ADDONS_SUPPORT="no"
@@ -94,9 +98,6 @@
   # for a list of additinoal drivers see packages/linux-driver-addons
   # Space separated list is supported,
     DRIVER_ADDONS="" #dvb-latest
-
-  # debug tty path
-    DEBUG_TTY="/dev/ttyFIQ0"
 
   # build and install bluetooth support (yes / no)
     BLUETOOTH_SUPPORT="yes"
