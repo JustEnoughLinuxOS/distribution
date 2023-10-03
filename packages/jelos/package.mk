@@ -81,7 +81,7 @@ EOF
 
   ### Defaults for non-main builds.
   BUILD_BRANCH="$(git branch --show-current)"
-  if [[ ! "${BUILD_BRANCH}" =~ main ]]
+  if [ ! "${BUILD_BRANCH}" = "main" ]
   then
     sed -i "s#ssh.enabled=0#ssh.enabled=1#g" ${INSTALL}/usr/config/system/configs/system.cfg
     sed -i "s#network.enabled=0#network.enabled=1#g" ${INSTALL}/usr/config/system/configs/system.cfg
