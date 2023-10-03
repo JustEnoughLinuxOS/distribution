@@ -5,6 +5,6 @@
 
 source /etc/profile
 
-jslisten set "killall scummvm"
+jslisten set "scummvm"
 
 /usr/bin/start_scummvm.sh sa

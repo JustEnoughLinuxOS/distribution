@@ -9,15 +9,23 @@ PKG_URL="${PKG_SITE}.git"
 PKG_SHORTDESC="Fast PlayStation 1 emulator for x86-64/AArch32/AArch64 "
 PKG_TOOLCHAIN="cmake"
 
-case ${DEVICE} in
-  RK356*)
-    PKG_VERSION="5ab5070d73f1acc51e064bd96be4ba6ce3c06f5c"
-    PKG_PATCH_DIRS+=" legacy"
-    PKG_CMAKE_OPTS_TARGET+=" -DUSE_DRMKMS=ON -DENABLE_EGL=ON -DUSE_MALI=OFF"
-  ;;
-  *)
-    PKG_VERSION="0798292"
-    PKG_PATCH_DIRS+=" wayland"
+case ${TARGET_ARCH} in
+  aarch64)
+    case ${DEVICE} in
+      RK356*)
+        PKG_VERSION="5ab5070d73f1acc51e064bd96be4ba6ce3c06f5c"
+        PKG_PATCH_DIRS+=" legacy"
+        PKG_CMAKE_OPTS_TARGET+=" -DUSE_DRMKMS=ON -DENABLE_EGL=ON -DUSE_MALI=OFF"
+      ;;
+      *)
+        PKG_VERSION="bfa792ddbff11c102521124f235ccb310cac6e6a"
+        PKG_PATCH_DIRS+=" wayland/${TARGET_ARCH}"
+      ;;
+    esac
+    ;;
+  x86_64)
+      PKG_VERSION="a45b50c3e996af823d35a6a193458532c4f4316d"
+      PKG_PATCH_DIRS+=" wayland/${TARGET_ARCH}"
   ;;
 esac
 
@@ -37,6 +45,7 @@ fi
 if [ "${VULKAN_SUPPORT}" = "yes" ]; then
   PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
   PKG_CMAKE_OPTS_TARGET+=" -DENABLE_VULKAN=ON"
+else PKG_CMAKE_OPTS_TARGET+=" -DENABLE_VULKAN=OFF"
 fi
 
 pre_configure_target() {

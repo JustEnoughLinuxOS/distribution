@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present Lakka (https://www.lakka.tv)
 
 PKG_NAME="fake08-lr"
-PKG_VERSION="10bd648f2ed91268c758751e3eda7708512cf065"
+PKG_VERSION="29d7996aabaf7268037fd95688be6cd227e93f98"
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/jtothebell/fake-08"
 PKG_URL="${PKG_SITE}.git"

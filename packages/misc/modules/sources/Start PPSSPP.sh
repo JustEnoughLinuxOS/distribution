@@ -5,7 +5,7 @@
 
 source /etc/profile
 
-jslisten set "killall ppsspp"
+jslisten set "ppsspp"
 
 cp -f /storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/.config/ppsspp/assets/gamecontrollerdb.txt
 
