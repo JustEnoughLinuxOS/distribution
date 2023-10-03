@@ -698,23 +698,23 @@ makeinstall_target() {
   case ${DEVICE} in
     AMD64)
       add_emu_core psx retroarch beetle_psx true
-      add_emu_core psx Duckstation duckstation-sa false
+      add_emu_core psx duckstation duckstation-sa false
     ;;
     S922X*)
       add_emu_core psx retroarch pcsx_rearmed true
       add_emu_core psx retroarch beetle_psx false
-      add_emu_core psx Duckstation duckstation-sa false
+      add_emu_core psx duckstation duckstation-sa false
     ;;
     RK3399|RK3588)
       add_emu_core psx retroarch pcsx_rearmed32 true
       add_emu_core psx retroarch pcsx_rearmed false
       add_emu_core psx retroarch beetle_psx false
-      add_emu_core psx Duckstation duckstation-sa false
+      add_emu_core psx duckstation duckstation-sa false
     ;;
     RK3326|RK3566*)
       add_emu_core psx retroarch pcsx_rearmed32 true
       add_emu_core psx retroarch pcsx_rearmed false
-      add_emu_core psx Duckstation duckstation-sa false
+      add_emu_core psx duckstation duckstation-sa false
     ;;
   esac
   add_emu_core psx retroarch duckstation false
