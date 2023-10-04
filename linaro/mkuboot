@@ -6,7 +6,7 @@ export PATH=/opt/toolchains/gcc-linaro-aarch64-none-elf-4.8-2013.11_linux/bin:/o
 
 if [ ! -d "u-boot" ]
 then
-  git clone https://github.com/hardkernel/u-boot.git -b odroidgoU-v2015.01
+  git clone https://github.com/JustEnoughLinuxOS/hardkernel-uboot.git -b odroidgoU-v2015.01
 fi
 
 cd u-boot
