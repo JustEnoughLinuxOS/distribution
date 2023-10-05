@@ -16,19 +16,18 @@ QUIRK_DEVICE="$(echo ${QUIRK_DEVICE} | sed -e "s#[/]#-#g")"
 
 export HW_MODEL=${QUIRK_DEVICE}
 
-case ${HW_MODEL} in
-  *RG351*|*Advance*)
-    ASPECT="3-2"
-  ;;
-  *RG353*|*RK2023)
-    ASPECT="4-3"
-  ;;
-  *RG503)
-    ASPECT="5-3"
-  ;;
-  *)
-    ASPECT="16-9"
-esac
-
-sed -e 's/name="subset.aspect-ratio" value=".*"/name="subset.aspect-ratio" value="'"$ASPECT"'"/g' \
-    -i /storage/.config/emulationstation/es_settings.cfg
+#case ${HW_MODEL} in
+#  *RG351*|*Advance*)
+#    ASPECT="3-2"
+#  ;;
+#  *RG353*|*RK2023)
+#    ASPECT="4-3"
+#  ;;
+#  *RG503)
+#    ASPECT="5-3"
+#  ;;
+#  *)
+#    ASPECT="16-9"
+#esac
+#sed -e 's/name="subset.aspect-ratio" value=".*"/name="subset.aspect-ratio" value="'"$ASPECT"'"/g' \
+#    -i /storage/.config/emulationstation/es_settings.cfg
