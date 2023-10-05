@@ -1015,4 +1015,8 @@ makeinstall_target() {
 
   mkdir -p ${INSTALL}/usr/bin
   cp ${PKG_DIR}/scripts/mkcontroller ${INSTALL}/usr/bin
+
+  mkdir -p ${INSTALL}/usr/lib/autostart/common
+  cp ${PKG_DIR}/autostart/* ${INSTALL}/usr/lib/autostart/common
+  chmod 0755 ${INSTALL}/usr/lib/autostart/common/*
 }

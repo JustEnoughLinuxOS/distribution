@@ -5,4 +5,4 @@
 # Minimal OS variable loading for performance
 . /etc/profile.d/001-functions
 
-rsync -a --delete /usr/config/modules/* /storage/.config/modules/
+rsync -a --delete /usr/config/modules/ /storage/.config/modules/
