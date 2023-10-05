@@ -76,6 +76,15 @@ esac
 
 PKG_DEPENDS_TARGET+=" ${PKG_EMUS} ${EMUS_32BIT} ${PKG_RETROARCH} ${LIBRETRO_CORES}"
 
+install_script() {
+  if [ ! -d "${INSTALL}/usr/config/modules" ]
+  then
+    mkdir -p ${INSTALL}/usr/config/modules
+  fi
+  cp -rf ${PKG_DIR}/sources/"${1}" ${INSTALL}/usr/config/modules
+  chmod 0755 ${INSTALL}/usr/config/modules/"${1}"
+}
+
 makeinstall_target() {
   ### README BEFORE EDITING
   ###
@@ -210,6 +219,7 @@ makeinstall_target() {
   add_emu_core atarist retroarch hatari true
   add_emu_core atarist hatarisa hatarisa false
   add_es_system atarist
+  install_script "Start HATARISA.sh"
 
   ## Sammy Atomiswave
   case ${DEVICE} in
@@ -472,6 +482,7 @@ makeinstall_target() {
     AMD64)
       add_emu_core wiiu cemu cemu-sa true
       add_es_system wiiu
+      install_script "Start CEMU.sh"
     ;;
   esac
 
@@ -481,6 +492,7 @@ makeinstall_target() {
       add_emu_core switch yuzu yuzu-sa true
       add_emu_core switch ryujinx ryujinx-sa false
       add_es_system switch
+      install_script "Start Yuzu.sh"
     ;;
   esac
 
@@ -727,10 +739,12 @@ makeinstall_target() {
       add_emu_core ps2 pcsx2 pcsx2-sa true
       add_emu_core ps2 retroarch pcsx2 false
       add_es_system ps2
+      install_script "Start PCSX2.sh"
     ;;
     RK3588|S922X|RK3399)
       add_emu_core ps2 aethersx2 aethersx2-sa true
       add_es_system ps2
+      install_script "Start PCSX2.sh"
     ;;
   esac
 
@@ -739,6 +753,7 @@ makeinstall_target() {
     x86_64)
       add_emu_core ps3 rpcs3 rpcs3-sa true
       add_es_system ps3
+      install_script "Start RPCS3.sh"
     ;;
   esac
 
@@ -750,6 +765,7 @@ makeinstall_target() {
     ;;
   esac
   add_es_system psp
+  install_script "Start PPSSPP.sh"
 
   ### Sony Playstation Portable Minis
   add_emu_core pspminis ppsspp ppsspp-sa true
@@ -779,6 +795,7 @@ makeinstall_target() {
     ;;
   esac
   add_es_system scummvm
+  install_script "Start ScummVM.sh"
 
   ### Sega 32X
   add_emu_core sega32x retroarch picodrive true
@@ -851,6 +868,7 @@ makeinstall_target() {
     x86_64)
       add_emu_core xbox xemu xemu-sa true
       add_es_system xbox
+      install_script "Start Xemu.sh"
     ;;
   esac
 
