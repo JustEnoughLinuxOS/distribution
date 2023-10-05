@@ -455,7 +455,7 @@ makeinstall_target() {
       add_emu_core gamecube primehack primehack false
       add_es_system gamecube
     ;;
-    RK35*|S922X*|RK3399)
+    S922X*|RK3399)
       add_emu_core gamecube dolphin dolphin-sa-gc true
       add_emu_core gamecube retroarch dolphin false
       add_es_system gamecube
@@ -470,7 +470,7 @@ makeinstall_target() {
       add_emu_core wii primehack primehack false
       add_es_system wii
     ;;
-    RK35*|S922X*|RK3399)
+    S922X*|RK3399)
       add_emu_core wii dolphin dolphin-sa-wii true
       add_emu_core wii retroarch dolphin false
       add_es_system wii
@@ -1015,4 +1015,8 @@ makeinstall_target() {
 
   mkdir -p ${INSTALL}/usr/bin
   cp ${PKG_DIR}/scripts/mkcontroller ${INSTALL}/usr/bin
+
+  mkdir -p ${INSTALL}/usr/lib/autostart/common
+  cp ${PKG_DIR}/autostart/* ${INSTALL}/usr/lib/autostart/common
+  chmod 0755 ${INSTALL}/usr/lib/autostart/common/*
 }
