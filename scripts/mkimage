@@ -90,10 +90,10 @@ fi
 
 if [ "${PARTITION_TABLE}" = "gpt" ]; then
     echo "image: Create storage partition."
-    parted -s "${DISK}" -a min unit s mkpart storage exfat ${STORAGE_PART_START} ${STORAGE_PART_END}
+    parted -s "${DISK}" -a min unit s mkpart storage ext4 ${STORAGE_PART_START} ${STORAGE_PART_END}
   else
     echo "image: Create primary partition."
-    parted -s "${DISK}" -a min unit s mkpart primary exfat ${STORAGE_PART_START} ${STORAGE_PART_END}
+    parted -s "${DISK}" -a min unit s mkpart primary ext4 ${STORAGE_PART_START} ${STORAGE_PART_END}
 fi
 sync
 
