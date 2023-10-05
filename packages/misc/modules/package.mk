@@ -14,6 +14,11 @@ PKG_IS_ADDON="no"
 PKG_AUTORECONF="no"
 PKG_TOOLCHAIN="manual"
 
+###
+### Note: Start scripts for emulators have been moved to
+### packages/virtual/emulators.
+###
+
 make_target() {
   :
 }
