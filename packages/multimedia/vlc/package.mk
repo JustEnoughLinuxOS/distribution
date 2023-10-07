@@ -177,6 +177,7 @@ pre_configure_target() {
     ;;
     *)
       ENABLED_FEATURES+=" ${OPENGL} glu libglvnd"
+    ;;
   esac
 
   PKG_CONFIGURE_OPTS_TARGET="${DISABLED_FEATURES} ${ENABLED_FEATURES}"

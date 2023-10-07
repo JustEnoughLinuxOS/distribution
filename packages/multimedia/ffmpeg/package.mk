@@ -39,11 +39,14 @@ if [ "${V4L2_SUPPORT}" = "yes" ]; then
   PKG_NEED_UNPACK+=" $(get_pkg_directory libdrm)"
   PKG_FFMPEG_V4L2="--enable-v4l2_m2m --enable-libdrm"
 
-  if [ "${PROJECT}" = "Amlogic" -o "${PROJECT}" = "PC" -o "${DEVICE}" = "Rockchip" ]; then
-    PKG_V4L2_REQUEST="yes"
-  else
-    PKG_V4L2_REQUEST="no"
-  fi
+  case ${PROJECT} in
+    Amlogic|PC|Rockchip)
+      PKG_V4L2_REQUEST="yes"
+    ;;
+    *)
+      PKG_V4L2_REQUEST="no"
+    ;;
+  esac
 
   if [ "${PKG_V4L2_REQUEST}" = "yes" ]; then
     PKG_DEPENDS_TARGET+=" systemd"
