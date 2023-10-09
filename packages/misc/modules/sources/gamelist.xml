@@ -9,7 +9,8 @@
         <publisher>JELOS</publisher>
         <rating>5.0</rating>
         <releasedate>2022</releasedate>
-        <genre>Script</genre>
+        <genre>Tool</genre>
+        <players>1</players>
         <image>./images/file-manager.svg</image>
     </game>
     <game>
@@ -20,7 +21,8 @@
         <publisher>JELOS</publisher>
         <rating>5.0</rating>
         <releasedate>2022</releasedate>
-        <genre>Script</genre>
+        <genre>Tool</genre>
+        <players>1</players>
         <image>./images/install-jelos.svg</image>
     </game>
     <game>
@@ -41,7 +43,8 @@
         <publisher>JELOS</publisher>
         <rating>5.0</rating>
         <releasedate>2022</releasedate>         
-        <genre>Script</genre>
+        <genre>Tool</genre>
+        <players>1</players>
         <image>./images/portmaster.svg</image>
     </game>
     <game>
@@ -53,6 +56,7 @@
         <rating>5.0</rating>
         <releasedate>2022</releasedate>
         <genre>Script</genre>
+        <players>1</players>
         <image>./images/rclone-backup.svg</image>
     </game>
     <game>
@@ -64,6 +68,7 @@
         <rating>5.0</rating>
         <releasedate>2022</releasedate>
         <genre>Script</genre>
+        <players>1</players>
         <image>./images/rclone-restore.svg</image>
     </game>
     <game>
@@ -75,105 +80,151 @@
         <rating>5.0</rating>
         <releasedate>2021</releasedate>
         <genre>Script</genre>
+        <players>1</players>
         <image>./images/remove-mac-files.svg</image>
     </game>
     <game>
         <path>./Start CEMU.sh</path>
         <name>Cemu 실행</name>
-        <desc>Cemu GUI(WiiU)를 열어 전역 구성 변경 사항을 에뮬레이터에 직접 적용할 수 있습니다. 설정을 수정하려면 마우스와 키보드를 준비하는 것이 좋습니다.</desc>
+        <desc>Cemu GUI(WiiU)를 열어 전역 구성 변경 사항을 에뮬레이터에 직접 적용할 수 있습니다. 설정을 수정하려면 마우스와 키보드를 준비하는 것이 좋습니다. Wii U 게임 및 애플리케이션을 에뮬레이션하는 소프트웨어입니다.</desc>
         <developer>JELOS</developer>
         <publisher>JELOS</publisher>
         <rating>5.0</rating>
         <releasedate>2023</releasedate>
-        <genre>Script</genre>
+        <genre>Emulator</genre>
+        <players>1</players>
         <image>./images/cemu.svg</image>
+    </game>
+    <game>
+        <path>./Start HATARISA.sh</path>
+        <name>Hatari 실행</name>
+        <desc>전역 구성 변경을 직접 수행할 수 있도록 Hatari GUI를 엽니다. Hatari는 GNU/Linux, BSD, Mac OS X, Windows 및 SDL 라이브러리에서 지원하는 기타 시스템용 Atari ST/STE/TT/Falcon 에뮬레이터입니다. 아타리 ST(Atari ST)는 1985년 아타리가 처음 출시한 16/32비트 컴퓨터 시스템이다. 모토로라 68000 CPU를 탑재해 당시 상당히 많은 CPU 파워를 지닌 매우 인기 있는 컴퓨터였다. GEM 애플리케이션을 실행하기 위한 좋은 환경을 제공하려고 하는 다른 많은 Atari ST 에뮬레이터와는 달리, Hatari는 대부분의 기존 ST 게임과 데모를 실행할 수 있도록 ST의 하드웨어를 최대한 가깝게 에뮬레이션하려고 합니다. Hatari는 오픈 소스 소프트웨어이며 GNU General Public License(GPL)의 조건에 따라 배포됩니다.</desc>
+        <developer>JELOS</developer>
+        <publisher>JELOS</publisher>
+        <rating>5.0</rating>
+        <releasedate>2023</releasedate>
+        <genre>Emulator</genre>
+        <players>1</players>
+        <image>./images/hatari.svg</image>
+    </game>
+    <game>
+        <path>./Start Moonlight.sh</path>
+        <name>Moonlight 실행</name>
+        <desc>Moonlight GUI를 열어 전역 구성을 직접 변경할 수 있습니다. Moonlight(이전의 Limelight)는 NVIDIA GameStream 프로토콜의 오픈 소스 구현입니다. 우리는 NVIDIA Shield에서 사용하는 프로토콜을 구현하고 제3자 클라이언트 세트를 작성했습니다. GameStream 호환 PC에서 지원되는 모든 장치로 PC 게임 컬렉션을 스트리밍하고 원격으로 플레이할 수 있습니다. Moonlight는 PC에서 사용할 수 있는 그래픽과 게임 선택 기능을 그대로 유지하면서 이동 중에도 게임을 즐기기에 적합합니다.</desc>
+        <developer>JELOS</developer>
+        <publisher>JELOS</publisher>
+        <rating>5.0</rating>
+        <releasedate>2023</releasedate>
+        <genre>Game Stream</genre>
+        <players>1</players>
+        <image>./images/moonlight.svg</image>
     </game>
     <game>
         <path>./Start PCSX2.sh</path>
         <name>PCSX2 실행</name>
-        <desc>PCSX2 GUI(PS2)를 열어 전역 구성 변경 사항을 에뮬레이터에 직접 적용할 수 있습니다. 설정을 수정하려면 마우스와 키보드를 준비하는 것이 좋습니다.</desc>
+        <desc>PCSX2 GUI(PS2)를 열어 전역 구성 변경 사항을 에뮬레이터에 직접 적용할 수 있습니다. 설정을 수정하려면 마우스와 키보드를 준비하는 것이 좋습니다. PCSX2는 무료 오픈 소스 PlayStation 2(PS2) 에뮬레이터입니다. 그 목적은 MIPS CPU 인터프리터, 리컴파일러 및 하드웨어 상태와 PS2 시스템 메모리를 관리하는 가상 머신의 조합을 사용하여 PS2의 하드웨어를 에뮬레이트하는 것입니다.</desc>
         <developer>JELOS</developer>
         <publisher>JELOS</publisher>
         <rating>5.0</rating>
         <releasedate>2021</releasedate>
-        <genre>Script</genre>
+        <genre>Emulator</genre>
+        <players>1</players>
         <image>./images/pcsx2.svg</image>
     </game>
     <game>
         <path>./Start PPSSPP.sh</path>
-        <name>PPSSPP 실행행</name>
-        <desc>PPSSPP GUI(PSP)를 열어 전역 구성 변경 사항을 에뮬레이터에 직접 적용할 수 있습니다.</desc>
+        <name>PPSSPP 실행</name>
+        <desc>PPSSPP GUI(PSP)를 열어 전역 구성 변경 사항을 에뮬레이터에 직접 적용할 수 있습니다. PPSSPP는 풀 HD 이상의 해상도로 PC 또는 Android 휴대폰에서 PSP 게임을 실행할 수 있습니다. 또한 텍스처를 더욱 선명하게 만들기 위해 업스케일할 수 있으며, 후처리 셰이더를 활성화하여 원하는 방식으로 색상과 밝기 및 기타 효과를 조정할 수 있습니다.</desc>
         <developer>JELOS</developer>
         <publisher>JELOS</publisher>
         <rating>5.0</rating>
         <releasedate>2021</releasedate>
-        <genre>Script</genre>
+        <genre>Emulator</genre>
+        <players>1</players>
         <image>./images/ppsspp.svg</image>
     </game>
     <game>
         <path>./Start 32bit Retroarch.sh</path>
-        <name>RetroArch (32비트) 실행</name>
-        <desc>RetroArch GUI(32비트)를 열어 전역 구성 변경 사항을 에뮬레이터에 직접 적용할 수 있습니다.</desc>
+        <name>RetroArch (32-bit) 실행</name>
+        <desc>RetroArch GUI(32비트 버전)를 열어 전역 구성 변경 사항을 에뮬레이터에 직접 적용할 수 있습니다. RetroArch는 에뮬레이터, 게임 엔진 및 미디어 플레이어를 위한 프런트엔드입니다.</desc>
         <developer>JELOS</developer>
         <publisher>JELOS</publisher>
         <rating>5.0</rating>
         <releasedate>2021</releasedate>
-        <genre>Script</genre>
+        <genre>Emulator</genre>
+        <players>1</players>
         <image>./images/retroarch-32.svg</image>
     </game>
     <game>
         <path>./Start 64bit Retroarch.sh</path>
-        <name>RetroArch (64비트) 실행</name>
-        <desc>RetroArch GUI(64비트)를 열어 전역 구성 변경 사항을 에뮬레이터에 직접 적용할 수 있습니다.</desc>
+        <name>RetroArch (64-bit) 실행</name>
+        <desc>RetroArch GUI(64비트 버전)를 열어 전역 구성 변경 사항을 에뮬레이터에 직접 적용할 수 있습니다. RetroArch는 에뮬레이터, 게임 엔진 및 미디어 플레이어를 위한 프런트엔드입니다.</desc>
         <developer>JELOS</developer>
         <publisher>JELOS</publisher>
         <rating>5.0</rating>
         <releasedate>2021</releasedate>
-        <genre>Script</genre>
+        <genre>Emulator</genre>
+        <players>1</players>
         <image>./images/retroarch-64.svg</image>
     </game>
     <game>
         <path>./Start RPCS3.sh</path>
-        <name>RPCS3 실행</name>
-        <desc>RPCS3 GUI(PS3)를 열어 구성 변경 사항을 에뮬레이터에 직접 적용할 수 있습니다. 이를 사용하여 펌웨어를 설정하고 제어를 업데이트하고 패키지를 설치할 수 있습니다. 설정을 수정하려면 마우스와 키보드를 준비하는 것이 좋습니다.</desc>
+        <name>RPCS3 </name>
+        <desc>RPCS3 GUI(PS3)를 열어 구성 변경 사항을 에뮬레이터에 직접 적용할 수 있습니다. 이를 사용하여 펌웨어를 설정하고 제어를 업데이트하고 패키지를 설치할 수 있습니다. 설정을 수정하려면 마우스와 키보드를 준비하는 것이 좋습니다. RPCS3는 Windows, Linux, macOS 및 FreeBSD용 C++로 작성된 다중 플랫폼 오픈 소스 Sony PlayStation 3 에뮬레이터 및 디버거입니다.</desc>
         <developer>JELOS</developer>
         <publisher>JELOS</publisher>
         <rating>5.0</rating>
         <releasedate>2021</releasedate>
-        <genre>Script</genre>
+        <genre>Emulator</genre>
+        <players>1</players>
         <image>./images/rpcs3.svg</image>
+    </game>
+    <game>
+        <path>./Start Ryujinx.sh</path>
+        <name>Ryujinx 실행</name>
+        <desc>Ryujinx GUI(스위치)를 열어 전역 구성 변경을 에뮬레이터에 직접 적용할 수 있습니다. 설정을 수정하려면 마우스와 키보드를 준비하는 것이 좋습니다. Ryujinx는 gdkchan이 만들고 C#으로 작성된 오픈 소스 Nintendo Switch 에뮬레이터입니다. 이 에뮬레이터는 뛰어난 정확성과 성능, 사용자 친화적인 인터페이스, 일관된 빌드를 제공하는 것을 목표로 합니다.</desc>
+        <developer>JELOS</developer>
+        <publisher>JELOS</publisher>
+        <rating>5.0</rating>
+        <releasedate>2023</releasedate>
+        <genre>Emulator</genre>
+        <players>1</players>
+        <image>./images/ryujinx.svg</image>
     </game>
     <game>
         <path>./Start ScummVM.sh</path>
         <name>ScummVM 실행</name>
-        <desc>ScummVM GUI를 열어 전역 구성 변경 사항을 에뮬레이터에 직접 적용할 수 있습니다. 설정을 수정하려면 마우스와 키보드를 준비하는 것이 좋습니다.</desc>
+        <desc>ScummVM GUI를 열어 전역 구성 변경 사항을 에뮬레이터에 직접 적용할 수 있습니다. 설정을 수정하려면 마우스와 키보드를 준비하는 것이 좋습니다. ScummVM은 데이터 파일이 이미 있는 경우 특정 클래식 그래픽 어드벤처 및 롤플레잉 게임을 실행할 수 있게 해주는 프로그램입니다. 이에 대한 영리한 부분은 ScummVM이 게임과 함께 제공된 실행 파일을 대체하므로 해당 실행 파일이 설계된 적이 없는 시스템에서 해당 실행 파일을 재생할 수 있다는 것입니다! ScummVM은 이러한 게임의 실행 파일을 완전히 재작성한 것이며 에뮬레이터가 아닙니다.</desc>
         <developer>JELOS</developer>
         <publisher>JELOS</publisher>
         <rating>5.0</rating>
         <releasedate>2021</releasedate>
-        <genre>Script</genre>
+        <genre>Emulator</genre>
+        <players>1</players>
         <image>./images/scummvm.svg</image>
     </game>
     <game>
         <path>./Start Xemu.sh</path>
         <name>Xemu 실행</name>
-        <desc>Xemu GUI(Xbox)를 열어 전역 구성 변경 사항을 에뮬레이터에 직접 적용할 수 있습니다. 설정을 수정하려면 마우스와 키보드를 준비하는 것이 좋습니다.</desc>
+        <desc>Xemu GUI(Xbox)를 열어 전역 구성 변경 사항을 에뮬레이터에 직접 적용할 수 있습니다. 설정을 수정하려면 마우스와 키보드를 준비하는 것이 좋습니다. 오리지널 Microsoft Xbox 게임 콘솔을 에뮬레이션하여 사람들이 Windows, macOS 및 Linux 시스템에서 오리지널 Xbox 게임을 플레이할 수 있게 해주는 무료 오픈 소스 애플리케이션입니다.</desc>
         <developer>JELOS</developer>
         <publisher>JELOS</publisher>
         <rating>5.0</rating>
         <releasedate>2023</releasedate>
-        <genre>Script</genre>
+        <genre>Emulator</genre>
+        <players>1</players>
         <image>./images/xemu.svg</image>
     </game>
     <game>
         <path>./Start Yuzu.sh</path>
         <name>Yuzu 실행</name>
-        <desc>Yuzu GUI(스위치)를 열어 전역 구성 변경 사항을 에뮬레이터에 직접 적용할 수 있습니다. 설정을 수정하려면 마우스와 키보드를 준비하는 것이 좋습니다.</desc>
+        <desc>Yuzu GUI(스위치)를 열어 전역 구성 변경 사항을 에뮬레이터에 직접 적용할 수 있습니다. 설정을 수정하려면 마우스와 키보드를 준비하는 것이 좋습니다. Yuzu는 Citra 제작자가 만든 Nintendo Switch용 실험적인 오픈 소스 에뮬레이터입니다.</desc>
         <developer>JELOS</developer>
         <publisher>JELOS</publisher>
         <rating>5.0</rating>
         <releasedate>2023</releasedate>
-        <genre>Script</genre>
+        <genre>Emulator</genre>
+        <players>1</players>
         <image>./images/yuzu.svg</image>
     </game>
 </gameList>
