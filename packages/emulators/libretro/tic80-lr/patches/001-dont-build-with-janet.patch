@@ -1,0 +1,13 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 22f6adb2..465e48cd 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -479,7 +479,7 @@ endif()
+ # Janet
+ ################################
+ 
+-set(BUILD_WITH_JANET_DEFAULT TRUE)
++set(BUILD_WITH_JANET_DEFAULT FALSE)
+ 
+ option(BUILD_WITH_JANET "Janet Enabled" ${BUILD_WITH_JANET_DEFAULT})
+ message("BUILD_WITH_JANET: ${BUILD_WITH_JANET}")
