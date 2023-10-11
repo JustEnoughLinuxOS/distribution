@@ -14,11 +14,6 @@ PKG_PATCH_DIRS="kodi libreelec"
 
 PKG_PATCH_DIRS+=" v4l2-request v4l2-drmprime"
 
-case "${PROJECT}" in
-  Rockchip)
-    PKG_PATCH_DIRS+=" vf-deinterlace-v4l2m2m"
-esac
-
 post_unpack() {
   # Fix FFmpeg version
   if [ "${PROJECT}" = "Amlogic" ]; then
@@ -36,6 +31,13 @@ PKG_FFMPEG_HWACCEL="--enable-hwaccels"
 case ${DEVICE} in
   RK3588)
     V4L2_SUPPORT=no
+  ;;
+  *)
+    case ${PROJECT} in
+      Rockchip)
+        PKG_PATCH_DIRS+=" vf-deinterlace-v4l2m2m"
+      ;;
+    esac
   ;;
 esac
 
