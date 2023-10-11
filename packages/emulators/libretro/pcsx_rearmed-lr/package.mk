@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="pcsx_rearmed-lr"
-PKG_VERSION="85d4a8394339a2ad11b24322f92643f18f645c73"
+PKG_VERSION="55ff71307db44c3122500104b83c21273853025c"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/pcsx_rearmed"
