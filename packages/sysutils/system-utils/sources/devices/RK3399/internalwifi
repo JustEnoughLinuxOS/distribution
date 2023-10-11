@@ -1,0 +1,23 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+. /etc/profile
+
+# Set export gpio for wifi and enable
+if [ ! -d "/sys/class/gpio/gpio${DEVICE_WIFI}" ]; then
+  echo ${DEVICE_WIFI} > /sys/class/gpio/export
+  echo out > /sys/class/gpio/gpio${DEVICE_WIFI}/direction
+fi
+
+# Set wifi gpio state
+case $1 in
+  disable)
+    echo 0 > /sys/class/gpio/gpio${DEVICE_WIFI}/value
+    set_setting internal.wifi 0
+  ;;
+  enable)
+    echo 1 > /sys/class/gpio/gpio${DEVICE_WIFI}/value
+    set_setting internal.wifi 1
+  ;;
+esac
