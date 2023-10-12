@@ -106,3 +106,6 @@ rm -f /storage/.config/asound*
 
 ### 20230916 - Disable Retrarch's built in image viewer so fake-08 blobs are opened correctly.  Thanks to christianhaitian and jtothebell.
 sed -i 's~builtin_imageviewer_enable.*$~builtin_imageviewer_enable = "false"~g' /storage/.config/retroarch/retroarch.cfg
+
+### 20231010 - Stop setting vram in ES settings.
+sed -i '/^.*<int name="MaxVRAM".*$/d' ${ES_SETTINGS}

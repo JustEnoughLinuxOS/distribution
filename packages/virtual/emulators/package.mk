@@ -20,7 +20,7 @@ LIBRETRO_CORES="81-lr a5200-lr arduous-lr atari800-lr beetle-gba-lr beetle-lynx-
                 dinothawr-lr dosbox-svn-lr dosbox-pure-lr duckstation-lr easyrpg-lr fake08-lr fbalpha2012-lr              \
                 fbalpha2019-lr fbneo-lr fceumm-lr flycast2021-lr fmsx-lr freechaf-lr freeintv-lr freej2me-lr fuse-lr      \
                 gambatte-lr gearboy-lr gearcoleco-lr gearsystem-lr genesis-plus-gx-lr genesis-plus-gx-wide-lr gme-lr      \
-                gw-lr handy-lr hatari-lr mame2000-lr mame2003-plus-lr mame2010-lr mame2015-lr melonds-lr meowpc98-lr      \
+                gw-lr handy-lr hatari-lr idtech-lr mame2000-lr mame2003-plus-lr mame2010-lr mame2015-lr melonds-lr meowpc98-lr      \
                 mesen-lr mgba-lr mojozork-lr mrboom-lr mupen64plus-lr mupen64plus-nx-lr neocd_lr nestopia-lr np2kai-lr    \
                 nxengine-lr o2em-lr opera-lr parallel-n64-lr pcsx_rearmed-lr picodrive-lr pokemini-lr potator-lr          \
                 prosystem-lr ppsspp-lr puae-lr puae2021-lr px68k-lr quasi88-lr quicknes-lr race-lr reminiscence-lr        \
@@ -75,6 +75,15 @@ case "${DEVICE}" in
 esac
 
 PKG_DEPENDS_TARGET+=" ${PKG_EMUS} ${EMUS_32BIT} ${PKG_RETROARCH} ${LIBRETRO_CORES}"
+
+install_script() {
+  if [ ! -d "${INSTALL}/usr/config/modules" ]
+  then
+    mkdir -p ${INSTALL}/usr/config/modules
+  fi
+  cp -rf ${PKG_DIR}/sources/"${1}" ${INSTALL}/usr/config/modules
+  chmod 0755 ${INSTALL}/usr/config/modules/"${1}"
+}
 
 makeinstall_target() {
   ### README BEFORE EDITING
@@ -210,6 +219,7 @@ makeinstall_target() {
   add_emu_core atarist retroarch hatari true
   add_emu_core atarist hatarisa hatarisa false
   add_es_system atarist
+  install_script "Start HATARISA.sh"
 
   ## Sammy Atomiswave
   case ${DEVICE} in
@@ -445,7 +455,7 @@ makeinstall_target() {
       add_emu_core gamecube primehack primehack false
       add_es_system gamecube
     ;;
-    RK35*|S922X*|RK3399)
+    S922X*|RK3399|RK3588)
       add_emu_core gamecube dolphin dolphin-sa-gc true
       add_emu_core gamecube retroarch dolphin false
       add_es_system gamecube
@@ -460,7 +470,7 @@ makeinstall_target() {
       add_emu_core wii primehack primehack false
       add_es_system wii
     ;;
-    RK35*|S922X*|RK3399)
+    S922X*|RK3399|RK3588)
       add_emu_core wii dolphin dolphin-sa-wii true
       add_emu_core wii retroarch dolphin false
       add_es_system wii
@@ -472,6 +482,7 @@ makeinstall_target() {
     AMD64)
       add_emu_core wiiu cemu cemu-sa true
       add_es_system wiiu
+      install_script "Start CEMU.sh"
     ;;
   esac
 
@@ -481,6 +492,7 @@ makeinstall_target() {
       add_emu_core switch yuzu yuzu-sa true
       add_emu_core switch ryujinx ryujinx-sa false
       add_es_system switch
+      install_script "Start Yuzu.sh"
     ;;
   esac
 
@@ -698,23 +710,23 @@ makeinstall_target() {
   case ${DEVICE} in
     AMD64)
       add_emu_core psx retroarch beetle_psx true
-      add_emu_core psx Duckstation duckstation-sa false
+      add_emu_core psx duckstation duckstation-sa false
     ;;
     S922X*)
       add_emu_core psx retroarch pcsx_rearmed true
       add_emu_core psx retroarch beetle_psx false
-      add_emu_core psx Duckstation duckstation-sa false
+      add_emu_core psx duckstation duckstation-sa false
     ;;
     RK3399|RK3588)
       add_emu_core psx retroarch pcsx_rearmed32 true
       add_emu_core psx retroarch pcsx_rearmed false
       add_emu_core psx retroarch beetle_psx false
-      add_emu_core psx Duckstation duckstation-sa false
+      add_emu_core psx duckstation duckstation-sa false
     ;;
     RK3326|RK3566*)
       add_emu_core psx retroarch pcsx_rearmed32 true
       add_emu_core psx retroarch pcsx_rearmed false
-      add_emu_core psx Duckstation duckstation-sa false
+      add_emu_core psx duckstation duckstation-sa false
     ;;
   esac
   add_emu_core psx retroarch duckstation false
@@ -727,10 +739,12 @@ makeinstall_target() {
       add_emu_core ps2 pcsx2 pcsx2-sa true
       add_emu_core ps2 retroarch pcsx2 false
       add_es_system ps2
+      install_script "Start PCSX2.sh"
     ;;
     RK3588|S922X|RK3399)
       add_emu_core ps2 aethersx2 aethersx2-sa true
       add_es_system ps2
+      install_script "Start PCSX2.sh"
     ;;
   esac
 
@@ -739,6 +753,7 @@ makeinstall_target() {
     x86_64)
       add_emu_core ps3 rpcs3 rpcs3-sa true
       add_es_system ps3
+      install_script "Start RPCS3.sh"
     ;;
   esac
 
@@ -750,6 +765,7 @@ makeinstall_target() {
     ;;
   esac
   add_es_system psp
+  install_script "Start PPSSPP.sh"
 
   ### Sony Playstation Portable Minis
   add_emu_core pspminis ppsspp ppsspp-sa true
@@ -779,6 +795,7 @@ makeinstall_target() {
     ;;
   esac
   add_es_system scummvm
+  install_script "Start ScummVM.sh"
 
   ### Sega 32X
   add_emu_core sega32x retroarch picodrive true
@@ -851,6 +868,7 @@ makeinstall_target() {
     x86_64)
       add_emu_core xbox xemu xemu-sa true
       add_es_system xbox
+      install_script "Start Xemu.sh"
     ;;
   esac
 
@@ -997,4 +1015,8 @@ makeinstall_target() {
 
   mkdir -p ${INSTALL}/usr/bin
   cp ${PKG_DIR}/scripts/mkcontroller ${INSTALL}/usr/bin
+
+  mkdir -p ${INSTALL}/usr/lib/autostart/common
+  cp ${PKG_DIR}/autostart/* ${INSTALL}/usr/lib/autostart/common
+  chmod 0755 ${INSTALL}/usr/lib/autostart/common/*
 }

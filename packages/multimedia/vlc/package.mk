@@ -29,14 +29,14 @@ pre_configure_target() {
             --enable-png \
             --enable-jpeg \
             --enable-libxml2 \
-            --enable-alsa \
+            --enable-pulse \
             --enable-udev \
             --enable-vlc \
-            --enable-x264 \
-            --enable-gles2"
+            --enable-x264"
 
   DISABLED_FEATURES="--disable-dependency-tracking \
             --without-contrib \
+            --disable-alsa \
             --disable-nls \
             --disable-dbus \
             --disable-gprof \
@@ -176,7 +176,8 @@ pre_configure_target() {
       ENABLED_FEATURES+=" --enable-gles2"
     ;;
     *)
-      ENABLED_FEATURES+=" ${OPENGL} glu libglvnd"
+      PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
+    ;;
   esac
 
   PKG_CONFIGURE_OPTS_TARGET="${DISABLED_FEATURES} ${ENABLED_FEATURES}"

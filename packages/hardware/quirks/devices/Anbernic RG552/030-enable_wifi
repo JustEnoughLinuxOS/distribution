@@ -3,11 +3,18 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
 
-. /storage/.config/profile.d/001-device_config
+. /etc/profile.d/001-functions
 
-# Set export GPIO for Wifi and enable
+# Get Internal Wifi State
+INTERNAL_WIFI_STATE=$(get_setting "internal.wifi")
+if [ ! -n "${INTERNAL_WIFI_STATE}" ]; then
+  INTERNAL_WIFI_STATE=1
+  set_setting "internal.wifi" "1"
+fi
+
+# Set export GPIO for Wifi and set state
 if [ ! -d "/sys/class/gpio/gpio${DEVICE_WIFI}" ]; then
   echo ${DEVICE_WIFI} > /sys/class/gpio/export
   echo out > /sys/class/gpio/gpio${DEVICE_WIFI}/direction
-  echo 1 > /sys/class/gpio/gpio${DEVICE_WIFI}/value
+  echo ${INTERNAL_WIFI_STATE} > /sys/class/gpio/gpio${DEVICE_WIFI}/value
 fi
