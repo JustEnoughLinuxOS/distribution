@@ -4,7 +4,7 @@
 PKG_NAME="arm"
 PKG_LICENSE="Apache-2.0"
 PKG_SITE="www.jelos.org"
-PKG_DEPENDS_TARGET="toolchain squashfs-tools:host dosfstools:host fakeroot:host kmod:host mtools:host populatefs:host libc gcc linux linux-drivers linux-firmware libusb unzip socat p7zip file SDL2 SDL2_gfx SDL2_image SDL2_mixer SDL2_net SDL2_ttf pipewire"
+PKG_DEPENDS_TARGET="toolchain squashfs-tools:host dosfstools:host fakeroot:host kmod:host mtools:host populatefs:host libc gcc linux linux-drivers linux-firmware libusb unzip socat p7zip file SDL2 SDL2_gfx SDL2_image SDL2_mixer SDL2_net SDL2_ttf"
 PKG_SECTION="virtual"
 PKG_LONGDESC="Root package used to build and create 32-bit userland"
 
@@ -24,6 +24,11 @@ fi
 
 if [ "${DISPLAYSERVER}" = "wl" ]; then
   PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER} libXtst libXfixes libXi gdk-pixbuf libvdpau"
+fi
+
+### Audio
+if [ "${PIPEWIRE_SUPPORT}" = "yes" ]; then
+  PKG_DEPENDS_TARGET+=" pipewire"
 fi
 
 ### Emulators and Cores
