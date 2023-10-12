@@ -15,8 +15,8 @@ do
   if [ "${ACTIVE}" ]
   then
     cat ${ACTIVE}
-    sleep ${DELAY}
   else
     echo -e "\nThere are no active builds available to view."
   fi
+  sleep ${DELAY}
 done
