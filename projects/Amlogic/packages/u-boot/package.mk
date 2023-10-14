@@ -4,7 +4,7 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="u-boot"
-PKG_VERSION="5a518474637b183e2bcad8ce216e293c1e72eceb"
+PKG_VERSION="8e2fc015730a6e906e09ab14ee883bfccae4c539"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.denx.de/wiki/U-Boot"
 PKG_URL="https://github.com/JustEnoughLinuxOS/hardkernel-uboot/archive/${PKG_VERSION}.tar.gz"
