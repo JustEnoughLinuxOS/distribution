@@ -4,9 +4,11 @@
 
 . /etc/profile
 
-ARG=${1//[\\]/}
+GAME=${1//[\\]/}
 
 jslisten set "-9 pcsx2-qt"
+
+FPS=$(get_setting show_fps ps2 "${GAME}")
 
 if [ ! -d "/storage/.config/PCSX2" ]
 then
@@ -29,7 +31,19 @@ then
   mkdir -p "/storage/roms/savestates/ps2"
 fi
 
-@APPIMAGE@ -fastboot -nogui -- "${ARG}"
+for OSDPROPERTY in OsdShowSpeed OsdShowFPS OsdShowCPU OsdShowGPU OsdShowResolution OsdShowGSStats OsdShowIndicators
+do
+  case ${FPS} in
+    true)
+      sed -i '/'${OSDPROPERTY}'/c\'${OSDPROPERTY}' = true' /storage/.config/PCSX2/inis/PCSX2.ini
+    ;;
+    *)
+      sed -i '/'${OSDPROPERTY}'/c\'${OSDPROPERTY}' = false' /storage/.config/PCSX2/inis/PCSX2.ini
+    ;;
+  esac
+done
+
+@APPIMAGE@ -fastboot -nogui -- "${GAME}"
 
 #Workaround until we can learn why it doesn't exit cleanly when asked.
 killall -9 pcsx2-qt

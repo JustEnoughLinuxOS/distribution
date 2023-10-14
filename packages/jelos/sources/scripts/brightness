@@ -8,16 +8,18 @@
 
 BRIGHTNESS_DEV="$(find /sys/class/backlight/*/ -name brightness -print -quit)"
 BRIGHTNESS_PATH="${BRIGHTNESS_DEV%/brightness}"
+
+declare -a BRIGHTNESS_TABLE
 BRIGHTNESS_TABLE=($(get_setting brightness_table))
-if [ -z $BRIGHTNESS_TABLE ]; then
-  BRIGHTNESS_TABLE="0 0.04 0.08 0.13 0.19 0.25 0.33 0.42 0.54 0.71 1"
-  set_setting brightness_table "$BRIGHTNESS_TABLE"
+if [ -z ${BRIGHTNESS_TABLE} ]; then
+  BRIGHTNESS_TABLE=(0 0.04 0.08 0.13 0.19 0.25 0.33 0.42 0.54 0.71 1)
+  set_setting brightness_table "${BRIGHTNESS_TABLE[*]}"
 fi
 NUM_STEPS=${#BRIGHTNESS_TABLE[@]}
 
 MAX=$(<$(find /sys/class/backlight/*/ -name max_brightness -print -quit))
-compute() {
-  echo "${BRIGHTNESS_TABLE[$NEXT]} * $MAX" | bc -l
+function compute() {
+  echo "${BRIGHTNESS_TABLE[$NEXT]} * ${MAX}" | bc -l
 }
 
 if [ ! -f "${BRIGHTNESS_DEV}" ]

@@ -29,8 +29,15 @@ get_graphicdrivers
 PKG_FFMPEG_HWACCEL="--enable-hwaccels"
 
 case ${DEVICE} in
-  RK3588|RK3399)
+  RK3588)
     V4L2_SUPPORT=no
+  ;;
+  *)
+    case ${PROJECT} in
+      Rockchip)
+        PKG_PATCH_DIRS+=" vf-deinterlace-v4l2m2m"
+      ;;
+    esac
   ;;
 esac
 
