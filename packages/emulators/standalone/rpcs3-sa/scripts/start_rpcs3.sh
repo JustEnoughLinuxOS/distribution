@@ -44,6 +44,8 @@ else
   GAME_PATH="${1}"
 fi
 
+sed -i "s#Resolution:.*\$#Resolution: $(fbwidth)x$(fbheight)#g" /storage/.config/rpcs3/config.yml
+
 # Run rpcs3
 if [ "$SUI" = "1" ]; then
   export QT_QPA_PLATFORM=wayland
