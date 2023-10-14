@@ -27,7 +27,7 @@ if [ "${BOOT_INI}" == true ]
 then
   echo "boot: create boot.ini..."
   cat >${INSTALL}/usr/share/bootloader/boot.ini <<EOF
-ODROIDGOU-UBOOT-CONFIG
+JELOS-UBOOT-CONFIG
 
 setenv dtb_loadaddr "0x10000000"
 setenv loadaddr "0x1B00000"
