@@ -15,6 +15,22 @@ then
   cp -rf /usr/config/PCSX2 /storage/.config
 fi
 
+#Create PS2 bios folder
+if [ ! -d "/storage/roms/bios/pcsx2/bios" ]
+then
+  mkdir -p "/storage/roms/bios/pcsx2/bios"
+fi
+
+#Create PS2 saves & savestates folders
+if [ ! -d "/storage/roms/saves/ps2" ]
+then
+  mkdir -p "/storage/roms/saves/ps2"
+fi
+if [ ! -d "/storage/roms/savestates/ps2" ]
+then
+  mkdir -p "/storage/roms/savestates/ps2"
+fi
+
 for OSDPROPERTY in OsdShowSpeed OsdShowFPS OsdShowCPU OsdShowGPU OsdShowResolution OsdShowGSStats OsdShowIndicators
 do
   case ${FPS} in
