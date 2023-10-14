@@ -69,12 +69,13 @@ pre_make_target() {
 post_makeinstall_target() {
   # Copy scripts
   mkdir -p ${INSTALL}/usr/bin/
-   cp ${PKG_DIR}/scripts/* ${INSTALL}/usr/bin/
+  cp ${PKG_DIR}/scripts/* ${INSTALL}/usr/bin/
 
   # Copy config & resources
   mkdir -p ${INSTALL}/usr/config/rpcs3
-   cp -PR ${PKG_DIR}/config/rpcs3                           ${INSTALL}/usr/config/rpcs3/
-   cp -PR ${INSTALL}/usr/share/rpcs3/{GuiConfigs,Icons} ${INSTALL}/usr/config/rpcs3/ 
+  cp -r ${PKG_DIR}/config/* ${INSTALL}/usr/config/rpcs3/
+  cp ${INSTALL}/usr/share/rpcs3/GuiConfigs/* ${INSTALL}/usr/config/rpcs3/GuiConfigs/
+  cp -PR ${INSTALL}/usr/share/rpcs3/Icons ${INSTALL}/usr/config/rpcs3/Icons
 
   # Clean up
   safe_remove ${INSTALL}/usr/share
