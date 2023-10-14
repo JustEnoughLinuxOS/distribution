@@ -124,8 +124,11 @@ makeinstall_host() {
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin
     [ ${TARGET_ARCH} = x86_64 ] && cp ${PKG_DIR}/scripts/getedid ${INSTALL}/usr/bin
-    cp ${PKG_DIR}/scripts/dtfile ${INSTALL}/usr/bin
-    cp ${PKG_DIR}/scripts/dtname ${INSTALL}/usr/bin
+    cp ${PKG_DIR}/scripts/dthelper ${INSTALL}/usr/bin
+      ln -sf dthelper ${INSTALL}/usr/bin/dtfile
+      ln -sf dthelper ${INSTALL}/usr/bin/dtflag
+      ln -sf dthelper ${INSTALL}/usr/bin/dtname
+      ln -sf dthelper ${INSTALL}/usr/bin/dtsoc
     cp ${PKG_DIR}/scripts/lsb_release ${INSTALL}/usr/bin/
     cp ${PKG_DIR}/scripts/pastebinit ${INSTALL}/usr/bin/
     ln -sf pastebinit ${INSTALL}/usr/bin/paste
