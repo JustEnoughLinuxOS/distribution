@@ -4,13 +4,14 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="u-boot"
-PKG_VERSION="8e2fc015730a6e906e09ab14ee883bfccae4c539"
+PKG_VERSION="95c5b7a80e"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.denx.de/wiki/U-Boot"
 PKG_URL="https://github.com/JustEnoughLinuxOS/hardkernel-uboot/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain gcc-linaro-aarch64-elf:host gcc-linaro-arm-eabi:host"
 PKG_LONGDESC="Das U-Boot is a cross-platform bootloader for embedded systems."
 PKG_TOOLCHAIN="manual"
+PKG_PATCH_DIRS+="${DEVICE}*"
 
 make_target() {
   . ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
