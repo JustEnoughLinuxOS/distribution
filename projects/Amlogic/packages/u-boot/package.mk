@@ -4,15 +4,14 @@
 # Copyright (C) 2022-present Fewtarius
 
 PKG_NAME="u-boot"
-PKG_VERSION="9235942"
+PKG_VERSION="9235942906216dc529c1e96f67dd2364a94d0738"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.denx.de/wiki/U-Boot"
-PKG_URL="https://github.com/hardkernel/u-boot.git"
+PKG_URL="https://github.com/hardkernel/u-boot/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain gcc-linaro-aarch64-elf:host gcc-linaro-arm-eabi:host"
 PKG_LONGDESC="Das U-Boot is a cross-platform bootloader for embedded systems."
 PKG_TOOLCHAIN="manual"
 PKG_PATCH_DIRS+="${DEVICE}*"
-PKG_GIT_CLONE_BRANCH="odroidgoU-v2015.01"
 
 make_target() {
   . ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
@@ -25,6 +24,11 @@ make_target() {
     DEBUG=${PKG_DEBUG} CROSS_COMPILE=aarch64-elf- ARCH=arm CFLAGS="" LDFLAGS="" make mrproper
     DEBUG=${PKG_DEBUG} CROSS_COMPILE=aarch64-elf- ARCH=arm CFLAGS="" LDFLAGS="" make ${UBOOT_CONFIG}
     DEBUG=${PKG_DEBUG} CROSS_COMPILE=aarch64-elf- ARCH=arm CFLAGS="" LDFLAGS="" make HOSTCC="${HOST_CC}" HOSTSTRIP="true"
+
+    # repack odroidbios.bin for jelos
+    ${TOOLCHAIN}/sbin/fsck.cramfs --extract=jelos tools/odroid_resource/ODROIDBIOS.BIN
+    sed -e "s/ODROIDGOU/JELOS/" -i jelos/boot.ini
+    ${TOOLCHAIN}/sbin/mkfs.cramfs -N little jelos tools/odroid_resource/ODROIDBIOS.BIN
   fi
 }
 
