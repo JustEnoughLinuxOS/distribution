@@ -43,8 +43,6 @@ makeinstall_target() {
     # Always install the update script
     find_file_path bootloader/update.sh && cp -av ${FOUND_PATH} ${INSTALL}/usr/share/bootloader
 
-    # Always install the canupdate script
-    if find_file_path bootloader/canupdate.sh; then
       cp -av ${FOUND_PATH} ${INSTALL}/usr/share/bootloader
       sed -e "s/@PROJECT@/${DEVICE:-${PROJECT}}/g" \
           -i ${INSTALL}/usr/share/bootloader/canupdate.sh
