@@ -151,4 +151,4 @@
     HTOP_TOOL="yes"
 
   # JELOS Subdevices
-    SUBDEVICES="Odroid_GOU"
+    SUBDEVICES="Odroid_GOU Odroid_N2"
