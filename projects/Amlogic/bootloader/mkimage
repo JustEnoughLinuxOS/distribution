@@ -1,80 +1,53 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
 
-source ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
+mkimage_uboot() {
+if [ -f "${RELEASE_DIR}/3rdparty/bootloader/${SUBDEVICE}_u-boot" ]; then
+  echo "image: writing u-boot to $(basename ${DISK})..."
+  dd if="${RELEASE_DIR}/3rdparty/bootloader/${SUBDEVICE}_u-boot" of="${DISK}" bs=512 seek=1 conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
+fi
+}
 
-#Write u-boot.bin to image
-case "${PKG_SOC}" in
-  s922x)
-    if [ -f "${RELEASE_DIR}/3rdparty/bootloader/u-boot.bin" ]; then
-      echo "image: burn uboot.bin to image... (${PKG_SOC})"
-      dd if="${RELEASE_DIR}/3rdparty/bootloader/u-boot.bin" of="${DISK}" bs=512 seek=1 conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
-    fi
+mkimage_bootini() {
+  echo "image: copying boot.ini..."
+  cp -p "${RELEASE_DIR}/3rdparty/bootloader/boot.ini" "${LE_TMP}/boot.ini"
+  sed -e "s/@BOOT_UUID@/${UUID_SYSTEM}/" \
+      -e "s/@DISK_UUID@/${UUID_STORAGE}/" \
+      -e "s/@EXTRA_CMDLINE@/${EXTRA_CMDLINE}/" \
+      -i "${LE_TMP}/boot.ini"
+  mcopy "${LE_TMP}/boot.ini" ::
+}
+
+mkimage_extlinux() {
+  echo "image: copying exlinux.conf..."
+  mkdir -p "${LE_TMP}/extlinux"
+  cp -p "${RELEASE_DIR}/3rdparty/bootloader/extlinux/extlinux.conf" "${LE_TMP}/extlinux/extlinux.conf"
+  sed -e "s/@BOOT_UUID@/${UUID_SYSTEM}/" \
+      -e "s/@DISK_UUID@/${UUID_STORAGE}/" \
+      -e "s/@EXTRA_CMDLINE@/${EXTRA_CMDLINE}/" \
+      -i "${LE_TMP}/extlinux/extlinux.conf"
+  mcopy "${LE_TMP}/extlinux" ::
+}
+
+mkimage_dtb() {
+  echo "image: copying device trees..."
+  for dtb in ${DTB[@]}; do
+    mcopy ${RELEASE_DIR}/3rdparty/bootloader/${dtb}.dtb ::
+  done
+}
+
+mkimage_gou_extras() {
+  echo "image: copying ODROIDBIOS.BIN and res..."
+  mcopy ${RELEASE_DIR}/3rdparty/bootloader/ODROIDBIOS.BIN ::
+  mcopy ${RELEASE_DIR}/3rdparty/bootloader/res ::
+}
+
+case "${SUBDEVICE}" in
+  Odroid_GOU)
+    DTB=("meson-g12b-odroid-go-ultra" "meson-g12b-powkiddy-rgb10-max-3")
+    mkimage_dtb
+    mkimage_bootini
+    mkimage_gou_extras
+    mkimage_uboot
+    ;;
 esac
-
-#Copy bios bin
-if [ "${BIOS_BIN}" == true ]; then
-  if [ -f "${RELEASE_DIR}/3rdparty/bootloader/ODROIDBIOS.BIN" ]; then
-    echo "image: copy bios bin image..."
-    cp "${RELEASE_DIR}/3rdparty/bootloader/ODROIDBIOS.BIN" "${LE_TMP}/ODROIDBIOS.BIN"
-    mcopy -so "${LE_TMP}/ODROIDBIOS.BIN" ::
-  fi
-  if [ -d "${RELEASE_DIR}/3rdparty/bootloader/res" ]; then
-    cp -r "${RELEASE_DIR}/3rdparty/bootloader/res" "${LE_TMP}/res"
-    mcopy -so "${LE_TMP}/res" ::
-  fi
-fi
-
-#Create boot.ini
-if [ "${BOOT_INI}" == true ]
-then
-  echo "image: create boot.ini..."
-  cat >"${LE_TMP}/boot.ini" <<EOF
-JELOS-UBOOT-CONFIG
-
-setenv dtb_loadaddr "0x10000000"
-setenv loadaddr "0x1B00000"
-
-setenv bootargs "boot=UUID=${UUID_SYSTEM} disk=UUID=${UUID_STORAGE} ${EXTRA_CMDLINE}"
-
-load mmc \${devno}:1 \${loadaddr} KERNEL
-load mmc \${devno}:1 \${dtb_loadaddr} \${fdtfile}
-
-fdt addr \${dtb_loadaddr}
-
-booti \${loadaddr} - \${dtb_loadaddr}
-
-EOF
-mcopy -so "${LE_TMP}/boot.ini" ::
-fi
-
-#Copy device trees to part1
-for DTB in ${DEVICE_DTB[@]}
-do
-  if [ -e "${DTB}.dtb" ]
-  then
-    echo "image: copy device trees to image..."
-    mcopy -o "${DTB}.dtb" ::
-  fi
-done
-
-#Create extlinux.conf
-if [ "${EXT_LINUX_CONF}" == true ]
-then
-
-mkdir -p "${LE_TMP}/extlinux"
-
-  echo "image: Set FTD to ${DEVICE_DTB}..."
-  FDTMODE="FDT /${DEVICE_DTB}.dtb"
-
-echo "image: Set extlinux.conf..."
-cat << EOF > "${LE_TMP}/extlinux/extlinux.conf"
-LABEL ${DISTRO}
-  LINUX /${KERNEL_NAME}
-  ${FDTMODE}
-  APPEND boot=UUID=${UUID_SYSTEM} disk=UUID=${UUID_STORAGE} ${EXTRA_CMDLINE}
-EOF
-
-mcopy -so "${LE_TMP}/extlinux" ::
-
-fi

@@ -20,7 +20,6 @@ fi
 # mount $BOOT_ROOT r/w
   mount -o remount,rw $BOOT_ROOT
 
-
 for arg in $(cat /proc/cmdline); do
   case $arg in
     boot=*)
@@ -54,56 +53,63 @@ for arg in $(cat /proc/cmdline); do
   esac
 done
 
-CONFS=$SYSTEM_ROOT/usr/share/bootloader/extlinux/*.conf
+DT_ID=$($SYSTEM_ROOT/usr/bin/dtname)
 
-for all_conf in $CONFS; do
-  conf="$(basename ${all_conf})"
-  echo "Updating ${conf}..."
-  cp -p $SYSTEM_ROOT/usr/share/bootloader/extlinux/${conf} $BOOT_ROOT/extlinux/${conf} &>/dev/null
-  sed -e "s/@BOOT_UUID@/$BOOT_UUID/" \
-      -e "s/@DISK_UUID@/$DISK_UUID/" \
-      -i $BOOT_ROOT/extlinux/${conf}
+if [ -n "$DT_ID" ]; then
+  case $DT_ID in
+    *odroid_go_ultra*|*rgb10-max-3*)
+      SUBDEVICE="Odroid_GOU"
+      ;;
+  esac
+fi
+
+for all_dtb in $BOOT_ROOT/*.dtb; do
+  dtb=$(basename $all_dtb)
+  if [ -f $SYSTEM_ROOT/usr/share/bootloader/$dtb ]; then
+    echo "Updating $dtb..."
+    cp -p $SYSTEM_ROOT/usr/share/bootloader/$dtb $BOOT_ROOT
+  fi
 done
 
-if [ -f $SYSTEM_ROOT/usr/share/bootloader/boot.ini ]; then
-  echo "Updating boot.ini..."
-  cp -p $SYSTEM_ROOT/usr/share/bootloader/boot.ini $BOOT_ROOT/boot.ini &>/dev/null
+if [ -f $BOOT_ROOT/extlinux/extlinux.conf ]; then
+  if [ -f $SYSTEM_ROOT/usr/share/bootloader/extlinux/extlinux.conf ]; then
+    echo "Updating extlinux.conf..."
+    cp -p $SYSTEM_ROOT/usr/share/bootloader/extlinux/extlinux.conf $BOOT_ROOT/extlinux
     sed -e "s/@BOOT_UUID@/$BOOT_UUID/" \
-      -e "s/@DISK_UUID@/$DISK_UUID/" \
-      -i $BOOT_ROOT/boot.ini
+        -e "s/@DISK_UUID@/$DISK_UUID/" \
+        -i $BOOT_ROOT/extlinux/extlinux.conf
+  fi
 fi
 
-if [ -f $SYSTEM_ROOT/usr/share/bootloader/ODROIDBIOS.BIN ]; then
-  echo "Updating odroidbios.bin..."
-  cp -p $SYSTEM_ROOT/usr/share/bootloader/ODROIDBIOS.BIN $BOOT_ROOT/ODROIDBIOS.BIN &>/dev/null
+if [ -f $BOOT_ROOT/boot.ini ]; then
+  if [ -f /usr/share/bootloader/boot.ini ]; then
+    echo "Updating boot.ini"
+    cp -p /usr/share/bootloader/boot.ini $BOOT_ROOT/boot.ini
+    sed -e "s/@BOOT_UUID@/$BOOT_UUID/" \
+        -e "s/@DISK_UUID@/$DISK_UUID/" \
+        -i $BOOT_ROOT/boot.ini
+  fi
 fi
 
-if [ -d $SYSTEM_ROOT/usr/share/bootloader/res ]; then
-  echo "Updating res..."
-  cp -rp $SYSTEM_ROOT/usr/share/bootloader/res $BOOT_ROOT/ &>/dev/null
+if [ -f $SYSTEM_ROOT/usr/share/bootloader/${SUBDEVICE}_u-boot ]; then
+  echo "Updating u-boot on: $BOOT_DISK..."
+  dd if=$SYSTEM_ROOT/usr/share/bootloader/${SUBDEVICE}_u-boot of=$BOOT_DISK conv=fsync,notrunc bs=512 seek=1 &>/dev/null
 fi
 
-# update device tree
-for all_dtb in $SYSTEM_ROOT/usr/share/bootloader/*.dtb; do
-  dtb="$(basename ${all_dtb})"
-    echo -n "Updating $dtb... "
-    cp -p $SYSTEM_ROOT/usr/share/bootloader/$dtb $BOOT_ROOT &>/dev/null
-    echo "done"
-done
+if [ -f $BOOT_ROOT/ODROIDBIOS.BIN ]; then
+  if [ -f $SYSTEM_ROOT/usr/share/bootloader/ODROIDBIOS.BIN ]; then
+    echo "Updating ODROIDBIOS.BIN..."
+    cp -p $SYSTEM_ROOT/usr/share/bootloader/ODROIDBIOS.BIN $BOOT_ROOT
+  fi
+fi
 
+if [ -d $BOOT_ROOT/res ]; then
+  if [ -d $SYSTEM_ROOT/usr/share/bootloader/res ]; then
+    echo "Updating res..."
+    cp -rp $SYSTEM_ROOT/usr/share/bootloader/res $BOOT_ROOT
+  fi
+fi
+
+mount -o ro,remount $BOOT_ROOT
 
 echo "UPDATE" > /storage/.boot.hint
-
-# update bootloader
-
-if [ -f $SYSTEM_ROOT/usr/share/bootloader/u-boot.bin ]; then
-  echo -n "Updating uboot.bin... "
-  dd if=$SYSTEM_ROOT/usr/share/bootloader/u-boot.bin of=$BOOT_DISK conv=fsync,notrunc bs=512 seek=1 &>/dev/null
-  echo "done"
-fi
-
-# mount $BOOT_ROOT r/o
-  sync
-  mount -o remount,ro $BOOT_ROOT &>/dev/null
-
-sync

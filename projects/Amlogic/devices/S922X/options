@@ -30,21 +30,12 @@
     KERNEL_TARGET="Image"
     BOOTLOADER="u-boot"
     PARTITION_TABLE="msdos"
-    DEVICE_DTB=("meson-g12b-odroid-go-ultra" "meson-g12b-powkiddy-rgb10-max-3")
-    UBOOT_DTB="${DEVICE_DTB[0]}"
-    UBOOT_CONFIG="odroidgou_defconfig"
-    PKG_SOC="s922x"
-    BOOT_FIP="odroid-go-ultra"
-    BOOT_INI=true
-    BIOS_BIN=true
-    EXT_LINUX_CONF=false
 
   # Additional kernel make parameters (for example to specify the u-boot loadaddress)
-    KERNEL_MAKE_EXTRACMD+=""
-    KERNEL_MAKE_EXTRACMD=" $(for DTB in "${DEVICE_DTB[@]}"; do echo -n "amlogic/${DTB}.dtb "; done)"  
+    KERNEL_MAKE_EXTRACMD+="dtbs"
 
   # Define the CPU
-    HW_CPU="Amlogic S922x"
+    HW_CPU="Amlogic S922X"
 
   # Mali GPU family
     MALI_FAMILY="g52"
@@ -158,3 +149,6 @@
 
   # htop tool (yes / no)
     HTOP_TOOL="yes"
+
+  # JELOS Subdevices
+    SUBDEVICES="Odroid_GOU"
