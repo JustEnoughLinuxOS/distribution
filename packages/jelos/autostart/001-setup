@@ -57,9 +57,9 @@ fi
 MYSLEEPMODE=$(get_setting system.suspendmode)
 if [ -n "${MYSLEEPMODE}" ]
 then
-  /usr/bin/setsuspendmode ${MYSLEEPMODE}
+  /usr/bin/suspendmode ${MYSLEEPMODE}
 else
-  /usr/bin/setsuspendmode mem
+  /usr/bin/suspendmode mem
 fi
 
 ### Clean up settings
