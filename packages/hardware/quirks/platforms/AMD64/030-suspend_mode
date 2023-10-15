@@ -8,6 +8,6 @@
 MYSLEEPMODE=$(get_setting system.suspendmode)
 if [ -z "${MYSLEEPMODE}" ]
 then
-  /usr/bin/setsuspendmode mem
+  /usr/bin/suspendmode mem
 fi
 

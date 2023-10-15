@@ -1,0 +1,27 @@
+#!/bin/bash
+. /etc/profile
+
+REQUESTED_MODE=${1}
+SUSPEND_MODE=$(get_setting system.suspendmode)
+
+if [ ! "${REQUESTED_MODE}" = "${SUSPEND_MODE}" ]
+then
+  cat <<EOF >/storage/.config/sleep.conf.d/sleep.conf
+  [Sleep]
+EOF
+  case ${REQUESTED_MODE} in
+    off)
+      cat <<EOF >>/storage/.config/sleep.conf.d/sleep.conf
+  AllowSuspend=no
+EOF
+    ;;
+    *)
+      cat <<EOF >>/storage/.config/sleep.conf.d/sleep.conf
+  AllowSuspend=yes
+  SuspendState=${REQUESTED_MODE}
+EOF
+    ;;
+  esac
+  set_setting system.suspendmode ${1}
+  systemctl restart systemd-logind
+fi
