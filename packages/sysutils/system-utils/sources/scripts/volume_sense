@@ -136,7 +136,7 @@ mkcontroller 2>/dev/null ||:
               UP="-b"
             else
               COMMAND="/usr/bin/wifictl"
-              WIFISTATE=$(get_setting wifi.enabled)
+              WIFISTATE=$(get_setting network.enabled)
 	      if [ "${WIFISTATE}" = 0 ]
               then
                 DOWN="reconnect"
