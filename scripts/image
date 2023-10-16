@@ -316,7 +316,6 @@ if [ "${1}" = "release" -o "${1}" = "mkimage" -o "${1}" = "noobs" ]; then
         do_mkimage "${IMAGE_NAME}-${DEVICE}"
     else
       if [ -n "${SUBDEVICES}" ]; then
-        [ "${PROJECT}" = "Amlogic" -o "${PROJECT}" = "Amlogic-ng" ] && SUBDEVICES+=" Generic"
         for SUBDEVICE in ${SUBDEVICES}; do
           do_mkimage "${IMAGE_NAME}"
         done

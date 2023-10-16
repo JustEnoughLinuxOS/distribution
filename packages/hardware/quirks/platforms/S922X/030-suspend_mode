@@ -4,11 +4,7 @@
 
 ### Sleep is currently broken, so we'll disable it.
 
-cat <<EOF >/storage/.config/sleep.conf.d/sleep.conf
-[Sleep]
-AllowSuspend=no
-SuspendState=freeze
-EOF
+suspendmode off
 
 ### Ignore power button presses for now, until we can finish up fixing sleep.
 cat <<EOF >~/.config/logind.conf.d/login.conf

@@ -7,7 +7,7 @@
 MYSLEEPMODE=$(get_setting system.suspendmode)
 if [ -z "${MYSLEEPMODE}" ]
 then
-  /usr/bin/setsuspendmode freeze
+  /usr/bin/suspendmode freeze
 fi
 
 echo s2idle >/sys/power/mem_sleep
