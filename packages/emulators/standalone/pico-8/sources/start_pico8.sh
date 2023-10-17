@@ -12,17 +12,19 @@ case ${HW_ARCH} in
     STATIC_BIN="pico8_64"
   ;;
   *)
-    STATIC_BIN="pico8"
+    STATIC_BIN="pico8_dyn"
   ;;
 esac
 
-if [ ! -z "${1}" ] && [ -s "${1}" ]
-then
+# check if the file being launched contains "Splore" and if so launch Pico-8 Splore otherwise run the game directly
+shopt -s nocasematch
+if [[ "${1}" == *splore* ]]; then
+  OPTIONS="-splore"
+else
   OPTIONS="-run"
   CART="${1}"
-else
-  OPTIONS="-splore"
 fi
+shopt -u nocasematch
 
 INTEGER_SCALE=$(get_setting pico-8.integerscale)
 if [ "${INTEGER_SCALE}" = "1" ]
@@ -37,23 +39,8 @@ else
   LAUNCH_DIR="${GAME_DIR}"
 fi
 
-cp -f /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt ${LAUNCH_DIR}/sdl_controllers.txt
+# store sdl_controllers in root directory so its shared across devices - will look to revisit this with controller refactor work
+cp -f /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt ${GAME_DIR}/sdl_controllers.txt
 
-if [ -e "${LAUNCH_DIR}/pico8_dyn" ] || [ ! "$?" = 0 ]
-then
-  jslisten set "-9 pico8_dyn"
-  ${LAUNCH_DIR}/pico8_dyn -home -root_path ${GAME_DIR} -joystick 0 ${OPTIONS} "${CART}"
-fi
-
-if [ -e "${LAUNCH_DIR}/${STATIC_BIN}" ] || [ ! "$?" = 0 ]
-then
-  jslisten set "-9 ${STATIC_BIN}"
-  ${LAUNCH_DIR}/${STATIC_BIN} -home -root_path ${GAME_DIR} -joystick 0 ${OPTIONS} "${CART}"
-  exit
-else
-  text_viewer -e -w -t "Missing Pico-8 binaries!" -m "Extract your purchased pico8 package into the pico-8 directory on your games partition."
-fi
-
-ret_error=$?
-
-exit $ret_error
+jslisten set "-9 ${STATIC_BIN}"
+${LAUNCH_DIR}/${STATIC_BIN} -home -root_path ${GAME_DIR} -joystick 0 ${OPTIONS} "${CART}"

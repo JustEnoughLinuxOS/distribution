@@ -8,5 +8,6 @@ then
   mkdir "${PICO_DIR}"
 fi
 
-cp -f  "/usr/bin/start_pico8.sh" "${PICO_DIR}/Start Pico-8.sh"
-
+# Suggest removing this and replacing it with a file called Splore.png
+# cp -f  "/usr/bin/start_pico8.sh" "${PICO_DIR}/Start Pico-8.sh"
+touch "${PICO_DIR}/Splore.png"
