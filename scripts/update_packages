@@ -6,7 +6,8 @@
 
 OPTIONS="distributions/JELOS/options"
 PACKAGES=("packages/virtual/emulators/package.mk" \
-          "packages/virtual/es-themes/package.mk")
+          "packages/virtual/es-themes/package.mk" \
+          "packages/virtual/gamesupport/package.mk" )
 BLOCKLIST="config/blocklist"
 
 update_packages() {
