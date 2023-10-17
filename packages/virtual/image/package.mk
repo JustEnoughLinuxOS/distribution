@@ -21,7 +21,7 @@ PKG_UI_TOOLS="fileman fbgrab"
 
 PKG_GRAPHICS="imagemagick"
 
-PKG_FONTS="terminus-font corefonts"
+PKG_FONTS="corefonts"
 
 PKG_MULTIMEDIA="ffmpeg vlc mpv gmu"
 
