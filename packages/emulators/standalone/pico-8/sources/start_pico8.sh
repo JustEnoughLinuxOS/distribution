@@ -33,6 +33,8 @@ fi
 if [ -d "${GAME_DIR}/${HW_ARCH}" ]
 then
   LAUNCH_DIR="${GAME_DIR}/${HW_ARCH}"
+else
+  LAUNCH_DIR="${GAME_DIR}"
 fi
 
 cp -f /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt ${LAUNCH_DIR}/sdl_controllers.txt
