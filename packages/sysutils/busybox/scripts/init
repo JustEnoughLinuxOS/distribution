@@ -430,15 +430,15 @@ set_consolefont() {
     hres="$(fbset 2>/dev/null | awk '/geometry/ { print $2 }')"
     if [ "${hres}" -gt "0" ] && [ "${hres}" -le "640" ]
     then
-      setfont -C /dev/console ter-v12n.psf
-    elif [ "${hres}" -ge "641" ] && [ "${hres}" -lt "720" ]
+      setfont -C /dev/console spleen-5x8.psfu
+    elif [ "${hres}" -ge "641" ] && [ "${hres}" -le "720" ]
     then
-      setfont -C /dev/console ter-v14n.psf
-    elif [ "${hres}" -ge "720" ] && [ "${hres}" -lt "1080" ]
+      setfont -C /dev/console spleen-6x12.psfu
+    elif [ "${hres}" -gt "720" ] && [ "${hres}" -lt "1080" ]
     then
-      setfont -C /dev/console ter-v18n.psf
+      setfont -C /dev/console spleen-8x16.psfu
     else
-      setfont -C /dev/console ter-v24n.psf
+      setfont -C /dev/console spleen-12x24.psfu
     fi
   fi
 }

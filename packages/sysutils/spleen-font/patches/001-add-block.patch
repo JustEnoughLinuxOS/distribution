@@ -1,0 +1,59 @@
+diff -rupN spleen-2.0.0.orig/spleen-5x8.bdf spleen-2.0.0/spleen-5x8.bdf
+--- spleen-2.0.0.orig/spleen-5x8.bdf	2023-10-17 11:29:44.898274937 +0000
++++ spleen-2.0.0/spleen-5x8.bdf	2023-10-17 12:21:00.033250208 +0000
+@@ -37,7 +37,7 @@ COPYRIGHT "Copyright (c) 2018-2023, Fred
+ DEFAULT_CHAR 32
+ _GBDFED_INFO "Edited with gbdfed 1.6."
+ ENDPROPERTIES
+-CHARS 472
++CHARS 473
+ STARTCHAR SPACE
+ ENCODING 32
+ SWIDTH 625 0
+@@ -7118,4 +7118,19 @@ BITMAP
+ 20
+ 10
+ ENDCHAR
++STARTCHAR FULL BLOCK
++ENCODING 9608
++SWIDTH 625 0
++DWIDTH 5 0
++BBX 5 8 0 -1
++BITMAP
++FF
++FF
++FF
++FF
++FF
++FF
++FF
++FF
++ENDCHAR
+ ENDFONT
+diff -rupN spleen-2.0.0.orig/spleen-6x12.bdf spleen-2.0.0/spleen-6x12.bdf
+--- spleen-2.0.0.orig/spleen-6x12.bdf	2023-10-17 11:29:44.898274937 +0000
++++ spleen-2.0.0/spleen-6x12.bdf	2023-10-17 12:22:31.486063337 +0000
+@@ -9006,4 +9006,23 @@ BITMAP
+ 08
+ 04
+ ENDCHAR
++STARTCHAR FULL BLOCK
++ENCODING 9608
++SWIDTH 500 0
++DWIDTH 6 0
++BBX 6 12 0 -3
++BITMAP
++FF
++FF
++FF
++FF
++FF
++FF
++FF
++FF
++FF
++FF
++FF
++FF
++ENDCHAR
+ ENDFONT
