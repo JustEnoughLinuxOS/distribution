@@ -115,13 +115,13 @@ makeinstall_target() {
 
   mkdir -p ${INSTALL}/etc/emulationstation/
   ln -sf /storage/.config/emulationstation/themes ${INSTALL}/etc/emulationstation/
+
+  cp -rf ${PKG_DIR}/config/common/*.cfg ${INSTALL}/usr/config/emulationstation
   ln -sf /usr/config/emulationstation/es_systems.cfg ${INSTALL}/etc/emulationstation/es_systems.cfg
 
-   cp -rf ${PKG_DIR}/config/common/*.cfg ${INSTALL}/usr/config/emulationstation
-
-   if [ -d "${PKG_DIR}/config/device/${DEVICE}" ]; then
-     cp -rf ${PKG_DIR}/config/device/${DEVICE}/*.cfg ${INSTALL}/usr/config/emulationstation
-   fi
+  if [ -d "${PKG_DIR}/config/device/${DEVICE}" ]; then
+    cp -rf ${PKG_DIR}/config/device/${DEVICE}/*.cfg ${INSTALL}/usr/config/emulationstation
+  fi
 
   ln -sf /storage/.cache/system_timezone ${INSTALL}/etc/timezone
 
