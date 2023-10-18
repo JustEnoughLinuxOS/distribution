@@ -14,7 +14,7 @@ PKG_NEED_UNPACK="$PROJECT_DIR/$PROJECT/bootloader"
 
 for PKG_SUBDEVICE in $SUBDEVICES; do
   PKG_DEPENDS_TARGET+=" u-boot-${PKG_SUBDEVICE}"
-  PKG_NEED_UNPACK+=" $(get_pkg_directory u-boot-${PKG_SUBDEVICE})"
+  PKG_NEED_UNPACK+=" $(get_pkg_directory u-boot-${PKG_SUBDEVICE}) ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options"
 done
 
 make_target() {
