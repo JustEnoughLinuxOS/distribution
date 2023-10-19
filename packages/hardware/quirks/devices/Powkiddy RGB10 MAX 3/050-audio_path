@@ -8,3 +8,7 @@ DEVICE_PLAYBACK_PATH_HP="SPK"
 DEVICE_PLAYBACK_PATH="Playback Path"
 DEVICE_PIPEWIRE_PROFILE="pro-audio"
 EOF
+
+### Set sound properties
+amixer -c 0 -q sset 'FRDDR_A SINK 1 SEL' 'OUT 1'
+amixer -c 0 -q sset 'FRDDR_A SRC 1 EN' 'on'
