@@ -30,7 +30,7 @@ if [ "${BOOT_INI}" == true ]
 then
   echo "image: create boot.ini..."
   cat >"${LE_TMP}/boot.ini" <<EOF
-ODROIDGOU-UBOOT-CONFIG
+JELOS-UBOOT-CONFIG
 
 setenv dtb_loadaddr "0x10000000"
 setenv loadaddr "0x1B00000"

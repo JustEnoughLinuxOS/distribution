@@ -179,7 +179,7 @@ case "${1}" in
       destroy_adhoc >/dev/null 2>&1
     fi
     connect_wifi >/dev/null 2>&1
-    set_setting wifi.enabled 1
+    set_setting network.enabled 1
   ;;
   disable)
     if [ "${WIFI_TYPE}" = "1" ]
@@ -189,7 +189,7 @@ case "${1}" in
     connmanctl disable wifi >/dev/null 2>&1
     rfkill block wifi >/dev/null 2>&1
     rm -f "${WIFI_CFG}" 2>/dev/null
-    set_setting wifi.enabled 0
+    set_setting network.enabled 0
   ;;
   reconnect)
     /usr/bin/wifictl disable

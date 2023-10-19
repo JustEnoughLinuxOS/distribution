@@ -2,7 +2,7 @@
 # Copyright (C) 2020-present Fewtarius (https://github.com/fewtarius)
 
 PKG_NAME="tic80-lr"
-PKG_VERSION="b62be5f570c10f1fa21570b418d2bf3e4d061dfc"
+PKG_VERSION="f740bff14921fe2120486c8a233094602032b996"
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/nesbox/TIC-80"
 PKG_URL="${PKG_SITE}.git"

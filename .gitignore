@@ -49,6 +49,9 @@
 # system document cache
 .doc_cache/
 
+# tmp space
+.tmp/
+
 # release images
 release/
 

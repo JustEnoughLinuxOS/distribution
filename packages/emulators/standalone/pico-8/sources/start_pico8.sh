@@ -5,22 +5,20 @@
 # Source predefined functions and variables
 . /etc/profile
 
-case ${HW_ARCH} in
-  aarch64)
-    STATIC_BIN="pico8_64"
-  ;;
-  *)
-    STATIC_BIN="pico8"
-  ;;
-esac
+GAME_DIR="/storage/roms/pico-8/"
 
-if [ ! -z "${1}" ] && [ -s "${1}" ]
-then
+# All architectures should use the dynamic binary.
+STATIC_BIN="pico8_dyn"
+
+# check if the file being launched contains "Splore" and if so launch Pico-8 Splore otherwise run the game directly
+shopt -s nocasematch
+if [[ "${1}" == *splore* ]]; then
+  OPTIONS="-splore"
+else
   OPTIONS="-run"
   CART="${1}"
-else
-  OPTIONS="-splore"
 fi
+shopt -u nocasematch
 
 INTEGER_SCALE=$(get_setting pico-8.integerscale)
 if [ "${INTEGER_SCALE}" = "1" ]
@@ -28,24 +26,18 @@ then
   OPTIONS="${OPTIONS} -pixel_perfect 1"
 fi
 
-cp -f /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt /storage/roms/pico-8/sdl_controllers.txt
-
-if [ -e "/storage/roms/pico-8/${STATIC_BIN}" ]
+if [ -d "${GAME_DIR}/${HW_ARCH}" ]
 then
-  jslisten set "-9 ${STATIC_BIN}"
-  /storage/roms/pico-8/${STATIC_BIN} -home -root_path /storage/roms/pico-8 -joystick 0 ${OPTIONS} "${CART}"
-  exit
-fi
-
-if [ -e "/storage/roms/pico-8/pico8_dyn" ] || [ ! "$?" = 0 ]
-then
-  jslisten set "-9 pico8_dyn"
-  /storage/roms/pico-8/pico8_dyn -home -root_path /storage/roms/pico-8 -joystick 0 ${OPTIONS} "${CART}"
-  exit
+  LAUNCH_DIR="${GAME_DIR}/${HW_ARCH}"
 else
-  text_viewer -e -w -t "Missing Pico-8 binaries!" -m "Extract your purchased pico8 package into the pico-8 directory on your games partition."
+  LAUNCH_DIR="${GAME_DIR}"
 fi
 
-ret_error=$?
+# store sdl_controllers in root directory so its shared across devices - will look to revisit this with controller refactor work
+cp -f /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt ${GAME_DIR}/sdl_controllers.txt
 
-exit $ret_error
+# mark the binary executable to cover cases where the user adding the binaries doesn't know or forgets.
+chmod 0755 ${LAUNCH_DIR}/${STATIC_BIN}
+
+jslisten set "-9 ${STATIC_BIN}"
+${LAUNCH_DIR}/${STATIC_BIN} -home -root_path ${GAME_DIR} -joystick 0 ${OPTIONS} "${CART}"

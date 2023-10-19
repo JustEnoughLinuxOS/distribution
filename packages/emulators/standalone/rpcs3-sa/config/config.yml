@@ -64,7 +64,6 @@ Core:
   Performance Report Threshold: 500
   Enable Performance Report: false
   Assume External Debugger: false
-  SPU GETLLAR polling detection: false
 VFS:
   Enable /host_root/: false
   Initialize Directories: true
@@ -73,7 +72,7 @@ VFS:
   Empty /dev_hdd0/tmp/: true
 Video:
   Renderer: Vulkan
-  Resolution: 720x480
+  Resolution: 1280x720
   Aspect ratio: 16:9
   Frame limit: Off
   Second Frame Limit: 0.000000
@@ -124,16 +123,12 @@ Video:
   Disable MSL Fast Math: false
   Output Scaling Mode: Bilinear
   Vulkan:
-    Adapter: AMD Unknown (RADV RENOIR)
     Force FIFO present mode: false
     Force primitive restart flag: false
     Exclusive Fullscreen Mode: Automatic
     Asynchronous Texture Streaming 2: false
     FidelityFX CAS Sharpening Intensity: 50
     Asynchronous Queue Scheduler: Safe
-    Force Disable Exclusive Fullscreen Mode: false
-    Enable FidelityFX Super Resolution Upscaling: false
-    Metal Semaphore: MTLEvent preferred
   Performance Overlay:
     Enabled: false
     Enable Framerate Graph: false
@@ -160,10 +155,6 @@ Video:
     Allow custom background: true
     Darkening effect strength: 30
     Blur effect strength: 0
-  Disable native float16 support: false
-  Shader Compilation Hint:
-    Position X (px): 20
-    Position Y (px): 690
 Audio:
   Renderer: Cubeb
   Audio Provider: CellAudio
@@ -182,8 +173,6 @@ Audio:
   Microphone Type: "Null"
   Microphone Devices: "@@@@@@@@@@@@"
   Music Handler: Qt
-  Audio provider: CellAudio
-  Audio Channels: Downmix to Stereo
 Input/Output:
   Keyboard: Basic
   Mouse: Basic
@@ -213,6 +202,7 @@ Net:
   Bind address: 0.0.0.0
   DNS address: 8.8.8.8
   IP swap list: ""
+  UPNP Enabled: false
   PSN status: Disconnected
 Savestate:
   Start Paused: false
@@ -221,7 +211,7 @@ Savestate:
   Save Disc Game Data: false
 Miscellaneous:
   Automatically start games after boot: true
-  Exit RPCS3 when process finishes: false
+  Exit RPCS3 when process finishes: true
   Start games in fullscreen mode: true
   Prevent display sleep while running games: true
   Show trophy popups: true

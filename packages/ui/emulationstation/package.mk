@@ -3,7 +3,7 @@
 # Copyright (C) 2020-present Fewtarius
 
 PKG_NAME="emulationstation"
-PKG_VERSION="29db271"
+PKG_VERSION="58a9a86aa957501753e7b2442efcbfb5dbdb9bac"
 PKG_GIT_CLONE_BRANCH="main"
 PKG_REV="1"
 PKG_ARCH="any"
@@ -115,13 +115,13 @@ makeinstall_target() {
 
   mkdir -p ${INSTALL}/etc/emulationstation/
   ln -sf /storage/.config/emulationstation/themes ${INSTALL}/etc/emulationstation/
+
+  cp -rf ${PKG_DIR}/config/common/*.cfg ${INSTALL}/usr/config/emulationstation
   ln -sf /usr/config/emulationstation/es_systems.cfg ${INSTALL}/etc/emulationstation/es_systems.cfg
 
-   cp -rf ${PKG_DIR}/config/common/*.cfg ${INSTALL}/usr/config/emulationstation
-
-   if [ -d "${PKG_DIR}/config/device/${DEVICE}" ]; then
-     cp -rf ${PKG_DIR}/config/device/${DEVICE}/*.cfg ${INSTALL}/usr/config/emulationstation
-   fi
+  if [ -d "${PKG_DIR}/config/device/${DEVICE}" ]; then
+    cp -rf ${PKG_DIR}/config/device/${DEVICE}/*.cfg ${INSTALL}/usr/config/emulationstation
+  fi
 
   ln -sf /storage/.cache/system_timezone ${INSTALL}/etc/timezone
 
