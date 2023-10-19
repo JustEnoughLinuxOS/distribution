@@ -1,6 +1,6 @@
 diff -rupN linux-6.4.16.orig/sound/pci/hda/patch_realtek.c linux-6.4.16/sound/pci/hda/patch_realtek.c
 --- linux-6.4.16.orig/sound/pci/hda/patch_realtek.c	2023-10-18 20:03:49.089091278 -0600
-+++ linux-6.4.16/sound/pci/hda/patch_realtek.c	2023-10-18 21:48:41.387675323 -0600
++++ linux-6.4.16/sound/pci/hda/patch_realtek.c	2023-10-19 10:21:10.552016120 -0600
 @@ -6521,6 +6521,20 @@ static void alc294_gx502_toggle_output(s
  		alc_write_coef_idx(codec, 0x10, 0x0a20);
  }
@@ -41,11 +41,12 @@ diff -rupN linux-6.4.16.orig/sound/pci/hda/patch_realtek.c linux-6.4.16/sound/pc
  	[ALC256_FIXUP_ASUS_AIO_GPIO2] = {
  		.type = HDA_FIXUP_FUNC,
  		/* Set up GPIO2 for the speaker amp */
-@@ -9929,6 +9948,7 @@ static const struct snd_pci_quirk alc269
+@@ -9929,6 +9948,8 @@ static const struct snd_pci_quirk alc269
  	SND_PCI_QUIRK(0x1d72, 0x1901, "RedmiBook 14", ALC256_FIXUP_ASUS_HEADSET_MIC),
  	SND_PCI_QUIRK(0x1d72, 0x1945, "Redmi G", ALC256_FIXUP_ASUS_HEADSET_MIC),
  	SND_PCI_QUIRK(0x1d72, 0x1947, "RedmiBook Air", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
 +	SND_PCI_QUIRK(0x1f66, 0x0101, "AYANEO Devices", ALC269_FIXUP_HEADSET_AYANEO_DEVICES),
++	SND_PCI_QUIRK(0x1f66, 0x0103, "AYANEO Air Plus", ALC269_FIXUP_HEADSET_AYANEO_DEVICES),
  	SND_PCI_QUIRK(0x8086, 0x2074, "Intel NUC 8", ALC233_FIXUP_INTEL_NUC8_DMIC),
  	SND_PCI_QUIRK(0x8086, 0x2080, "Intel NUC 8 Rugged", ALC256_FIXUP_INTEL_NUC8_RUGGED),
  	SND_PCI_QUIRK(0x8086, 0x2081, "Intel NUC 10", ALC256_FIXUP_INTEL_NUC10),
