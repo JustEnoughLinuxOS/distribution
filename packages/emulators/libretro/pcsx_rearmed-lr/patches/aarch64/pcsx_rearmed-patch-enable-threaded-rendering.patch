@@ -1,0 +1,13 @@
+diff --git a/frontend/libretro_core_options.h b/frontend/libretro_core_options.h
+index 3e1daf2..06702a1 100644
+--- a/frontend/libretro_core_options.h
++++ b/frontend/libretro_core_options.h
+@@ -848,7 +848,7 @@ struct retro_core_option_definition option_defs_us[] = {
+          { "async",  NULL },
+          { NULL, NULL},
+       },
+-      "disabled",
++      "sync",
+    },
+ #endif
+ 
