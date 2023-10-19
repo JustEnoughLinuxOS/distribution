@@ -44,7 +44,7 @@ This document describes all available systems emulators and cores available for 
 |JELOS|Ports (ports)|2021|`ports`|.sh||
 |JELOS|Screenshots (imageviewer)|2021|`screenshots`|.jpg .jpeg .png .bmp .psd .tga .gif .hdr .pic .ppm .pgm .mkv .pdf .mp4 .avi||
 |JELOS|Tools (tools)|2021|`modules`|.sh||
-|Lexaloffle|PICO-8 (pico-8)|2015|`pico-8`|.sh .p8 .png|**pico-8:** pico8 (default)<br>**retroarch:** fake08<br>|
+|Lexaloffle|PICO-8 (pico-8)|2015|`pico-8`|.p8 .png|**pico-8:** pico8 (default)<br>**retroarch:** fake08<br>|
 |Magnavox|Odyssey 2 (odyssey2)|1979|`odyssey`|.bin .zip .7z|**retroarch:** o2em (default)<br>|
 |Mattel|Intellivision (intellivision)|1979|`intellivision`|.int .bin .rom .zip .7z|**retroarch:** freeintv (default)<br>|
 |Microsoft|MS-DOS (pc)|1981|`pc`|.com .bat .exe .dosz|**retroarch:** dosbox_pure<br>**retroarch:** dosbox_svn<br>|
