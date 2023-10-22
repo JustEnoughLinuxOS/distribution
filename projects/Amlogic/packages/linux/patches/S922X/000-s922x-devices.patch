@@ -339,7 +339,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
 +                        color = <LED_COLOR_ID_BLUE>;
 +                        function = LED_FUNCTION_STATUS;
 +                        gpios = <&gpio_ao GPIOAO_11 GPIO_ACTIVE_HIGH>;
-+                        linux,default-trigger = "heartbeat";
++                        linux,default-trigger = "none";
 +                };
 +
 +                led-red {
@@ -1353,7 +1353,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-
 +                        color = <LED_COLOR_ID_BLUE>;
 +                        function = LED_FUNCTION_STATUS;
 +                        gpios = <&gpio_ao GPIOAO_11 GPIO_ACTIVE_HIGH>;
-+                        linux,default-trigger = "heartbeat";
++                        linux,default-trigger = "none";
 +                };
 +
 +                led-red {
@@ -8581,3 +8581,14 @@ diff -rupN linux.orig/sound/soc/meson/axg-card.c linux/sound/soc/meson/axg-card.
  
  	for_each_rtd_codec_dais(rtd, i, codec_dai) {
  		ret = snd_soc_dai_set_tdm_slot(codec_dai,
+--- a/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-n2.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-n2.dtsi
+@@ -45,7 +45,7 @@
+ 		led-blue {
+ 			label = "n2:blue";
+ 			gpios = <&gpio_ao GPIOAO_11 GPIO_ACTIVE_HIGH>;
+-			linux,default-trigger = "heartbeat";
++			linux,default-trigger = "none";
+ 		};
+ 	};
+ 
