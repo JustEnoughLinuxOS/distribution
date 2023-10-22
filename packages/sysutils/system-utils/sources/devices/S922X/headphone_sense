@@ -6,6 +6,8 @@
 # Source predefined functions and variables
 . /etc/profile
 
+[ -z "${DEVICE_PLAYBACK_PATH}" -o -z "${DEVICE_PLAYBACK_PATH_HP}" -o -z "${DEVICE_PLAYBACK_PATH_SPK}" ] && exit 0
+
 ### Set correct audio output device at boot.
 HEADPHONE_STATE=$(cat /sys/kernel/debug/gpio | grep HEADPHONE)
 if [[ "${HEADPHONE_STATE}" == *"hi"* ]]; then
