@@ -7,8 +7,14 @@
 
 GAME_DIR="/storage/roms/pico-8/"
 
-# All architectures should use the dynamic binary.
-STATIC_BIN="pico8_dyn"
+case ${HW_ARCH} in
+  aarch64)
+    STATIC_BIN="pico8_64"
+  ;;
+  *)
+    STATIC_BIN="pico8"
+  ;;
+esac
 
 # check if the file being launched contains "Splore" and if so launch Pico-8 Splore otherwise run the game directly
 shopt -s nocasematch
@@ -36,8 +42,17 @@ fi
 # store sdl_controllers in root directory so its shared across devices - will look to revisit this with controller refactor work
 cp -f /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt ${GAME_DIR}/sdl_controllers.txt
 
-# mark the binary executable to cover cases where the user adding the binaries doesn't know or forgets.
-chmod 0755 ${LAUNCH_DIR}/${STATIC_BIN}
+if [ -e "${LAUNCH_DIR}/pico8_dyn" ]
+then
+  chmod 0755 ${LAUNCH_DIR}/pico8_din
+  jslisten set "-9 pico8_dyn start_pico8.sh"
+  ${LAUNCH_DIR}/pico8_dyn -home -root_path ${GAME_DIR} -joystick 0 ${OPTIONS} "${CART}"
+fi
 
-jslisten set "-9 ${STATIC_BIN}"
-${LAUNCH_DIR}/${STATIC_BIN} -home -root_path ${GAME_DIR} -joystick 0 ${OPTIONS} "${CART}"
+if [ ! "$?" = 0 ] && [ -e "${LAUNCH_DIR}/${STATIC_BIN}" ]
+then
+  # mark the binary executable to cover cases where the user adding the binaries doesn't know or forgets.
+  chmod 0755 ${LAUNCH_DIR}/${STATIC_BIN}
+  jslisten set "-9 ${STATIC_BIN} start_pico8.sh"
+  ${LAUNCH_DIR}/${STATIC_BIN} -home -root_path ${GAME_DIR} -joystick 0 ${OPTIONS} "${CART}"
+fi
