@@ -70,9 +70,23 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/config/duckstation
   cp -rf ${PKG_BUILD}/.${TARGET_NAME}/bin/* ${INSTALL}/usr/config/duckstation
   cp -rf ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/config/duckstation
+  cp -rf ${PKG_BUILD}/data/* ${INSTALL}/usr/config/duckstation
 
   rm -rf ${INSTALL}/usr/config/duckstation/duckstation-nogui
   rm -rf ${INSTALL}/usr/config/duckstation/common-tests
 
   chmod +x ${INSTALL}/usr/bin/start_duckstation.sh
+}
+
+post_install() {
+    case ${DEVICE} in
+      RK356*)
+        RESOURCE_FOLDER="database"
+      ;;
+      *)
+        RESOURCE_FOLDER="resources"
+      ;;
+    esac
+    sed -e "s/@RESOURCE_FOLDER@/${RESOURCE_FOLDER}/g" \
+        -i ${INSTALL}/usr/bin/start_duckstation.sh
 }
