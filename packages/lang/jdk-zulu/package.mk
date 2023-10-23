@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2019-present Peter Vicman (peter.vicman@gmail.com)
-# Copyright (C) 2022-present Fewtarius
+# Copyright (C) 2023-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 PKG_NAME="jdk-zulu"
 PKG_VERSION="20.32.11-ca-jdk20.0.2"
 PKG_LICENSE="GPLv2"

@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
-# Copyright (C) 2022-present Fewtarius
+# Copyright (C) 2023-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="sixpair"
 PKG_VERSION="23e6e087fe7f013128ce2e0e19a8f4b04fa7a6e8"

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0
-# Copyright (C) 2022-present Fewtarius
+# Copyright (C) 2023-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="es-theme-minielec"
 PKG_VERSION="364173dab15a77190b11a5e36966890468cad67c"

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2022-present Fewtarius
+# Copyright (C) 2023-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="u-boot-Odroid_GOU"
 PKG_VERSION="9235942906216dc529c1e96f67dd2364a94d0738"

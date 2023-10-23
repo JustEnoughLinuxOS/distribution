@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0
-# Copyright (C) 2022 - Fewtarius
+# Copyright (C) 2023-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="emulators"
 PKG_LICENSE="GPLv2"

@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 # Copyright (C) 2023 Nicholas Ricciuti (rishooty@gmail.com)
-# Copyright (C) 2023 Fewtarius (fewtarius@jelos.org)
+# Copyright (C) 2023-present - The JELOS Project (https://github.com/JustEnoughLinuxOS) (fewtarius@jelos.org)
 
 PKG_NAME="mupen64plus-sa-audio-sdl"
 PKG_VERSION="cec70e42b4535ce5bd1be24e7d816c54b3e75673"

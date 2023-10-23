@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2021-present Shanti Gilbert (https://github.com/shantigilbert)
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
-# Copyright (C) 2022-present Fewtarius
+# Copyright (C) 2023-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="flycast-sa"
 PKG_VERSION="35b7be39053a7564026417c33a4b956fe23e2608"

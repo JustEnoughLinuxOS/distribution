@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+# Copyright (C) 2023-present - The JELOS Project (https://github.com/JustEnoughLinuxOS) (https://github.com/fewtarius)
 # Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="duckstation-lr"

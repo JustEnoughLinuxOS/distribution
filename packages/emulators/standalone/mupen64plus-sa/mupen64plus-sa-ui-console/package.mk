@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 # Copyright (C) 2023 Nicholas Ricciuti (rishooty@gmail.com)
-# Copyright (C) 2023 Fewtarius (fewtarius@jelos.org)
+# Copyright (C) 2023-present - The JELOS Project (https://github.com/JustEnoughLinuxOS) (fewtarius@jelos.org)
 
 PKG_NAME="mupen64plus-sa-ui-console"
 PKG_VERSION="1340c4bdfc9ec53d3fccda5e085930dd79eb08b3"
