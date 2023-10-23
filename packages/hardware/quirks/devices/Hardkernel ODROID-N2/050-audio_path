@@ -1,0 +1,16 @@
+#!/bin/sh
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+
+cat <<EOF >/storage/.config/profile.d/002-audio_path
+DEVICE_PIPEWIRE_PROFILE="pro-audio"
+EOF
+
+amixer -c 0 -q sset 'FRDDR_A SINK 1 SEL' 'OUT 1'
+amixer -c 0 -q sset 'FRDDR_A SRC 1 EN' 'on'
+amixer -c 0 -q sset 'TDMOUT_B SRC SEL' 'IN 0'
+amixer -c 0 -q sset 'TOHDMITX I2S SRC' 'I2S B'
+amixer -c 0 -q sset 'TOHDMITX' 'on'
+amixer -c 0 -q sset 'TOACODEC SRC' 'I2S B'
+amixer -c 0 -q sset 'TOACODEC OUT EN' 'on'
+amixer -c 0 -q sset 'ACODEC' '255'

@@ -51,7 +51,7 @@ case ${device} in
     width="60"
     opengl='(?<=Title_F=\").*?(?=\")'
   ;;
-  "Hardkernel ODROID-GO-Ultra"|"Powkiddy RGB10 MAX 3")
+  "Hardkernel ODROID-GO-Ultra"|"Powkiddy RGB10 MAX 3"|"Hardkernel ODROID-N2*")
     param_device="s922x"
     height="20"
     width="60"

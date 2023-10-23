@@ -9,3 +9,4 @@ melonds-sa #Broken OpenGL renderer upstream
 mupen64plus-sa-ui-console #Causes segfaults
 nanoboyadvance-sa #SDL version removed after this commit
 freechaf-lr #build issue, revisit.
+pcsx_rearmed-lr #pins version as new releases have artifacting issues.

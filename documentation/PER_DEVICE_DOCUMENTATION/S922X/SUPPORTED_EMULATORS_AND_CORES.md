@@ -6,6 +6,12 @@ This document describes all available systems emulators and cores available for 
 
 |Manufacturer|System|Release Date|Games Path|Supported Extensions|Emulator / Core|
 |----|----|----|----|----|----|
+|&#xf013; System|Media Player (mplayer)|System|`mplayer`|.mp4 .mkv .avi .mov .wmv .m3u .mpg .ytb .twi .sh .mp3 .aac .mka .dts .flac .ogg .m4a .ac3 .opus .wav .wv .eac33 .thd|**mplayer:** mplayer (default)<br>|
+|&#xf013; System|Moonlight Game Streaming (moonlight)|System|`moonlight`|.sh||
+|&#xf013; System|Music Player (music)|System|`playlists`|.m3u .sh|**gmu:** gmu (default)<br>|
+|&#xf013; System|Ports (ports)|System|`ports`|.sh||
+|&#xf013; System|Screenshots (imageviewer)|System|`screenshots`|.jpg .jpeg .png .bmp .psd .tga .gif .hdr .pic .ppm .pgm .mkv .pdf .mp4 .avi||
+|&#xf013; System|Tools (tools)|System|`modules`|.sh||
 |Amstrad|CPC (amstradcpc)|1984|`amstradcpc`|.dsk .sna .tap .cdt .kcr .voc .m3u .zip .7z|**retroarch:** crocods (default)<br>**retroarch:** cap32<br>|
 |Arcade|Arcade (arcade)|1984|`arcade`|.zip .7z|**retroarch:** mame2003_plus (default)<br>**retroarch:** mame2000<br>**retroarch:** mame2010<br>**retroarch:** mame2015<br>**retroarch:** fbneo<br>**retroarch:** fbalpha2012<br>**retroarch:** fbalpha2019<br>**retroarch:** mame<br>|
 |Arcade|Daphne (daphne)|1996|`daphne`|.daphne .zip|**hypseus:** hypseus (default)<br>**retroarch:** daphne<br>|
@@ -38,19 +44,12 @@ This document describes all available systems emulators and cores available for 
 |id Software|Doom (doom)|1993|`doom`|.doom|**gzdoom:** gzdoom-sa (default)<br>|
 |id Software|iDtech (idtech)|1991|`idtech`|.sh|**retroarch:** idtech<br>|
 |Infocom|Z-machine (zmachine)|1979|`zmachine`|.dat .z1 .z2 .z3 .z4 .z5 .z6 .zip|**retroarch:** mojozork (default)<br>|
-|JELOS|Media Player (mplayer)|unknown|`mplayer`|.mp4 .mkv .avi .mov .wmv .m3u .mpg .ytb .twi .sh .mp3 .aac .mka .dts .flac .ogg .m4a .ac3 .opus .wav .wv .eac33 .thd|**mplayer:** mplayer (default)<br>|
-|JELOS|Moonlight Game Streaming (moonlight)|2021|`moonlight`|.sh||
-|JELOS|Music Player (music)|unknown|`playlists`|.m3u .sh|**gmu:** gmu (default)<br>|
-|JELOS|Ports (ports)|2021|`ports`|.sh||
-|JELOS|Screenshots (imageviewer)|2021|`screenshots`|.jpg .jpeg .png .bmp .psd .tga .gif .hdr .pic .ppm .pgm .mkv .pdf .mp4 .avi||
-|JELOS|Tools (tools)|2021|`modules`|.sh||
 |Lexaloffle|PICO-8 (pico-8)|2015|`pico-8`|.p8 .png|**pico-8:** pico8 (default)<br>**retroarch:** fake08<br>|
 |Magnavox|Odyssey 2 (odyssey2)|1979|`odyssey`|.bin .zip .7z|**retroarch:** o2em (default)<br>|
 |Mattel|Intellivision (intellivision)|1979|`intellivision`|.int .bin .rom .zip .7z|**retroarch:** freeintv (default)<br>|
 |Microsoft|MS-DOS (pc)|1981|`pc`|.com .bat .exe .dosz|**retroarch:** dosbox_pure<br>**retroarch:** dosbox_svn<br>|
 |Microsoft|MSX (msx)|1983|`msx`|.dsk .mx1 .mx2 .rom .zip .7z .m3u|**retroarch:** bluemsx (default)<br>**retroarch:** fmsx<br>|
 |Microsoft|MSX 2 (msx2)|1988|`msx2`|.dsk .mx1 .mx2 .rom .zip .7z .m3u|**retroarch:** bluemsx (default)<br>**retroarch:** fmsx<br>|
-|Milton Bradley|Vectrex (vectrex)|1982|`vectrex`|.bin .gam .vec .zip .7z|**retroarch:** vecx (default)<br>|
 |NEC|PC Engine (pcengine)|1987|`pcengine`|.pce .bin .zip .7z|**retroarch:** beetle_pce_fast (default)<br>**retroarch:** beetle_pce<br>**retroarch:** beetle_supergrafx<br>|
 |NEC|PC Engine CD (pcenginecd)|1988|`pcenginecd`|.cue .ccd .chd .toc .m3u|**retroarch:** beetle_pce_fast (default)<br>**retroarch:** beetle_pce<br>**retroarch:** beetle_supergrafx<br>|
 |NEC|PC-8800 (pc-8800)|1981|`pc88`|.d88 .m3u|**retroarch:** quasi88 (default)<br>|
@@ -104,8 +103,9 @@ This document describes all available systems emulators and cores available for 
 |Sharp|x68000 (x68000)|1987|`x68000`|.dim .img .d88d .hdm .dup .2hd .xdf .hdf .cmd .m3u .zip .7z|**retroarch:** px68k (default)<br>|
 |Sinclair|ZX Spectrum (zxspectrum)|1982|`zxspectrum`|.tzx .tap .z80 .rzx .scl .trd .dsk .zip .7z|**retroarch:** fuse<br>|
 |Sinclair|ZX81 (zx81)|1981|`zx81`|.tzx .p .zip .7z|**retroarch:** 81 (default)<br>|
+|Smith Engineering|Vectrex (vectrex)|1982|`vectrex`|.bin .gam .vec .zip .7z|**retroarch:** vecx (default)<br>|
 |SNK|Neo Geo (neogeo)|1990|`neogeo`|.7z .zip|**retroarch:** fbneo (default)<br>**retroarch:** mame2003_plus<br>**retroarch:** fbalpha2012<br>**retroarch:** fbalpha2019<br>**retroarch:** mame2010<br>**retroarch:** mame2015<br>**retroarch:** mame<br>|
-|SNK|Neo Geo CD (neocd)|1990|`neocd`|.cue .iso .chd|**retroarch:** neocd (default)<br>**retroarch:** fbneo<br>|
+|SNK|Neo Geo CD (neocd)|1994|`neocd`|.cue .iso .chd|**retroarch:** neocd (default)<br>**retroarch:** fbneo<br>|
 |SNK|Neo Geo Pocket (ngp)|1998|`ngp`|.ngc .ngp .zip .7z|**retroarch:** beetle_ngp (default)<br>**retroarch:** race<br>|
 |SNK|Neo Geo Pocket Color (ngpc)|1999|`ngpc`|.ngc .zip .7z|**retroarch:** beetle_ngp (default)<br>**retroarch:** race<br>|
 |Sony|PlayStation (psx)|1994|`psx`|.bin .cue .img .mdf .pbp .toc .cbn .m3u .ccd .chd .iso|**retroarch:** pcsx_rearmed (default)<br>**retroarch:** beetle_psx<br>**duckstation:** duckstation-sa<br>**retroarch:** duckstation<br>**retroarch:** swanstation<br>|
@@ -114,7 +114,7 @@ This document describes all available systems emulators and cores available for 
 |Sony|PSP Minis (pspminis)|2004|`pspminis`|.iso .cso .pbp|**ppsspp:** ppsspp-sa (default)<br>**retroarch:** ppsspp<br>|
 |Sun Microsystems|J2ME (j2me)|2002|`j2me`|.jar|**retroarch:** freej2me (default)<br>|
 |Various|EasyRPG (easyrpg)|2003|`easyrpg`|.zip .easyrpg .ldb|**retroarch:** easyrpg (default)<br>|
-|Various|OpenBOR (openbor)|2008|`openbor`|.pak|**OpenBOR:** OpenBOR (default)<br>|
+|Various|OpenBOR (openbor)|2003|`openbor`|.pak|**OpenBOR:** OpenBOR (default)<br>|
 |Various|ScummVM (scummvm)|2001|`games`|.sh .svm .scummvm|**retroarch:** scummvm (default)<br>|
 |Watara|Supervision (supervision)|1992|`supervision`|.sv .zip .7z|**retroarch:** potator (default)<br>|
 |Welback Holdings|Mega Duck (megaduck)|1993|`megaduck`|.bin .zip .7z|**retroarch:** sameduck (default)<br>|
