@@ -57,7 +57,7 @@ Under the following terms:
 
 Copyright 2021-present - The JELOS Project
 
-Original software and scripts developed by the JELOS team are licensed under the terms of the GNU GPL Version 2.  The full license can be found at [/licenses/GPL2.txt]().
+Original software and scripts developed by the JELOS team are licensed under the terms of the [GNU GPL Version 2](https://choosealicense.com/licenses/gpl-2.0/).  The full license can be found in this project's licenses folder.
 
 ### Bundled Works
 All other software is provided under each component's respective license.  These licenses can be found in the software sources or in this project's licenses folder.  Modifications to bundled software and scripts by the JELOS team are licensed under the terms of the software being modified.
