@@ -1,5 +1,5 @@
 #!/bin/sh
-# SPDX-License-Identifier: Apache-2.0
+# SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2020-present Fewtarius
 
 ip route | awk '/default/ {print $3}' >/dev/null 2>&1
