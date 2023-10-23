@@ -12,7 +12,7 @@ case ${HW_ARCH} in
     STATIC_BIN="pico8_64"
   ;;
   *)
-    STATIC_BIN="pico8"
+    STATIC_BIN="pico8_dyn"
   ;;
 esac
 
@@ -42,17 +42,7 @@ fi
 # store sdl_controllers in root directory so its shared across devices - will look to revisit this with controller refactor work
 cp -f /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt ${GAME_DIR}/sdl_controllers.txt
 
-if [ -e "${LAUNCH_DIR}/pico8_dyn" ]
-then
-  chmod 0755 ${LAUNCH_DIR}/pico8_din
-  jslisten set "-9 pico8_dyn start_pico8.sh"
-  ${LAUNCH_DIR}/pico8_dyn -home -root_path ${GAME_DIR} -joystick 0 ${OPTIONS} "${CART}"
-fi
-
-if [ ! "$?" = 0 ] && [ -e "${LAUNCH_DIR}/${STATIC_BIN}" ]
-then
-  # mark the binary executable to cover cases where the user adding the binaries doesn't know or forgets.
-  chmod 0755 ${LAUNCH_DIR}/${STATIC_BIN}
-  jslisten set "-9 ${STATIC_BIN} start_pico8.sh"
-  ${LAUNCH_DIR}/${STATIC_BIN} -home -root_path ${GAME_DIR} -joystick 0 ${OPTIONS} "${CART}"
-fi
+# mark the binary executable to cover cases where the user adding the binaries doesn't know or forgets.
+chmod 0755 ${LAUNCH_DIR}/${STATIC_BIN}
+jslisten set "-9 ${STATIC_BIN} start_pico8.sh"
+${LAUNCH_DIR}/${STATIC_BIN} -home -root_path ${GAME_DIR} -joystick 0 ${OPTIONS} "${CART}"
