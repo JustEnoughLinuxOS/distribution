@@ -8,7 +8,7 @@ PKG_SECTION="emulation" # Do not change to virtual or makeinstall_target will no
 PKG_LONGDESC="Emulation metapackage."
 PKG_TOOLCHAIN="manual"
 
-PKG_EMUS="flycast-sa gzdoom-sa hatarisa hypseus-singe hypseus-singe moonlight openbor pico-8 ppsspp-sa
+PKG_EMUS="flycast-sa gzdoom-sa hatarisa hypseus-singe moonlight openbor pico-8 ppsspp-sa
           vice-sa"
 
 PKG_RETROARCH="core-info libretro-database retroarch retroarch-assets retroarch-joypads retroarch-overlays     \
@@ -319,7 +319,7 @@ makeinstall_target() {
   add_es_system cps3
 
   ### Daphne
-  add_emu_core daphne hypseus hypseus true
+  add_emu_core daphne hypseus-singe hypseus-singe true
   add_emu_core daphne retroarch daphne false
   add_es_system daphne
 
