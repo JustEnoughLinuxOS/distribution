@@ -28,6 +28,13 @@ volumectl() {
   fi
 }
 
+jslisten() {
+  if [ "$(systemctl is-active jslisten)" = "active" ]
+  then
+    systemctl ${1} jslisten
+  fi
+}
+
 powerstate() {
   if [ "$(get_setting system.powersave)" = 1 ]
   then
@@ -101,6 +108,7 @@ case $1 in
   pre)
     headphones stop
     volumectl stop
+    jslisten stop
     bluetooth stop
     runtime_power_management on
     wake_events disabled
@@ -115,6 +123,7 @@ case $1 in
     powerstate start
     headphones start
     volumectl start
+    jslisten start
     bluetooth start
 
     if [ "$(get_setting network.enabled)" == "1" ]
