@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2021-present 351ELEC (https://github.com/351ELEC)
-# Copyright (C) 2023-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="freej2me-lr"
 PKG_VERSION="d8aa5d9a55a5673b77d5999342143ebdf131bfbd"

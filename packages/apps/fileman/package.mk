@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2021-present 351ELEC (https://github.com/351elec)
-# Copyright (C) 2023-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="fileman"
 PKG_VERSION="9f192b8d026568f232f6687882f519572623a992"

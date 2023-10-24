@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2018-present 5schatten (https://github.com/5schatten)
-# Copyright (C) 2023-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="SDL2"
 PKG_VERSION="2.28.4"

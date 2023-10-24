@@ -2,7 +2,7 @@
 # Copyright (C) 2010-2011 Roman Weber (roman@openelec.tv)
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
-# Copyright (C) 2023-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="libcap"
 PKG_VERSION="2.69"
