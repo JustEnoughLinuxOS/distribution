@@ -1,5 +1,5 @@
-# SPDX-License-Identifier: Apache-2.0
-# Copyright (C) 2020-present Fewtarius (https://github.com/fewtarius)
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2023-present - The JELOS Project (https://github.com/JustEnoughLinuxOS) (https://github.com/fewtarius)
 
 PKG_NAME="tic80-lr"
 PKG_VERSION="f740bff14921fe2120486c8a233094602032b996"

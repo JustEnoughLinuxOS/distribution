@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2023 Fewtarius
+# Copyright (C) 2023-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="libxcb-cursor"
 PKG_VERSION="103bccad6f4a421ede6a0ef2eecc2749ff9be083"
