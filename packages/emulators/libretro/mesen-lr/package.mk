@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
+# Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS) (https://github.com/brooksytech)
 
 PKG_NAME="mesen-lr"
 PKG_VERSION="d25d60fc190f3f7603a1113ef1e11d9da65b7583"

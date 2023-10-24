@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0
-# Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
+# Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS) (https://github.com/brooksytech)
 
 PKG_NAME="boom3-lr"
 PKG_VERSION="0bea79abf5ec8262dfe9af73cb8c54ea6e2aeb98"

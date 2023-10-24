@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
+# Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS) (https://github.com/brooksytech)
 
 PKG_NAME="parallel-n64-lr"
 PKG_VERSION="49eadb4da85f7e3bd59b60f61e8fd5dbfb9f07d5"

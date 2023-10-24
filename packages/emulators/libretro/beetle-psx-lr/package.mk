@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
+# Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS) (https://github.com/brooksytech)
 
 PKG_NAME="beetle-psx-lr"
 PKG_VERSION="9d07ee164ce18d5c98a12c1fb48d637306d4e8ee"
