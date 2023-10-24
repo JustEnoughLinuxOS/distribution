@@ -1,5 +1,5 @@
-# SPDX-License-Identifier: Apache-2.0
-# Copyright (C) 2020-present Fewtarius
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2023-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="dmidecode"
 PKG_VERSION="3.4"

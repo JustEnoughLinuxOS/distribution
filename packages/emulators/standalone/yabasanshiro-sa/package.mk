@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2022-present Shanti Gilbert (https://github.com/shantigilbert)
 # Copyright (C) 2022-present 351ELEC
-# Copyright (C) 2022-present Fewtarius
+# Copyright (C) 2023-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="yabasanshiro-sa"
 PKG_LICENSE="GPLv2"

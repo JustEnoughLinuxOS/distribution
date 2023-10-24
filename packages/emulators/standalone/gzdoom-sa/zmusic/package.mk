@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2021-present 351ELEC (https://github.com/351ELEC)
-# Copyright (C) 2023-present Fewtarius
+# Copyright (C) 2023-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="zmusic"
 PKG_VERSION="d8e6e28879ee97d00ce0eb9ad13ba462d85faf29"

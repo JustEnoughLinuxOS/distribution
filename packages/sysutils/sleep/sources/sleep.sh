@@ -1,6 +1,6 @@
 #!/bin/bash
 # SPDX-License-Identifier: GPL-2.0
-# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+# Copyright (C) 2023-present - The JELOS Project (https://github.com/JustEnoughLinuxOS) (https://github.com/fewtarius)
 
 . /etc/profile
 
@@ -25,6 +25,13 @@ volumectl() {
   then
     log $0 "Volume control: ${1}"
     systemctl ${1} volume >/dev/null 2>&1
+  fi
+}
+
+jslisten() {
+  if [ "$(systemctl is-active jslisten)" = "active" ]
+  then
+    systemctl ${1} jslisten
   fi
 }
 
@@ -101,6 +108,7 @@ case $1 in
   pre)
     headphones stop
     volumectl stop
+    jslisten stop
     bluetooth stop
     runtime_power_management on
     wake_events disabled
@@ -115,6 +123,7 @@ case $1 in
     powerstate start
     headphones start
     volumectl start
+    jslisten start
     bluetooth start
 
     if [ "$(get_setting network.enabled)" == "1" ]

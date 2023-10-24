@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 # Copyright (C) 2023 Nicholas Ricciuti (rishooty@gmail.com)
-# Copyright (C) 2023 Fewtarius (fewtarius@jelos.org)
+# Copyright (C) 2023-present - The JELOS Project (https://github.com/JustEnoughLinuxOS) (fewtarius@jelos.org)
 
 PKG_NAME="mupen64plus-sa-rsp-cxd4"
 PKG_VERSION="0a4e30f56033396e3ba47ec0fdd7acea3522362a"
