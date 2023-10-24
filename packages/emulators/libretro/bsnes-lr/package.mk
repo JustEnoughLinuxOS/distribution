@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0
-# Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS) (https://github.com/brooksytech)
+# Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="bsnes-lr"
 PKG_VERSION="e71eca1199d1359af53c806811dc3f05c64f8d91"

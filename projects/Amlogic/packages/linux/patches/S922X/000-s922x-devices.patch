@@ -1135,7 +1135,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2022 Neil Armstrong <narmstrong@kernel.org>
-+ * Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS) (https://github.com/brooksytech)
++ * Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 + */
 +
 +/dts-v1/;
