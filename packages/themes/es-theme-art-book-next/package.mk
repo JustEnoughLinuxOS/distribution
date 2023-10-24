@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2020 Shanti Gilbert (https://github.com/shantigilbert)
 # Copyright (C) 2020 351ELEC team (https://github.com/fewtarius/351ELEC)
-# Copyright (C) 2023-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="es-theme-art-book-next"
 PKG_VERSION="b9979c32d9ba25a31b28e9ff159e8397ca0b307a"
