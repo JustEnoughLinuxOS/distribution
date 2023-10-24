@@ -46,6 +46,7 @@ else
 
   # Sound support
   [ "${PIPEWIRE_SUPPORT}" = "yes" ] && PKG_DEPENDS_TARGET+=" alsa pulseaudio pipewire wireplumber"
+
 fi
 
 # Device is an emulation focused device
@@ -53,6 +54,14 @@ fi
 
 # Add support for containers
 [ "${CONTAINER_SUPPORT}" = "yes" ] && PKG_DEPENDS_TARGET+=" ${PKG_TOOLS} docker"
+
+### Unless we're building the release branch, build the debug tools.
+BUILD_BRANCH="$(git branch --show-current)"
+if [ ! "${BUILD_BRANCH}" = "main" ] && \
+   [ -z "${DEBUG_SUPPORT}" ]
+then
+  DEBUG_SUPPORT=yes
+fi
 
 [ "${DEBUG_SUPPORT}" = "yes" ] && PKG_DEPENDS_TARGET+=" ${PKG_DEBUG}"
 

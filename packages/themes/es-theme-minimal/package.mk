@@ -1,5 +1,5 @@
-# SPDX-License-Identifier: Apache-2.0
-# Copyright (C) 2022-present Fewtarius
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="es-theme-minimal"
 PKG_VERSION="b478b0e3986e557b40fcd25a9e48d9956fa11a96"

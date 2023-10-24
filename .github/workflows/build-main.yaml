@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2021-present 351ELEC
-# Copyright (C) 2022-present Fewtarius
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 ### Based on work by @pkegg
 
@@ -78,7 +78,7 @@ jobs:
             * ShareAlike — If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
 
             ### JELOS Software
-            Copyright 2021-present Fewtarius
+            Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
             Licensed under the Apache License, Version 2.0 (the "License");
             you may not use this file except in compliance with the License.
@@ -104,8 +104,8 @@ jobs:
             |**Anbernic RG353P/M/V/VS, RG503, Powkiddy RK2023, RGB30**|[JELOS-RK3566.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3566.aarch64-${{ steps.version.outputs.version }}.img.gz)|[documentation](/documentation/PER_DEVICE_DOCUMENTATION/RK3566/)|
             |**Anbernic RG552**|[JELOS-RK3399.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3399.aarch64-${{ steps.version.outputs.version }}.img.gz)|[documentation](/documentation/PER_DEVICE_DOCUMENTATION/RK3399/)|
             |**Atari VCS, AOKZOE, Ayaneo, Ayn, GPD, and other x86_64 devices**|[JELOS-AMD64.x86_64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-AMD64.x86_64-${{ steps.version.outputs.version }}.img.gz)|[documentation](/documentation/PER_DEVICE_DOCUMENTATION/AMD64/)|
-            |**Hardkernel ODROID Go Ultra, Powkiddy RGB10 Max 3 Pro**|[JELOS-S922X.aarch64-${{ steps.version.outputs.version }}-Odroid_GOU.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-S922X.aarch64-${{ steps.version.outputs.version }}.img.gz)|[documentation](/documentation/PER_DEVICE_DOCUMENTATION/S922X/)|
-            |**Hardkernel ODROID N2/N2+**|[JELOS-S922X.aarch64-${{ steps.version.outputs.version }}-Odroid_N2.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-S922X.aarch64-${{ steps.version.outputs.version }}.img.gz)|[documentation](/documentation/PER_DEVICE_DOCUMENTATION/S922X/)|
+            |**Hardkernel ODROID Go Ultra, Powkiddy RGB10 Max 3 Pro**|[JELOS-S922X.aarch64-${{ steps.version.outputs.version }}-Odroid_GOU.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-S922X.aarch64-${{ steps.version.outputs.version }}-Odroid_GOU.img.gz)|[documentation](/documentation/PER_DEVICE_DOCUMENTATION/S922X/)|
+            |**Hardkernel ODROID N2/N2+**|[JELOS-S922X.aarch64-${{ steps.version.outputs.version }}-Odroid_N2.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-S922X.aarch64-${{ steps.version.outputs.version }}.img.gz)-Odroid_N2.img|[documentation](/documentation/PER_DEVICE_DOCUMENTATION/S922X/)|
             |**Orange Pi 5, and Indiedroid Nova**|[JELOS-RK3588.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3588.aarch64-${{ steps.version.outputs.version }}.img.gz)|[documentation](/documentation/PER_DEVICE_DOCUMENTATION/RK3588/)|
             |**Powkiddy x55**|[JELOS-RK3566-X55.aarch64-${{ steps.version.outputs.version }}.img.gz](https://github.com/JustEnoughLinuxOS/distribution/releases/download/${{ steps.version.outputs.version }}/JELOS-RK3566-X55.aarch64-${{ steps.version.outputs.version }}.img.gz)|[documentation](/documentation/PER_DEVICE_DOCUMENTATION/RK3566-X55/)|
 

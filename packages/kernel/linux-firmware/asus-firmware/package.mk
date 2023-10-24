@@ -1,5 +1,5 @@
-# SPDX-License-Identifier: Apache-2.0
-# Copyright (C) 2023-present Fewtarius
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="asus-firmware"
 PKG_VERSION="b7d9e3ed9cc14dbc5f1640309ae13dd627fc173a"

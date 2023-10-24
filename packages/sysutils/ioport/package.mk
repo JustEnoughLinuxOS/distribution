@@ -1,5 +1,5 @@
-# SPDX-License-Identifier: Apache-2.0
-# Copyright (C) 2023-present Fewtarius
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="ioport"
 PKG_VERSION="af4b1b5b7d1e596efdd27e9a12b8ea6f13b63f51"

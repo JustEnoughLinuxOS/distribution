@@ -1,4 +1,4 @@
-# Copyright (C) 2021-present Fewtarius
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="system-utils"
 PKG_VERSION=""
