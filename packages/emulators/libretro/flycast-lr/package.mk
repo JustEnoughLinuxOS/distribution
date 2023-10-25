@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2022-present AmberELEC (https://github.com/AmberELEC)
-# Copyright (C) 2022-present Fewtarius
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="flycast-lr"
 PKG_VERSION="92a10ba0f0a5ca0d1ec9498962002f4cdcc8e7f6"

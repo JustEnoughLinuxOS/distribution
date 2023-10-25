@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2023-present BrooksyTech (https://github.com/brooksytech)
+# Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="vita3k-sa"
-PKG_VERSION="44d8c5da9cc6bed0b670099f4d131296ff8acf25"
+PKG_VERSION="564417b3b6a31296a2a09912c249a0145376e3c8"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/Vita3K/Vita3K"
 PKG_URL="${PKG_SITE}.git"

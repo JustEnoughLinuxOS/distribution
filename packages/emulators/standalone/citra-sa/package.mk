@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
+# Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="citra-sa"
-PKG_VERSION="a034c54f91495e6c987e3c3d221c7f7615d60a56"
+PKG_VERSION="2f4039858a082818b8fff60a7a89794c6259f146"
 PKG_LICENSE="MPLv2"
 PKG_SITE="https://github.com/JustEnoughLinuxOS/citra-canary"
 PKG_URL="${PKG_SITE}.git"

@@ -1,6 +1,6 @@
 #!/bin/bash
 # SPDX-License-Identifier: GPL-2.0
-# Copyright (C) 2022-present Fewtarius (https://github.com/fewtarius)
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 get_gpu_power_profile() {
   cat /sys/class/drm/card0/device/power_dpm_state 2>/dev/null

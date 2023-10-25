@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 0riginally created by Escalade (https://github.com/escalade)
 # Copyright (C) 2018-present 5schatten (https://github.com/5schatten)
-# Copyright (C) 2023-present Fewtarius
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="SDL_sound"
 PKG_VERSION="253b00c"
