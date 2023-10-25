@@ -1,7 +1,7 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
-#      Copyright (C) 2023-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
+#      Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 #
 #  OpenELEC is free software: you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by

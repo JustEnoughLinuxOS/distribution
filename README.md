@@ -55,7 +55,7 @@ Under the following terms:
 
 ### JELOS Software
 
-Copyright 2023-present - The JELOS Project
+Copyright 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 Original software and scripts developed by the JELOS team are licensed under the terms of the [GNU GPL Version 2](https://choosealicense.com/licenses/gpl-2.0/).  The full license can be found in this project's licenses folder.
 

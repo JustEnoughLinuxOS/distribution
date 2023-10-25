@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2023-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 # Simple script to watch the battery capacity and
 # turn the power LED orange when it reaches 30%, red at 20%, and blinking red at 10%
