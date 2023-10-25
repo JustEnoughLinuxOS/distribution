@@ -41,9 +41,6 @@ then
 else
   PKG_DEPENDS_TARGET+=" ${PKG_TOOLS} ${PKG_FONTS} ${PKG_SOUND} ${PKG_SYNC} ${PKG_GRAPHICS} ${PKG_UI} ${PKG_UI_TOOLS} ${PKG_MULTIMEDIA} misc-packages"
 
-  # GL demos and tools
-  [ "${OPENGL_SUPPORT}" = "yes" ]&& PKG_DEPENDS_TARGET+=" mesa-demos glmark2"
-
   # Sound support
   [ "${PIPEWIRE_SUPPORT}" = "yes" ] && PKG_DEPENDS_TARGET+=" alsa pulseaudio pipewire wireplumber"
 
@@ -88,9 +85,6 @@ fi
 
 # Devtools... (not for Release)
 [ "${TESTING}" = "yes" ] && PKG_DEPENDS_TARGET+=" testing"
-
-# OEM packages
-[ "${OEM_SUPPORT}" = "yes" ] && PKG_DEPENDS_TARGET+=" oem"
 
 # htop
 [ "${HTOP_TOOL}" = "yes" ] && PKG_DEPENDS_TARGET+=" htop"
