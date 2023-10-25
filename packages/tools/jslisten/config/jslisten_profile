@@ -28,26 +28,38 @@ jslisten() {
 program="/usr/bin/manage_mpv.sh pause"
 button1=${BTN_PAUSE}
 
-[Exit]
-program="/usr/bin/manage_mpv.sh quit"
-button1=${BTN_QUIT_HOTKEY}
-button2=${BTN_QUIT_SELECT}
+[ChangeAudio]
+program="/usr/bin/manage_mpv.sh changeaudio"
+button1=${BTN_CHANGEAUDIO}
 
-[Skip5s]
-program="/usr/bin/manage_mpv.sh skip5s"
-button1=${BTN_SKIP5S}
+[ChangeSub]
+program="/usr/bin/manage_mpv.sh changesub"
+button1=${BTN_CHANGESUB}
+
+[ShowOSD]
+program="/usr/bin/manage_mpv.sh showosd"
+button1=${BTN_SHOWOSD}
 
 [Back5s]
 program="/usr/bin/manage_mpv.sh back5s"
 button1=${BTN_BACK5S}
 
-[Skip60s]
-program="/usr/bin/manage_mpv.sh skip60s"
-button1=${BTN_SKIP60S}
+[Skip5s]
+program="/usr/bin/manage_mpv.sh skip5s"
+button1=${BTN_SKIP5S}
 
 [Back60s]
 program="/usr/bin/manage_mpv.sh back60s"
 button1=${BTN_BACK60S}
+
+[Skip60s]
+program="/usr/bin/manage_mpv.sh skip60s"
+button1=${BTN_SKIP60S}
+
+[Exit]
+program="/usr/bin/manage_mpv.sh quit"
+button1=${BTN_QUIT_HOTKEY}
+button2=${BTN_QUIT_SELECT}
 
 EOF
 		fi
