@@ -55,6 +55,8 @@ performance
 if [[ $EMULATOR = "retroarch" ]]; then
 	EMU="${CORE}_libretro"
 	RETROARCH="yes"
+elif [[ $EMULATOR = "mednafen" ]]; then
+	EMU="mednafen"
 else
 	EMU="${CORE}"
 fi
@@ -260,7 +262,11 @@ bluetooth disable
 jslisten stop
 
 ### Per emulator/core configurations
-if [ -z ${RETROARCH} ]
+if [[ $EMULATOR = "mednafen" ]]; then
+	jslisten set "-9 mednafen"
+	RUNTHIS='${TBASH} /usr/bin/start_mednafen.sh "${ROMNAME}" "${CORE}" "${PLATFORM}"'
+
+elif [ -z ${RETROARCH} ]
 then
 	$VERBOSE && log $0 "Configuring for a non-libretro emulator"
 	case ${PLATFORM} in
