@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
+# Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
 
 PKG_NAME="glfw"
 PKG_VERSION="3eaf125"
@@ -15,8 +15,7 @@ pre_configure_target() {
         PKG_CMAKE_OPTS_TARGET+="        -DBUILD_SHARED_LIBS=ON \
                                         -DGLFW_BUILD_DOCS=OFF \
                                         -DGLFW_BUILD_EXAMPLES=OFF \
-                                        -DGLFW_BUILD_TESTS=OFF \
-                                        -DGLFW_INSTALL=OFF"
+                                        -DGLFW_BUILD_TESTS=OFF"
                                         }
 
 if [ "${DISPLAYSERVER}" = "x11" ]; then
@@ -32,11 +31,5 @@ fi
 
 post_unpack() {
   sed -i "s|\${WAYLAND_CLIENT_PKGDATADIR}|${TOOLCHAIN}/share/wayland|" ${PKG_BUILD}/src/CMakeLists.txt
-}
-
-makeinstall_target() {
-  mkdir -p ${INSTALL}/usr/lib/
-  cp ${PKG_BUILD}/.${TARGET_NAME}/src/libglfw* ${INSTALL}/usr/lib/
-  cp -rf ${PKG_BUILD}/include/* ${SYSROOT_PREFIX}/usr/include
 }
 
