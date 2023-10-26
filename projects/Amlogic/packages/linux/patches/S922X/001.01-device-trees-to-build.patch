@@ -1,6 +1,7 @@
---- a/arch/arm64/boot/dts/amlogic/Makefile
-+++ b/arch/arm64/boot/dts/amlogic/Makefile
-@@ -1,71 +1,5 @@
+diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/Makefile linux/arch/arm64/boot/dts/amlogic/Makefile
+--- linux.orig/arch/arm64/boot/dts/amlogic/Makefile	2023-09-12 12:02:56.937601871 +0000
++++ linux/arch/arm64/boot/dts/amlogic/Makefile	2023-09-12 12:03:27.490291628 +0000
+@@ -1,69 +1,5 @@
  # SPDX-License-Identifier: GPL-2.0
 -dtb-$(CONFIG_ARCH_MESON) += meson-a1-ad401.dtb
 -dtb-$(CONFIG_ARCH_MESON) += meson-axg-jethome-jethub-j100.dtb
@@ -15,10 +16,9 @@
 -dtb-$(CONFIG_ARCH_MESON) += meson-g12b-gsking-x.dtb
 -dtb-$(CONFIG_ARCH_MESON) += meson-g12b-gtking-pro.dtb
 -dtb-$(CONFIG_ARCH_MESON) += meson-g12b-gtking.dtb
- dtb-$(CONFIG_ARCH_MESON) += meson-g12b-odroid-go-ultra.dtb
++dtb-$(CONFIG_ARCH_MESON) += meson-g12b-odroid-go-ultra.dtb
  dtb-$(CONFIG_ARCH_MESON) += meson-g12b-odroid-n2-plus.dtb
  dtb-$(CONFIG_ARCH_MESON) += meson-g12b-odroid-n2.dtb
- dtb-$(CONFIG_ARCH_MESON) += meson-g12b-powkiddy-rgb10-max-3.dtb
 -dtb-$(CONFIG_ARCH_MESON) += meson-g12b-s922x-khadas-vim3.dtb
 -dtb-$(CONFIG_ARCH_MESON) += meson-g12b-ugoos-am6.dtb
 -dtb-$(CONFIG_ARCH_MESON) += meson-gxbb-kii-pro.dtb
@@ -72,3 +72,4 @@
 -dtb-$(CONFIG_ARCH_MESON) += meson-sm1-sei610.dtb
 -dtb-$(CONFIG_ARCH_MESON) += meson-sm1-x96-air-gbit.dtb
 -dtb-$(CONFIG_ARCH_MESON) += meson-sm1-x96-air.dtb
++dtb-$(CONFIG_ARCH_MESON) += meson-g12b-powkiddy-rgb10-max-3.dtb
