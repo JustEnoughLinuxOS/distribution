@@ -1,0 +1,29 @@
+From 92b2e4a6ff5569dbb21b3791434413154acc3284 Mon Sep 17 00:00:00 2001
+From: "asoderq/sydarn(2)" <soder.alexander@gmail.com>
+Date: Tue, 19 Sep 2023 20:48:38 +0200
+Subject: [PATCH 1/1] list joysticks
+
+---
+ src/drivers/main.cpp | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/src/drivers/main.cpp b/src/drivers/main.cpp
+index a6f7db2..e69e4c4 100644
+--- a/src/drivers/main.cpp
++++ b/src/drivers/main.cpp
+@@ -1980,6 +1980,13 @@ __attribute__((force_align_arg_pointer))	// Not sure what's going on to cause th
+ #endif
+ int main(int argc, char *argv[])
+ {
++    if(argc == 2) {
++     const char* ljoy = "--list-joysticks";
++     size_t size = ljoy < argv[1] ? strlen(ljoy) : strlen(argv[1]);
++     if(!strncmp(ljoy, argv[1], size))
++      JoystickManager::Init();
++     return 0;
++    }
+ 	// SuppressErrorPopups must be set very early.
+ 	{
+ 	 char* mnp = getenv("MEDNAFEN_NOPOPUPS");
+-- 
+2.39.2
