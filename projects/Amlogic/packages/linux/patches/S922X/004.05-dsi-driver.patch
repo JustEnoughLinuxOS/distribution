@@ -1,7 +1,7 @@
 diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi linux/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi
 --- linux.orig/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi	2023-08-22 23:19:15.430576261 +0000
 +++ linux/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi	2023-08-22 23:08:18.677044634 +0000
-@@ -1644,9 +1644,28 @@
+@@ -1656,9 +1656,28 @@
  								       <250000000>,
  								       <0>; /* Do Nothing */
  					};
@@ -30,7 +30,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi linux/ar
  			usb3_pcie_phy: phy@46000 {
  				compatible = "amlogic,g12a-usb3-pcie-phy";
  				reg = <0x0 0x46000 0x0 0x2000>;
-@@ -2140,6 +2159,15 @@
+@@ -2143,6 +2162,15 @@
  					remote-endpoint = <&hdmi_tx_in>;
  				};
  			};
@@ -46,7 +46,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi linux/ar
  		};
  
  		gic: interrupt-controller@ffc01000 {
-@@ -2177,6 +2205,48 @@
+@@ -2180,6 +2208,48 @@
  				amlogic,channel-interrupts = <64 65 66 67 68 69 70 71>;
  			};
  
