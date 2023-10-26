@@ -2,7 +2,7 @@
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="libglvnd"
-PKG_VERSION="1.6.0"
+PKG_VERSION="1.7.0"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/NVIDIA/libglvnd"
 PKG_URL="https://github.com/NVIDIA/libglvnd/archive/v${PKG_VERSION}.tar.gz"
@@ -17,16 +17,16 @@ configure_package() {
 }
 
 pre_configure_target(){
-  if [ ! "${OPENGL}" = "no" ]
+  if [ "${OPENGL_SUPPORT}" = "yes" ]
   then
-    PKG_MESON_OPTS_TARGET+=" -Degl=true -Dheaders=true"
+    PKG_MESON_OPTS_TARGET+=" -Degl=true -Dglx=enabled -Dheaders=true"
   fi
     
-  if [ ! "${OPENGLES_SUPPORT}" = "no" ]
+  if [ "${OPENGLES_SUPPORT}" = "yes" ]
   then
     PKG_MESON_OPTS_TARGET+=" -Dgles1=true -Dgles2=true -Dheaders=true"
   else
-    PKG_MESON_OPTS_TARGET+=" -Dgles2=false"
+    PKG_MESON_OPTS_TARGET+=" -Dgles1=false -Dgles2=false"
   fi
 }
 
