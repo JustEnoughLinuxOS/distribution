@@ -1,3 +1,4 @@
+pico-8 # Metapackage, doesn't need to update
 np2kai # Last major commit before hiatus is broken.
 vice-sa # Doesn't support updating with the script.
 dolphin-sa # Wayland patch is now broken upstream
