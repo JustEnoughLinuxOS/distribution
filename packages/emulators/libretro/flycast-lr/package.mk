@@ -35,7 +35,8 @@ else
 fi
 
 pre_configure_target() {
-  sed -i 's/"reicast"/"flycast"/g' ${PKG_BUILD}/shell/libretro/libretro_core_option_defines.h 
+  sed -i 's/"reicast"/"flycast"/g' ${PKG_BUILD}/shell/libretro/libretro_core_option_defines.h
+  sed -i 's/\-O[23]/-Ofast/' ${PKG_BUILD}/CMakeLists.txt
   PKG_CMAKE_OPTS_TARGET="${PKG_CMAKE_OPTS_TARGET} \
 			 -Wno-dev -DLIBRETRO=ON \
                          -DWITH_SYSTEM_ZLIB=ON \
