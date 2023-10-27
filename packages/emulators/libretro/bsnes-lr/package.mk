@@ -21,6 +21,10 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
 fi
 
+pre_configure_target() {
+  sed -i 's/\-O[23]/-Ofast/' ${PKG_BUILD}/Makefile
+}
+
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
   cp bsnes_libretro.so ${INSTALL}/usr/lib/libretro/

@@ -13,6 +13,10 @@ PKG_IS_ADDON="no"
 PKG_TOOLCHAIN="make"
 PKG_AUTORECONF="no"
 
+pre_configure_target() {
+  sed -i 's/\-O[23]/-Ofast/' ${PKG_BUILD}/Makefile
+}
+
 pre_make_target() {
     PKG_MAKE_OPTS_TARGET+=" platform=${DEVICE}"
 }
