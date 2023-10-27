@@ -28,7 +28,7 @@ diff --git a/sound/core/pcm_lib.c b/sound/core/pcm_lib.c
 index 8b6aeb8a78f7d3..eee05d447dece7 100644
 --- a/sound/core/pcm_lib.c
 +++ b/sound/core/pcm_lib.c
-@@ -2514,7 +2514,10 @@ int snd_pcm_add_chmap_ctls(struct snd_pcm *pcm, int stream,
+@@ -2516,7 +2516,10 @@ int snd_pcm_add_chmap_ctls(struct snd_pcm *pcm, int stream,
  		knew.name = "Playback Channel Map";
  	else
  		knew.name = "Capture Channel Map";
