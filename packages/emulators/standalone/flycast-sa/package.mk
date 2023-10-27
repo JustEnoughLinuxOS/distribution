@@ -1,10 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2021-present Shanti Gilbert (https://github.com/shantigilbert)
-# Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
-# Copyright (C) 2022-present Fewtarius
+# Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="flycast-sa"
-PKG_VERSION="35b7be39053a7564026417c33a4b956fe23e2608"
+PKG_VERSION="8fb3def2d5cdd6adea00171ed720afb390cafd78"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/flyinghead/flycast"
 PKG_URL="${PKG_SITE}.git"
@@ -31,8 +30,9 @@ else
 fi
 
 pre_configure_target() {
-export CXXFLAGS="${CXXFLAGS} -Wno-error=array-bounds"
-PKG_CMAKE_OPTS_TARGET+=" -DUSE_OPENMP=ON"
+  export CXXFLAGS="${CXXFLAGS} -Wno-error=array-bounds"
+  PKG_CMAKE_OPTS_TARGET+=" -DUSE_OPENMP=ON"
+  sed -i 's/\-O[23]/-Ofast/' ${PKG_BUILD}/CMakeLists.txt
 }
 
 makeinstall_target() {

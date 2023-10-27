@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
-# Copyright (C) 2023-present Fewtarius
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="arm-mem"
 PKG_VERSION="b48ea154fd74410022d8189003cd69fad8f3d02c"

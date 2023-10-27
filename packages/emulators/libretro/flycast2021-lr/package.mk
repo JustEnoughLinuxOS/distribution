@@ -1,7 +1,7 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
-#      Copyright (C) 2022-present Fewtarius
+#      Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 #
 #  This Program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -41,6 +41,7 @@ fi
 
 pre_configure_target() {
   sed -i 's/define CORE_OPTION_NAME "reicast"/define CORE_OPTION_NAME "flycast2021"/g' core/libretro/libretro_core_option_defines.h
+  sed -i 's/\-O[23]/-Ofast/' ${PKG_BUILD}/Makefile
   PKG_MAKE_OPTS_TARGET="${PKG_MAKE_OPTS_TARGET} ARCH=${TARGET_ARCH} HAVE_OPENMP=1 GIT_VERSION=${PKG_VERSION:0:7}  HAVE_LTCG=0"
 }
 

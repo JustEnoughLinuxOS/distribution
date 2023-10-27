@@ -2,7 +2,7 @@
 
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
-# Copyright (C) 2020-present Fewtarius
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 # Source predefined functions and variables
 . /etc/profile
@@ -55,6 +55,8 @@ performance
 if [[ $EMULATOR = "retroarch" ]]; then
 	EMU="${CORE}_libretro"
 	RETROARCH="yes"
+elif [[ $EMULATOR = "mednafen" ]]; then
+	EMU="mednafen"
 else
 	EMU="${CORE}"
 fi
@@ -250,7 +252,11 @@ bluetooth disable
 jslisten stop
 
 ### Per emulator/core configurations
-if [ -z ${RETROARCH} ]
+if [[ $EMULATOR = "mednafen" ]]; then
+	jslisten set "-9 mednafen"
+	RUNTHIS='${TBASH} /usr/bin/start_mednafen.sh "${ROMNAME}" "${CORE}" "${PLATFORM}"'
+
+elif [ -z ${RETROARCH} ]
 then
 	$VERBOSE && log $0 "Configuring for a non-libretro emulator"
 	case ${PLATFORM} in

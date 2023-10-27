@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2018-present Frank Hartung (supervisedthinking @ gmail.com)
-# Copyright (C) 2023-present Fewtarius
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="qt5"
 PKG_VERSION="8e65ddffeaf77b312c26d3097c26e525b7c5e220"
@@ -43,7 +43,7 @@ configure_package() {
 
   # Wayland support
   if [ "${DISPLAYSERVER}" = "wl" ]; then
-    PKG_DEPENDS_TARGET+=" wayland xcb-util xcb-util-image xcb-util-keysyms xcb-util-renderutil xcb-util-wm"
+    PKG_DEPENDS_TARGET+=" wayland xcb-util xcb-util-image xcb-util-keysyms xcb-util-renderutil xcb-util-wm egl-wayland"
   fi
 
   # Vulkan support
@@ -137,10 +137,10 @@ pre_configure_target() {
                              -skip qtx11extras"
 
   # Build with OpenGL or OpenGLES support
-  if [ "${OPENGL_SUPPORT}" = "yes" ]; then
-    PKG_CONFIGURE_OPTS_TARGET+=" -opengl -no-eglfs"
-  elif [ "${OPENGLES_SUPPORT}" = "yes" ]; then
+  if [ "${OPENGLES_SUPPORT}" = "yes" ]; then
     PKG_CONFIGURE_OPTS_TARGET+=" -opengl es2"
+  elif [ "${OPENGL_SUPPORT}" = "yes" ]; then
+    PKG_CONFIGURE_OPTS_TARGET+=" -opengl"
   fi
 
   # Wayland support
@@ -189,16 +189,8 @@ configure_target() {
   echo "QMAKE_CFLAGS            = ${CFLAGS}"      >> ${QMAKE_CONF}
   echo "QMAKE_CXXFLAGS          = ${CXXFLAGS}"    >> ${QMAKE_CONF}
   echo "QMAKE_LFLAGS            = ${LDFLAGS}"     >> ${QMAKE_CONF}
-  # Set Mesa 3D OpenGL ES based project flags
   if [ "${OPENGLES_SUPPORT}" = "yes" ]; then
-    if [ ${DISPLAYSERVER} = "no" ]; then
-      echo "QMAKE_LIBS_EGL += -lEGL"              >> ${QMAKE_CONF}
-      echo "EGLFS_DEVICE_INTEGRATION = eglfs_kms" >> ${QMAKE_CONF}
-      echo "DEFINES += MESA_EGL_NO_X11_HEADERS"   >> ${QMAKE_CONF}
-    fi
-    if [ ! ${DISPLAYSERVER} = "x11" ]; then
-      echo "DEFINES += QT_EGL_NO_X11"             >> ${QMAKE_CONF}
-    fi
+    echo "QMAKE_LIBS_EGL += -lEGL"              >> ${QMAKE_CONF}
   fi
   echo "load(qt_config)"                            >> ${QMAKE_CONF}
   echo '#include "../../linux-g++/qplatformdefs.h"' >> ${QMAKE_CONF_DIR}/qplatformdefs.h

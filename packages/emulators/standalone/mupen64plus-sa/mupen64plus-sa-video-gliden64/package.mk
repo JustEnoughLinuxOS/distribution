@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 # Copyright (C) 2023 Nicholas Ricciuti (rishooty@gmail.com)
-# Copyright (C) 2023 Fewtarius (fewtarius@jelos.org)
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="mupen64plus-sa-video-gliden64"
 PKG_VERSION="0fee30d010d1feda7d343654871b3dfd05ccab70"
@@ -50,6 +50,8 @@ make_target() {
   export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -pthread -D_REENTRANT"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
   export CROSS_COMPILE="${TARGET_PREFIX}"
+
+  sed -i 's/\-O[23]/-Ofast/' ${PKG_BUILD}/src/CMakeLists.txt
 
   ./src/getRevision.sh
   cmake ${PKG_MAKE_OPTS_TARGET} -DAPIDIR=${APIDIR} -DMUPENPLUSAPI=On -DGLIDEN64_BUILD_TYPE=Release -DCMAKE_C_COMPILER="${CC}" -DCMAKE_CXX_COMPILER="${CXX}" -DCMAKE_C_FLAGS="${CFLAGS}" -DCMAKE_CXX_FLAGS="${CXXFLAGS} -pthread" -S src -B projects/cmake

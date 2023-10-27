@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 # Copyright (C) 2023 Nicholas Ricciuti (rishooty@gmail.com)
-# Copyright (C) 2023 Fewtarius (fewtarius@jelos.org)
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="mupen64plus-sa-simplecore"
 PKG_VERSION="6867e510d03ce91e67baf54116c1447033d12066"

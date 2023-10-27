@@ -1,6 +1,6 @@
 #!/bin/bash
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2020-present ShantiGilbert, RedWolfTech, Fewtarius
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 function sendkey() {
   echo '{"command":["keypress", "'${1}'"]}' | socat - "/tmp/mpvsocket"

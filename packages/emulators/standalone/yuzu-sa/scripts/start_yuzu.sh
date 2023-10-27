@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
+# Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 . /etc/profile
 
@@ -97,6 +97,10 @@ ln -sf /storage/roms/bios/yuzu/keys /storage/.config/yuzu/keys
 	then
   		sed -i '/^aspect_ratio=/c\aspect_ratio=3' /storage/.config/yuzu/qt-config.ini
 	fi
+        if [ "$ASPECT" = "4" ]
+        then
+                sed -i '/^aspect_ratio=/c\aspect_ratio=4' /storage/.config/yuzu/qt-config.ini
+        fi
 
   #GPU Accuracy
 	sed -i '/^gpu_accuracy\\default=/c\gpu_accuracy\\default=false' /storage/.config/yuzu/qt-config.ini

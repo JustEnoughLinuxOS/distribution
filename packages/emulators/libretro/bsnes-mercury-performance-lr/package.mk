@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0
-# Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
+# Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="bsnes-mercury-performance-lr"
 PKG_VERSION="fb9a41fe9bc230a07c4506cad3cbf21d3fa635b4"
@@ -12,6 +12,10 @@ PKG_SHORTDESC="BSNES Super Nintendo Libretro Core"
 PKG_IS_ADDON="no"
 PKG_TOOLCHAIN="make"
 PKG_AUTORECONF="no"
+
+pre_configure_target() {
+  sed -i 's/\-O[23]/-Ofast/' ${PKG_BUILD}/Makefile
+}
 
 pre_make_target() {
     PKG_MAKE_OPTS_TARGET+=" platform=${DEVICE}"

@@ -1,6 +1,6 @@
 #!/bin/bash
 # SPDX-License-Identifier: GPL-2.0
-# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 . /etc/profile
 

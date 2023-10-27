@@ -1,6 +1,5 @@
-# SPDX-License-Identifier: Apache-2.0
-# Copyright (C) 2022-present Brooksytech
-# Copyright (C) 2022-present Fewtarius
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="RTL8821CS-firmware"
 PKG_VERSION=""

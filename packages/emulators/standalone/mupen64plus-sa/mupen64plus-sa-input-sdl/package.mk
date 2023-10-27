@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 # Copyright (C) 2023 Nicholas Ricciuti (rishooty@gmail.com)
-# Copyright (C) 2023 Fewtarius (fewtarius@jelos.org)
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="mupen64plus-sa-input-sdl"
 PKG_VERSION="b175a41675ba39ac3ce6f152355dca92d9d32207"
@@ -45,6 +45,9 @@ make_target() {
   export CROSS_COMPILE="${TARGET_PREFIX}"
 
   export APIDIR=$(get_build_dir mupen64plus-sa-core)/src/api
+
+  sed -i 's/\-O[23]/-Ofast/' ${PKG_BUILD}/projects/unix/Makefile
+
   make -C projects/unix clean
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
   cp ${PKG_BUILD}/projects/unix/mupen64plus-input-sdl.so ${PKG_BUILD}/projects/unix/mupen64plus-input-sdl-base.so

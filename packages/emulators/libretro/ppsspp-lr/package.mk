@@ -1,7 +1,7 @@
 ################################################################################
 #      This file is part of OpenELEC - http://www.openelec.tv
 #      Copyright (C) 2009-2012 Stephan Raue (stephan@openelec.tv)
-#      Copyright (C) 2023-present Fewtarius
+#      Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 #
 #  This Program is free software; you can redistribute it and/or modify
 #  it under the terms of the GNU General Public License as published by
@@ -20,7 +20,7 @@
 ################################################################################
 
 PKG_NAME="ppsspp-lr"
-PKG_VERSION="e93f9f64cc3979ff7d1dddc2fbec7ddc410da3dc"
+PKG_VERSION="a9d2ff29ea06c709c3cd077eeb720ce9efdc4f6f"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/hrydgard/ppsspp"
 PKG_URL="https://github.com/hrydgard/ppsspp.git"

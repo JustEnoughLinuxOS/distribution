@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2020-present Fewtarius
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="mupen64plus-nx-lr"
 PKG_VERSION="26fd1edd640ff3db49dd5ebb7e54f0de6600fc45"
@@ -25,6 +25,7 @@ fi
 
 pre_configure_target() {
   sed -e "s|^GIT_VERSION ?.*$|GIT_VERSION := \" ${PKG_VERSION:0:7}\"|" -i Makefile
+  sed -i 's/\-O[23]/-Ofast/' ${PKG_BUILD}/Makefile
   case ${DEVICE} in
     RK3*|S922X*)
       PKG_MAKE_OPTS_TARGET=" platform=${DEVICE}"

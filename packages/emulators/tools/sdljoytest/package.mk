@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2020-present Shanti Gilbert (https://github.com/shantigilbert)
-# Copyright (C) 2022-present Fewtarius
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="sdljoytest"
 PKG_VERSION="811d9875e0c13e0c87d93351e69169bf74d28270"

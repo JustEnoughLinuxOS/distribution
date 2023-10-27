@@ -2,8 +2,7 @@
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 # Copyright (C) 2021-present 351ELEC (https://github.com/351ELEC)
-# Copyright (C) 2022-present Fewtarius
-# Copyright (C) 2022-present Brooksytech
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="linux"
 PKG_LICENSE="GPL"
@@ -41,7 +40,7 @@ case ${DEVICE} in
     PKG_GIT_CLONE_BRANCH="main"
   ;;
   RK33*)
-    PKG_VERSION="6.1.59"
+    PKG_VERSION="6.1.60"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
   ;;
 esac

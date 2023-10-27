@@ -1,8 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2022-present BrooksyTech (https://github.com/brooksytech)
+# Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="yuzu-sa"
-PKG_VERSION="249db0a59bb4aadb031f270ed79044f91defb98d"
+PKG_VERSION="6eb3a583cbbb55ebe6dd2409f5f53aef02cff561"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/yuzu-emu/yuzu"

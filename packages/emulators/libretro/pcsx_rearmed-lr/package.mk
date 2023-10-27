@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2020 Trond Haugland (trondah@gmail.com)
-# Copyright (C) 2022-present Fewtarius
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="pcsx_rearmed-lr"
 PKG_VERSION="e34ef5a"
@@ -12,6 +12,10 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_SHORTDESC="ARM optimized PCSX fork"
 PKG_TOOLCHAIN="manual"
 PKG_PATCH_DIRS+="${TARGET_ARCH}/${DEVICE}"
+
+pre_configure_target() {
+  sed -i 's/\-O[23]/-Ofast/' ${PKG_BUILD}/Makefile
+}
 
 make_target() {
   cd ${PKG_BUILD}

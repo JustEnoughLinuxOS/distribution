@@ -1,13 +1,13 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
-# Copyright (C) 2022-present Fewtarius
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="ppsspp-sa"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/hrydgard/ppsspp"
 PKG_URL="${PKG_SITE}.git"
-PKG_VERSION="e93f9f64cc3979ff7d1dddc2fbec7ddc410da3dc"
+PKG_VERSION="a9d2ff29ea06c709c3cd077eeb720ce9efdc4f6f"
 PKG_LICENSE="GPLv2"
 PKG_DEPENDS_TARGET="toolchain ffmpeg libzip SDL2 zlib zip"
 PKG_SHORTDESC="PPSSPPDL"

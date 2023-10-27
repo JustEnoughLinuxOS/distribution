@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 # Copyright (C) 2023 Nicholas Ricciuti (rishooty@gmail.com)
-# Copyright (C) 2023 Fewtarius (fewtarius@jelos.org)
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="mupen64plus-sa-video-glide64mk2"
 PKG_VERSION="d900f2191575e01eb846a1009be71cbc1b413dba"
@@ -44,6 +44,8 @@ make_target() {
   export SDL_CFLAGS="-I${SYSROOT_PREFIX}/usr/include/SDL2 -pthread -D_REENTRANT"
   export SDL_LDLIBS="-lSDL2_net -lSDL2"
   export CROSS_COMPILE="${TARGET_PREFIX}"
+
+  sed -i 's/\-O[23]/-Ofast/' ${PKG_BUILD}/projects/unix/Makefile
 
   make -C projects/unix clean
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}

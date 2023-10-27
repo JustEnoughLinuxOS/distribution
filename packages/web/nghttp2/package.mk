@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
-# Copyright (C) 2023-present Fewtarius
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="nghttp2"
 PKG_VERSION="1.52.0"

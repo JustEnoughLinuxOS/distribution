@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2022-present AmberELEC (https://github.com/AmberELEC)
-# Copyright (C) 2022-present Fewtarius
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="flycast-lr"
 PKG_VERSION="92a10ba0f0a5ca0d1ec9498962002f4cdcc8e7f6"
@@ -35,7 +35,8 @@ else
 fi
 
 pre_configure_target() {
-  sed -i 's/"reicast"/"flycast"/g' ${PKG_BUILD}/shell/libretro/libretro_core_option_defines.h 
+  sed -i 's/"reicast"/"flycast"/g' ${PKG_BUILD}/shell/libretro/libretro_core_option_defines.h
+  sed -i 's/\-O[23]/-Ofast/' ${PKG_BUILD}/CMakeLists.txt
   PKG_CMAKE_OPTS_TARGET="${PKG_CMAKE_OPTS_TARGET} \
 			 -Wno-dev -DLIBRETRO=ON \
                          -DWITH_SYSTEM_ZLIB=ON \

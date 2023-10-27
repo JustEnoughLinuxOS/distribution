@@ -1,8 +1,8 @@
-# SPDX-License-Identifier: Apache-2.0
-# Copyright (C) 2021-present Fewtarius (https://github.com/fewtarius)
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="gamecontrollerdb"
-PKG_VERSION="6f3c4edcb5a2e2ed090ca8af40d2c0f00dcd77f6"
+PKG_VERSION="eb831f75abb5c796fb2f2843c3e055d2b8cba29b"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_DEPENDS_TARGET="toolchain SDL2"

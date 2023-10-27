@@ -16,6 +16,10 @@ PKG_AUTORECONF="no"
 
 PKG_MAKE_OPTS_TARGET+=" -C bsnes target=libretro compiler=${TARGET_NAME}-g++"
 
+pre_configure_target() {
+  sed -i 's/\-O[23]/-Ofast/' ${PKG_BUILD}/bsnes/GNUmakefile
+}
+
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
   cp bsnes/out/bsnes_hd_beta_libretro.so ${INSTALL}/usr/lib/libretro/
