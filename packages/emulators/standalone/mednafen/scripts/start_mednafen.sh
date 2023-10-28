@@ -5,7 +5,17 @@
 . /etc/profile
 
 export MEDNAFEN_HOME=/storage/.config/mednafen
-MEDNAFEN_CONFIG=/usr/config/mednafen/mednafen.cfg
+export MEDNAFEN_CONFIG=/usr/config/mednafen.cfg
+
+if [ ! -d "$MEDNAFEN_HOME" ]
+then
+  mkdir /storage/.config/mednafen
+fi
+
+if [ ! -f "$MEDNAFEN_HOME/mednafen.cfg" ]
+then
+    /usr/bin/bash /usr/bin/mednafen_gen_config.sh
+fi
 
 #Emulation Station Features
 GAME=$(echo "${1}"| sed "s#^/.*/##")

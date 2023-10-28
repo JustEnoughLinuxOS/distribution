@@ -4,8 +4,6 @@
 
 . /etc/profile
 
-export MEDNAFEN_HOME=/storage/.config/mednafen
-MEDNAFEN_CONFIG=/usr/config/mednafen.cfg
 
 # Generate controller config
 # Set controller guid, just take the first one mednafen lists
