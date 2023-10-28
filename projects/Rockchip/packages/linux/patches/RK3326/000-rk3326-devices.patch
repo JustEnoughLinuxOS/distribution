@@ -1218,7 +1218,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts lin
 +		compatible = "mmc-pwrseq-simple";
 +		pinctrl-names = "default";
 +		pinctrl-0 = <&wifi_pwrseq_pins>;
-+		reset-gpios = <&gpio3 RK_PB1 GPIO_ACTIVE_LOW>;
++		/*reset-gpios = <&gpio3 RK_PB1 GPIO_ACTIVE_LOW>;*/
 +	};
 +};
 +
@@ -1235,6 +1235,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts lin
 +			regulator-name = "vcc_wifi";
 +			regulator-min-microvolt = <3300000>;
 +			regulator-max-microvolt = <3300000>;
++			regulator-always-on;
++			regulator-boot-on;
 +
 +			regulator-state-mem {
 +				regulator-on-in-suspend;
@@ -1254,16 +1256,14 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts lin
 +	cap-sdio-irq;
 +	disable-wp;
 +	keep-power-in-suspend;
-+	mmc-pwrseq = <&wifi_pwrseq>;
 +	non-removable;
 +	vmmc-supply = <&vcc_wifi>;
-+	#address-cells = <1>;
-+	#size-cells = <0>;
 +	status = "okay";
 +
 +	esp8089: wifi@1 {
 +		compatible = "esp,esp8089";
 +		reg = <1>;
++		esp,crystal-26M-en = <2>;
 +	};
 +};
 +
@@ -1291,7 +1291,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts lin
 +
 +	wifi {
 +		wifi_pwrseq_pins: wifi-pwrseq-pins {
-+			rockchip,pins = <3 RK_PB1 RK_FUNC_GPIO &pcfg_pull_up>,
++			rockchip,pins = /*<3 RK_PB1 RK_FUNC_GPIO &pcfg_pull_up>,*/
 +					<3 RK_PB6 RK_FUNC_GPIO &pcfg_output_high>;
 +		};
 +	};
