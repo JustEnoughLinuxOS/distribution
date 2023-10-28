@@ -6,7 +6,7 @@ PKG_VERSION="1.31.0-UNSTABLE"
 PKG_LICENSE="mixed"
 PKG_SITE="https://mednafen.github.io/"
 PKG_URL="${PKG_SITE}/releases/files/${PKG_NAME}-${PKG_VERSION}.tar.xz"
-PKG_DEPENDS_TARGET="toolchain SDL2"
+PKG_DEPENDS_TARGET="toolchain SDL2 libegl"
 PKG_TOOLCHAIN="configure"
 
 pre_configure_target() {
@@ -22,7 +22,7 @@ case ${DEVICE} in
 			 --disable-ss \
 			 --disable-psx"
   ;;
-  RK3399|RK35*)
+  RK356*)
     DISABLED_MODULES+="  --disable-ss \
                          --disable-psx"
   ;;
@@ -38,10 +38,23 @@ makeinstall_target() {
 
   chmod +x ${INSTALL}/usr/bin/start_mednafen.sh
 
-  mkdir -p ${INSTALL}/usr/config
+  mkdir -p ${INSTALL}/usr/config/${PKG_NAME}
   if [ -d ${PKG_DIR}/config/${DEVICE} ]; then
-    cp ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/config/
+    cp ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/config/${PKG_NAME}
   else
-    cp ${PKG_DIR}/config/common/* ${INSTALL}/usr/config/
+    cp ${PKG_DIR}/config/common/* ${INSTALL}/usr/config/${PKG_NAME}
   fi
+}
+
+post_install() {
+    case ${DEVICE} in
+      S922X)
+        LIBEGL="export SDL_VIDEO_GL_DRIVER=\/usr\/lib\/egl\/libGL.so.1 SDL_VIDEO_EGL_DRIVER=\/usr\/lib\/egl\/libEGL.so.1"
+      ;;
+      *)
+        LIBEGL=""
+      ;;
+    esac
+    sed -e "s/@LIBEGL@/${LIBEGL}/g" \
+        -i ${INSTALL}/usr/bin/start_mednafen.sh
 }
