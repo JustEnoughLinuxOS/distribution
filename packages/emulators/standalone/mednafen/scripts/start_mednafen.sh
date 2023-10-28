@@ -1,6 +1,6 @@
 #!/bin/bash
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2022-present asoderq (https://github.com/asoderq)
+# Copyright (C) 2023-present asoderq (https://github.com/asoderq)
 
 . /etc/profile
 
@@ -27,94 +27,8 @@ else
   unset EMUPERF
 fi
 
-# delete current config
-rm $MEDNAFEN_HOME/mednafen.cfg
-
-#Overrides, for WIN MAX 2, should be moved into device quirks somehow
-#OVERRIDE_GUID="keyboard 0x0"
-#DEVICE_BTN_TL2="9"
-#DEVICE_BTN_TR2="10"
-
-if [[ -z "${OVERRIDE_GUID+x}" ]]
-then
-
-    for CONTROL in DEVICE_BTN_TL2 DEVICE_BTN_TR2
-    do
-        sed -i -e "s/@${CONTROL}@/button_${!CONTROL}/g" $MEDNAFEN_HOME/mednafen.cfg
-    done
-fi
-
-
-
-
-# Generate controller config
-# Set controller sdl guid
-GUID1="$(mednafen --list-joysticks | grep ID | awk 'NR==1 {print $2}')"
-sed -e "s/@GUID1@/${GUID1}/g" ${MEDNAFEN_CONFIG} >> $MEDNAFEN_HOME/mednafen.cfg
-
-NAME="$(mednafen --list-joysticks | grep ID | awk 'NR==1 {print $5$6}')"
-
-
-
-
-# Mednafen doesn't use SDL for input
-# Not sure how to reliably get mednafens input naming scheme.
-# Exception 360 controller
-if [[ "${NAME}" = "X-Box360" ]]
-then
-
-# Naming differs to much just assign mednafen name here
-DEVICE_BTN_DPAD_UP="abs_7-"
-DEVICE_BTN_DPAD_DOWN="abs_7+"
-DEVICE_BTN_DPAD_LEFT="abs_6-"
-DEVICE_BTN_DPAD_RIGHT="abs_6+"
-DEVICE_BTN_TL2="abs_2+"
-DEVICE_BTN_TR2="abs_5+"
-
-# These are the minus range of the analog triggers
-DEVICE_BTN_TL2_MINUS="abs_2-"
-DEVICE_BTN_TR2_MINUS="abs_5-"
-
-# Left analog
-DEVICE_BTN_AL_DOWN="abs_1+"
-DEVICE_BTN_AL_UP="abs_1-"
-DEVICE_BTN_AL_LEFT="abs_0-"
-DEVICE_BTN_AL_RIGHT="abs_0+"
-
-# Right analog
-DEVICE_BTN_AR_DOWN="abs_3+"
-DEVICE_BTN_AR_UP="abs_3-"
-DEVICE_BTN_AR_LEFT="abs_2-"
-DEVICE_BTN_AR_RIGHT="abs_2+"
-for CONTROL in DEVICE_BTN_SOUTH DEVICE_BTN_EAST DEVICE_BTN_NORTH         \
-               DEVICE_BTN_WEST DEVICE_BTN_TL DEVICE_BTN_TR               \
-               DEVICE_BTN_TL2 DEVICE_BTN_TR2 DEVICE_BTN_SELECT           \
-               DEVICE_BTN_START DEVICE_BTN_MODE DEVICE_BTN_THUMBL        \
-               DEVICE_BTN_THUMBR DEVICE_BTN_DPAD_UP DEVICE_BTN_DPAD_DOWN \
-               DEVICE_BTN_DPAD_LEFT DEVICE_BTN_DPAD_RIGHT                \
-               DEVICE_BTN_TL2_MINUS DEVICE_BTN_TR2_MINUS
-               DEVICE_BTN_AL_DOWN DEVICE_BTN_AL_UP
-               DEVICE_BTN_AL_LEFT DEVICE_BTN_AL_RIGHT
-DEVICE_BTN_AR_DOWN
-do
-    sed -i -e "s/@${CONTROL}@/button_${!CONTROL}/g" $MEDNAFEN_HOME/mednafen.cfg
-done
-
-else
-# Regular gpio based input (tested on OGA) is easy
-for CONTROL in DEVICE_BTN_SOUTH DEVICE_BTN_EAST DEVICE_BTN_NORTH         \
-               DEVICE_BTN_WEST DEVICE_BTN_TL DEVICE_BTN_TR               \
-               DEVICE_BTN_TL2 DEVICE_BTN_TR2 DEVICE_BTN_SELECT           \
-               DEVICE_BTN_START DEVICE_BTN_MODE DEVICE_BTN_THUMBL        \
-               DEVICE_BTN_THUMBR DEVICE_BTN_DPAD_UP DEVICE_BTN_DPAD_DOWN \
-               DEVICE_BTN_DPAD_LEFT DEVICE_BTN_DPAD_RIGHT
-do
-    sed -i -e "s/@${CONTROL}@/button_${!CONTROL}/g" $MEDNAFEN_HOME/mednafen.cfg
-done
-fi
-
 #Set Save folder
-  sed -i -e "s/@PLATFORM@/${PLATFORM}/g" $MEDNAFEN_HOME/mednafen.cfg
+sed -i -e "s/@PLATFORM@/${PLATFORM}/g" $MEDNAFEN_HOME/mednafen.cfg
 
 # Get command line switches
 FEATURES_CMDLINE=""
