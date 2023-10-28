@@ -57,6 +57,7 @@ pre_configure_target() {
       PKG_MAKE_OPTS_TARGET="GLES=0 GLES3=0"
     ;;
   esac
+  sed -i 's/\-O[23]/-Ofast/' ${PKG_BUILD}/Makefile
 }
 
 makeinstall_target() {

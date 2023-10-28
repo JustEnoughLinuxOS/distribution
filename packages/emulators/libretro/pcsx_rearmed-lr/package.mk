@@ -13,6 +13,10 @@ PKG_SHORTDESC="ARM optimized PCSX fork"
 PKG_TOOLCHAIN="manual"
 PKG_PATCH_DIRS+="${TARGET_ARCH}/${DEVICE}"
 
+pre_configure_target() {
+  sed -i 's/\-O[23]/-Ofast/' ${PKG_BUILD}/Makefile
+}
+
 make_target() {
   cd ${PKG_BUILD}
   make -f Makefile.libretro GIT_VERSION=${PKG_VERSION} platform=${DEVICE}

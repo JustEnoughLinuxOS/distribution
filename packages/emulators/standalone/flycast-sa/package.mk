@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="flycast-sa"
-PKG_VERSION="e55d70c0e6bc09a0ee6d7b8cae3136bb66af537c"
+PKG_VERSION="8fb3def2d5cdd6adea00171ed720afb390cafd78"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/flyinghead/flycast"
 PKG_URL="${PKG_SITE}.git"
@@ -30,8 +30,9 @@ else
 fi
 
 pre_configure_target() {
-export CXXFLAGS="${CXXFLAGS} -Wno-error=array-bounds"
-PKG_CMAKE_OPTS_TARGET+=" -DUSE_OPENMP=ON"
+  export CXXFLAGS="${CXXFLAGS} -Wno-error=array-bounds"
+  PKG_CMAKE_OPTS_TARGET+=" -DUSE_OPENMP=ON"
+  sed -i 's/\-O[23]/-Ofast/' ${PKG_BUILD}/CMakeLists.txt
 }
 
 makeinstall_target() {

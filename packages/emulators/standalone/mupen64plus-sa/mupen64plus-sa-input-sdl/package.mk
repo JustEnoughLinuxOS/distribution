@@ -45,6 +45,9 @@ make_target() {
   export CROSS_COMPILE="${TARGET_PREFIX}"
 
   export APIDIR=$(get_build_dir mupen64plus-sa-core)/src/api
+
+  sed -i 's/\-O[23]/-Ofast/' ${PKG_BUILD}/projects/unix/Makefile
+
   make -C projects/unix clean
   make -C projects/unix all ${PKG_MAKE_OPTS_TARGET}
   cp ${PKG_BUILD}/projects/unix/mupen64plus-input-sdl.so ${PKG_BUILD}/projects/unix/mupen64plus-input-sdl-base.so

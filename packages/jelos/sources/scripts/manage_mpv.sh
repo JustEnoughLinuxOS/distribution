@@ -10,20 +10,29 @@ case "$1" in
     "pause")
         sendkey "p"
     ;;
-    "skip5s") 
-        sendkey "RIGHT"
+    "changeaudio")
+        sendkey "#"
+    ;;
+    "changesub")
+        sendkey "j"
+    ;;
+    "showosd")
+        sendkey "O"
     ;;
     "back5s") 
         sendkey "LEFT"
     ;;
-    "skip60s") 
-        sendkey "UP"
+    "skip5s") 
+        sendkey "RIGHT"
     ;;
     "back60s") 
         sendkey "DOWN"
     ;;
+    "skip60s") 
+        sendkey "UP"
+    ;;
     "quit") 
-        sendkey "q"
+        sendkey "Q"
     ;;
 esac
 
