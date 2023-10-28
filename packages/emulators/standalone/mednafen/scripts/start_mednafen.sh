@@ -5,7 +5,7 @@
 . /etc/profile
 
 export MEDNAFEN_HOME=/storage/.config/mednafen
-MEDNAFEN_CONFIG=/usr/config/mednafen.cfg
+MEDNAFEN_CONFIG=/usr/config/mednafen/mednafen.cfg
 
 #Emulation Station Features
 GAME=$(echo "${1}"| sed "s#^/.*/##")
@@ -175,4 +175,5 @@ then
 fi
 
 #Run mednafen
+@LIBEGL@
 ${EMUPERF} /usr/bin/mednafen -force_module ${CORE} -${CORE}.stretch ${STRETCH:="aspect"} -${CORE}.shader ${SHADER:="ipsharper"} ${FEATURES_CMDLINE} "${1}"
