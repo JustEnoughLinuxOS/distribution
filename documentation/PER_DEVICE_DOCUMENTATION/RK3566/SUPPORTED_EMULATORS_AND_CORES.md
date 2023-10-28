@@ -13,6 +13,7 @@ This document describes all available systems emulators and cores available for 
 |&#xf013; System|Screenshots (imageviewer)|System|`screenshots`|.jpg .jpeg .png .bmp .psd .tga .gif .hdr .pic .ppm .pgm .mkv .pdf .mp4 .avi||
 |&#xf013; System|Tools (tools)|System|`modules`|.sh||
 |Amstrad|CPC (amstradcpc)|1984|`amstradcpc`|.dsk .sna .tap .cdt .kcr .voc .m3u .zip .7z|**retroarch:** crocods (default)<br>**retroarch:** cap32<br>|
+|Apple|Macintosh (macintosh)|1984|`mac`|.dsk .img .hfv .cmd .zip|**retroarch:** minivmac (default)<br>|
 |Arcade|Arcade (arcade)|1984|`arcade`|.zip .7z|**retroarch:** mame2003_plus (default)<br>**retroarch:** mame2000<br>**retroarch:** mame2010<br>**retroarch:** mame2015<br>**retroarch:** fbneo<br>**retroarch:** fbalpha2012<br>**retroarch:** fbalpha2019<br>|
 |Arcade|Daphne (daphne)|1996|`daphne`|.daphne .singe|**hypseus-singe:** hypseus-singe (default)<br>**retroarch:** daphne<br>|
 |Arcade|Final Burn Neo (fbn)|1986|`fbneo`|.7z .zip|**retroarch:** fbneo (default)<br>**retroarch:** mame2003_plus<br>**retroarch:** mame2010<br>**retroarch:** mame2015<br>**retroarch:** mame<br>**retroarch:** fbalpha2012<br>**retroarch:** fbalpha2019<br>|
