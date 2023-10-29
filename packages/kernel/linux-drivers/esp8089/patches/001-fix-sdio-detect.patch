@@ -1,0 +1,47 @@
+--- a/sdio_sif_esp.c	2023-08-04 15:04:02.000000000 -0600
++++ b/sdio_sif_esp.c	2023-10-27 12:08:08.302695270 -0600
+@@ -50,6 +50,24 @@
+ //unsigned int esp_msg_level = 0;
+ unsigned int esp_msg_level = ESP_DBG_ERROR | ESP_SHOW;
+ 
++/* HdG: Note:
++ * 1) MMC_HAS_FORCE_DETECT_CHANGE is a hack which is set by my sunxi-wip
++ *    tree. FIXME replace with a version check once mmc_force_detect_change()
++ *    is added to the mainline kernel.
++ * 2) This version does NOT implement keep_power, the dts must mark the
++ *    regulators as regulator-always-on and not use mmc-pwrseq for this stub
++ *    to work.
++ */
++#ifndef MMC_HAS_FORCE_DETECT_CHANGE
++void mmc_force_detect_change(struct mmc_host *host, unsigned long delay,
++			     bool keep_power)
++{
++	host->caps &= ~MMC_CAP_NONREMOVABLE;
++	host->caps |= MMC_CAP_NEEDS_POLL;
++	mmc_detect_change(host, delay);
++}
++#endif
++
+ static struct semaphore esp_powerup_sem;
+ 
+ static enum esp_sdio_state sif_sdio_state;
+@@ -500,6 +518,7 @@
+         int err = 0;
+         struct esp_pub *epub;
+         struct esp_sdio_ctrl *sctrl;
++        struct mmc_host *host = func->card->host;
+ 
+         esp_dbg(ESP_DBG_TRACE,
+                         "sdio_func_num: 0x%X, vendor id: 0x%X, dev id: 0x%X, block size: 0x%X/0x%X\n",
+@@ -609,6 +628,10 @@
+ 	if(sif_sdio_state == ESP_SDIO_STATE_FIRST_INIT){
+ 		esp_dbg(ESP_DBG_ERROR, "first normal exit\n");
+ 		sif_sdio_state = ESP_SDIO_STATE_FIRST_NORMAL_EXIT;
++
++		/* Rescan the esp8089 after loading the initial firmware */
++		mmc_force_detect_change(host, msecs_to_jiffies(100), true);
++
+ 		up(&esp_powerup_sem);
+ 	}
+ 
+ 

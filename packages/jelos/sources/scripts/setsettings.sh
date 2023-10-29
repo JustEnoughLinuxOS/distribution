@@ -758,14 +758,20 @@ function set_runahead() {
     local RUNAHEAD="$(game_setting runahead)"
     local HAS_RUNAHEAD="$(match ${PLATFORM} ${NO_RUNAHEAD[@]})"
     case ${HAS_RUNAHEAD} in
-        0|false|none)
+        1)
             add_setting "none" "run_ahead_enabled" "false"
-            add_setting "none" "run_ahead_frames" "1"
+            add_setting "none" "run_ahead_frames" "0"
         ;;
         *)
-            add_setting "none" "run_ahead_enabled" "true"
-            add_setting "none" "run_ahead_frames" "${RUNAHEAD}"
-            add_setting "secondinstance" "run_ahead_secondary_instance"
+            if [ "${RUNAHEAD}" -gt 0 ]
+            then
+                add_setting "none" "run_ahead_enabled" "true"
+                add_setting "none" "run_ahead_frames" "${RUNAHEAD}"
+                add_setting "secondinstance" "run_ahead_secondary_instance"
+            else
+                add_setting "none" "run_ahead_enabled" "false"
+                add_setting "none" "run_ahead_frames" "0"
+            fi
         ;;
     esac
 }

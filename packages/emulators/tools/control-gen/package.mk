@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="control-gen"
-PKG_VERSION="95cb4d4f28e1743c6a7f3c0266049f68b2134b60"
+PKG_VERSION="47234c710a073ff02fe1a99e1b6dff912259ac32"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
 PKG_DEPENDS_TARGET="toolchain"
