@@ -213,8 +213,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-rgb10.dts linux/arch/a
 +
 +	battery: battery {
 +		compatible = "simple-battery";
-+		charge-full-design-microamp-hours = <3000000>;
-+		charge-term-current-microamp = <300000>;
++		charge-full-design-microamp-hours = <2800000>;
++		charge-term-current-microamp = <280000>;
 +		constant-charge-current-max-microamp = <2000000>;
 +		constant-charge-voltage-max-microvolt = <4200000>;
 +		factory-internal-resistance-micro-ohms = <180000>;
