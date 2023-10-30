@@ -16,7 +16,7 @@ PKG_GIT_CLONE_BRANCH="master"
 PKG_GIT_CLONE_SINGLE="yes"
 
 pre_configure_host() {
-  PKG_CMAKE_SCRIPT="${PKG_BUILD}/llvm/CMakeLists.txt"
+  PKG_CMAKE_SCRIPT="${PKG_BUILD}/3rdparty/llvm/llvm/llvm/CMakeLists.txt"
   PKG_CMAKE_OPTS_HOST="-DLLVM_TARGETS_TO_BUILD="X86" \
                        -DLLVM_BUILD_RUNTIME=OFF \
                        -DLLVM_BUILD_TOOLS=OFF \
