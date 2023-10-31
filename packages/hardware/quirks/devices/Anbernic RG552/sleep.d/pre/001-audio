@@ -1,0 +1,16 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
+
+# Workaround for no audio on wake from sleep.
+
+. /etc/profile
+
+HDMI=$(pactl list sinks short | grep hdmi | cut -c 0-2)
+SPEAKER=$(pactl list sinks short | grep es8316 | cut -c 0-2)
+
+#Set sink to one we aren't currently using
+pactl set-default-sink ${HDMI}
+
+#Suspend the sink we are using
+pactl suspend-sink ${SPEAKER} 1
