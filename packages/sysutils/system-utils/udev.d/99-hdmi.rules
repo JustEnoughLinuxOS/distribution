@@ -1,2 +1,1 @@
 KERNEL=="card*", SUBSYSTEM=="drm", ACTION=="add|change", RUN+="/usr/bin/hdmi_sense"
-ACTION=="change", SUBSYSTEM=="extcon", ATTRS{name}=="*hdmi*", RUN+="/usr/bin/hdmi_sense"
