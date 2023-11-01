@@ -109,3 +109,6 @@ sed -i 's~builtin_imageviewer_enable.*$~builtin_imageviewer_enable = "false"~g' 
 
 ### 20231010 - Stop setting vram in ES settings.
 sed -i '/^.*<int name="MaxVRAM".*$/d' ${ES_SETTINGS}
+
+### 20231031 - Switch back to alsathread for RetroArch
+sed -i 's~"pulse"~"alsathread"~g' /storage/.config/retroarch/retroarch.cfg
