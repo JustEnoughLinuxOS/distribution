@@ -6,7 +6,7 @@
 # Source predefined functions and variables
 . /etc/profile
 
-for HDMI in /sys/class/drm/card0/card0-HDMI-A-[0-9]/status
+for HDMI in /sys/class/drm/card*/card*-HDMI-A-[0-9]/status
 do
   HDMI_STATE=$(<${HDMI})
   case ${HDMI_STATE} in
