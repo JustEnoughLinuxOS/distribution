@@ -30,7 +30,7 @@ do
 		pactl set-default-sink ${SPEAKER}
         ;;
       esac
-      systemctl restart weston
+      killall emulationstation
 
       HDMI_VALUE=${HDMI_NEW_VALUE}
     fi
