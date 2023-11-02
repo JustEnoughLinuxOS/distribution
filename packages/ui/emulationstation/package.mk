@@ -117,7 +117,12 @@ makeinstall_target() {
   ln -sf /storage/.config/emulationstation/themes ${INSTALL}/etc/emulationstation/
 
   cp -rf ${PKG_DIR}/config/common/*.cfg ${INSTALL}/usr/config/emulationstation
-  ln -sf /usr/config/emulationstation/es_systems.cfg ${INSTALL}/etc/emulationstation/es_systems.cfg
+
+  if [ "${EMULATION_DEVICE}" = "no" ] || \
+     [ "${BASE_ONLY}" = "true" ]
+  then
+    ln -sf /usr/config/emulationstation/es_systems.cfg ${INSTALL}/etc/emulationstation/es_systems.cfg
+  fi
 
   if [ -d "${PKG_DIR}/config/device/${DEVICE}" ]; then
     cp -rf ${PKG_DIR}/config/device/${DEVICE}/*.cfg ${INSTALL}/usr/config/emulationstation
