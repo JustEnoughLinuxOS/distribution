@@ -102,7 +102,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/bo
 +		compatible = "operating-points-v2";
 +		opp-786000000 {
 +			opp-hz = /bits/ 64 <786000000>;
-+			opp-microvolt = <1100000>;
++			opp-microvolt = <1125000>;
 +		};
 +	};
 +
@@ -1239,7 +1239,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts lin
 +			regulator-boot-on;
 +
 +			regulator-state-mem {
-+				regulator-on-in-suspend;
++				regulator-off-in-suspend;
 +				regulator-suspend-microvolt = <3300000>;
 +			};
 +		};

@@ -121,7 +121,7 @@ JELOS supports a variety of ARM and Intel/AMD based devices.
 | Hardkernel | [Odroid Go Advance](http://jelos.org/devices/hardkernel/odroid-go-advance) | Rockchip RK3326 (ARM) | Mainline Linux | Panfrost | Weston + Emulation Station |
 | Hardkernel | [Odroid Go Super](http://jelos.org/devices/hardkernel/odroid-go-super) | Rockchip RK3326 (ARM) | Mainline Linux | Panfrost | Weston + Emulation Station |
 | Hardkernel | [Odroid Go Ultra](http://jelos.org/devices/hardkernel/odroid-go-ultra) | Amlogic S922X / Mali G52 M6 (ARMv8-A) | Mainline Linux | Mali | Weston + Emulation Station |
-| Hardkernel | [Odroid N2/N2+](http://jelos.org/devices/hardkernel/odroid-n2) | Amlogic S922X / Mali G52 M6 (ARMv8-A) | Mainline Linux | Mali | Weston + Emulation Station |
+| Hardkernel | [Odroid N2/N2+/N2L](http://jelos.org/devices/hardkernel/odroid-n2) | Amlogic S922X / Mali G52 M6 (ARMv8-A) | Mainline Linux | Mali | Weston + Emulation Station |
 | Indiedroid | [Nova](http://jelos.org/devices/indiedroid/nova) | Rockchip RK3588S / Mali G610 (ARMv8-A) | Rockchip 5.10 BSP Linux | Panfrost | Weston + Emulation Station |
 | Orange Pi | [Orange Pi 5](http://jelos.org/devices/orange-pi/orange-pi-5) | Rockchip RK3588S / Mali G610 (ARMv8-A) | Rockchip 5.10 BSP Linux | Panfrost | Weston + Emulation Station |
 | Powkiddy | [RGB10 Max 3 Pro](http://jelos.org/devices/powkiddy/rgb10-max-3-pro) | Amlogic A311D / Mali G52 M4 (ARMv8-A) | Mainline Linux | Mali | Weston + Emulation Station |
