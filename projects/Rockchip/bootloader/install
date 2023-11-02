@@ -101,7 +101,11 @@ load mmc 1:1 \${loadaddr} KERNEL
 
 if test \${hwrev} = 'v11'; then
   if gpio input c22; then
-    load mmc 1:1 \${dtb_loadaddr} rk3326-odroid-go2-v11.dtb
+    if gpio input d9; then
+      load mmc 1:1 \${dtb_loadaddr} rk3326-powkiddy-rgb10.dtb
+    else
+      load mmc 1:1 \${dtb_loadaddr} rk3326-odroid-go2-v11.dtb
+    fi
   else 
     load mmc 1:1 \${dtb_loadaddr} rk3326-anbernic-rg351m.dtb
   fi
