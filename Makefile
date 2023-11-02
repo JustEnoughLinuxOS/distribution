@@ -1,5 +1,5 @@
 BUILD_DIRS=build.*
--include $(pwd)/config/options
+-include $(HOME)/.JELOS/options
 
 all: world
 
