@@ -30,7 +30,7 @@ case ${DEVICE} in
     PKG_GIT_CLONE_BRANCH="main"
   ;;
   *ML)
-    PKG_VERSION="6.6-rc3"
+    PKG_VERSION="6.6"
     PKG_URL="https://git.kernel.org/torvalds/t/${PKG_NAME}-${PKG_VERSION}.tar.gz"
   ;;
   *X55)

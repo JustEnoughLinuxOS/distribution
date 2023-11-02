@@ -20,7 +20,7 @@ case ${DEVICE} in
   ;;
   *ML)
     PKG_URL="https://github.com/u-boot/u-boot.git"
-    PKG_VERSION="976fb2f"
+    PKG_VERSION="a803f87"
   ;;
   RK356*)
     PKG_URL="${PKG_SITE}/rk356x-uboot.git"
