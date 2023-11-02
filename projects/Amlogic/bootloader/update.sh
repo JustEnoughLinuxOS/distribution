@@ -60,8 +60,11 @@ if [ -n "$DT_ID" ]; then
     *odroid_go_ultra*|*rgb10-max-3*)
       SUBDEVICE="Odroid_GOU"
       ;;
-    *odroid-n2*)
+    *odroid-n2|*odroid-n2-plus)
       SUBDEVICE="Odroid_N2"
+      ;;
+    *odroid-n2l)
+      SUBDEVICE="Odroid_N2L"
       ;;
   esac
 fi
