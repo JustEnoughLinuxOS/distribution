@@ -18,7 +18,7 @@
 ################################################################################
 
 PKG_NAME="mame2015-lr"
-PKG_VERSION="2599c8aeaf84f62fe16ea00daa460a19298c121c"
+PKG_VERSION="316cd06349f2b34b4719f04f7c0d07569a74c764"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
