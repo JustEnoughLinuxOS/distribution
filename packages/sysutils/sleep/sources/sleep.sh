@@ -12,11 +12,13 @@ else
 fi
 QUIRK_DEVICE="$(echo ${QUIRK_DEVICE} | sed -e "s#[/]#-#g")"
 
+EVENTLOG="/var/log/sleep.log"
+
 headphones() {
   if [ "${DEVICE_FAKE_JACKSENSE}" == "true" ]
   then
     log $0 "Headphone sense: ${1}"
-    systemctl ${1} headphones >/dev/null 2>&1
+    systemctl ${1} headphones >${EVENTLOG} 2>&1
   fi
 }
 
@@ -24,21 +26,14 @@ volumectl() {
   if [ "${DEVICE_VOLUMECTL}" == "true" ]
   then
     log $0 "Volume control: ${1}"
-    systemctl ${1} volume >/dev/null 2>&1
-  fi
-}
-
-jslisten() {
-  if [ "$(systemctl is-active jslisten)" = "active" ]
-  then
-    systemctl ${1} jslisten
+    systemctl ${1} volume >${EVENTLOG} 2>&1
   fi
 }
 
 powerstate() {
   if [ "$(get_setting system.powersave)" = 1 ]
   then
-    systemctl ${1} powerstate >/dev/null 2>&1
+    systemctl ${1} powerstate >${EVENTLOG} 2>&1
   fi
 }
 
@@ -46,7 +41,7 @@ bluetooth() {
   if [ "$(get_setting bluetooth.enabled)" == "1" ]
   then
     log $0 "Bluetooth: ${1}"
-    systemctl ${1} bluetooth >/dev/null 2>&1
+    systemctl ${1} bluetooth >${EVENTLOG} 2>&1
   fi
 }
 
@@ -62,7 +57,7 @@ modules() {
           if [ $? = 0 ]
           then
             echo ${module} >>/tmp/modules.load
-            modprobe -r ${module}
+            modprobe -r ${module} >${EVENTLOG} 2>&1
           fi
         done
       fi
@@ -78,7 +73,7 @@ modules() {
           do
             if (( "${MODCNT}" < "${MODATTEMPTS}" ))
             then
-              modprobe ${module%% *}
+              modprobe ${module%% *} >${EVENTLOG} 2>&1
               if [ $? = 0 ]
               then
                 break
@@ -100,7 +95,7 @@ quirks() {
   for QUIRK in /usr/lib/autostart/quirks/platforms/"${HW_DEVICE}"/sleep.d/${1}/* \
                /usr/lib/autostart/quirks/devices/"${QUIRK_DEVICE}"/sleep.d/${1}/*
   do
-    "${QUIRK}" >/dev/null 2>&1
+    "${QUIRK}" >${EVENTLOG} 2>&1
   done
 }
 
@@ -108,7 +103,6 @@ case $1 in
   pre)
     headphones stop
     volumectl stop
-    jslisten stop
     bluetooth stop
     runtime_power_management on
     wake_events disabled
@@ -123,22 +117,23 @@ case $1 in
     powerstate start
     headphones start
     volumectl start
-    jslisten start
     bluetooth start
 
     if [ "$(get_setting network.enabled)" == "1" ]
     then
       log $0 "Connecting WIFI."
-      nohup wifictl enable >/dev/null 2>&1
+      nohup wifictl enable >${EVENTLOG} 2>&1
     fi
 
     DEVICE_VOLUME=$(get_setting "audio.volume" 2>/dev/null)
     log $0 "Restoring volume to ${DEVICE_VOLUME}%."
-    amixer -c 0 -M set "${DEVICE_AUDIO_MIXER}" ${DEVICE_VOLUME}%
+    amixer -c 0 -M set "${DEVICE_AUDIO_MIXER}" ${DEVICE_VOLUME}% >${EVENTLOG} 2>&1
 
     BRIGHTNESS=$(get_setting system.brightness)
     log $0 "Restoring brightness to ${BRIGHTNESS}."
-    brightness set ${BRIGHTNESS}
+    brightness set ${BRIGHTNESS} >${EVENTLOG} 2>&1
     quirks post
+
+    systemctl restart jslisten >${EVENTLOG} 2>&1
   ;;
 esac
