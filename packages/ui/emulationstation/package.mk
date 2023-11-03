@@ -129,8 +129,31 @@ makeinstall_target() {
   ln -sf /storage/.config/emulationstation/themes ${INSTALL}/etc/emulationstation/
 
   cp -rf ${PKG_DIR}/config/common/*.cfg ${INSTALL}/usr/config/emulationstation
-  ln -sf /usr/config/emulationstation/es_systems.cfg ${INSTALL}/etc/emulationstation/es_systems.cfg
 
+  # If we're not an emulation device, ES may still be installed so we need a default config.
+  if [ "${EMULATION_DEVICE}" = "no" ] || \
+     [ "${BASE_ONLY}" = "true" ]
+  then
+    cat <<EOF >${INSTALL}/etc/emulationstation/es_systems.cfg
+<?xml version="1.0" encoding="UTF-8"?>
+<systemList>
+        <system>
+                <name>tools</name>
+                <fullname>Tools</fullname>
+                <manufacturer>JELOS</manufacturer>
+                <release>2021</release>
+                <hardware>system</hardware>
+                <path>/storage/.config/modules</path>
+                <extension>.sh</extension>
+                <command>/usr/bin/run %ROM%</command>
+                <platform>tools</platform>
+                <theme>tools</theme>
+        </system>
+</systemList>
+EOF
+  fi
+
+  ln -sf /usr/config/emulationstation/es_systems.cfg ${INSTALL}/etc/emulationstation/es_systems.cfg
   if [ -d "${PKG_DIR}/config/device/${DEVICE}" ]; then
     cp -rf ${PKG_DIR}/config/device/${DEVICE}/*.cfg ${INSTALL}/usr/config/emulationstation
   fi
