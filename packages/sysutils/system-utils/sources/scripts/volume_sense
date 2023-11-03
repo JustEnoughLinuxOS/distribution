@@ -202,4 +202,5 @@ mkcontroller 2>/dev/null ||:
           fi
         ;;
     esac
+    sleep .1
 done
