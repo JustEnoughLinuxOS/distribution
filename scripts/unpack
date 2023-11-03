@@ -42,7 +42,7 @@ for i in ${BUILD}/${PKG_NAME}-*; do
       if [ ! "${PKG_DEEPHASH}" = "${STAMP_PKG_DEEPHASH}" ] ; then
         ${SCRIPTS}/clean "${PKG_NAME}"
         if [ "${PKG_NAME}" = "linux" ]; then
-          for CLEAN_DEP in ${KERNEL_EXTRA_DEPENDS_TARGET} ${ADDITIONAL_DRIVERS} initramfs
+          for CLEAN_DEP in ${KERNEL_EXTRA_DEPENDS_TARGET} ${ADDITIONAL_DRIVERS} busybox initramfs
           do
             ${SCRIPTS}/clean "${CLEAN_DEP}"
             ${SCRIPTS}/unpack "${CLEAN_DEP}"
