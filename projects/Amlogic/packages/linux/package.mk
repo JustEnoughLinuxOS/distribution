@@ -114,6 +114,11 @@ makeinstall_host() {
 }
 
 pre_make_target() {
+  ( cd ${ROOT}
+    rm -rf ${BUILD}/initramfs
+    rm -f ${STAMPS_INSTALL}/initramfs/install_target ${STAMPS_INSTALL}/*/install_init
+    ${SCRIPTS}/install initramfs
+  )
   if [ "${TARGET_ARCH}" = "x86_64" ]; then
     # copy some extra firmware to linux tree
     mkdir -p ${PKG_BUILD}/external-firmware
