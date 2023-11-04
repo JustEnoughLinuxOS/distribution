@@ -25,7 +25,7 @@ case ${DEVICE} in
   ;;
   RK3566)
     PKG_URL="${PKG_SITE}/rk356x-kernel.git"
-    PKG_VERSION="a52a02798"
+    PKG_VERSION="7aac6327c"
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="main"
   ;;
