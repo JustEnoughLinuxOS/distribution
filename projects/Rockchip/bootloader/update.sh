@@ -27,13 +27,13 @@ for arg in $(cat /proc/cmdline); do
       boot="${arg#*=}"
       case $boot in
         /dev/mmc*)
-          BOOT_UUID="$(blkid $boot | sed 's/.* UUID="//;s/".*//g')"
+          UUID_SYSTEM="$(blkid $boot | sed 's/.* UUID="//;s/".*//g')"
           ;;
         UUID=*|LABEL=*)
-          BOOT_UUID="$(blkid | sed 's/"//g' | grep -m 1 -i " $boot " | sed 's/.* UUID=//;s/ .*//g')"
+          UUID_SYSTEM="$(blkid | sed 's/"//g' | grep -m 1 -i " $boot " | sed 's/.* UUID=//;s/ .*//g')"
           ;;
         FOLDER=*)
-          BOOT_UUID="$(blkid ${boot#*=} | sed 's/.* UUID="//;s/".*//g')"
+          UUID_SYSTEM="$(blkid ${boot#*=} | sed 's/.* UUID="//;s/".*//g')"
           ;;
       esac
     ;;
@@ -41,13 +41,13 @@ for arg in $(cat /proc/cmdline); do
       disk="${arg#*=}"
       case $disk in
         /dev/mmc*)
-          DISK_UUID="$(blkid $disk | sed 's/.* UUID="//;s/".*//g')"
+          UUID_STORAGE="$(blkid $disk | sed 's/.* UUID="//;s/".*//g')"
           ;;
         UUID=*|LABEL=*)
-          DISK_UUID="$(blkid | sed 's/"//g' | grep -m 1 -i " $disk " | sed 's/.* UUID=//;s/ .*//g')"
+          UUID_STORAGE="$(blkid | sed 's/"//g' | grep -m 1 -i " $disk " | sed 's/.* UUID=//;s/ .*//g')"
           ;;
         FOLDER=*)
-          DISK_UUID="$(blkid ${disk#*=} | sed 's/.* UUID="//;s/".*//g')"
+          UUID_STORAGE="$(blkid ${disk#*=} | sed 's/.* UUID="//;s/".*//g')"
           ;;
       esac
     ;;
@@ -60,16 +60,16 @@ for all_conf in $CONFS; do
   conf="$(basename ${all_conf})"
   echo "Updating ${conf}..."
   cp -p $SYSTEM_ROOT/usr/share/bootloader/extlinux/${conf} $BOOT_ROOT/extlinux/${conf} &>/dev/null
-  sed -e "s/@BOOT_UUID@/$BOOT_UUID/" \
-      -e "s/@DISK_UUID@/$DISK_UUID/" \
+  sed -e "s/@UUID_SYSTEM@/${UUID_SYSTEM}/" \
+      -e "s/@UUID_STORAGE@/${UUID_STORAGE}/" \
       -i $BOOT_ROOT/extlinux/${conf}
 done
 
 if [ -f $SYSTEM_ROOT/usr/share/bootloader/boot.ini ]; then
   echo "Updating boot.ini..."
   cp -p $SYSTEM_ROOT/usr/share/bootloader/boot.ini $BOOT_ROOT/boot.ini &>/dev/null
-    sed -e "s/@BOOT_UUID@/$BOOT_UUID/" \
-      -e "s/@DISK_UUID@/$DISK_UUID/" \
+    sed -e "s/@UUID_SYSTEM@/${UUID_SYSTEM}/" \
+      -e "s/@UUID_STORAGE@/${UUID_STORAGE}/" \
       -i $BOOT_ROOT/boot.ini
 fi
 
