@@ -1,11 +1,21 @@
 #!/bin/bash
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2022-present asoderq (https://github.com/asoderq)
+# Copyright (C) 2023-present asoderq (https://github.com/asoderq)
 
 . /etc/profile
 
 export MEDNAFEN_HOME=/storage/.config/mednafen
-MEDNAFEN_CONFIG=/usr/config/mednafen/mednafen.cfg
+export MEDNAFEN_CONFIG=/usr/config/mednafen/mednafen.cfg
+
+if [ ! -d "$MEDNAFEN_HOME" ]
+then
+  mkdir /storage/.config/mednafen
+fi
+
+if [ ! -f "$MEDNAFEN_HOME/mednafen.cfg" ]
+then
+    /usr/bin/bash /usr/bin/mednafen_gen_config.sh
+fi
 
 #Emulation Station Features
 GAME=$(echo "${1}"| sed "s#^/.*/##")
@@ -27,26 +37,8 @@ else
   unset EMUPERF
 fi
 
-# delete current config
-rm $MEDNAFEN_HOME/mednafen.cfg
-# Generate controller config
-# Set controller sdl guid
-GUID1="$(mednafen --list-joysticks | grep ID | awk 'NR==1 {print $2}')"
-sed -e "s/@GUID1@/${GUID1}/g" ${MEDNAFEN_CONFIG} >> $MEDNAFEN_HOME/mednafen.cfg
-
-# Buttons mapping
-for CONTROL in DEVICE_BTN_SOUTH DEVICE_BTN_EAST DEVICE_BTN_NORTH         \
-               DEVICE_BTN_WEST DEVICE_BTN_TL DEVICE_BTN_TR               \
-               DEVICE_BTN_TL2 DEVICE_BTN_TR2 DEVICE_BTN_SELECT           \
-               DEVICE_BTN_START DEVICE_BTN_MODE DEVICE_BTN_THUMBL        \
-               DEVICE_BTN_THUMBR DEVICE_BTN_DPAD_UP DEVICE_BTN_DPAD_DOWN \
-               DEVICE_BTN_DPAD_LEFT DEVICE_BTN_DPAD_RIGHT
-do
-  sed -i -e "s/@${CONTROL}@/button_${!CONTROL}/g" $MEDNAFEN_HOME/mednafen.cfg
-done
-
 #Set Save folder
-  sed -i -e "s/@PLATFORM@/${PLATFORM}/g" $MEDNAFEN_HOME/mednafen.cfg
+sed -i -e "s/@PLATFORM@/${PLATFORM}/g" $MEDNAFEN_HOME/mednafen.cfg
 
 # Get command line switches
 FEATURES_CMDLINE=""
