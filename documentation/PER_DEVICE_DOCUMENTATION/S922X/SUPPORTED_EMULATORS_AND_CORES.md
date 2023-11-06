@@ -12,33 +12,33 @@ This document describes all available systems emulators and cores available for 
 |&#xf013; System|Ports (ports)|System|`ports`|.sh||
 |&#xf013; System|Screenshots (imageviewer)|System|`screenshots`|.jpg .jpeg .png .bmp .psd .tga .gif .hdr .pic .ppm .pgm .mkv .pdf .mp4 .avi||
 |&#xf013; System|Tools (tools)|System|`modules`|.sh||
-|Amstrad|CPC (amstradcpc)|1984|`amstradcpc`|.dsk .sna .tap .cdt .kcr .voc .m3u .zip .7z|**retroarch:** crocods (default)<br>**retroarch:** cap32<br>|
+|Amstrad|Amstrad CPC (amstradcpc)|1984|`amstradcpc`|.dsk .sna .tap .cdt .kcr .voc .m3u .zip .7z|**retroarch:** crocods (default)<br>**retroarch:** cap32<br>|
 |Apple|Macintosh (macintosh)|1984|`mac`|.dsk .img .hfv .cmd .zip|**retroarch:** minivmac (default)<br>|
-|Arcade|Arcade (arcade)|1984|`arcade`|.zip .7z|**retroarch:** mame2003_plus (default)<br>**retroarch:** mame2000<br>**retroarch:** mame2010<br>**retroarch:** mame2015<br>**retroarch:** fbneo<br>**retroarch:** fbalpha2012<br>**retroarch:** fbalpha2019<br>**retroarch:** mame<br>|
+|Arcade|Arcade (arcade)|0000|`arcade`|.zip .7z|**retroarch:** mame2003_plus (default)<br>**retroarch:** mame2000<br>**retroarch:** mame2010<br>**retroarch:** mame2015<br>**retroarch:** fbneo<br>**retroarch:** fbalpha2012<br>**retroarch:** fbalpha2019<br>**retroarch:** mame<br>|
 |Arcade|Daphne (daphne)|1996|`daphne`|.daphne .singe|**hypseus-singe:** hypseus-singe (default)<br>**retroarch:** daphne<br>|
-|Arcade|Final Burn Neo (fbn)|1986|`fbneo`|.7z .zip|**retroarch:** fbneo (default)<br>**retroarch:** mame2003_plus<br>**retroarch:** mame2010<br>**retroarch:** mame2015<br>**retroarch:** mame<br>**retroarch:** fbalpha2012<br>**retroarch:** fbalpha2019<br>|
-|Arcade|MAME (mame)|1948|`mame`|.7z .zip|**retroarch:** mame2003_plus (default)<br>**retroarch:** mame2010<br>**retroarch:** mame2015<br>**retroarch:** mame<br>**retroarch:** fbneo<br>**retroarch:** fbalpha2012<br>**retroarch:** fbalpha2019<br>|
+|Arcade|Final Burn Neo (fbn)|2002|`fbneo`|.7z .zip|**retroarch:** fbneo (default)<br>**retroarch:** mame2003_plus<br>**retroarch:** mame2010<br>**retroarch:** mame2015<br>**retroarch:** mame<br>**retroarch:** fbalpha2012<br>**retroarch:** fbalpha2019<br>|
+|Arcade|MAME (mame)|1997|`mame`|.7z .zip|**retroarch:** mame2003_plus (default)<br>**retroarch:** mame2010<br>**retroarch:** mame2015<br>**retroarch:** mame<br>**retroarch:** fbneo<br>**retroarch:** fbalpha2012<br>**retroarch:** fbalpha2019<br>|
 |Arduboy|Arduboy (arduboy)|2014|`arduboy`|.hex|**retroarch:** arduous (default)<br>|
-|Atari|2600 (atari2600)|1977|`atari2600`|.a26 .bin .zip .7z|**retroarch:** stella (default)<br>|
-|Atari|5200 (atari5200)|1982|`atari5200`|.rom .xfd .atr .atx .cdm .cas .car .bin .a52 .xex .zip .7z|**retroarch:** a5200 (default)<br>**retroarch:** atari800<br>|
-|Atari|7800 (atari7800)|1986|`atari7800`|.a78 .bin .zip .7z|**retroarch:** prosystem (default)<br>|
+|Atari|Atari 2600 (atari2600)|1977|`atari2600`|.a26 .bin .zip .7z|**retroarch:** stella (default)<br>|
+|Atari|Atari 5200 (atari5200)|1982|`atari5200`|.rom .xfd .atr .atx .cdm .cas .car .bin .a52 .xex .zip .7z|**retroarch:** a5200 (default)<br>**retroarch:** atari800<br>|
+|Atari|Atari 7800 (atari7800)|1986|`atari7800`|.a78 .bin .zip .7z|**retroarch:** prosystem (default)<br>|
 |Atari|Atari 800 (atari800)|1979|`atari800`|.rom .xfd .atr .atx .cdm .cas .car .bin .a52 .xex .zip .7z|**retroarch:** atari800 (default)<br>|
+|Atari|Atari Jaguar (atarijaguar)|1993|`atarijaguar`|.j64 .jag .rom .abs .cof .bin .prg|**retroarch:** virtualjaguar (default)<br>|
+|Atari|Atari Lynx (atarilynx)|1989|`atarilynx`|.lnx .o .zip .7z|**retroarch:** handy (default)<br>**retroarch:** beetle_lynx<br>|
 |Atari|Atari ST (atarist)|1985|`atarist`|.st .msa .stx .dim .ipf .m3u .zip .7z|**retroarch:** hatari (default)<br>**hatarisa:** hatarisa<br>|
-|Atari|Jaguar (atarijaguar)|1993|`atarijaguar`|.j64 .jag .rom .abs .cof .bin .prg|**retroarch:** virtualjaguar (default)<br>|
-|Atari|Lynx (atarilynx)|1989|`atarilynx`|.lnx .o .zip .7z|**retroarch:** handy (default)<br>**retroarch:** beetle_lynx<br>|
 |Bandai|SuFami Turbo (sufami)|1996|`sufami`|.st .zip .7z|**retroarch:** snes9x (default)<br>|
 |Bandai|Wonderswan (wonderswan)|1999|`wonderswan`|.ws .zip .7z|**retroarch:** beetle_wswan (default)<br>|
 |Bandai|Wonderswan Color (wonderswancolor)|2000|`wonderswancolor`|.wsc .zip .7z|**retroarch:** beetle_wswan (default)<br>|
 |belogic|Uzebox (uzebox)|2008|`uzebox`|.uze|**retroarch:** uzem (default)<br>|
-|Capcom|PlaySystem 1 (cps1)|1988|`cps1`|.zip .7z|**retroarch:** fbneo (default)<br>**retroarch:** mame2003_plus<br>**retroarch:** mame2010<br>**retroarch:** fbalpha2012<br>**retroarch:** mba_mini<br>**AdvanceMame:** AdvanceMame<br>|
-|Capcom|PlaySystem 2 (cps2)|1993|`cps2`|.zip .7z|**retroarch:** fbneo (default)<br>**retroarch:** mame2003_plus<br>**retroarch:** mame2010<br>**retroarch:** fbalpha2012<br>**retroarch:** mba_mini<br>**AdvanceMame:** AdvanceMame<br>|
-|Capcom|PlaySystem 3 (cps3)|1996|`cps3`|.zip .7z|**retroarch:** fbneo (default)<br>**retroarch:** mame2003_plus<br>**retroarch:** mame2010<br>**retroarch:** fbalpha2012<br>**retroarch:** mba_mini<br>**AdvanceMame:** AdvanceMame<br>|
+|Capcom|CPS I (cps1)|1988|`cps1`|.zip .7z|**retroarch:** fbneo (default)<br>**retroarch:** mame2003_plus<br>**retroarch:** mame2010<br>**retroarch:** fbalpha2012<br>**retroarch:** mba_mini<br>**AdvanceMame:** AdvanceMame<br>|
+|Capcom|CPS II (cps2)|1993|`cps2`|.zip .7z|**retroarch:** fbneo (default)<br>**retroarch:** mame2003_plus<br>**retroarch:** mame2010<br>**retroarch:** fbalpha2012<br>**retroarch:** mba_mini<br>**AdvanceMame:** AdvanceMame<br>|
+|Capcom|CPS III (cps3)|1996|`cps3`|.zip .7z|**retroarch:** fbneo (default)<br>**retroarch:** mame2003_plus<br>**retroarch:** mame2010<br>**retroarch:** fbalpha2012<br>**retroarch:** mba_mini<br>**AdvanceMame:** AdvanceMame<br>|
 |Coleco|ColecoVision (colecovision)|1982|`coleco`|.bin .col .rom .zip .7z|**retroarch:** bluemsx (default)<br>**retroarch:** gearcoleco<br>**retroarch:** smsplus<br>|
 |Commodore|Amiga (amiga)|1985|`amiga`|.zip .adf .uae .ipf .dms .adz .lha .m3u .hdf .hdz|**retroarch:** puae (default)<br>**retroarch:** puae2021<br>**amiberry:** amiberry<br>**retroarch:** uae4arm<br>|
 |Commodore|Amiga CD32 (amigacd32)|1994|`amigacd32`|.iso .cue .lha .chd|**retroarch:** puae (default)<br>**retroarch:** puae2021<br>**retroarch:** uae4arm<br>|
-|Commodore|C128 (c128)|1985|`c128`|.d64 .d71 .d80 .d81 .d82 .g64 .g41 .x64 .t64 .tap .prg .p00 .crt .bin .d6z .d7z .d8z .g6z .g4z .x6z .cmd .m3u .vsf .nib .nbz .zip|**retroarch:** vice_x128 (default)<br>**vicesa:** x128<br>|
-|Commodore|C16 (c16)|1984|`c16`|.d64 .d71 .d80 .d81 .d82 .g64 .g41 .x64 .t64 .tap .prg .p00 .crt .bin .d6z .d7z .d8z .g6z .g4z .x6z .cmd .m3u .vsf .nib .nbz .zip|**retroarch:** vice_xplus4 (default)<br>**vicesa:** xplus4<br>|
-|Commodore|C64 (c64)|1982|`c64`|.d64 .d71 .d80 .d81 .d82 .g64 .g41 .x64 .t64 .tap .prg .p00 .crt .bin .d6z .d7z .d8z .g6z .g4z .x6z .cmd .m3u .vsf .nib .nbz .zip|**retroarch:** vice_x64 (default)<br>**vicesa:** x64sc<br>|
+|Commodore|Commodore 128 (c128)|1985|`c128`|.d64 .d71 .d80 .d81 .d82 .g64 .g41 .x64 .t64 .tap .prg .p00 .crt .bin .d6z .d7z .d8z .g6z .g4z .x6z .cmd .m3u .vsf .nib .nbz .zip|**retroarch:** vice_x128 (default)<br>**vicesa:** x128<br>|
+|Commodore|Commodore 16 (c16)|1984|`c16`|.d64 .d71 .d80 .d81 .d82 .g64 .g41 .x64 .t64 .tap .prg .p00 .crt .bin .d6z .d7z .d8z .g6z .g4z .x6z .cmd .m3u .vsf .nib .nbz .zip|**retroarch:** vice_xplus4 (default)<br>**vicesa:** xplus4<br>|
+|Commodore|Commodore 64 (c64)|1982|`c64`|.d64 .d71 .d80 .d81 .d82 .g64 .g41 .x64 .t64 .tap .prg .p00 .crt .bin .d6z .d7z .d8z .g6z .g4z .x6z .cmd .m3u .vsf .nib .nbz .zip|**retroarch:** vice_x64 (default)<br>**vicesa:** x64sc<br>|
 |Commodore|Commodore PET (pet)|1977|`pet`|.20 .a0 .b0 .d64 .d71 .d80 .d81 .d82 .g64 .g41 .x64 .t64 .tap .prg .p00 .crt .bin .gz .d6z .d7z .d8z .g6z .g4z .x6z .cmd .m3u .vsf .nib .nbz .zip|**retroarch:** vice_xpet (default)<br>|
 |Commodore|VIC-20 (vic20)|1980|`vic20`|.20 .a0 .b0 .d64 .d71 .d80 .d81 .d82 .g64 .g41 .x64 .t64 .tap .prg .p00 .crt .bin .gz .d6z .d7z .d8z .g6z .g4z .x6z .cmd .m3u .vsf .nib .nbz .zip|**retroarch:** vice_xvic (default)<br>**vicesa:** xvic<br>|
 |Fairchild|Channel F (channelf)|1976|`channelf`|.bin .chf .zip .7z|**retroarch:** freechaf (default)<br>|
@@ -48,7 +48,7 @@ This document describes all available systems emulators and cores available for 
 |Lexaloffle|PICO-8 (pico-8)|2015|`pico-8`|.p8 .png|**pico-8:** pico8 (default)<br>**retroarch:** fake08<br>|
 |Magnavox|Odyssey 2 (odyssey2)|1979|`odyssey`|.bin .zip .7z|**retroarch:** o2em (default)<br>|
 |Mattel|Intellivision (intellivision)|1979|`intellivision`|.int .bin .rom .zip .7z|**retroarch:** freeintv (default)<br>|
-|Microsoft|MS-DOS (pc)|1981|`pc`|.com .bat .exe .dosz|**retroarch:** dosbox_pure<br>**retroarch:** dosbox_svn<br>|
+|Microsoft|DOS (pc)|1981|`pc`|.com .bat .exe .dosz|**retroarch:** dosbox_pure<br>**retroarch:** dosbox_svn<br>|
 |Microsoft|MSX (msx)|1983|`msx`|.dsk .mx1 .mx2 .rom .zip .7z .m3u|**retroarch:** bluemsx (default)<br>**retroarch:** fmsx<br>|
 |Microsoft|MSX 2 (msx2)|1988|`msx2`|.dsk .mx1 .mx2 .rom .zip .7z .m3u|**retroarch:** bluemsx (default)<br>**retroarch:** fmsx<br>|
 |NEC|PC Engine (pcengine)|1987|`pcengine`|.pce .bin .zip .7z|**retroarch:** beetle_pce_fast (default)<br>**retroarch:** beetle_pce<br>**retroarch:** beetle_supergrafx<br>|
