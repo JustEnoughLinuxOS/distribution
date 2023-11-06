@@ -85,18 +85,15 @@ fi
   ;;
 esac
 
-#Create boot.scr
 if [ "${BOOT_INI}" == true ]
 then
-  echo "image: create boot.scr..."
-  if [ -e "${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/boot/boot.scr" ]
+  echo "boot: create boot.ini..."
+  if [ -e "${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/boot/boot.ini" ]
   then
-    cp ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/boot/boot.scr ${INSTALL}/usr/share/bootloader/boot.scr
-    sed -i "s~@EXTRA_CMDLINE@~${EXTRA_CMDLINE}~g" ${INSTALL}/usr/share/bootloader/boot.scr
-    sed -i "s~@PKG_LOAD_ADDR@~${PKG_LOAD_ADDR}~g" ${INSTALL}/usr/share/bootloader/boot.scr
-    sed -i "s~@DTB_LOAD_ADDR@~${DTB_LOAD_ADDR}~g" ${INSTALL}/usr/share/bootloader/boot.scr
+    cp -f ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/boot/boot.ini ${INSTALL}/usr/share/bootloader/boot.ini
+    sed -i "s~@EXTRA_CMDLINE@~${EXTRA_CMDLINE}~g" ${INSTALL}/usr/share/bootloader/boot.ini
   else
-    echo "ERROR: No boot.scr found in ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/boot/."
+    echo "ERROR: No boot.ini found in ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/boot/."
     exit 1
   fi
 fi
