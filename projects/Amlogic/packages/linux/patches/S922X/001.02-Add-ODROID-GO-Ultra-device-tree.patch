@@ -1,7 +1,7 @@
 diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts linux/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
 --- linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts	1970-01-01 00:00:00.000000000 +0000
 +++ linux/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts	2023-09-12 13:20:28.956694441 +0000
-@@ -0,0 +1,1021 @@
+@@ -0,0 +1,1015 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2022 Neil Armstrong <narmstrong@kernel.org>
@@ -361,9 +361,6 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
 +
 +/* RK817 only supports 12.5mV steps, round up the values */
 +&cpu_opp_table_0 {
-+	opp-667000000 {
-+		opp-microvolt = <725000>;
-+	};
 +	opp-1000000000 {
 +		opp-microvolt = <737500>;
 +	};
@@ -396,9 +393,6 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
 +
 +/* RK818 only supports 12.5mV steps, round up the values */
 +&cpub_opp_table_1 {
-+	opp-667000000 {
-+		opp-microvolt = <750000>;
-+	};
 +	opp-1000000000 {
 +		opp-microvolt = <775000>;
 +	};

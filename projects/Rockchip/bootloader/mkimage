@@ -49,6 +49,7 @@ esac
 #Create boot.scr
 if [ "${BOOT_INI}" == true ]
 then
+<<<<<<< HEAD
   echo "image: create boot.scr..."
   if [ -e "${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/boot/boot.scr" ]
   then

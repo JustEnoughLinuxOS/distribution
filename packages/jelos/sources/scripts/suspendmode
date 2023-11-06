@@ -1,7 +1,7 @@
 #!/bin/bash
 . /etc/profile
 
-REQUESTED_MODE=${1}
+REQUESTED_MODE="${*}"
 SUSPEND_MODE=$(get_setting system.suspendmode)
 
 if [ ! "${REQUESTED_MODE}" = "${SUSPEND_MODE}" ]
@@ -14,6 +14,34 @@ EOF
       cat <<EOF >>/storage/.config/sleep.conf.d/sleep.conf
   AllowSuspend=no
 EOF
+    ;;
+    freeze)
+      cat <<EOF >>/storage/.config/sleep.conf.d/sleep.conf
+  AllowSuspend=yes
+  SuspendState=freeze standby mem
+EOF
+    ;;
+    standby)
+      cat <<EOF >>/storage/.config/sleep.conf.d/sleep.conf
+  AllowSuspend=yes
+  SuspendState=standby mem freeze
+EOF
+    ;;
+    mem)
+      cat <<EOF >>/storage/.config/sleep.conf.d/sleep.conf
+  AllowSuspend=yes
+  SuspendState=mem standby freeze
+EOF
+    ;;
+    default)
+      del_setting system.suspendmode
+      if [ -e "/usr/lib/autostart/quirks/platforms/${HW_DEVICE}/030-suspend_mode" ]
+      then
+        "/usr/lib/autostart/quirks/devices/${QUIRK_DEVICE}/030-suspend_mode"
+      elif [ -e "/usr/lib/autostart/quirks/devices/${QUIRK_DEVICE}/030-suspend_mode" ]
+      then
+        "/usr/lib/autostart/quirks/platforms/${HW_DEVICE}/030-suspend_mode"
+      fi
     ;;
     *)
       cat <<EOF >>/storage/.config/sleep.conf.d/sleep.conf

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2023-present asoderq/sydarn2 (https://github.com/asoderq)
+# Copyright (C) 2023-present sydarn (https://github.com/asoderq)
 
 PKG_NAME="mednafen"
 PKG_VERSION="1.31.0-UNSTABLE"
@@ -13,18 +13,17 @@ pre_configure_target() {
 
 # unsupported modules
 DISABLED_MODULES+=" --disable-apple2 \
-		    --disable-sasplay \
+                   --disable-sasplay \
                     --disable-ssfplay"
 
 case ${DEVICE} in
-  RK3326)
+  RK3326|RK3566)
     DISABLED_MODULES+="   --disable-snes \
 			 --disable-ss \
 			 --disable-psx"
   ;;
-  RK356*)
-    DISABLED_MODULES+="  --disable-ss \
-                         --disable-psx"
+  S922X|RK3399|RK3588)
+    DISABLED_MODULES+="  --disable-ss"
   ;;
 esac
 
@@ -37,13 +36,10 @@ makeinstall_target() {
   cp -rf ${PKG_DIR}/scripts/* ${INSTALL}/usr/bin
 
   chmod +x ${INSTALL}/usr/bin/start_mednafen.sh
+  chmod +x ${INSTALL}/usr/bin/mednafen_gen_config.sh
 
   mkdir -p ${INSTALL}/usr/config/${PKG_NAME}
-  if [ -d ${PKG_DIR}/config/${DEVICE} ]; then
-    cp ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/config/${PKG_NAME}
-  else
-    cp ${PKG_DIR}/config/common/* ${INSTALL}/usr/config/${PKG_NAME}
-  fi
+  cp ${PKG_DIR}/config/common/* ${INSTALL}/usr/config/${PKG_NAME}
 }
 
 post_install() {

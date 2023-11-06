@@ -85,7 +85,7 @@
     DRIVER_ADDONS=""
 
   # debug tty path
-    DEBUG_TTY="/dev/ttyFIQ0"
+    DEBUG_TTY="/dev/ttyAML0"
 
   # Disable 32BIT support
     ENABLE_32BIT="false"
