@@ -108,6 +108,6 @@ cat << EOF > "${INSTALL}/usr/share/bootloader/extlinux/extlinux.conf"
 LABEL ${DISTRO}
   LINUX /${KERNEL_NAME}
   ${FDTMODE}
-  APPEND boot=UUID=@BOOT_UUID@ disk=UUID=@DISK_UUID@ ${EXTRA_CMDLINE}
+  APPEND boot=UUID=@UUID_SYSTEM@ disk=UUID=@UUID_STORAGE@ ${EXTRA_CMDLINE}
 EOF
 fi
