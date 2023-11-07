@@ -1,0 +1,14 @@
+diff -rupN esp8089-1.9.20230804.orig/sdio_stub.c esp8089-1.9.20230804/sdio_stub.c
+--- esp8089-1.9.20230804.orig/sdio_stub.c	2023-08-04 21:04:02.000000000 +0000
++++ esp8089-1.9.20230804/sdio_stub.c	2023-11-07 16:38:55.889274803 +0000
+@@ -38,8 +38,9 @@ void sif_platform_reset_target(void)
+ 	printk("ESP8089 reset via GPIO %d\n", esp_reset_gpio);
+ 	gpio_request(esp_reset_gpio,"esp_reset");
+ 	gpio_direction_output(esp_reset_gpio,0);
++	gpio_set_value(esp_reset_gpio,0);
+ 	msleep(200);
+-	gpio_direction_input(esp_reset_gpio);
++	gpio_set_value(esp_reset_gpio,1);
+ 	gpio_free(esp_reset_gpio);
+ }
+ 
