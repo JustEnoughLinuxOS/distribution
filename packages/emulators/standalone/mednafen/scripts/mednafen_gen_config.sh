@@ -100,7 +100,7 @@ for CONTROL in DEVICE_BTN_AL_DOWN DEVICE_BTN_AL_UP DEVICE_BTN_AL_LEFT    \
                DEVICE_BTN_DPAD_LEFT DEVICE_BTN_DPAD_RIGHT
 
 do
-    sed -i -e "s/@${CONTROL}@//g" $MEDNAFEN_HOME/mednafen.cfg
+    sed -i -e "s/@${CONTROL}@/${!CONTROL}/g" $MEDNAFEN_HOME/mednafen.cfg
 done
 
 else
