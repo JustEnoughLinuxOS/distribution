@@ -85,41 +85,26 @@ set_gpu_gov() {
   fi
 }
 
-set_amdgpu_perf() {
-  for AMDGPU_PERF_DEVICE in $(find /sys/devices -name power_dpm_force_performance_level 2>/dev/null)
-  do
-    echo $1 >${AMDGPU_PERF_DEVICE} 2>/dev/null
-  done
-}
-
 onlinethreads() {
   set_online_threads ${1} ${2}
 }
 
 performance() {
   set_cpu_gov performance
-  set_amdgpu_perf profile_peak
-  set_gpu_gov performance
   set_dmc_gov performance
 }
 
 ondemand() {
   set_cpu_gov ondemand
-  set_amdgpu_perf auto
-  set_gpu_gov ondemand
   set_dmc_gov ondemand
 }
 
 schedutil() {
   set_cpu_gov schedutil
-  set_amdgpu_perf auto
-  set_gpu_gov ondemand
   set_dmc_gov ondemand
 }
 
 powersave() {
   set_cpu_gov powersave
-  set_amdgpu_perf low
-  set_gpu_gov powersave
   set_dmc_gov powersave
 }
