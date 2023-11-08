@@ -2,18 +2,6 @@
 # setup system defaults
 ################################################################################
 
-  # The TARGET_CPU variable controls which processor should be targeted for
-  # generated code.
-    case ${TARGET_ARCH} in
-      x86_64)
-        # (AMD CPUs)    k8 k8-sse3 opteron opteron-sse3 athlon64 athlon64-sse3
-        #               athlon-fx amdfam10 barcelona
-        # (Intel CPUs)  atom core2 nocona
-        #
-        TARGET_CPU="x86-64"
-        ;;
-    esac
-
   # Bootloader to use (syslinux / u-boot)
     BOOTLOADER="syslinux"
 

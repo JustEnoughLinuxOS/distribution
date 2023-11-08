@@ -2,8 +2,7 @@
       x86_64|i686)
         if [ -z "${TARGET_CPU}" ]
         then
-          # Zen version 1 
-          TARGET_CPU="znver1"
+          TARGET_CPU="haswell"
         fi
       ;;
     esac
