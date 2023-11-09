@@ -1,14 +1,16 @@
     case ${TARGET_ARCH} in
       x86_64)
-        # (AMD CPUs)    k8 k8-sse3 opteron opteron-sse3 athlon64 athlon64-sse3
-        #               athlon-fx amdfam10 barcelona
-        # (Intel CPUs)  atom core2 nocona
-        #
-        TARGET_CPU="x86-64"
-        ;;
+        if [ -z "${TARGET_CPU}" ]
+        then
+          TARGET_CPU="x86-64-v3"
+        fi
+      ;;
       i686)
-        TARGET_CPU="i686"
-        ;;
+        if [ -z "${TARGET_CPU}" ]
+        then
+          TARGET_CPU="i686"
+        fi
+      ;;
     esac
 
   # kernel command line
