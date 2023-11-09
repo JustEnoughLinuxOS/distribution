@@ -76,10 +76,10 @@ do
     sed -i -e "s/@${CONTROL}@/button_${!CONTROL}/g" $MEDNAFEN_HOME/mednafen.cfg
 done
 
-DEVICE_BTN_DPAD_UP="abs_7-"
-DEVICE_BTN_DPAD_DOWN="abs_7+"
-DEVICE_BTN_DPAD_LEFT="abs_6-"
-DEVICE_BTN_DPAD_RIGHT="abs_6+"
+DEVICE_BTN_DPAD_UP="abs_6-"
+DEVICE_BTN_DPAD_DOWN="abs_6+"
+DEVICE_BTN_DPAD_LEFT="abs_5-"
+DEVICE_BTN_DPAD_RIGHT="abs_5+"
 
 # These inputs are probably prefixed with something else than button_
 # Just null out the sticks until it is supported in the controller profile
@@ -100,7 +100,7 @@ for CONTROL in DEVICE_BTN_AL_DOWN DEVICE_BTN_AL_UP DEVICE_BTN_AL_LEFT    \
                DEVICE_BTN_DPAD_LEFT DEVICE_BTN_DPAD_RIGHT
 
 do
-    sed -i -e "s/@${CONTROL}@//g" $MEDNAFEN_HOME/mednafen.cfg
+    sed -i -e "s/@${CONTROL}@/${!CONTROL}/g" $MEDNAFEN_HOME/mednafen.cfg
 done
 
 else

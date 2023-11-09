@@ -18,7 +18,7 @@ PKG_PATCH_DIRS+="${DEVICE}"
 
 case ${DEVICE} in
   RK358*)
-    PKG_VERSION="9469ea8bd5ed"
+    PKG_VERSION="a7c264a8249f2058cf8ca624ee5034403412a2c1"
     PKG_URL="${PKG_SITE}/rk358x-kernel.git"
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="main"
