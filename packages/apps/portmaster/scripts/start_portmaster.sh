@@ -13,44 +13,35 @@ fi
 
 cd /storage/.config/PortMaster
 
-#Grab the latest PortMaster.sh script
-cp /usr/config/PortMaster/PortMaster.sh PortMaster.sh
+#Grab the latest control.txt
 cp /usr/config/PortMaster/control.txt control.txt
 
 #Use our gamecontrollerdb.txt
-rm gamecontrollerdb.txt
+rm -r gamecontrollerdb.txt
 ln -sf /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt gamecontrollerdb.txt
 
-#Use our gptokeyb
-rm gptokeyb
-ln -sf /usr/bin/gptokeyb gptokeyb
-cp /usr/config/PortMaster/portmaster.gptk portmaster.gptk
-
-#Use our wget
-ln -sf /usr/bin/wget wget
+#Delete old PortMaster fold first (we can probably remove this later)
+if [ ! -f "/storage/roms/ports/PortMaster/pugwash" ]; then
+    rm -r /storage/roms/ports/PortMaster
+fi
 
 #Make sure roms/ports/PortMaster folder exists
 if [ ! -d "/storage/roms/ports/PortMaster" ]; then
-    mkdir -p "/storage/roms/ports/PortMaster"
+    unzip /usr/config/PortMaster/release/PortMaster.zip -d /storage/roms/ports/
+    chmod +x /storage/roms/ports/PortMaster/PortMaster.sh
 fi
 
-#Make sure libs the folder exists
-if [ ! -d "/storage/roms/ports/PortMaster/libs" ]; then
-    mkdir -p "/storage/roms/ports/PortMaster/libs"
-fi
+#Use PortMasters gptokeyb
+rm gptokeyb
+cp /storage/roms/ports/PortMaster/gptokeyb gptokeyb
 
 #Copy over required files for ports
 cp /storage/.config/PortMaster/control.txt /storage/roms/ports/PortMaster/control.txt
-cp /storage/.config/PortMaster/gptokeyb /storage/roms/ports/PortMaster/gptokeyb
 cp /storage/.config/PortMaster/gamecontrollerdb.txt /storage/roms/ports/PortMaster/gamecontrollerdb.txt
-
 cp /usr/bin/oga_controls* /storage/roms/ports/PortMaster/
 
-#Delete and refrence to PortMaster.sh, we only want to use ours.
-find /storage/roms/ports -type f -name "PortMaster.sh" -delete
-
 #Start PortMaster
-run ./PortMaster.sh 2>/dev/null
+@LIBEGL@
 
-#Kill gptokeyb at exit
-pkill -9 gptokeyb
+cd /storage/roms/ports/PortMaster
+run ./PortMaster.sh 2>/dev/null
