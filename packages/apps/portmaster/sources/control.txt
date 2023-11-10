@@ -1,0 +1,72 @@
+# This file can and should be sourced by ports for various parameters to 
+# minimize script customizations and allow for easier future updates
+# like adding additional supported devices.
+# Thanks to JohnnyonFlame, dhwz, romadu, and shantigilbert for the 
+# suggestion and assistance with this.
+# Source used for gptokeyb available at
+# https://github.com/christianhaitian/gptokeyb
+# Source used for oga_controls available at
+# https://github.com/christianhaitian/oga_controls
+
+directory="roms"
+controlfolder="/$directory/ports/PortMaster"
+ESUDO=""
+ESUDOKILL="-1" 
+raloc="/usr/bin"
+raconf="--config /storage/.config/retroarch/retroarch.cfg"
+pdevice=$(cat /sys/firmware/devicetree/base/model 2>/dev/null)
+
+case ${pdevice} in
+  "Anbernic RG552")
+    profile="rg552"
+  ;;
+  "Hardkernel ODROID-GO-Ultra"|"Powkiddy RGB10 MAX 3")
+    profile="s922x"
+  ;;
+  "Powkiddy x55")
+    profile="x55"
+  ;;
+  "Anbernic RG351*")
+    profile="anbernic"
+  ;;
+  "ODROID-GO Advance*")
+    profile="oga"
+  ;;
+  "ODROID-GO Super")
+    profile="ogs"
+  ;;
+  *)
+    profile="rg552"
+  ;;
+esac
+
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib32
+export SDL_GAMECONTROLLERCONFIG_FILE="$controlfolder/gamecontrollerdb.txt"
+
+get_controls() {
+
+    ANALOGSTICKS="2"
+    LOWRES="N"
+
+    DEVICE="${1}"
+    param_device="${profile}"
+
+    # Set file
+    export SDL_GAMECONTROLLERCONFIG_FILE="/tmp/gamecontrollerdb.txt"
+
+    # Spit the controller of the device our heuristics found (if it did).
+    if [[ ! -z ${DEVICE} ]]; then
+      grep "${SDLDBUSERFILE}" -e "${DEVICE}" > /tmp/gamecontrollerdb.txt
+    else
+      echo "" > /tmp/gamecontrollerdb.txt
+    fi
+
+    # Now find any controller mapped on emulationstation...
+    /storage/.config/PortMaster/mapper.txt /tmp/gamecontrollerdb.txt > /dev/null 2>&1
+    SDLDBUSERFILE="/storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt"
+
+    # Some ports want SDL_GAMECONTROLLERCONFIG, so let's fill it in
+    sdl_controllerconfig="$(< "${SDL_GAMECONTROLLERCONFIG_FILE}")"
+}
+
+GPTOKEYB="$ESUDO $controlfolder/gptokeyb $ESUDOKILL"
