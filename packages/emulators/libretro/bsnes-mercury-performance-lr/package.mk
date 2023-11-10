@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="bsnes-mercury-performance-lr"
-PKG_VERSION="fb9a41fe9bc230a07c4506cad3cbf21d3fa635b4"
+PKG_VERSION="60c204ca17941704110885a815a65c740572326f"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/bsnes-mercury"
 PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"

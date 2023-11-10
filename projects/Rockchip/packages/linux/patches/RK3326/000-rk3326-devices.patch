@@ -102,7 +102,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/bo
 +		compatible = "operating-points-v2";
 +		opp-786000000 {
 +			opp-hz = /bits/ 64 <786000000>;
-+			opp-microvolt = <1100000>;
++			opp-microvolt = <1125000>;
 +		};
 +	};
 +
@@ -995,7 +995,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go.dtsi linux/a
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts	1970-01-01 00:00:00.000000000 +0000
 +++ linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts	2023-10-28 04:02:49.341614140 +0000
-@@ -0,0 +1,300 @@
+@@ -0,0 +1,303 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2019 Hardkernel Co., Ltd
@@ -1218,7 +1218,9 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts lin
 +		compatible = "mmc-pwrseq-simple";
 +		pinctrl-names = "default";
 +		pinctrl-0 = <&wifi_pwrseq_pins>;
-+		/*reset-gpios = <&gpio3 RK_PB1 GPIO_ACTIVE_LOW>;*/
++		reset-gpios = <&gpio3 RK_PB1 GPIO_ACTIVE_LOW>;
++		post-power-on-delay-ms = <300>;
++		power-off-delay-us = <200000>;
 +	};
 +};
 +
@@ -1258,12 +1260,13 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts lin
 +	keep-power-in-suspend;
 +	non-removable;
 +	vmmc-supply = <&vcc_wifi>;
++	mmc-pwrseq = <&wifi_pwrseq>;
 +	status = "okay";
 +
 +	esp8089: wifi@1 {
 +		compatible = "esp,esp8089";
 +		reg = <1>;
-+		esp,crystal-26M-en = <2>;
++		esp,crystal-26M-en = <1>;
 +	};
 +};
 +
@@ -1291,7 +1294,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts lin
 +
 +	wifi {
 +		wifi_pwrseq_pins: wifi-pwrseq-pins {
-+			rockchip,pins = /*<3 RK_PB1 RK_FUNC_GPIO &pcfg_pull_up>,*/
++			rockchip,pins = <3 RK_PB1 RK_FUNC_GPIO &pcfg_pull_up>,
 +					<3 RK_PB6 RK_FUNC_GPIO &pcfg_output_high>;
 +		};
 +	};

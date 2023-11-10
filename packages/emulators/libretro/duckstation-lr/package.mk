@@ -13,11 +13,19 @@ PKG_SHORTDESC="DuckStation - PlayStation 1, aka. PSX Emulator"
 PKG_TOOLCHAIN="cmake"
 PKG_BUILD_FLAGS="-lto"
 
+pre_configure_target() {
+  case ${TARGET_ARCH} in
+    x86_64)
+      CFLAGS+=" -march=x86-64"
+    ;;
+  esac
+
 PKG_CMAKE_OPTS_TARGET+=" -DBUILD_SDL_FRONTEND=OFF \
                          -DBUILD_QT_FRONTEND=OFF \
                          -DBUILD_LIBRETRO_CORE=ON \
 			 -DENABLE_DISCORD_PRESENCE=OFF \
 			 -DUSE_X11=OFF"
+}
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro

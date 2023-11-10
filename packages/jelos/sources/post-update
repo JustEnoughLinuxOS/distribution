@@ -64,13 +64,6 @@ ln -sf /usr/share/locale /storage/.config/emulationstation/locale >>/var/log/con
 ### Add items below this line that are safe to remove after a period of time.
 ################################################################################
 
-### Added 20230409 as a helper for the quirks refactor.
-if [ ! -d "/storage/.config/profile_backup" ]
-then
-  mkdir /storage/.config/profile_backup
-  mv /storage/.config/profile.d/* /storage/.config/profile_backup
-fi
-
 ### 20230913 (reverted) Set the default output to Master for pipewire
 ES_SETTINGS="/storage/.config/emulationstation/es_settings.cfg"
 
@@ -109,3 +102,6 @@ sed -i 's~builtin_imageviewer_enable.*$~builtin_imageviewer_enable = "false"~g' 
 
 ### 20231010 - Stop setting vram in ES settings.
 sed -i '/^.*<int name="MaxVRAM".*$/d' ${ES_SETTINGS}
+
+### 20231031 - Switch back to alsathread for RetroArch
+sed -i 's~"pulse"~"alsathread"~g' /storage/.config/retroarch/retroarch.cfg

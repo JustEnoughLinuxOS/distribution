@@ -11,38 +11,26 @@ if [ ! -d "/sys/class/gpio/gpio${DEVICE_HDMI_GPIO}" ]; then
   echo in > /sys/class/gpio/gpio${DEVICE_HDMI_GPIO}/direction
 fi
 
+HDMI=$(pactl list sinks short | grep hdmi | cut -c 0-2)
+SPEAKER=$(pactl list sinks short | grep es8316 | cut -c 0-2)
+
 # Check HDMI plugged / unplugged, set audio output, restart Emulation Station
 HDMI_VALUE=$(cat /sys/class/gpio/gpio${DEVICE_HDMI_GPIO}/value)
 while true
 do
     HDMI_NEW_VALUE=$(cat /sys/class/gpio/gpio${DEVICE_HDMI_GPIO}/value)
-    HP_GPIO=$(cat /sys/class/gpio/gpio${DEVICE_JACK}/value)
 
     if test "${HDMI_VALUE}" != "${HDMI_NEW_VALUE}"
     then
       case ${HDMI_NEW_VALUE} in
         "0") #HDMI plugged
-          sed -i 's/pcm "hw:0,0"/pcm "hw:1,0"/' /storage/.config/asound.conf
+		pactl set-default-sink ${HDMI}
         ;;
         "1") #HDMI unpluagged
-          sed -i 's/pcm "hw:1,0"/pcm "hw:0,0"/' /storage/.config/asound.conf
-            case ${HP_GPIO} in
-              "1")
-                amixer -c 0 cset name='Speaker Switch' ${DEVICE_PLAYBACK_PATH_HP}
-                amixer -c 0 set 'Headphone' '67%'
-                amixer -c 0 set 'Playback Polarity' Normal
-                set_setting "audio.device" "headphone"
-              ;;
-              *)
-                amixer -c 0 cset name='Speaker Switch' ${DEVICE_PLAYBACK_PATH_SPK}
-                amixer -c 0 set 'Headphone' '100%'
-                amixer -c 0 set 'Playback Polarity' 'R Invert'
-                set_setting "audio.device" "speakers"
-              ;;
-            esac
+		pactl set-default-sink ${SPEAKER}
         ;;
       esac
-      systemctl restart weston
+      killall emulationstation
 
       HDMI_VALUE=${HDMI_NEW_VALUE}
     fi

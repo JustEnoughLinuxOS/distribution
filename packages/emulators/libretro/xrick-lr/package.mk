@@ -19,7 +19,7 @@
 ################################################################################
 
 PKG_NAME="xrick-lr"
-PKG_VERSION="c433c1080409fefcfb69d66dc6416967ff5f6735"
+PKG_VERSION="58e544ee8de08ca8421e97c064d52ef6cdd73bd2"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"

@@ -56,4 +56,10 @@ case "${SUBDEVICE}" in
     mkimage_extlinux
     mkimage_uboot
     ;;
+  Odroid_N2L)
+    DTB=("meson-g12b-odroid-n2l")
+    mkimage_dtb
+    mkimage_extlinux
+    mkimage_uboot
+    ;;
 esac

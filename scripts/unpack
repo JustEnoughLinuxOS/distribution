@@ -42,7 +42,7 @@ for i in ${BUILD}/${PKG_NAME}-*; do
       if [ ! "${PKG_DEEPHASH}" = "${STAMP_PKG_DEEPHASH}" ] ; then
         ${SCRIPTS}/clean "${PKG_NAME}"
         if [ "${PKG_NAME}" = "linux" ]; then
-          for CLEAN_DEP in ${KERNEL_EXTRA_DEPENDS_TARGET} ${ADDITIONAL_DRIVERS} initramfs
+          for CLEAN_DEP in ${KERNEL_EXTRA_DEPENDS_TARGET} ${ADDITIONAL_DRIVERS} busybox initramfs
           do
             ${SCRIPTS}/clean "${CLEAN_DEP}"
             ${SCRIPTS}/unpack "${CLEAN_DEP}"
@@ -124,13 +124,7 @@ if [ -d "${SOURCES}/${PKG_NAME}" -o -d "${PKG_DIR}/sources" ] || pkg_call_exists
 
   if [ "${PKG_SKIP_PATCHES}" != "yes" ]; then
     pkg_call_exists pre_patch && pkg_call pre_patch
-
-    if [ "${TARGET_ARCH}" = "x86_64" ]; then
-      PATCH_ARCH="x86"
-    else
-      #PATCH_ARCH="${TARGET_PATCH_ARCH:-${TARGET_ARCH}}"
-      PATCH_ARCH="${TARGET_ARCH}"
-    fi
+    PATCH_ARCH="${TARGET_ARCH}"
 
     PATCH_DIRS_PKG=""
     PATCH_DIRS_PRJ=""

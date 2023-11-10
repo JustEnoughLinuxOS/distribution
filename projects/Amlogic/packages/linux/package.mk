@@ -8,9 +8,9 @@ PKG_NAME="linux"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/JustEnoughLinuxOS"
 PKG_DEPENDS_HOST="ccache:host rsync:host openssl:host"
-PKG_DEPENDS_TARGET="toolchain linux:host cpio:host kmod:host xz:host wireless-regdb keyutils util-linux binutils ncurses openssl:host initramfs ${KERNEL_EXTRA_DEPENDS_TARGET}"
+PKG_DEPENDS_TARGET="toolchain linux:host cpio:host kmod:host xz:host wireless-regdb keyutils util-linux binutils ncurses openssl:host ${KERNEL_EXTRA_DEPENDS_TARGET}"
 PKG_DEPENDS_INIT="toolchain"
-PKG_NEED_UNPACK="${LINUX_DEPENDS} $(get_pkg_directory busybox)"
+PKG_NEED_UNPACK="${LINUX_DEPENDS} $(get_pkg_directory initramfs) $(get_pkg_variable initramfs PKG_NEED_UNPACK)"
 PKG_LONGDESC="This package builds the kernel for Amlogic devices"
 PKG_IS_KERNEL_PKG="yes"
 PKG_STAMP="${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD}"
@@ -18,7 +18,7 @@ PKG_PATCH_DIRS+="${DEVICE}"
 
 case ${DEVICE} in
   S922X*)
-    PKG_VERSION="6.1.60"
+    PKG_VERSION="6.1.62"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
   ;;
 esac
@@ -43,6 +43,13 @@ fi
 if [[ "${KERNEL_TARGET}" = uImage* ]]; then
   PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} u-boot-tools:host"
 fi
+
+# Ensure that the dependencies of initramfs:target are built correctly, but
+# we don't want to add initramfs:target as a direct dependency as we install
+# this "manually" from within linux:target
+for pkg in $(get_pkg_variable initramfs PKG_DEPENDS_TARGET); do
+  ! listcontains "${PKG_DEPENDS_TARGET}" "${pkg}" && PKG_DEPENDS_TARGET+=" ${pkg}" || true
+done
 
 post_patch() {
   cp ${PKG_KERNEL_CFG_FILE} ${PKG_BUILD}/.config
@@ -107,6 +114,11 @@ makeinstall_host() {
 }
 
 pre_make_target() {
+  ( cd ${ROOT}
+    rm -rf ${BUILD}/initramfs
+    rm -f ${STAMPS_INSTALL}/initramfs/install_target ${STAMPS_INSTALL}/*/install_init
+    ${SCRIPTS}/install initramfs
+  )
   if [ "${TARGET_ARCH}" = "x86_64" ]; then
     # copy some extra firmware to linux tree
     mkdir -p ${PKG_BUILD}/external-firmware
