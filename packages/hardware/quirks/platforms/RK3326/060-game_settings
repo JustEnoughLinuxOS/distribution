@@ -11,6 +11,7 @@ do
   if [ -z ${SETTING} ]
   then
     set_setting ${SYSTEM}.cpugovernor performance
+    set_setting ${SYSTEM}.gpuperf profile_peak
   fi
 done
 
