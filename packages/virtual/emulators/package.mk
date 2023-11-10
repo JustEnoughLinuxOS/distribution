@@ -863,7 +863,7 @@ makeinstall_target() {
     RK3588|S922X|RK3399)
       add_emu_core ps2 aethersx2 aethersx2-sa true
       add_es_system ps2
-      install_script "Start PCSX2.sh"
+      install_script "Start AetherSX2.sh"
     ;;
   esac
 
