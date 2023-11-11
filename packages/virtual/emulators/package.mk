@@ -68,7 +68,7 @@ case "${DEVICE}" in
   RK3326*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="flycast-lr desmume-lr gpsp-lr pcsx_rearmed-lr"
     PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders"
-    PKG_EMUS+=" amiberry drastic-sa mupen64plus-sa nanoboyadvance-sa scummvmsa yabasanshiro-sa portmaster mednafen"
+    PKG_EMUS+=" amiberry drastic-sa mupen64plus-sa scummvmsa yabasanshiro-sa portmaster mednafen"
     LIBRETRO_CORES+=" uae4arm flycast-lr"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
@@ -432,10 +432,10 @@ makeinstall_target() {
   add_emu_core gba retroarch vba_next false
   add_emu_core gba retroarch beetle_gba false
   case ${DEVICE} in
-    RK356*)
+    RK356*|RK3326)
       add_emu_core gba retroarch gpsp false
     ;;
-    RK33*|RK3588)
+    RK3399|RK3588)
       add_emu_core gba retroarch gpsp false
       add_emu_core gba nanoboyadvance nanoboyadvance-sa false
     ;;
@@ -537,6 +537,7 @@ makeinstall_target() {
       add_emu_core switch ryujinx ryujinx-sa false
       add_es_system switch
       install_script "Start Yuzu.sh"
+      install_script "Start Ryujinx.sh"
     ;;
   esac
 
@@ -986,25 +987,22 @@ makeinstall_target() {
       add_emu_core saturn retroarch yabasanshiro false
     ;;
     x86_64)
-      add_emu_core saturn kronos kronos-sa true
+      add_emu_core saturn kronos kronos-sa false
       add_emu_core saturn retroarch yabasanshiro true
-    ;;
-  esac
-  add_emu_core saturn retroarch beetle_saturn false
-  case ${DEVICE} in
-    AMD64)
       add_emu_core saturn mednafen ss false
     ;;
   esac
+  add_emu_core saturn retroarch beetle_saturn false
   add_es_system saturn
 
   ### Sega ST-V
   case ${DEVICE} in
-    AMD64|S922X*|RK35*)
+    S922X*|RK35*)
       add_emu_core st-v retroarch beetle_saturn true
     ;;
     RK3399|AMD64)
-      add_emu_core st-v retroarch beetle_saturn true
+      add_emu_core saturn kronos kronos-sa true
+      add_emu_core st-v retroarch beetle_saturn false
       add_emu_core st-v mednafen ss false
     ;;
   esac
