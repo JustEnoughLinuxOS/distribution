@@ -537,6 +537,7 @@ makeinstall_target() {
       add_emu_core switch ryujinx ryujinx-sa false
       add_es_system switch
       install_script "Start Yuzu.sh"
+      install_script "Start Ryujinx.sh"
     ;;
   esac
 
