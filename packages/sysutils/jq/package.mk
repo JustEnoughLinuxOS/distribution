@@ -2,8 +2,7 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="jq"
-PKG_VERSION="1.6"
-PKG_SHA256="5de8c8e29aaa3fb9cc6b47bb27299f271354ebb72514e3accadc7d38b5bbaa72"
+PKG_VERSION="1.7"
 PKG_LICENSE="MIT"
 PKG_SITE="http://stedolan.github.io/jq/"
 PKG_URL="https://github.com/stedolan/jq/releases/download/${PKG_NAME}-${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.gz"

@@ -4,7 +4,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="mpfr"
-PKG_VERSION="4.2.0"
+PKG_VERSION="4.2.1"
 PKG_LICENSE="LGPL"
 PKG_SITE="http://www.mpfr.org/"
 PKG_URL="http://ftpmirror.gnu.org/mpfr/${PKG_NAME}-${PKG_VERSION}.tar.xz"

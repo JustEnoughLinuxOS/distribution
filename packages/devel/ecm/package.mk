@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="ecm"
-PKG_VERSION="v5.109.0"
+PKG_VERSION="v5.112.0"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/KDE/extra-cmake-modules"
