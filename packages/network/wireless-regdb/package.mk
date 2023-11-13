@@ -4,7 +4,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="wireless-regdb"
-PKG_VERSION="2023.05.03"
+PKG_VERSION="2023.09.01"
 PKG_LICENSE="GPL"
 PKG_SITE="https://wireless.wiki.kernel.org/en/developers/regulatory/wireless-regdb"
 PKG_URL="https://www.kernel.org/pub/software/network/${PKG_NAME}/${PKG_NAME}-${PKG_VERSION}.tar.xz"
