@@ -8,7 +8,7 @@ jslisten set "PortMaster"
 
 #Make sure PortMaster exists in .config/PortMaster
 if [ ! -d "/storage/.config/PortMaster" ]; then
-    mkdir -p "/storage/.config/ports/PortMaster"
+    mkdir -p "/storage/.config/PortMaster"
       cp -r "/usr/config/PortMaster" "/storage/.config/"
 fi
 
@@ -16,6 +16,7 @@ cd /storage/.config/PortMaster
 
 #Grab the latest control.txt
 cp /usr/config/PortMaster/control.txt control.txt
+cp /usr/config/PortMaster/mapper.txt mapper.txt
 
 #Use our gamecontrollerdb.txt
 rm -r gamecontrollerdb.txt
