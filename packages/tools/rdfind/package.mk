@@ -6,7 +6,6 @@ PKG_VERSION="1.6.0"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/pauldreik/rdfind"
 PKG_URL="${PKG_SITE}/archive/refs/tags/releases/${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_HOST="toolchain nettle:host"
 PKG_LONGDESC="A command line tool that finds duplicate files."
 PKG_TOOLCHAIN="autotools"
 
