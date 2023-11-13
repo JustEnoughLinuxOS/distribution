@@ -74,6 +74,17 @@ pre_configure() {
 
 post_makeinstall_target() {
   make -C lib/et LIBMODE=644 DESTDIR=${SYSROOT_PREFIX} install
+
+  rm -rf ${INSTALL}/usr/sbin/badblocks
+  rm -rf ${INSTALL}/usr/sbin/blkid
+  rm -rf ${INSTALL}/usr/sbin/dumpe2fs
+  rm -rf ${INSTALL}/usr/sbin/e2freefrag
+  rm -rf ${INSTALL}/usr/sbin/e2undo
+  rm -rf ${INSTALL}/usr/sbin/e4defrag
+  rm -rf ${INSTALL}/usr/sbin/filefrag
+  rm -rf ${INSTALL}/usr/sbin/fsck
+  rm -rf ${INSTALL}/usr/sbin/logsave
+  rm -rf ${INSTALL}/usr/sbin/mklost+found
 }
 
 makeinstall_init() {

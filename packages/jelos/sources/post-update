@@ -64,51 +64,12 @@ ln -sf /usr/share/locale /storage/.config/emulationstation/locale >>/var/log/con
 ### Add items below this line that are safe to remove after a period of time.
 ################################################################################
 
-### Added 20230409 as a helper for the quirks refactor.
-if [ ! -d "/storage/.config/profile_backup" ]
-then
-  mkdir /storage/.config/profile_backup
-  mv /storage/.config/profile.d/* /storage/.config/profile_backup
-fi
-
-### 20230913 (reverted) Set the default output to Master for pipewire
-ES_SETTINGS="/storage/.config/emulationstation/es_settings.cfg"
-
-function set_es_path() {
-  AUDIODEVICE=${1}
-  sed -i '/^.*<string name="AudioDevice".*$/d' ${ES_SETTINGS}
-  if [ -e "/storage/.config/profile.d/99-mixer" ]
-  then
-    rm "/storage/.config/profile.d/99-mixer"
-  fi
-  sed -i '/^.*AudioCard.*$/a \\t<string name="AudioDevice" value="'"${AUDIODEVICE}"'" \/>' ${ES_SETTINGS}
-  echo "DEVICE_AUDIO_MIXER=\"${AUDIODEVICE}\"" >/storage/.config/profile.d/99-mixer
-}
-
-set_es_path "Master"
-
-### 20230913 (reverted) Set default audio latency
-LATENCY=$(get_setting global.audiolatency)
-if [ -z "${LATENCY}" ]
-then
-  set_setting global.audiolatency 32
-fi
-
-### 20230915 - Apply a rewind global if it doesn't exist.
-REWIND=$(get_setting global.rewind)
-if [ -z "${REWIND}" ]
-then
-  set_setting global.rewind 0
-fi
-
-### 20230915 - Delete any stale alsa configs.
-rm -f /storage/.config/asound*
-
-### 20230916 - Disable Retrarch's built in image viewer so fake-08 blobs are opened correctly.  Thanks to christianhaitian and jtothebell.
-sed -i 's~builtin_imageviewer_enable.*$~builtin_imageviewer_enable = "false"~g' /storage/.config/retroarch/retroarch.cfg
-
 ### 20231010 - Stop setting vram in ES settings.
 sed -i '/^.*<int name="MaxVRAM".*$/d' ${ES_SETTINGS}
 
 ### 20231031 - Switch back to alsathread for RetroArch
 sed -i 's~"pulse"~"alsathread"~g' /storage/.config/retroarch/retroarch.cfg
+
+### Items below this line should not be removed.
+tocon "Update complete, rebooting..."
+reboot

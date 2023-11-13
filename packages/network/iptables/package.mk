@@ -14,17 +14,19 @@ PKG_TOOLCHAIN="autotools"
 case ${DEVICE} in
   RK356*)
     PKG_VERSION="1.8.3"
+    PKG_EXTENSION="bz2"
     PKG_PATCH_DIRS+="4.x"
     PKG_CONFIGURE_OPTS_TARGET="--with-kernel=$(kernel_path)
     CPPFLAGS=-I${SYSROOT_PREFIX}/usr/include"
   ;;
   *)
-    PKG_VERSION="1.8.8"
+    PKG_VERSION="1.8.9"
+    PKG_EXTENSION="xz"
     PKG_PATCH_DIRS+="5.x"
   ;;
 esac
 
-PKG_URL="https://www.netfilter.org/projects/iptables/files/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
+PKG_URL="https://www.netfilter.org/projects/iptables/files/${PKG_NAME}-${PKG_VERSION}.tar.${PKG_EXTENSION}"
 
 post_makeinstall_target() {
   mkdir -p ${INSTALL}/usr/config/iptables/

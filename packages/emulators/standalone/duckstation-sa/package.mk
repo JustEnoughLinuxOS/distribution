@@ -49,17 +49,22 @@ else PKG_CMAKE_OPTS_TARGET+=" -DENABLE_VULKAN=OFF"
 fi
 
 pre_configure_target() {
-	PKG_CMAKE_OPTS_TARGET+="	-DANDROID=OFF \
-					-DENABLE_DISCORD_PRESENCE=OFF \
-					-DBUILD_QT_FRONTEND=OFF \
-					-DBUILD_NOGUI_FRONTEND=ON \
-					-DCMAKE_BUILD_TYPE=Release \
-					-DBUILD_SHARED_LIBS=OFF \
-					-DUSE_SDL2=ON \
-					-DENABLE_CHEEVOS=ON \
-					-DUSE_FBDEV=OFF \
-					-DUSE_EVDEV=ON \
-					-DUSE_X11=OFF"
+  case ${TARGET_ARCH} in
+    x86_64)
+      CFLAGS+=" -march=x86-64"
+    ;;
+  esac
+  PKG_CMAKE_OPTS_TARGET+=" -DANDROID=OFF \
+                           -DENABLE_DISCORD_PRESENCE=OFF \
+                           -DBUILD_QT_FRONTEND=OFF \
+                           -DBUILD_NOGUI_FRONTEND=ON \
+                           -DCMAKE_BUILD_TYPE=Release \
+                           -DBUILD_SHARED_LIBS=OFF \
+                           -DUSE_SDL2=ON \
+                           -DENABLE_CHEEVOS=ON \
+                           -DUSE_FBDEV=OFF \
+                           -DUSE_EVDEV=ON \
+                           -DUSE_X11=OFF"
 }
 
 makeinstall_target() {

@@ -4,7 +4,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="es-theme-art-book-next"
-PKG_VERSION="81a1a9bc1985e5ba40c081fd1eec0544d7f7556c"
+PKG_VERSION="3ff943daf65c4a4f0a682fe293eb7f846b083eba"
 PKG_ARCH="any"
 PKG_LICENSE="CUSTOM"
 PKG_SITE="https://github.com/anthonycaccese/art-book-next-jelos"
