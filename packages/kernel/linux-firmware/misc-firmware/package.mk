@@ -3,8 +3,7 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="misc-firmware"
-PKG_VERSION="9dd2a25"
-PKG_SHA256="8788d153cbee0bfd9998aed4cf2e015b373529d4b9c2c35325a08ef390855ec6"
+PKG_VERSION="a7ba8d5"
 PKG_LICENSE="Free-to-use"
 PKG_SITE="https://github.com/LibreELEC/misc-firmware"
 PKG_URL="https://github.com/LibreELEC/misc-firmware/archive/${PKG_VERSION}.tar.gz"
