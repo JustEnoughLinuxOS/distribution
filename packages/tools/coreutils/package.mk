@@ -3,7 +3,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="coreutils"
-PKG_VERSION="9.3"
+PKG_VERSION="9.4"
 PKG_LICENSE="GPLv2+"
 PKG_SITE="https://www.gnu.org/software/coreutils/"
 PKG_URL="https://ftp.gnu.org/gnu/coreutils/coreutils-${PKG_VERSION}.tar.xz"

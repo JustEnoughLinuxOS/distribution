@@ -4,7 +4,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="bash"
-PKG_VERSION="5.1.16"
+PKG_VERSION="5.2.21"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/bash/"
 PKG_URL="http://ftpmirror.gnu.org/bash/${PKG_NAME}-${PKG_VERSION}.tar.gz"

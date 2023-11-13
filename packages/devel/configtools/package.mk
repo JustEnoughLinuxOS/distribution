@@ -4,7 +4,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="configtools"
-PKG_VERSION="d4e37b5868ef910e3e52744c34408084bb13051c"
+PKG_VERSION="28ea239c53a2d5d8800c472bc2452eaa16e37af2"
 PKG_LICENSE="GPL"
 PKG_SITE="http://git.savannah.gnu.org/cgit/config.git"
 PKG_URL="http://git.savannah.gnu.org/cgit/config.git/snapshot/config-${PKG_VERSION}.tar.gz"

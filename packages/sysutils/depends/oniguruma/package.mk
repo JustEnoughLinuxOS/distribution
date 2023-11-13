@@ -3,7 +3,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="oniguruma"
-PKG_VERSION="6.9.8"
+PKG_VERSION="6.9.9"
 PKG_LICENSE="BSD"
 PKG_SITE="https://github.com/kkos/oniguruma"
 PKG_URL="https://github.com/kkos/oniguruma/releases/download/v${PKG_VERSION}/onig-${PKG_VERSION}.tar.gz"

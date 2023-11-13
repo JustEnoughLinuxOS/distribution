@@ -2,7 +2,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="gmu"
-PKG_VERSION="cf21c3f"
+PKG_VERSION="3aed18b"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/jhe2/gmu"
 PKG_URL="${PKG_SITE}.git"

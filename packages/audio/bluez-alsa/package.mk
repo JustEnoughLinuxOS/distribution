@@ -3,7 +3,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="bluez-alsa"
-PKG_VERSION="f7e6ee5"
+PKG_VERSION="b65a40f"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/Arkq/bluez-alsa"
 PKG_URL="${PKG_SITE}.git"
