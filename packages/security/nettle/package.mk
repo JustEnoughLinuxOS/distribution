@@ -8,7 +8,7 @@ PKG_VERSION="3.9.1"
 PKG_LICENSE="GPL2"
 PKG_SITE="http://www.lysator.liu.se/~nisse/nettle"
 PKG_URL="http://ftpmirror.gnu.org/gnu/nettle/nettle-${PKG_VERSION}.tar.gz"
-PKG_DEPENDS_HOST="toolchain gmp:host openssl:host"
+PKG_DEPENDS_HOST="gmp:host openssl:host"
 PKG_DEPENDS_TARGET="toolchain gmp openssl"
 PKG_LONGDESC="A low-level cryptographic library."
 
