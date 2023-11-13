@@ -6,9 +6,11 @@ PKG_VERSION="20231111"
 PKG_LICENSE="other"
 PKG_SITE="https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/"
 PKG_URL="https://cdn.kernel.org/pub/linux/kernel/firmware/linux-firmware-${PKG_VERSION}.tar.xz"
+PKG_DEPENDS_HOST="rdfind:host"
+PKG_DEPENDS_TARGET="rdfind:host"
 PKG_NEED_UNPACK="${PROJECT_DIR}/${PROJECT}/packages/${PKG_NAME} ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/packages/${PKG_NAME}"
 PKG_LONGDESC="kernel-firmware: kernel related firmware"
-PKG_TOOLCHAIN="manual"
+#PKG_TOOLCHAIN="manual"
 
 configure_package() {
   PKG_FW_SOURCE=${PKG_BUILD}/.copied-firmware
@@ -25,6 +27,14 @@ post_patch() {
       cp -r ${PKG_DIR}/extra-firmware/* "${PKG_FW_SOURCE}"
     fi
   )
+}
+
+configure_target() {
+  :
+}
+
+make_target() {
+  :
 }
 
 # Install additional miscellaneous drivers

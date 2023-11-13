@@ -2,7 +2,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="RTL8852xx"
-PKG_VERSION="78a73b0ffa15111c3021fcc8c4b6d2605fc16d88"
+PKG_VERSION="fce040c12fbf93bfd904ded48df60dea2c8d4423"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/lwfinger/rtw89"
 PKG_URL="https://github.com/lwfinger/rtw89/archive/${PKG_VERSION}.tar.gz"
