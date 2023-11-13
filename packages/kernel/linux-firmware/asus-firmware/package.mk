@@ -2,7 +2,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="asus-firmware"
-PKG_VERSION="b7d9e3ed9cc14dbc5f1640309ae13dd627fc173a"
+PKG_VERSION="25a5ec1248ae56303cffcd5c113fb10538d18cff"
 PKG_LICENSE="https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tree/LICENSE.cirrus" # Probably
 PKG_SITE="https://gitlab.com/asus-linux/firmware"
 PKG_URL="${PKG_SITE}.git"
