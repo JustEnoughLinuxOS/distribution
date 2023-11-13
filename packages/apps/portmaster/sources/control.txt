@@ -15,6 +15,7 @@ ESUDOKILL="-1"
 raloc="/usr/bin"
 raconf="--config /storage/.config/retroarch/retroarch.cfg"
 pdevice=$(cat /sys/firmware/devicetree/base/model 2>/dev/null)
+pdevice=$(tr -d '\0' </sys/firmware/devicetree/base/model 2>/dev/null)
 
 case ${pdevice} in
   "Anbernic RG552")
@@ -29,7 +30,7 @@ case ${pdevice} in
   "Anbernic RG351*")
     profile="anbernic"
   ;;
-  "ODROID-GO Advance*")
+  "ODROID-GO Advance*"|"Powkiddy RGB10")
     profile="oga"
   ;;
   "ODROID-GO Super")
