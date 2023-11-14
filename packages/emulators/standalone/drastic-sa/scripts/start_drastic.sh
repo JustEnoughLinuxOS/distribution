@@ -40,5 +40,5 @@ rm -rf /storage/.config/drastic/backup
 ln -sf /storage/roms/nds /storage/.config/drastic/backup
 
 cd /storage/.config/drastic/
-
+@LIBEGL@
 ./drastic "$1"
