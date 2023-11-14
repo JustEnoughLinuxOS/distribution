@@ -12,6 +12,8 @@ directory="roms"
 controlfolder="/$directory/ports/PortMaster"
 ESUDO=""
 ESUDOKILL="-1"
+SDLDBUSERFILE="/storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt"
+#clibs="/usr/lib/compat/"
 raloc="/usr/bin"
 raconf="--config /storage/.config/retroarch/retroarch.cfg"
 pdevice=$(tr -d '\0' </sys/firmware/devicetree/base/model 2>/dev/null)
@@ -67,8 +69,20 @@ get_controls() {
 
     param_device="${profile}"
 
+    GUID=$(control-gen | awk 'BEGIN {FS="\""} /^DEVICE/ {print $2;exit}')
+
     # Set file
     export SDL_GAMECONTROLLERCONFIG_FILE="/tmp/gamecontrollerdb.txt"
+
+    # Spit the controller of the device our heuristics found (if it did).
+    if [[ ! -z ${GUID} ]]; then
+      grep "${SDLDBUSERFILE}" -e "${GUID}" > /tmp/gamecontrollerdb.txt
+    else
+      echo "" > /tmp/gamecontrollerdb.txt
+    fi
+
+    # Set compatability libs
+    #export LD_LIBRARY_PATH=${clibs}
 
     # Now find any controller mapped on emulationstation...
     /storage/.config/PortMaster/mapper.txt SDL_GAMECONTROLLERCONFIG_FILE > /dev/null 2>&1
