@@ -2,7 +2,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="ryzenadj"
-PKG_VERSION="7201ff25533698bfe3c402a87d479e02358bd929"
+PKG_VERSION="0460a4d"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/FlyGoat/RyzenAdj"
 PKG_URL="${PKG_SITE}.git"

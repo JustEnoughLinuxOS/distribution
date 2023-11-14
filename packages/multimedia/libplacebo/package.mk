@@ -2,7 +2,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="libplacebo"
-PKG_VERSION="839e847e32ff0b6bb0a0c033b700245de6a333dc"
+PKG_VERSION="c02c40cc3f5eb4fd736eebf6056ae4ec0df2448b"
 PKG_LICENSE="GPLv2+"
 PKG_SITE="https://code.videolan.org/videolan/libplacebo"
 PKG_URL="${PKG_SITE}.git"

@@ -2,7 +2,7 @@
 # Copyright (C) 2021-present Team CoreELEC (https://coreelec.org)
 
 PKG_NAME="gperftools"
-PKG_VERSION="2.11"
+PKG_VERSION="2.13"
 PKG_LICENSE="BSD"
 PKG_SITE="https://github.com/gperftools/gperftools"
 PKG_URL="https://github.com/gperftools/gperftools/archive/${PKG_NAME}-${PKG_VERSION}.tar.gz"

@@ -1,7 +1,7 @@
-diff -rupN pipewire.orig/src/daemon/pipewire-pulse.conf.in pipewire/src/daemon/pipewire-pulse.conf.in
---- pipewire.orig/src/daemon/pipewire-pulse.conf.in	2023-08-07 01:36:39.320782246 +0000
-+++ pipewire/src/daemon/pipewire-pulse.conf.in	2023-08-07 22:04:21.956983916 +0000
-@@ -89,11 +89,11 @@ pulse.properties = {
+diff -rupN pipewire-0.3.84.orig/src/daemon/pipewire-pulse.conf.in pipewire-0.3.84/src/daemon/pipewire-pulse.conf.in
+--- pipewire-0.3.84.orig/src/daemon/pipewire-pulse.conf.in	2023-11-13 16:35:56.502690919 +0000
++++ pipewire-0.3.84/src/daemon/pipewire-pulse.conf.in	2023-11-13 16:36:28.096495134 +0000
+@@ -90,11 +90,11 @@ pulse.properties = {
          #"tcp:[::]:9999"                    # IPv6 on all addresses
          #"tcp:127.0.0.1:8888"               # IPv4 on a single address
          #
@@ -18,9 +18,9 @@ diff -rupN pipewire.orig/src/daemon/pipewire-pulse.conf.in pipewire/src/daemon/p
      ]
      #server.dbus-name       = "org.pulseaudio.Server"
      #pulse.min.req          = 128/48000     # 2.7ms
-diff -rupN pipewire.orig/src/daemon/systemd/system/pipewire.service.in pipewire/src/daemon/systemd/system/pipewire.service.in
---- pipewire.orig/src/daemon/systemd/system/pipewire.service.in	2023-08-07 01:36:39.320782246 +0000
-+++ pipewire/src/daemon/systemd/system/pipewire.service.in	2023-08-07 22:19:22.589017591 +0000
+diff -rupN pipewire-0.3.84.orig/src/daemon/systemd/system/pipewire.service.in pipewire-0.3.84/src/daemon/systemd/system/pipewire.service.in
+--- pipewire-0.3.84.orig/src/daemon/systemd/system/pipewire.service.in	2023-11-13 16:35:56.502690919 +0000
++++ pipewire-0.3.84/src/daemon/systemd/system/pipewire.service.in	2023-11-13 16:36:28.096495134 +0000
 @@ -15,21 +15,24 @@ Description=PipeWire Multimedia Service
  Requires=pipewire.socket
  
@@ -56,13 +56,13 @@ diff -rupN pipewire.orig/src/daemon/systemd/system/pipewire.service.in pipewire/
 -Also=pipewire.socket
 +Also=pipewire-pulse.socket
  WantedBy=default.target
-diff -rupN pipewire.orig/src/daemon/systemd/system/pipewire.socket pipewire/src/daemon/systemd/system/pipewire.socket
---- pipewire.orig/src/daemon/systemd/system/pipewire.socket	2023-08-07 01:36:39.320782246 +0000
-+++ pipewire/src/daemon/systemd/system/pipewire.socket	2023-08-07 22:38:25.418008336 +0000
-@@ -4,8 +4,8 @@ Description=PipeWire Multimedia System S
- [Socket]
+diff -rupN pipewire-0.3.84.orig/src/daemon/systemd/system/pipewire.socket pipewire-0.3.84/src/daemon/systemd/system/pipewire.socket
+--- pipewire-0.3.84.orig/src/daemon/systemd/system/pipewire.socket	2023-11-13 16:35:56.502690919 +0000
++++ pipewire-0.3.84/src/daemon/systemd/system/pipewire.socket	2023-11-13 16:36:58.434228383 +0000
+@@ -5,8 +5,8 @@ Description=PipeWire Multimedia System S
  Priority=6
  ListenStream=%t/pipewire/pipewire-0
+ ListenStream=%t/pipewire/pipewire-0-manager
 -SocketUser=pipewire
 -SocketGroup=pipewire
 +SocketUser=root
@@ -70,3 +70,20 @@ diff -rupN pipewire.orig/src/daemon/systemd/system/pipewire.socket pipewire/src/
  SocketMode=0660
  
  [Install]
+diff -rupN pipewire-0.3.84.orig/src/daemon/systemd/system/pipewire.socket.rej pipewire-0.3.84/src/daemon/systemd/system/pipewire.socket.rej
+--- pipewire-0.3.84.orig/src/daemon/systemd/system/pipewire.socket.rej	1970-01-01 00:00:00.000000000 +0000
++++ pipewire-0.3.84/src/daemon/systemd/system/pipewire.socket.rej	2023-11-13 16:36:28.096495134 +0000
+@@ -0,0 +1,13 @@
++--- src/daemon/systemd/system/pipewire.socket	2023-08-07 01:36:39.320782246 +0000
+++++ src/daemon/systemd/system/pipewire.socket	2023-08-07 22:38:25.418008336 +0000
++@@ -4,8 +4,8 @@ Description=PipeWire Multimedia System S
++ [Socket]
++ Priority=6
++ ListenStream=%t/pipewire/pipewire-0
++-SocketUser=pipewire
++-SocketGroup=pipewire
+++SocketUser=root
+++SocketGroup=root
++ SocketMode=0660
++ 
++ [Install]
