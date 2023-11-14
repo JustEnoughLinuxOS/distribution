@@ -33,6 +33,11 @@ if [ ! -d "/storage/roms/ports/PortMaster" ]; then
     chmod +x /storage/roms/ports/PortMaster/PortMaster.sh
 fi
 
+#We dont use tasksetter, delete it
+if [ ! -f /storage/roms/ports/PortMaster/tasksetter ]; then
+  rm -r /storage/roms/ports/PortMaster/tasksetter
+fi
+
 #Use PortMasters gptokeyb
 rm gptokeyb
 cp /storage/roms/ports/PortMaster/gptokeyb gptokeyb
@@ -43,8 +48,20 @@ cp /storage/.config/PortMaster/gamecontrollerdb.txt /storage/roms/ports/PortMast
 cp /storage/.config/PortMaster/gamecontrollerdb.txt /tmp/gamecontrollerdb.txt
 cp /usr/bin/oga_controls* /storage/roms/ports/PortMaster/
 
+#Hide PortMaster folder in ports
+if [ ! -f /storage/roms/ports/gamelist.xml ]; then
+echo "<gameList>
+	<folder>
+		<path>./PortMaster</path>
+		<name>PortMaster</name>
+		<hidden>true</hidden>
+	</folder>
+</gameList>" > /storage/roms/ports/gamelist.xml
+else
+  xmlstarlet ed --inplace -u "/gameList/folder[name='PortMaster']/hidden" -v "true" /storage/roms/ports/gamelist.xml
+fi
+
 #Start PortMaster
 @LIBEGL@
-
 cd /storage/roms/ports/PortMaster
 run ./PortMaster.sh 2>/dev/null
