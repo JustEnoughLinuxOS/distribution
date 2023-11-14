@@ -5,11 +5,16 @@ PKG_NAME="portmaster"
 PKG_VERSION="8.5.2_0811"
 PKG_SITE="https://github.com/PortsMaster/PortMaster-GUI"
 PKG_URL="${PKG_SITE}/releases/download/${PKG_VERSION}/PortMaster.zip"
+COMPAT_URL="https://github.com/brooksytech/JelosAddOns/raw/main/compat.zip"
 PKG_LICENSE="MIT"
 PKG_ARCH="arm aarch64"
-PKG_DEPENDS_TARGET="toolchain gptokeyb gamecontrollerdb wget oga_controls libegl"
+PKG_DEPENDS_TARGET="toolchain gptokeyb gamecontrollerdb wget oga_controls control-gen"
 PKG_TOOLCHAIN="manual"
 PKG_LONGDESC="Portmaster - a simple tool that allows you to download various game ports"
+
+if [ "${DEVICE}" = "S922X" ]; then
+  PKG_DEPENDS_TARGET+=" libegl"
+fi
 
 makeinstall_target() {
   export STRIP=true
@@ -18,10 +23,14 @@ makeinstall_target() {
 
   mkdir -p ${INSTALL}/usr/bin
   cp -rf ${PKG_DIR}/scripts/* ${INSTALL}/usr/bin
-  chmod +x ${INSTALL}/usr/bin/start_portmaster.sh
+  chmod +x ${INSTALL}/usr/bin/*
 
   mkdir -p ${INSTALL}/usr/config/PortMaster/release
   curl -Lo ${INSTALL}/usr/config/PortMaster/release/PortMaster.zip ${PKG_URL}
+
+  mkdir -p ${INSTALL}/usr/lib/compat
+  curl -Lo ${PKG_BUILD}/compat.zip ${COMPAT_URL}
+  unzip ${PKG_BUILD}/compat.zip -d ${INSTALL}/usr/lib/compat/
 }
 
 post_install() {
