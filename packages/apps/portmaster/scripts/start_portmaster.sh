@@ -57,7 +57,12 @@ echo "<gameList>
 	</folder>
 </gameList>" > /storage/roms/ports/gamelist.xml
 else
-  xmlstarlet ed --inplace -u "/gameList/folder[name='PortMaster']/hidden" -v "true" /storage/roms/ports/gamelist.xml
+  xmlstarlet ed --inplace -d  "/gameList/folder[name='PortMaster']" /storage/roms/ports/gamelist.xml
+  xmlstarlet ed --inplace -d  "/gameList/game[name='PortMaster']" /storage/roms/ports/gamelist.xml
+  xmlstarlet ed --inplace --subnode "/gameList" --type elem -n folder -v "" /storage/roms/ports/gamelist.xml
+  xmlstarlet ed --inplace --subnode "/gameList/folder[last()]" --type elem -n path -v "./PortMaster" /storage/roms/ports/gamelist.xml
+  xmlstarlet ed --inplace --subnode "/gameList/folder[last()]" --type elem -n name -v "PortMaster" /storage/roms/ports/gamelist.xml
+  xmlstarlet ed --inplace --subnode "/gameList/folder[last()]" --type elem -n hidden -v "true" /storage/roms/ports/gamelist.xml
 fi
 
 #Start PortMaster
