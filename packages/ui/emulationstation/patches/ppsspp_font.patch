@@ -1,10 +1,10 @@
-diff -rupN emulationstation-6dafa36/es-app/src/guis/GuiMenu.cpp emulationstation/es-app/src/guis/GuiMenu.cpp
---- emulationstation-6dafa36/es-app/src/guis/GuiMenu.cpp	2023-07-20 05:10:38.209217942 +0900
-+++ emulationstation/es-app/src/guis/GuiMenu.cpp	2023-07-20 13:35:03.286185321 +0900
-@@ -2686,6 +2686,22 @@ void GuiMenu::openGamesSettings_batocera
+--- ./emulationstation-6430bb1/es-app/src/guis/GuiMenu.orig.cpp	2023-11-16 02:47:53.339163442 +0900
++++ ./emulationstation-6430bb1/es-app/src/guis/GuiMenu.cpp	2023-11-16 02:51:21.082925131 +0900
+@@ -2004,6 +2004,22 @@ void GuiMenu::openGamesSettings_batocera
+ 		// Netplay
  		if (SystemData::isNetplayActivated() && ApiSystem::getInstance()->isScriptingSupported(ApiSystem::NETPLAY))
  			s->addEntry(_("NETPLAY SETTINGS"), true, [this] { openNetplaySettings(); }, "iconNetplay");
- 
++		
 +		// PPSSPP font change
 +		auto pspfont_enabled = std::make_shared<SwitchComponent>(mWindow);
 +		bool pfbaseEnabled = SystemConf::getInstance()->get("global.pspfont.enabled") == "1";
@@ -18,9 +18,8 @@ diff -rupN emulationstation-6dafa36/es-app/src/guis/GuiMenu.cpp emulationstation
 +			}
 +		bool pspfontenabled = pspfont_enabled->getState();
 +		SystemConf::getInstance()->set("global.pspfont.enabled", pspfontenabled ? "1" : "0");
-+				SystemConf::getInstance()->saveSystemConf();
++			SystemConf::getInstance()->saveSystemConf();
 +		});
-+
- //		// Missing Bios
- //		if (ApiSystem::getInstance()->isScriptingSupported(ApiSystem::BIOSINFORMATION))
- //		{
+ 
+ 	}
+ 
