@@ -220,7 +220,7 @@ function quit() {
 }
 
 function stop_rumble() {
-	if [[ "${HW_DEVICE}" == RK3356 ]]
+	if [[ "${HW_DEVICE}" == RK3556 ]]
 	then
 		$VERBOSE && log $0 "Stop rumble"
 		echo 1000000 > /sys/class/pwm/pwmchip1/pwm0/duty_cycle
