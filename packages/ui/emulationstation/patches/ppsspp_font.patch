@@ -1,6 +1,7 @@
---- GuiMenu.orig.cpp	2023-11-15 15:15:11.933455034 +0900
-+++ GuiMenu.cpp	2023-11-15 15:12:18.226381068 +0900
-@@ -2005,6 +2005,21 @@ void GuiMenu::openGamesSettings_batocera
+diff -rupN emulationstation-6dafa36/es-app/src/guis/GuiMenu.cpp emulationstation/es-app/src/guis/GuiMenu.cpp
+--- emulationstation-6dafa36/es-app/src/guis/GuiMenu.cpp	2023-07-20 05:10:38.209217942 +0900
++++ emulationstation/es-app/src/guis/GuiMenu.cpp	2023-07-20 13:35:03.286185321 +0900
+@@ -2686,6 +2686,22 @@ void GuiMenu::openGamesSettings_batocera
  		if (SystemData::isNetplayActivated() && ApiSystem::getInstance()->isScriptingSupported(ApiSystem::NETPLAY))
  			s->addEntry(_("NETPLAY SETTINGS"), true, [this] { openNetplaySettings(); }, "iconNetplay");
  
@@ -15,10 +16,11 @@
 +			} else {
 +				runSystemCommand("/usr/bin/ppsspp_font.sh enabled", "", nullptr);
 +			}
-+			bool pspfontenabled = pspfont_enabled->getState();
-+			SystemConf::getInstance()->set("global.pspfont.enabled", pspfontenabled ? "1" : "0");
-+			SystemConf::getInstance()->saveSystemConf();
++		bool pspfontenabled = pspfont_enabled->getState();
++		SystemConf::getInstance()->set("global.pspfont.enabled", pspfontenabled ? "1" : "0");
++				SystemConf::getInstance()->saveSystemConf();
 +		});
- 	}
- 
- 	mWindow->pushGui(s);
++
+ //		// Missing Bios
+ //		if (ApiSystem::getInstance()->isScriptingSupported(ApiSystem::BIOSINFORMATION))
+ //		{
