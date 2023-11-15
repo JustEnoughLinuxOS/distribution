@@ -1,0 +1,21 @@
+diff -rupN pugixml-1.14.orig/Makefile pugixml-1.14/Makefile
+--- pugixml-1.14.orig/Makefile	2023-11-15 01:33:42.867974887 +0000
++++ pugixml-1.14/Makefile	2023-11-15 01:34:25.850537167 +0000
+@@ -1,7 +1,7 @@
+ .SUFFIXES:
+ MAKEFLAGS+=-r
+ 
+-config=debug
++config=release
+ defines=standard
+ cxxstd=c++11
+ # set cxxstd=any to disable use of -std=...
+@@ -18,7 +18,7 @@ CXXFLAGS=-g -Wall -Wextra -Werror -pedan
+ LDFLAGS=
+ 
+ ifeq ($(config),release)
+-	CXXFLAGS+=-O3 -DNDEBUG
++	CXXFLAGS+=-Ofast -DNDEBUG
+ endif
+ 
+ ifeq ($(config),coverage)
