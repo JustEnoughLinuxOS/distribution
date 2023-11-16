@@ -5,7 +5,7 @@
 . /etc/profile
 
 export MEDNAFEN_HOME=/storage/.config/mednafen
-export MEDNAFEN_CONFIG=/usr/config/mednafen/mednafen.cfg
+export MEDNAFEN_CONFIG=/usr/config/mednafen/mednafen.template
 
 if [ ! -d "$MEDNAFEN_HOME" ]
 then
