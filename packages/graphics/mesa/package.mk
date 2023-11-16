@@ -31,9 +31,9 @@ esac
 get_graphicdrivers
 
 PKG_MESON_OPTS_TARGET="-Dgallium-drivers=${GALLIUM_DRIVERS// /,} \
-                       -Dgallium-extra-hud=false \
+                       -Dgallium-extra-hud=true \
+                       -Dgallium-nine=true \
                        -Dgallium-omx=disabled \
-                       -Dgallium-nine=false \
                        -Dgallium-opencl=disabled \
                        -Dshader-cache=enabled \
                        -Dshared-glapi=enabled \
