@@ -30,7 +30,7 @@ makeinstall_target() {
 
   mkdir -p ${INSTALL}/usr/lib/compat
   curl -Lo ${PKG_BUILD}/compat.zip ${COMPAT_URL}
-  unzip ${PKG_BUILD}/compat.zip -d ${INSTALL}/usr/lib/compat/
+  unzip -qq ${PKG_BUILD}/compat.zip -d ${INSTALL}/usr/lib/compat/
 }
 
 post_install() {
