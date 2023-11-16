@@ -2,7 +2,7 @@
 # Copyright (C) 2021-present Frank Hartung (supervisedthinking (@) gmail.com)
 
 PKG_NAME="librsvg"
-PKG_VERSION="2.46.7"
+PKG_VERSION="2.57.0"
 PKG_LICENSE="LGPL-2.1"
 PKG_SITE="https://gitlab.gnome.org/GNOME/librsvg"
 PKG_URL="https://download.gnome.org/sources/librsvg/${PKG_VERSION:0:4}/${PKG_NAME}-${PKG_VERSION}.tar.xz"

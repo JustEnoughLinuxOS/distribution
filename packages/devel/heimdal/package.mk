@@ -3,7 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="heimdal"
-PKG_VERSION="f62e2f278437ff6c03d2d09bd628381c795bba78"
+PKG_VERSION="a3878d3"
 PKG_LICENSE="BSD-3c"
 PKG_SITE="http://www.h5l.org/"
 PKG_URL="https://github.com/heimdal/heimdal/archive/${PKG_VERSION}.tar.gz"

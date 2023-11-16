@@ -2,7 +2,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="yamlcpp"
-PKG_VERSION="f732014"
+PKG_VERSION="f732014" # 0.8.0
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/jbeder/yaml-cpp"
 PKG_URL="${PKG_SITE}.git"

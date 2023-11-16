@@ -3,7 +3,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="dialog"
-PKG_VERSION="1.3-20230209"
+PKG_VERSION="1.3-20231002"
 PKG_LICENSE="GNU-2.1"
 PKG_SITE="https://invisible-mirror.net/archives/dialog"
 PKG_URL="${PKG_SITE}/dialog-${PKG_VERSION}.tgz"

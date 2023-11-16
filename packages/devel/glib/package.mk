@@ -4,7 +4,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="glib"
-PKG_VERSION="2.77.1"
+PKG_VERSION="2.78.1"
 PKG_LICENSE="LGPL"
 PKG_SITE="https://www.gtk.org/"
 PKG_URL="https://download.gnome.org/sources/glib/$(get_pkg_version_maj_min)/${PKG_NAME}-${PKG_VERSION}.tar.xz"
@@ -35,4 +35,6 @@ post_makeinstall_target() {
   rm -rf ${INSTALL}/usr/lib/glib-2.0
   rm -rf ${INSTALL}/usr/lib/installed-tests
   rm -rf ${INSTALL}/usr/share
+
+  sed -e "s#bindir=\${prefix}/bin#bindir=${TOOLCHAIN}/bin#" -i "${SYSROOT_PREFIX}/usr/lib/pkgconfig/"{gio,glib}-2.0.pc
 }

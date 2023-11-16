@@ -1,17 +1,7 @@
-diff -rupN wireplumber.orig/src/systemd/system/wireplumber.service.in wireplumber/src/systemd/system/wireplumber.service.in
---- wireplumber.orig/src/systemd/system/wireplumber.service.in	2023-08-07 22:20:40.224986070 +0000
-+++ wireplumber/src/systemd/system/wireplumber.service.in	2023-08-07 22:37:50.340093097 +0000
-@@ -5,19 +5,16 @@ BindsTo=pipewire.service
- Conflicts=pipewire-media-session.service
- 
- [Service]
--LockPersonality=yes
--MemoryDenyWriteExecute=yes
--NoNewPrivileges=yes
--RestrictNamespaces=yes
--SystemCallArchitectures=native
--SystemCallFilter=@system-service
- Type=simple
+diff -rupN wireplumber-0.4.15.orig/src/systemd/system/wireplumber.service.in wireplumber-0.4.15/src/systemd/system/wireplumber.service.in
+--- wireplumber-0.4.15.orig/src/systemd/system/wireplumber.service.in	2023-11-13 16:40:22.585908363 +0000
++++ wireplumber-0.4.15/src/systemd/system/wireplumber.service.in	2023-11-13 16:42:13.896286333 +0000
+@@ -14,9 +14,12 @@ Type=simple
  AmbientCapabilities=CAP_SYS_NICE
  ExecStart=@WP_BINARY@
  Restart=on-failure
@@ -25,10 +15,10 @@ diff -rupN wireplumber.orig/src/systemd/system/wireplumber.service.in wireplumbe
  
  [Install]
  WantedBy=pipewire.service
-diff -rupN wireplumber.orig/src/systemd/system/wireplumber@.service.in wireplumber/src/systemd/system/wireplumber@.service.in
---- wireplumber.orig/src/systemd/system/wireplumber@.service.in	2023-08-07 22:20:40.224986070 +0000
-+++ wireplumber/src/systemd/system/wireplumber@.service.in	2023-08-07 22:37:43.927743110 +0000
-@@ -20,7 +20,7 @@ Type=simple
+diff -rupN wireplumber-0.4.15.orig/src/systemd/system/wireplumber@.service.in wireplumber-0.4.15/src/systemd/system/wireplumber@.service.in
+--- wireplumber-0.4.15.orig/src/systemd/system/wireplumber@.service.in	2023-11-13 16:40:22.585908363 +0000
++++ wireplumber-0.4.15/src/systemd/system/wireplumber@.service.in	2023-11-13 16:41:37.274187302 +0000
+@@ -19,7 +19,7 @@ Type=simple
  AmbientCapabilities=CAP_SYS_NICE
  ExecStart=@WP_BINARY@ -c %i.conf
  Restart=on-failure
@@ -37,3 +27,34 @@ diff -rupN wireplumber.orig/src/systemd/system/wireplumber@.service.in wireplumb
  Environment=PIPEWIRE_RUNTIME_DIR=%t/pipewire
  Environment=GIO_USE_VFS=local
  
+diff -rupN wireplumber-0.4.15.orig/src/systemd/system/wireplumber@.service.in.orig wireplumber-0.4.15/src/systemd/system/wireplumber@.service.in.orig
+--- wireplumber-0.4.15.orig/src/systemd/system/wireplumber@.service.in.orig	1970-01-01 00:00:00.000000000 +0000
++++ wireplumber-0.4.15/src/systemd/system/wireplumber@.service.in.orig	2023-10-12 16:24:26.000000000 +0000
+@@ -0,0 +1,27 @@
++# Service file to run WirePlumber in split mode, i.e. run multiple
++# WirePlumber instances with different module sets.
++# The template argument is used to load the configuration file, e.g.
++# wireplumber@main.service loads main.conf,
++# wireplumber@policy.service loads policy.conf, etc.
++[Unit]
++Description=Multimedia Service Session Manager (%i)
++After=pipewire.service
++BindsTo=pipewire.service
++Conflicts=pipewire-media-session.service
++
++[Service]
++LockPersonality=yes
++MemoryDenyWriteExecute=yes
++NoNewPrivileges=yes
++SystemCallArchitectures=native
++SystemCallFilter=@system-service
++Type=simple
++AmbientCapabilities=CAP_SYS_NICE
++ExecStart=@WP_BINARY@ -c %i.conf
++Restart=on-failure
++User=pipewire
++Environment=PIPEWIRE_RUNTIME_DIR=%t/pipewire
++Environment=GIO_USE_VFS=local
++
++[Install]
++WantedBy=pipewire.service

@@ -3,7 +3,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="libsodium"
-PKG_VERSION="a3f200a"
+PKG_VERSION="39184b5"
 PKG_LICENSE="ISC"
 PKG_SITE="https://libsodium.org/"
 PKG_URL="https://github.com/jedisct1/libsodium/archive/${PKG_VERSION}.tar.gz"

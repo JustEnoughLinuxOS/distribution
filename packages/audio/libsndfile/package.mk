@@ -4,7 +4,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="libsndfile"
-PKG_VERSION="72f6af1"
+PKG_VERSION="e486f20"
 PKG_LICENSE="LGPL-2.1-or-later"
 PKG_SITE="https://libsndfile.github.io/libsndfile/"
 PKG_URL="https://github.com/libsndfile/libsndfile/archive/${PKG_VERSION}.tar.gz"

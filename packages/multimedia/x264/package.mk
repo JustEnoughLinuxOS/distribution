@@ -3,7 +3,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="x264"
-PKG_VERSION="a8b68ebfaa68621b5ac8907610d3335971839d52"
+PKG_VERSION="a354f11f8f019a2a34ae7ef554ff07b31f0818f3"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.videolan.org/developers/x264.html"
 PKG_URL="https://code.videolan.org/videolan/x264/-/archive/${PKG_VERSION}.tar.gz"

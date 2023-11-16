@@ -18,7 +18,7 @@ fi
 
 #Create PS2 savestates folder
 if [ ! -d "/storage/roms/savestates/ps2" ]; then
-    mkdir -p "/storage/roms/savestastes/ps2"
+    mkdir -p "/storage/roms/savestates/ps2"
 fi
 
 #Set the cores to use
