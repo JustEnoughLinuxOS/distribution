@@ -5,10 +5,20 @@
 PKG_NAME="tailscale"
 PKG_VERSION="1.52.1"
 PKG_SITE="https://tailscale.com/"
-PKG_URL="https://pkgs.tailscale.com/stable/tailscale_${PKG_VERSION}_arm64.tgz"
 PKG_DEPENDS_TARGET="toolchain wireguard-tools"
 PKG_SHORTDESC="Zero config VPN. Installs on any device in minutes, manages firewall rules for you, and works from anywhere."
 PKG_TOOLCHAIN="manual"
+
+case ${TARGET_ARCH} in
+  aarch64)
+    TS_ARCH="arm64"
+  ;;
+  x86_64)
+    TS_ARCH="amd64"
+  ;;
+esac
+
+PKG_URL="https://pkgs.tailscale.com/stable/tailscale_${PKG_VERSION}_${TS_ARCH}.tgz"
 
 # Don't wildcard (X55)
 case ${DEVICE} in

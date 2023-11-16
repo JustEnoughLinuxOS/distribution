@@ -2,7 +2,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="wxwidgets"
-PKG_VERSION="a7bfae0"
+PKG_VERSION="b958f602fa1cdd77ee3d6a77537d4d3850d8230a"
 PKG_LICENSE="wxWindows Library Licence"
 PKG_SITE="https://github.com/wxWidgets/wxWidgets"
 PKG_URL="${PKG_SITE}.git"

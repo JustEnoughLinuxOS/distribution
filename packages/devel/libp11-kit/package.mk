@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="libp11-kit"
-PKG_VERSION="b6411d7"
+PKG_VERSION="66d6b42"
 PKG_LICENSE="libp11-kit"
 PKG_SITE="https://github.com/p11-glue/p11-kit"
 PKG_URL="${PKG_SITE}.git"

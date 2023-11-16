@@ -3,7 +3,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="file"
-PKG_VERSION="b92eed4"
+PKG_VERSION="c5eb6d6"
 PKG_LICENSE="BSD"
 PKG_SITE="http://www.darwinsys.com/file/"
 PKG_URL="https://github.com/file/file/archive/${PKG_VERSION}.tar.gz"

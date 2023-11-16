@@ -3,7 +3,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="wget"
-PKG_VERSION="1.21.3"
+PKG_VERSION="1.21.4"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/wget/"
 PKG_URL="http://ftpmirror.gnu.org/wget/${PKG_NAME}-${PKG_VERSION}.tar.gz"
