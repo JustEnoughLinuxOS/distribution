@@ -62,4 +62,7 @@ makeinstall_target() {
       makeinstall_target32 flycast
     ;;
   esac
+
+  mkdir -p ${INSTALL}/usr/config/retroarch
+  cp -rf ${PKG_DIR}/config/* ${INSTALL}/usr/config/retroarch/
 }

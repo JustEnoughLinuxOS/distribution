@@ -858,6 +858,25 @@ function set_n64opts() {
     fi
 }
 
+function set_dreamcastopts() {
+    log "Set up Dreamcast..."
+    if [ "${CORE}" = "flycast" ]
+    then
+        local FLYCASTDIR="${RETROARCH_PATH}/config/Flycast"
+        if [ ! -d "${FLYCASTDIR}" ]
+        then
+            mkdir -p "${FLYCASTDIR}"
+        fi
+
+        if [ ! -f "${FLYCASTDIR}/Flycast.opt" ]
+        then
+            cp "/usr/config/retroarch/Flycast.opt" "${FLYCASTDIR}/Flycast.opt"
+        fi
+        local FRAME_SKIP="$(game_setting frame_skip)"
+        sed -i '/flycast_auto_skip_frame = /c\flycast_auto_skip_frame = "'${FRAME_SKIP}'"' "${FLYCASTDIR}/Flycast.opt"
+    fi
+}
+
 function set_atari() {
     log "Set up Atari (FIXME)..."
     if [ "${CORE}" = "atari800" ]
@@ -990,6 +1009,7 @@ set_audiolatency &
 set_analogsupport &
 set_tatemode &
 set_n64opts &
+set_dreamcastopts &
 
 ### Sed operations are expensive, so they are staged and executed as
 ### a single process when all forks complete.
