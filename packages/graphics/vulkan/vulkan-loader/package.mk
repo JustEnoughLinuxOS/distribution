@@ -11,7 +11,8 @@ PKG_DEPENDS_TARGET="toolchain Python3:host vulkan-headers libxcb libX11 libXrand
 PKG_LONGDESC="Vulkan Installable Client Driver (ICD) Loader."
 
 pre_configure_target() {
-  PKG_CMAKE_OPTS_TARGET="-DBUILD_TESTS=OFF"
+  PKG_CMAKE_OPTS_TARGET="-DBUILD_TESTS=OFF \
+                         -DCMAKE_BUILD_TYPE=Release"
 
   # GAS / GNU Assembler is only supported by aarch64 & x86_64
   HOST_ARCH=$(uname -m)

@@ -85,7 +85,7 @@
     </Graphic>
     <Audio>
         <api>3</api>
-        <delay>2</delay>
+        <delay>3</delay>
         <TVChannels>1</TVChannels>
         <PadChannels>1</PadChannels>
         <InputChannels>0</InputChannels>
