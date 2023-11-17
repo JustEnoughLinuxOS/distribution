@@ -26,6 +26,7 @@ pre_configure_target() {
                          -DINSTALL_ICD=OFF \
                          -DBUILD_WSI_DIRECTFB_SUPPORT=OFF \
                          -DPython3_EXECUTABLE=${TOOLCHAIN}/bin/python3 \
+                         -DCMAKE_BUILD_TYPE=Release \
                          -Wno-dev"
 
   if [ "${DISPLAYSERVER}" = "x11" ]; then
