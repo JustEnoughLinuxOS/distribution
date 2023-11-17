@@ -3,14 +3,14 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="qt5"
-PKG_VERSION="6508627d500d3f7b9a4f7b12019476e982abfa50"
+PKG_VERSION="b62f335cb3bb1a4e9d7411fad7de9c8eddde1b4e"
 PKG_LICENSE="GPL"
 PKG_SITE="http://qt-project.org"
 PKG_URL="https://invent.kde.org/qt/qt/qt5.git"
 PKG_DEPENDS_TARGET="toolchain openssl libjpeg-turbo libpng pcre2 sqlite zlib freetype SDL2 libxkbcommon gstreamer gst-plugins-base gst-plugins-good gst-libav"
 PKG_LONGDESC="A cross-platform application and UI framework"
 GET_HANDLER_SUPPORT="git"
-PKG_GIT_CLONE_BRANCH="5.15"
+PKG_GIT_CLONE_BRANCH="kde/5.15"
 PKG_GIT_CLONE_SINGLE="yes"
 
 post_unpack() {
