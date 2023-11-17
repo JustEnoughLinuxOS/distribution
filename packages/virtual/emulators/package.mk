@@ -54,7 +54,7 @@ case "${DEVICE}" in
   RK356*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 desmume-lr flycast-lr gpsp-lr pcsx_rearmed-lr"
     PKG_DEPENDS_TARGET+=" common-shaders duckstation-sa glsl-shaders mupen64plus-sa scummvmsa box64 portmaster"
-    PKG_EMUS+=" amiberry dolphin-sa drastic-sa yabasanshiro-sa"
+    PKG_EMUS+=" amiberry drastic-sa yabasanshiro-sa"
     LIBRETRO_CORES+=" uae4arm"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
