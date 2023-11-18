@@ -66,7 +66,7 @@ case "${DEVICE}" in
     PKG_RETROARCH+=" retropie-shaders"
   ;;
   RK3326*)
-    [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="flycast-lr desmume-lr gpsp-lr pcsx_rearmed-lr"
+    [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="desmume-lr gpsp-lr pcsx_rearmed-lr"
     PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders"
     PKG_EMUS+=" amiberry drastic-sa mupen64plus-sa scummvmsa yabasanshiro-sa portmaster mednafen"
     LIBRETRO_CORES+=" uae4arm flycast-lr"
@@ -223,13 +223,13 @@ makeinstall_target() {
 
   ## Sammy Atomiswave
   case ${DEVICE} in
-    RK35*|RK3326)
+    RK35*)
       add_emu_core atomiswave retroarch flycast2021 false
       add_emu_core atomiswave retroarch flycast32 true
       add_emu_core atomiswave retroarch flycast false
       add_emu_core atomiswave flycast flycast-sa false
     ;;
-    RK3399)
+    RK33*)
       add_emu_core atomiswave flycast flycast-sa false
       add_emu_core atomiswave retroarch flycast true
     ;;
@@ -325,13 +325,13 @@ makeinstall_target() {
 
   ### Sega Dreamcast
   case ${DEVICE} in
-    RK35*|RK3326)
+    RK35*)
       add_emu_core dreamcast retroarch flycast2021 false
       add_emu_core dreamcast retroarch flycast32 true
       add_emu_core dreamcast retroarch flycast false
       add_emu_core dreamcast flycast flycast-sa false
     ;;
-    RK3399)
+    RK33*)
       add_emu_core dreamcast flycast flycast-sa false
       add_emu_core dreamcast retroarch flycast true
     ;;
@@ -639,13 +639,13 @@ makeinstall_target() {
 
   ### Sega Naomi
   case ${DEVICE} in
-    RK35*|RK3326)
+    RK35*)
       add_emu_core naomi retroarch flycast2021 false
       add_emu_core naomi retroarch flycast32 true
       add_emu_core naomi retroarch flycast false
       add_emu_core naomi flycast flycast-sa false
     ;;
-    RK3399)
+    RK33*)
       add_emu_core naomi flycast flycast-sa false
       add_emu_core naomi retroarch flycast true
     ;;

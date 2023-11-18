@@ -82,8 +82,8 @@ This document describes all available systems emulators and cores available for 
 |Nintendo|Virtual Boy (virtualboy)|1995|`virtualboy`|.vb .zip .7z|**retroarch:** beetle_vb (default)<br>**mednafen:** vb<br>|
 |Panasonic|3DO (3do)|1993|`3do`|.iso .bin .chd .cue|**retroarch:** opera (default)<br>|
 |Philips|VideoPac (videopac)|1978|`videopac`|.bin .zip .7z|**retroarch:** o2em (default)<br>|
-|Sammy|Atomiswave (atomiswave)|2003|`atomiswave`|.lst .bin .dat .zip .7z|**retroarch:** flycast2021<br>**retroarch:** flycast32 (default)<br>**retroarch:** flycast<br>**flycast:** flycast-sa<br>|
-|Sega|Dreamcast (dreamcast)|1998|`dreamcast`|.cdi .gdi .chd .m3u|**retroarch:** flycast2021<br>**retroarch:** flycast32 (default)<br>**retroarch:** flycast<br>**flycast:** flycast-sa<br>|
+|Sammy|Atomiswave (atomiswave)|2003|`atomiswave`|.lst .bin .dat .zip .7z|**flycast:** flycast-sa<br>**retroarch:** flycast (default)<br>|
+|Sega|Dreamcast (dreamcast)|1998|`dreamcast`|.cdi .gdi .chd .m3u|**flycast:** flycast-sa<br>**retroarch:** flycast (default)<br>|
 |Sega|Game Gear (gamegear)|1990|`gamegear`|.bin .gg .zip .7z|**retroarch:** gearsystem (default)<br>**retroarch:** genesis_plus_gx<br>**retroarch:** picodrive<br>**retroarch:** smsplus<br>**mednafen:** gg<br>|
 |Sega|Game Gear (Hacks) (ggh)|1990|`gamegearh`|.bin .gg .zip .7z|**retroarch:** gearsystem (default)<br>**retroarch:** genesis_plus_gx<br>**retroarch:** picodrive<br>**retroarch:** smsplus<br>**mednafen:** gg<br>|
 |Sega|Genesis (genesis)|1989|`genesis`|.bin .gen .md .sg .smd .zip .7z|**retroarch:** genesis_plus_gx (default)<br>**retroarch:** genesis_plus_gx_wide<br>**retroarch:** picodrive<br>|
@@ -92,7 +92,7 @@ This document describes all available systems emulators and cores available for 
 |Sega|Mega CD (megacd)|1991|`megacd`|.chd .cue .iso .m3u|**retroarch:** genesis_plus_gx (default)<br>**retroarch:** picodrive<br>|
 |Sega|Mega Drive (megadrive)|1990|`megadrive`|.bin .gen .md .sg .smd .zip .7z|**retroarch:** genesis_plus_gx (default)<br>**retroarch:** genesis_plus_gx_wide<br>**retroarch:** picodrive<br>**mednafen:** md<br>|
 |Sega|Mega Drive (megadrive-japan)|1988|`megadrive-japan`|.bin .gen .md .sg .smd .zip .7z|**retroarch:** genesis_plus_gx (default)<br>**retroarch:** genesis_plus_gx_wide<br>**retroarch:** picodrive<br>**mednafen:** md<br>|
-|Sega|Naomi (naomi)|1998|`naomi`|.lst .bin .dat .zip .7z|**retroarch:** flycast2021<br>**retroarch:** flycast32 (default)<br>**retroarch:** flycast<br>**flycast:** flycast-sa<br>|
+|Sega|Naomi (naomi)|1998|`naomi`|.lst .bin .dat .zip .7z|**flycast:** flycast-sa<br>**retroarch:** flycast (default)<br>|
 |Sega|Saturn (saturn)|1994|`saturn`|.cue .chd .iso|**yabasanshiro:** yabasanshiro-sa (default)<br>**retroarch:** yabasanshiro<br>**retroarch:** beetle_saturn<br>|
 |Sega|Sega 32X (sega32x)|1994|`sega32x`|.32x .smd .bin .md .zip .7z|**retroarch:** picodrive (default)<br>|
 |Sega|Sega CD (segacd)|1991|`segacd`|.chd .cue .iso .m3u|**retroarch:** genesis_plus_gx (default)<br>**retroarch:** picodrive<br>|
