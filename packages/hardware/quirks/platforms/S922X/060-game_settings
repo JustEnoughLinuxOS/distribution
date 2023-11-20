@@ -5,7 +5,7 @@
 . /etc/profile.d/001-functions
 
 ### Set the default performance scaling mode for a few systems.
-for SYSTEM in 3ds dreamcast gamecube n64 ps2 psp saturn
+for SYSTEM in 3ds dreamcast gamecube n64 ports ps2 psp saturn
 do
   SETTING=$(get_setting ${SYSTEM})
   if [ -z ${SETTING} ]
