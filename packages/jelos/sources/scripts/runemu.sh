@@ -75,11 +75,6 @@ if [[ ${EMU} == "easyrpg_libretro" ]]; then
   /usr/bin/easyrpg.sh
 fi
 
-### If we're running a port, assume it's libretro
-### Re-evaluate as not all ports may be libretro cores
-### perhaps rewrite to use ^ functionality
-[[ ${PLATFORM} = "ports" ]] && RETROARCH="yes"
-
 # Make sure netplay isn't defined before we start our tests/configuration.
 del_setting netplay.mode
 
@@ -288,7 +283,7 @@ then
                         RUNTHIS='${TBASH} /usr/bin/start_${EMU%-*}.sh "${ROMNAME}"'
                         fi
                 ;;
-		"shell")
+		"shell"|"ports")
 			RUNTHIS='${TBASH} "${ROMNAME}"'
 		;;
 		*)
@@ -386,11 +381,6 @@ else
                 "atomiswave")
                         rm ${ROMNAME}.nvmem*
                 ;;
-                "ports")
-                        PORTCORE="${arguments##*-C}"  # read from -C onwards
-                        EMU="${PORTCORE%% *}_libretro"  # until a space is found
-                        PORTSCRIPT="${arguments##*-SC}"  # read from -SC onwards
-                ;;
                 "scummvm")
 			GAMEDIR=$(cat "${ROMNAME}" | awk 'BEGIN {FS="\""}; {print $2}')
 			cd "${GAMEDIR}"
@@ -405,7 +395,7 @@ then
 fi
 
 if [[ ${PLATFORM} == "ports" ]]; then
-	(/usr/bin/setsettings.sh "${PLATFORM}" "${PORTSCRIPT}" "${CORE}" --controllers="${CONTROLLERCONFIG}" --autosave="${AUTOSAVE}" --snapshot="${SNAPSHOT}" >${SETSETTINGS_TMP})
+	(/usr/bin/setsettings.sh "${PLATFORM}" "${ROMNAME}" >${SETSETTINGS_TMP})
 else
 	(/usr/bin/setsettings.sh "${PLATFORM}" "${ROMNAME}" "${CORE}" --controllers="${CONTROLLERCONFIG}" --autosave="${AUTOSAVE}" --snapshot="${SNAPSHOT}" >${SETSETTINGS_TMP})
 fi
@@ -510,4 +500,3 @@ else
 	log $0 "exiting with $ret_error"
 	quit 1
 fi
-
