@@ -1,0 +1,12 @@
+diff -rupN linux.orig/drivers/staging/media/rkvdec/Kconfig linux/drivers/staging/media/rkvdec/Kconfig
+--- linux.orig/drivers/staging/media/rkvdec/Kconfig	2023-11-04 15:02:12.097534138 +0000
++++ linux/drivers/staging/media/rkvdec/Kconfig	2023-11-18 19:39:03.078054602 +0000
+@@ -1,7 +1,7 @@
+ # SPDX-License-Identifier: GPL-2.0
+ config VIDEO_ROCKCHIP_VDEC
+ 	tristate "Rockchip Video Decoder driver"
+-	depends on ARCH_ROCKCHIP || COMPILE_TEST
++	depends on ARCH_ROCKCHIP
+ 	depends on VIDEO_DEV
+ 	select MEDIA_CONTROLLER
+ 	select MEDIA_CONTROLLER_REQUEST_API

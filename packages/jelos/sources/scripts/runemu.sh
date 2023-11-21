@@ -312,39 +312,6 @@ else
 		fi
 	fi
 
-	# Platform specific configurations
-        case ${PLATFORM} in
-                "doom")
-			# EXT can be wad, WAD, iwad, IWAD, pwad, PWAD or doom
-			EXT=${ROMNAME##*.}
-
-			# If its not a simple wad (extension .doom) read the file and parse the data
-			if [ ${EXT} == "doom" ]; then
-			  dos2unix "${1}"
-			  while IFS== read -r key value; do
-			    if [ "$key" == "IWAD" ]; then
-			      ROMNAME="$value"
-			    fi
-			    done < "${1}"
-			fi
-                ;;
-				"quake")
-			# EXT can only by quake
-			EXT=${ROMNAME##*.}
-
-			# If its not a simple pak (extension .pak0) read the file and parse the data
-			if [ ${EXT} == "quake" ]; then
-			  dos2unix "${1}"
-			  while IFS== read -r key value; do
-			    if [ "$key" == "PAK" ]; then
-			      ROMNAME="$value"
-			    fi
-			    done < "${1}"
-			fi
-                ;;
-        esac
-
-
         ### Set the performance mode for emulation
         PERFORMANCE_MODE=$(get_setting "cpugovernor" "${PLATFORM}" "${ROMNAME##*/}")
         ${PERFORMANCE_MODE}
