@@ -66,6 +66,13 @@ get_release_list() {
   fi
 }
 
+function cleanup() {
+  if [ -e "/tmp/release.data" ]
+  then
+    rm -f /tmp/release.data
+  fi
+}
+
 ###
 ### Check for passed arguments.  If we receive changelog, fetch it.  If we receive a version, force install it.
 ###
@@ -105,10 +112,14 @@ fi
 
 if [ -z "${LATEST_RELEASE_TAG}" ]
 then
-  # Download
-  LATEST_RELEASE_TAG=$(curl -H 'Cache-Control: no-cache' -Ls "${GIT_API}/releases" | python -c "import sys, json; print(json.load(sys.stdin)[0]['tag_name'])")
-  if [ "${OS_VERSION}" -ge "${LATEST_RELEASE_TAG}" ] && [ ! "${FORCE}" = "1" ]
+  curl -o /tmp/release.data -H 'Cache-Control: no-cache' -Ls "${GIT_API}/releases"
+  LATEST_RELEASE_TAG=$(cat /tmp/release.data | python -c "import sys, json; print(json.load(sys.stdin)[0]['tag_name'])")
+  UPDATE_PACKAGE=$((grep "${OS_NAME}-${HW_DEVICE}.${HW_ARCH}.*tar.sha256" /tmp/release.data >/dev/null 2>&1 && echo true ) || echo false)
+  if [ "${OS_VERSION}" -ge "${LATEST_RELEASE_TAG}" ] \
+  && [ ! "${FORCE}" == "1" ] \
+  || [ ! "${UPDATE_PACKAGE}" == "true" ]
   then
+    cleanup
     echo "No new updates are available..."
     echo "Exiting in 5 seconds..." && sleep 5
     exit 0
@@ -116,9 +127,9 @@ then
 fi
 
 echo -e "\nFetching: ${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.${EXTENSION}"
-curl -Lo "${UPDATE_PATH}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.${EXTENSION}" "${GIT_REPO}/releases/download/${LATEST_RELEASE_TAG}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.tar" 
+curl -Lo "${UPDATE_PATH}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.${EXTENSION}" "${GIT_REPO}/releases/download/${LATEST_RELEASE_TAG}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.tar"
 echo -e "Fetching: ${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.${EXTENSION}.sha256"
-curl -Lo "${UPDATE_PATH}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.${EXTENSION}.sha256" "${GIT_REPO}/releases/download/${LATEST_RELEASE_TAG}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.tar.sha256" 
+curl -Lo "${UPDATE_PATH}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.${EXTENSION}.sha256" "${GIT_REPO}/releases/download/${LATEST_RELEASE_TAG}/${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-${LATEST_RELEASE_TAG}.tar.sha256"
 
 echo -e "\nVerifying download, please wait..."
 # Verify
