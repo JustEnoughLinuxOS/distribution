@@ -35,12 +35,12 @@ case ${DEVICE} in
   ;;
   *X55)
     PKG_URL="${PKG_SITE}/rk3566-x55-kernel.git"
-    PKG_VERSION="9b92751b8fe21f9326d1a54dd5f675965a12d6e1"
+    PKG_VERSION="9a85982a2"
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="main"
   ;;
   RK33*)
-    PKG_VERSION="6.1.62"
+    PKG_VERSION="6.1.63"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
   ;;
 esac

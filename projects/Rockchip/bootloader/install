@@ -103,7 +103,8 @@ then
 echo "boot: create extlinux.conf..."
 mkdir -p "${INSTALL}/usr/share/bootloader/extlinux"
 
-if [ "${#DEVICE_DTB}" -gt 1 ]
+if [ "${TRUST_LABEL}" = "resource" ] || \
+   [ "${#DEVICE_DTB[@]}" -gt 1 ]
 then
   FDTMODE="FDTDIR /"
 else

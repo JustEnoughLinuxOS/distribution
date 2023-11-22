@@ -5,7 +5,7 @@
 . /etc/profile.d/001-functions
 
 ### Set the default performance scaling mode for a few systems.
-for SYSTEM in dreamcast n64 psp saturn
+for SYSTEM in dreamcast gamecube n64 ports ps2 psp saturn
 do
   SETTING=$(get_setting ${SYSTEM})
   if [ -z ${SETTING} ]
@@ -15,3 +15,12 @@ do
   fi
 done
 
+for SYSTEM in gb gbc gba snes nes sms gamegear genesis mastersystem sega32x megadrive segacd megacd
+do
+  SETTING=$(get_setting ${SYSTEM})
+  if [ -z ${SETTING} ]
+  then
+    set_setting ${SYSTEM}.cpugovernor powersave
+    set_setting ${SYSTEM}.gpuperf low
+  fi
+done

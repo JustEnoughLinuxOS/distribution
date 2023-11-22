@@ -9,6 +9,9 @@ case "${1}" in
     rm -f /storage/.config/retroarch/retroarch.cfg
     cp -rf /usr/config/retroarch/retroarch.cfg /storage/.config/retroarch/retroarch.cfg
   ;;
+  "mednafen")
+    rm -f /storage/.config/mednafen/mednafen.cfg
+  ;;
   "ALL")
     systemctl stop ${UI_SERVICE}
     cd /

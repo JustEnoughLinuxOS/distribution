@@ -10,3 +10,7 @@ PKG_URL="https://github.com/KhronosGroup/Vulkan-Headers/archive/v${PKG_VERSION}.
 PKG_DEPENDS_HOST="toolchain:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="Vulkan Header files and API registry"
+
+pre_configure_target() {
+  PKG_CMAKE_OPTS_TARGET="-DCMAKE_BUILD_TYPE=Release"
+}
