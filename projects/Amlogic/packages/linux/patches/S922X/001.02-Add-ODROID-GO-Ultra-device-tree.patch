@@ -1,7 +1,9 @@
-diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts linux/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
---- linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts	2023-09-12 13:20:28.956694441 +0000
-@@ -0,0 +1,1015 @@
+diff --git a/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts b/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
+new file mode 100644
+index 000000000000..d0a7ba2c2bd4
+--- /dev/null
++++ b/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
+@@ -0,0 +1,935 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2022 Neil Armstrong <narmstrong@kernel.org>
@@ -357,86 +359,6 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
 +	operating-points-v2 = <&cpub_opp_table_1>;
 +	clocks = <&clkc CLKID_CPUB_CLK>;
 +	clock-latency = <50000>;
-+};
-+
-+/* RK817 only supports 12.5mV steps, round up the values */
-+&cpu_opp_table_0 {
-+	opp-1000000000 {
-+		opp-microvolt = <737500>;
-+	};
-+	opp-1200000000 {
-+		opp-microvolt = <737500>;
-+	};
-+	opp-1398000000 {
-+		opp-microvolt = <762500>;
-+	};
-+	opp-1512000000 {
-+		opp-microvolt = <800000>;
-+	};
-+	opp-1608000000 {
-+		opp-microvolt = <837500>;
-+	};
-+	opp-1704000000 {
-+		opp-microvolt = <862500>;
-+	};
-+	opp-1896000000 {
-+		opp-microvolt = <987500>;
-+	};
-+	opp-1992000000 {
-+		opp-microvolt = <1050000>;
-+	};
-+	opp-2016000000 {
-+        opp-hz = /bits/ 64 <2016000000>;
-+		opp-microvolt = <1050000>;
-+	};
-+};
-+
-+/* RK818 only supports 12.5mV steps, round up the values */
-+&cpub_opp_table_1 {
-+	opp-1000000000 {
-+		opp-microvolt = <775000>;
-+	};
-+	opp-1200000000 {
-+		opp-microvolt = <775000>;
-+	};
-+	opp-1398000000 {
-+		opp-microvolt = <800000>;
-+	};
-+	opp-1512000000 {
-+		opp-microvolt = <825000>;
-+	};
-+	opp-1608000000 {
-+		opp-microvolt = <862500>;
-+	};
-+	opp-1704000000 {
-+		opp-microvolt = <900000>;
-+	};
-+	opp-1800000000 {
-+		opp-microvolt = <987500>;
-+	};
-+	opp-1908000000 {
-+		opp-microvolt = <1025000>;
-+	};
-+	opp-2016000000 {
-+		opp-hz = /bits/ 64 <2016000000>;
-+		opp-microvolt = <1025000>;
-+	};
-+	opp-2100000000 {
-+		opp-hz = /bits/ 64 <2100000000>;
-+		opp-microvolt = <1025000>;
-+	};
-+	opp-2208000000 {
-+		opp-hz = /bits/ 64 <2208000000>;
-+		opp-microvolt = <1050000>;
-+	};
-+	opp-2304000000 {
-+		opp-hz = /bits/ 64 <2304000000>;
-+		opp-microvolt = <1050000>;
-+	};
-+	opp-2400000000 {
-+		opp-hz = /bits/ 64 <2400000000>;
-+		opp-microvolt = <1050000>;
-+	};
 +};
 +
 +&i2c_AO {
