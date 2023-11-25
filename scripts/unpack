@@ -43,14 +43,12 @@ for i in ${BUILD}/${PKG_NAME}-*; do
         ${SCRIPTS}/clean "${PKG_NAME}"
         if [ "${PKG_NAME}" = "linux" ]; then
           # Include busybox, systemd, and initramfs so the cpio is generated correctly after a kernel update.
-          for CLEAN_DEP in ${KERNEL_EXTRA_DEPENDS_TARGET} ${ADDITIONAL_DRIVERS} busybox systemd initramfs
+          for CLEAN_DEP in ${KERNEL_EXTRA_DEPENDS_TARGET} ${ADDITIONAL_DRIVERS} busybox systemd
           do
             ${SCRIPTS}/clean "${CLEAN_DEP}"
+            ${SCRIPTS}/unpack "${UNPACK_DEP}"
           done
-          for UNPACK_DEP in ${ADDITIONAL_DRIVERS}
-          do
-            ${SCRIPTS}/clean "${UNPACK_DEP}"
-          done
+          ${SCRIPTS}/clean initramfs
         fi
       fi
     fi
