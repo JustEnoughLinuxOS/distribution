@@ -47,6 +47,10 @@ for i in ${BUILD}/${PKG_NAME}-*; do
           do
             ${SCRIPTS}/clean "${CLEAN_DEP}"
           done
+          for UNPACK_DEP in ${ADDITIONAL_DRIVERS}
+          do
+            ${SCRIPTS}/clean "${UNPACK_DEP}"
+          done
         fi
       fi
     fi
