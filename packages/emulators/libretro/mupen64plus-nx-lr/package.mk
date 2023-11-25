@@ -2,7 +2,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="mupen64plus-nx-lr"
-PKG_VERSION="26fd1edd640ff3db49dd5ebb7e54f0de6600fc45"
+PKG_VERSION="f1ad37c3a9be64b499d9a36f57e41d59fb677c73"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/libretro/mupen64plus-libretro-nx"
 PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
