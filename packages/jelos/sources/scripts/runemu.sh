@@ -123,7 +123,7 @@ fi
 ### We need the original system cooling profile later so get it now!
 COOLINGPROFILE=$(get_setting cooling.profile)
 
-### Set CPU TDP (AMD) or EPP (Intel)
+### Set CPU TDP and EPP
 CPU_VENDOR=$(cpu_vendor)
 case ${CPU_VENDOR} in
   AuthenticAMD)
@@ -134,14 +134,13 @@ case ${CPU_VENDOR} in
       /usr/bin/overclock ${OVERCLOCK}
     fi
   ;;
-  GenuineIntel)
-    EPP=$(get_setting "power.epp" "${PLATFORM}" "${ROMNAME##*/}")
-    if [ ! -z ${EPP} ]
-    then
-      /usr/bin/set_epp ${EPP}
-    fi
-  ;;
 esac
+
+EPP=$(get_setting "power.epp" "${PLATFORM}" "${ROMNAME##*/}")
+if [ ! -z ${EPP} ]
+then
+  /usr/bin/set_epp ${EPP}
+fi
 
 GPUPERF=$(get_setting "gpuperf" "${PLATFORM}" "${ROMNAME##*/}")
 if [ ! -z ${GPUPERF} ]

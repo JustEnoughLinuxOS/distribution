@@ -31,7 +31,7 @@ case ${DEVICE} in
   ;;
   *X55)
     PKG_URL="${PKG_SITE}/rk3566-x55-kernel.git"
-    PKG_VERSION="ec1669474"
+    PKG_VERSION="9b92751b8fe21f9326d1a54dd5f675965a12d6e1"
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="main"
   ;;
