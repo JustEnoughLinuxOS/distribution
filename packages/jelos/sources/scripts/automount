@@ -8,6 +8,7 @@
 UPDATE_ROOT="/storage/.update"
 MOUNT_GAMES=$(get_setting system.automount)
 GAMES_DEVICE=$(get_setting system.gamesdevice)
+MOUNT_PATH="/storage/games-external"
 
 if [[ ! "${MOUNT_GAMES}" =~ [0-9] ]]
 then
@@ -38,17 +39,17 @@ mount_games() {
         umount /var/media/*
         log $0 "FSCK ${1}"
         fsck -Mly ${1}
-        log $0 "Mounting ${1} on /storage/roms"
-        /usr/bin/busybox mount ${1} /storage/roms >/dev/null 2>&1
+        log $0 "Mounting ${1} on ${MOUNT_PATH}"
+        /usr/bin/busybox mount ${1} ${MOUNT_PATH} >/dev/null 2>&1
         /usr/bin/systemd-tmpfiles --create /usr/lib/tmpfiles.d/JELOS-system-dirs.conf >/dev/null 2>&1
       fi
 }
 
 find_games() {
   if /usr/bin/busybox mountpoint -q /storage ; then
-    if [ ! -d "/storage/roms" ]
+    if [ ! -d "${MOUNT_PATH}" ]
     then
-      /usr/bin/busybox mkdir -p /storage/roms >/dev/null 2>&1
+      /usr/bin/busybox mkdir -p ${MOUNT_PATH} >/dev/null 2>&1
     fi
 
     for DEV in $(for dev in mmcblk[0-9] sd[a-z] nvme[0-9]; do blkid | grep ${dev} | awk 'BEGIN {FS=":"}; /ext4/ || /fat/ {print $1}' | sort -r; done)

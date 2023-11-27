@@ -73,6 +73,26 @@ sed -i 's~"pulse"~"alsathread"~g' /storage/.config/retroarch/retroarch.cfg
 ### 20231114 - Update hosts.conf
 grep "127.0.0.1" /storage/.config/hosts.conf >/dev/null 2>&1 || cp /usr/config/hosts.conf /storage/.config/
 
+### 20231127 - Migrate games to overlayfs
+systemctl stop storage-roms.mount
+GAMECOUNT=$(find /storage/roms -type f | wc -l)
+if [ "${GAMECOUNT}" -gt 20 ] && \
+   [ ! -e "/storage/.migrated_games" ]
+then
+  echo "Migrating games to overlayfs" >>${LOG}
+  if [ -d "/storage/games-internal" ]
+  then
+    echo "Backing up games-internal" >>${LOG}
+    mv /storage/games-internal /storage/games-internal.backup
+  fi
+  mv /storage/roms /storage/games-internal
+  mkdir /storage/roms
+  touch /storage/.migrated_games
+else
+  echo "Game weight too low (${GAMECOUNT}) or content already migrated." >>${LOG}
+fi
+systemctl start storage-roms.mount
+
 ### Items below this line should not be removed.
 tocon "Update complete, rebooting..."
 reboot

@@ -14,5 +14,5 @@ DEVICE_VOLUME="100"
 DEVICE_BATTERY_LED_STATUS="true"
 DEVICE_PWR_LED_GPIO="77"
 DEVICE_TEMP_SENSOR="/sys/devices/virtual/thermal/thermal_zone0/temp"
-
+DEVICE_MMC_EJECT="false"
 EOF
