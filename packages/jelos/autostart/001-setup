@@ -25,42 +25,9 @@ fi
 ### to last known good state if corrupt.
 /usr/bin/chksysconfig verify
 
+### Clean up settings
+sort_settings
+
 ### We do not want to mount the cloud drive on startup
 ### so we'll reset the mount option to 0.
 set_setting clouddrive.mounted 0
-
-### Enable the desired number of threads.
-tocon "Restoring cpu threads..."
-NUMTHREADS=$(get_setting "system.threads")
-if [ -n "${NUMTHREADS}" ]
-then
-        onlinethreads ${NUMTHREADS} 0
-else
-        onlinethreads all 1
-fi
-
-### If we don't have a default governor set, set it
-### to schedutil.
-if [ -z "$(get_setting system.cpugovernor)" ]
-then
-  set_setting system.cpugovernor schedutil
-fi
-
-### Set the default GPU performance mode
-GPUPERF=$(get_setting system.gpuperf)
-if [ -n "${GPUPERF}" ]
-then
-  gpu_performance_level ${GPUPERF}
-fi
-
-### Configure suspend mode.
-MYSLEEPMODE=$(get_setting system.suspendmode)
-if [ -n "${MYSLEEPMODE}" ]
-then
-  /usr/bin/suspendmode ${MYSLEEPMODE}
-else
-  /usr/bin/suspendmode mem
-fi
-
-### Clean up settings
-sort_settings
