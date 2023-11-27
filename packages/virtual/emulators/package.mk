@@ -1235,3 +1235,7 @@ makeinstall_target() {
   cp ${PKG_DIR}/autostart/* ${INSTALL}/usr/lib/autostart/common
   chmod 0755 ${INSTALL}/usr/lib/autostart/common/*
 }
+
+post_install() {
+  enable_service storage-roms.mount
+}
