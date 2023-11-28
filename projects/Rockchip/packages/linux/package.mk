@@ -25,7 +25,7 @@ case ${DEVICE} in
   ;;
   RK3566)
     PKG_URL="${PKG_SITE}/rk356x-kernel.git"
-    PKG_VERSION="1e8f831c570eb50245a7dddfb9c7de58c9843f8e"
+    PKG_VERSION="d346337a7b3e3e7e0d12dbdcc4fc62efc86cbda3"
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="main"
   ;;
@@ -35,7 +35,7 @@ case ${DEVICE} in
   ;;
   *X55)
     PKG_URL="${PKG_SITE}/rk3566-x55-kernel.git"
-    PKG_VERSION="9a85982a2"
+    PKG_VERSION="9b92751b8fe21f9326d1a54dd5f675965a12d6e1"
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="main"
   ;;

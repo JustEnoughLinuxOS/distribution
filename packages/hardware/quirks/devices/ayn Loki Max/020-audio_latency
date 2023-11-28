@@ -2,8 +2,10 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
-# Minimal OS variable loading for performance
 . /etc/profile.d/001-functions
 
-tocon "Configuring LEDs..."
-/usr/bin/ledcontrol
+AUDIO_LATENCY=$(get_setting audiolatency)
+if [ -z "${AUDIO_LATENCY}" ]
+then
+  set_setting global.audiolatency 64
+fi

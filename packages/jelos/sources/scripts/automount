@@ -8,12 +8,16 @@
 UPDATE_ROOT="/storage/.update"
 MOUNT_GAMES=$(get_setting system.automount)
 GAMES_DEVICE=$(get_setting system.gamesdevice)
+MOUNT_PATH="/storage/games-external"
+OVERLAY_PATH="/storage/roms"
 
 if [[ ! "${MOUNT_GAMES}" =~ [0-9] ]]
 then
   set_setting system.automount 1
 elif [[ "${MOUNT_GAMES}" == "0" ]]
 then
+  systemctl enable storage-roms.mount >/dev/null 2>&1
+  systemctl start storage-roms.mount >/dev/null 2>&1
   exit 0
 fi
 
@@ -29,27 +33,55 @@ load_modules() {
 }
 
 mount_games() {
+      FSTYPE=$(blkid -o export ${1} | awk 'BEGIN {FS="="} /TYPE/ {print $2}')
+      case ${FSTYPE} in
+        ext4)
+          ENABLE_OVERLAY=true
+          if [ -e "/storage/.overlay_unsupported" ]
+          then
+            rm -f /storage/.overlay_unsupported
+          fi
+	  touch /storage/.overlay_supported
+          set_setting system.merged.storage 1
+        ;;
+        *)
+          systemctl stop storage-roms.mount >/dev/null 2>&1
+          systemctl disable storage-roms.mount >/dev/null 2>&1
+          MOUNT_PATH=${OVERLAY_PATH}
+          if [ -e "/storage/.overlay_supported" ]
+          then
+            rm -f /storage/.overlay_supported
+          fi
+          touch /storage/.overlay_unsupported
+        ;;
+      esac
+
+      if [ ! -d "${MOUNT_PATH}" ]
+      then
+        /usr/bin/busybox mkdir -p ${MOUNT_PATH} >/dev/null 2>&1
+      fi
+
       NULL=$(cat /proc/mounts | grep -v -e "/var/media" 2>/dev/null | grep ${1})
       if [ ! "$?" = "0" ] && \
          [ -e "${1}" ] && \
          [ ! -e "/storage/.please_resize_me" ]
       then
         ### Udevil shouldn't mount it this early, but just in-case.
-        umount /var/media/*
+        umount /var/media/* 2>/dev/null
         log $0 "FSCK ${1}"
         fsck -Mly ${1}
-        log $0 "Mounting ${1} on /storage/roms"
-        /usr/bin/busybox mount ${1} /storage/roms >/dev/null 2>&1
-        /usr/bin/systemd-tmpfiles --create /usr/lib/tmpfiles.d/JELOS-system-dirs.conf >/dev/null 2>&1
+        log $0 "Mounting ${1} on ${MOUNT_PATH}"
+        /usr/bin/busybox mount ${1} ${MOUNT_PATH} >/dev/null 2>&1
+        if [ "${ENABLE_OVERLAY}" = true ]
+        then
+          systemctl enable storage-roms.mount >/dev/null 2>&1
+	  systemctl restart storage-roms.mount >/dev/null 2>&1
+        fi
       fi
 }
 
 find_games() {
   if /usr/bin/busybox mountpoint -q /storage ; then
-    if [ ! -d "/storage/roms" ]
-    then
-      /usr/bin/busybox mkdir -p /storage/roms >/dev/null 2>&1
-    fi
 
     for DEV in $(for dev in mmcblk[0-9] sd[a-z] nvme[0-9]; do blkid | grep ${dev} | awk 'BEGIN {FS=":"}; /ext4/ || /fat/ {print $1}' | sort -r; done)
     do
