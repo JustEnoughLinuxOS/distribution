@@ -1,7 +1,9 @@
-diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3.dts linux/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3.dts
---- linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3.dts	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3.dts	2023-09-12 12:04:13.567330573 +0000
-@@ -0,0 +1,989 @@
+diff --git a/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3.dts b/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3.dts
+new file mode 100644
+index 000000000000..877663f6fb7c
+--- /dev/null
++++ b/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3.dts
+@@ -0,0 +1,986 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2022 Neil Armstrong <narmstrong@kernel.org>
@@ -400,15 +402,12 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-
 +		opp-microvolt = <1025000>;
 +	};
 +	opp-2016000000 {
-+		opp-hz = /bits/ 64 <2016000000>;
 +		opp-microvolt = <1025000>;
 +	};
-+	opp-2100000000 {
-+		opp-hz = /bits/ 64 <2100000000>;
++	opp-2108000000 {
 +		opp-microvolt = <1025000>;
 +	};
 +	opp-2208000000 {
-+		opp-hz = /bits/ 64 <2208000000>;
 +		opp-microvolt = <1050000>;
 +	};
 +};
