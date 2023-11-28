@@ -3,11 +3,11 @@
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="bluez"
-PKG_VERSION="5.68"
+PKG_VERSION="5.70"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.bluez.org/"
 PKG_URL="https://www.kernel.org/pub/linux/bluetooth/${PKG_NAME}-${PKG_VERSION}.tar.xz"
-PKG_DEPENDS_TARGET="toolchain dbus glib readline systemd"
+PKG_DEPENDS_TARGET="toolchain dbus glib readline systemd json-c"
 PKG_LONGDESC="Bluetooth Tools and System Daemons for Linux."
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="+lto"
@@ -37,6 +37,11 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-dependency-tracking \
                            --enable-sap \
                            --enable-a2dp \
                            --enable-avrcp \
+                           --enable-btpclient \
+                           --enable-midi \
+                           --enable-mesh \
+                           --enable-hid2hci \
+                           --enable-experimental \
                            --enable-hid \
                            --with-gnu-ld \
                            ${BLUEZ_CONFIG} \
@@ -59,6 +64,9 @@ post_makeinstall_target() {
   safe_remove ${INSTALL}/usr/bin/bluemoon
   safe_remove ${INSTALL}/usr/bin/ciptool
   safe_remove ${INSTALL}/usr/share/dbus-1
+
+  mkdir -p ${INSTALL}/etc/dbus-1/system.d
+    cp src/bluetooth.conf ${INSTALL}/etc/dbus-1/system.d
 
   mkdir -p ${INSTALL}/etc/bluetooth
     cp src/main.conf ${INSTALL}/etc/bluetooth
