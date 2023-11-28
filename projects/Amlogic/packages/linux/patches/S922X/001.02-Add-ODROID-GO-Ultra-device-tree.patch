@@ -1,9 +1,7 @@
-diff --git a/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts b/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
-new file mode 100644
-index 000000000000..b35abc50bd40
---- /dev/null
-+++ b/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
-@@ -0,0 +1,991 @@
+diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts linux/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
+--- linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts	1970-01-01 00:00:00.000000000 +0000
++++ linux/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts	2023-09-12 13:20:28.956694441 +0000
+@@ -0,0 +1,1015 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2022 Neil Armstrong <narmstrong@kernel.org>
@@ -385,7 +383,11 @@ index 000000000000..b35abc50bd40
 +		opp-microvolt = <987500>;
 +	};
 +	opp-1992000000 {
-+		opp-microvolt = <1012500>;
++		opp-microvolt = <1050000>;
++	};
++	opp-2016000000 {
++        opp-hz = /bits/ 64 <2016000000>;
++		opp-microvolt = <1050000>;
 +	};
 +};
 +
@@ -414,6 +416,26 @@ index 000000000000..b35abc50bd40
 +	};
 +	opp-1908000000 {
 +		opp-microvolt = <1025000>;
++	};
++	opp-2016000000 {
++		opp-hz = /bits/ 64 <2016000000>;
++		opp-microvolt = <1025000>;
++	};
++	opp-2100000000 {
++		opp-hz = /bits/ 64 <2100000000>;
++		opp-microvolt = <1025000>;
++	};
++	opp-2208000000 {
++		opp-hz = /bits/ 64 <2208000000>;
++		opp-microvolt = <1050000>;
++	};
++	opp-2304000000 {
++		opp-hz = /bits/ 64 <2304000000>;
++		opp-microvolt = <1050000>;
++	};
++	opp-2400000000 {
++		opp-hz = /bits/ 64 <2400000000>;
++		opp-microvolt = <1050000>;
 +	};
 +};
 +
