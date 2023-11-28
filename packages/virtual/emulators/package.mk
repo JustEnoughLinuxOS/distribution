@@ -1237,3 +1237,4 @@ makeinstall_target() {
   cp ${PKG_DIR}/autostart/* ${INSTALL}/usr/lib/autostart/common
   chmod 0755 ${INSTALL}/usr/lib/autostart/common/*
 }
+

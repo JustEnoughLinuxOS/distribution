@@ -1,0 +1,21 @@
+# dont run in "installer" mode
+IMPORT{cmdline}="installer"
+ENV{installer}=="1", GOTO="exit"
+
+SUBSYSTEM!="block", KERNEL!="mmc*", GOTO="exit"
+
+# check for special partitions we dont want mount
+IMPORT{builtin}="blkid"
+ENV{ID_FS_LABEL}=="EFI|BOOT|Recovery|RECOVERY|SETTINGS|boot|root0|share0", GOTO="exit"
+
+# /dev/mmc* partitions/disk and filesystems only
+KERNEL=="mmc*", ENV{DEVTYPE}=="partition|disk", ENV{ID_FS_USAGE}=="filesystem", GOTO="harddisk"
+GOTO="exit"
+
+# mount or umount for hdds
+LABEL="harddisk"
+ACTION=="add", PROGRAM="/usr/bin/sh -c '/usr/bin/grep -E ^/dev/%k\  /proc/mounts || true'", RESULT=="", RUN+="/usr/bin/systemctl stop storage-roms.mount", RUN+="/usr/bin/systemctl restart jelos-automount.service"
+GOTO="exit"
+
+# Exit
+LABEL="exit"
