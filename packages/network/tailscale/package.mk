@@ -12,9 +12,11 @@ PKG_TOOLCHAIN="manual"
 case ${TARGET_ARCH} in
   aarch64)
     TS_ARCH="_arm64"
+    PKG_SHA256="a7c9e801f43c04290481c2f6b0baad6fcaa82db3149fac232b2601115dd65db7"
   ;;
   x86_64)
     TS_ARCH="_amd64"
+    PKG_SHA256="e9375a321faaba03c93e006f40318eb986937658e09287cdf0117b9e28ab8fbe"
   ;;
 esac
 
