@@ -1,7 +1,6 @@
 [Unit]
 Description=Overlays directory
 After=systemd-tmpfiles-setup.service
-Before=jelos-automount.service
 DefaultDependencies=no
 
 [Mount]
