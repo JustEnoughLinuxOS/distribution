@@ -7,7 +7,7 @@ DefaultDependencies=no
 What=none
 Where=/storage/roms
 Type=overlay
-Options=lowerdir=/storage/games-internal:/storage/games-external
+Options=lowerdir=/storage/games-external,upperdir=/storage/games-internal,workdir=/storage/.tmp/games-workdir
 
 [Install]
 WantedBy=jelos.target
