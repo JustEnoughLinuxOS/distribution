@@ -16,6 +16,8 @@ then
   set_setting system.automount 1
 elif [[ "${MOUNT_GAMES}" == "0" ]]
 then
+  systemctl enable storage-roms.mount >/dev/null 2>&1
+  systemctl start storage-roms.mount >/dev/null 2>&1
   exit 0
 fi
 
@@ -73,8 +75,8 @@ mount_games() {
         if [ "${ENABLE_OVERLAY}" = true ]
         then
           systemctl enable storage-roms.mount >/dev/null 2>&1
+	  systemctl restart storage-roms.mount >/dev/null 2>&1
         fi
-        /usr/bin/systemd-tmpfiles --create /usr/lib/tmpfiles.d/JELOS-system-dirs.conf >/dev/null 2>&1
       fi
 }
 
