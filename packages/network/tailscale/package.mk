@@ -11,14 +11,14 @@ PKG_TOOLCHAIN="manual"
 
 case ${TARGET_ARCH} in
   aarch64)
-    TS_ARCH="arm64"
+    TS_ARCH="_arm64"
   ;;
   x86_64)
-    TS_ARCH="amd64"
+    TS_ARCH="_amd64"
   ;;
 esac
 
-PKG_URL="https://pkgs.tailscale.com/stable/tailscale_${PKG_VERSION}_${TS_ARCH}.tgz"
+PKG_URL="https://pkgs.tailscale.com/stable/tailscale_${PKG_VERSION}${TS_ARCH}.tgz"
 
 # Don't wildcard (X55)
 case ${DEVICE} in
@@ -29,7 +29,7 @@ esac
 
 pre_unpack() {
   mkdir -p ${PKG_BUILD}
-  tar --strip-components=1 -xf ${SOURCES}/${PKG_NAME}/${PKG_NAME}-${PKG_VERSION}.tgz -C ${PKG_BUILD}
+  tar --strip-components=1 -xf $SOURCES/${PKG_NAME}/${PKG_NAME}-${PKG_VERSION}.tgz -C ${PKG_BUILD} tailscale_${PKG_VERSION}${TS_ARCH}
 }
 
 makeinstall_target() {
