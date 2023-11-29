@@ -93,6 +93,15 @@ else
 fi
 systemctl start storage-roms.mount
 
+### 20231129 - Don't default to performance.
+EPP=$(get_setting system.power.epp)
+if [ -z "${EPP}" ] || \
+   [ "${EPP}" = "performance" ]
+then
+  EPP="balance_performance"
+  set_setting system.power.epp ${EPP}
+fi
+
 ### Items below this line should not be removed.
 tocon "Update complete, rebooting..."
 reboot
