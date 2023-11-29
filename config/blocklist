@@ -9,6 +9,5 @@ ryujinx-sa #broken on JELOS after build 1.1740.
 melonds-sa #Broken OpenGL renderer upstream
 mupen64plus-sa-ui-console #Causes segfaults
 nanoboyadvance-sa #SDL version removed after this commit
-freechaf-lr #build issue, revisit.
 kronos-sa #using the release version of kronos had better results.
 retroarch #pinning to release versions for stability.
