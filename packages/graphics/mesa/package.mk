@@ -22,7 +22,7 @@ case ${DEVICE} in
 	PKG_URL="https://mesa.freedesktop.org/archive/mesa-${PKG_VERSION}.tar.xz"
   ;;
   *)
-	PKG_VERSION="23.2.1"
+	PKG_VERSION="23.3.0"
 	PKG_SITE="http://www.mesa3d.org/"
 	PKG_URL="https://mesa.freedesktop.org/archive/mesa-${PKG_VERSION}.tar.xz"
   ;;
