@@ -15,7 +15,7 @@ then
   PROFILE=$(get_setting system.power.epp)
   if [ -z "${PROFILE}" ]
   then
-    PROFILE="performance"
+    PROFILE="balance_performance"
     set_setting system.power.epp ${PROFILE}
   fi
 else
