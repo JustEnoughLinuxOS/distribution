@@ -11,13 +11,21 @@ GAMES_DEVICE=$(get_setting system.gamesdevice)
 MOUNT_PATH="/storage/games-external"
 OVERLAY_PATH="/storage/roms"
 
+
+start_overlay() {
+  if [ "${ENABLE_OVERLAY}" = "true" ]
+  then
+    systemctl enable storage-roms.mount >/dev/null 2>&1
+    systemctl start storage-roms.mount >/dev/null 2>&1
+  fi
+}
+
 if [[ ! "${MOUNT_GAMES}" =~ [0-9] ]]
 then
   set_setting system.automount 1
 elif [[ "${MOUNT_GAMES}" == "0" ]]
 then
-  systemctl enable storage-roms.mount >/dev/null 2>&1
-  systemctl start storage-roms.mount >/dev/null 2>&1
+  start_overlay
   exit 0
 fi
 
@@ -45,8 +53,7 @@ mount_games() {
           set_setting system.merged.storage 1
         ;;
         *)
-          systemctl stop storage-roms.mount >/dev/null 2>&1
-          systemctl disable storage-roms.mount >/dev/null 2>&1
+          ENABLE_OVERLAY=false
           MOUNT_PATH=${OVERLAY_PATH}
           if [ -e "/storage/.overlay_supported" ]
           then
@@ -72,17 +79,12 @@ mount_games() {
         fsck -Mly ${1}
         log $0 "Mounting ${1} on ${MOUNT_PATH}"
         /usr/bin/busybox mount ${1} ${MOUNT_PATH} >/dev/null 2>&1
-        if [ "${ENABLE_OVERLAY}" = true ]
-        then
-          systemctl enable storage-roms.mount >/dev/null 2>&1
-	  systemctl restart storage-roms.mount >/dev/null 2>&1
-        fi
       fi
+      start_overlay
 }
 
 find_games() {
   if /usr/bin/busybox mountpoint -q /storage ; then
-
     for DEV in $(for dev in mmcblk[0-9] sd[a-z] nvme[0-9]; do blkid | grep ${dev} | awk 'BEGIN {FS=":"}; /ext4/ || /fat/ {print $1}' | sort -r; done)
     do
       ROOTDEV=$(echo ${DEV} | sed -e "s#^/.*/##g" -e "s#p[0-9].*\$##g")
@@ -110,6 +112,9 @@ find_games() {
         break
       fi
     done
+    # If we're here there is no external storage to use, but we want to start the overlay anyway.
+    ENABLE_OVERLAY=true
+    start_overlay
   fi
 }
 
