@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="rpcs3-sa"
-PKG_VERSION="ed75bab7b284a9cb62b7308097108e4caef9a0b3"
+PKG_VERSION="7081b89e976ad7f931c926022bd93ddd9778347c"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL-2.0-or-later"
 PKG_SITE="https://rpcs3.net"
@@ -16,7 +16,9 @@ PKG_GIT_CLONE_BRANCH="master"
 PKG_GIT_CLONE_SINGLE="yes"
 
 pre_configure_host() {
-  PKG_CMAKE_SCRIPT="${PKG_BUILD}/3rdparty/llvm/llvm/llvm/CMakeLists.txt"
+  # path changes in future commits.
+  # PKG_CMAKE_SCRIPT="${PKG_BUILD}/3rdparty/llvm/llvm/llvm/CMakeLists.txt"
+  PKG_CMAKE_SCRIPT="${PKG_BUILD}/llvm/CMakeLists.txt"
   PKG_CMAKE_OPTS_HOST="-DLLVM_TARGETS_TO_BUILD="X86" \
                        -DLLVM_BUILD_RUNTIME=OFF \
                        -DLLVM_BUILD_TOOLS=OFF \
