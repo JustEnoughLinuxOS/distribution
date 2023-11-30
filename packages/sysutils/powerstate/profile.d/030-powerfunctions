@@ -68,6 +68,10 @@ pcie_aspm_policy() {
 }
 
 cpu_perftune() {
+  if [ -n "${1}" ]
+  then
+    DESIRED_EPP=${1}
+  fi
   CPUPOWERSAVE=$(get_setting system.power.cpu)
   POWERSAVEENABLED=$(get_setting system.powersave)
   CPU="$(awk '/vendor_id/ {print $3;exit}' /proc/cpuinfo)"
@@ -91,15 +95,22 @@ cpu_perftune() {
     AuthenticAMD)
       PSTATE="amd_pstate"
       STATUS="active"
+      WARM="passive"
     ;;
     GenuineIntel)
       PSTATE="intel_pstate"
       STATUS="passive"
+      WARM="active"
     ;;
   esac
 
   if [ -f "/sys/devices/system/cpu/${PSTATE}/status" ]
   then
+    if [ -n "${WARM}" ]
+    then
+      # Some devices need to switch before the handles are writeable (AYANEO).
+      echo ${WARM} >/sys/devices/system/cpu/${PSTATE}/status
+    fi
     echo ${STATUS} >/sys/devices/system/cpu/${PSTATE}/status
     while [ ! -f /sys/devices/system/cpu/cpufreq/policy0/energy_performance_preference ]
     do
@@ -110,8 +121,12 @@ cpu_perftune() {
       EPP=$(get_setting system.power.epp)
       if [ -z "${EPP}" ]
       then
-        EPP="performance"
+        EPP="balance_performance"
         set_setting system.power.epp ${EPP}
+      fi
+      if [ -n "${DESIRED_EPP}" ]
+      then
+        EPP="${DESIRED_EPP}"
       fi
       echo ${EPP} >${policy} 2>/dev/null
     done
