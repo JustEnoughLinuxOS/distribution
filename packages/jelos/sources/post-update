@@ -102,6 +102,9 @@ then
   set_setting system.power.epp ${EPP}
 fi
 
+### 20231130 - Replace smb.conf for new overlay mechanism.
+cp -f /usr/config/smb.conf /storage/.config
+
 ### Items below this line should not be removed.
 tocon "Update complete, rebooting..."
 reboot
