@@ -11,10 +11,21 @@ GAMES_DEVICE=$(get_setting system.gamesdevice)
 MOUNT_PATH="/storage/games-external"
 OVERLAY_PATH="/storage/roms"
 
-
 start_overlay() {
-  if [ "${ENABLE_OVERLAY}" = "true" ]
+  if [ -e "/storage/.overlay_unsupported" ]
   then
+    # If we're not using the overlay, bind mount the external storage path
+    # so we don't need to change any configs.
+    grep ${MOUNT_PATH} /proc/mounts >/dev/null 2>&1
+    if [ ! $? = 0 ]
+    then
+      MOUNT_PATH="/storage/games-internal"
+    fi
+    log $0 "Executing bind mount of ${MOUNT_PATH} to ${OVERLAY_PATH}"
+    mount --bind ${MOUNT_PATH} ${OVERLAY_PATH}
+    exit 0
+  else
+    log $0 "Enabling overlay."
     systemctl enable storage-roms.mount >/dev/null 2>&1
     systemctl start storage-roms.mount >/dev/null 2>&1
   fi
@@ -29,22 +40,23 @@ then
   exit 0
 fi
 
-load_modules() {
+function load_modules() {
   for MODULE in exfat vfat
   do
     lsmod | grep ${MODULE} 2>/dev/null
     if [ ! $? = 0 ]
     then
+      log $0 "Loading ${MODULE}."
       modprobe ${MODULE} 2>/dev/null
     fi
   done
 }
 
-mount_games() {
+function mount_games() {
       FSTYPE=$(blkid -o export ${1} | awk 'BEGIN {FS="="} /TYPE/ {print $2}')
       case ${FSTYPE} in
         ext4)
-          ENABLE_OVERLAY=true
+          log $0 "Found supported partition for overlayfs."
           if [ -e "/storage/.overlay_unsupported" ]
           then
             rm -f /storage/.overlay_unsupported
@@ -53,8 +65,7 @@ mount_games() {
           set_setting system.merged.storage 1
         ;;
         *)
-          ENABLE_OVERLAY=false
-          MOUNT_PATH=${OVERLAY_PATH}
+          log $0 "Partition does not support overlayfs, disabling."
           if [ -e "/storage/.overlay_supported" ]
           then
             rm -f /storage/.overlay_supported
@@ -65,6 +76,7 @@ mount_games() {
 
       if [ ! -d "${MOUNT_PATH}" ]
       then
+        log $0 "Create directory ${MOUNT_PATH}"
         /usr/bin/busybox mkdir -p ${MOUNT_PATH} >/dev/null 2>&1
       fi
 
@@ -75,8 +87,8 @@ mount_games() {
       then
         ### Udevil shouldn't mount it this early, but just in-case.
         umount /var/media/* 2>/dev/null
-        log $0 "FSCK ${1}"
-        fsck -Mly ${1}
+        log $0 "Checking filesystem ${1}."
+        fsck -Mly ${1} >/dev/null 2>&1
         log $0 "Mounting ${1} on ${MOUNT_PATH}"
         /usr/bin/busybox mount ${1} ${MOUNT_PATH} >/dev/null 2>&1
       fi
@@ -108,12 +120,12 @@ find_games() {
          [ ! -e "/storage/.please_resize_me" ]
       then
         GAMES_DEVICE=${DEV}
+        log $0 "Found ${DEV} available to mount."
         mount_games "${DEV}"
         break
       fi
     done
     # If we're here there is no external storage to use, but we want to start the overlay anyway.
-    ENABLE_OVERLAY=true
     start_overlay
   fi
 }
