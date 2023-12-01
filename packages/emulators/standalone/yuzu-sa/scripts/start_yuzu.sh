@@ -237,6 +237,10 @@ ln -sf /storage/roms/bios/yuzu/keys /storage/.config/yuzu/keys
 		sed -i '/^use_vsync=/c\use_vsync=true' /storage/.config/yuzu/qt-config.ini
 	fi
 
+#Never ask to confrim close
+sed -i '/^confirmStop\\default=/c\confirmStop\\default=false' /storage/.config/yuzu/qt-config.ini
+sed -i '/^confirmStop=/c\confirmStop=3' /storage/.config/yuzu/qt-config.ini
+
 #Link  .config/yuzu to .local
 rm -rf /storage/.local/share/yuzu
 ln -sf /storage/.config/yuzu /storage/.local/share/yuzu
