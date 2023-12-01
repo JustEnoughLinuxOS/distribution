@@ -27,4 +27,5 @@ makeinstall_target() {
     cp ${PKG_DIR}/scripts/wg-genconfig ${INSTALL}/usr/bin
     cp ${PKG_BUILD}/src/wg ${INSTALL}/usr/bin
     cp ${PKG_BUILD}/src/wg-quick/linux.bash ${INSTALL}/usr/bin/wg-quick
+    chmod 755 ${INSTALL}/usr/bin/*
 }
