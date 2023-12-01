@@ -101,8 +101,8 @@ else
 fi
 
 pre_configure_target() {
-  TARGET_CFLAGS=$(echo ${CFLAGS} | sed -e "s|-Ofast|-O3|")
-  TARGET_CXXFLAGS=$(echo ${CXXFLAGS} | sed -e "s|-Ofast|-O3|")
+  TARGET_CFLAGS=$(echo ${TARGET_CFLAGS} | sed -e "s|-Ofast|-O3|")
+  TARGET_CXXFLAGS=$(echo ${TARGET_CXXFLAGS} | sed -e "s|-Ofast|-O3|")
 }
 
 post_makeinstall_target() {
