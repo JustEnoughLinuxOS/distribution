@@ -48,6 +48,10 @@ PKG_CMAKE_OPTS_TARGET+="        -DENABLE_QT=ON \
 				-DYUZU_USE_QT_MULTIMEDIA=ON \
 				-DYUZU_USE_QT_WEB_ENGINE=OFF \
                                 -DUSE_DISCORD_PRESENCE=OFF"
+pre_configure_target() {
+  CFLAGS=$(echo ${CFLAGS} | sed -e "s|-Ofast|-O3|")
+  CXXFLAGS=$(echo ${CXXFLAGS} | sed -e "s|-Ofast|-O3|")
+}
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin
