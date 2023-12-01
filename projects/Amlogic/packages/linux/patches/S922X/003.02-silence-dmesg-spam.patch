@@ -1,0 +1,23 @@
+diff --git a/sound/soc/soc-pcm.c b/sound/soc/soc-pcm.c
+index f3964060a044..dc1ffb3a098b 100644
+--- a/sound/soc/soc-pcm.c
++++ b/sound/soc/soc-pcm.c
+@@ -41,9 +41,6 @@ static inline int _soc_pcm_ret(struct snd_soc_pcm_runtime *rtd,
+ 	case -ENOTSUPP:
+ 		break;
+ 	default:
+-		dev_err(rtd->dev,
+-			"ASoC: error at %s on %s: %d\n",
+-			func, rtd->dai_link->name, ret);
+ 	}
+ 
+ 	return ret;
+@@ -2438,8 +2435,6 @@ static int dpcm_fe_dai_prepare(struct snd_pcm_substream *substream)
+ 
+ 	/* there is no point preparing this FE if there are no BEs */
+ 	if (list_empty(&fe->dpcm[stream].be_clients)) {
+-		dev_err(fe->dev, "ASoC: no backend DAIs enabled for %s\n",
+-				fe->dai_link->name);
+ 		ret = -EINVAL;
+ 		goto out;
+ 	}
