@@ -1,0 +1,32 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
+
+### Restore previous governors before going to sleep
+
+. /etc/profile
+
+### Set max/min freq to lowest available value
+echo 1008000 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
+echo 1008000 > /sys/devices/system/cpu/cpufreq/policy4/scaling_min_freq
+echo 600000000 > /sys/devices/platform/ff9a0000.gpu/devfreq/ff9a0000.gpu/min_freq
+
+echo 1608000 > /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq
+echo 2088000 > /sys/devices/system/cpu/cpufreq/policy4/scaling_max_freq
+echo 900000000 > /sys/devices/platform/ff9a0000.gpu/devfreq/ff9a0000.gpu/max_freq
+
+### Grab the old governors.
+OLD_CPU_FREQ=$(get_setting "sleep.cpugovernor")
+if [ ! -n "${OLD_CPU_FREQ}" ]; then
+  OLD_CPU_FREQ="schedutil"
+fi
+
+OLD_GPU_FREQ=$(get_setting "sleep.gpugovernor")
+if [ ! -n "${OLD_GPU_FREQ}" ]; then
+  OLD_GPU_FREQ="simple_ondemand"
+fi
+
+# Restore old governors.
+set_cpu_gov "${OLD_CPU_FREQ}"
+set_dmc_gov "${OLD_CPU_FREQ}"
+set_gpu_gov "${OLD_GPU_FREQ}"
