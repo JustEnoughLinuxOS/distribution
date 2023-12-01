@@ -16,7 +16,7 @@ lock_source_dir "${1}"
 _get_file_already_downloaded && exit 0
 
 # Check if a package source directory already exists and clean it out if it does
-if [ -d "${SOURCES}/${1}" -a "${PACKAGE}" != "u-boot" ]; then
+if [ -d "${SOURCES}/${1}" ]; then
   build_msg "CLR_CLEAN" "DELETE" "(${1}/${1}-*)"
   rm -rf "${SOURCES}/${1}/${1}-"*
 fi
