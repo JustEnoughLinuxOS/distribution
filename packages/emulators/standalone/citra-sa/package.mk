@@ -2,15 +2,24 @@
 # Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="citra-sa"
-PKG_VERSION="9b2a592"
 PKG_LICENSE="MPLv2"
 PKG_SITE="https://github.com/citra-emu/citra"
-PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain ffmpeg mesa SDL2 boost zlib libusb boost zstd control-gen"
 PKG_LONGDESC="Citra 3DS emulator"
 PKG_TOOLCHAIN="cmake"
 GET_HANDLER_SUPPORT="git"
 PKG_PATCH_DIRS+="${DEVICE}"
+
+case ${DEVICE} in
+  S922X)
+    PKG_URL="${PKG_SITE}.git"
+    PKG_VERSION="9b2a592"
+  ;;
+  *)
+    PKG_URL="${PKG_SITE}.git"
+    PKG_VERSION="59beeac4c714d3f34a479293faffd3197bea70ea"
+  ;;
+esac
 
 if [ ! "${OPENGL}" = "no" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
