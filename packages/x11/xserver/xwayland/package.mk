@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2023-present JELOS (https://github.com/JustEnoughLinuxOS/distribution)
 
 PKG_NAME="xwayland"
 PKG_VERSION="7883646a8f208a1db4cb98f8b295c7f862da3b2a"
@@ -64,25 +65,4 @@ fi
 post_makeinstall_target() {
   rm -rf ${INSTALL}/var/cache/xkb
 
-  mkdir -p ${INSTALL}/usr/lib/xorg
-    cp -P ${PKG_DIR}/scripts/xorg-configure ${INSTALL}/usr/lib/xorg
-      sed -i -e "s|@NVIDIA_VERSION@|$(get_pkg_version xf86-video-nvidia)|g" ${INSTALL}/usr/lib/xorg/xorg-configure
-      sed -i -e "s|@NVIDIA_LEGACY_VERSION@|$(get_pkg_version xf86-video-nvidia-legacy)|g" ${INSTALL}/usr/lib/xorg/xorg-configure
-
-  if [ ! "${OPENGL}" = "no" ]; then
-    if [ -f ${INSTALL}/usr/lib/xorg/modules/extensions/libglx.so ]; then
-      mv ${INSTALL}/usr/lib/xorg/modules/extensions/libglx.so \
-         ${INSTALL}/usr/lib/xorg/modules/extensions/libglx_mesa.so # rename for cooperate with nvidia drivers
-      ln -sf /var/lib/libglx.so ${INSTALL}/usr/lib/xorg/modules/extensions/libglx.so
-    fi
-  fi
-
-  mkdir -p ${INSTALL}/etc/X11
-    if find_file_path config/xorg.conf; then
-      cp ${FOUND_PATH} ${INSTALL}/etc/X11
-    fi
 }
-
-#post_install() {
-#  enable_service xorg.service
-#}
