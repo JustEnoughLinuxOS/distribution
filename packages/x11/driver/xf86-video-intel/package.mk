@@ -9,7 +9,7 @@ PKG_ARCH="x86_64"
 PKG_LICENSE="OSS"
 PKG_SITE="https://www.x.org/wiki/IntelGraphicsDriver/"
 PKG_URL="https://gitlab.freedesktop.org/xorg/driver/${PKG_NAME}/-/archive/${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain libXcomposite libXxf86vm libXdamage libdrm util-macros systemd xorg-server"
+PKG_DEPENDS_TARGET="toolchain libXcomposite libXxf86vm libXdamage libdrm util-macros systemd xwayland"
 PKG_LONGDESC="Open-source Xorg graphics driver for Intel graphics."
 PKG_TOOLCHAIN="autotools"
 
