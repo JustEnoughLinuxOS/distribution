@@ -41,6 +41,7 @@ ln -sf /storage/roms/bios/yuzu/keys /storage/.config/yuzu/keys
   IRES=$(get_setting internal_resolution switch "${GAME}")
   PFILTER=$(get_setting pixel_filter switch "${GAME}")
   RUMBLE=$(get_setting rumble switch "${GAME}")
+  RUMBLESTR=$(get_setting rumble_strength switch "${GAME}")
   SDOCK=$(get_setting switch_mode switch "${GAME}")
   SUI=$(get_setting start_ui switch "${GAME}")
   VSYNC=$(get_setting vsync switch "${GAME}")
@@ -195,6 +196,25 @@ ln -sf /storage/roms/bios/yuzu/keys /storage/.config/yuzu/keys
 		sed -i '/^vibration_enabled=/c\vibration_enabled=true' /storage/.config/yuzu/qt-config.ini
 	fi
 
+  #RUMBLE STRENGTH
+	sed -i '/^player_0_vibration_strength\\default=/c\player_0_vibration_strength\\default=false' /storage/.config/yuzu/qt-config.ini
+        if [ "$RUMBLESTR" = "100" ]
+        then
+		sed -i '/^player_0_vibration_strength=/c\player_0_vibration_strength=100' /storage/.config/yuzu/qt-config.ini
+	fi
+        if [ "$RUMBLESTR" = "75" ]
+        then
+                sed -i '/^player_0_vibration_strength=/c\player_0_vibration_strength=75' /storage/.config/yuzu/qt-config.ini
+        fi
+        if [ "$RUMBLESTR" = "50" ]
+        then
+                sed -i '/^player_0_vibration_strength=/c\player_0_vibration_strength=50' /storage/.config/yuzu/qt-config.ini
+        fi
+        if [ "$RUMBLESTR" = "25" ]
+        then
+                sed -i '/^player_0_vibration_strength=/c\player_0_vibration_strength=25' /storage/.config/yuzu/qt-config.ini
+        fi
+
   #Switch Mode
 	sed -i '/^use_docked_mode\\default=/c\use_docked_mode\\default=false' /storage/.config/yuzu/qt-config.ini
 	if [ "$SDOCK" = "0" ]
@@ -216,6 +236,10 @@ ln -sf /storage/roms/bios/yuzu/keys /storage/.config/yuzu/keys
 	then
 		sed -i '/^use_vsync=/c\use_vsync=true' /storage/.config/yuzu/qt-config.ini
 	fi
+
+#Never ask to confrim close
+sed -i '/^confirmStop\\default=/c\confirmStop\\default=false' /storage/.config/yuzu/qt-config.ini
+sed -i '/^confirmStop=/c\confirmStop=3' /storage/.config/yuzu/qt-config.ini
 
 #Link  .config/yuzu to .local
 rm -rf /storage/.local/share/yuzu
