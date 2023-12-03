@@ -3,7 +3,7 @@
 # Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="rpcs3-sa"
-PKG_VERSION="ed75bab7b284a9cb62b7308097108e4caef9a0b3"
+PKG_VERSION="7081b89e976ad7f931c926022bd93ddd9778347c"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL-2.0-or-later"
 PKG_SITE="https://rpcs3.net"
