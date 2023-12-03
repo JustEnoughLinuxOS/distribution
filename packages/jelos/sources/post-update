@@ -125,6 +125,13 @@ do
   rm -rf ${FILE} 2>/dev/null
 done
 
+### 20231203 - Disable merged storage by default.
+MERGED_STORAGE=$(get_setting system.merged.storage)
+if [ -z "${MERGED_STORAGE}" ]
+then
+  set_setting system.merged.storage 0
+fi
+
 ### Items below this line should not be removed.
 tocon "Update complete, rebooting..."
 reboot
