@@ -8,26 +8,51 @@
 UPDATE_ROOT="/storage/.update"
 MOUNT_GAMES=$(get_setting system.automount)
 GAMES_DEVICE=$(get_setting system.gamesdevice)
-MOUNT_PATH="/storage/games-external"
-OVERLAY_PATH="/storage/roms"
 
-start_overlay() {
-  if [ -e "/storage/.overlay_unsupported" ]
+MS_ENABLED=$(get_setting system.merged.storage)
+MS_DEVICE=$(get_setting system.merged.device)
+MS_PATH="/storage/roms"
+if [ -z "${MS_DEVICE}" ]
+then
+  MS_DEVICE="external"
+fi
+MOUNT_PATH="/storage/games-${MS_DEVICE}"
+
+function start_ms() {
+  if [ -e "/storage/.ms_unsupported" ] || \
+     [ "${MS_ENABLED}" = "false" ]
   then
-    # If we're not using the overlay, bind mount the external storage path
+    # If we're not using merged storage, bind mount the external storage path
     # so we don't need to change any configs.
     grep ${MOUNT_PATH} /proc/mounts >/dev/null 2>&1
     if [ ! $? = 0 ]
     then
       MOUNT_PATH="/storage/games-internal"
     fi
-    log $0 "Executing bind mount of ${MOUNT_PATH} to ${OVERLAY_PATH}"
-    mount --bind ${MOUNT_PATH} ${OVERLAY_PATH}
+    log $0 "Executing bind mount of ${MOUNT_PATH} to ${MS_PATH}"
+    mount --bind ${MOUNT_PATH} ${MS_PATH}
     exit 0
   else
-    log $0 "Enabling overlay."
-    systemctl enable storage-roms.mount >/dev/null 2>&1
-    systemctl start storage-roms.mount >/dev/null 2>&1
+    log $0 "Enabling merged storage."
+
+    case ${MS_DEVICE} in
+      internal)
+        LOWER="internal"
+        UPPER="external"
+      ;;
+      *)
+        LOWER="external"
+        UPPER="internal"
+      ;;
+    esac
+    for DIR in /storage/games-${UPPER}/.tmp/games-workdir /storage/games-${LOWER}/roms /storage/games-${UPPER}/roms
+    do
+      if [ ! -d "${DIR}" ]
+      then
+        mkdir -p "${DIR}"
+      fi
+    done
+    mount overlay -t overlay -o lowerdir=/storage/games-${LOWER}/roms,upperdir=/storage/games-${UPPER}/roms,workdir=/storage/games-${UPPER}/.tmp/games-workdir /storage/roms
   fi
 }
 
@@ -36,9 +61,17 @@ then
   set_setting system.automount 1
 elif [[ "${MOUNT_GAMES}" == "0" ]]
 then
-  start_overlay
+  start_ms
   exit 0
 fi
+
+function unmount_roms() {
+  NULL=$(cat /proc/mounts | grep -v -e "${MS_PATH}" 2>/dev/null | grep ${1})
+  if [ ! "$?" = "0" ]
+  then
+    umount -f "${MS_PATH}"
+  fi
+}
 
 function load_modules() {
   for MODULE in exfat vfat
@@ -53,24 +86,25 @@ function load_modules() {
 }
 
 function mount_games() {
+      unmount_roms
       FSTYPE=$(blkid -o export ${1} | awk 'BEGIN {FS="="} /TYPE/ {print $2}')
       case ${FSTYPE} in
         ext4)
           log $0 "Found supported partition for overlayfs."
-          if [ -e "/storage/.overlay_unsupported" ]
+          if [ -e "/storage/.ms_unsupported" ]
           then
-            rm -f /storage/.overlay_unsupported
+            rm -f /storage/.ms_unsupported
           fi
-	  touch /storage/.overlay_supported
+	  touch /storage/.ms_supported
           set_setting system.merged.storage 1
         ;;
         *)
           log $0 "Partition does not support overlayfs, disabling."
-          if [ -e "/storage/.overlay_supported" ]
+          if [ -e "/storage/.ms_supported" ]
           then
-            rm -f /storage/.overlay_supported
+            rm -f /storage/.ms_supported
           fi
-          touch /storage/.overlay_unsupported
+          touch /storage/.ms_unsupported
         ;;
       esac
 
@@ -92,10 +126,11 @@ function mount_games() {
         log $0 "Mounting ${1} on ${MOUNT_PATH}"
         /usr/bin/busybox mount ${1} ${MOUNT_PATH} >/dev/null 2>&1
       fi
-      start_overlay
+      start_ms
+      exit 0
 }
 
-find_games() {
+function find_games() {
   if /usr/bin/busybox mountpoint -q /storage ; then
     for DEV in $(for dev in mmcblk[0-9] sd[a-z] nvme[0-9]; do blkid | grep ${dev} | awk 'BEGIN {FS=":"}; /ext4/ || /fat/ {print $1}' | sort -r; done)
     do
@@ -125,8 +160,8 @@ find_games() {
         break
       fi
     done
-    # If we're here there is no external storage to use, but we want to start the overlay anyway.
-    start_overlay
+    # If we're here there is no external storage to use, but we want to start merged storage or the bind mount anyway.
+    start_ms
   fi
 }
 

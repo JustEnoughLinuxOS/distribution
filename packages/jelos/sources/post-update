@@ -73,8 +73,12 @@ sed -i 's~"pulse"~"alsathread"~g' /storage/.config/retroarch/retroarch.cfg
 ### 20231114 - Update hosts.conf
 grep "127.0.0.1" /storage/.config/hosts.conf >/dev/null 2>&1 || cp /usr/config/hosts.conf /storage/.config/
 
-### 20231127 - Migrate games to overlayfs
-systemctl stop storage-roms.mount
+### 20231127 - Migrate games to overlayfs (updated 20231203)
+NULL=$(cat /proc/mounts | grep -v -e "/storage/roms" 2>/dev/null | grep ${1})
+if [ ! "$?" = 0 ]
+then
+  umount /storage/roms
+fi
 GAMECOUNT=$(find /storage/roms -type f | wc -l)
 if [ "${GAMECOUNT}" -gt 20 ] && \
    [ ! -e "/storage/.migrated_games" ]
@@ -91,7 +95,17 @@ then
 else
   echo "Game weight too low (${GAMECOUNT}) or content already migrated." >>${LOG}
 fi
-systemctl start storage-roms.mount
+
+### Migration part 2
+for GAMES in /storage/games-internal /storage/games-external
+do
+  if [ ! -d "${GAMES}/roms" ]
+  then
+    mkdir -p "${GAMES}/roms"
+    mv "${GAMES}/"* "${GAMES}/roms/"
+  fi
+done
+systemctl restart jelos-automount
 
 ### 20231129 - Don't default to performance.
 EPP=$(get_setting system.power.epp)
