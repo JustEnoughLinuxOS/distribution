@@ -36,6 +36,7 @@ ln -sf /storage/roms/bios/yuzu/keys /storage/.config/yuzu/keys
   AA=$(get_setting anti_aliasing switch "${GAME}")
   ASPECT=$(get_setting aspect_ratio switch "${GAME}")
   ASTCD=$(get_setting astc_decoding_method switch "${GAME}")
+  CACCURACY=$(get_setting cpu_accuracy switch "${GAME}")
   GACCURACY=$(get_setting gpu_accuracy switch "${GAME}")
   GRENDERER=$(get_setting graphics_backend switch "${GAME}")
   IRES=$(get_setting internal_resolution switch "${GAME}")
@@ -116,6 +117,20 @@ ln -sf /storage/roms/bios/yuzu/keys /storage/.config/yuzu/keys
 		sed -i '/^accelerate_astc=/c\accelerate_astc=1' /storage/.config/yuzu/qt-config.ini
 	fi
 
+  #GPU Accuracy
+	sed -i '/^cpu_accuracy\\default=/c\cpu_accuracy\\default=false' /storage/.config/yuzu/qt-config.ini
+	if [ "$CACCURACY" = "1" ]
+ 	then
+ 		sed -i '/^cpu_accuracy=/c\cpu_accuracy=1' /storage/.config/yuzu/qt-config.ini
+ 	elif [ "$CACCURACY" = "2" ]
+ 	then
+ 		sed -i '/^cpu_accuracy=/c\cpu_accuracy=2' /storage/.config/yuzu/qt-config.ini
+	elif [ "$CACCURACY" = "3" ]
+ 	then
+ 		sed -i '/^cpu_accuracy=/c\cpu_accuracy=3' /storage/.config/yuzu/qt-config.ini
+	else
+		sed -i '/^cpu_accuracy=/c\cpu_accuracy=0' /storage/.config/yuzu/qt-config.ini
+	fi
 
   #GPU Accuracy
 	sed -i '/^gpu_accuracy\\default=/c\gpu_accuracy\\default=false' /storage/.config/yuzu/qt-config.ini
