@@ -1,0 +1,19 @@
+diff --git a/driver/product/kernel/drivers/gpu/arm/midgard/Makefile b/driver/product/kernel/drivers/gpu/arm/midgard/Makefile
+index a3ba2b2..3ed9ccf 100644
+--- a/product/kernel/drivers/gpu/arm/midgard/Makefile
++++ b/product/kernel/drivers/gpu/arm/midgard/Makefile
+@@ -228,14 +228,6 @@ ifeq ($(MALI_KCONFIG_EXT_PREFIX),)
+     EXTRA_CFLAGS += -DCONFIG_MALI_NO_MALI_DEFAULT_GPU='\"$(CONFIG_MALI_NO_MALI_DEFAULT_GPU)\"'
+ endif
+
+-#
+-# KBUILD_EXTRA_SYMBOLS to prevent warnings about unknown functions
+-#
+-BASE_SYMBOLS = $(M)/../../base/arm/Module.symvers
+-
+-EXTRA_SYMBOLS += \
+-    $(BASE_SYMBOLS)
+-
+ CFLAGS_MODULE += -Wall -Werror
+
+ # The following were added to align with W=1 in scripts/Makefile.extrawarn

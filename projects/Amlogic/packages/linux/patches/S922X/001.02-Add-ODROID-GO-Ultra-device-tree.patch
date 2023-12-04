@@ -1,9 +1,9 @@
 diff --git a/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts b/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
 new file mode 100644
-index 000000000000..f42ebb59a59c
+index 000000000000..6d0453220212
 --- /dev/null
 +++ b/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
-@@ -0,0 +1,1001 @@
+@@ -0,0 +1,997 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2022 Neil Armstrong <narmstrong@kernel.org>
@@ -383,10 +383,6 @@ index 000000000000..f42ebb59a59c
 +	};
 +	opp-1800000000 {
 +		opp-microvolt = <987500>;
-+	};
-+	opp-1908000000 {
-+		opp-hz = /bits/ 64 <1908000000>;
-+		opp-microvolt = <1050000>;
 +	};
 +};
 +

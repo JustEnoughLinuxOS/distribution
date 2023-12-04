@@ -26,7 +26,7 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
 fi
 
 if [ "${DISPLAYSERVER}" = "wl" ]; then
-  PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER} xorg-server xrandr libXi"
+  PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER} xwayland xrandr libXi"
   PKG_CONFIGURE_OPTS_TARGET+=" -DENABLE_X11=ON \
                                -DENABLE_EGL=ON"
 fi

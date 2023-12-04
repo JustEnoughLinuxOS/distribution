@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="libmali-vulkan"
-PKG_VERSION="r40p0-01eac0"
+PKG_VERSION="r46p0-01eac1"
 PKG_LICENSE="mali_driver"
 PKG_ARCH="arm aarch64"
 PKG_SITE="https://developer.arm.com/downloads/-/mali-drivers/user-space"

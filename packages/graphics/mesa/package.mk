@@ -100,6 +100,11 @@ else
   PKG_MESON_OPTS_TARGET+=" -Dvulkan-drivers="
 fi
 
+pre_configure_target() {
+  TARGET_CFLAGS=$(echo ${TARGET_CFLAGS} | sed -e "s|-Ofast|-O3|")
+  TARGET_CXXFLAGS=$(echo ${TARGET_CXXFLAGS} | sed -e "s|-Ofast|-O3|")
+}
+
 post_makeinstall_target() {
   case ${DEVICE} in
     S922X)

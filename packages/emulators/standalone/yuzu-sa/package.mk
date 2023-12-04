@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="yuzu-sa"
-PKG_VERSION="767c4b5a992bfeeae9194bc9f5a3dc63996645df"
+PKG_VERSION="5fb1a83e4cbb43f5bb2e07d003e544dca580e0de"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/yuzu-emu/yuzu"
@@ -22,7 +22,7 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
 fi
 
 if [ "${DISPLAYSERVER}" = "wl" ]; then
-  PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER} xorg-server xrandr libXi"
+  PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER} xwayland xrandr libXi"
 fi
 
 if [ "${VULKAN_SUPPORT}" = "yes" ]

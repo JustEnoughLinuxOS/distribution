@@ -29,7 +29,7 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
 fi
 
 if [ "${DISPLAYSERVER}" = "wl" ]; then
-  PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER} xorg-server xrandr libXi"
+  PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER} xwayland xrandr libXi"
 fi
 
 if [ "${VULKAN_SUPPORT}" = "yes" ]

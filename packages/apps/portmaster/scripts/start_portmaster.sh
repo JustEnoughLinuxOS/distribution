@@ -34,7 +34,7 @@ if [ ! -d "/storage/roms/ports/PortMaster" ]; then
 fi
 
 #We dont use tasksetter, delete it
-if [ ! -f /storage/roms/ports/PortMaster/tasksetter ]; then
+if [ -f /storage/roms/ports/PortMaster/tasksetter ]; then
   rm -r /storage/roms/ports/PortMaster/tasksetter
 fi
 
@@ -64,6 +64,9 @@ else
   xmlstarlet ed --inplace --subnode "/gameList/folder[last()]" --type elem -n name -v "PortMaster" /storage/roms/ports/gamelist.xml
   xmlstarlet ed --inplace --subnode "/gameList/folder[last()]" --type elem -n hidden -v "true" /storage/roms/ports/gamelist.xml
 fi
+
+#Make sure permissions are correct in the PortMaster folder
+chmod 755 /storage/roms/ports/PortMaster/* -R
 
 #Start PortMaster
 @LIBEGL@
