@@ -18,11 +18,7 @@ PKG_PATCH_DIRS+="${DEVICE}"
 
 case ${DEVICE} in
   S922X*)
-<<<<<<< HEAD
-    PKG_VERSION="6.1.64"
-=======
     PKG_VERSION="6.1.65"
->>>>>>> upstream/dev
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
   ;;
 esac

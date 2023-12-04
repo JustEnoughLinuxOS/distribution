@@ -40,11 +40,7 @@ case ${DEVICE} in
     PKG_GIT_CLONE_BRANCH="main"
   ;;
   RK33*)
-<<<<<<< HEAD
-    PKG_VERSION="6.1.64"
-=======
     PKG_VERSION="6.1.65"
->>>>>>> upstream/dev
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
   ;;
 esac

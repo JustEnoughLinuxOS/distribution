@@ -83,12 +83,6 @@ then
   set_setting system.automount 1
 elif [[ "${MOUNT_GAMES}" == "0" ]]
 then
-<<<<<<< HEAD
-  start_overlay
-  exit 0
-fi
-
-=======
   start_ms internal
   exit 0
 fi
@@ -97,7 +91,6 @@ function create_game_dirs() {
   systemd-tmpfiles --create /usr/lib/tmpfiles.d/JELOS-system-dirs.conf >/dev/null 2>&1 ||:
 }
 
->>>>>>> upstream/dev
 function load_modules() {
   for MODULE in exfat vfat
   do
@@ -105,29 +98,18 @@ function load_modules() {
     if [ ! $? = 0 ]
     then
       log $0 "Loading ${MODULE}."
-<<<<<<< HEAD
-      modprobe ${MODULE} 2>/dev/null
-=======
       modprobe ${MODULE} >/dev/null 2>&1
->>>>>>> upstream/dev
     fi
   done
 }
 
 function mount_games() {
-<<<<<<< HEAD
-=======
       local MOUNT_PATH="/storage/games-external"
->>>>>>> upstream/dev
       FSTYPE=$(blkid -o export ${1} | awk 'BEGIN {FS="="} /TYPE/ {print $2}')
       case ${FSTYPE} in
         ext4)
           log $0 "Found supported partition for overlayfs."
-<<<<<<< HEAD
-          if [ -e "/storage/.overlay_unsupported" ]
-=======
           if [ -e "/storage/.ms_unsupported" ]
->>>>>>> upstream/dev
           then
             rm -f /storage/.ms_unsupported
           fi
@@ -135,11 +117,7 @@ function mount_games() {
         ;;
         *)
           log $0 "Partition does not support overlayfs, disabling."
-<<<<<<< HEAD
-          if [ -e "/storage/.overlay_supported" ]
-=======
           if [ -e "/storage/.ms_supported" ]
->>>>>>> upstream/dev
           then
             rm -f /storage/.ms_supported
           fi
@@ -161,18 +139,6 @@ function mount_games() {
 
         ### Udevil shouldn't mount it this early, but just in-case.
         umount /var/media/* 2>/dev/null
-<<<<<<< HEAD
-        log $0 "Checking filesystem ${1}."
-        fsck -Mly ${1} >/dev/null 2>&1
-        log $0 "Mounting ${1} on ${MOUNT_PATH}"
-        /usr/bin/busybox mount ${1} ${MOUNT_PATH} >/dev/null 2>&1
-      fi
-      start_overlay
-}
-
-find_games() {
-  if /usr/bin/busybox mountpoint -q /storage ; then
-=======
 
         log $0 "Checking filesystem ${1}."
         fsck -Mly ${1} >/dev/null 2>&1
@@ -188,7 +154,6 @@ find_games() {
 function find_games() {
   if /usr/bin/busybox mountpoint -q /storage
   then
->>>>>>> upstream/dev
     for DEV in $(for dev in mmcblk[0-9] sd[a-z] nvme[0-9]; do blkid | grep ${dev} | awk 'BEGIN {FS=":"}; /ext4/ || /fat/ {print $1}' | sort -r; done)
     do
       ROOTDEV=$(echo ${DEV} | sed -e "s#^/.*/##g" -e "s#p[0-9].*\$##g")
@@ -216,15 +181,10 @@ function find_games() {
         log $0 "${DEV} not available."
       fi
     done
-<<<<<<< HEAD
-    # If we're here there is no external storage to use, but we want to start the overlay anyway.
-    start_overlay
-=======
     log $0 "Could not find external card to mount, assume internal."
     start_ms internal
     create_game_dirs
     exit 0
->>>>>>> upstream/dev
   fi
 }
 
