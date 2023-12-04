@@ -97,22 +97,19 @@ else
 fi
 
 ### Migration part 2
-for GAMES in /storage/games-internal /storage/games-external
-do
-  COUNT=$(find ${GAMES}/roms 2>/dev/null| wc -l)
-  if [ "${COUNT}" -lt 320 ]
-  then
+if [ ! -e "/storage/.migrated_games2" ]
+then
+  for GAMES in /storage/games-internal /storage/games-external
+  do
     if [ ! -d "${GAMES}/roms" ]
     then
       mkdir -p "${GAMES}/roms" 2>/dev/null
-    else
-      find "${GAMES}/roms" -type d -empty -delete
     fi
-    mv "${GAMES}/"* "${GAMES}/roms/" 2>/dev/null
-    find "${GAMES}" -type d -empty -delete
-  fi
-done
-systemctl restart jelos-automount
+    mv "${GAMES}"/* "${GAMES}/roms/" 
+  done
+  systemctl restart jelos-automount
+  touch /storage/.migrated_games2
+fi
 
 ### 20231129 - Don't default to performance.
 EPP=$(get_setting system.power.epp)
@@ -139,6 +136,3 @@ then
   set_setting system.merged.storage 0
 fi
 
-### Items below this line should not be removed.
-tocon "Update complete, rebooting..."
-reboot
