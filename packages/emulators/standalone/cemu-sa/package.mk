@@ -18,7 +18,7 @@ PKG_BUILD_FLAGS="+lto"
 configure_package() {
   # Displayserver Support
   if [ "${DISPLAYSERVER}" = "x11" ]; then
-    PKG_DEPENDS_TARGET+=" xorg-server"
+    PKG_DEPENDS_TARGET+=" xwayland"
   elif [ "${DISPLAYSERVER}" = "wl" ]; then
     PKG_DEPENDS_TARGET+=" wayland"
   fi

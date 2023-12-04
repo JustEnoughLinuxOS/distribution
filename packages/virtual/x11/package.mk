@@ -6,11 +6,11 @@ PKG_VERSION=""
 PKG_LICENSE="OSS"
 PKG_SITE="http://www.X.org"
 PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain xorg-server"
+PKG_DEPENDS_TARGET="toolchain xwayland"
 PKG_SECTION="virtual"
 PKG_LONGDESC="X11 is the Windowing system"
 
-# Additional packages we need for using xorg-server:
+# Additional packages we need for using xwayland:
 # Fonts
   PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} encodings font-xfree86-type1 font-bitstream-type1 font-misc-misc"
 
