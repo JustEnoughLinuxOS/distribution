@@ -7,7 +7,7 @@ PKG_SHA256="b8fa4aab913fc63754bbd6439e020658c412743a055201ddf212760593962c38"
 PKG_LICENSE="GPL"
 PKG_SITE="https://lists.freedesktop.org/mailman/listinfo/xorg"
 PKG_URL="https://xorg.freedesktop.org/archive/individual/driver/${PKG_NAME}-${PKG_VERSION}.tar.xz"
-PKG_DEPENDS_TARGET="toolchain xorg-server libXi libXext libevdev"
+PKG_DEPENDS_TARGET="toolchain xwayland libXi libXext libevdev"
 PKG_LONGDESC="Synaptics touchpad driver for X.Org."
 PKG_TOOLCHAIN="autotools"
 
