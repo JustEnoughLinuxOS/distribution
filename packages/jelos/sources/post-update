@@ -107,7 +107,6 @@ then
     fi
     mv "${GAMES}"/* "${GAMES}/roms/" 
   done
-  systemctl restart jelos-automount
   touch /storage/.migrated_games2
 fi
 
@@ -136,3 +135,4 @@ then
   set_setting system.merged.storage 0
 fi
 
+systemctl restart jelos-automount
