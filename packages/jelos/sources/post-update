@@ -100,10 +100,16 @@ fi
 for GAMES in /storage/games-internal /storage/games-external
 do
   COUNT=$(find ${GAMES}/roms 2>/dev/null| wc -l)
-  if [ "${COUNT}" -lt 10 ]
+  if [ "${COUNT}" -lt 320 ]
   then
-    mkdir -p "${GAMES}/roms" 2>/dev/null
+    if [ ! -d "${GAMES}/roms" ]
+    then
+      mkdir -p "${GAMES}/roms" 2>/dev/null
+    else
+      find "${GAMES}/roms" -type d -empty -delete
+    fi
     mv "${GAMES}/"* "${GAMES}/roms/" 2>/dev/null
+    find "${GAMES}" -type d -empty -delete
   fi
 done
 systemctl restart jelos-automount
