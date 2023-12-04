@@ -9,7 +9,6 @@
 UPDATE_ROOT="/storage/.update"
 MOUNT_GAMES=$(get_setting system.automount)
 GAMES_DEVICE=$(get_setting system.gamesdevice)
-MS_ENABLED=$(get_setting system.merged.storage)
 MS_DEVICE=$(get_setting system.merged.device)
 
 ### Default to the external storage device.
@@ -26,6 +25,13 @@ function start_ms() {
   ### Entrypoint will be either games card found (external), or not found (internal).
   MOUNT_PATH="/storage/games-${1}"
 
+  ### If the merge target isn't defined and we have an external microsd, we should use the external card by default.
+  if [ -z "${MS_DEVICE}" ] && \
+     [ "${1}" = "external" ]
+  then
+    set_setting system.merged.device external
+  fi
+
   ### Determine if internal or external is the primary target by configuration.
   case ${MS_DEVICE} in
     internal)
@@ -38,8 +44,9 @@ function start_ms() {
     ;;
   esac
 
+  MS_ENABLED=$(get_setting system.merged.storage)
   if [ -e "/storage/.ms_unsupported" ] || \
-     [ "${MS_ENABLED}" = 0 ]
+     [ ! "${MS_ENABLED}" = 1 ]
   then
     log $0 "Executing bind mount of ${MOUNT_PATH} to ${MS_PATH}"
     mount --bind ${MOUNT_PATH}/roms ${MS_PATH}
@@ -68,7 +75,11 @@ then
 fi
 
 function create_game_dirs() {
-  systemd-tmpfiles --create /usr/lib/tmpfiles.d/JELOS-system-dirs.conf >/dev/null 2>&1 ||:
+  ### We don't want systemd to manage this or the directories could be created in the wrong location.
+  if [ -e "/usr/config/system-dirs.conf" ]
+  then
+    systemd-tmpfiles --create /usr/config/system-dirs.conf >/dev/null 2>&1 ||:
+  fi
 }
 
 function load_modules() {
