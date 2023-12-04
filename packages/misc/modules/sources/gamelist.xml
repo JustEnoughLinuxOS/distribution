@@ -61,18 +61,6 @@
         <image>./images/rclone-restore.svg</image>
     </game>
     <game>
-        <path>./Optimize Merged Storage.sh</path>
-        <name>Optimize Merged Storage</name>
-        <desc>This tool can be run to clean up simple issues preventing games from being listed.</desc>
-        <developer>JELOS</developer>
-        <publisher>JELOS</publisher>
-        <rating>5.0</rating>
-        <releasedate>2023</releasedate>
-        <genre>Script</genre>
-        <players>1</players>
-        <image>./images/remove-mac-files.svg</image>
-    </game>
-    <game>
         <path>./Remove ._ Files.sh</path>
         <name>Remove ._ Files</name>
         <desc>This tool can be run to remove hidden ._ files created by the MacOS filesystem</desc>

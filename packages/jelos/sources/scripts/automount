@@ -12,26 +12,19 @@ GAMES_DEVICE=$(get_setting system.gamesdevice)
 MS_ENABLED=$(get_setting system.merged.storage)
 MS_DEVICE=$(get_setting system.merged.device)
 
-
 ### Default to the external storage device.
 MOUNT_PATH="/storage/games-external"
 
 MS_PATH="/storage/roms"
 
 function unmount() {
-  NULL=$(grep -e "${1}" /proc/mounts >/dev/null 2>&1)
-  if [ "$?" = "0" ]
-  then
-    log $0 "Unmount ${1}."
-    umount -f "${1}" 2>/dev/null ||:
-  fi
+  log $0 "Unmount ${1}."
+  umount -f "${1}" 2>/dev/null ||:
 }
 
 function start_ms() {
   ### Entrypoint will be either games card found (external), or not found (internal).
   MOUNT_PATH="/storage/games-${1}"
-
-  unmount ${MS_PATH}
 
   ### Determine if internal or external is the primary target by configuration.
   case ${MS_DEVICE} in
@@ -139,10 +132,12 @@ function mount_games() {
 }
 
 function find_games() {
-  if /usr/bin/busybox mountpoint -q /storage ; then
+  if /usr/bin/busybox mountpoint -q /storage
+  then
     for DEV in $(for dev in mmcblk[0-9] sd[a-z] nvme[0-9]; do blkid | grep ${dev} | awk 'BEGIN {FS=":"}; /ext4/ || /fat/ {print $1}' | sort -r; done)
     do
       ROOTDEV=$(echo ${DEV} | sed -e "s#^/.*/##g" -e "s#p[0-9].*\$##g")
+      log $0 "Inspecting ${DEV}."
       SIZE=$(awk '/'${ROOTDEV}'$/ {print $3}' /proc/partitions)
       if (( ${SIZE} <= 8388608 ))
       then
@@ -156,20 +151,20 @@ function find_games() {
         # Assume this is an android boot device and ignore it.
         continue
       fi
-      # Udevil might mount it, and we shouldn't care if it does.
-      NULL=$(cat /proc/mounts | grep -v -e "/var/media" 2>/dev/null | grep ${DEV})
-      if [ ! "$?" = "0" ] && \
-         [ -e "${DEV}" ] && \
+      if [ -e "${DEV}" ] && \
          [ ! -e "/storage/.please_resize_me" ]
       then
         GAMES_DEVICE=${DEV}
         log $0 "Found ${DEV} available to mount."
         mount_games "${DEV}"
-        break
+      else
+        log $0 "${DEV} not available."
       fi
     done
     log $0 "Could not find external card to mount, assume internal."
     start_ms internal
+    create_game_dirs
+    exit 0
   fi
 }
 
@@ -177,8 +172,9 @@ function find_games() {
 
 load_modules
 
-### Unmount external storage if it's mounted.
-unmount "${MOUNT_PATH}"
+### Unmount any existing storage before beginning operations.
+unmount /storage/games-external
+unmount /storage/roms
 
 if [ -e "${GAMES_DEVICE}" ]
 then
