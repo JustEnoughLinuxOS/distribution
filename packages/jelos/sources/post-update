@@ -99,10 +99,11 @@ fi
 ### Migration part 2
 for GAMES in /storage/games-internal /storage/games-external
 do
-  if [ ! -d "${GAMES}/roms" ]
+  COUNT=$(find ${GAMES}/roms 2>/dev/null| wc -l)
+  if [ "${COUNT}" -lt 10 ]
   then
-    mkdir -p "${GAMES}/roms"
-    mv "${GAMES}/"* "${GAMES}/roms/"
+    mkdir -p "${GAMES}/roms" 2>/dev/null
+    mv "${GAMES}/"* "${GAMES}/roms/" 2>/dev/null
   fi
 done
 systemctl restart jelos-automount
