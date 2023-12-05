@@ -5,10 +5,8 @@
 
 . /etc/profile
 
-PORTPLATFORM=$(tr -d '\0' </sys/firmware/devicetree/base/model 2>/dev/null)
-
 if [[ "${UI_SERVICE}" =~ weston.service ]]; then
-case ${PORTPLATFORM} in
+case ${QUIRK_DEVICE} in
   "Hardkernel ODROID-GO-Ultra"|"Powkiddy RGB10 MAX 3"|"Hardkernel ODROID-N2*")
     #Fixing ports on S922X, exclude FNA games
     for port in /storage/roms/ports/*.sh; do
