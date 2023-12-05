@@ -637,6 +637,10 @@ function set_aspectratio() {
         done
       ;;
     esac
+    add_setting "positionx" "custom_viewport_x"
+    add_setting "positiony" "custom_viewport_y"
+    add_setting "width" "custom_viewport_width"
+    add_setting "height" "custom_viewport_height"
 }
 
 function set_filtering() {
@@ -645,6 +649,7 @@ function set_filtering() {
 
 function set_integerscale() {
     add_setting "integerscale" "video_scale_integer"
+    add_setting "integerscaleoverscale" "video_scale_integer_overscale"
 }
 
 function set_rgascale() {
@@ -927,6 +932,7 @@ function set_gambatte() {
         local COLORIZATION=$(game_setting renderer.colorization)
         local TWB1_COLORIZATION=$(game_setting renderer.twb1_colorization)
         local TWB2_COLORIZATION=$(game_setting renderer.twb2_colorization)
+        local TWB3_COLORIZATION=$(game_setting renderer.twb3_colorization)
         local PIXELSHIFT1_COLORIZATION=$(game_setting renderer.pixelshift1_colorization)
 
 	if [ -n "${COLORIZATION}" ]
@@ -946,7 +952,8 @@ function set_gambatte() {
                     echo 'gambatte_gb_internal_palette = "'${COLORIZATION}'"' >> ${GAMBATTECONF}
                     echo 'gambatte_gb_palette_twb64_1 = "'${TWB1_COLORIZATION}'"' >> ${GAMBATTECONF}
                     echo 'gambatte_gb_palette_twb64_2 = "'${TWB2_COLORIZATION}'"' >> ${GAMBATTECONF}
-		    echo 'gambatte_gb_palette_pixelshift_1 = "'${PIXELSHIFT1_COLORIZATION}'"' >> ${GAMBATTECONF}
+                    echo 'gambatte_gb_palette_twb64_3 = "'${TWB3_COLORIZATION}'"' >> ${GAMBATTECONF}
+		            echo 'gambatte_gb_palette_pixelshift_1 = "'${PIXELSHIFT1_COLORIZATION}'"' >> ${GAMBATTECONF}
                 ;;
             esac
         fi
