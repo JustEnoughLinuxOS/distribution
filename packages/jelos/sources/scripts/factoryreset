@@ -15,7 +15,7 @@ case "${1}" in
   "ALL")
     systemctl stop ${UI_SERVICE}
     cd /
-    find /storage -mindepth 1 \( ! -regex '^/storage/.update.*' -a ! -regex '^/storage/roms.*' \) -delete
+    find /storage -mindepth 1 \( ! -regex '^/storage/.update.*' -a ! -regex '^/storage/roms.*' -a ! -regex '^/storage/games-*' \) -delete
     mkdir /storage/.config/
     sync
     systemctl reboot
