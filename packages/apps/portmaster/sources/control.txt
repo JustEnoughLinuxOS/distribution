@@ -23,9 +23,8 @@ SDLDBUSERFILE="/storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt"
 clibs="/usr/lib/compat/"
 raloc="/usr/bin"
 raconf="--config /storage/.config/retroarch/retroarch.cfg"
-pdevice=$(tr -d '\0' </sys/firmware/devicetree/base/model 2>/dev/null)
 
-case ${pdevice} in
+case "${QUIRK_DEVICE}" in
   "Anbernic RG552")
     profile="rg552"
     lres="N"
