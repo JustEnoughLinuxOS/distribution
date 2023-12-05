@@ -9,12 +9,6 @@
 UPDATE_ROOT="/storage/.update"
 MOUNT_GAMES=$(get_setting system.automount)
 GAMES_DEVICE=$(get_setting system.gamesdevice)
-MS_ENABLED=$(get_setting system.merged.storage)
-MS_DEVICE=$(get_setting system.merged.device)
-
-### Default to the external storage device.
-MOUNT_PATH="/storage/games-external"
-
 MS_PATH="/storage/roms"
 
 function unmount() {
@@ -25,6 +19,14 @@ function unmount() {
 function start_ms() {
   ### Entrypoint will be either games card found (external), or not found (internal).
   MOUNT_PATH="/storage/games-${1}"
+
+  MS_DEVICE=$(get_setting system.merged.device)
+  ### If the merge target isn't defined and we have an external microsd, we should use the external card by default.
+  if [ -z "${MS_DEVICE}" ] && \
+     [ "${1}" = "external" ]
+  then
+    set_setting system.merged.device external
+  fi
 
   ### Determine if internal or external is the primary target by configuration.
   case ${MS_DEVICE} in
@@ -38,8 +40,9 @@ function start_ms() {
     ;;
   esac
 
+  MS_ENABLED=$(get_setting system.merged.storage)
   if [ -e "/storage/.ms_unsupported" ] || \
-     [ "${MS_ENABLED}" = 0 ]
+     [ ! "${MS_ENABLED}" = 1 ]
   then
     log $0 "Executing bind mount of ${MOUNT_PATH} to ${MS_PATH}"
     mount --bind ${MOUNT_PATH}/roms ${MS_PATH}
@@ -88,7 +91,11 @@ then
 fi
 
 function create_game_dirs() {
-  systemd-tmpfiles --create /usr/lib/tmpfiles.d/JELOS-system-dirs.conf >/dev/null 2>&1 ||:
+  ### We don't want systemd to manage this or the directories could be created in the wrong location.
+  if [ -e "/usr/config/system-dirs.conf" ]
+  then
+    systemd-tmpfiles --create /usr/config/system-dirs.conf >/dev/null 2>&1 ||:
+  fi
 }
 
 function load_modules() {
@@ -104,7 +111,7 @@ function load_modules() {
 }
 
 function mount_games() {
-      local MOUNT_PATH="/storage/games-external"
+      MOUNT_PATH="/storage/games-external"
       FSTYPE=$(blkid -o export ${1} | awk 'BEGIN {FS="="} /TYPE/ {print $2}')
       case ${FSTYPE} in
         ext4)
@@ -171,7 +178,9 @@ function find_games() {
         # Assume this is an android boot device and ignore it.
         continue
       fi
-      if [ -e "${DEV}" ] && \
+      ISMOUNTED="$(grep "${DEV}" /proc/mounts) >/dev/null 2>&1"
+      if [ ! "$?" = 0 ] && \
+         [ -e "${DEV}" ] && \
          [ ! -e "/storage/.please_resize_me" ]
       then
         GAMES_DEVICE=${DEV}
@@ -182,6 +191,13 @@ function find_games() {
       fi
     done
     log $0 "Could not find external card to mount, assume internal."
+
+    MS_DEVICE=$(get_setting system.merged.device)
+    ### If the merge target isn't defined and we do not have an external microsd, we should use the internal card by default.
+    if [ -z "${MS_DEVICE}" ]
+    then
+      set_setting system.merged.device internal
+    fi
     start_ms internal
     create_game_dirs
     exit 0

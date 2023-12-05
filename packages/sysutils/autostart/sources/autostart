@@ -44,6 +44,7 @@ then
 fi
 
 ### Start the automount service
+tocon "Starting storage services..."
 systemctl start jelos-automount
 
 ### Run common start scripts

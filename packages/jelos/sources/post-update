@@ -97,16 +97,18 @@ else
 fi
 
 ### Migration part 2
-for GAMES in /storage/games-internal /storage/games-external
-do
-  COUNT=$(find ${GAMES}/roms 2>/dev/null| wc -l)
-  if [ "${COUNT}" -lt 10 ]
-  then
-    mkdir -p "${GAMES}/roms" 2>/dev/null
-    mv "${GAMES}/"* "${GAMES}/roms/" 2>/dev/null
-  fi
-done
-systemctl restart jelos-automount
+if [ ! -e "/storage/.migrated_games2" ]
+then
+  for GAMES in /storage/games-internal /storage/games-external
+  do
+    if [ ! -d "${GAMES}/roms" ]
+    then
+      mkdir -p "${GAMES}/roms" 2>/dev/null
+    fi
+    mv "${GAMES}"/* "${GAMES}/roms/" 
+  done
+  touch /storage/.migrated_games2
+fi
 
 ### 20231129 - Don't default to performance.
 EPP=$(get_setting system.power.epp)
@@ -133,18 +135,4 @@ then
   set_setting system.merged.storage 0
 fi
 
-### 20231129 - Don't default to performance.
-EPP=$(get_setting system.power.epp)
-if [ -z "${EPP}" ] || \
-   [ "${EPP}" = "performance" ]
-then
-  EPP="balance_performance"
-  set_setting system.power.epp ${EPP}
-fi
-
-### 20231130 - Replace smb.conf for new overlay mechanism.
-cp -f /usr/config/smb.conf /storage/.config
-
-### Items below this line should not be removed.
-tocon "Update complete, rebooting..."
-reboot
+systemctl restart jelos-automount
