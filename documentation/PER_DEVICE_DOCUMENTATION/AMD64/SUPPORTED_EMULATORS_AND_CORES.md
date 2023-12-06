@@ -89,7 +89,7 @@ This document describes all available systems emulators and cores available for 
 |Panasonic|3DO (3do)|1993|`3do`|.iso .bin .chd .cue|**retroarch:** opera (default)<br>|
 |Philips|VideoPac (videopac)|1978|`videopac`|.bin .zip .7z|**retroarch:** o2em (default)<br>|
 |Sammy|Atomiswave (atomiswave)|2003|`atomiswave`|.lst .bin .dat .zip .7z|**retroarch:** flycast (default)<br>**flycast:** flycast-sa<br>|
-|Sega|Dreamcast (dreamcast)|1998|`dreamcast`|.cdi .gdi .chd .m3u|**retroarch:** flycast2021<br>**retroarch:** flycast (default)<br>**flycast:** flycast-sa<br>|
+|Sega|Dreamcast (dreamcast)|1998|`dreamcast`|.cdi .gdi .chd .m3u .cue|**retroarch:** flycast2021<br>**retroarch:** flycast (default)<br>**flycast:** flycast-sa<br>|
 |Sega|Game Gear (gamegear)|1990|`gamegear`|.bin .gg .zip .7z|**retroarch:** gearsystem (default)<br>**retroarch:** genesis_plus_gx<br>**retroarch:** picodrive<br>**retroarch:** smsplus<br>**mednafen:** gg<br>|
 |Sega|Game Gear (Hacks) (ggh)|1990|`gamegearh`|.bin .gg .zip .7z|**retroarch:** gearsystem (default)<br>**retroarch:** genesis_plus_gx<br>**retroarch:** picodrive<br>**retroarch:** smsplus<br>**mednafen:** gg<br>|
 |Sega|Genesis (genesis)|1989|`genesis`|.bin .gen .md .sg .smd .zip .7z|**retroarch:** genesis_plus_gx (default)<br>**retroarch:** genesis_plus_gx_wide<br>**retroarch:** picodrive<br>**mednafen:** md<br>|
