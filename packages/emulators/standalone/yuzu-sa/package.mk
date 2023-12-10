@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="yuzu-sa"
-PKG_VERSION="8a79dd2d6c6445bff63ea1f2f5f1611a6afcd97a"
+PKG_VERSION="875568bb3e34725578f7fa3661c8bad89f23a173"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/yuzu-emu/yuzu"
