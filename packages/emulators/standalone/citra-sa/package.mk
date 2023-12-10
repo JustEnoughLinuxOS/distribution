@@ -17,7 +17,7 @@ case ${DEVICE} in
   ;;
   *)
     PKG_URL="${PKG_SITE}.git"
-    PKG_VERSION="59df319f48a8a67db717233e5b222a0b86f1eae4"
+    PKG_VERSION="60584e861d15f5cf1f64890c03e8090460d3f7c4"
   ;;
 esac
 
