@@ -11,7 +11,10 @@ GUID1="$(mednafen --list-joysticks | grep ID | awk 'NR==1 {print $2}')"
 sed -e "s/@GUID1@/${GUID1}/g" ${MEDNAFEN_CONFIG} >> $MEDNAFEN_HOME/mednafen.cfg
 
 NAME="$(mednafen --list-joysticks | grep ID | awk 'NR==1 {print $5$6}')"
-
+if [[ "$(mednafen --list-joysticks | grep ID | awk 'NR==1 {print $4}')" = "8BitDo" ]]
+then
+NAME="X-Box360"
+fi
 
 # Controller config for 360 and GPIO handled separately
 if [[ "${NAME}" = "X-Box360" ]]
