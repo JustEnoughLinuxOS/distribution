@@ -7,7 +7,7 @@
 PKG_NAME="linux"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/JustEnoughLinuxOS"
-PKG_DEPENDS_HOST="ccache:host rsync:host openssl:host"
+PKG_DEPENDS_HOST="ccache:host rsync:host openssl:host rdfind:host"
 PKG_DEPENDS_TARGET="toolchain linux:host cpio:host kmod:host xz:host lz4:host wireless-regdb keyutils util-linux binutils ncurses openssl:host ${KERNEL_EXTRA_DEPENDS_TARGET}"
 PKG_DEPENDS_INIT="toolchain"
 PKG_NEED_UNPACK="${LINUX_DEPENDS} $(get_pkg_directory initramfs) $(get_pkg_variable initramfs PKG_NEED_UNPACK)"
@@ -36,7 +36,7 @@ case ${DEVICE} in
     PKG_GIT_CLONE_BRANCH="main"
   ;;
   RK33*)
-    PKG_VERSION="6.1.64"
+    PKG_VERSION="6.1.65"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
   ;;
 esac

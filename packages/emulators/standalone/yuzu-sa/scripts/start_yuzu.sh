@@ -35,11 +35,14 @@ ln -sf /storage/roms/bios/yuzu/keys /storage/.config/yuzu/keys
   AF=$(get_setting anisotropic_filtering switch "${GAME}")
   AA=$(get_setting anti_aliasing switch "${GAME}")
   ASPECT=$(get_setting aspect_ratio switch "${GAME}")
+  ASTCD=$(get_setting astc_decoding_method switch "${GAME}")
+  CACCURACY=$(get_setting cpu_accuracy switch "${GAME}")
   GACCURACY=$(get_setting gpu_accuracy switch "${GAME}")
   GRENDERER=$(get_setting graphics_backend switch "${GAME}")
   IRES=$(get_setting internal_resolution switch "${GAME}")
   PFILTER=$(get_setting pixel_filter switch "${GAME}")
   RUMBLE=$(get_setting rumble switch "${GAME}")
+  RUMBLESTR=$(get_setting rumble_strength switch "${GAME}")
   SDOCK=$(get_setting switch_mode switch "${GAME}")
   SUI=$(get_setting start_ui switch "${GAME}")
   VSYNC=$(get_setting vsync switch "${GAME}")
@@ -101,6 +104,33 @@ ln -sf /storage/roms/bios/yuzu/keys /storage/.config/yuzu/keys
         then
                 sed -i '/^aspect_ratio=/c\aspect_ratio=4' /storage/.config/yuzu/qt-config.ini
         fi
+
+  #ASTC Acceleration (default to 1/GPU)
+	sed -i '/^accelerate_astc\\default=/c\accelerate_astc\\default=false' /storage/.config/yuzu/qt-config.ini
+	if [ "$ASTCD" = "0" ]
+	then
+                sed -i '/^accelerate_astc=/c\accelerate_astc=0' /storage/.config/yuzu/qt-config.ini
+	elif [ "$ASTCD" = "2" ]
+	then
+		sed -i '/^accelerate_astc=/c\accelerate_astc=2' /storage/.config/yuzu/qt-config.ini
+	else
+		sed -i '/^accelerate_astc=/c\accelerate_astc=1' /storage/.config/yuzu/qt-config.ini
+	fi
+
+  #GPU Accuracy
+	sed -i '/^cpu_accuracy\\default=/c\cpu_accuracy\\default=false' /storage/.config/yuzu/qt-config.ini
+	if [ "$CACCURACY" = "1" ]
+ 	then
+ 		sed -i '/^cpu_accuracy=/c\cpu_accuracy=1' /storage/.config/yuzu/qt-config.ini
+ 	elif [ "$CACCURACY" = "2" ]
+ 	then
+ 		sed -i '/^cpu_accuracy=/c\cpu_accuracy=2' /storage/.config/yuzu/qt-config.ini
+	elif [ "$CACCURACY" = "3" ]
+ 	then
+ 		sed -i '/^cpu_accuracy=/c\cpu_accuracy=3' /storage/.config/yuzu/qt-config.ini
+	else
+		sed -i '/^cpu_accuracy=/c\cpu_accuracy=0' /storage/.config/yuzu/qt-config.ini
+	fi
 
   #GPU Accuracy
 	sed -i '/^gpu_accuracy\\default=/c\gpu_accuracy\\default=false' /storage/.config/yuzu/qt-config.ini
@@ -181,6 +211,25 @@ ln -sf /storage/roms/bios/yuzu/keys /storage/.config/yuzu/keys
 		sed -i '/^vibration_enabled=/c\vibration_enabled=true' /storage/.config/yuzu/qt-config.ini
 	fi
 
+  #RUMBLE STRENGTH
+	sed -i '/^player_0_vibration_strength\\default=/c\player_0_vibration_strength\\default=false' /storage/.config/yuzu/qt-config.ini
+        if [ "$RUMBLESTR" = "100" ]
+        then
+		sed -i '/^player_0_vibration_strength=/c\player_0_vibration_strength=100' /storage/.config/yuzu/qt-config.ini
+	fi
+        if [ "$RUMBLESTR" = "75" ]
+        then
+                sed -i '/^player_0_vibration_strength=/c\player_0_vibration_strength=75' /storage/.config/yuzu/qt-config.ini
+        fi
+        if [ "$RUMBLESTR" = "50" ]
+        then
+                sed -i '/^player_0_vibration_strength=/c\player_0_vibration_strength=50' /storage/.config/yuzu/qt-config.ini
+        fi
+        if [ "$RUMBLESTR" = "25" ]
+        then
+                sed -i '/^player_0_vibration_strength=/c\player_0_vibration_strength=25' /storage/.config/yuzu/qt-config.ini
+        fi
+
   #Switch Mode
 	sed -i '/^use_docked_mode\\default=/c\use_docked_mode\\default=false' /storage/.config/yuzu/qt-config.ini
 	if [ "$SDOCK" = "0" ]
@@ -202,6 +251,10 @@ ln -sf /storage/roms/bios/yuzu/keys /storage/.config/yuzu/keys
 	then
 		sed -i '/^use_vsync=/c\use_vsync=true' /storage/.config/yuzu/qt-config.ini
 	fi
+
+#Never ask to confrim close
+sed -i '/^confirmStop\\default=/c\confirmStop\\default=false' /storage/.config/yuzu/qt-config.ini
+sed -i '/^confirmStop=/c\confirmStop=3' /storage/.config/yuzu/qt-config.ini
 
 #Link  .config/yuzu to .local
 rm -rf /storage/.local/share/yuzu

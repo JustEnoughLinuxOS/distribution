@@ -4,6 +4,7 @@
 
 # Minimal OS variable loading for performance
 . /etc/profile.d/001-functions
+. /etc/profile.d/030-powerfunctions
 . /etc/profile.d/099-freqfunctions
 
 tocon "Setting performance mode..."

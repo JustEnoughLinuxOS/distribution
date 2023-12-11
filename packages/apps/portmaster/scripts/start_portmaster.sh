@@ -66,7 +66,10 @@ else
 fi
 
 #Make sure permissions are correct in the PortMaster folder
-chmod 755 /storage/roms/ports/PortMaster/* -R
+find /storage/roms/ports/ -not -perm 755 -exec chmod 755 {} \;
+
+#Fix compatability for some portmaster ports
+/usr/bin/portmaster_compatibility.sh
 
 #Start PortMaster
 @LIBEGL@

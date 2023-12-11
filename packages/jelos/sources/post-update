@@ -73,8 +73,12 @@ sed -i 's~"pulse"~"alsathread"~g' /storage/.config/retroarch/retroarch.cfg
 ### 20231114 - Update hosts.conf
 grep "127.0.0.1" /storage/.config/hosts.conf >/dev/null 2>&1 || cp /usr/config/hosts.conf /storage/.config/
 
-### 20231127 - Migrate games to overlayfs
-systemctl stop storage-roms.mount
+### 20231127 - Migrate games to overlayfs (updated 20231203)
+NULL=$(cat /proc/mounts | grep -v -e "/storage/roms" 2>/dev/null | grep ${1})
+if [ ! "$?" = 0 ]
+then
+  umount /storage/roms
+fi
 GAMECOUNT=$(find /storage/roms -type f | wc -l)
 if [ "${GAMECOUNT}" -gt 20 ] && \
    [ ! -e "/storage/.migrated_games" ]
@@ -91,7 +95,20 @@ then
 else
   echo "Game weight too low (${GAMECOUNT}) or content already migrated." >>${LOG}
 fi
-systemctl start storage-roms.mount
+
+### Migration part 2
+if [ ! -e "/storage/.migrated_games2" ]
+then
+  for GAMES in /storage/games-internal /storage/games-external
+  do
+    if [ ! -d "${GAMES}/roms" ]
+    then
+      mkdir -p "${GAMES}/roms" 2>/dev/null
+    fi
+    mv "${GAMES}"/* "${GAMES}/roms/" 
+  done
+  touch /storage/.migrated_games2
+fi
 
 ### 20231129 - Don't default to performance.
 EPP=$(get_setting system.power.epp)
@@ -105,6 +122,17 @@ fi
 ### 20231130 - Replace smb.conf for new overlay mechanism.
 cp -f /usr/config/smb.conf /storage/.config
 
-### Items below this line should not be removed.
-tocon "Update complete, rebooting..."
-reboot
+### 20231202 - Remove stale profile bits if they exist.
+for FILE in 001-deviceconfig 99-mixer
+do
+  rm -rf ${FILE} 2>/dev/null
+done
+
+### 20231203 - Disable merged storage by default.
+MERGED_STORAGE=$(get_setting system.merged.storage)
+if [ -z "${MERGED_STORAGE}" ]
+then
+  set_setting system.merged.storage 0
+fi
+
+systemctl restart jelos-automount

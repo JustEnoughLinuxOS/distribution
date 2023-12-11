@@ -1225,8 +1225,8 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/config/emulationstation
   cp -f ${ESTMP}/es_systems.cfg ${INSTALL}/usr/config/emulationstation
 
-  mkdir -p ${INSTALL}/usr/lib/tmpfiles.d
-  cp -f ${ESTMP}/${DISTRO}-system-dirs.conf ${INSTALL}/usr/lib/tmpfiles.d
+  ### Automount should handle this.
+  cp -f ${ESTMP}/system-dirs.conf ${INSTALL}/usr/config
 
   mkdir -p ${INSTALL}/usr/bin
   cp ${PKG_DIR}/scripts/mkcontroller ${INSTALL}/usr/bin

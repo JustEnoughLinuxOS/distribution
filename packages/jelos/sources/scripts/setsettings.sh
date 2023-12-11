@@ -927,6 +927,7 @@ function set_gambatte() {
         local COLORIZATION=$(game_setting renderer.colorization)
         local TWB1_COLORIZATION=$(game_setting renderer.twb1_colorization)
         local TWB2_COLORIZATION=$(game_setting renderer.twb2_colorization)
+        local TWB3_COLORIZATION=$(game_setting renderer.twb3_colorization)
         local PIXELSHIFT1_COLORIZATION=$(game_setting renderer.pixelshift1_colorization)
 
 	if [ -n "${COLORIZATION}" ]
@@ -946,6 +947,7 @@ function set_gambatte() {
                     echo 'gambatte_gb_internal_palette = "'${COLORIZATION}'"' >> ${GAMBATTECONF}
                     echo 'gambatte_gb_palette_twb64_1 = "'${TWB1_COLORIZATION}'"' >> ${GAMBATTECONF}
                     echo 'gambatte_gb_palette_twb64_2 = "'${TWB2_COLORIZATION}'"' >> ${GAMBATTECONF}
+                    echo 'gambatte_gb_palette_twb64_3 = "'${TWB3_COLORIZATION}'"' >> ${GAMBATTECONF}
 		    echo 'gambatte_gb_palette_pixelshift_1 = "'${PIXELSHIFT1_COLORIZATION}'"' >> ${GAMBATTECONF}
                 ;;
             esac
