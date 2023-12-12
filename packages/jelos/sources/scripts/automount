@@ -46,7 +46,6 @@ function start_ms() {
   then
     log $0 "Executing bind mount of ${MOUNT_PATH} to ${MS_PATH}"
     mount --bind ${MOUNT_PATH}/roms ${MS_PATH}
-    exit 0
   else
     log $0 "Enabling merged storage of /storage/games-${LOWER} and /storage/games-${UPPER} to ${MS_PATH}."
 
@@ -74,6 +73,7 @@ function create_game_dirs() {
   ### We don't want systemd to manage this or the directories could be created in the wrong location.
   if [ -e "/usr/config/system-dirs.conf" ]
   then
+    log $0 "Creating game directories."
     systemd-tmpfiles --create /usr/config/system-dirs.conf >/dev/null 2>&1 ||:
   fi
 }
