@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="portmaster"
-PKG_VERSION="8.5.2_0811"
+PKG_VERSION="8.5.13_1130"
 PKG_SITE="https://github.com/PortsMaster/PortMaster-GUI"
 PKG_URL="${PKG_SITE}/releases/download/${PKG_VERSION}/PortMaster.zip"
 COMPAT_URL="https://github.com/brooksytech/JelosAddOns/raw/main/compat.zip"

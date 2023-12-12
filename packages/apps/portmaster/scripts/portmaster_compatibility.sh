@@ -6,7 +6,7 @@
 . /etc/profile
 
 if [[ "${UI_SERVICE}" =~ weston.service ]]; then
-case ${QUIRK_DEVICE} in
+case "${QUIRK_DEVICE}" in
   "Hardkernel ODROID-GO-Ultra"|"Powkiddy RGB10 MAX 3"|"Hardkernel ODROID-N2*")
     #Fixing ports on S922X, exclude FNA games
     for port in /storage/roms/ports/*.sh; do
@@ -17,9 +17,20 @@ case ${QUIRK_DEVICE} in
     done;
   ;;
   *)
-    #Remove gl4es libs on devices that support OpenGL
+    #Remove gl4es libs on devices that support OpenGL and sed any port that refrences it
     rm -rf /storage/roms/ports/*/lib*/libEGL*
     rm -rf /storage/roms/ports/*/lib*/libGL*
+    for port in /storage/roms/ports/*.sh; do
+        sed -i '/^export SDL_VIDEO_GL_DRIVER/c\#export SDL_VIDEO_GL_DRIVER"' "$port"
+        sed -i '/^export SDL_VIDEO_EGL_DRIVER/c\#export SDL_VIDEO_EGL_DRIVER' "$port"
+        echo Fixing: "$port";
+    done;
+
+    #Remove S922X fix if exists
+    for port in /storage/roms/ports/*.sh; do
+      sed -i '/get_controls && export/c\get_controls' "$port"
+      echo Fixing: "$port";
+    done;
   ;;
 esac
 fi
