@@ -51,7 +51,7 @@ jobs:
       - name: Build World
         run: |
             set -e
-            CUSTOM_VERSION="${{ steps.version.outputs.version }}" DOCKER_WORK_DIR="/work" DOCKER_EXTRA_OPTS="-v /buildroot:/buildroot" make docker-world
+            CUSTOM_VERSION="${{ steps.version.outputs.version }}" DOCKER_WORK_DIR="/work" DOCKER_EXTRA_OPTS="-v /buildroot:/buildroot" make docker-world >/tmp/build.log 2>&1
       - name: Create release as draft at first to hide during uploads
         if: github.event.action == 'release-main'
         uses: ncipollo/release-action@v1

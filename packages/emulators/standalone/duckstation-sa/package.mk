@@ -18,7 +18,7 @@ case ${TARGET_ARCH} in
         PKG_CMAKE_OPTS_TARGET+=" -DUSE_DRMKMS=ON -DENABLE_EGL=ON -DUSE_MALI=OFF"
       ;;
       *)
-        PKG_VERSION="bfa792ddbff11c102521124f235ccb310cac6e6a"
+        PKG_VERSION="dbaf49e4d4f217e22b3bf4ae9439108966e95682"
         PKG_PATCH_DIRS+=" wayland/${TARGET_ARCH}"
       ;;
     esac
