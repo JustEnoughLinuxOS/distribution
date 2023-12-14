@@ -3,7 +3,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="qt5"
-PKG_VERSION="8e65ddffeaf77b312c26d3097c26e525b7c5e220"
+PKG_VERSION="b62f335cb3bb1a4e9d7411fad7de9c8eddde1b4e"
 PKG_LICENSE="GPL"
 PKG_SITE="http://qt-project.org"
 PKG_URL="https://invent.kde.org/qt/qt/qt5.git"
