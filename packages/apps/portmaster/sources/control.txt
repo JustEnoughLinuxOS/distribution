@@ -3,10 +3,10 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2023-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
-# This file can and should be sourced by ports for various parameters to 
+# This file can and should be sourced by ports for various parameters to
 # minimize script customizations and allow for easier future updates
 # like adding additional supported devices.
-# Thanks to JohnnyonFlame, dhwz, romadu, and shantigilbert for the 
+# Thanks to JohnnyonFlame, dhwz, romadu, and shantigilbert for the
 # suggestion and assistance with this.
 # Source used for gptokeyb available at
 # https://github.com/christianhaitian/gptokeyb
@@ -23,9 +23,8 @@ SDLDBUSERFILE="/storage/.config/SDL-GameControllerDB/gamecontrollerdb.txt"
 clibs="/usr/lib/compat/"
 raloc="/usr/bin"
 raconf="--config /storage/.config/retroarch/retroarch.cfg"
-pdevice=$(tr -d '\0' </sys/firmware/devicetree/base/model 2>/dev/null)
 
-case ${pdevice} in
+case "${QUIRK_DEVICE}" in
   "Anbernic RG552")
     profile="rg552"
     lres="N"
@@ -90,7 +89,6 @@ get_controls() {
 
     # Set compatability libs and run compatability script
     export LD_LIBRARY_PATH=${clibs}
-    /usr/bin/portmaster_compatibility.sh
 
     # Now find any controller mapped on emulationstation...
     /storage/.config/PortMaster/mapper.txt SDL_GAMECONTROLLERCONFIG_FILE > /dev/null 2>&1
