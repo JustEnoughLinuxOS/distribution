@@ -645,6 +645,7 @@ function set_filtering() {
 
 function set_integerscale() {
     add_setting "integerscale" "video_scale_integer"
+    add_setting "integerscaleoverscale" "video_scale_integer_overscale"
 }
 
 function set_rgascale() {
