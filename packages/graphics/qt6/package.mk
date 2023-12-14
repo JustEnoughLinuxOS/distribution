@@ -9,6 +9,4 @@ PKG_SITE="https://download.qt.io"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="Qt6 - Qt is a full development framework with tools designed to streamline the creation of applications and user interfaces for desktop, embedded, and mobile platforms."
 
-PKG_DEPENDS_TARGET+=" 	qt6base \
-			qt6tools \
-			qt6wayland"
+PKG_DEPENDS_TARGET+=" qt6base qt6tools qt6wayland"
