@@ -7,7 +7,7 @@
 PKG_NAME="linux"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/JustEnoughLinuxOS"
-PKG_DEPENDS_HOST="ccache:host rsync:host openssl:host"
+PKG_DEPENDS_HOST="ccache:host rsync:host openssl:host rdfind:host"
 PKG_DEPENDS_TARGET="toolchain linux:host cpio:host kmod:host xz:host lz4:host wireless-regdb keyutils util-linux binutils ncurses openssl:host ${KERNEL_EXTRA_DEPENDS_TARGET}"
 PKG_DEPENDS_INIT="toolchain"
 PKG_NEED_UNPACK="${LINUX_DEPENDS} $(get_pkg_directory initramfs) $(get_pkg_variable initramfs PKG_NEED_UNPACK)"
@@ -25,7 +25,7 @@ case ${DEVICE} in
   ;;
   RK3566)
     PKG_URL="${PKG_SITE}/rk356x-kernel.git"
-    PKG_VERSION="1e8f831c570eb50245a7dddfb9c7de58c9843f8e"
+    PKG_VERSION="d346337a7b3e3e7e0d12dbdcc4fc62efc86cbda3"
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="main"
   ;;
@@ -33,15 +33,18 @@ case ${DEVICE} in
 #    PKG_VERSION="6.6"
 #    PKG_URL="https://git.kernel.org/torvalds/t/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 	PKG_URL="https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/snapshot/linux-next-next-20231212.tar.gz"
+
+#    PKG_VERSION="6.7-rc4"
+#    PKG_URL="https://git.kernel.org/torvalds/t/${PKG_NAME}-${PKG_VERSION}.tar.gz"
   ;;
   *X55)
     PKG_URL="${PKG_SITE}/rk3566-x55-kernel.git"
-    PKG_VERSION="9a85982a2"
+    PKG_VERSION="9b92751b8fe21f9326d1a54dd5f675965a12d6e1"
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="main"
   ;;
   RK33*)
-    PKG_VERSION="6.1.63"
+    PKG_VERSION="6.1.65"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
   ;;
 esac

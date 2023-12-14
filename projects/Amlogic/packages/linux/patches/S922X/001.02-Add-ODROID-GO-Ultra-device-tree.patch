@@ -1,7 +1,9 @@
-diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts linux/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
---- linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts	2023-09-12 13:20:28.956694441 +0000
-@@ -0,0 +1,1015 @@
+diff --git a/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts b/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
+new file mode 100644
+index 000000000000..6d0453220212
+--- /dev/null
++++ b/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
+@@ -0,0 +1,997 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2022 Neil Armstrong <narmstrong@kernel.org>
@@ -9,7 +11,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
 +
 +/dts-v1/;
 +
-+#include "meson-g12b-s922x.dtsi"
++#include "meson-g12b-a311d.dtsi"
 +#include <dt-bindings/input/input.h>
 +#include <dt-bindings/leds/common.h>
 +#include <dt-bindings/gpio/meson-g12a-gpio.h>
@@ -379,15 +381,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
 +	opp-1704000000 {
 +		opp-microvolt = <862500>;
 +	};
-+	opp-1896000000 {
++	opp-1800000000 {
 +		opp-microvolt = <987500>;
-+	};
-+	opp-1992000000 {
-+		opp-microvolt = <1050000>;
-+	};
-+	opp-2016000000 {
-+        opp-hz = /bits/ 64 <2016000000>;
-+		opp-microvolt = <1050000>;
 +	};
 +};
 +
@@ -418,23 +413,12 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
 +		opp-microvolt = <1025000>;
 +	};
 +	opp-2016000000 {
-+		opp-hz = /bits/ 64 <2016000000>;
 +		opp-microvolt = <1025000>;
 +	};
-+	opp-2100000000 {
-+		opp-hz = /bits/ 64 <2100000000>;
++	opp-2108000000 {
 +		opp-microvolt = <1025000>;
 +	};
 +	opp-2208000000 {
-+		opp-hz = /bits/ 64 <2208000000>;
-+		opp-microvolt = <1050000>;
-+	};
-+	opp-2304000000 {
-+		opp-hz = /bits/ 64 <2304000000>;
-+		opp-microvolt = <1050000>;
-+	};
-+	opp-2400000000 {
-+		opp-hz = /bits/ 64 <2400000000>;
 +		opp-microvolt = <1050000>;
 +	};
 +};

@@ -1879,7 +1879,7 @@ add_system_dir() {
   then
     mkdir -p "${ESTMP}"
   fi
-  cat <<EOF >>${ESTMP}/${DISTRO}-system-dirs.conf
+  cat <<EOF >>${ESTMP}/system-dirs.conf
 d	${1}			0777 root root - -
 EOF
 }

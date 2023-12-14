@@ -27,7 +27,6 @@ fi
 
 if [ -n "${DEVICE_ROOT}" ]
 then
-
   if [ ! "${DEVICE_ROOT}" = "${DEVICE}" ]
   then
     # Ensure there isn't a left over build directory.
@@ -58,11 +57,11 @@ then
       ln -sf sources-${DEVICE_ROOT} sources-${DEVICE}
     fi
   fi
-
+  PKG_CLEAN+=" ${CLEAN_DEVICE_ROOT}"
 fi
 
 # Clean necessary packages.
-PKG_CLEAN+=" ${CLEAN_NETWORK} ${CLEAN_OS_BASE} ${CLEAN_DEVICE_ROOT} ${CLEAN_PACKAGES}"
+PKG_CLEAN+=" ${CLEAN_NETWORK} ${CLEAN_OS_BASE} ${CLEAN_PACKAGES}"
 
 if [ ! -n "${DIRTY}" ]
 then

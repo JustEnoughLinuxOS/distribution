@@ -22,7 +22,7 @@ case ${DEVICE} in
 	PKG_URL="https://mesa.freedesktop.org/archive/mesa-${PKG_VERSION}.tar.xz"
   ;;
   *)
-	PKG_VERSION="23.2.1"
+	PKG_VERSION="23.3.0"
 	PKG_SITE="http://www.mesa3d.org/"
 	PKG_URL="https://mesa.freedesktop.org/archive/mesa-${PKG_VERSION}.tar.xz"
   ;;
@@ -99,6 +99,11 @@ if [ "${VULKAN_SUPPORT}" = "yes" ]; then
 else
   PKG_MESON_OPTS_TARGET+=" -Dvulkan-drivers="
 fi
+
+pre_configure_target() {
+  TARGET_CFLAGS=$(echo ${TARGET_CFLAGS} | sed -e "s|-Ofast|-O3|")
+  TARGET_CXXFLAGS=$(echo ${TARGET_CXXFLAGS} | sed -e "s|-Ofast|-O3|")
+}
 
 post_makeinstall_target() {
   case ${DEVICE} in

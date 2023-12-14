@@ -4,7 +4,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="fbneo-lr"
-PKG_VERSION="089013116d33f212b8dd49c007ac56afe3013f27"
+PKG_VERSION="c6cb6e43497f45a7d39e1194447f318eb0b27b16"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="Non-commercial"

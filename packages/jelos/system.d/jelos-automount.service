@@ -8,7 +8,6 @@ Type=oneshot
 Environment=HOME=/storage
 EnvironmentFile=/etc/profile
 ExecStart=/usr/bin/automount
-ExecStartPost=systemd-tmpfiles --create /usr/lib/tmpfiles.d/JELOS-system-dirs.conf
 RemainAfterExit=yes
 
 [Install]

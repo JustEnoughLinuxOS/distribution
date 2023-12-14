@@ -9,7 +9,7 @@ PKG_ARCH="x86_64"
 PKG_LICENSE="OSS"
 PKG_SITE="https://www.x.org/wiki/RadeonFeature/"
 PKG_URL="http://xorg.freedesktop.org/archive/individual/driver/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain xorg-server"
+PKG_DEPENDS_TARGET="toolchain xwayland"
 PKG_LONGDESC="ATI/AMD Radeon video driver for the Xorg X server."
 PKG_TOOLCHAIN="autotools"
 

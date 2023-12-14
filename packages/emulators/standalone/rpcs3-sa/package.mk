@@ -3,20 +3,22 @@
 # Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="rpcs3-sa"
-PKG_VERSION="ed75bab7b284a9cb62b7308097108e4caef9a0b3"
+PKG_VERSION="7081b89e976ad7f931c926022bd93ddd9778347c"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL-2.0-or-later"
 PKG_SITE="https://rpcs3.net"
 PKG_URL="https://github.com/RPCS3/rpcs3.git"
 PKG_DEPENDS_HOST="toolchain:host"
-PKG_DEPENDS_TARGET="toolchain linux glibc systemd pulseaudio mesa xorg-server libevdev curl ffmpeg libpng zlib glew-cmake libSM SDL2 enet qt5 rpcs3-sa:host vulkan-headers vulkan-loader vulkan-tools libp11-kit yamlcpp openal-soft soundtouch"
+PKG_DEPENDS_TARGET="toolchain linux glibc systemd pulseaudio mesa xwayland libevdev curl ffmpeg libpng zlib glew-cmake libSM SDL2 enet qt5 rpcs3-sa:host vulkan-headers vulkan-loader vulkan-tools libp11-kit yamlcpp openal-soft soundtouch"
 PKG_LONGDESC="RPCS3 is an experimental open-source Sony PlayStation 3 emulator and debugger."
 GET_HANDLER_SUPPORT="git"
 PKG_GIT_CLONE_BRANCH="master"
 PKG_GIT_CLONE_SINGLE="yes"
 
 pre_configure_host() {
-  PKG_CMAKE_SCRIPT="${PKG_BUILD}/3rdparty/llvm/llvm/llvm/CMakeLists.txt"
+  # path changes in future commits.
+  # PKG_CMAKE_SCRIPT="${PKG_BUILD}/3rdparty/llvm/llvm/llvm/CMakeLists.txt"
+  PKG_CMAKE_SCRIPT="${PKG_BUILD}/llvm/CMakeLists.txt"
   PKG_CMAKE_OPTS_HOST="-DLLVM_TARGETS_TO_BUILD="X86" \
                        -DLLVM_BUILD_RUNTIME=OFF \
                        -DLLVM_BUILD_TOOLS=OFF \

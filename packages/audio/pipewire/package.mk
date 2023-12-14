@@ -17,6 +17,7 @@ if [ "${BLUETOOTH_SUPPORT}" = "yes" ]; then
                           -Dbluez5-backend-ofono=disabled \
                           -Dbluez5-backend-hsphfpd=disabled \
                           -Dbluez5-codec-aptx=enabled \
+                          -Dbluez5-codec-lc3plus=disabled \
                           -Dbluez5-codec-ldac=enabled \
                           -Dbluez5-codec-aac=enabled"
 else
@@ -83,6 +84,8 @@ pre_configure_target() {
 }
 
 post_install() {
+  add_user pipewire x 982 980 "pipewire-daemon" "/var/run/pipewire" "/bin/sh"
+  add_group pipewire 980
   mkdir -p ${INSTALL}/etc/alsa/conf.d
   ln -sf /usr/share/alsa/alsa.conf.d/50-pipewire.conf ${INSTALL}/etc/alsa/conf.d/50-pipewire.conf
   ln -sf /usr/share/alsa/alsa.conf.d/99-pipewire-default.conf ${INSTALL}/etc/alsa/conf.d/99-pipewire-default.conf

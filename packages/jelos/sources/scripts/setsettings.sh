@@ -52,6 +52,9 @@ declare -a HAS_CHEEVOS=(    arcade
                             atari7800
                             atarilynx
                             colecovision
+                            cps1
+                            cps2
+                            cps3
                             dreamcast
                             famicom
                             fbn
@@ -921,10 +924,15 @@ function set_gambatte() {
             sed -i "/gambatte_gb_colorization =/d" ${GAMBATTECONF}
             sed -i "/gambatte_gb_internal_palette =/d" ${GAMBATTECONF}
         fi
-        local RENDERER=$(game_setting renderer.colorization)
-	if [ -n "${RENDERER}" ]
+        local COLORIZATION=$(game_setting renderer.colorization)
+        local TWB1_COLORIZATION=$(game_setting renderer.twb1_colorization)
+        local TWB2_COLORIZATION=$(game_setting renderer.twb2_colorization)
+        local TWB3_COLORIZATION=$(game_setting renderer.twb3_colorization)
+        local PIXELSHIFT1_COLORIZATION=$(game_setting renderer.pixelshift1_colorization)
+
+	if [ -n "${COLORIZATION}" ]
         then
-            case ${RENDERER} in
+            case ${COLORIZATION} in
                 0|false|none)
                     echo 'gambatte_gb_colorization = "disabled"' >> ${GAMBATTECONF}
                 ;;
@@ -932,11 +940,15 @@ function set_gambatte() {
                     echo 'gambatte_gb_colorization = "auto"' >> ${GAMBATTECONF}
                 ;;
                 GBC|SGB)
-                    echo 'gambatte_gb_colorization = "'${RENDERER}'"' >> ${GAMBATTECONF}
+                    echo 'gambatte_gb_colorization = "'${COLORIZATION}'"' >> ${GAMBATTECONF}
                 ;;
                 *)
                     echo 'gambatte_gb_colorization = "internal"' >> ${GAMBATTECONF}
-                    echo 'gambatte_gb_internal_palette = "'${RENDERER}'"' >> ${GAMBATTECONF}
+                    echo 'gambatte_gb_internal_palette = "'${COLORIZATION}'"' >> ${GAMBATTECONF}
+                    echo 'gambatte_gb_palette_twb64_1 = "'${TWB1_COLORIZATION}'"' >> ${GAMBATTECONF}
+                    echo 'gambatte_gb_palette_twb64_2 = "'${TWB2_COLORIZATION}'"' >> ${GAMBATTECONF}
+                    echo 'gambatte_gb_palette_twb64_3 = "'${TWB3_COLORIZATION}'"' >> ${GAMBATTECONF}
+		    echo 'gambatte_gb_palette_pixelshift_1 = "'${PIXELSHIFT1_COLORIZATION}'"' >> ${GAMBATTECONF}
                 ;;
             esac
         fi

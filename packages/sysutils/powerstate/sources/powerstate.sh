@@ -11,14 +11,16 @@
 . /etc/profile
 
 BATCNT=0
+unset CURRENT_MODE
+unset AC_STATUS
 while true
 do
   if [ "$(get_setting system.powersave)" = 1 ]
   then
-    STATUS="$(cat /sys/class/power_supply/{BAT*,bat*}/status 2>/dev/null)"
-    if [ ! "${STATUS}" = "${CURRENT_MODE}" ]
+    AC_STATUS="$(cat /sys/class/power_supply/[bB][aA][tT]*/status 2>/dev/null)"
+    if [[ ! "${CURRENT_MODE}" =~ ${AC_STATUS} ]]
     then
-      case ${STATUS} in
+      case ${AC_STATUS} in
         Disch*)
           log $0 "Switching to battery mode."
           if [ -e "/tmp/.gpu_performance_level" ]
@@ -56,7 +58,7 @@ do
         ;;
       esac
     fi
-    CURRENT_MODE="${STATUS}"
+    CURRENT_MODE="${AC_STATUS}"
   fi
   ### Until we have an overlay. :rofl:
   if (( "${BATCNT}" >= "90" )) &&
