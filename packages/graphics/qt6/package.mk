@@ -7,8 +7,8 @@ PKG_VERSION="${PKG_MAJOR_VERSION}.1"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://download.qt.io"
 PKG_DEPENDS_TARGET="toolchain"
-PKG_LONGDESC="QT6 - Qt is a full development framework with tools designed to streamline the creation of applications and user interfaces for desktop, embedded, and mobile platforms."
+PKG_LONGDESC="Qt6 - Qt is a full development framework with tools designed to streamline the creation of applications and user interfaces for desktop, embedded, and mobile platforms."
 
 PKG_DEPENDS_TARGET+=" 	qt6base \
 			qt6tools \
-			qtwayland"
+			qt6wayland"
