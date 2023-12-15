@@ -1,5 +1,5 @@
 PKG_NAME="RTL8188FU-firmware"
-PKG_VERSION="68ced40"
+PKG_VERSION="68ced40d862d13663294496bac2e9a91ffa0e5c7"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kelebek333/rtl8188fu"
 PKG_URL="${PKG_SITE}.git"

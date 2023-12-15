@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0
 
 PKG_NAME="libserialport"
-PKG_VERSION="fd20b0f"
+PKG_VERSION="fd20b0fc5a34cd7f776e4af6c763f59041de223b"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/sigrokproject/libserialport"
 PKG_URL="${PKG_SITE}.git"
