@@ -862,6 +862,37 @@ function set_n64opts() {
     fi
 }
 
+function set_saturnopts() {
+    log "Set up Saturn..."
+    if [ "${CORE}" = "kronos" ]
+    then
+        log "Set up Kronos..."
+        local KRONOSDIR="${RETROARCH_PATH}/Kronos/config/Kronos"
+        if [ ! -d "${KRONOSDIR}" ]
+        then
+            mkdir -p "${KRONOSDIR}"
+        fi
+
+        if [ ! -f "${KRONOSDIR}/Kronos.opt" ]
+        then
+            cp "/usr/config/retroarch/Kronos.opt" "${KRONOSDIR}/Kronos.opt"
+        fi
+        local KRONOSOPT="${KRONOSDIR}/Kronos.opt"
+        local HLE_BIOS="$(game_setting force_hle_bios)"
+        sed -i '/kronos_force_hle_bios = /c\kronos_force_hle_bios = "'${HLE_BIOS}'"' "${KRONOSOPT}"
+        local ADDON_CART="$(game_setting addon_cartridge)"
+        sed -i '/kronos_addon_cartridge = /c\kronos_addon_cartridge = "'${ADDON_CART}'"' "${KRONOSOPT}"
+        local TESSELATION="$(game_setting tesselation)"
+        sed -i '/kronos_polygon_mode = /c\kronos_polygon_mode = "'${TESSELATION}'"' "${KRONOSOPT}"
+        local RESOLUTION="$(game_setting resolution)"
+        sed -i '/kronos_resolution_mode = /c\kronos_resolution_mode = "'${RESOLUTION}'"' "${KRONOSOPT}"
+        local COMPUTE_SHADER="$(game_setting compute_shader)"
+        sed -i '/kronos_use_cs = /c\kronos_use_cs = "'${COMPUTE_SHADER}'"' "${KRONOSOPT}"
+        local TRANSPARENCY="$(game_setting transparency)"
+        sed -i '/kronos_mesh_mode = /c\kronos_mesh_mode = "'${TRANSPARENCY}'"' "${KRONOSOPT}"
+    fi
+}
+
 function set_dreamcastopts() {
     log "Set up Dreamcast..."
     if [ "${CORE}" = "flycast" ]
@@ -1022,6 +1053,7 @@ set_audiolatency &
 set_analogsupport &
 set_tatemode &
 set_n64opts &
+set_saturnopts &
 set_dreamcastopts &
 
 ### Sed operations are expensive, so they are staged and executed as
