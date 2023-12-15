@@ -30,7 +30,7 @@ case ${DEVICE} in
     PKG_GIT_CLONE_BRANCH="main"
   ;;
   *ML)
-#    PKG_VERSION="6.6"
+    PKG_VERSION="next-next-20231212"
 #    PKG_URL="https://git.kernel.org/torvalds/t/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 	PKG_URL="https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git/snapshot/linux-next-next-20231212.tar.gz"
 
