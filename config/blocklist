@@ -3,6 +3,7 @@ np2kai # Last major commit before hiatus is broken.
 vice-sa # Doesn't support updating with the script.
 dolphin-sa # Wayland patch is now broken upstream
 duckstation-lr #Libretro support removed from upstream.
+duckstation-sa #Patches need to be reworked.
 rpcs3-sa #Need to update to llvm 16 
 gzdoom-sa #will break build patch
 ryujinx-sa #broken on JELOS after build 1.1740.

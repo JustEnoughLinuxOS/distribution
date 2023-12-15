@@ -4,7 +4,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="RTL88x2BU"
-PKG_VERSION="888ba1b309e6258a736ef5c37a68836cd0ea5517"
+PKG_VERSION="cd2b6cbd9c8fbfebee8a1f28fab8e4434450456c"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/morrownr/88x2bu-20210702"
 PKG_URL="${PKG_SITE}.git"

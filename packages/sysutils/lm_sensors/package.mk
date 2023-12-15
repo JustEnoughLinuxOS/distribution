@@ -2,7 +2,7 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="lm_sensors"
-PKG_VERSION="42f240d"
+PKG_VERSION="42f240d2a457834bcbdf4dc8b57237f97b5f5854"
 PKG_ARCH="arm x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="http://secure.netroedge.com/~lm78/"

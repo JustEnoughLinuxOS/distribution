@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="play-lr"
-PKG_VERSION="58216c3110abcaf582c6eb9c8fad62ec92945ae6"
+PKG_VERSION="e0f5091e6eb80d609807fc2a9da3f2516373582f"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/jpd002/Play-"
