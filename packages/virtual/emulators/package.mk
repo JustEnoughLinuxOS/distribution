@@ -35,7 +35,7 @@ case "${DEVICE}" in
     PKG_EMUS+=" amiberry cemu-sa citra-sa dolphin-sa duckstation-sa melonds-sa minivmacsa mupen64plus-sa kronos-sa        \
                nanoboyadvance-sa pcsx2-sa primehack rpcs3-sa ryujinx-sa scummvmsa vita3k-sa xemu-sa yuzu-sa mednafen"
     LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr citra-lr desmume-lr dolphin-lr flycast-lr lrps2-lr mame-lr                \
-                     play-lr ppsspp-lr"
+                     play-lr ppsspp-lr kronos-lr"
   ;;
   RK358*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 desmume-lr flycast-lr gpsp-lr pcsx_rearmed-lr"
@@ -989,6 +989,7 @@ makeinstall_target() {
     x86_64)
       add_emu_core saturn kronos kronos-sa false
       add_emu_core saturn retroarch yabasanshiro true
+      add_emu_core saturn retroarch kronos false
       add_emu_core saturn mednafen ss false
     ;;
   esac
@@ -1003,6 +1004,7 @@ makeinstall_target() {
     RK3399|AMD64)
       add_emu_core saturn kronos kronos-sa true
       add_emu_core st-v retroarch beetle_saturn false
+      add_emu_core st-v retroarch kronos false
       add_emu_core st-v mednafen ss false
     ;;
   esac
