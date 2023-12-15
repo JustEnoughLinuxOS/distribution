@@ -4,7 +4,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="RTL8821CU"
-PKG_VERSION="fdbb62727c1526778e408da928d8c3760cce0fa1"
+PKG_VERSION="eb52ece92607394ecc22e96b41671ec3e5b1fa30"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/morrownr/8821cu-20210916"
 PKG_URL="${PKG_SITE}.git"

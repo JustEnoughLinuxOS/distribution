@@ -2,7 +2,7 @@
 # Copyright (C) 2020-present Shanti Gilbert (https://github.com/shantigilbert)
 
 PKG_NAME="librga"
-PKG_VERSION="df26244"
+PKG_VERSION="df26244eb0c3991df319d4276ab80e8c0bf91f64"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="GNU"
 PKG_DEPENDS_TARGET="toolchain libdrm"
