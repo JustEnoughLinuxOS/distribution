@@ -2,7 +2,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="libxcb-cursor"
-PKG_VERSION="103bccad6f4a421ede6a0ef2eecc2749ff9be083"
+PKG_VERSION="c393b71fff76fe8627d0e95c53e756615f84d7a3"
 PKG_LICENSE="OSS"
 PKG_SITE="https://gitlab.freedesktop.org/xorg/lib/libxcb-cursor"
 PKG_URL="${PKG_SITE}.git"

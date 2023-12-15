@@ -2,7 +2,7 @@
 # Copyright (C) 2016-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="unrar"
-PKG_VERSION="c0561ea"
+PKG_VERSION="df15c8c3c9f4105d3501bc477e80ac6b8e227677"
 PKG_LICENSE="free"
 PKG_SITE="http://www.rarlab.com"
 PKG_URL="https://github.com/pmachapman/unrar.git"

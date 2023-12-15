@@ -4,7 +4,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="SDL_sound"
-PKG_VERSION="253b00c"
+PKG_VERSION="c5639414c1bb24fb4eef5861c13adb42a4aab950"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/icculus/SDL_sound"
 PKG_URL="${PKG_SITE}.git"
