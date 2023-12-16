@@ -637,6 +637,11 @@ function set_aspectratio() {
         done
       ;;
     esac
+#    add_setting "positionx" "custom_viewport_x"
+#    add_setting "positiony" "custom_viewport_y"
+    add_setting "width" "custom_viewport_width"
+    add_setting "height" "custom_viewport_height"
+    add_setting "rotation" "video_rotation"
 }
 
 function set_filtering() {
@@ -685,6 +690,21 @@ function set_filter() {
                 add_setting "none" "video_filter" "${FILTER_PATH}/${BITS}bit/video/${FILTER}"
                 add_setting "none" "video_filter_dir" "${FILTER_PATH}/${BITS}bit/video/"
                 add_setting "none" "audio_filter_dir" "${FILTER_PATH}/${BITS}bit/audio"
+        ;;
+    esac
+}
+
+function set_overlay() {
+    local OVERLAY="$(game_setting overlayset)"
+    case ${OVERLAY} in
+        0|false|none)
+            add_setting "none" "input_overlay_enable" "false"
+            add_setting "none" "input_overlay" ""
+        ;;
+        *)
+            local OVERLAY_PATH="/storage/overlays"
+            add_setting "none" "input_overlay_enable" "true"
+            add_setting "none" "input_overlay" "${OVERLAY_PATH}/${OVERLAY}"
         ;;
     esac
 }
@@ -980,7 +1000,7 @@ function set_gambatte() {
                     echo 'gambatte_gb_palette_twb64_1 = "'${TWB1_COLORIZATION}'"' >> ${GAMBATTECONF}
                     echo 'gambatte_gb_palette_twb64_2 = "'${TWB2_COLORIZATION}'"' >> ${GAMBATTECONF}
                     echo 'gambatte_gb_palette_twb64_3 = "'${TWB3_COLORIZATION}'"' >> ${GAMBATTECONF}
-		    echo 'gambatte_gb_palette_pixelshift_1 = "'${PIXELSHIFT1_COLORIZATION}'"' >> ${GAMBATTECONF}
+		            echo 'gambatte_gb_palette_pixelshift_1 = "'${PIXELSHIFT1_COLORIZATION}'"' >> ${GAMBATTECONF}
                 ;;
             esac
         fi
@@ -1044,6 +1064,7 @@ set_integerscale &
 set_rgascale &
 set_shader &
 set_filter &
+set_overlay &
 set_rewind &
 set_savestates &
 set_autosave &
