@@ -639,8 +639,8 @@ function set_aspectratio() {
     esac
 #    add_setting "positionx" "custom_viewport_x"
 #    add_setting "positiony" "custom_viewport_y"
-    add_setting "width" "custom_viewport_width"
-    add_setting "height" "custom_viewport_height"
+#    add_setting "width" "custom_viewport_width"
+#    add_setting "height" "custom_viewport_height"
     add_setting "rotation" "video_rotation"
 }
 
