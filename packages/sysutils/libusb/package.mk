@@ -4,7 +4,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="libusb"
-PKG_VERSION="67ac8a0"
+PKG_VERSION="87d6686a5474b95e575390d29e1c897f043acbde"
 PKG_LICENSE="LGPLv2.1"
 PKG_SITE="https://github.com/libusb/libusb"
 PKG_URL="${PKG_SITE}.git"

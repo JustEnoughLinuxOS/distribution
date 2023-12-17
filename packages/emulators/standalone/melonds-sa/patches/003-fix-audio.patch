@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
+# Copyright (C) 2022-present JELOS (https://github.com/JustEnoughLinuxOS)
 
 diff --git a/src/frontend/qt_sdl/Platform.cpp b/src/frontend/qt_sdl/Platform.cpp
 index f9eaf42..ff4bc03 100644

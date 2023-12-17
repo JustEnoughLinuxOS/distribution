@@ -2,7 +2,7 @@
 # Copyright (C) 2021-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="ldacBT"
-PKG_VERSION="fbffba4"
+PKG_VERSION="af2dd23979453bcd1cad7c4086af5fb421a955c5"
 PKG_LICENSE="Apache"
 PKG_SITE="https://github.com/EHfive/ldacBT"
 PKG_URL="${PKG_SITE}.git"

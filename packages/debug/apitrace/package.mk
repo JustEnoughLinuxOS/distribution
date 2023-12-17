@@ -2,7 +2,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="apitrace"
-PKG_VERSION="00706d1"
+PKG_VERSION="c314a74227d658db08077d685a83e1246e0c13a7"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/apitrace/apitrace"
 PKG_URL="${PKG_SITE}.git"

@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
+# Copyright (C) 2022-present JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="primehack"
 PKG_LICENSE="GPLv2"
 PKG_DEPENDS_TARGET="toolchain libevdev libdrm ffmpeg zlib libpng lzo libusb zstd ecm"
 PKG_SITE="https://github.com/shiiion/dolphin"
 PKG_URL="${PKG_SITE}.git"
-PKG_VERSION="48dbd3a4a7249948d3e7e21b20842d493c3b00cb"
+PKG_VERSION="d65c10ef85bf14cadd660d5f07c88f40f8b7fec5"
 PKG_GIT_CLONE_BRANCH="master"
 PKG_LONGDESC="PrimeHack – A Dolphin Emulator fork for Metroid Prime Trilogy."
 PKG_PATCH_DIRS+=" wayland"

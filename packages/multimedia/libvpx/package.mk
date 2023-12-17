@@ -3,7 +3,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="libvpx"
-PKG_VERSION="10b9492" # 1.13.1
+PKG_VERSION="df655cf4fb6c2a23b964544acd015cc715752830" # 1.13.1
 PKG_LICENSE="BSD"
 PKG_SITE="https://github.com/webmproject/libvpx"
 PKG_URL="${PKG_SITE}.git"
