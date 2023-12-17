@@ -3,7 +3,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="rclone"
-PKG_VERSION="1.64.2"
+PKG_VERSION="1.65.0"
 PKG_DEPENDS_TARGET="toolchain fuse rsync"
 PKG_SECTION="tools"
 PKG_SHORTDESC="rsync for cloud storage"

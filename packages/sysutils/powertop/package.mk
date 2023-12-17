@@ -2,7 +2,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="powertop"
-PKG_VERSION="4bdfba1"
+PKG_VERSION="4bdfba189864d699621708fea182db292edc9305"
 PKG_ARCH="x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/fenrus75/powertop"

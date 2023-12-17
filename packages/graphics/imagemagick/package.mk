@@ -3,7 +3,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="imagemagick"
-PKG_VERSION="58d86e4"
+PKG_VERSION="f65eba252e3aa387bd99297a750a2ee250664f8c"
 PKG_LICENSE="http://www.imagemagick.org/script/license.php"
 PKG_SITE="https://github.com/ImageMagick/ImageMagick"
 PKG_URL="${PKG_SITE}.git"

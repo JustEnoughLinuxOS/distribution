@@ -18,11 +18,10 @@ case ${DEVICE} in
   ;;
   RK3399|RK3566*) #Upstream Mesa appears to be broken on the RK3399 build currently
 	PKG_VERSION="22.3.7"
-	PKG_SHA256="894ce2f4a1c2e76177cdd2284620192d0da3066b243eec2fbb1d7cf37f13042c"
 	PKG_URL="https://mesa.freedesktop.org/archive/mesa-${PKG_VERSION}.tar.xz"
   ;;
   *)
-	PKG_VERSION="23.3.0"
+	PKG_VERSION="23.3.1"
 	PKG_SITE="http://www.mesa3d.org/"
 	PKG_URL="https://mesa.freedesktop.org/archive/mesa-${PKG_VERSION}.tar.xz"
   ;;
@@ -49,14 +48,23 @@ PKG_MESON_OPTS_TARGET="-Dgallium-drivers=${GALLIUM_DRIVERS// /,} \
 if [ "${DISPLAYSERVER}" = "x11" ]; then
   PKG_DEPENDS_TARGET+=" xorgproto libXext libXdamage libXfixes libXxf86vm libxcb libX11 libxshmfence libXrandr libglvnd glfw"
   export X11_INCLUDES=
-  PKG_MESON_OPTS_TARGET+=" -Dplatforms=x11 -Ddri3=enabled -Dglx=dri -Dglvnd=true"
+  PKG_MESON_OPTS_TARGET+="	-Dplatforms=x11 \
+				-Ddri3=enabled \
+				-Dglx=dri \
+				-Dglvnd=true"
 elif [ "${DISPLAYSERVER}" = "wl" ]; then
   PKG_DEPENDS_TARGET+=" wayland wayland-protocols libglvnd glfw"
-  PKG_MESON_OPTS_TARGET+=" -Dplatforms=wayland,x11 -Ddri3=enabled -Dglx=dri -Dglvnd=true"
+  PKG_MESON_OPTS_TARGET+=" 	-Dplatforms=wayland,x11 \
+				-Ddri3=enabled \
+				-Dglx=dri \
+				-Dglvnd=true"
   PKG_DEPENDS_TARGET+=" xorgproto libXext libXdamage libXfixes libXxf86vm libxcb libX11 libxshmfence libXrandr libglvnd"
   export X11_INCLUDES=
 else
-  PKG_MESON_OPTS_TARGET+=" -Dplatforms="" -Ddri3=disabled -Dglx=disabled -Dglvnd=false"
+  PKG_MESON_OPTS_TARGET+="	-Dplatforms="" \
+				-Ddri3=disabled \
+				-Dglx=disabled \
+				-Dglvnd=false"
 fi
 
 if [ "${LLVM_SUPPORT}" = "yes" ]; then
