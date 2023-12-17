@@ -37,7 +37,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-anbernic-rg552-opp.dts
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2016-2017 Fuzhou Rockchip Electronics Co., Ltd
-+ * Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
++ * Copyright (C) 2022-present JELOS (https://github.com/JustEnoughLinuxOS)
 + */
 +
 +/ {
@@ -182,7 +182,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-anbernic-rg552.dts lin
 + * Copyright (c) 2017 Fuzhou Rockchip Electronics Co., Ltd.
 + * Copyright (c) 2018 Akash Gajjar <Akash_Gajjar@mentor.com>
 + * Copyright (c) 2022 Maya Matuszczyk <maccraft123mc@gmail.com>
-+ * Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
++ * Copyright (C) 2022-present JELOS (https://github.com/JustEnoughLinuxOS)
 + */
 +
 +
