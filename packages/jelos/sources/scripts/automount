@@ -31,12 +31,12 @@ function start_ms() {
   ### Determine if internal or external is the primary target by configuration.
   case ${MS_DEVICE} in
     internal)
-      LOWER="internal"
-      UPPER="external"
-    ;;
-    *)
       LOWER="external"
       UPPER="internal"
+    ;;
+    *)
+      LOWER="internal"
+      UPPER="external"
     ;;
   esac
 

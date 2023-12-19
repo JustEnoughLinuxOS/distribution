@@ -18,12 +18,12 @@ case ${DEVICE} in
   ;;
   RK3399) #Upstream Mesa appears to be broken on the RK3399 build currently
 	PKG_VERSION="22.3.7"
-	PKG_URL="https://mesa.freedesktop.org/archive/mesa-${PKG_VERSION}.tar.xz"
+	PKG_URL="https://gitlab.freedesktop.org/mesa/mesa/-/archive/mesa-${PKG_VERSION}/mesa-mesa-${PKG_VERSION}.tar.gz"
   ;;
   *)
 	PKG_VERSION="23.3.1"
 	PKG_SITE="http://www.mesa3d.org/"
-	PKG_URL="https://mesa.freedesktop.org/archive/mesa-${PKG_VERSION}.tar.xz"
+	PKG_URL="https://gitlab.freedesktop.org/mesa/mesa/-/archive/mesa-${PKG_VERSION}/mesa-mesa-${PKG_VERSION}.tar.gz"
   ;;
 esac
 
