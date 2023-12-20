@@ -82,7 +82,6 @@ makeinstall_target() {
   cp ${PKG_DIR}/scripts/start_ppsspp.sh ${INSTALL}/usr/bin
   cp PPSSPPSDL ${INSTALL}/usr/bin/ppsspp
   chmod 0755 ${INSTALL}/usr/bin/*
-  cp -f ${ROOT}/distributions/JELOS/fonts/NanumSquareNeo-bRg.ttf /storage/.config/ppsspp/assets/Roboto-Condensed.ttf
   ln -sf /storage/.config/ppsspp/assets ${INSTALL}/usr/bin/assets
   mkdir -p ${INSTALL}/usr/config/ppsspp/PSP/SYSTEM
   cp -r `find . -name "assets" | xargs echo` ${INSTALL}/usr/config/ppsspp/
@@ -94,6 +93,7 @@ makeinstall_target() {
   rm ${INSTALL}/usr/config/ppsspp/assets/gamecontrollerdb.txt
 
   cp -f ${PKG_DIR}/fonts/* ${INSTALL}/usr/config/ppsspp/assets/
+  cp -f ${ROOT}/distributions/JELOS/fonts/NanumSquareNeo-bRg.ttf ${INSTALL}/usr/config/ppsspp/assets/Roboto-Condensed.ttf
   cp -f ${PKG_DIR}/fonts/patch.jpn0.pgf ${INSTALL}/usr/config/ppsspp/assets/flash0/font/jpn0.pgf
   cp -f ${PKG_DIR}/fonts/patch.kr0.pgf ${INSTALL}/usr/config/ppsspp/assets/flash0/font/kr0.pgf
 }
