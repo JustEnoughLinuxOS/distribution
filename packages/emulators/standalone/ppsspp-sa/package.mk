@@ -75,8 +75,6 @@ pre_make_target() {
   # fix cross compiling
   find ${PKG_BUILD} -name flags.make -exec sed -i "s:isystem :I:g" \{} \;
   find ${PKG_BUILD} -name build.ninja -exec sed -i "s:isystem :I:g" \{} \;
-
-  cp -f ${ROOT}/distributions/JELOS/fonts/NanumSquareNeo-bRg.ttf ${PKG_BUILD}/assets/Roboto-Condensed.ttf
 }
 
 makeinstall_target() {
@@ -84,6 +82,7 @@ makeinstall_target() {
   cp ${PKG_DIR}/scripts/start_ppsspp.sh ${INSTALL}/usr/bin
   cp PPSSPPSDL ${INSTALL}/usr/bin/ppsspp
   chmod 0755 ${INSTALL}/usr/bin/*
+  cp -f ${ROOT}/distributions/JELOS/fonts/NanumSquareNeo-bRg.ttf /storage/.config/ppsspp/assets/Roboto-Condensed.ttf
   ln -sf /storage/.config/ppsspp/assets ${INSTALL}/usr/bin/assets
   mkdir -p ${INSTALL}/usr/config/ppsspp/PSP/SYSTEM
   cp -r `find . -name "assets" | xargs echo` ${INSTALL}/usr/config/ppsspp/
