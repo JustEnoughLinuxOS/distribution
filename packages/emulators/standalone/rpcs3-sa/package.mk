@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2019-present Frank Hartung (supervisedthinking (@) gmail.com)
-# Copyright (C) 2022-present - The JELOS Project (https://github.com/JustEnoughLinuxOS)
+# Copyright (C) 2022-present JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="rpcs3-sa"
 PKG_VERSION="7081b89e976ad7f931c926022bd93ddd9778347c"

@@ -89,7 +89,6 @@ case ${USE_VSYNC} in
 esac
 
 COMPUTE_SHADER=$(get_setting gpu_rgb saturn "${GAME}")
-Video\compute_shader_mode
 case ${COMPUTE_SHADER} in
   1)
     #gpu

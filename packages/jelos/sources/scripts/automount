@@ -31,14 +31,23 @@ function start_ms() {
   ### Determine if internal or external is the primary target by configuration.
   case ${MS_DEVICE} in
     internal)
-      LOWER="internal"
-      UPPER="external"
-    ;;
-    *)
       LOWER="external"
       UPPER="internal"
     ;;
+    *)
+      LOWER="internal"
+      UPPER="external"
+    ;;
   esac
+
+  for GAME_PATH in internal external
+  do
+    if [ ! -d "/storage/games-${GAME_PATH}/roms" ]
+    then
+      log $0 "Create /storage/games-${GAME_PATH}/roms."
+      mkdir -p "/storage/games-${GAME_PATH}/roms"
+    fi
+  done
 
   MS_ENABLED=$(get_setting system.merged.storage)
   if [ -e "/storage/.ms_unsupported" ] || \

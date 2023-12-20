@@ -637,6 +637,11 @@ function set_aspectratio() {
         done
       ;;
     esac
+#    add_setting "positionx" "custom_viewport_x"
+#    add_setting "positiony" "custom_viewport_y"
+#    add_setting "width" "custom_viewport_width"
+#    add_setting "height" "custom_viewport_height"
+    add_setting "rotation" "video_rotation"
 }
 
 function set_filtering() {
@@ -645,6 +650,7 @@ function set_filtering() {
 
 function set_integerscale() {
     add_setting "integerscale" "video_scale_integer"
+    add_setting "integerscaleoverscale" "video_scale_integer_overscale"
 }
 
 function set_rgascale() {
@@ -684,6 +690,21 @@ function set_filter() {
                 add_setting "none" "video_filter" "${FILTER_PATH}/${BITS}bit/video/${FILTER}"
                 add_setting "none" "video_filter_dir" "${FILTER_PATH}/${BITS}bit/video/"
                 add_setting "none" "audio_filter_dir" "${FILTER_PATH}/${BITS}bit/audio"
+        ;;
+    esac
+}
+
+function set_overlay() {
+    local OVERLAY="$(game_setting overlayset)"
+    case ${OVERLAY} in
+        0|false|none)
+            add_setting "none" "input_overlay_enable" "false"
+            add_setting "none" "input_overlay" ""
+        ;;
+        *)
+            local OVERLAY_PATH="/storage/overlays"
+            add_setting "none" "input_overlay_enable" "true"
+            add_setting "none" "input_overlay" "${OVERLAY_PATH}/${OVERLAY}"
         ;;
     esac
 }
@@ -861,6 +882,37 @@ function set_n64opts() {
     fi
 }
 
+function set_saturnopts() {
+    log "Set up Saturn..."
+    if [ "${CORE}" = "kronos" ]
+    then
+        log "Set up Kronos..."
+        local KRONOSDIR="${RETROARCH_PATH}/Kronos/config/Kronos"
+        if [ ! -d "${KRONOSDIR}" ]
+        then
+            mkdir -p "${KRONOSDIR}"
+        fi
+
+        if [ ! -f "${KRONOSDIR}/Kronos.opt" ]
+        then
+            cp "/usr/config/retroarch/Kronos.opt" "${KRONOSDIR}/Kronos.opt"
+        fi
+        local KRONOSOPT="${KRONOSDIR}/Kronos.opt"
+        local HLE_BIOS="$(game_setting force_hle_bios)"
+        sed -i '/kronos_force_hle_bios = /c\kronos_force_hle_bios = "'${HLE_BIOS}'"' "${KRONOSOPT}"
+        local ADDON_CART="$(game_setting addon_cartridge)"
+        sed -i '/kronos_addon_cartridge = /c\kronos_addon_cartridge = "'${ADDON_CART}'"' "${KRONOSOPT}"
+        local TESSELATION="$(game_setting tesselation)"
+        sed -i '/kronos_polygon_mode = /c\kronos_polygon_mode = "'${TESSELATION}'"' "${KRONOSOPT}"
+        local RESOLUTION="$(game_setting resolution)"
+        sed -i '/kronos_resolution_mode = /c\kronos_resolution_mode = "'${RESOLUTION}'"' "${KRONOSOPT}"
+        local COMPUTE_SHADER="$(game_setting compute_shader)"
+        sed -i '/kronos_use_cs = /c\kronos_use_cs = "'${COMPUTE_SHADER}'"' "${KRONOSOPT}"
+        local TRANSPARENCY="$(game_setting transparency)"
+        sed -i '/kronos_mesh_mode = /c\kronos_mesh_mode = "'${TRANSPARENCY}'"' "${KRONOSOPT}"
+    fi
+}
+
 function set_dreamcastopts() {
     log "Set up Dreamcast..."
     if [ "${CORE}" = "flycast" ]
@@ -948,7 +1000,7 @@ function set_gambatte() {
                     echo 'gambatte_gb_palette_twb64_1 = "'${TWB1_COLORIZATION}'"' >> ${GAMBATTECONF}
                     echo 'gambatte_gb_palette_twb64_2 = "'${TWB2_COLORIZATION}'"' >> ${GAMBATTECONF}
                     echo 'gambatte_gb_palette_twb64_3 = "'${TWB3_COLORIZATION}'"' >> ${GAMBATTECONF}
-		    echo 'gambatte_gb_palette_pixelshift_1 = "'${PIXELSHIFT1_COLORIZATION}'"' >> ${GAMBATTECONF}
+		            echo 'gambatte_gb_palette_pixelshift_1 = "'${PIXELSHIFT1_COLORIZATION}'"' >> ${GAMBATTECONF}
                 ;;
             esac
         fi
@@ -1012,6 +1064,7 @@ set_integerscale &
 set_rgascale &
 set_shader &
 set_filter &
+set_overlay &
 set_rewind &
 set_savestates &
 set_autosave &
@@ -1021,6 +1074,7 @@ set_audiolatency &
 set_analogsupport &
 set_tatemode &
 set_n64opts &
+set_saturnopts &
 set_dreamcastopts &
 
 ### Sed operations are expensive, so they are staged and executed as
