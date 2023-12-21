@@ -34,7 +34,7 @@ LDFLAGS_OPTIM_LINKER_GOLD="-fuse-ld=gold"
 LDFLAGS_OPTIM_LINKER_MOLD="-fuse-ld=mold"
 
 # default compiler optimization
-CFLAGS_OPTIM_DEFAULT="-Ofast -fomit-frame-pointer -DNDEBUG"
+CFLAGS_OPTIM_DEFAULT="-O3 -fomit-frame-pointer -DNDEBUG"
 CXXFLAGS_OPTIM_DEFAULT="${CFLAGS_OPTIM_DEFAULT}"
 # speed flag
 CFLAGS_OPTIM_SPEED="-Ofast -fomit-frame-pointer -DNDEBUG"
