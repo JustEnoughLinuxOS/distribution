@@ -8,6 +8,7 @@ PKG_SITE="https://xiph.org/flac/"
 PKG_URL="http://downloads.xiph.org/releases/flac/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_DEPENDS_TARGET="toolchain libogg"
 PKG_LONGDESC="An Free Lossless Audio Codec."
+PKG_BUILD_FLAGS="+speed"
 
 pre_configure_target() {
   PKG_CMAKE_OPTS_TARGET="-DBUILD_SHARED_LIBS=ON \

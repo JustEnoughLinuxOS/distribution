@@ -64,8 +64,6 @@ post_unpack() {
 
 pre_configure_target() {
 # Filter out some problematic *FLAGS
-  export CFLAGS=$(echo ${CFLAGS} | sed -e "s|-ffast-math||g")
-  export CFLAGS=$(echo ${CFLAGS} | sed -e "s|-Ofast|-O3|g")
   export CFLAGS=$(echo ${CFLAGS} | sed -e "s|-O.|-O3|g")
 
   export CFLAGS=$(echo ${CFLAGS} | sed -e "s|-Wunused-but-set-variable||g")
@@ -75,8 +73,6 @@ pre_configure_target() {
     export CFLAGS=$(echo ${CFLAGS} | sed -e "s|${PROJECT_CFLAGS}||g")
   fi
 
-  export LDFLAGS=$(echo ${LDFLAGS} | sed -e "s|-ffast-math||g")
-  export LDFLAGS=$(echo ${LDFLAGS} | sed -e "s|-Ofast|-O3|g")
   export LDFLAGS=$(echo ${LDFLAGS} | sed -e "s|-O.|-O3|g")
 
   export LDFLAGS=$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||")

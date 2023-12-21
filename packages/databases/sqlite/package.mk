@@ -23,9 +23,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-static \
                            --with-gnu-ld"
 
 pre_configure_target() {
-# sqlite fails to compile with fast-math link time optimization.
-  CFLAGS=$(echo ${CFLAGS} | sed -e "s|-Ofast|-O3|g")
-  CFLAGS=$(echo ${CFLAGS} | sed -e "s|-ffast-math||g")
 
 # This option adds additional logic to the ANALYZE command and to the query planner
 # that can help SQLite to chose a better query plan under certain situations. The
