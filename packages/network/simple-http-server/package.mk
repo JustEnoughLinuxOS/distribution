@@ -13,6 +13,7 @@ PKG_LONGDESC="Simple http server in Rust"
 PKG_TOOLCHAIN="manual"
 
 unpack() {
+	mkdir -p ${PKG_BUILD}
 	case $ARCH in
 	x86_64)
 		PKG_URL=$PKG_URL_X86_64
@@ -23,12 +24,18 @@ unpack() {
 	aarch64)
 		PKG_URL=$PKG_URL_AARCH64
 		;;
+	*)
+		echo "Unsupported architecture!"
+		;;
 	esac
 
-	curl -L $PKG_URL -o ${PKG_DIR}/simple-http-server
+	curl -L $PKG_URL -o ${PKG_BUILD}/simple-http-server
 }
 
 makeinstall_target() {
 	mkdir -p ${INSTALL}/usr/bin
-	install -Dm755 ${PKG_DIR}/simple-http-server ${INSTALL}/usr/bin/
+	mkdir -p ${INSTALL}/usr/lib/systemd/system
+
+	install -Dm755 ${PKG_BUILD}/simple-http-server ${INSTALL}/usr/bin/
+	install -Dm644 ${PKG_DIR}/system.d/simple-http-server.service ${INSTALL}/usr/lib/systemd/system/
 }
