@@ -5,36 +5,31 @@ PKG_NAME="simple-http-server"
 PKG_VERSION="0.6.7"
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/TheWaWaR/simple-http-server"
-PKG_URL_ARM="https://github.com/TheWaWaR/simple-http-server/releases/download/v${PKG_VERSION}/armv7-unknown-linux-musleabihf-simple-http-server"
-PKG_URL_AARCH64="https://github.com/TheWaWaR/simple-http-server/releases/download/v${PKG_VERSION}/aarch64-unknown-linux-musl-simple-http-server"
-PKG_URL_X86_64="https://github.com/TheWaWaR/simple-http-server/releases/download/v${PKG_VERSION}/x86_64-unknown-linux-musl-simple-http-server"
+PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="Simple http server in Rust"
 PKG_TOOLCHAIN="manual"
 
-unpack() {
-	mkdir -p ${PKG_BUILD}
-	case $ARCH in
-	x86_64)
-		PKG_URL=$PKG_URL_X86_64
-		;;
-	arm)
-		PKG_URL=$PKG_URL_ARM
-		;;
-	aarch64)
-		PKG_URL=$PKG_URL_AARCH64
-		;;
-	*)
-		echo "Unsupported architecture!"
-		;;
-	esac
+case ${ARCH} in
+  x86_64)
+    PKG_URL="${PKG_SITE}/releases/download/v${PKG_VERSION}/x86_64-unknown-linux-musl-simple-http-server"
+    ;;
+  arm)
+    PKG_URL="${PKG_SITE}/releases/download/v${PKG_VERSION}/armv7-unknown-linux-musleabihf-simple-http-server"
+    ;;
+  aarch64)
+    PKG_URL="${PKG_SITE}/releases/download/v${PKG_VERSION}/aarch64-unknown-linux-musl-simple-http-server"
+    ;;
+esac
 
-	curl -L $PKG_URL -o ${PKG_BUILD}/simple-http-server
+unpack() {
+  mkdir -p ${PKG_BUILD}
+  cp ${SOURCES}/${PKG_NAME}/${PKG_NAME}-${PKG_VERSION}.${ARCH}*${PKG_NAME} ${PKG_BUILD}/simple-http-server
 }
 
 makeinstall_target() {
-	mkdir -p ${INSTALL}/usr/bin
-	mkdir -p ${INSTALL}/usr/lib/systemd/system
+  mkdir -p ${INSTALL}/usr/bin
+  install -Dm755 ${PKG_BUILD}/simple-http-server ${INSTALL}/usr/bin
 
-	install -Dm755 ${PKG_BUILD}/simple-http-server ${INSTALL}/usr/bin/
-	install -Dm644 ${PKG_DIR}/system.d/simple-http-server.service ${INSTALL}/usr/lib/systemd/system/
+  mkdir -p ${INSTALL}/usr/lib/systemd/system
+  install -Dm644 ${PKG_DIR}/system.d/simple-http-server.service ${INSTALL}/usr/lib/systemd/system
 }
