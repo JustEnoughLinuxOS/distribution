@@ -3,7 +3,7 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="RTL8188EU"
-PKG_VERSION="f5d1c8df2e2d8b217ea0113bf2cf3e37df8cb716"
+PKG_VERSION="306f3e62cf7cddf8cee74f70f88a7a7b3af46f56"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/lwfinger/rtl8188eu"
 PKG_URL="https://github.com/lwfinger/rtl8188eu/archive/${PKG_VERSION}.tar.gz"
