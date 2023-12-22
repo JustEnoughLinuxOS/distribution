@@ -1,4 +1,3 @@
-# Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 # Copyright (C) 2023-present NeoTheFox (https://github.com/NeoTheFox)
 
