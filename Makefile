@@ -62,6 +62,10 @@ RK3566-ML:
 	PROJECT=Rockchip DEVICE=RK3566-ML ARCH=arm ./scripts/build_distro
 	PROJECT=Rockchip DEVICE=RK3566-ML ARCH=aarch64 ./scripts/build_distro
 
+RK3566-X55-ML:
+	DEVICE_ROOT=RK3566-ML PROJECT=Rockchip DEVICE=RK3566-X55-ML ARCH=arm ./scripts/build_distro
+	DEVICE_ROOT=RK3566-ML PROJECT=Rockchip DEVICE=RK3566-X55-ML ARCH=aarch64 ./scripts/build_distro
+
 RK3326:
 	unset DEVICE_ROOT
 	PROJECT=Rockchip DEVICE=RK3326 ARCH=arm ./scripts/build_distro
@@ -71,7 +75,6 @@ RK3399:
 	unset DEVICE_ROOT
 	PROJECT=Rockchip DEVICE=RK3399 ARCH=arm ./scripts/build_distro
 	PROJECT=Rockchip DEVICE=RK3399 ARCH=aarch64 ./scripts/build_distro
-
 
 update:
 	PROJECT=PC DEVICE=AMD64 ARCH=x86_64 ./scripts/update_packages

@@ -23,15 +23,15 @@ case ${DEVICE} in
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="main"
   ;;
+  *ML)
+    PKG_VERSION="6.7-rc6"
+    PKG_URL="https://git.kernel.org/torvalds/t/${PKG_NAME}-${PKG_VERSION}.tar.gz"
+  ;;
   RK3566)
     PKG_URL="${PKG_SITE}/rk356x-kernel.git"
     PKG_VERSION="d346337a7b3e3e7e0d12dbdcc4fc62efc86cbda3"
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="main"
-  ;;
-  *ML)
-    PKG_VERSION="6.7-rc6"
-    PKG_URL="https://git.kernel.org/torvalds/t/${PKG_NAME}-${PKG_VERSION}.tar.gz"
   ;;
   *X55)
     PKG_URL="${PKG_SITE}/rk3566-x55-kernel.git"
