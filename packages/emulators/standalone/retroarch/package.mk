@@ -42,7 +42,7 @@ case ${PROJECT} in
 esac
 
 case ${DEVICE} in
-  RK3566-X55)
+  RK3566-X55|RK3566-X55-ML)
     PKG_DEPENDS_TARGET+=" libgo2"
     PKG_CONFIGURE_OPTS_TARGET+=" --enable-odroidgo2"
   ;;

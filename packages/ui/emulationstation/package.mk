@@ -88,7 +88,8 @@ pre_configure_target() {
     fi
   done
 
-  export DEVICE=$(echo ${DEVICE^^} | sed "s#-#_##g")
+  export DEVICE=$(echo ${DEVICE^^} | sed "s#-#_#g")
+
 }
 
 makeinstall_target() {
