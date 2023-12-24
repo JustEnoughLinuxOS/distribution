@@ -32,8 +32,9 @@ CORE=${3,,}
 
 #Autosave
 AUTOSAVE="$@"
-AUTOSAVE="${AUTOSAVE#*--autosave=*}"
+AUTOSAVE="${AUTOSAVE#*-autosave *}"
 AUTOSAVE="${AUTOSAVE% --*}"
+AUTOSAVE="${AUTOSAVE% --*}" # Fix later (first deletes --autosave, second deletes --snapshot).
 
 #Snapshot
 SNAPSHOT="$@"
@@ -757,12 +758,12 @@ function set_autosave() {
             local AUTOSAVE_SETTING="$(game_setting autosave)"
             case ${AUTOSAVE_SETTING} in
                 [1-3])
-                    SETAUTOSAVE=true
+                   SETAUTOSAVE=true
                 ;;
             esac
         ;;
     esac
-        
+    
     add_setting "none" "savestate_directory" "${SNAPSHOTS}/${PLATFORM}"
     if [ ! -d "${SNAPSHOTS}/${PLATFORM}" ]
     then
