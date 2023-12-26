@@ -64,12 +64,6 @@ ln -sf /usr/share/locale /storage/.config/emulationstation/locale >>/var/log/con
 ### Add items below this line that are safe to remove after a period of time.
 ################################################################################
 
-### 20231010 - Stop setting vram in ES settings.
-sed -i '/^.*<int name="MaxVRAM".*$/d' ${ES_SETTINGS}
-
-### 20231031 - Switch back to alsathread for RetroArch
-sed -i 's~"pulse"~"alsathread"~g' /storage/.config/retroarch/retroarch.cfg
-
 ### 20231114 - Update hosts.conf
 grep "127.0.0.1" /storage/.config/hosts.conf >/dev/null 2>&1 || cp /usr/config/hosts.conf /storage/.config/
 
