@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
-# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="Python3"
 # When changing PKG_VERSION remember to sync PKG_PYTHON_VERSION!
-PKG_VERSION="3.11.6"
+PKG_VERSION="3.11.7"
+PKG_SHA256="18e1aa7e66ff3a58423d59ed22815a6954e53342122c45df20c96877c062b9b7"
 PKG_LICENSE="OSS"
 PKG_SITE="https://www.python.org/"
 PKG_URL="https://www.python.org/ftp/python/${PKG_VERSION}/${PKG_NAME::-1}-${PKG_VERSION}.tar.xz"
@@ -42,7 +42,7 @@ PKG_CONFIGURE_OPTS_HOST="ac_cv_prog_HAS_HG=/bin/false
                          --with-doc-strings
                          --with-system-ffi
                          --without-pymalloc
-                         --without-ensurepip
+                         --with-ensurepip=no
 "
 
 PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
@@ -79,11 +79,11 @@ PKG_CONFIGURE_OPTS_TARGET="ac_cv_prog_HAS_HG=/bin/false
                            --with-libmpdec=none
                            --with-doc-strings
                            --with-system-ffi
-                           --disable-static
-                           --enable-shared
                            --without-pymalloc
                            --without-ensurepip
                            --enable-ipv6
+                           --disable-static
+                           --enable-shared
                            --with-build-python=${TOOLCHAIN}/bin/python
 "
 
@@ -91,6 +91,10 @@ pre_configure_host() {
   export PYTHON_MODULES_INCLUDE="${HOST_INCDIR}"
   export PYTHON_MODULES_LIB="${HOST_LIBDIR}"
   export DISABLED_EXTENSIONS="readline _curses _curses_panel ${PKG_PY_DISABLED_MODULES}"
+  # control patch Python3-0300-generate-legacy-pyc-bytecode
+  # this needs to be set when building host based py file
+  # do not set this for py compiles being done for target use
+  export DONT_BUILD_LEGACY_PYC=1
 }
 
 post_make_host() {

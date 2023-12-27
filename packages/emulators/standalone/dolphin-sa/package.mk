@@ -47,6 +47,10 @@ then
   PKG_CMAKE_OPTS_TARGET+=" -DENABLE_VULKAN=ON"
 fi
 
+pre_configure_target() {
+  sed -i 's~#include <cstdlib>~#include <cstdlib>\n#include <cstdint>~g' ${PKG_BUILD}/Externals/VulkanMemoryAllocator/include/vk_mem_alloc.h
+}
+
 PKG_CMAKE_OPTS_TARGET+=" -DENABLE_HEADLESS=ON \
                          -DENABLE_EVDEV=ON \
                          -DUSE_DISCORD_PRESENCE=OFF \
