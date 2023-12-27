@@ -3,12 +3,12 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="gzdoom-sa"
-PKG_VERSION="d05ea1965ad1f070859806a3a67aaf5ea6c46234"
+PKG_VERSION="a368588db6f8485072429f264aca2d9c411fe9b2"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/ZDoom/gzdoom"
 PKG_URL="${PKG_SITE}.git"
-PKG_DEPENDS_HOST="toolchain SDL2:host zmusic:host"
-PKG_DEPENDS_TARGET="toolchain SDL2 gzdoom-sa:host zmusic"
+PKG_DEPENDS_HOST="toolchain SDL2:host zmusic:host libwebp:host"
+PKG_DEPENDS_TARGET="toolchain SDL2 gzdoom-sa:host zmusic libvpx libwebp"
 PKG_LONGDESC="GZDoom is a modder-friendly OpenGL and Vulkan source port based on the DOOM engine"
 GET_HANDLER_SUPPORT="git"
 PKG_TOOLCHAIN="cmake-make"
@@ -30,6 +30,13 @@ makeinstall_host() {
 }
 
 pre_configure_target() {
+
+  ### Enable GLES on devices that don't support OpenGL.
+  if [ ! "${OPENGL_SUPPORT}" = "yes" ]
+  then
+    sed -i 's~#define USE_GLAD_LOADER 0~#define USE_GLAD_LOADER 1~g' ${PKG_BUILD}/src/common/rendering/gles/gles_system.h
+  fi
+
   PKG_CMAKE_OPTS_TARGET+=" -DNO_GTK=ON \
                            -DFORCE_CROSSCOMPILE=ON \
                            -DIMPORT_EXECUTABLES=${PKG_BUILD}/.${HOST_NAME}/ImportExecutables.cmake \

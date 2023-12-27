@@ -1,0 +1,322 @@
+From 5d199dd8742f858b83beb55abd7cd0da45d3721e Mon Sep 17 00:00:00 2001
+From: fleroviux <fleroviux@gmail.com>
+Date: Mon, 13 Feb 2023 23:11:05 +0100
+Subject: [PATCH] Bus: rework DMA interleave to be more robust and simpler
+
+---
+ src/nba/CMakeLists.txt                    |  1 +
+ src/nba/include/nba/common/scope_exit.hpp | 24 +++++++++++++++++++++++
+ src/nba/include/nba/save_state.hpp        |  7 ++-----
+ src/nba/src/bus/bus.cpp                   | 16 +++++++++++++--
+ src/nba/src/bus/bus.hpp                   |  8 +++-----
+ src/nba/src/bus/io.cpp                    |  2 +-
+ src/nba/src/bus/serialization.cpp         |  6 ++----
+ src/nba/src/bus/timing.cpp                | 11 ++---------
+ src/nba/src/core.cpp                      |  4 +++-
+ src/nba/src/hw/dma/dma.cpp                | 16 +++++++--------
+ 10 files changed, 60 insertions(+), 35 deletions(-)
+ create mode 100644 src/nba/include/nba/common/scope_exit.hpp
+
+diff --git a/src/nba/CMakeLists.txt b/src/nba/CMakeLists.txt
+index 9c9c6e8ab..887bcac7a 100644
+--- a/src/nba/CMakeLists.txt
++++ b/src/nba/CMakeLists.txt
+@@ -91,6 +91,7 @@ set(HEADERS_PUBLIC
+   include/nba/common/crc32.hpp
+   include/nba/common/meta.hpp
+   include/nba/common/punning.hpp
++  include/nba/common/scope_exit.hpp
+   include/nba/device/audio_device.hpp
+   include/nba/device/input_device.hpp
+   include/nba/device/video_device.hpp
+diff --git a/src/nba/include/nba/common/scope_exit.hpp b/src/nba/include/nba/common/scope_exit.hpp
+new file mode 100644
+index 000000000..888c3703c
+--- /dev/null
++++ b/src/nba/include/nba/common/scope_exit.hpp
+@@ -0,0 +1,24 @@
++/*
++ * Copyright (C) 2023 fleroviux
++ *
++ * Licensed under GPLv3 or any later version.
++ * Refer to the included LICENSE file.
++ */
++
++#pragma once
++
++namespace nba {
++
++template<typename Functor>
++struct ScopeExit {
++  ScopeExit(Functor&& fn) : fn{fn} {}
++
++  ScopeExit(ScopeExit&& other) = delete;
++  ScopeExit(ScopeExit const& other) = delete;
++
++ ~ScopeExit() { fn.operator()(); }
++
++  Functor fn;
++};
++
++} // namespace nba
+\ No newline at end of file
+diff --git a/src/nba/include/nba/save_state.hpp b/src/nba/include/nba/save_state.hpp
+index 5e3c1dd00..7e8865dba 100644
+--- a/src/nba/include/nba/save_state.hpp
++++ b/src/nba/include/nba/save_state.hpp
+@@ -16,7 +16,7 @@ namespace nba {
+ 
+ struct SaveState {
+   static constexpr u32 kMagicNumber = 0x5353424E; // NBSS
+-  static constexpr u32 kCurrentVersion = 3;
++  static constexpr u32 kCurrentVersion = 4;
+ 
+   u32 magic;
+   u32 version;
+@@ -76,10 +76,7 @@ struct SaveState {
+       u8 countdown;
+     } prefetch;
+ 
+-    struct DMA {
+-      bool active;
+-      bool openbus;
+-    } dma;
++    int last_access;
+   } bus;
+ 
+   // TODO: keep track of IRQ delay:
+diff --git a/src/nba/src/bus/bus.cpp b/src/nba/src/bus/bus.cpp
+index 2a6b53a86..ef9f50ed4 100644
+--- a/src/nba/src/bus/bus.cpp
++++ b/src/nba/src/bus/bus.cpp
+@@ -7,6 +7,7 @@
+ 
+ #include <algorithm>
+ #include <nba/common/punning.hpp>
++#include <nba/common/scope_exit.hpp>
+ #include <stdexcept>
+ 
+ #include "arm/arm7tdmi.hpp"
+@@ -32,7 +33,7 @@ void Bus::Reset() {
+   hw.rcnt[1] = 0;
+   hw.postflg = 0;
+   prefetch = {};
+-  dma = {};
++  last_access = 0;
+   UpdateWaitStateTable();
+ }
+ 
+@@ -77,6 +78,13 @@ auto Bus::Read(u32 address, int access) -> T {
+   auto page = address >> 24;
+   auto is_u32 = std::is_same_v<T, u32>;
+ 
++  // Set last_access to access right before returning.
++  auto _ = ScopeExit{[&]() {
++    last_access = access;
++  }};
++
++  if(!(access & Dma) && hw.dma.IsRunning()) hw.dma.Run();
++
+   switch (page) {
+     // BIOS
+     case 0x00: {
+@@ -170,6 +178,8 @@ void Bus::Write(u32 address, int access, T value) {
+   auto page = address >> 24;
+   auto is_u32 = std::is_same_v<T, u32>;
+ 
++  if(!(access & Dma) && hw.dma.IsRunning()) hw.dma.Run();
++
+   switch (page) {
+     // EWRAM (external work RAM)
+     case 0x02: {
+@@ -255,6 +265,8 @@ void Bus::Write(u32 address, int access, T value) {
+       break;
+     }
+   }
++
++  last_access = access;
+ }
+ 
+ auto Bus::ReadBIOS(u32 address) -> u32 {
+@@ -279,7 +291,7 @@ auto Bus::ReadOpenBus(u32 address) -> u32 {
+ 
+   Log<Trace>("Bus: illegal memory read: 0x{:08X}", address);
+ 
+-  if (hw.dma.IsRunning() || dma.openbus) {
++  if(last_access & Dma) {
+     return hw.dma.GetOpenBusValue() >> shift;
+   }
+ 
+diff --git a/src/nba/src/bus/bus.hpp b/src/nba/src/bus/bus.hpp
+index 8c1bc64af..472ae5dc6 100644
+--- a/src/nba/src/bus/bus.hpp
++++ b/src/nba/src/bus/bus.hpp
+@@ -30,7 +30,8 @@ struct Bus {
+   enum Access {
+     Nonsequential = 0,
+     Sequential = 1,
+-    Code = 2
++    Code = 2,
++    Dma = 4
+   };
+ 
+   void Reset();
+@@ -109,10 +110,7 @@ struct Bus {
+     int duty;
+   } prefetch;
+ 
+-  struct DMA {
+-    bool active = false;
+-    bool openbus = false;
+-  } dma;
++  int last_access;
+ 
+   template<typename T>
+   auto Read(u32 address, int access) -> T;
+diff --git a/src/nba/src/bus/io.cpp b/src/nba/src/bus/io.cpp
+index ab5175e9e..51a7fcf1a 100644
+--- a/src/nba/src/bus/io.cpp
++++ b/src/nba/src/bus/io.cpp
+@@ -551,7 +551,7 @@ void Bus::Hardware::WriteByte(u32 address,  u8 value) {
+           haltcnt = HaltControl::Stop;
+         } else {
+           haltcnt = HaltControl::Halt;
+-          bus->Idle();
++          bus->Step(1);
+         }
+       }
+       break;
+diff --git a/src/nba/src/bus/serialization.cpp b/src/nba/src/bus/serialization.cpp
+index 48d31d1ed..50283cad8 100644
+--- a/src/nba/src/bus/serialization.cpp
++++ b/src/nba/src/bus/serialization.cpp
+@@ -44,8 +44,7 @@ void Bus::LoadState(SaveState const& state) {
+     prefetch.duty = wait32[int(Access::Sequential)][prefetch.last_address >> 24];
+   }
+ 
+-  dma.active = state.bus.dma.active;
+-  dma.openbus = state.bus.dma.openbus;
++  last_access = state.bus.last_access;
+ }
+ 
+ void Bus::CopyState(SaveState& state) {
+@@ -73,8 +72,7 @@ void Bus::CopyState(SaveState& state) {
+   state.bus.prefetch.count = prefetch.count;
+   state.bus.prefetch.countdown = prefetch.countdown;
+ 
+-  state.bus.dma.active = dma.active;
+-  state.bus.dma.openbus = dma.openbus;
++  state.bus.last_access = last_access;
+ }
+ 
+ } // namespace nba::core
+\ No newline at end of file
+diff --git a/src/nba/src/bus/timing.cpp b/src/nba/src/bus/timing.cpp
+index ecdf105f8..c1e92ae6a 100644
+--- a/src/nba/src/bus/timing.cpp
++++ b/src/nba/src/bus/timing.cpp
+@@ -11,6 +11,8 @@
+ namespace nba::core {
+ 
+ void Bus::Idle() {
++  if(hw.dma.IsRunning()) hw.dma.Run();
++
+   Step(1);
+ }
+ 
+@@ -85,15 +87,6 @@ void Bus::StopPrefetch() {
+ }
+ 
+ void Bus::Step(int cycles) {
+-  dma.openbus = false;
+-
+-  if (hw.dma.IsRunning() && !dma.active) {
+-    dma.active = true;
+-    hw.dma.Run();
+-    dma.active = false;
+-    dma.openbus = true;
+-  }
+-
+   scheduler.AddCycles(cycles);
+ 
+   if (prefetch.active) {
+diff --git a/src/nba/src/core.cpp b/src/nba/src/core.cpp
+index 3749778cb..6d0257544 100644
+--- a/src/nba/src/core.cpp
++++ b/src/nba/src/core.cpp
+@@ -81,7 +81,7 @@ void Core::Run(int cycles) {
+ 
+   while (scheduler.GetTimestampNow() < limit) {
+     if (bus.hw.haltcnt == HaltControl::Halt && irq.HasServableIRQ()) {
+-      bus.Idle();
++      bus.Step(1);
+       bus.hw.haltcnt = HaltControl::Run;
+     }
+ 
+@@ -96,6 +96,8 @@ void Core::Run(int cycles) {
+       }
+       cpu.Run();
+     } else {
++      if(dma.IsRunning()) dma.Run();
++
+       bus.Step(scheduler.GetRemainingCycleCount());
+     }
+   }
+diff --git a/src/nba/src/hw/dma/dma.cpp b/src/nba/src/hw/dma/dma.cpp
+index 8bb07a3c7..db5bb4b72 100644
+--- a/src/nba/src/hw/dma/dma.cpp
++++ b/src/nba/src/hw/dma/dma.cpp
+@@ -151,13 +151,13 @@ bool DMA::HasVideoTransferDMA() {
+ }
+ 
+ void DMA::Run() {
+-  bus.Idle();
++  bus.Step(1);
+ 
+   do {
+     RunChannel();
+   } while (IsRunning());
+ 
+-  bus.Idle();
++  bus.Step(1);
+ }
+ 
+ void DMA::RunChannel() {
+@@ -186,15 +186,15 @@ void DMA::RunChannel() {
+     auto src_addr = channel.latch.src_addr;
+     auto dst_addr = channel.latch.dst_addr;
+ 
+-    auto access_src = Bus::Access::Sequential;
+-    auto access_dst = Bus::Access::Sequential;
++    auto access_src = Bus::Access::Sequential | Bus::Access::Dma;
++    auto access_dst = Bus::Access::Sequential | Bus::Access::Dma;
+ 
+     if (!did_access_rom) {
+       if (src_addr >= 0x08000000) {
+-        access_src = Bus::Access::Nonsequential;
++        access_src = Bus::Access::Nonsequential | Bus::Access::Dma;
+         did_access_rom = true;
+       } else if (dst_addr >= 0x08000000) {
+-        access_dst = Bus::Access::Nonsequential;
++        access_dst = Bus::Access::Nonsequential | Bus::Access::Dma;
+         did_access_rom = true;
+       }
+     }
+@@ -212,7 +212,7 @@ void DMA::RunChannel() {
+         } else {
+           value = channel.latch.bus;
+         }
+-        bus.Idle();
++        bus.Step(1);
+       }
+ 
+       bus.WriteHalf(dst_addr, value, access_dst);
+@@ -221,7 +221,7 @@ void DMA::RunChannel() {
+         channel.latch.bus = bus.ReadWord(src_addr, access_src);
+         latch = channel.latch.bus;
+       } else {
+-        bus.Idle();
++        bus.Step(1);
+       }
+ 
+       bus.WriteWord(dst_addr, channel.latch.bus, access_dst);

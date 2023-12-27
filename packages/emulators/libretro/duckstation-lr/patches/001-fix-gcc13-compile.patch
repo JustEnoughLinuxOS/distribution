@@ -1,6 +1,16 @@
-# SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2022-present JELOS (https://github.com/JustEnoughLinuxOS)
-
+diff --git a/src/common/log.h b/src/common/log.h
+index 1223ce03..0c6b0856 100644
+--- a/src/common/log.h
++++ b/src/common/log.h
+@@ -1,6 +1,8 @@
+ #pragma once
+ #include "types.h"
+ #include <cinttypes>
++#include <cstdint>
++#include <cstdarg>
+ #include <mutex>
+ 
+ enum LOGLEVEL
 diff --git a/src/core/cpu_core.h b/src/core/cpu_core.h
 index c9199153..5d82b5c0 100644
 --- a/src/core/cpu_core.h
@@ -12,7 +22,7 @@ index c9199153..5d82b5c0 100644
 +
 +  static constexpr u32 GTERegisterOffset(u32 index) { return offsetof(State, gte_regs.r32) + (sizeof(u32) * index); }
  };
-
+ 
  extern State g_state;
 diff --git a/src/core/cpu_recompiler_code_generator.cpp b/src/core/cpu_recompiler_code_generator.cpp
 index 68492b03..e550844e 100644
