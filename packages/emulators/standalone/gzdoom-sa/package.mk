@@ -7,7 +7,7 @@ PKG_VERSION="a368588db6f8485072429f264aca2d9c411fe9b2"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/ZDoom/gzdoom"
 PKG_URL="${PKG_SITE}.git"
-PKG_DEPENDS_HOST="toolchain SDL2:host zmusic:host libwebp:host"
+PKG_DEPENDS_HOST="toolchain SDL2:host zmusic:host libvpx:host libwebp:host"
 PKG_DEPENDS_TARGET="toolchain SDL2 gzdoom-sa:host zmusic libvpx libwebp"
 PKG_LONGDESC="GZDoom is a modder-friendly OpenGL and Vulkan source port based on the DOOM engine"
 GET_HANDLER_SUPPORT="git"
@@ -16,13 +16,10 @@ PKG_TOOLCHAIN="cmake-make"
 
 pre_configure_host() {
   unset HOST_CMAKE_OPTS
-  PKG_CMAKE_OPTS_HOST=" -DZMUSIC_LIBRARIES=${TOOLCHAIN}/usr/lib/libzmusic.so \
-                        -DZMUSIC_INCLUDE_DIR=${TOOLCHAIN}/usr/include"
-}
-
-make_host() {
-  cmake . -DNO_GTK=ON
-  make
+  PKG_CMAKE_OPTS_HOST+=" -DZMUSIC_LIBRARIES=${TOOLCHAIN}/usr/lib/libzmusic.so \
+                        -DZMUSIC_INCLUDE_DIR=${TOOLCHAIN}/usr/include \
+                        -DCMAKE_BUILD_TYPE=Release \
+                        -DNO_GTK=ON"
 }
 
 makeinstall_host() {
