@@ -5,4 +5,4 @@
 . /storage/.config/profile.d/001-device_config
 
 # RK3566 devices have a master volume attached to card 0 that needs to be set to 100% on startup.
-amixer -c 0 set "Master" "100%"
+amixer -c 1 set "Master" "100%"

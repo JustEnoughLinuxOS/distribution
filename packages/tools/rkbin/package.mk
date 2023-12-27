@@ -9,5 +9,5 @@ PKG_LONGDESC="rkbin: Rockchip Firmware and Tool Binaries"
 PKG_TOOLCHAIN="manual"
 PKG_PATCH_DIRS+="${DEVICE}*"
 
-PKG_VERSION="3aafb4dd13a750ab226604875d7938284d4ee9f1"
+PKG_VERSION="5257e54cc6c15fef28c3b73bd95ca1b55cc8c8cd"
 PKG_URL="${PKG_SITE}.git"
