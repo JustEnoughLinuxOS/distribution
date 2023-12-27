@@ -31,17 +31,19 @@ makeinstall_host() {
 
 pre_configure_target() {
 
-  ### Enable GLES on devices that don't support OpenGL.
-  if [ ! "${OPENGL_SUPPORT}" = "yes" ]
-  then
-    sed -i 's~#define USE_GLAD_LOADER 0~#define USE_GLAD_LOADER 1~g' ${PKG_BUILD}/src/common/rendering/gles/gles_system.h
-  fi
-
   PKG_CMAKE_OPTS_TARGET+=" -DNO_GTK=ON \
                            -DFORCE_CROSSCOMPILE=ON \
                            -DIMPORT_EXECUTABLES=${PKG_BUILD}/.${HOST_NAME}/ImportExecutables.cmake \
                            -DCMAKE_BUILD_TYPE=Release \
                            -DZMUSIC_LIBRARIES=${SYSROOT_PREFIX}/usr/lib/libzmusic.so -DZMUSIC_INCLUDE_DIR=${SYSROOT_PREFIX}/usr/include"
+  ### Enable GLES on devices that don't support OpenGL.
+  if [ ! "${OPENGL_SUPPORT}" = "yes" ]
+  then
+    sed -i 's~#define USE_GLAD_LOADER 0~#define USE_GLAD_LOADER 1~g' ${PKG_BUILD}/src/common/rendering/gles/gles_system.h
+    PKG_CMAKE_OPTS_TARGET+=" -DHAVE_GLES2=ON \
+                             -DHAVE_VULKAN=OFF"
+  fi
+
 }
 
 makeinstall_target() {
