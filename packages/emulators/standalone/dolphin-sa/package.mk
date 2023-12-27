@@ -49,6 +49,7 @@ fi
 
 pre_configure_target() {
   sed -i 's~#include <cstdlib>~#include <cstdlib>\n#include <cstdint>~g' ${PKG_BUILD}/Externals/VulkanMemoryAllocator/include/vk_mem_alloc.h
+  sed -i 's~#include <cstdint>~#include <cstdint>\n#include <string>~g' ${PKG_BUILD}/Externals/VulkanMemoryAllocator/include/vk_mem_alloc.h
 }
 
 PKG_CMAKE_OPTS_TARGET+=" -DENABLE_HEADLESS=ON \
