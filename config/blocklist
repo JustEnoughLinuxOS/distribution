@@ -5,11 +5,9 @@ dolphin-sa # Wayland patch is now broken upstream
 duckstation-lr #Libretro support removed from upstream.
 duckstation-sa #Patches need to be reworked.
 rpcs3-sa #Need to update to llvm 16 
-gzdoom-sa #will break build patch
 ryujinx-sa #broken on JELOS after build 1.1740.
 melonds-sa #Broken OpenGL renderer upstream
 mupen64plus-sa-ui-console #Causes segfaults
-nanoboyadvance-sa #SDL version removed after this commit
 kronos-sa #using the release version of kronos had better results.
 retroarch #pinning to release versions for stability.
 vita3k-sa #Patch updates needed.

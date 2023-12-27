@@ -16,6 +16,7 @@ PKG_GIT_CLONE_BRANCH="master"
 PKG_GIT_CLONE_SINGLE="yes"
 
 pre_configure_host() {
+  sed -i '/include <string>/a #include <cstdint>' ${PKG_BUILD}/llvm/include/llvm/Support/Signals.h
   # path changes in future commits.
   # PKG_CMAKE_SCRIPT="${PKG_BUILD}/3rdparty/llvm/llvm/llvm/CMakeLists.txt"
   PKG_CMAKE_SCRIPT="${PKG_BUILD}/llvm/CMakeLists.txt"
@@ -33,6 +34,7 @@ pre_configure_host() {
 }
 
 pre_configure_target() {
+  sed -i '/include <string>/a #include <cstdint>' ${PKG_BUILD}/llvm/include/llvm/Support/Signals.h
   PKG_CMAKE_OPTS_TARGET=(-DUSE_NATIVE_INSTRUCTIONS=OFF \
                          -DBUILD_LLVM_SUBMODULE=ON \
                          -DCMAKE_C_FLAGS="${CFLAGS}" \
