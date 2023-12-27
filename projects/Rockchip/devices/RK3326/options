@@ -119,6 +119,9 @@
   # build and install SFTP Server (yes / no)
     SFTP_SERVER="yes"
 
+  # build and install Simple HTTP Server (yes / no)
+    SIMPLE_HTTP_SERVER="yes"
+
   # build and install OpenVPN support (yes / no)
     OPENVPN_SUPPORT="no"
 

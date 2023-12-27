@@ -51,7 +51,7 @@
  
   # Mali GPU family
     MALI_FAMILY="bifrost-g52"
-    MALI_VERSION="g13p0"
+    MALI_VERSION="g2p0"
     OPENGLES="libmali"
     VULKAN_SUPPORT="no"
 
@@ -108,6 +108,9 @@
 
   # build and install SFTP Server (yes / no)
     SFTP_SERVER="yes"
+
+  # build and install Simple HTTP Server (yes / no)
+    SIMPLE_HTTP_SERVER="yes"
 
   # build and install OpenVPN support (yes / no)
     OPENVPN_SUPPORT="no"

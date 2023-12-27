@@ -2,7 +2,7 @@
 # Copyright (C) 2023-present JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="libwebp"
-PKG_VERSION="89c5b917463c07bfb5b6390b81d258c49d5fe8c6"
+PKG_VERSION="e78e924f84ddcd41fc5d55583bc32f4ddc4100a3"
 PKG_LICENSE="BSD"
 PKG_SITE="https://github.com/webmproject/libwebp"
 PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"

@@ -11,7 +11,6 @@ PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_SHORTDESC="ARM optimized PCSX fork"
 PKG_TOOLCHAIN="manual"
-PKG_PATCH_DIRS+="${TARGET_ARCH}/${DEVICE}"
 
 pre_configure_target() {
   sed -i 's/\-O[23]/-Ofast/' ${PKG_BUILD}/Makefile
