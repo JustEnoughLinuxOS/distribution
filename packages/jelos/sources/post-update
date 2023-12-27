@@ -119,7 +119,7 @@ cp -f /usr/config/smb.conf /storage/.config
 ### 20231202 - Remove stale profile bits if they exist.
 for FILE in 001-deviceconfig 99-mixer
 do
-  rm -rf ${FILE} 2>/dev/null
+  rm -f /storage/.config/profile.d/${FILE} 2>/dev/null
 done
 
 ### 20231203 - Disable merged storage by default.
