@@ -22,13 +22,6 @@ esac
 
 PKG_URL="https://pkgs.tailscale.com/stable/tailscale_${PKG_VERSION}${TS_ARCH}.tgz"
 
-# Don't wildcard (X55)
-case ${DEVICE} in
-  RK3566)
-    PKG_DEPENDS_TARGET+=" wireguard-linux-compat"
-  ;;
-esac
-
 pre_unpack() {
   mkdir -p ${PKG_BUILD}
   tar --strip-components=1 -xf $SOURCES/${PKG_NAME}/${PKG_NAME}-${PKG_VERSION}.tgz -C ${PKG_BUILD} tailscale_${PKG_VERSION}${TS_ARCH}

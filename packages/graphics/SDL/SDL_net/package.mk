@@ -18,11 +18,10 @@
 
 PKG_NAME="SDL_net"
 PKG_VERSION="1.2.8"
-PKG_SHA256="5f4a7a8bb884f793c278ac3f3713be41980c5eedccecff0260411347714facb4"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.libsdl.org/"
-PKG_URL="https://www.libsdl.org/projects/SDL_net/release/${PKG_NAME}-${PKG_VERSION}.tar.gz"
+PKG_URL="https://github.com/libsdl-org/${PKG_NAME}/archive/refs/tags/release-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain yasm:host alsa-lib systemd dbus SDL SDL_net:host"
 PKG_DEPENDS_HOST="SDL:host"
 PKG_SECTION="multimedia"

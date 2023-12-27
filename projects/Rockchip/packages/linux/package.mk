@@ -23,24 +23,12 @@ case ${DEVICE} in
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="main"
   ;;
-  *ML)
-    PKG_VERSION="6.7-rc6"
+  RK356*)
+    PKG_VERSION="6.7-rc7"
     PKG_URL="https://git.kernel.org/torvalds/t/${PKG_NAME}-${PKG_VERSION}.tar.gz"
   ;;
-  RK3566)
-    PKG_URL="${PKG_SITE}/rk356x-kernel.git"
-    PKG_VERSION="d346337a7b3e3e7e0d12dbdcc4fc62efc86cbda3"
-    GET_HANDLER_SUPPORT="git"
-    PKG_GIT_CLONE_BRANCH="main"
-  ;;
-  *X55)
-    PKG_URL="${PKG_SITE}/rk3566-x55-kernel.git"
-    PKG_VERSION="9b92751b8fe21f9326d1a54dd5f675965a12d6e1"
-    GET_HANDLER_SUPPORT="git"
-    PKG_GIT_CLONE_BRANCH="main"
-  ;;
   RK33*)
-    PKG_VERSION="6.1.68"
+    PKG_VERSION="6.1.69"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
   ;;
 esac

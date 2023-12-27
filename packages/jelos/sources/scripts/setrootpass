@@ -32,3 +32,13 @@ if [ "${SYNCSTATUS}" = "1" ] &&
 then
   systemctl restart syncthing >/dev/null 2>&1
 fi
+
+# Restart simple-http-server if it is enabled
+SIMPLESTATUS=$(get_setting simplehttp.enabled)
+SIMPLEACTIVE=$(systemctl status simple-http-server | awk '/active/ {print $2}')
+if [ "${SIMPLESTATUS}" = "1" ] &&
+   [ "${SIMPLEACTIVE}" = "active" ]
+then
+  systemctl restart simple-http-server >/dev/null 2>&1
+fi
+

@@ -41,7 +41,7 @@ do
   else
     if [ ${STAT} == "Discharging" ]
     then
-      if (( ${CAP} <= 10 ))
+      if (( ${CAP} <= 5 ))
       then
         for ctr in $(seq 1 1 5)
         do
@@ -51,10 +51,10 @@ do
           sleep .5
         done
         continue
-      elif (( ${CAP} <= 20 ))
+      elif (( ${CAP} <= 10 ))
       then
         set_led red
-      elif (( ${CAP} <=  30 ))
+      elif (( ${CAP} <=  20 ))
       then
         set_led orange
       else

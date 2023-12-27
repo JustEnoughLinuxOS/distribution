@@ -12,13 +12,6 @@ PKG_TOOLCHAIN="autotools"
 
 
 case ${DEVICE} in
-  RK356*)
-    PKG_VERSION="1.8.3"
-    PKG_EXTENSION="bz2"
-    PKG_PATCH_DIRS+="4.x"
-    PKG_CONFIGURE_OPTS_TARGET="--with-kernel=$(kernel_path)
-    CPPFLAGS=-I${SYSROOT_PREFIX}/usr/include"
-  ;;
   *)
     PKG_VERSION="1.8.9"
     PKG_EXTENSION="xz"

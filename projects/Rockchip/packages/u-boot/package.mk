@@ -18,14 +18,10 @@ case ${DEVICE} in
     PKG_VERSION="d34ff0716"
     PKG_GIT_CLONE_BRANCH="v2017.09-rk3588"
   ;;
-  *ML)
+  RK356*)
     PKG_URL="https://github.com/u-boot/u-boot.git"
     PKG_VERSION="27089f1e4d11fd7e0619097b59258d0428cde2ac"
     PKG_GIT_CLONE_BRANCH="master"
-  ;;
-  RK356*)
-    PKG_URL="${PKG_SITE}/rk356x-uboot.git"
-    PKG_VERSION="88b2f26"
   ;;
   RK3399)
     PKG_URL="${PKG_SITE}/rk3399-uboot.git"

@@ -5,7 +5,7 @@ PKG_NAME="screen"
 PKG_VERSION="4.9.1"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.gnu.org/software/screen/"
-PKG_URL="http://ftpmirror.gnu.org/screen/${PKG_NAME}-${PKG_VERSION}.tar.gz"
+PKG_URL="http://ftp.gnu.org/gnu/screen/${PKG_NAME}-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain ncurses"
 PKG_LONGDESC="Screen is a window manager that multiplexes a physical terminal between several processes"
 
