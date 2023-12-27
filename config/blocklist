@@ -7,6 +7,7 @@ duckstation-sa #Patches need to be reworked.
 rpcs3-sa #Need to update to llvm 16 
 ryujinx-sa #broken on JELOS after build 1.1740.
 melonds-sa #Broken OpenGL renderer upstream
+nanoboyadvance-sa #SDL version removed after this commit
 mupen64plus-sa-ui-console #Causes segfaults
 kronos-sa #using the release version of kronos had better results.
 retroarch #pinning to release versions for stability.
