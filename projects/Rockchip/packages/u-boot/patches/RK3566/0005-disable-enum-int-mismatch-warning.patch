@@ -1,0 +1,13 @@
+diff --git a/Makefile b/Makefile
+index cdb3ff9..d439225 100644
+--- a/Makefile
++++ b/Makefile
+@@ -596,6 +596,8 @@ KBUILD_CFLAGS += $(call cc-option,-fno-delete-null-pointer-checks)
+ KBUILD_CFLAGS  += $(call cc-disable-warning, address-of-packed-member)
+ KBUILD_CFLAGS   += $(call cc-disable-warning, dangling-pointer)
+ KBUILD_CFLAGS   += $(call cc-disable-warning, address)
++KBUILD_CFLAGS   += $(call cc-disable-warning, enum-int-mismatch)
++KBUILD_CFLAGS   += $(call cc-disable-warning, maybe-uninitialized)
+ 
+ KBUILD_CFLAGS	+= -g
+ # $(KBUILD_AFLAGS) sets -g, which causes gcc to pass a suitable -g<format>
