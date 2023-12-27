@@ -13,13 +13,13 @@ PKG_LONGDESC="GZDoom is a modder-friendly OpenGL and Vulkan source port based on
 GET_HANDLER_SUPPORT="git"
 PKG_TOOLCHAIN="cmake-make"
 
-
 pre_configure_host() {
   unset HOST_CMAKE_OPTS
   PKG_CMAKE_OPTS_HOST+=" -DZMUSIC_LIBRARIES=${TOOLCHAIN}/usr/lib/libzmusic.so \
                         -DZMUSIC_INCLUDE_DIR=${TOOLCHAIN}/usr/include \
-                        -DCMAKE_BUILD_TYPE=Release \
-                        -DNO_GTK=ON"
+                        -DNO_GTK=ON \
+                        -DHAVE_VULKAN=OFF \
+                        -DHAVE_GLES2=OFF"
 }
 
 makeinstall_host() {
@@ -41,6 +41,11 @@ pre_configure_target() {
                              -DHAVE_VULKAN=OFF"
   fi
 
+  ### Enable vulkan support on devices that have it available.
+  if [ "${VULKAN_SUPPORT}" = "yes" ]
+  then
+    PKG_CMAKE_OPTS_TARGET+=" -DHAVE_VULKAN=ON"
+  fi
 }
 
 makeinstall_target() {
