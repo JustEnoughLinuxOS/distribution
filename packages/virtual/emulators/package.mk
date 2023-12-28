@@ -1059,11 +1059,11 @@ makeinstall_target() {
   add_emu_core snes retroarch bsnes_mercury_performance false
   add_emu_core snes retroarch bsnes_hd_beta false
   case ${DEVICE} in
-    RK3399|AMD64)
+    AMD64)
       add_emu_core snes mednafen snes_faust false
       add_emu_core snes mednafen snes false
     ;;
-    RK3326)
+    RK33*)
       add_emu_core snes mednafen snes_faust false
 	;;
   esac
@@ -1079,11 +1079,11 @@ makeinstall_target() {
   add_emu_core snesh retroarch bsnes_mercury_performance false
   add_emu_core snesh retroarch bsnes_hd_beta false
   case ${DEVICE} in
-    RK3399|AMD64)
+    AMD64)
       add_emu_core snesh mednafen snes false
       add_emu_core snesh mednafen snes_faust false
     ;;
-    RK3326)
+    RK33*)
       add_emu_core snes mednafen snes_faust false
 	;;
   esac
@@ -1099,11 +1099,11 @@ makeinstall_target() {
   add_emu_core sfc retroarch bsnes_mercury_performance false
   add_emu_core sfc retroarch bsnes_hd_beta false
   case ${DEVICE} in
-    RK3399|AMD64)
+    AMD64)
       add_emu_core sfc mednafen snes false
       add_emu_core sfc mednafen snes_faust false
     ;;
-    RK3326)
+    RK33*)
       add_emu_core snes mednafen snes_faust false
 	;;
   esac
