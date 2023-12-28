@@ -10,18 +10,19 @@ PKG_DEPENDS_TARGET="toolchain zlib libzip"
 PKG_LONGDESC="Flycast is a multi-platform Sega Dreamcast, Naomi and Atomiswave emulator"
 PKG_TOOLCHAIN="cmake"
 
-if [ ! "${OPENGL}" = "no" ]; then
+if [ "${OPENGL_SUPPORT}" = "yes" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
-  PKG_CMAKE_OPTS_TARGET+="  USE_OPENGL=ON"
+  PKG_CMAKE_OPTS_TARGET+="  -DUSE_OPENGL=ON"
 else
-  PKG_CMAKE_OPTS_TARGET+="  USE_OPENGL=OFF"
+  PKG_CMAKE_OPTS_TARGET+="  -DUSE_OPENGL=OFF"
 fi
 
 if [ "${OPENGLES_SUPPORT}" = yes ] && \
    [ ! "${TARGET_ARCH}" = "x86_64" ]
 then
   PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-  PKG_CMAKE_OPTS_TARGET+=" -DUSE_GLES=ON"
+  ### Will fail to compile if USE_OPENGL=OFF and USE_GLES=ON as both options are required.
+  PKG_CMAKE_OPTS_TARGET+=" -DUSE_OPENGL=ON -DUSE_GLES=ON"
 else
   PKG_CMAKE_OPTS_TARGET+=" -DUSE_GLES=OFF"
 fi
