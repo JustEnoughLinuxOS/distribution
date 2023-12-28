@@ -24,6 +24,10 @@ if [ "${OPENGLES_SUPPORT}" = yes ]; then
 fi
 
 pre_configure_target() {
+  for SOURCE in ${PKG_BUILD}/mupen64plus-rsp-paraLLEl/rsp_disasm.cpp ${PKG_BUILD}/mupen64plus-rsp-paraLLEl/rsp_disasm.hpp
+  do
+    sed -i '/include <string>/a #include <cstdint>' ${SOURCE}
+  done
   sed -e "s|^GIT_VERSION ?.*$|GIT_VERSION := \" ${PKG_VERSION:0:7}\"|" -i Makefile
   sed -i 's/\-O[23]/-Ofast/' ${PKG_BUILD}/Makefile
   case ${DEVICE} in
