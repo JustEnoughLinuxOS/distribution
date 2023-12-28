@@ -364,6 +364,7 @@ makeinstall_target() {
   add_emu_core fds retroarch nestopia true
   add_emu_core fds retroarch fceumm false
   add_emu_core fds retroarch quicknes false
+  add_emu_core fds retroarch mesen false
   case ${DEVICE} in
     RK3399|AMD64|RK3326)
       add_emu_core fds mednafen nes false
