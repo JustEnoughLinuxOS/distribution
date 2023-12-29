@@ -1,19 +1,21 @@
 diff -rupN u-boot.orig/Makefile u-boot/Makefile
---- u-boot.orig/Makefile	2023-05-11 17:08:32.613932080 +0000
-+++ u-boot/Makefile	2023-05-11 17:08:01.428935587 +0000
-@@ -360,6 +360,9 @@ KBUILD_CPPFLAGS := -D__KERNEL__ -D__UBOO
- KBUILD_CFLAGS   := -Wall -Wstrict-prototypes \
- 		   -Wno-format-security \
- 		   -fno-builtin -ffreestanding
-+KBUILD_CFLAGS += $(call cc-disable-warning, address-of-packed-member)
-+KBUILD_CFLAGS   += $(call cc-disable-warning, dangling-pointer)
-+KBUILD_CFLAGS   += $(call cc-disable-warning, address)
- KBUILD_CFLAGS	+= -fshort-wchar -Werror
- KBUILD_AFLAGS   := -D__ASSEMBLY__
+--- u-boot.orig/Makefile	2023-12-28 14:42:41.202046205 +0000
++++ u-boot/Makefile	2023-12-28 14:42:25.021569301 +0000
+@@ -605,6 +605,11 @@ ifeq ($(shell $(CONFIG_SHELL) $(srctree)
+ endif
  
+ KBUILD_CFLAGS += $(call cc-option,-Wno-format-nonliteral)
++KBUILD_CFLAGS += $(call cc-disable-warning, address-of-packed-member)
++KBUILD_CFLAGS += $(call cc-disable-warning, dangling-pointer)
++KBUILD_CFLAGS += $(call cc-disable-warning, address)
++KBUILD_CFLAGS += $(call cc-disable-warning, maybe-uninitialized)
++KBUILD_CFLAGS += $(call cc-disable-warning, enum-int-mismatch)
+ 
+ # turn jbsr into jsr for m68k
+ ifeq ($(ARCH),m68k)
 diff -rupN u-boot.orig/arch/arm/dts/Makefile u-boot/arch/arm/dts/Makefile
---- u-boot.orig/arch/arm/dts/Makefile	2023-05-11 17:08:32.629932591 +0000
-+++ u-boot/arch/arm/dts/Makefile	2023-05-11 17:08:01.448936226 +0000
+--- u-boot.orig/arch/arm/dts/Makefile	2023-12-28 14:42:41.210046441 +0000
++++ u-boot/arch/arm/dts/Makefile	2023-12-28 14:39:14.956037945 +0000
 @@ -28,11 +28,9 @@ dtb-$(CONFIG_EXYNOS5) += exynos5250-arnd
  	exynos5422-odroidxu3.dtb
  dtb-$(CONFIG_EXYNOS7420) += exynos7420-espresso7420.dtb
@@ -39,8 +41,8 @@ diff -rupN u-boot.orig/arch/arm/dts/Makefile u-boot/arch/arm/dts/Makefile
  	rk3399-firefly.dtb \
  	rk3399-puma-ddr1333.dtb \
 diff -rupN u-boot.orig/board/rockchip/odroidgoa/odroidgoa.c u-boot/board/rockchip/odroidgoa/odroidgoa.c
---- u-boot.orig/board/rockchip/odroidgoa/odroidgoa.c	2023-05-11 17:08:32.685934380 +0000
-+++ u-boot/board/rockchip/odroidgoa/odroidgoa.c	2023-05-11 17:08:01.500937888 +0000
+--- u-boot.orig/board/rockchip/odroidgoa/odroidgoa.c	2023-12-28 14:42:41.306049273 +0000
++++ u-boot/board/rockchip/odroidgoa/odroidgoa.c	2023-12-28 14:39:14.956037945 +0000
 @@ -21,6 +21,8 @@
  
  DECLARE_GLOBAL_DATA_PTR;
@@ -92,8 +94,8 @@ diff -rupN u-boot.orig/board/rockchip/odroidgoa/odroidgoa.c u-boot/board/rockchi
  	if (!board_check_autotest()) {
  		board_run_autotest();
 diff -rupN u-boot.orig/scripts/dtc/dtc-lexer.l u-boot/scripts/dtc/dtc-lexer.l
---- u-boot.orig/scripts/dtc/dtc-lexer.l	2023-05-11 17:08:32.809938343 +0000
-+++ u-boot/scripts/dtc/dtc-lexer.l	2023-05-11 17:08:01.628941978 +0000
+--- u-boot.orig/scripts/dtc/dtc-lexer.l	2023-12-28 14:42:41.414052459 +0000
++++ u-boot/scripts/dtc/dtc-lexer.l	2023-12-28 14:39:14.956037945 +0000
 @@ -38,7 +38,6 @@ LINECOMMENT	"//".*\n
  #include "srcpos.h"
  #include "dtc-parser.tab.h"
@@ -103,8 +105,8 @@ diff -rupN u-boot.orig/scripts/dtc/dtc-lexer.l u-boot/scripts/dtc/dtc-lexer.l
  
  /* CAUTION: this will stop working if we ever use yyless() or yyunput() */
 diff -rupN u-boot.orig/scripts/dtc/dtc-lexer.lex.c_shipped u-boot/scripts/dtc/dtc-lexer.lex.c_shipped
---- u-boot.orig/scripts/dtc/dtc-lexer.lex.c_shipped	2023-05-11 17:08:32.809938343 +0000
-+++ u-boot/scripts/dtc/dtc-lexer.lex.c_shipped	2023-05-11 17:08:01.628941978 +0000
+--- u-boot.orig/scripts/dtc/dtc-lexer.lex.c_shipped	2023-12-28 14:42:41.414052459 +0000
++++ u-boot/scripts/dtc/dtc-lexer.lex.c_shipped	2023-12-28 14:39:14.956037945 +0000
 @@ -631,7 +631,6 @@ char *yytext;
  #include "srcpos.h"
  #include "dtc-parser.tab.h"
