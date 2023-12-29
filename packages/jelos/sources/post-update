@@ -13,11 +13,13 @@ LOG="/var/log/boot.log"
 ################################################################################
 
 echo "Rebuild library cache..." >>${LOG}
+tocon "Rebuilding library cache..."
 ### Rebuild the library cache
 rm -f /storage/.cache/ld.so.cache
 ldconfig -X
 
 echo "Sync configuration files..." >>${LOG}
+tocon "Re-sync configuration files..."
 ### Sync configurations
 if [ -d "/storage/.config/system/configs" ]
 then
@@ -41,6 +43,7 @@ then
 fi
 
 echo "Sync modules..." >>${LOG}
+tocon "Update tool modules..."
 rsync -a /usr/config/modules/* /storage/.config/modules/
 cp -f /usr/config/retroarch/retroarch-core-options.cfg /storage/.config/retroarch/retroarch-core-options.cfg
 
@@ -48,6 +51,7 @@ cp -f /usr/config/retroarch/retroarch-core-options.cfg /storage/.config/retroarc
 echo "Apply dev keys if available..." >>${LOG}
 if [ -e /usr/config/ssh/authorized_keys ]
 then
+  tocon "Update developer keys..."
   cp /usr/config/ssh/authorized_keys /storage/.ssh
 fi
 
@@ -57,6 +61,7 @@ rsync --ignore-existing /usr/config/rsync-rules.conf /storage/.config/
 rsync --ignore-existing /usr/config/rsync.conf /storage/.config/
 
 ### Sync locale data
+tocon "Re-sync locale data..."
 rsync -a --delete /usr/config/locale/* /storage/.config/locale/ >>/var/log/configure.log 2>&1
 rm -rf /storage/.config/emulationstation/locale >>/var/log/configure.log 2>&1 ||:
 ln -sf /usr/share/locale /storage/.config/emulationstation/locale >>/var/log/configure.log 2>&1 ||:
@@ -78,6 +83,7 @@ if [ "${GAMECOUNT}" -gt 20 ] && \
    [ ! -e "/storage/.migrated_games" ]
 then
   echo "Migrating games to overlayfs" >>${LOG}
+  tocon "Migrate games to new storage model..."
   if [ -d "/storage/games-internal" ]
   then
     echo "Backing up games-internal" >>${LOG}
@@ -99,6 +105,7 @@ then
     then
       mkdir -p "${GAMES}/roms" 2>/dev/null
     fi
+    tocon "Migrate games to new storage model..."
     mv "${GAMES}"/* "${GAMES}/roms/" 
   done
   touch /storage/.migrated_games2
