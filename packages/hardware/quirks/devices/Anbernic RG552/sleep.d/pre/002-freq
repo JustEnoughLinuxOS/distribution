@@ -7,8 +7,8 @@
 . /etc/profile
 
 ### Get the current cpu and gpu governor, save for when the device wakes from sleep.
-CUR_CPU_FREQ="$(cat /sys/devices/system/cpu/cpufreq/policy0/scaling_governor)"
-CUR_GPU_FREQ="$(cat /sys/devices/platform/ff9a0000.gpu/devfreq/ff9a0000.gpu/governor)"
+CUR_CPU_FREQ="$(cat ${CPU_FREQ}/scaling_governor)"
+CUR_GPU_FREQ="$(cat ${GPU_FREQ}/governor)"
 
 set_setting sleep.cpugovernor "${CUR_CPU_FREQ}"
 set_setting sleep.gpugovernor "${CUR_GPU_FREQ}"
