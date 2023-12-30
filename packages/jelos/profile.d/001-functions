@@ -30,7 +30,7 @@ function get_setting() {
   if [ -n "${3}" ]
   then
     ### Test to see if we have a game setting.
-    VAR="$2\[\"$(echo ${3} | sed 's/\W/\\&/g')\"]\.$1"
+    VAR="$2\[\"$(echo ${3} | sed -E "s~'~\\\x27~g"';s~[()&]~\\&~g')\"\]\.$1"
     OUTPUT=$(awk 'BEGIN {FS="="} /^'"${VAR}"'/ {print $NF}' ${J_CONF})
     if [ ! -z "${OUTPUT}" ]
     then
