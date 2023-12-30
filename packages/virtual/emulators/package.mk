@@ -16,17 +16,17 @@ PKG_RETROARCH="core-info libretro-database retroarch retroarch-assets retroarch-
 
 LIBRETRO_CORES="81-lr a5200-lr arduous-lr atari800-lr beetle-gba-lr beetle-lynx-lr beetle-ngp-lr beetle-pce-lr beetle-pce-fast-lr    \
                 beetle-pcfx-lr bsnes-lr bsnes-mercury-performance-lr beetle-supafaust-lr beetle-supergrafx-lr             \
-                beetle-vb-lr beetle-wswan-lr beetle-saturn-lr bluemsx-lr cannonball-lr cap32-lr crocods-lr daphne-lr      \
-                dinothawr-lr dosbox-svn-lr dosbox-pure-lr duckstation-lr easyrpg-lr fake08-lr fbalpha2012-lr              \
+                beetle-vb-lr beetle-wswan-lr beetle-saturn-lr bluemsx-lr cap32-lr crocods-lr daphne-lr      \
+                dosbox-svn-lr dosbox-pure-lr duckstation-lr easyrpg-lr fake08-lr fbalpha2012-lr              \
                 fbalpha2019-lr fbneo-lr fceumm-lr flycast2021-lr fmsx-lr freechaf-lr freeintv-lr freej2me-lr fuse-lr      \
-                gambatte-lr gearboy-lr gearcoleco-lr gearsystem-lr genesis-plus-gx-lr genesis-plus-gx-wide-lr gme-lr      \
-                gw-lr handy-lr hatari-lr idtech-lr mame2000-lr mame2003-plus-lr mame2010-lr mame2015-lr melonds-lr meowpc98-lr      \
-                mesen-lr mgba-lr mojozork-lr mrboom-lr mupen64plus-lr mupen64plus-nx-lr neocd_lr nestopia-lr np2kai-lr    \
-                nxengine-lr o2em-lr opera-lr parallel-n64-lr pcsx_rearmed-lr picodrive-lr pokemini-lr potator-lr          \
-                prosystem-lr puae-lr puae2021-lr px68k-lr quasi88-lr quicknes-lr race-lr reminiscence-lr        \
+                gambatte-lr gearboy-lr gearcoleco-lr gearsystem-lr genesis-plus-gx-lr genesis-plus-gx-wide-lr      \
+                gw-lr handy-lr hatari-lr idtech-lr mame2003-plus-lr mame2010-lr mame2015-lr melonds-lr      \
+                mesen-lr mgba-lr mojozork-lr mupen64plus-lr mupen64plus-nx-lr neocd_lr nestopia-lr np2kai-lr    \
+                o2em-lr opera-lr parallel-n64-lr pcsx_rearmed-lr picodrive-lr pokemini-lr potator-lr          \
+                prosystem-lr puae-lr puae2021-lr px68k-lr quasi88-lr quicknes-lr race-lr       \
                 sameboy-lr sameduck-lr scummvm-lr smsplus-gx-lr snes9x-lr snes9x2002-lr snes9x2005_plus-lr snes9x2010-lr  \
-                stella-lr stella-2014-lr swanstation-lr tic80-lr tgbdual-lr uzem-lr vba-next-lr minivmac-lr               \
-                vbam-lr vecx-lr vice-lr yabasanshiro-lr virtualjaguar-lr xmil-lr xrick-lr"
+                stella-lr swanstation-lr tic80-lr tgbdual-lr uzem-lr vba-next-lr minivmac-lr               \
+                vbam-lr vecx-lr vice-lr yabasanshiro-lr virtualjaguar-lr xmil-lr"
 
 ### Emulators or cores for specific devices
 case "${DEVICE}" in
@@ -35,7 +35,7 @@ case "${DEVICE}" in
     PKG_EMUS+=" amiberry cemu-sa citra-sa dolphin-sa duckstation-sa melonds-sa minivmacsa mupen64plus-sa kronos-sa        \
                nanoboyadvance-sa pcsx2-sa primehack rpcs3-sa ryujinx-sa scummvmsa vita3k-sa xemu-sa yuzu-sa mednafen"
     LIBRETRO_CORES+=" beetle-psx-lr bsnes-hd-lr citra-lr desmume-lr dolphin-lr flycast-lr lrps2-lr mame-lr                \
-                     play-lr ppsspp-lr kronos-lr"
+                     ppsspp-lr kronos-lr"
   ;;
   RK358*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 desmume-lr flycast-lr gpsp-lr pcsx_rearmed-lr"
@@ -181,7 +181,6 @@ makeinstall_target() {
 
   ### Arcade
   add_emu_core arcade retroarch mame2003_plus true
-  add_emu_core arcade retroarch mame2000 false
   add_emu_core arcade retroarch mame2010 false
   add_emu_core arcade retroarch mame2015 false
   add_emu_core arcade retroarch fbneo false
@@ -284,7 +283,6 @@ makeinstall_target() {
   add_emu_core cps1 retroarch mame2003_plus false
   add_emu_core cps1 retroarch mame2010 false
   add_emu_core cps1 retroarch fbalpha2012 false
-  add_emu_core cps1 retroarch mba_mini false
   case ${TARGET_ARCH} in
     aarch64)
       add_emu_core cps1 AdvanceMame AdvanceMame false
@@ -297,7 +295,6 @@ makeinstall_target() {
   add_emu_core cps2 retroarch mame2003_plus false
   add_emu_core cps2 retroarch mame2010 false
   add_emu_core cps2 retroarch fbalpha2012 false
-  add_emu_core cps2 retroarch mba_mini false
   case ${TARGET_ARCH} in
     aarch64)
       add_emu_core cps2 AdvanceMame AdvanceMame false
@@ -310,7 +307,6 @@ makeinstall_target() {
   add_emu_core cps3 retroarch mame2003_plus false
   add_emu_core cps3 retroarch mame2010 false
   add_emu_core cps3 retroarch fbalpha2012 false
-  add_emu_core cps3 retroarch mba_mini false
   case ${TARGET_ARCH} in
     aarch64)
       add_emu_core cps3 AdvanceMame AdvanceMame false
@@ -368,6 +364,7 @@ makeinstall_target() {
   add_emu_core fds retroarch nestopia true
   add_emu_core fds retroarch fceumm false
   add_emu_core fds retroarch quicknes false
+  add_emu_core fds retroarch mesen false
   case ${DEVICE} in
     RK3399|AMD64|RK3326)
       add_emu_core fds mednafen nes false
@@ -1062,11 +1059,11 @@ makeinstall_target() {
   add_emu_core snes retroarch bsnes_mercury_performance false
   add_emu_core snes retroarch bsnes_hd_beta false
   case ${DEVICE} in
-    RK3399|AMD64)
+    AMD64)
       add_emu_core snes mednafen snes_faust false
       add_emu_core snes mednafen snes false
     ;;
-    RK3326)
+    RK33*)
       add_emu_core snes mednafen snes_faust false
 	;;
   esac
@@ -1082,11 +1079,11 @@ makeinstall_target() {
   add_emu_core snesh retroarch bsnes_mercury_performance false
   add_emu_core snesh retroarch bsnes_hd_beta false
   case ${DEVICE} in
-    RK3399|AMD64)
+    AMD64)
       add_emu_core snesh mednafen snes false
       add_emu_core snesh mednafen snes_faust false
     ;;
-    RK3326)
+    RK33*)
       add_emu_core snes mednafen snes_faust false
 	;;
   esac
@@ -1102,11 +1099,11 @@ makeinstall_target() {
   add_emu_core sfc retroarch bsnes_mercury_performance false
   add_emu_core sfc retroarch bsnes_hd_beta false
   case ${DEVICE} in
-    RK3399|AMD64)
+    AMD64)
       add_emu_core sfc mednafen snes false
       add_emu_core sfc mednafen snes_faust false
     ;;
-    RK3326)
+    RK33*)
       add_emu_core snes mednafen snes_faust false
 	;;
   esac

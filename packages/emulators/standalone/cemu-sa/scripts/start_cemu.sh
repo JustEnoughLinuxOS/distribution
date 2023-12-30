@@ -65,11 +65,22 @@ FILE=$(echo $@ | sed "s#^/.*/##g")
 ONLINE=$(get_setting online_enabled wiiu "${FILE}")
 FPS=$(get_setting show_fps wiiu "${FILE}")
 CON=$(get_setting wiiu_controller_profile wiiu "${FILE}")
+RENDERER=$(get_setting graphics_backend wiiu "${FILE}")
 
 if [ -z "${FPS}" ]
 then
   FPS="0"
 fi
+
+# Assume Vulkan
+case ${RENDERER} in
+  opengl)
+    RENDERER=0
+  ;;
+  *)
+    RENDERER=1
+  ;;
+esac
 
 case ${CON} in
   "Wii U Pro Controller")
@@ -100,6 +111,7 @@ xmlstarlet ed --inplace -u "//Account/OnlineEnabled" -v "${ONLINE}" ${CEMU_CONFI
 xmlstarlet ed --inplace -u "//Overlay/Position" -v "${FPS}" ${CEMU_CONFIG_ROOT}/settings.xml
 xmlstarlet ed --inplace -u "//fullscreen" -v "true" ${CEMU_CONFIG_ROOT}/settings.xml
 xmlstarlet ed --inplace -u "//Audio/TVDevice" -v "${PASINK}" ${CEMU_CONFIG_ROOT}/settings.xml
+xmlstarlet ed --inplace -u "//Graphic/api" -v "${RENDERER}" ${CEMU_CONFIG_ROOT}/settings.xml
 xmlstarlet ed --inplace -u "//emulated_controller/type" -v "${CON}" ${CEMU_CONFIG_ROOT}/controllerProfiles/controller0.xml
 xmlstarlet ed --inplace -u "//emulated_controller/controller/uuid" -v "${UUID0}" ${CEMU_CONFIG_ROOT}/controllerProfiles/controller0.xml
 xmlstarlet ed --inplace -u "//emulated_controller/controller/display_name" -v "${CONTROLLER0}" ${CEMU_CONFIG_ROOT}/controllerProfiles/controller0.xml

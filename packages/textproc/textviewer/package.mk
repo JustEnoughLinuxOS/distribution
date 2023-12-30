@@ -3,7 +3,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="textviewer"
-PKG_VERSION="16d4c69d4686e9cc210ab5964d909dfedc8866f4"
+PKG_VERSION="fcbda2d1708e9e2c650abc589ea8e7f1fe1d04d8"
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/JustEnoughLinuxOS/TvTextViewer"
 PKG_URL="${PKG_SITE}.git"

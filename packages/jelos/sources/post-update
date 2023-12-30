@@ -13,11 +13,13 @@ LOG="/var/log/boot.log"
 ################################################################################
 
 echo "Rebuild library cache..." >>${LOG}
+tocon "Rebuilding library cache..."
 ### Rebuild the library cache
 rm -f /storage/.cache/ld.so.cache
 ldconfig -X
 
 echo "Sync configuration files..." >>${LOG}
+tocon "Re-sync configuration files..."
 ### Sync configurations
 if [ -d "/storage/.config/system/configs" ]
 then
@@ -41,6 +43,7 @@ then
 fi
 
 echo "Sync modules..." >>${LOG}
+tocon "Update tool modules..."
 rsync -a /usr/config/modules/* /storage/.config/modules/
 cp -f /usr/config/retroarch/retroarch-core-options.cfg /storage/.config/retroarch/retroarch-core-options.cfg
 
@@ -48,6 +51,7 @@ cp -f /usr/config/retroarch/retroarch-core-options.cfg /storage/.config/retroarc
 echo "Apply dev keys if available..." >>${LOG}
 if [ -e /usr/config/ssh/authorized_keys ]
 then
+  tocon "Update developer keys..."
   cp /usr/config/ssh/authorized_keys /storage/.ssh
 fi
 
@@ -57,18 +61,13 @@ rsync --ignore-existing /usr/config/rsync-rules.conf /storage/.config/
 rsync --ignore-existing /usr/config/rsync.conf /storage/.config/
 
 ### Sync locale data
+tocon "Re-sync locale data..."
 rsync -a --delete /usr/config/locale/* /storage/.config/locale/ >>/var/log/configure.log 2>&1
 rm -rf /storage/.config/emulationstation/locale >>/var/log/configure.log 2>&1 ||:
 ln -sf /usr/share/locale /storage/.config/emulationstation/locale >>/var/log/configure.log 2>&1 ||:
 
 ### Add items below this line that are safe to remove after a period of time.
 ################################################################################
-
-### 20231010 - Stop setting vram in ES settings.
-sed -i '/^.*<int name="MaxVRAM".*$/d' ${ES_SETTINGS}
-
-### 20231031 - Switch back to alsathread for RetroArch
-sed -i 's~"pulse"~"alsathread"~g' /storage/.config/retroarch/retroarch.cfg
 
 ### 20231114 - Update hosts.conf
 grep "127.0.0.1" /storage/.config/hosts.conf >/dev/null 2>&1 || cp /usr/config/hosts.conf /storage/.config/
@@ -84,6 +83,7 @@ if [ "${GAMECOUNT}" -gt 20 ] && \
    [ ! -e "/storage/.migrated_games" ]
 then
   echo "Migrating games to overlayfs" >>${LOG}
+  tocon "Migrate games to new storage model..."
   if [ -d "/storage/games-internal" ]
   then
     echo "Backing up games-internal" >>${LOG}
@@ -105,6 +105,7 @@ then
     then
       mkdir -p "${GAMES}/roms" 2>/dev/null
     fi
+    tocon "Migrate games to new storage model..."
     mv "${GAMES}"/* "${GAMES}/roms/" 
   done
   touch /storage/.migrated_games2
@@ -125,7 +126,7 @@ cp -f /usr/config/smb.conf /storage/.config
 ### 20231202 - Remove stale profile bits if they exist.
 for FILE in 001-deviceconfig 99-mixer
 do
-  rm -rf ${FILE} 2>/dev/null
+  rm -f /storage/.config/profile.d/${FILE} 2>/dev/null
 done
 
 ### 20231203 - Disable merged storage by default.

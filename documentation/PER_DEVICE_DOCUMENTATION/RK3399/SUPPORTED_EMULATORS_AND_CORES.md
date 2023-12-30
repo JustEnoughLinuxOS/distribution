@@ -12,9 +12,9 @@ This document describes all available systems emulators and cores available for 
 |&#xf013; System|Ports (ports)|System|`ports`|.sh||
 |&#xf013; System|Screenshots (imageviewer)|System|`screenshots`|.jpg .jpeg .png .bmp .psd .tga .gif .hdr .pic .ppm .pgm .mkv .pdf .mp4 .avi||
 |&#xf013; System|Tools (tools)|System|`modules`|.sh||
-|Amstrad|Amstrad CPC (amstradcpc)|1984|`amstradcpc`|.dsk .sna .tap .cdt .kcr .voc .m3u .zip .7z|**retroarch:** crocods (default)<br>**retroarch:** cap32<br>|
+|Amstrad|Amstrad CPC (amstradcpc)|1984|`amstradcpc`|.dsk .cpr .sna .tap .cdt .kcr .voc .m3u .zip .7z|**retroarch:** crocods (default)<br>**retroarch:** cap32<br>|
 |Apple|Macintosh (macintosh)|1984|`mac`|.dsk .img .hfv .cmd .zip|**retroarch:** minivmac (default)<br>|
-|Arcade|Arcade (arcade)|0000|`arcade`|.zip .7z|**retroarch:** mame2003_plus (default)<br>**retroarch:** mame2000<br>**retroarch:** mame2010<br>**retroarch:** mame2015<br>**retroarch:** fbneo<br>**retroarch:** fbalpha2012<br>**retroarch:** fbalpha2019<br>**retroarch:** mame<br>|
+|Arcade|Arcade (arcade)|0000|`arcade`|.zip .7z|**retroarch:** mame2003_plus (default)<br>**retroarch:** mame2010<br>**retroarch:** mame2015<br>**retroarch:** fbneo<br>**retroarch:** fbalpha2012<br>**retroarch:** fbalpha2019<br>**retroarch:** mame<br>|
 |Arcade|Daphne (daphne)|1996|`daphne`|.daphne .singe|**hypseus-singe:** hypseus-singe (default)<br>**retroarch:** daphne<br>|
 |Arcade|Final Burn Neo (fbn)|2002|`fbneo`|.7z .zip|**retroarch:** fbneo (default)<br>**retroarch:** mame2003_plus<br>**retroarch:** mame2010<br>**retroarch:** mame2015<br>**retroarch:** mame<br>**retroarch:** fbalpha2012<br>**retroarch:** fbalpha2019<br>|
 |Arcade|MAME (mame)|1997|`mame`|.7z .zip|**retroarch:** mame2003_plus (default)<br>**retroarch:** mame2010<br>**retroarch:** mame2015<br>**retroarch:** mame<br>**retroarch:** fbneo<br>**retroarch:** fbalpha2012<br>**retroarch:** fbalpha2019<br>|
@@ -30,9 +30,9 @@ This document describes all available systems emulators and cores available for 
 |Bandai|Wonderswan (wonderswan)|1999|`wonderswan`|.ws .zip .7z|**retroarch:** beetle_wswan (default)<br>**mednafen:** wswan<br>|
 |Bandai|Wonderswan Color (wonderswancolor)|2000|`wonderswancolor`|.wsc .zip .7z|**retroarch:** beetle_wswan (default)<br>**mednafen:** wswan<br>|
 |belogic|Uzebox (uzebox)|2008|`uzebox`|.uze|**retroarch:** uzem (default)<br>|
-|Capcom|CPS-I (cps1)|1988|`cps1`|.zip .7z|**retroarch:** fbneo (default)<br>**retroarch:** mame2003_plus<br>**retroarch:** mame2010<br>**retroarch:** fbalpha2012<br>**retroarch:** mba_mini<br>**AdvanceMame:** AdvanceMame<br>|
-|Capcom|CPS-II (cps2)|1993|`cps2`|.zip .7z|**retroarch:** fbneo (default)<br>**retroarch:** mame2003_plus<br>**retroarch:** mame2010<br>**retroarch:** fbalpha2012<br>**retroarch:** mba_mini<br>**AdvanceMame:** AdvanceMame<br>|
-|Capcom|CPS-III (cps3)|1996|`cps3`|.zip .7z|**retroarch:** fbneo (default)<br>**retroarch:** mame2003_plus<br>**retroarch:** mame2010<br>**retroarch:** fbalpha2012<br>**retroarch:** mba_mini<br>**AdvanceMame:** AdvanceMame<br>|
+|Capcom|CPS-I (cps1)|1988|`cps1`|.zip .7z|**retroarch:** fbneo (default)<br>**retroarch:** mame2003_plus<br>**retroarch:** mame2010<br>**retroarch:** fbalpha2012<br>**AdvanceMame:** AdvanceMame<br>|
+|Capcom|CPS-II (cps2)|1993|`cps2`|.zip .7z|**retroarch:** fbneo (default)<br>**retroarch:** mame2003_plus<br>**retroarch:** mame2010<br>**retroarch:** fbalpha2012<br>**AdvanceMame:** AdvanceMame<br>|
+|Capcom|CPS-III (cps3)|1996|`cps3`|.zip .7z|**retroarch:** fbneo (default)<br>**retroarch:** mame2003_plus<br>**retroarch:** mame2010<br>**retroarch:** fbalpha2012<br>**AdvanceMame:** AdvanceMame<br>|
 |Coleco|ColecoVision (colecovision)|1982|`coleco`|.bin .col .rom .zip .7z|**retroarch:** bluemsx (default)<br>**retroarch:** gearcoleco<br>**retroarch:** smsplus<br>|
 |Commodore|Amiga (amiga)|1985|`amiga`|.zip .adf .uae .ipf .dms .adz .lha .m3u .hdf .hdz|**retroarch:** puae2021 (default)<br>**retroarch:** puae<br>**amiberry:** amiberry<br>**retroarch:** uae4arm<br>|
 |Commodore|Amiga CD32 (amigacd32)|1994|`amigacd32`|.iso .cue .lha .chd|**retroarch:** puae2021 (default)<br>**retroarch:** puae<br>**retroarch:** uae4arm<br>|
@@ -61,7 +61,7 @@ This document describes all available systems emulators and cores available for 
 |NEC|TurboGrafx-CD (tg16cd)|1989|`tg16cd`|.cue .ccd .chd .toc .m3u|**retroarch:** beetle_pce_fast (default)<br>**retroarch:** beetle_pce<br>**retroarch:** beetle_supergrafx<br>**mednafen:** pce<br>**mednafen:** pce_fast<br>|
 |Nesbox|TIC-80 (tic-80)|2017|`tic-80`|.tic|**retroarch:** tic80 (default)<br>|
 |Nintendo|Famicom (famicom)|1983|`famicom`|.nes .unif .unf .zip .7z|**retroarch:** nestopia (default)<br>**retroarch:** fceumm<br>**retroarch:** quicknes<br>**retroarch:** mesen<br>**mednafen:** nes<br>|
-|Nintendo|Famicom Disk System (fds)|1986|`fds`|.fds .zip .7z|**retroarch:** nestopia (default)<br>**retroarch:** fceumm<br>**retroarch:** quicknes<br>**mednafen:** nes<br>|
+|Nintendo|Famicom Disk System (fds)|1986|`fds`|.fds .zip .7z|**retroarch:** nestopia (default)<br>**retroarch:** fceumm<br>**retroarch:** quicknes<br>**retroarch:** mesen<br>**mednafen:** nes<br>|
 |Nintendo|Game &amp; Watch (gameandwatch)|1980|`gameandwatch`|.mgw .zip .7z|**retroarch:** gw<br>|
 |Nintendo|Game Boy (gb)|1989|`gb`|.gb .gbc .zip .7z|**retroarch:** gambatte (default)<br>**retroarch:** sameboy<br>**retroarch:** gearboy<br>**retroarch:** tgbdual<br>**retroarch:** mgba<br>**retroarch:** vbam<br>**mednafen:** gb<br>|
 |Nintendo|Game Boy (Hacks) (gbh)|1989|`gbh`|.gb .zip .7z|**retroarch:** gambatte (default)<br>**retroarch:** sameboy<br>**retroarch:** gearboy<br>**retroarch:** tgbdual<br>**retroarch:** mgba<br>**retroarch:** vbam<br>**mednafen:** gb<br>|
@@ -76,10 +76,10 @@ This document describes all available systems emulators and cores available for 
 |Nintendo|Nintendo Entertainment System (nes)|1985|`nes`|.nes .unif .unf .zip .7z|**retroarch:** nestopia (default)<br>**retroarch:** fceumm<br>**retroarch:** quicknes<br>**retroarch:** mesen<br>**mednafen:** nes<br>|
 |Nintendo|Pokémon Mini (pokemini)|2001|`pokemini`|.min .zip .7z|**retroarch:** pokemini (default)<br>|
 |Nintendo|Satellaview (satellaview)|1995|`satellaview`|.smc .fig .bs .sfc .bsx .swc .zip .7z|**retroarch:** snes9x (default)<br>**retroarch:** snes9x2010<br>**retroarch:** snes9x2002<br>**retroarch:** snes9x2005_plus<br>|
-|Nintendo|Super Famicom (sfc)|1990|`sfc`|.smc .fig .sfc .swc .zip .7z|**retroarch:** snes9x (default)<br>**retroarch:** snes9x2010<br>**retroarch:** snes9x2002<br>**retroarch:** snes9x2005_plus<br>**retroarch:** beetle_supafaust<br>**retroarch:** bsnes<br>**retroarch:** bsnes_mercury_performance<br>**retroarch:** bsnes_hd_beta<br>**mednafen:** snes<br>**mednafen:** snes_faust<br>|
+|Nintendo|Super Famicom (sfc)|1990|`sfc`|.smc .fig .sfc .swc .zip .7z|**retroarch:** snes9x (default)<br>**retroarch:** snes9x2010<br>**retroarch:** snes9x2002<br>**retroarch:** snes9x2005_plus<br>**retroarch:** beetle_supafaust<br>**retroarch:** bsnes<br>**retroarch:** bsnes_mercury_performance<br>**retroarch:** bsnes_hd_beta<br>|
 |Nintendo|Super NES MSU-1 (snesmsu1)|2012|`snesmsu1`|.smc .fig .sfc .swc .zip .7z|**retroarch:** snes9x (default)<br>**retroarch:** beetle_supafaust<br>**mednafen:** snes_faust<br>|
-|Nintendo|Super Nintendo (Hacks) (snesh)|1991|`snesh`|.smc .fig .sfc .swc .zip .7z|**retroarch:** snes9x (default)<br>**retroarch:** snes9x2010<br>**retroarch:** snes9x2002<br>**retroarch:** snes9x2005_plus<br>**retroarch:** beetle_supafaust<br>**retroarch:** bsnes<br>**retroarch:** bsnes_mercury_performance<br>**retroarch:** bsnes_hd_beta<br>**mednafen:** snes<br>**mednafen:** snes_faust<br>|
-|Nintendo|Super Nintendo (snes)|1991|`snes`|.smc .fig .sfc .swc .zip .7z|**retroarch:** snes9x (default)<br>**retroarch:** snes9x2010<br>**retroarch:** snes9x2002<br>**retroarch:** snes9x2005_plus<br>**retroarch:** beetle_supafaust<br>**retroarch:** bsnes<br>**retroarch:** bsnes_mercury_performance<br>**retroarch:** bsnes_hd_beta<br>**mednafen:** snes_faust<br>**mednafen:** snes<br>|
+|Nintendo|Super Nintendo (Hacks) (snesh)|1991|`snesh`|.smc .fig .sfc .swc .zip .7z|**retroarch:** snes9x (default)<br>**retroarch:** snes9x2010<br>**retroarch:** snes9x2002<br>**retroarch:** snes9x2005_plus<br>**retroarch:** beetle_supafaust<br>**retroarch:** bsnes<br>**retroarch:** bsnes_mercury_performance<br>**retroarch:** bsnes_hd_beta<br>|
+|Nintendo|Super Nintendo (snes)|1991|`snes`|.smc .fig .sfc .swc .zip .7z|**retroarch:** snes9x (default)<br>**retroarch:** snes9x2010<br>**retroarch:** snes9x2002<br>**retroarch:** snes9x2005_plus<br>**retroarch:** beetle_supafaust<br>**retroarch:** bsnes<br>**retroarch:** bsnes_mercury_performance<br>**retroarch:** bsnes_hd_beta<br>**mednafen:** snes_faust<br>**mednafen:** snes_faust<br>**mednafen:** snes_faust<br>|
 |Nintendo|Virtual Boy (virtualboy)|1995|`virtualboy`|.vb .zip .7z|**retroarch:** beetle_vb (default)<br>**mednafen:** vb<br>|
 |Nintendo|Wii (wii)|2006|`wii`|.gcm .iso .gcz .ciso .wbfs .rvz .dol .wad|**dolphin:** dolphin-sa-wii (default)<br>**retroarch:** dolphin<br>|
 |Panasonic|3DO (3do)|1993|`3do`|.iso .bin .chd .cue|**retroarch:** opera (default)<br>|
