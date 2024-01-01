@@ -4,7 +4,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="openbor"
-PKG_VERSION="b8303cce992a0db93c3a465df3c943942fe322f8"
+PKG_VERSION="5c8261444de6b61f8e2ce6e79e3d86a2949e55bd"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/DCurrent/openbor"
 PKG_URL="${PKG_SITE}.git"
@@ -24,6 +24,7 @@ pre_configure_target() {
 
 pre_make_target() {
   cd ${PKG_BUILD}/engine
+  chmod 0755 version.sh
   ./version.sh
 }
 

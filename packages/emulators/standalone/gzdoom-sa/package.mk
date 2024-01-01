@@ -3,7 +3,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="gzdoom-sa"
-PKG_VERSION="a368588db6f8485072429f264aca2d9c411fe9b2"
+PKG_VERSION="5b90b2d80c6b976138472e8e389d76cb89282e37"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/ZDoom/gzdoom"
 PKG_URL="${PKG_SITE}.git"
