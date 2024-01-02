@@ -24,7 +24,7 @@ case ${DEVICE} in
     PKG_GIT_CLONE_BRANCH="main"
   ;;
   RK356*)
-    PKG_VERSION="6.7-rc7"
+    PKG_VERSION="6.7-rc8"
     PKG_URL="https://git.kernel.org/torvalds/t/${PKG_NAME}-${PKG_VERSION}.tar.gz"
   ;;
   RK33*)

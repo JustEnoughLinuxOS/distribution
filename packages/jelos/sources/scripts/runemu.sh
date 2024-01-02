@@ -336,11 +336,14 @@ case ${CPU_VENDOR} in
 esac
 
 ### Apply energy performance preference
-EPP=$(get_setting "power.epp" "${PLATFORM}" "${ROMNAME##*/}")
-if [ ! -z ${EPP} ]
+if [ -e "/usr/bin/set_epp" ]
 then
-  ${VERBOSE} && log $0 "Set EPP to (${EPP})"
-  /usr/bin/set_epp ${EPP}
+  EPP=$(get_setting "power.epp" "${PLATFORM}" "${ROMNAME##*/}")
+  if [ ! -z ${EPP} ]
+  then
+    ${VERBOSE} && log $0 "Set EPP to (${EPP})"
+    /usr/bin/set_epp ${EPP}
+  fi
 fi
 
 ### Configure GPU performance mode
