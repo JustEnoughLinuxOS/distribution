@@ -6,18 +6,16 @@
 # Copyright (C) 2020-present Shanti Gilbert (https://github.com/shantigilbert)
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
-if [[ "${UI_SERVICE}" =~ ^weston ]]
-then
-  SHADERS='*.slang*'
+if [ -z "$UI_SHADER" ]; then
+  option=".*\.\(glslp\|slangp\)$"
 else
-  SHADERS='*.glslp*'
+  option=".*\.\($UI_SHADER\)$"
 fi
 
 for dir in /tmp/shaders
 do
-  if [ -d "${dir}" ]
-  then
-    find ${dir} -name ${SHADERS} -print0 |
+  if [ -d "${dir}" ]; then
+    find ${dir} -regex "${option}" -print0 |
       while IFS= read -r -d '' line; do
       echo ${line#${dir}/},
     done
