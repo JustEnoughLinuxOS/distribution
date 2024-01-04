@@ -45,6 +45,8 @@ if [ "${VULKAN_SUPPORT}" = "yes" ]
 then
   PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
   PKG_CMAKE_OPTS_TARGET+=" -DENABLE_VULKAN=ON"
+else
+  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_VULKAN=OFF"
 fi
 
 pre_configure_target() {
