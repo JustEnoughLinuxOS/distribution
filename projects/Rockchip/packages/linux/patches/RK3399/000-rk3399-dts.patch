@@ -1,4 +1,4 @@
-\diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/Makefile linux/arch/arm64/boot/dts/rockchip/Makefile
+diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/Makefile linux/arch/arm64/boot/dts/rockchip/Makefile
 --- linux.orig/arch/arm64/boot/dts/rockchip/Makefile	2024-01-02 16:20:12.766155041 +0000
 +++ linux/arch/arm64/boot/dts/rockchip/Makefile	2024-01-02 21:22:52.154473211 +0000
 @@ -21,6 +21,7 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3368-li
