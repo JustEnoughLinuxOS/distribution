@@ -4,8 +4,9 @@
 
 PKG_NAME="linux"
 PKG_LICENSE="GPL"
-PKG_VERSION="6.6.9"
-PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
+PKG_VERSION="6.7-rc8"
+PKG_URL="https://git.kernel.org/torvalds/t/${PKG_NAME}-${PKG_VERSION}.tar.gz"
+#PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_SITE="http://www.kernel.org"
 PKG_DEPENDS_HOST="ccache:host rsync:host openssl:host rdfind:host"
 PKG_DEPENDS_TARGET="toolchain linux:host kmod:host cpio:host xz:host keyutils ncurses openssl:host wireless-regdb ${KERNEL_EXTRA_DEPENDS_TARGET}"
