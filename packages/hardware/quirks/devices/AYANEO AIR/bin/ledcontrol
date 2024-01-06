@@ -53,7 +53,6 @@ function ec_writecmd() {
 function mode() {
   debug_out "Set mode ${1}"
   ${ECTOOL} -w 0xbf -z ${1} >/dev/null 2>&1
-  ${ECTOOL} -w 0xbf -z ff >/dev/null 2>&1
 }
 
 function off() {
@@ -123,16 +122,19 @@ debug_out "led brightness: ${LEDBRIGHTNESS}"
 case $1 in
   red)
     off
+    mode 0xe0
     color 1 ${LEDBRIGHTNESS}
     set_setting led.color red
   ;;
   green)
     off
+    mode 0xe0
     color 2 ${LEDBRIGHTNESS}
     set_setting led.color green
   ;;
   blue)
     off
+    mode 0xe2
     color 3 ${LEDBRIGHTNESS}
     set_setting led.color blue
   ;;

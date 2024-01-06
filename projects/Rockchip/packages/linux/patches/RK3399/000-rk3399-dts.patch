@@ -1022,18 +1022,18 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-anbernic-rg552.dts lin
 +	status = "okay";
 +
 +	touchscreen@14 {
-+		compatible = "goodix,gt1158";
++		compatible = "goodix,gt927";
 +		reg = <0x14>;
 +		interrupt-parent = <&gpio3>;
-+                interrupts = <RK_PD7 IRQ_TYPE_EDGE_FALLING>;
++               interrupts = <RK_PD7 IRQ_TYPE_EDGE_FALLING>;
++               AVDD28-supply = <&vcc3v0_touch>;
++               VDDIO-supply = <&vcc3v0_touch>;
 +		irq-gpios = <&gpio3 RK_PD7 GPIO_ACTIVE_HIGH>;
 +		reset-gpios = <&gpio3 RK_PD6 GPIO_ACTIVE_HIGH>;
-+                AVDD28-supply = <&vcc3v0_touch>;
-+                VDDIO-supply = <&vcc3v0_touch>;
-+                touchscreen-size-x = <1152>;
-+                touchscreen-size-y = <1920>;
-+                touchscreen-inverted-x;
-+                touchscreen-inverted-y;
++               touchscreen-size-x = <1152>;
++               touchscreen-size-y = <1920>;
++               touchscreen-inverted-x;
++               touchscreen-inverted-y;
 +	};
 +
 +	fusb0: typec-portc@22 {
