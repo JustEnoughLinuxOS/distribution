@@ -114,6 +114,8 @@ JELOS supports a variety of ARM and Intel/AMD based devices.
 | Atari | [VCS](http://jelos.org/devices/atari/vcs) | AMD Ryzen R1606G (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
 | AYANEO | [Air / Air Pro](http://jelos.org/devices/ayaneo/air) | Amd Ryzen 5 5560U / AMD Ryzen 7 5825U (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
 | AYANEO | [Air Plus](http://jelos.org/devices/ayaneo/air-plus) | Amd Ryzen 7 6800U / (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
+| AYANEO | [AYANEO 2](http://jelos.org/devices/ayaneo/ayaneo-2) | Amd Ryzen 7 6800U / (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
+| AYANEO | [AYANEO 2S](http://jelos.org/devices/ayaneo/ayaneo-2) | Amd Ryzen 7 7840U / (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
 | Ayn | [Loki Zero](http://jelos.org/devices/ayn/loki-zero) | AMD Athlon Silver 3050e (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
 | Ayn | [Loki Max](http://jelos.org/devices/ayn/loki-max) | Amd Ryzen 7 6800U / (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
 | GPD | [Win 4](http://jelos.org/devices/gpd/win4) | Amd Ryzen 7 6800U / (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
