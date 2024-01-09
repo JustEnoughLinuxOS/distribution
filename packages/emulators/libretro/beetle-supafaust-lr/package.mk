@@ -38,4 +38,7 @@ PKG_AUTORECONF="no"
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/libretro
   cp ${PKG_BUILD}/mednafen_supafaust_libretro.so ${INSTALL}/usr/lib/libretro/beetle_supafaust_libretro.so
+
+  mkdir -p ${INSTALL}/usr/config/retroarch
+  cp -rf ${PKG_DIR}/config/* ${INSTALL}/usr/config/retroarch/
 }
