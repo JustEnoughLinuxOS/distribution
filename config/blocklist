@@ -12,3 +12,4 @@ mupen64plus-sa-ui-console #Causes segfaults
 kronos-sa #using the release version of kronos had better results.
 retroarch #pinning to release versions for stability.
 vita3k-sa #Patch updates needed.
+gzdoom-sa #Stick to release versions.

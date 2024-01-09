@@ -20,7 +20,7 @@
 ################################################################################
 
 PKG_NAME="scummvm-lr"
-PKG_VERSION="18c3591548d0665b4b92a1810f3a57f9f2797ba4"
+PKG_VERSION="6118a0d92907ae68c38d444a680aa4a1610099c8"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv2"
