@@ -290,16 +290,6 @@ LABEL linux
  APPEND boot=UUID=$UUID_SYSTEM disk=UUID=$UUID_STORAGE $SYSLINUX_PARAMETERS @EXTRA_CMDLINE@
 EOF
 
-    cat << EOF > $TMPDIR/part1/EFI/BOOT/grub.cfg
-set timeout="0"
-set default="${DISTRO}"
-
-menuentry "${DISTRO}" {
-	search --set -f /KERNEL
-	linux /KERNEL boot=UUID=$UUID_SYSTEM disk=UUID=$UUID_STORAGE @EXTRA_CMDLINE@
-}
-EOF
-
     # uefi boot / hybrid mode
     cp /usr/share/syslinux/bootx64.efi $TMPDIR/part1/EFI/BOOT
     cp /usr/share/syslinux/ldlinux.e64 $TMPDIR/part1/EFI/BOOT
