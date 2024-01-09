@@ -28,7 +28,7 @@ case ${DEVICE} in
     PKG_URL="https://git.kernel.org/torvalds/t/${PKG_NAME}-${PKG_VERSION}.tar.gz"
   ;;
   RK33*)
-    PKG_VERSION="6.1.69"
+    PKG_VERSION="6.1.70"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
   ;;
 esac
@@ -132,7 +132,7 @@ pre_make_target() {
   if [ "${TARGET_ARCH}" = "x86_64" ]; then
     # copy some extra firmware to linux tree
     mkdir -p ${PKG_BUILD}/external-firmware
-      cp -a $(get_build_dir kernel-firmware)/{amdgpu,amd-ucode,i915,radeon,e100,rtl_nic} ${PKG_BUILD}/external-firmware
+      cp -a $(get_build_dir kernel-firmware)/{amd,amdgpu,amd-ucode,intel,i915,radeon,e100,rtl_nic} ${PKG_BUILD}/external-firmware
 
     cp -a $(get_build_dir intel-ucode)/intel-ucode ${PKG_BUILD}/external-firmware
 

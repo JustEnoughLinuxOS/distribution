@@ -1,8 +1,8 @@
-diff --git a/CMakeLists.txt b/CMakeLists.txt
-index 22f6adb2..465e48cd 100644
---- a/CMakeLists.txt
-+++ b/CMakeLists.txt
-@@ -479,7 +479,7 @@ endif()
+diff --git a/cmake/janet.cmake b/cmake/janet.cmake
+index 5830878e..65a71989 100644
+--- a/cmake/janet.cmake
++++ b/cmake/janet.cmake
+@@ -2,7 +2,7 @@
  # Janet
  ################################
  
@@ -11,3 +11,10 @@ index 22f6adb2..465e48cd 100644
  
  option(BUILD_WITH_JANET "Janet Enabled" ${BUILD_WITH_JANET_DEFAULT})
  message("BUILD_WITH_JANET: ${BUILD_WITH_JANET}")
+@@ -42,4 +42,4 @@ if(BUILD_WITH_JANET)
+     target_include_directories(janet PUBLIC ${CMAKE_SOURCE_DIR}/build/janet/)
+     target_compile_definitions(janet INTERFACE TIC_BUILD_WITH_JANET=1)
+ 
+-endif()
+\ No newline at end of file
++endif()

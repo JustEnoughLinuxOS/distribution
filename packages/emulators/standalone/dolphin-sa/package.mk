@@ -45,18 +45,15 @@ if [ "${VULKAN_SUPPORT}" = "yes" ]
 then
   PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
   PKG_CMAKE_OPTS_TARGET+=" -DENABLE_VULKAN=ON"
+else
+  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_VULKAN=OFF"
 fi
 
 pre_configure_target() {
-  sed -i 's~#include <cstdlib>~#include <cstdlib>\n#include <cstdint>~g' ${PKG_BUILD}/Externals/VulkanMemoryAllocator/include/vk_mem_alloc.h
-  sed -i 's~#include <cstdint>~#include <cstdint>\n#include <string>~g' ${PKG_BUILD}/Externals/VulkanMemoryAllocator/include/vk_mem_alloc.h
-}
-
-PKG_CMAKE_OPTS_TARGET+=" -DENABLE_HEADLESS=ON \
+  PKG_CMAKE_OPTS_TARGET+=" -DENABLE_HEADLESS=ON \
                          -DENABLE_EVDEV=ON \
                          -DUSE_DISCORD_PRESENCE=OFF \
                          -DBUILD_SHARED_LIBS=OFF \
-                         -DUSE_MGBA=OFF \
                          -DLINUX_LOCAL_DEV=ON \
                          -DENABLE_PULSEAUDIO=ON \
                          -DENABLE_ALSA=ON \
@@ -67,7 +64,10 @@ PKG_CMAKE_OPTS_TARGET+=" -DENABLE_HEADLESS=ON \
                          -DENABLE_QT=OFF \
                          -DENCODE_FRAMEDUMPS=OFF \
                          -DENABLE_CLI_TOOL=OFF"
+  sed -i 's~#include <cstdlib>~#include <cstdlib>\n#include <cstdint>~g' ${PKG_BUILD}/Externals/VulkanMemoryAllocator/include/vk_mem_alloc.h
+  sed -i 's~#include <cstdint>~#include <cstdint>\n#include <string>~g' ${PKG_BUILD}/Externals/VulkanMemoryAllocator/include/vk_mem_alloc.h
 
+}
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin

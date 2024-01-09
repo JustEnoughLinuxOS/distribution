@@ -3,10 +3,11 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="gzdoom-sa"
-PKG_VERSION="a368588db6f8485072429f264aca2d9c411fe9b2"
+PKG_VERSION="6ce809e"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/ZDoom/gzdoom"
 PKG_URL="${PKG_SITE}.git"
+PKG_GIT_CLONE_BRANCH="4.11"
 PKG_DEPENDS_HOST="toolchain SDL2:host zmusic:host libvpx:host libwebp:host"
 PKG_DEPENDS_TARGET="toolchain SDL2 gzdoom-sa:host zmusic libvpx libwebp"
 PKG_LONGDESC="GZDoom is a modder-friendly OpenGL and Vulkan source port based on the DOOM engine"
@@ -36,15 +37,15 @@ pre_configure_target() {
   ### Enable GLES on devices that don't support OpenGL.
   if [ ! "${OPENGL_SUPPORT}" = "yes" ]
   then
-    sed -i 's~#define USE_GLAD_LOADER 0~#define USE_GLAD_LOADER 1~g' ${PKG_BUILD}/src/common/rendering/gles/gles_system.h
-    PKG_CMAKE_OPTS_TARGET+=" -DHAVE_GLES2=ON \
-                             -DHAVE_VULKAN=OFF"
+    PKG_CMAKE_OPTS_TARGET+=" -DHAVE_GLES2=ON"
   fi
 
   ### Enable vulkan support on devices that have it available.
   if [ "${VULKAN_SUPPORT}" = "yes" ]
   then
     PKG_CMAKE_OPTS_TARGET+=" -DHAVE_VULKAN=ON"
+  else
+    PKG_CMAKE_OPTS_TARGET+=" -DHAVE_VULKAN=OFF"
   fi
 }
 
