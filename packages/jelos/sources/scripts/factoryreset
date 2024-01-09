@@ -9,8 +9,17 @@ case "${1}" in
     rm -f /storage/.config/retroarch/retroarch.cfg
     cp -rf /usr/config/retroarch/retroarch.cfg /storage/.config/retroarch/retroarch.cfg
   ;;
+  "retroarch-full")
+    rm -rf /storage/.config/retroarch
+    cp -rf /usr/config/retroarch /storage/.config/
+  ;;
   "mednafen")
     rm -f /storage/.config/mednafen/mednafen.cfg
+  ;;
+  "overlays")
+    rm -rf $(cat /usr/lib/systemd/system/tmp-*.mount | grep -Eo 'upperdir=.*,' | sed -e 's~upperdir=~~g; s~,~~g')
+    sync
+    systemctl reboot
   ;;
   "ALL")
     systemctl stop ${UI_SERVICE}

@@ -1,0 +1,102 @@
+diff -rupN syncthing.orig/lib/locations/locations.go syncthing/lib/locations/locations.go
+--- syncthing.orig/lib/locations/locations.go	2023-12-11 06:46:46.000000000 +0000
++++ syncthing/lib/locations/locations.go	2024-01-03 01:01:17.529930502 +0000
+@@ -49,7 +49,7 @@ const (
+ 
+ 	LevelDBDir          = "index-v0.14.0.db"
+ 	configFileName      = "config.xml"
+-	defaultStateDir     = ".local/state/syncthing"
++	defaultStateDir     = ".config/syncthing"
+ 	oldDefaultConfigDir = ".config/syncthing"
+ )
+ 
+@@ -244,7 +244,7 @@ func unixConfigDir(userHome, xdgConfigHo
+ func unixDataDir(userHome, configDir, xdgDataHome, xdgStateHome string, fileExists func(string) bool) string {
+ 	// If a database exists at the config location, use that. This is the
+ 	// most common case for both legacy (~/.config/syncthing) and current
+-	// (~/.local/state/syncthing) setups.
++	// (~/.config/syncthing) setups.
+ 	if fileExists(filepath.Join(configDir, LevelDBDir)) {
+ 		return configDir
+ 	}
+diff -rupN syncthing.orig/lib/locations/locations_test.go syncthing/lib/locations/locations_test.go
+--- syncthing.orig/lib/locations/locations_test.go	2023-12-11 06:46:46.000000000 +0000
++++ syncthing/lib/locations/locations_test.go	2024-01-03 01:01:17.529930502 +0000
+@@ -29,9 +29,9 @@ func TestUnixConfigDir(t *testing.T) {
+ 		// First some "new installations", no files exist previously.
+ 
+ 		// No variables set, use our current default
+-		{"/home/user", "", "", nil, "/home/user/.local/state/syncthing"},
++		{"/home/user", "", "", nil, "/home/user/.config/syncthing"},
+ 		// Config home set, doesn't matter
+-		{"/home/user", "/somewhere/else", "", nil, "/home/user/.local/state/syncthing"},
++		{"/home/user", "/somewhere/else", "", nil, "/home/user/.config/syncthing"},
+ 		// State home set, use that
+ 		{"/home/user", "", "/var/state", nil, "/var/state/syncthing"},
+ 		// State home set, again config home doesn't matter
+@@ -75,9 +75,9 @@ func TestUnixDataDir(t *testing.T) {
+ 		// First some "new installations", no files exist previously.
+ 
+ 		// No variables set, use our current default
+-		{"/home/user", "", "", "", nil, "/home/user/.local/state/syncthing"},
++		{"/home/user", "", "", "", nil, "/home/user/.config/syncthing"},
+ 		// Data home set, doesn't matter
+-		{"/home/user", "", "/somewhere/else", "", nil, "/home/user/.local/state/syncthing"},
++		{"/home/user", "", "/somewhere/else", "", nil, "/home/user/.config/syncthing"},
+ 		// State home set, use that
+ 		{"/home/user", "", "", "/var/state", nil, "/var/state/syncthing"},
+ 
+diff -rupN syncthing.orig/man/syncthing.1 syncthing/man/syncthing.1
+--- syncthing.orig/man/syncthing.1	2023-12-11 06:46:46.000000000 +0000
++++ syncthing/man/syncthing.1	2024-01-03 01:01:17.529930502 +0000
+@@ -157,7 +157,7 @@ given subcommand.
+ .B \-\-home=<dir>
+ Set common configuration and data directory. The default configuration
+ directory is \fB$XDG_STATE_HOME/syncthing\fP or
+-\fB$HOME/.local/state/syncthing\fP (Unix\-like),
++\fB$HOME/.config/syncthing\fP (Unix\-like),
+ \fB$HOME/Library/Application Support/Syncthing\fP (Mac) and
+ \fB%LOCALAPPDATA%\eSyncthing\fP (Windows).
+ .UNINDENT
+diff -rupN syncthing.orig/man/syncthing-config.5 syncthing/man/syncthing-config.5
+--- syncthing.orig/man/syncthing-config.5	2023-12-11 06:46:46.000000000 +0000
++++ syncthing/man/syncthing-config.5	2024-01-03 01:01:17.529930502 +0000
+@@ -37,7 +37,7 @@ syncthing-config \- Syncthing Configurat
+ .nf
+ .ft C
+ $XDG_STATE_HOME/syncthing
+-$HOME/.local/state/syncthing
++$HOME/.config/syncthing
+ $HOME/Library/Application Support/Syncthing
+ %LOCALAPPDATA%\eSyncthing
+ .ft P
+@@ -48,7 +48,7 @@ $HOME/Library/Application Support/Syncth
+ .sp
+ Changed in version 1.27.0: The default location of the configuration and database directory on
+ Unix\-like systems was changed to \fB$XDG_STATE_HOME/syncthing\fP or
+-\fB$HOME/.local/state/syncthing\fP\&. Previously the default config location
++\fB$HOME/.config/syncthing\fP\&. Previously the default config location
+ was \fB$XDG_CONFIG_HOME/syncthing\fP or \fB$HOME/.config/syncthing\fP\&. The
+ database directory was previously \fB$HOME/.config/syncthing\fP or, if the
+ environment variable was set, \fB$XDG_DATA_HOME/syncthing\fP\&. Existing
+@@ -65,7 +65,7 @@ Syncthing also keeps an index database w
+ default stored in the same directory, though this can be overridden.
+ .sp
+ The location defaults to \fB$XDG_STATE_HOME/syncthing\fP or
+-\fB$HOME/.local/state/syncthing\fP (Unix\-like), \fB$HOME/Library/Application
++\fB$HOME/.config/syncthing\fP (Unix\-like), \fB$HOME/Library/Application
+ Support/Syncthing\fP (Mac), or \fB%LOCALAPPDATA%\eSyncthing\fP (Windows). It can
+ be changed at runtime using the \fB\-\-config\fP or \fB\-\-home\fP flags or the
+ corresponding environment varibles (\fB$STCONFDIR\fP or \fBSTHOMEDIR\fP). The
+diff -rupN syncthing.orig/man/syncthing-faq.7 syncthing/man/syncthing-faq.7
+--- syncthing.orig/man/syncthing-faq.7	2023-12-11 06:46:46.000000000 +0000
++++ syncthing/man/syncthing-faq.7	2024-01-03 01:01:17.529930502 +0000
+@@ -355,7 +355,7 @@ The web GUI contains a \fBRecent Changes
+ displays changes since the last (re)start of Syncthing. With the \fB\-\-audit\fP
+ option you can enable a persistent, detailed log of changes and most
+ activities, which contains a JSON\-formatted sequence of events in the
+-\fB~/.local/state/syncthing/audit\-_date_\-_time_.log\fP file.
++\fB~/.config/syncthing/audit\-_date_\-_time_.log\fP file.
+ .SS Does the audit log contain every change?
+ .sp
+ The audit log (and the \fBRecent Changes\fP window) sees the changes that your

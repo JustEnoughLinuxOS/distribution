@@ -1,0 +1,150 @@
+diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-op1-opp.dtsi linux/arch/arm64/boot/dts/rockchip/rk3399-op1-opp.dtsi
+--- linux.orig/arch/arm64/boot/dts/rockchip/rk3399-op1-opp.dtsi	2024-01-02 16:20:12.770155149 +0000
++++ linux/arch/arm64/boot/dts/rockchip/rk3399-op1-opp.dtsi	2024-01-02 21:04:45.168352345 +0000
+@@ -9,34 +9,30 @@
+ 		opp-shared;
+ 
+ 		opp00 {
+-			opp-hz = /bits/ 64 <408000000>;
+-			opp-microvolt = <800000>;
+-			clock-latency-ns = <40000>;
+-		};
+-		opp01 {
+ 			opp-hz = /bits/ 64 <600000000>;
+ 			opp-microvolt = <825000>;
++			clock-latency-ns = <40000>;
+ 		};
+-		opp02 {
+-			opp-hz = /bits/ 64 <816000000>;
+-			opp-microvolt = <850000>;
+-		};
+-		opp03 {
++		opp01 {
+ 			opp-hz = /bits/ 64 <1008000000>;
+ 			opp-microvolt = <900000>;
+ 		};
+-		opp04 {
++		opp02 {
+ 			opp-hz = /bits/ 64 <1200000000>;
+ 			opp-microvolt = <975000>;
+ 		};
+-		opp05 {
++		opp03 {
+ 			opp-hz = /bits/ 64 <1416000000>;
+ 			opp-microvolt = <1100000>;
+ 		};
+-		opp06 {
++		opp04 {
+ 			opp-hz = /bits/ 64 <1512000000>;
+ 			opp-microvolt = <1150000>;
+ 		};
++		opp05 {
++			opp-hz = /bits/ 64 <1608000000>;
++			opp-microvolt = <1200000>;
++		};
+ 	};
+ 
+ 	cluster1_opp: opp-table-1 {
+@@ -44,40 +40,32 @@
+ 		opp-shared;
+ 
+ 		opp00 {
+-			opp-hz = /bits/ 64 <408000000>;
+-			opp-microvolt = <800000>;
+-			clock-latency-ns = <40000>;
+-		};
+-		opp01 {
+ 			opp-hz = /bits/ 64 <600000000>;
+-			opp-microvolt = <800000>;
+-		};
+-		opp02 {
+-			opp-hz = /bits/ 64 <816000000>;
+ 			opp-microvolt = <825000>;
++			clock-latency-ns = <40000>;
+ 		};
+-		opp03 {
++		opp01 {
+ 			opp-hz = /bits/ 64 <1008000000>;
+ 			opp-microvolt = <850000>;
+ 		};
+-		opp04 {
++		opp02 {
+ 			opp-hz = /bits/ 64 <1200000000>;
+ 			opp-microvolt = <900000>;
+ 		};
+-		opp05 {
++		opp03 {
+ 			opp-hz = /bits/ 64 <1416000000>;
+ 			opp-microvolt = <975000>;
+ 		};
+-		opp06 {
++		opp04 {
+ 			opp-hz = /bits/ 64 <1608000000>;
+ 			opp-microvolt = <1050000>;
+ 		};
+-		opp07 {
++		opp05 {
+ 			opp-hz = /bits/ 64 <1800000000>;
+ 			opp-microvolt = <1150000>;
+ 		};
+-		opp08 {
+-			opp-hz = /bits/ 64 <2016000000>;
++		opp06 {
++			opp-hz = /bits/ 64 <2088000000>;
+ 			opp-microvolt = <1250000>;
+ 		};
+ 	};
+@@ -90,46 +78,30 @@
+ 			opp-microvolt = <800000>;
+ 		};
+ 		opp01 {
+-			opp-hz = /bits/ 64 <297000000>;
+-			opp-microvolt = <800000>;
+-		};
+-		opp02 {
+-			opp-hz = /bits/ 64 <400000000>;
+-			opp-microvolt = <825000>;
+-		};
+-		opp03 {
+-			opp-hz = /bits/ 64 <500000000>;
+-			opp-microvolt = <850000>;
+-		};
+-		opp04 {
+ 			opp-hz = /bits/ 64 <600000000>;
+ 			opp-microvolt = <925000>;
+ 		};
+-		opp05 {
++		opp02 {
+ 			opp-hz = /bits/ 64 <800000000>;
+ 			opp-microvolt = <1075000>;
+ 		};
++		opp03 {
++			opp-hz = /bits/ 64 <900000000>;
++			opp-microvolt = <1150000>;
++		};
+ 	};
+ 
+ 	dmc_opp_table: opp-table-3 {
+ 		compatible = "operating-points-v2";
+ 
+ 		opp00 {
+-			opp-hz = /bits/ 64 <400000000>;
+-			opp-microvolt = <900000>;
+-		};
+-		opp01 {
+ 			opp-hz = /bits/ 64 <666000000>;
+ 			opp-microvolt = <900000>;
+ 		};
+-		opp02 {
+-			opp-hz = /bits/ 64 <800000000>;
++		opp01 {
++			opp-hz = /bits/ 64 <856000000>;
+ 			opp-microvolt = <900000>;
+ 		};
+-		opp03 {
+-			opp-hz = /bits/ 64 <928000000>;
+-			opp-microvolt = <925000>;
+-		};
+ 	};
+ };
+ 

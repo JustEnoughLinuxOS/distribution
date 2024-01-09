@@ -1,0 +1,100 @@
+From c731e0b23383c8b451932331f22122afe04348bd Mon Sep 17 00:00:00 2001
+From: Johnny on Flame <johnnyonflame@hotmail.com>
+Date: Fri, 3 Nov 2023 04:53:33 +0000
+Subject: [PATCH] Port radial thresholding from @littleguy77.
+
+---
+ drivers/input/joystick/singleadcjoy.c | 64 ++++++++++++++++++++-------
+ 1 file changed, 48 insertions(+), 16 deletions(-)
+
+diff --git a/drivers/input/joystick/singleadcjoy.c b/drivers/input/joystick/singleadcjoy.c
+index f0a24a24a..455e11121 100644
+--- a/drivers/input/joystick/singleadcjoy.c
++++ b/drivers/input/joystick/singleadcjoy.c
+@@ -580,35 +580,67 @@ static void joypad_adc_check(struct input_polled_dev *poll_dev)
+ {
+ 	struct joypad *joypad = poll_dev->private;
+ 	int nbtn;
++	int mag;
+ 
+-	for (nbtn = 0; nbtn < joypad->amux_count; nbtn++) {
+-		struct bt_adc *adc = &joypad->adcs[nbtn];
++	/* Assumes an even number of axes and that joystick axis pairs are sequential */
++	/* e.g. left stick Y immediately follows left stick X */
++	for (nbtn = 0; nbtn < joypad->amux_count; nbtn+=2) {
++		struct bt_adc *adcx = &joypad->adcs[nbtn];
++		struct bt_adc *adcy = &joypad->adcs[nbtn + 1];
+ 
+-		adc->value = joypad_adc_read(joypad->amux, adc);
+-		if (!adc->value) {
++		/* Read first joystick axis */
++		adcx->value = joypad_adc_read(joypad->amux, adcx);
++		if (!adcx->value) {
++			//dev_err(joypad->dev, "%s : saradc channels[%d]! adc->value : %d\n",__func__, nbtn, adc->value);
++			continue;
++		}
++		adcx->value = adcx->value - adcx->cal;
++
++		/* Read second joystick axis */
++		adcy->value = joypad_adc_read(joypad->amux, adcy);
++		if (!adcy->value) {
+ 			//dev_err(joypad->dev, "%s : saradc channels[%d]! adc->value : %d\n",__func__, nbtn, adc->value);
+ 			continue;
+ 		}
+-		adc->value = adc->value - adc->cal;
++		adcy->value = adcy->value - adcy->cal;
+ 
+ 		/* Joystick Deadzone check */
++		mag = int_sqrt((adcx->value * adcx->value) + (adcy->value * adcy->value));
+ 		if (joypad->bt_adc_deadzone) {
+-			if (abs(adc->value) < joypad->bt_adc_deadzone)
+-				adc->value = 0;
++			if (mag <= joypad->bt_adc_deadzone) {
++				adcx->value = 0;
++				adcy->value = 0;
++			}
++			else {
++				/* Assumes adcx->max == -adcx->min == adcy->max == -adcy->min */
++				/* Order of operations is critical to avoid integer overflow */
++				adcx->value = (((adcx->max * adcx->value) / mag) * (mag - joypad->bt_adc_deadzone)) / (adcx->max - joypad->bt_adc_deadzone);
++				adcy->value = (((adcy->max * adcy->value) / mag) * (mag - joypad->bt_adc_deadzone)) / (adcy->max - joypad->bt_adc_deadzone);
++			}
+ 		}
+ 
+ 		/* adc data tuning */
+-		if (adc->tuning_n && adc->value < 0)
+-			adc->value = ADC_DATA_TUNING(adc->value, adc->tuning_n);
+-		if (adc->tuning_p && adc->value > 0)
+-			adc->value = ADC_DATA_TUNING(adc->value, adc->tuning_p);
+-
+-		adc->value = adc->value > adc->max ? adc->max : adc->value;
+-		adc->value = adc->value < adc->min ? adc->min : adc->value;
++		if (adcx->tuning_n && adcx->value < 0)
++			adcx->value = ADC_DATA_TUNING(adcx->value, adcx->tuning_n);
++		if (adcx->tuning_p && adcx->value > 0)
++			adcx->value = ADC_DATA_TUNING(adcx->value, adcx->tuning_p);
++		if (adcy->tuning_n && adcy->value < 0)
++			adcy->value = ADC_DATA_TUNING(adcy->value, adcy->tuning_n);
++		if (adcy->tuning_p && adcy->value > 0)
++			adcy->value = ADC_DATA_TUNING(adcy->value, adcy->tuning_p);
++
++		/* Clamp to [min, max] */
++		adcx->value = adcx->value > adcx->max ? adcx->max : adcx->value;
++		adcx->value = adcx->value < adcx->min ? adcx->min : adcx->value;
++		adcy->value = adcy->value > adcy->max ? adcy->max : adcy->value;
++		adcy->value = adcy->value < adcy->min ? adcy->min : adcy->value;
+ 
+ 		input_report_abs(poll_dev->input,
+-			adc->report_type,
+-			adc->invert ? adc->value * (-1) : adc->value);
++			adcx->report_type,
++			adcx->invert ? adcx->value * (-1) : adcx->value);
++		input_report_abs(poll_dev->input,
++			adcy->report_type,
++			adcy->invert ? adcy->value * (-1) : adcy->value);
+ 	}
+ 	input_sync(poll_dev->input);
+ }
+-- 
+2.34.1
+

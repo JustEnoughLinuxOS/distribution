@@ -157,14 +157,14 @@ case ${EMULATOR} in
         NETWORK_PLAY="${ARGUMENTS##*--host}"  # read from --host onwards
         NETWORK_PLAY="${NETWORK_PLAY%%--nick*}"  # until --nick is found
         NETWORK_PLAY="--host ${NETWORK_PLAY} --nick"
-        set_setting netplay.mode host
+        set_setting netplay.mode "host"
       ;;
       *"--connect"*)
         ${VERBOSE} && log $0 "Setup netplay client."
-        NETWORK_PLAY="${ARGUMENTS##*--host}"  # read from --host onwards
+        NETWORK_PLAY="${ARGUMENTS##*--connect}"  # read from --connect onwards
         NETWORK_PLAY="${NETWORK_PLAY%%--nick*}"  # until --nick is found
-        NETWORK_PLAY="--host ${NETWORK_PLAY} --nick"
-        set_setting netplay.mode host
+        NETWORK_PLAY="--connect ${NETWORK_PLAY} --nick"
+        set_setting netplay.mode "client"
       ;;
       *"--netplaymode spectator"*)
         ${VERBOSE} && log $0 "Setup netplay spectator."
@@ -336,11 +336,14 @@ case ${CPU_VENDOR} in
 esac
 
 ### Apply energy performance preference
-EPP=$(get_setting "power.epp" "${PLATFORM}" "${ROMNAME##*/}")
-if [ ! -z ${EPP} ]
+if [ -e "/usr/bin/set_epp" ]
 then
-  ${VERBOSE} && log $0 "Set EPP to (${EPP})"
-  /usr/bin/set_epp ${EPP}
+  EPP=$(get_setting "power.epp" "${PLATFORM}" "${ROMNAME##*/}")
+  if [ ! -z ${EPP} ]
+  then
+    ${VERBOSE} && log $0 "Set EPP to (${EPP})"
+    /usr/bin/set_epp ${EPP}
+  fi
 fi
 
 ### Configure GPU performance mode
