@@ -18,6 +18,11 @@ if [ -n "${UBOOT_CONFIG}" ]; then
         cp -a ${KERNEL_DIR}/resource.img ${RELEASE_DIR}/3rdparty/bootloader
       fi
     ;;
+    rk3399)
+      if [ -f ${BOOTLOADER_DIR}/rk3399-uboot.bin ]; then
+        cp -a ${BOOTLOADER_DIR}/rk3399-uboot.bin ${RELEASE_DIR}/3rdparty/bootloader
+      fi 
+    ;;
     *)
       if [ -f ${BOOTLOADER_DIR}/uboot.img ]; then
         cp -a ${BOOTLOADER_DIR}/uboot.img ${RELEASE_DIR}/3rdparty/bootloader
