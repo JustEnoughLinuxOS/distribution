@@ -15,13 +15,13 @@ unset CURRENT_MODE
 unset AC_STATUS
 while true
 do
-  if [ "$(get_setting system.powersave)" = 1 ]
+  AC_STATUS="$(cat /sys/class/power_supply/[bB][aA][tT]*/status 2>/dev/null)"
+  if [[ ! "${CURRENT_MODE}" =~ ${AC_STATUS} ]]
   then
-    AC_STATUS="$(cat /sys/class/power_supply/[bB][aA][tT]*/status 2>/dev/null)"
-    if [[ ! "${CURRENT_MODE}" =~ ${AC_STATUS} ]]
-    then
-      case ${AC_STATUS} in
-        Disch*)
+    case ${AC_STATUS} in
+      Disch*)
+        if [ "$(get_setting system.powersave)" = 1 ]
+        then
           log $0 "Switching to battery mode."
           if [ -e "/tmp/.gpu_performance_level" ]
           then
@@ -33,7 +33,6 @@ do
           then
             GPUPROFILE="auto"
           fi
-          ledcontrol $(get_setting led.color)
           audio_powersave 1
           cpu_perftune battery
           gpu_performance_level ${GPUPROFILE}
@@ -41,12 +40,12 @@ do
           wake_events enabled
           runtime_power_management auto 5
           scsi_link_power_management med_power_with_dipm
-          /usr/bin/wifictl setpowersave
-
-        ;;
-        *)
+        fi
+      ;;
+      *)
+        if [ "$(get_setting system.powersave)" = 1 ]
+        then
           log $0 "Switching to performance mode."
-          ledcontrol $(get_setting led.color)
           audio_powersave 0
           cpu_perftune performance
           gpu_performance_level auto
@@ -54,10 +53,11 @@ do
           wake_events disabled
           runtime_power_management on 0
           scsi_link_power_management ""
-          /usr/bin/wifictl setpowersave
-        ;;
-      esac
-    fi
+        fi
+      ;;
+    esac
+    /usr/bin/wifictl setpowersave
+    ledcontrol $(get_setting led.color)
     CURRENT_MODE="${AC_STATUS}"
   fi
   ### Until we have an overlay. :rofl:

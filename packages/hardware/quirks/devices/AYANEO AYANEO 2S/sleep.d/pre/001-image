@@ -1,0 +1,17 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
+
+# There is a display bug with the Ayaneo 2S preventing the display from
+# blanking and powering the backlight off.  To work around this, we will
+# set the brightness to the lowest value, and display an black image before
+# entering sleep.
+
+# Yes, it's gross.
+
+. /etc/profile
+
+brightness >/tmp/.brightness
+echo 0 >"/sys/devices/pci0000:00/0000:00:08.1/0000:c4:00.0/drm/card0/card0-eDP-1/amdgpu_bl0/brightness"
+weston-image /usr/lib/autostart/quirks/devices/"${QUIRK_DEVICE}"/images/black.png &
+sleep 1
