@@ -1,0 +1,31 @@
+diff -rupN linux.orig/drivers/gpio/gpio-rockchip.c linux/drivers/gpio/gpio-rockchip.c
+--- linux.orig/drivers/gpio/gpio-rockchip.c	2023-12-22 04:23:33.879905917 +0000
++++ linux/drivers/gpio/gpio-rockchip.c	2023-12-22 05:08:03.636801366 +0000
+@@ -335,13 +335,13 @@ static void rockchip_irq_demux(struct ir
+ 	unsigned long pending;
+ 	unsigned int irq;
+ 
+-	dev_dbg(bank->dev, "got irq for bank %s\n", bank->name);
++	//dev_dbg(bank->dev, "got irq for bank %s\n", bank->name);
+ 
+ 	chained_irq_enter(chip, desc);
+ 
+ 	pending = readl_relaxed(bank->reg_base + bank->gpio_regs->int_status);
+ 	for_each_set_bit(irq, &pending, 32) {
+-		dev_dbg(bank->dev, "handling irq %d\n", irq);
++		//dev_dbg(bank->dev, "handling irq %d\n", irq);
+ 
+ 		/*
+ 		 * Triggering IRQ on both rising and falling edge
+diff -rupN linux.orig/drivers/input/touchscreen/goodix.c linux/drivers/input/touchscreen/goodix.c
+--- linux.orig/drivers/input/touchscreen/goodix.c	2023-12-22 04:23:34.199912947 +0000
++++ linux/drivers/input/touchscreen/goodix.c	2023-12-22 05:08:59.121963345 +0000
+@@ -1019,7 +1019,7 @@ retry_get_irq_gpio:
+ 	default:
+ 		if (ts->gpiod_int && ts->gpiod_rst) {
+ 			ts->reset_controller_at_probe = true;
+-			ts->load_cfg_from_disk = true;
++			ts->load_cfg_from_disk = false;
+ 			ts->irq_pin_access_method = IRQ_PIN_ACCESS_GPIO;
+ 		}
+ 	}
