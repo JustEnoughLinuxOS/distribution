@@ -22,17 +22,23 @@ fi
 
 case "${PKG_SOC}" in
   rk35*)
-	if [ -f "${RELEASE_DIR}/3rdparty/bootloader/u-boot.itb" ]; then
-	  echo "image: burn uboot.itb to image... (${PKG_SOC})"
-	  dd if="${RELEASE_DIR}/3rdparty/bootloader/u-boot.itb" of="${DISK}" bs=512 seek=16384 conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
-	fi
-	if [ -f "${RELEASE_DIR}/3rdparty/bootloader/trust.img" ]; then
-	  echo "image: burn trust.img to image..."
-	  dd if="${RELEASE_DIR}/3rdparty/bootloader/trust.img" of="${DISK}" bs=512 seek=24576 conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
-	elif [ -f "${RELEASE_DIR}/3rdparty/bootloader/resource.img" ]; then
-	  echo "image: burn resource.img to image..."
-	  dd if="${RELEASE_DIR}/3rdparty/bootloader/resource.img" of="${DISK}" bs=512 seek=24576 conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
-	fi
+    if [ -f "${RELEASE_DIR}/3rdparty/bootloader/u-boot.itb" ]; then
+      echo "image: burn uboot.itb to image... (${PKG_SOC})"
+      dd if="${RELEASE_DIR}/3rdparty/bootloader/u-boot.itb" of="${DISK}" bs=512 seek=16384 conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
+    fi
+    if [ -f "${RELEASE_DIR}/3rdparty/bootloader/trust.img" ]; then
+      echo "image: burn trust.img to image..."
+      dd if="${RELEASE_DIR}/3rdparty/bootloader/trust.img" of="${DISK}" bs=512 seek=24576 conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
+    elif [ -f "${RELEASE_DIR}/3rdparty/bootloader/resource.img" ]; then
+      echo "image: burn resource.img to image..."
+      dd if="${RELEASE_DIR}/3rdparty/bootloader/resource.img" of="${DISK}" bs=512 seek=24576 conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
+    fi
+  ;;
+  rk3399)
+    if [ -f "${RELEASE_DIR}/3rdparty/bootloader/rk3399-uboot.bin" ]; then
+      echo "image: burn u-boot.bin to image..."
+      dd if="${RELEASE_DIR}/3rdparty/bootloader/rk3399-uboot.bin" of="${DISK}" bs=512 seek=64 conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
+    fi
   ;;
   *)
     if [ -f "${RELEASE_DIR}/3rdparty/bootloader/uboot.img" ]; then
