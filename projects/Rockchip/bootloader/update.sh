@@ -107,7 +107,7 @@ if [ -f $SYSTEM_ROOT/usr/share/bootloader/uboot.img ]; then
 fi
 if [ -f $SYSTEM_ROOT/usr/share/bootloader/rk3399-uboot.bin ]; then
   echo -n "Updating uboot.bin... "
-  dd if=$SYSTEM_ROOT/usr/share/bootloader/rk3399-uboot.bin of=$BOOT_DISK 512 seek=64 conv=fsync &>/dev/null
+  dd if=$SYSTEM_ROOT/usr/share/bootloader/rk3399-uboot.bin of=$BOOT_DISK bs=512 seek=64 conv=fsync &>/dev/null
   echo "done"
 fi
 if [ -f $SYSTEM_ROOT/usr/share/bootloader/u-boot.itb ]; then
