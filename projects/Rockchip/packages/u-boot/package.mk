@@ -7,9 +7,8 @@ PKG_NAME="u-boot"
 PKG_ARCH="arm aarch64"
 PKG_SITE="https://github.com/JustEnoughLinuxOS"
 PKG_LICENSE="GPL"
-PKG_DEPENDS_TARGET="toolchain swig:host rkbin"
+PKG_DEPENDS_TARGET="toolchain swig:host rkbin glibc pyelftools:host"
 PKG_LONGDESC="Rockchip U-Boot is a bootloader for embedded systems."
-GET_HANDLER_SUPPORT="git"
 PKG_PATCH_DIRS+="${DEVICE}"
 
 case ${DEVICE} in
@@ -23,10 +22,11 @@ case ${DEVICE} in
     PKG_VERSION="88b2f26"
   ;;
   RK3399)
-    PKG_URL="${PKG_SITE}/rk3399-uboot.git"
-    PKG_VERSION="bb226439ac676a75b87a555e8741ac3c0b3e11b1"
+    PKG_DEPENDS_TARGET+=" atf"
+    PKG_VERSION="2024.01"
+    PKG_URL="https://ftp.denx.de/pub/u-boot/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
   ;;
-  RK332*)
+  RK3326)
     PKG_URL="https://github.com/hardkernel/u-boot.git"
     PKG_VERSION="0e26e35cb18a80005b7de45c95858c86a2f7f41e"
     PKG_GIT_CLONE_BRANCH="odroidgoA-v2017.09"
@@ -51,6 +51,7 @@ post_patch() {
 }
 
 make_target() {
+setup_pkg_config_host
   . ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
   if [ -z "${UBOOT_CONFIG}" ]; then
     echo "UBOOT_CONFIG must be set to build an image"
@@ -75,7 +76,9 @@ make_target() {
       DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 _python_sysroot="${TOOLCHAIN}" _python_prefix=/ _python_exec_prefix=/ make HOSTCC="${HOST_CC}" HOSTLDFLAGS="-L${TOOLCHAIN}/lib" HOSTSTRIP="true" CONFIG_MKIMAGE_DTC_PATH="scripts/dtc/dtc"
     else
       echo "Building for MBR (${UBOOT_DTB})..."
-      [ -n "${ATF_PLATFORM}" ] &&  cp -av $(get_build_dir atf)/bl31.bin .
+      if [[ "${ATF_PLATFORM}" =~ "rk3399" ]]; then
+        export BL31="$(get_build_dir atf)/.install_pkg/usr/share/bootloader/bl31.elf"
+      fi
       DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm make mrproper
       DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm make ${UBOOT_CONFIG}
       DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm _python_sysroot="${TOOLCHAIN}" _python_prefix=/ _python_exec_prefix=/ make HOSTCC="$HOST_CC" HOSTLDFLAGS="-L${TOOLCHAIN}/lib" HOSTSTRIP="true" CONFIG_MKIMAGE_DTC_PATH="scripts/dtc/dtc"
