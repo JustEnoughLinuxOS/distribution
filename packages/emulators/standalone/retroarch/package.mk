@@ -27,6 +27,7 @@ PKG_CONFIGURE_OPTS_TARGET="   --disable-qt \
                               --disable-discord \
                               --disable-vg \
                               --disable-sdl \
+                              --enable-sdl2 \
 			      --enable-kms \
                               --enable-ffmpeg"
 
