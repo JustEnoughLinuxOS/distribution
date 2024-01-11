@@ -82,7 +82,8 @@ echo "BUILD ID: ${BUILD_ID:0:7} (${BUILD_BRANCH})"
 echo "KERNEL: ${V_SYSTEM} ($(uname -m))"
 echo "DISK SPACE:"
 echo "/storage: $(df -h /storage | awk '/dev/ {print $3"/"$2" ("$5")"}')"
-echo "/storage/roms: $(df -h /storage/roms | awk '/dev/ {print $3"/"$2" ("$5")"}')"
+echo "/storage/games-internal: $(df -h /storage/games-internal | awk '/dev/ {print $3"/"$2" ("$5")"}')"
+echo "/storage/games-external: $(df -h /storage/games-external | awk '/dev/ {print $3"/"$2" ("$5")"}')"
 
 if test -n "${BATT}"
 then

@@ -150,6 +150,9 @@
   # swapfile size if SWAP_SUPPORT=yes in MB
     SWAPFILESIZE="384"
 
+  # Some devices have internal storage.
+    INSTALLER_SUPPORT="yes"
+
   # cron support (yes / no)
     CRON_SUPPORT="no"
 

@@ -29,7 +29,12 @@
 # disable Ctrl+C - can be very dangerous
 trap '' 2
 
+# Don't execute if installer.conf doesn't exist
 [ -f /etc/installer.conf ] && . /etc/installer.conf || exit 0
+
+# Bring in OS variables.
+. /etc/os-release
+
 
 dbglg() {
   # Acts just like echo cmd, with automatic redirection
@@ -158,14 +163,21 @@ do_install_quick() {
   INSTALL_DEVICE=$(cat "$TMPDIR/device_for_install")
   INSTALL_DEVICE_FULL=$(echo ${DEVICE_LIST} | sed "s|.*${INSTALL_DEVICE} \([^ ]*\).*|${INSTALL_DEVICE} \1|")
 
-  case ${INSTALL_DEVICE} in
-    "/dev/mmcblk"*|"/dev/nvme"*)
-      PART1="p1"
-      PART2="p2"
-      ;;
+  case ${HW_ARCH} in
+    arm|aarch64)
+      PART1="3"
+      PART2="4"
+    ;;
     *)
       PART1="1"
       PART2="2"
+    ;;
+  esac
+
+  case ${INSTALL_DEVICE} in
+    "/dev/mmcblk"*|"/dev/nvme"*)
+      PART1="p${PART1}"
+      PART2="p${PART2}"
       ;;
   esac
 
@@ -204,12 +216,30 @@ do_install_quick() {
       parted -s ${INSTALL_DEVICE} mklabel msdos >> $LOGFILE 2>&1
     fi
 
-    msg_progress_install "9" "Writing Master Boot Record on ${INSTALL_DEVICE}"
-    if [ "$GPT" = "1" ]; then
-      cat /usr/share/syslinux/gptmbr.bin > ${INSTALL_DEVICE}
-    else
-      cat /usr/share/syslinux/mbr.bin > ${INSTALL_DEVICE}
-    fi
+    case ${HW_ARCH} in
+      arm|aarch64)
+        parted -s "${INSTALL_DEVICE}" unit s mkpart uboot 16384 24575 >> $LOGFILE 2>&1
+        if [ -e "/usr/share/bootloader/trust.img" ]
+        then
+          TRUST_LABEL="trust"
+        elif [ -e "/usr/share/bootloader/resource.img" ]
+        then
+          TRUST_LABEL="resource"
+        fi
+        if [ -n "${TRUST_LABEL}" ]
+        then
+          parted -s "${INSTALL_DEVICE}" unit s mkpart ${TRUST_LABEL} 24576 32767 >> $LOGFILE 2>&1
+        fi
+      ;;
+      *)
+        msg_progress_install "9" "Writing Master Boot Record on ${INSTALL_DEVICE}"
+        if [ "$GPT" = "1" ]; then
+          cat /usr/share/syslinux/gptmbr.bin > ${INSTALL_DEVICE}
+        else
+          cat /usr/share/syslinux/mbr.bin > ${INSTALL_DEVICE}
+        fi
+      ;;
+    esac
 
     partsize_system_start=$PARTSIZE_SYSTEM_OFFSET
     partsize_system_end=$(((PARTSIZE_SYSTEM * 1024 * 1024 / 512) + partsize_system_start - 1))
@@ -227,13 +257,21 @@ do_install_quick() {
     if [ "$GPT" = "1" ]; then
       parted -s ${INSTALL_DEVICE} unit s mkpart $DISKLABEL_STORAGE ext4 -- $partsize_storage_start $partsize_storage_end >> $LOGFILE 2>&1
     else
-      parted -s ${INSTALL_DEVICE} unit s mkpart primary ext4 -- $partsize_storage_start $partsize_storage_end >> $LOGFILE 2>&1
+      parted -s ${INSTALL_DEVICE} unit s mkpart storage ext4 -- $partsize_storage_start $partsize_storage_end >> $LOGFILE 2>&1
     fi
 
     msg_progress_install "16" "Setup bootflag on partition 1 of ${INSTALL_DEVICE}"
     parted -s ${INSTALL_DEVICE} set 1 boot on >> $LOGFILE 2>&1
     if [ "$GPT" = "1" ]; then
-      parted -s ${INSTALL_DEVICE} set 1 legacy_boot on >> $LOGFILE 2>&1
+      case ${HW_ARCH} in
+        arm|aarch64)
+          BOOT_PART=3
+        ;;
+        *)
+          BOOT_PART=1
+        ;;
+      esac
+      parted -s ${INSTALL_DEVICE} set ${BOOT_PART} legacy_boot on >> $LOGFILE 2>&1
     fi
 
     msg_progress_install "20" "Tell the kernel we have a new partition table on ${INSTALL_DEVICE}"
@@ -266,9 +304,34 @@ do_install_quick() {
     msg_progress_install "40" "Mounting ${INSTALL_DEVICE}${PART1} to $TMPDIR/part1"
     mount -t vfat ${INSTALL_DEVICE}${PART1} $TMPDIR/part1 >> $LOGFILE 2>&1
 
-    # installing syslinux
-    msg_progress_install "50" "Installing syslinux to $TMPDIR/part1"
-    syslinux -i ${INSTALL_DEVICE}${PART1} >> $LOGFILE 2>&1
+    case ${HW_ARCH} in
+      arm|aarch64)
+        msg_progress_install "50" "Installing bootloader to $TMPDIR/part1"
+        /usr/share/bootloader/update.sh "${INSTALL_DEVICE}" "${TMPDIR}/part1" "$UUID_SYSTEM" "$UUID_STORAGE" "$SYSLINUX_PARAMETERS @EXTRA_CMDLINE@"
+        mount -o remount,rw $TMPDIR/part1
+      ;;
+      i686|x86_64)
+        # installing syslinux
+        msg_progress_install "50" "Installing syslinux to $TMPDIR/part1"
+        syslinux -i ${INSTALL_DEVICE}${PART1} >> $LOGFILE 2>&1
+
+        # configuring bootloader
+        msg_progress_install "80" "Setup bootloader with boot label = $DISKLABEL_SYSTEM and disk label = $DISKLABEL_STORAGE"
+        mkdir -p $TMPDIR/part1/EFI/BOOT
+        cat << EOF > $TMPDIR/part1/syslinux.cfg
+DEFAULT linux
+PROMPT 0
+
+LABEL linux
+ KERNEL /KERNEL
+ APPEND boot=UUID=$UUID_SYSTEM disk=UUID=$UUID_STORAGE $SYSLINUX_PARAMETERS @EXTRA_CMDLINE@
+EOF
+        # uefi boot / hybrid mode
+        cp /usr/share/syslinux/bootx64.efi $TMPDIR/part1/EFI/BOOT
+        cp /usr/share/syslinux/ldlinux.e64 $TMPDIR/part1/EFI/BOOT
+        cp /usr/share/grub/bootia32.efi $TMPDIR/part1/EFI/BOOT
+      ;;
+    esac
 
     # install system files
     msg_progress_install "60" "Installing Kernel"
@@ -278,22 +341,6 @@ do_install_quick() {
     cp "/flash/$IMAGE_SYSTEM" $TMPDIR/part1/SYSTEM >> $LOGFILE 2>&1
     sync
 
-    # configuring bootloader
-    msg_progress_install "80" "Setup bootloader with boot label = $DISKLABEL_SYSTEM and disk label = $DISKLABEL_STORAGE"
-    mkdir -p $TMPDIR/part1/EFI/BOOT
-    cat << EOF > $TMPDIR/part1/syslinux.cfg
-DEFAULT linux
-PROMPT 0
-
-LABEL linux
- KERNEL /KERNEL
- APPEND boot=UUID=$UUID_SYSTEM disk=UUID=$UUID_STORAGE $SYSLINUX_PARAMETERS @EXTRA_CMDLINE@
-EOF
-
-    # uefi boot / hybrid mode
-    cp /usr/share/syslinux/bootx64.efi $TMPDIR/part1/EFI/BOOT
-    cp /usr/share/syslinux/ldlinux.e64 $TMPDIR/part1/EFI/BOOT
-    cp /usr/share/grub/bootia32.efi $TMPDIR/part1/EFI/BOOT
     sync
 
     # umount system partition, remove mountpoint
@@ -351,19 +398,36 @@ msg_progress_install() {
 }
 
 prompt_gpt() {
-  GPT="0"
-  UEFI="0"
-  # Get size in GB.
-  # 2^41 bytes is the DOS limit (2199023255552 bytes, 2.2TB). Use GUID Partition Table.>= 2200GB
-  INSTALL_DEVICE_SIZE=$(($(cat /sys/block/${INSTALL_DEVICE#/dev/}/size)*512/1000/1000/1000))
-  if [ "${INSTALL_DEVICE_SIZE}" -ge 2200 ] 2>/dev/null; then
-    GPT="1"
-  fi
-  # force gpt + uefi in uefi boot mode
-  if [ -d /sys/firmware/efi ]; then
-    UEFI="1"
-    GPT="1"
-  fi
+  case ${HW_ARCH} in
+    arm|aarch64)
+      BOOT_DEVICE=$(blkid | awk 'BEGIN {FS=":"} /'$(cat /proc/cmdline | sed -e 's~^.*disk=UUID=~~g; s~\ .*$~~g')'/ {print $1}' | sed 's~p[0-9].*$~~g')
+      BOOT_LABEL="$(blkid ${BOOT_DEVICE} | grep -Eo 'PTTYPE=".*"' | sed 's~PTTYPE=~~g; s~"~~g')"
+      case ${BOOT_LABEL} in
+        gpt)
+          GPT="1"
+        ;;
+        *)
+          GPT="0"
+        ;;
+      esac
+      UEFI="0"
+    ;;
+    *)
+     GPT="0"
+     UEFI="0"
+     # Get size in GB.
+     # 2^41 bytes is the DOS limit (2199023255552 bytes, 2.2TB). Use GUID Partition Table.>= 2200GB
+     INSTALL_DEVICE_SIZE=$(($(cat /sys/block/${INSTALL_DEVICE#/dev/}/size)*512/1000/1000/1000))
+     if [ "${INSTALL_DEVICE_SIZE}" -ge 2200 ] 2>/dev/null; then
+       GPT="1"
+     fi
+     # force gpt + uefi in uefi boot mode
+     if [ -d /sys/firmware/efi ]; then
+       UEFI="1"
+       GPT="1"
+     fi
+    ;;
+  esac
 }
 
 prompt_backup_unpack() {
@@ -491,6 +555,7 @@ log_system_status >> $LOGFILE 2>&1
 
 # generate the en_US.UTF-8 locale to enable line drawing
 mkdir -p $TMPDIR/locale
+echo "Please wait, configuring en_US.UTF-8."
 localedef -i en_US -f UTF-8 $TMPDIR/locale/en_US.UTF-8
 export LOCPATH=$TMPDIR/locale
 export LC_ALL=en_US.UTF-8

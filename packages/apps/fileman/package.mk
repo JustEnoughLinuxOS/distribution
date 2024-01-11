@@ -3,7 +3,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="fileman"
-PKG_VERSION="9f192b8d026568f232f6687882f519572623a992"
+PKG_VERSION="a32294a681036cdb9d2f3707ebc3f2889705960e"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/JustEnoughLinuxOS/fileman"
