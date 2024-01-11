@@ -139,6 +139,9 @@
   # build with swap support (yes / no)
     SWAP_SUPPORT="yes"
 
+  # Some devices have internal storage.
+    INSTALLER_SUPPORT="yes"
+
   # swap support enabled per default (yes / no)
     SWAP_ENABLED_DEFAULT="yes"
 
