@@ -3542,7 +3542,7 @@ new file mode 100644
 index 000000000000..14186365fdd4
 --- /dev/null
 +++ b/drivers/net/wireless/esp8089/esp_mac80211.c
-@@ -0,0 +1,1727 @@
+@@ -0,0 +1,1728 @@
 +/*
 + * Copyright (c) 2011-2014 Espressif System.
 + *
@@ -4952,6 +4952,7 @@ index 000000000000..14186365fdd4
 +#endif
 +	.set_bitrate_mask = esp_op_set_bitrate_mask,
 +	.flush = esp_op_flush,
++	.wake_tx_queue = ieee80211_handle_wake_tx_queue,
 +};
 +
 +struct esp_pub *esp_pub_alloc_mac80211(struct device *dev)
@@ -10927,4 +10928,3 @@ index 000000000000..2cdb2c856d15
 +#endif				// SLC_HOST_REGISTER_H_INCLUDED
 -- 
 2.34.1
-
