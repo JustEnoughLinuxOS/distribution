@@ -35,15 +35,19 @@ post_makeinstall_target() {
       rm -f ${INSTALL}/usr/config/modules/*32bit*
       rm -f ${INSTALL}/usr/config/modules/*Master*
     ;;
-    *)
-      rm -f ${INSTALL}/usr/config/modules/Install*
-    ;;
   esac
+
   case ${DEVICE} in
     S922X*)
       rm -f ${INSTALL}/usr/config/modules/*ScummVM*
       rm -f ${INSTALL}/usr/config/modules/*32bit*
     ;;
   esac
+
+  if [ ! "${INSTALLER_SUPPORT}" = "yes" ] || \
+     [ ! "${DISPLAYSERVER}" = "wl" ]
+  then
+    rm -f ${INSTALL}/usr/config/modules/Install*
+  fi
 }
 

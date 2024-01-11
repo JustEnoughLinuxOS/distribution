@@ -1,0 +1,9 @@
+[Unit]
+Description=Virtual Gamepad Driver
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/virtualgamepad
+
+[Install]
+WantedBy=multi-user.target

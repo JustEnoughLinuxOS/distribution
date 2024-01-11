@@ -21,11 +21,6 @@ PKG_CONFIGURE_OPTS_TARGET="   --disable-qt \
                               --enable-alsa \
                               --enable-udev \
                               --disable-opengl1 \
-                              --disable-opengl \
-                              --disable-opengles \
-                              --disable-opengles3 \
-                              --disable-opengles3_2 \
-                              --disable-wayland \
                               --disable-x11 \
                               --enable-zlib \
                               --enable-freetype \
@@ -33,6 +28,7 @@ PKG_CONFIGURE_OPTS_TARGET="   --disable-qt \
                               --disable-vg \
                               --disable-sdl \
                               --enable-sdl2 \
+			      --enable-kms \
                               --disable-odroidgo2 \
                               --enable-ffmpeg"
 
@@ -54,27 +50,38 @@ esac
 if [ "${DISPLAYSERVER}" = "wl" ]; then
   PKG_DEPENDS_TARGET+=" wayland ${WINDOWMANAGER}"
   PKG_CONFIGURE_OPTS_TARGET+=" --enable-wayland"
+else
+  PKG_CONFIGURE_OPTS_TARGET+=" --disable-wayland"
 fi
 
-if [ ! "${OPENGL}" = "no" ]; then
+if [[ "${OPENGL_SUPPORT}" = "yes" ]] && [[ ! "${DEVICE}" = "S922X" ]]; then
     PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
     PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengl"
 else
     PKG_CONFIGURE_OPTS_TARGET+=" --disable-opengl"
 fi
 
-if [ "${OPENGLES_SUPPORT}" = yes ] && \
-   [[ ! "${ARCH}" =~ i*86|x86_64 ]]; then
+if [ "${OPENGLES_SUPPORT}" = "yes" ]; then
     PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-    PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengles --enable-opengles3 --enable-opengles3_2 --enable-kms"
+	PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengles --enable-opengles3"
+	case ${DEVICE} in
+	  RK33*|RK3566|RK3588)
+	    PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengles3_1"
+          ;;
+	  AMD64|S922X)
+            PKG_CONFIGURE_OPTS_TARGET+="  --enable-opengles3_1 --enable-opengles3_2"
+	  ;;
+	esac
 else
-    PKG_CONFIGURE_OPTS_TARGET+=" --disable-opengles --disable-opengles3 --disable-opengles3_2"
+    PKG_CONFIGURE_OPTS_TARGET+=" --disable-opengles --disable-opengles3 --disable-opengles3_1 --disable-opengles3_2"
 fi
 
 if [ "${VULKAN_SUPPORT}" = "yes" ]
 then
     PKG_DEPENDS_TARGET+=" vulkan-loader vulkan-headers"
     PKG_CONFIGURE_OPTS_TARGET+=" --enable-vulkan --enable-vulkan_display"
+else
+  PKG_CONFIGURE_OPTS_TARGET+=" --disable-vulkan"
 fi
 
 pre_configure_target() {
