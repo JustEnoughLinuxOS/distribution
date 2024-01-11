@@ -166,6 +166,15 @@ LABEL run
   APPEND boot=UUID=${UUID_SYSTEM} disk=UUID=${UUID_STORAGE} portable ${EXTRA_CMDLINE}
 EOF
 
+  cat << EOF > "${LE_TMP}/grub.cfg"
+set timeout="0"
+set default="Run"
+menuentry "Run" {
+	search --set -f /KERNEL
+	linux /KERNEL boot=UUID=${UUID_SYSTEM} disk=UUID=${UUID_STORAGE} grub_portable ${EXTRA_CMDLINE}
+}
+EOF
+
   mcopy "${LE_TMP}/syslinux.cfg" ::
 
   # install syslinux
@@ -183,6 +192,7 @@ EOF
   mcopy "${TOOLCHAIN}/share/syslinux/bootx64.efi" ::/EFI/BOOT
   mcopy "${TOOLCHAIN}/share/syslinux/ldlinux.e64" ::/EFI/BOOT
   mcopy "${TOOLCHAIN}/share/grub/bootia32.efi" ::/EFI/BOOT
+  mcopy "${LE_TMP}/grub.cfg" ::/EFI/BOOT
 
 elif [ "${BOOTLOADER}" = "bcm2835-bootloader" ]; then
   # create bootloader configuration
@@ -265,7 +275,9 @@ if [ "${PROJECT}" = "Generic" ]; then
   # change syslinux default to 'run'
   echo "image: modifying files on part1 for open virtual appliance..."
   sed -e "/DEFAULT/ s/installer/run/" -i "${LE_TMP}/syslinux.cfg"
+  sed -e "/set default=/s/\"Installer\"/\"Run\"/" -i "${LE_TMP}/grub.cfg"
   mcopy "${LE_TMP}/syslinux.cfg" :: >"${SAVE_ERROR}" 2>&1 || show_error
+  mcopy "${LE_TMP}/grub.cfg" ::/EFI/BOOT >"${SAVE_ERROR}" 2>&1 || show_error
   sync
   # run fsck
   echo "image: checking filesystem on part1..."
