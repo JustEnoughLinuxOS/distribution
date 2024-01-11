@@ -385,7 +385,7 @@ EOF
 
   # install complete
   MSG_TITLE="@DISTRONAME@ Install Complete"
-  MSG_DETAIL="You may now remove the install media and reboot.\n"
+  MSG_DETAIL="You may now remove the install media and shutdown.\n"
   whiptail --backtitle "$BACKTITLE" --title "$MSG_TITLE" --msgbox "$MSG_DETAIL" 7 52
 }
 
@@ -474,7 +474,7 @@ out during the installation. \
       1 "Install @DISTRONAME@" \
       2 "View installation log" \
       3 "Save installation log" \
-      4 "Reboot" 2> $TMPDIR/mainmenu
+      4 "Shutdown" 2> $TMPDIR/mainmenu
 
   case $? in
     0)
@@ -483,13 +483,10 @@ out during the installation. \
         1) do_install_quick;;
         2) logfile_show;;
         3) logfile_save;;
-        4) do_reboot;;
+        4) do_poweroff;;
       esac
       ;;
-    1)
-      do_reboot
-      ;;
-    255)
+    1|255)
       do_poweroff
       ;;
   esac
@@ -511,13 +508,6 @@ logfile_save() {
   MSG_TITLE="@DISTRONAME@ Log Saved"
   MSG_DETAIL="Log location: ${LOGBACKUP}\n"
   whiptail --backtitle "$BACKTITLE" --title "$MSG_TITLE" --msgbox "$MSG_DETAIL" 7 52
-}
-
-do_reboot() {
-  # reboot on request
-  clear
-  sync
-  reboot -f
 }
 
 do_poweroff() {
