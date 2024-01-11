@@ -3,55 +3,64 @@
 # Copyright (C) 2017-2021 Team LibreELEC (https://libreelec.tv)
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
-[ -z "$SYSTEM_ROOT" ] && SYSTEM_ROOT=""
-[ -z "$BOOT_ROOT" ] && BOOT_ROOT="/flash"
-[ -z "$BOOT_PART" ] && BOOT_PART=$(df "$BOOT_ROOT" | tail -1 | awk {' print $1 '})
-if [ -z "$BOOT_DISK" ]; then
-  case $BOOT_PART in
-    /dev/sd[a-z][0-9]*)
-      BOOT_DISK=$(echo $BOOT_PART | sed -e "s,[0-9]*,,g")
+if [ -z "${1}" ]
+then
+  [ -z "$SYSTEM_ROOT" ] && SYSTEM_ROOT=""
+  [ -z "$BOOT_ROOT" ] && BOOT_ROOT="/flash"
+  [ -z "$BOOT_PART" ] && BOOT_PART=$(df "$BOOT_ROOT" | tail -1 | awk {' print $1 '})
+  if [ -z "$BOOT_DISK" ]; then
+    case $BOOT_PART in
+      /dev/sd[a-z][0-9]*)
+        BOOT_DISK=$(echo $BOOT_PART | sed -e "s,[0-9]*,,g")
+        ;;
+      /dev/mmcblk*)
+        BOOT_DISK=$(echo $BOOT_PART | sed -e "s,p[0-9]*,,g")
+        ;;
+    esac
+  fi
+
+  # mount $BOOT_ROOT r/w
+    mount -o remount,rw $BOOT_ROOT
+
+
+  for arg in $(cat /proc/cmdline); do
+    case $arg in
+      boot=*)
+        boot="${arg#*=}"
+        case $boot in
+          /dev/mmc*)
+            UUID_SYSTEM="$(blkid $boot | sed 's/.* UUID="//;s/".*//g')"
+            ;;
+          UUID=*|LABEL=*)
+            UUID_SYSTEM="$(blkid | sed 's/"//g' | grep -m 1 -i " $boot " | sed 's/.* UUID=//;s/ .*//g')"
+            ;;
+          FOLDER=*)
+            UUID_SYSTEM="$(blkid ${boot#*=} | sed 's/.* UUID="//;s/".*//g')"
+            ;;
+        esac
       ;;
-    /dev/mmcblk*)
-      BOOT_DISK=$(echo $BOOT_PART | sed -e "s,p[0-9]*,,g")
+      disk=*)
+        disk="${arg#*=}"
+        case $disk in
+          /dev/mmc*)
+            UUID_STORAGE="$(blkid $disk | sed 's/.* UUID="//;s/".*//g')"
+            ;;
+          UUID=*|LABEL=*)
+            UUID_STORAGE="$(blkid | sed 's/"//g' | grep -m 1 -i " $disk " | sed 's/.* UUID=//;s/ .*//g')"
+            ;;
+          FOLDER=*)
+            UUID_STORAGE="$(blkid ${disk#*=} | sed 's/.* UUID="//;s/".*//g')"
+            ;;
+        esac
       ;;
-  esac
+    esac
+  done
+else
+  BOOT_DISK="${1}"
+  BOOT_ROOT="${2}"
+  UUID_SYSTEM="${3}"
+  UUID_STORAGE="${4}"
 fi
-
-# mount $BOOT_ROOT r/w
-  mount -o remount,rw $BOOT_ROOT
-
-for arg in $(cat /proc/cmdline); do
-  case $arg in
-    boot=*)
-      boot="${arg#*=}"
-      case $boot in
-        /dev/mmc*)
-          BOOT_UUID="$(blkid $boot | sed 's/.* UUID="//;s/".*//g')"
-          ;;
-        UUID=*|LABEL=*)
-          BOOT_UUID="$(blkid | sed 's/"//g' | grep -m 1 -i " $boot " | sed 's/.* UUID=//;s/ .*//g')"
-          ;;
-        FOLDER=*)
-          BOOT_UUID="$(blkid ${boot#*=} | sed 's/.* UUID="//;s/".*//g')"
-          ;;
-      esac
-    ;;
-    disk=*)
-      disk="${arg#*=}"
-      case $disk in
-        /dev/mmc*)
-          DISK_UUID="$(blkid $disk | sed 's/.* UUID="//;s/".*//g')"
-          ;;
-        UUID=*|LABEL=*)
-          DISK_UUID="$(blkid | sed 's/"//g' | grep -m 1 -i " $disk " | sed 's/.* UUID=//;s/ .*//g')"
-          ;;
-        FOLDER=*)
-          DISK_UUID="$(blkid ${disk#*=} | sed 's/.* UUID="//;s/".*//g')"
-          ;;
-      esac
-    ;;
-  esac
-done
 
 DT_ID=$($SYSTEM_ROOT/usr/bin/dtname)
 
@@ -77,9 +86,13 @@ for all_dtb in $BOOT_ROOT/*.dtb; do
   fi
 done
 
-if [ -f $BOOT_ROOT/extlinux/extlinux.conf ]; then
+if [ -f $BOOT_ROOT/extlinux/extlinux.conf ] || [ -n "${1}" ]; then
   if [ -f $SYSTEM_ROOT/usr/share/bootloader/extlinux/extlinux.conf ]; then
     echo "Updating extlinux.conf..."
+    if [ ! -d "${BOOT_ROOT}/extlinux" ]
+    then
+      mkdir "${BOOT_ROOT}/extlinux"
+    fi
     cp -p $SYSTEM_ROOT/usr/share/bootloader/extlinux/extlinux.conf $BOOT_ROOT/extlinux
     sed -e "s/@BOOT_UUID@/$BOOT_UUID/" \
         -e "s/@DISK_UUID@/$DISK_UUID/" \
@@ -87,7 +100,7 @@ if [ -f $BOOT_ROOT/extlinux/extlinux.conf ]; then
   fi
 fi
 
-if [ -f $BOOT_ROOT/boot.ini ]; then
+if [ -f $BOOT_ROOT/boot.ini ] || [ -n "${1}" ]; then
   if [ -f /usr/share/bootloader/boot.ini ]; then
     echo "Updating boot.ini"
     cp -p /usr/share/bootloader/boot.ini $BOOT_ROOT/boot.ini
