@@ -13,6 +13,12 @@ else
   source /usr/config/jslisten_hotkeys
 fi
 
+if [ -e "/storage/.config/profile.d/100-jslisten-hotkey" ]
+then
+  source /storage/.config/profile.d/100-jslisten-hotkey
+fi
+
+# "Global" key-combos loaded for every application
 read -d '\n' GLOBAL << EOF
 [IncrVol]
 program="/usr/bin/volume up"
