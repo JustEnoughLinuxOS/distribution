@@ -555,9 +555,10 @@ log_system_status >> $LOGFILE 2>&1
 
 # generate the en_US.UTF-8 locale to enable line drawing
 mkdir -p $TMPDIR/locale
-#localedef -i en_US -f UTF-8 $TMPDIR/locale/en_US.UTF-8
-#export LOCPATH=$TMPDIR/locale
-#export LC_ALL=en_US.UTF-8
+echo "Please wait, configuring en_US.UTF-8."
+localedef -i en_US -f UTF-8 $TMPDIR/locale/en_US.UTF-8
+export LOCPATH=$TMPDIR/locale
+export LC_ALL=en_US.UTF-8
 
 # main
 
