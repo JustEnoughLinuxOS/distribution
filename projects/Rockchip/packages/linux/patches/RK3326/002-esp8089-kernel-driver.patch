@@ -2597,7 +2597,7 @@ index 000000000000..ea702f010eec
 +#include <linux/netdevice.h>
 +#include <linux/aio.h>
 +#include <linux/property.h>
-+
++#include <linux/of.h>
 +#include "esp_file.h"
 +#include "esp_debug.h"
 +#include "esp_sif.h"
@@ -7427,7 +7427,7 @@ index 000000000000..6602a1e22ab1
 +		}
 +	}
 +      _exit:
-+	ieee80211_tx_status(sip->epub->hw, skb);
++	ieee80211_tx_status_skb(sip->epub->hw, skb);
 +}
 +
 +/*
