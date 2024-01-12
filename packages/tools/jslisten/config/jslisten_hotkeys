@@ -22,3 +22,9 @@ BTN_QUIT_SELECT=${DEVICE_BTN_START}
 BTN_KILL_HOTKEY=${DEVICE_BTN_TL}
 BTN_KILL_SELECTA=${DEVICE_BTN_SELECT}
 BTN_KILL_SELECTB=${DEVICE_BTN_START}
+
+###
+### Define BTN_VOLBRIGHT_HOTKEY as an impossible value by default so it doesn't get used unless redefined.
+###
+
+BTN_VOLBRIGHT_HOTKEY=999
