@@ -22,7 +22,7 @@ case "${1}" in
     systemctl reboot
   ;;
   "ALL")
-    systemctl stop ${UI_SERVICE}
+    swapoff -a
     cd /
     find /storage -mindepth 1 \( ! -regex '^/storage/.update.*' -a ! -regex '^/storage/roms.*' -a ! -regex '^/storage/games-*' \) -delete
     mkdir /storage/.config/

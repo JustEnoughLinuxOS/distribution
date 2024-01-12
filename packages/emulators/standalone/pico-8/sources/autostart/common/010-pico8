@@ -3,11 +3,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PICO_DIR="/storage/roms/pico-8"
-if [ ! -d "${PICO_DIR}" ]
+if [ -d "${PICO_DIR}" ]
 then
-  mkdir "${PICO_DIR}"
+  touch "${PICO_DIR}/Splore.png"
 fi
-
-# Suggest removing this and replacing it with a file called Splore.png
-# cp -f  "/usr/bin/start_pico8.sh" "${PICO_DIR}/Start Pico-8.sh"
-touch "${PICO_DIR}/Splore.png"
