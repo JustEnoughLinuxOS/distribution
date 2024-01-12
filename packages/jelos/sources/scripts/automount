@@ -16,6 +16,12 @@ function unmount() {
   umount -f "${1}" 2>/dev/null ||:
 }
 
+function add_readme() {
+  cat <<EOF >/storage/roms/README
+Use the \`Create Game Directories\` option in \`System Settings\` to create your game directories.
+EOF
+}
+
 function start_ms() {
   ### Entrypoint will be either games card found (external), or not found (internal).
   MOUNT_PATH="/storage/games-${1}"
@@ -75,6 +81,7 @@ then
 elif [[ "${MOUNT_GAMES}" == "0" ]]
 then
   start_ms internal
+  add_readme
   exit 0
 fi
 
@@ -134,6 +141,7 @@ function mount_games() {
         /usr/bin/busybox mount ${1} ${MOUNT_PATH} >/dev/null 2>&1
       fi
       start_ms external
+      add_readme
       exit 0
 }
 
@@ -178,6 +186,7 @@ function find_games() {
       set_setting system.merged.device internal
     fi
     start_ms internal
+    add_readme
     exit 0
   fi
 }
