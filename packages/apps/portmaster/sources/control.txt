@@ -82,7 +82,7 @@ get_controls() {
     export SDL_GAMECONTROLLERCONFIG_FILE="/tmp/gamecontrollerdb.txt"
 
     # Now find any controller mapped on emulationstation...
-    /storage/.config/PortMaster/mapper.txt ${SDL_GAMECONTROLLERCONFIG_FILE}
+    /storage/.config/PortMaster/mapper.txt ${SDL_GAMECONTROLLERCONFIG_FILE} ${controlfolder}
 
     # Set compatability libs and run compatability script
     export LD_LIBRARY_PATH=${clibs}
