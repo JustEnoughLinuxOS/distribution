@@ -36,7 +36,7 @@ fi
 
 echo -e "# Xbox Layout\nABUT=\"b\"\nBBUT=\"a\"\nXBUT=\"y\"\nYBUT=\"x\"" >  "${controlfolder}/${scriptdir}/xbox_layout.txt"
 echo -e "# Nintendo Layout\nABUT=\"a\"\nBBUT=\"b\"\nXBUT=\"x\"\nYBUT=\"y\"" >  "${controlfolder}/${scriptdir}/nintendo_layout.txt"
-if [[ ! -e "/storage/roms/ports/PortMaster/controller_layout/custom_layout.cfg" ]]; then
+if [[ ! -e "${controlfolder}/${scriptdir}/custom_layout.txt" ]]; then
   echo -e "# Custom Layout\nABUT=\"a\"\nBBUT=\"b\"\nXBUT=\"x\"\nYBUT=\"y\"" >  "${controlfolder}/${scriptdir}/custom_layout.txt"
 fi
 
