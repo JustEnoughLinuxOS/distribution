@@ -280,7 +280,11 @@ case ${EMULATOR} in
       "wii")
         RUNTHIS='${RUN_SHELL} /usr/bin/start_dolphin_wii.sh "${ROMNAME}"'
       ;;
-      "shell"|"ports")
+      "ports")
+        RUNTHIS='${RUN_SHELL} "${ROMNAME}"'
+	sed -i "/^ACTIVE_GAME=/c\ACTIVE_GAME=\"${ROMNAME}\"" /storage/.config/PortMaster/mapper.txt
+      ;;
+      "shell")
         RUNTHIS='${RUN_SHELL} "${ROMNAME}"'
       ;;
       *)
