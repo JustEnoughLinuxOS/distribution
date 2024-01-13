@@ -14,9 +14,12 @@ fi
 
 cd /storage/.config/PortMaster
 
-#Grab the latest control.txt
+#Grab the latest control.txt & mapper.txt, then set correct permissions
 cp /usr/config/PortMaster/control.txt control.txt
+chmod +x /storage/.config/PortMaster/control.txt
 cp /usr/config/PortMaster/mapper.txt mapper.txt
+chmod +x /storage/.config/PortMaster/mapper.txt
+
 
 #Use our gamecontrollerdb.txt
 rm -r gamecontrollerdb.txt
@@ -44,6 +47,7 @@ cp /storage/roms/ports/PortMaster/gptokeyb gptokeyb
 
 #Copy over required files for ports
 cp /storage/.config/PortMaster/control.txt /storage/roms/ports/PortMaster/control.txt
+cp /storage/.config/PortMaster/mapper.txt /storage/roms/ports/PortMaster/mapper.txt
 cp /storage/.config/PortMaster/gamecontrollerdb.txt /storage/roms/ports/PortMaster/gamecontrollerdb.txt
 cp /usr/bin/oga_controls* /storage/roms/ports/PortMaster/
 

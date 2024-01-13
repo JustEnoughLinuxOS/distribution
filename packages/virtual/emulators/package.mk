@@ -1194,6 +1194,11 @@ makeinstall_target() {
   add_es_system x68000
 
   ### PC Ports
+  case ${TARGET_ARCH} in
+    arm|aarch64)
+      add_emu_core ports portmaster portmaster true
+    ;;
+  esac
   add_es_system ports
 
   ### Doom
