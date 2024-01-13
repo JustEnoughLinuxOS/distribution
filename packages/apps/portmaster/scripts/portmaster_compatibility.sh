@@ -21,6 +21,7 @@ case "${QUIRK_DEVICE}" in
     rm -rf /storage/roms/ports/*/lib*/libEGL*
     rm -rf /storage/roms/ports/*/lib*/libGL*
     for port in /storage/roms/ports/*.sh; do
+      if  grep -q SDL_VIDEO_GL_DRIVER "$port"; then
         sed -i '/^export SDL_VIDEO_GL_DRIVER/c\#export SDL_VIDEO_GL_DRIVER"' "$port"
         sed -i '/^export SDL_VIDEO_EGL_DRIVER/c\#export SDL_VIDEO_EGL_DRIVER' "$port"
         echo Fixing: "$port";
