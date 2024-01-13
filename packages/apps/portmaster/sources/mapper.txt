@@ -4,16 +4,16 @@
 
 # -- Config & Setup --
 # Destination file
-if [[ -z "$1" ]]; then
-  echo "Usage: mapper.txt [gamecontrollerdb.txt]"
+if [[ -z "$1" ]] && [[ -z "$2" ]]; then
+  echo "Usage: mapper.txt [gamecontrollerdb.txt] [controlfolder]"
   exit -1
 fi
 
 CONTROLLER_DB="$1"
+controlfolder="$2"
 
 #Scrub the CONTROLLER_DB file
-rm ${CONTROLLER_DB}
-touch ${CONTROLLER_DB}
+echo "" > ${CONTROLLER_DB}
 
 # Where the emulationstation configuration file is
 ES_CONFIG="${HOME}/.config/emulationstation/es_input.cfg"
@@ -28,17 +28,19 @@ if [ ! -n "${CONTROLLER_LAYOUT}" ]; then
   CONTROLLER_LAYOUT="nintendo"
 fi
 
-if [[ "${CONTROLLER_LAYOUT}" == "xbox" ]]; then
-  ABUT="b"
-  BBUT="a"
-  XBUT="y"
-  YBUT="x"
-else
-  ABUT="a"
-  BBUT="b"
-  XBUT="x"
-  DBUT="y"
+scriptdir="controller_layout"
+
+if [ ! -d "${controlfolder}/${scriptdir}" ]; then
+    mkdir -p "${controlfolder}/${scriptdir}"
 fi
+
+echo -e "# Xbox Layout\nABUT=\"b\"\nBBUT=\"a\"\nXBUT=\"y\"\nYBUT=\"x\"" >  "${controlfolder}/${scriptdir}/xbox_layout.txt"
+echo -e "# Nintendo Layout\nABUT=\"a\"\nBBUT=\"b\"\nXBUT=\"x\"\nYBUT=\"y\"" >  "${controlfolder}/${scriptdir}/nintendo_layout.txt"
+if [[ ! -e "${controlfolder}/${scriptdir}/custom_layout.txt" ]]; then
+  echo -e "# Custom Layout\nABUT=\"a\"\nBBUT=\"b\"\nXBUT=\"x\"\nYBUT=\"y\"" >  "${controlfolder}/${scriptdir}/custom_layout.txt"
+fi
+
+source "${controlfolder}/${scriptdir}/${CONTROLLER_LAYOUT}_layout.txt"
 
 # -- Helper function --
 # Map the actual button/hat/axis
@@ -117,7 +119,7 @@ function get_map_prefix {
 
 # query controllers mapped in emulationstation, ignore devices without a GUID
 ES_QUERY="$(xmlstarlet sel -T -t -m "inputList/inputConfig[@deviceGUID!='']" -n -v "concat(@deviceName,';',@deviceGUID)" $ES_CONFIG)"
-printf "### ${CONTROLLER_LAYOUT} layout\n" >> "${CONTROLLER_DB}"
+printf "# ${CONTROLLER_LAYOUT} layout\n" >> "${CONTROLLER_DB}"
 
 echo "## ES Dev Mapper ##"
 while IFS=";" read -r NAME GUID; do
