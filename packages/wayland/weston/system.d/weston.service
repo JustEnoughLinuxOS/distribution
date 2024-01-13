@@ -10,7 +10,7 @@ Environment=LANG=C
 Environment=XDG_RUNTIME_DIR=/var/run/0-runtime-dir
 WorkingDirectory=/storage
 ExecStartPre=-/usr/lib/weston/weston-config
-ExecStart=/usr/bin/weston --log=/var/log/weston.log
+ExecStart=/usr/bin/weston --flight-rec-scopes= --log=/var/log/weston.log
 Restart=always
 RestartSec=2
 

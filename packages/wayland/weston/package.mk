@@ -42,7 +42,7 @@ PKG_MESON_OPTS_TARGET+=" -Dbackend-drm=true \
                          -Dlauncher-libseat=true \
                          -Dimage-jpeg=true \
                          -Dimage-webp=true \
-                         -Dtools=['terminal']
+                         -Dtools=['terminal','debug','info']
                          -Ddemo-clients=true \
                          -Dsimple-clients=[] \
                          -Dresize-pool=false \
