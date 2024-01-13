@@ -1,4 +1,4 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
-export PAN_MESA_DEBUG=forcepack,gofaster
+export PAN_MESA_DEBUG=gofaster
