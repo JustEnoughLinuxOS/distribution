@@ -1269,7 +1269,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go3.dts linux/a
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-powkiddy-rgb10.dts linux/arch/arm64/boot/dts/rockchip/rk3326-powkiddy-rgb10.dts
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-powkiddy-rgb10.dts	1970-01-01 00:00:00.000000000 +0000
 +++ linux/arch/arm64/boot/dts/rockchip/rk3326-powkiddy-rgb10.dts	2024-01-10 20:02:43.061559086 +0000
-@@ -0,0 +1,299 @@
+@@ -0,0 +1,280 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2019 Hardkernel Co., Ltd
@@ -1286,25 +1286,6 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-powkiddy-rgb10.dts lin
 +
 +	aliases {
 +		mmc1 = &sdio;
-+	};
-+
-+	gpio_keys: volume-keys {
-+		compatible = "gpio-keys-polled";
-+		poll-interval = <5>;
-+		autorepeat;
-+
-+		volume-up-button {
-+			label = "VOLUME-UP";
-+			linux,code = <KEY_VOLUMEUP>;
-+			gpios = <&gpio2 RK_PA4 GPIO_ACTIVE_LOW>;
-+
-+		};
-+		volume-down-button {
-+			label = "VOLUME-DOWN";
-+			linux,code = <KEY_VOLUMEDOWN>;
-+			gpios = <&gpio2 RK_PA1 GPIO_ACTIVE_LOW>;
-+
-+		};
 +	};
 +
 +	joypad: odroidgo2-joypad {
@@ -1375,7 +1356,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-powkiddy-rgb10.dts lin
 +		| sw15                                      sw16 |
 +		|        sw20                         sw21       |
 +		|------------------------------------------------|
-+		|    sw1  vol- |-------------------| vol+ sw8    |
++		|    sw1  sw10 |-------------------| sw13 sw8    |
 +		|  sw3   sw4   |                   |   sw7   sw5 |
 +		|     sw2      |    LCD Display    |      sw6    |
 +		|              |                   |             |
@@ -1432,12 +1413,12 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-powkiddy-rgb10.dts lin
 +                        linux,code = <BTN_TRIGGER_HAPPY1>; // 0x2c0
 +                };
 +                sw10 {
-+                        gpios = <&gpio3 RK_PB2 GPIO_ACTIVE_LOW>;
++                        gpios = <&gpio2 RK_PA1 GPIO_ACTIVE_LOW>;
 +                        label = "GPIO F2";
 +                        linux,code = <BTN_TRIGGER_HAPPY2>; // 0x2c1
 +                };
 +                sw13 {
-+                        gpios = <&gpio3 RK_PB7 GPIO_ACTIVE_LOW>;
++                        gpios = <&gpio2 RK_PA4 GPIO_ACTIVE_LOW>;
 +                        label = "GPIO F5";
 +                        linux,code = <BTN_TRIGGER_HAPPY5>; // 0x2c4
 +                };

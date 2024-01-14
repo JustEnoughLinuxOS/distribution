@@ -361,8 +361,13 @@ function configure_hotkeys() {
                 clear_setting "${HKEYSETTING}"
             done
             flush_settings
+            if [ -z ${input_enable_hotkey_btn+x} ]
+            then
+                echo 'input_enable_hotkey_btn = '\"${input_select_btn}\" >>${RETROARCH_CONFIG}
+            else
+                echo 'input_enable_hotkey_btn = '\"${input_enable_hotkey_btn}\" >>${RETROARCH_CONFIG}
+            fi
             cat <<EOF >>${RETROARCH_CONFIG}
-input_enable_hotkey_btn = "${input_select_btn}"
 input_bind_hold = "${input_select_btn}"
 input_exit_emulator_btn = "${input_start_btn}"
 input_fps_toggle_btn = "${input_y_btn}"
