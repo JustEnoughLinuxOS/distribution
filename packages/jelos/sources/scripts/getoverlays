@@ -8,4 +8,5 @@
 find /storage/overlays/ -name '*.cfg' -print0 |
   while IFS= read -r -d '' line; do
   echo ${line#/storage/overlays/},
-done
+done | sort
+
