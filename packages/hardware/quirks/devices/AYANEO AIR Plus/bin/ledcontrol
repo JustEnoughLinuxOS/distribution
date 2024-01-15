@@ -361,6 +361,18 @@ case ${1} in
     set_setting led.brightness ${2}
     ledcontrol $(get_setting led.color)
   ;;
+  list)
+    cat <<EOF
+default
+off
+red
+green
+blue
+teal
+purple
+white
+EOF
+  ;;
   *)
     COLOR=$(get_setting led.color)
     if [ ! -z "${COLOR}" ]

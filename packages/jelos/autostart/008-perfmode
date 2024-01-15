@@ -20,10 +20,17 @@ else
 fi
 
 ### If we don't have a default governor set, set it
-### to schedutil but don't enable it.
+### to schedutil if the device supports it, otherwise
+### set to performance, but don't enable it.
 if [ -z "$(get_setting system.cpugovernor)" ]
 then
-  set_setting system.cpugovernor schedutil
+  GOVTEST="$(awk '/schedutil/ {print $1}' /sys/devices/system/cpu/cpufreq/policy0/scaling_available_governors)"
+  if [ -n "${GOVTEST}" ]
+  then
+    set_setting system.cpugovernor schedutil
+  else
+    set_setting system.cpugovernor performance
+  fi
 fi
 
 ### Set the default GPU performance mode
