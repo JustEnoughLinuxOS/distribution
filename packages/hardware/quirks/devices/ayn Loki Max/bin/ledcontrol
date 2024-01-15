@@ -144,12 +144,12 @@ case $1 in
   ;;
   white)
     off
-    COLOR=$(intensity 0x80 ${LEDBRIGHTNESS})
+    COLOR=$(intensity 0xFF ${LEDBRIGHTNESS})
     ec_set ${RGB_RED} ${COLOR}
     ec_set ${RGB_GREEN} ${COLOR}
     ec_set ${RGB_BLUE} ${COLOR}
     ec_save
-    set_setting led.color purple
+    set_setting led.color white
   ;;
   off)
     off
@@ -162,6 +162,18 @@ case $1 in
   brightness)
     set_setting led.brightness ${2}
     ledcontrol $(get_setting led.color)
+  ;;
+  list)
+    cat <<EOF
+default
+off
+red
+green
+blue
+teal
+purple
+white
+EOF
   ;;
   *)
     COLOR=$(get_setting led.color)
