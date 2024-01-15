@@ -76,7 +76,6 @@ function brightness() {
   debug_out "Set brightness ${1}"
   ${ECTOOL} -w 0xb2 -z 0x${1}  >/dev/null 2>&1
   mode 0x10
-  close_channel
 }
 
 function color() {
