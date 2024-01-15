@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
-for mod in usb_f_ecm ; do
+for mod in usb_f_ecm usb_f_fs; do
 	modprobe -q ${mod}
 done
 
@@ -40,21 +40,34 @@ usb_start() {
 		gadget/strings/0x409 \
 		gadget/configs/c.1 \
 		gadget/configs/c.1/strings/0x409 \
+		gadget/functions/ffs.mtp \
 		gadget/functions/ecm.usb0
         
 	echo $VENDOR > gadget/strings/0x409/manufacturer
 	echo $MACHINE > gadget/strings/0x409/product
+	
+	if [ "${USB_MODE}" = mtp ] ; then
+		echo 0x1d6b > gadget/idVendor 
+		echo 0x0100 > gadget/idProduct
+		echo mtp > gadget/configs/c.1/strings/0x409/configuration
+		ln -s gadget/functions/ffs.mtp gadget/configs/c.1
+		mkdir /dev/ffs-umtp
+		mount mtp -t functionfs /dev/ffs-umtp
+		/usr/sbin/umtprd &
+		sleep 1
 
-	if [ "${USB_MODE}" = cdc ] ; then
+	elif [ "${USB_MODE}" = cdc ] ; then
 		echo cdc > gadget/configs/c.1/strings/0x409/configuration
 		echo 0x1d6b > gadget/idVendor	
 		echo 0x104 > gadget/idProduct
 		ln -s gadget/functions/ecm.usb0 gadget/configs/c.1
-		echo "${UDC_NAME}" > /sys/kernel/config/usb_gadget/gadget/UDC
 		ifconfig usb0 $IP up
 		/usr/sbin/udhcpd -S /storage/.cache/usbgadget/udhcpd.conf
+	else
+		exit 0
 	fi
 
+	echo "${UDC_NAME}" > /sys/kernel/config/usb_gadget/gadget/UDC
 	echo "USB_MODE=$(cat gadget/configs/c.1/strings/0x409/configuration)" > /storage/.cache/usbgadget/usbgadget.conf
 }
 
@@ -63,16 +76,21 @@ usb_stop() {
 		cd /sys/kernel/config/usb_gadget
 
 		usb_disable
-
-		rm -f gadget/configs/c.1/ecm.usb0 \
+		umount /dev/ffs-umtp
+		rmdir /dev/ffs-umtp
+		
+		rm -f mtp/configs/c.1/ffs.mtp \
+			gadget/configs/c.1/ecm.usb0 \
 
 		rmdir gadget/configs/c.1/strings/0x409 \
 			gadget/configs/c.1 \
+			gadget/functions/ffs.mtp \
 			gadget/functions/ecm.usb0 \
 			gadget/strings/0x409 \
 			gadget
 
 		killall udhcpd
+		killall umtprd
 	) >/dev/null 2>&1
 }
 

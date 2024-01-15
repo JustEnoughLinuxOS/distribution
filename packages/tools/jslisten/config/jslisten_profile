@@ -13,6 +13,34 @@ else
   source /usr/config/jslisten_hotkeys
 fi
 
+if [ -e "/storage/.config/profile.d/100-jslisten-hotkey" ]
+then
+  source /storage/.config/profile.d/100-jslisten-hotkey
+fi
+
+# "Global" key-combos loaded for every application
+read -d '\n' GLOBAL << EOF
+[IncrVol]
+program="/usr/bin/volume up"
+button1="${BTN_VOLBRIGHT_HOTKEY}"
+button2="${DEVICE_BTN_DPAD_RIGHT}"
+
+[DecrVol]
+program="/usr/bin/volume down"
+button1="${BTN_VOLBRIGHT_HOTKEY}"
+button2="${DEVICE_BTN_DPAD_LEFT}"
+
+[IncrBright]
+program="/usr/bin/brightness up"
+button1="${BTN_VOLBRIGHT_HOTKEY}"
+button2="${DEVICE_BTN_DPAD_UP}"
+
+[DecrBright]
+program="/usr/bin/brightness down"
+button1="${BTN_VOLBRIGHT_HOTKEY}"
+button2="${DEVICE_BTN_DPAD_DOWN}"
+EOF
+
 jslisten() {
         JSLISTENCONF="/storage/.config/system/configs/jslisten.cfg"
         if [ "$1" == "set" ]
@@ -71,6 +99,7 @@ button1=${BTN_KILL_HOTKEY}
 button2=${BTN_KILL_SELECTA}
 button3=${BTN_KILL_SELECTB}
 
+$(echo "$GLOBAL")
 EOF
                 systemctl start jslisten
         elif [ "$1" == "stop" ]

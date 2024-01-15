@@ -674,6 +674,20 @@ update_bootmenu() {
       fi
     fi
   fi
+
+  if [ -n "${GRUB_DEFAULT}" -a -f /flash/EFI/BOOT/grub.cfg ]; then
+    if grep -q "^menuentry \"${GRUB_DEFAULT}\"" /flash/EFI/BOOT/grub.cfg 2>/dev/null; then
+      crnt_default="$(awk '/^set default/ {print substr($2,9,19)}' /flash/EFI/BOOT/grub.cfg)"
+      if [ ! "$crnt_default" = "\"${GRUB_DEFAULT}\"" ]; then
+        progress "Updating /flash/EFI/BOOT/grub.cfg [$crnt_default -> \"${GRUB_DEFAULT}\"]"
+
+        mount -o remount,rw /flash
+        sed -e "s/^set default=.*/set default=\"${GRUB_DEFAULT}\"/" -i /flash/EFI/BOOT/grub.cfg
+        rm -f /flash/grub.cfg
+        mount -o remount,ro /flash
+      fi
+    fi
+  fi
 }
 
 check_out_of_space() {

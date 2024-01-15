@@ -156,7 +156,7 @@ fi
         fi
 
 #Set OpenGL 3.3 on panfrost
-  export PAN_MESA_DEBUG=gl3,gofaster
+  export PAN_MESA_DEBUG=${PAN_MESA_DEBUG},gl3
 
 #Set QT enviornment to wayland
   export QT_QPA_PLATFORM=wayland
