@@ -1,7 +1,8 @@
 [Unit]
 Description=Setup User config dir
 DefaultDependencies=no
-After=systemd-tmpfiles-setup.service jelos-automount.service
+After=systemd-tmpfiles-setup.service
+Before=jelos-automount.service autostart.service
 
 [Service]
 Type=oneshot

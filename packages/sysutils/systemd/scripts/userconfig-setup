@@ -10,16 +10,16 @@ if [ ! -e "/storage/.configured" ]
 then
   tocon "Initializing configuration..."
   # Copy config files
-  rsync -a --exclude={es_features.cfg,es_systems.cfg} /usr/config/* /storage/.config/ >/var/log/configure.log 2>&1
+  rsync -a --ignore-existing --exclude={es_features.cfg,es_systems.cfg} /usr/config/* /storage/.config/ >/var/log/configure.log 2>&1
 
   if [ -d "/usr/lib/autostart/quirks/platforms/${HW_DEVICE}/config" ]
   then
-    rsync -a --exclude={es_features.cfg,es_systems.cfg} /usr/lib/autostart/quirks/platforms/"${HW_DEVICE}"/config/* /storage/.config/ >>/var/log/configure.log 2>&1
+    rsync -a /usr/lib/autostart/quirks/platforms/"${HW_DEVICE}"/config/* /storage/.config/ >>/var/log/configure.log 2>&1
   fi
 
   if [ -d "/usr/lib/autostart/quirks/devices/${QUIRK_DEVICE}/config" ]
   then
-    rsync -a --exclude={es_features.cfg,es_systems.cfg} /usr/lib/autostart/quirks/devices/"${QUIRK_DEVICE}"/config/* /storage/.config/ >>/var/log/configure.log 2>&1
+    rsync -a /usr/lib/autostart/quirks/devices/"${QUIRK_DEVICE}"/config/* /storage/.config/ >>/var/log/configure.log 2>&1
   fi
 
   if [ -e "/usr/bin/emulationstation" ]
@@ -39,11 +39,11 @@ then
     do
       ln -s /usr/config/emulationstation/${es_cfg} /storage/.config/emulationstation/${es_cfg}  >/dev/null 2>&1
     done
-
   fi
 
   mkdir -p /storage/.config/modprobe.d  >/dev/null 2>&1
   touch /storage/.configured  >/dev/null 2>&1
+  sync
 fi
 
 if [ ! -e "/storage/.cache/ld.so.cache" ]
