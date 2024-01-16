@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0
-# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
+# Copyright (C) 2024 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="weston-kiosk-shell-dpms"
 PKG_VERSION="dccd7db3905464bb0c00b65ee554b0fd2e3ba7b6"
