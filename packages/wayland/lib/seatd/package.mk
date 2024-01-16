@@ -5,7 +5,7 @@ PKG_NAME="seatd"
 PKG_VERSION="0.8.0"
 PKG_LICENSE="MIT"
 PKG_SITE="https://git.sr.ht/~kennylevinsen/seatd"
-PKG_URL="https://git.sr.ht/~kennylevinsen/seatd/archive/${PKG_VERSION}.tar.gz"
+PKG_URL="https://github.com/kennylevinsen/seatd/archive/refs/tags/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain systemd"
 PKG_LONGDESC="A minimal seat management daemon, and a universal seat management library."
 

@@ -9,7 +9,7 @@ This document describes all available systems emulators and cores available for 
 |&#xf013; System|Media Player (mplayer)|System|`mplayer`|.mp4 .mkv .avi .mov .wmv .m3u .mpg .ytb .twi .sh .mp3 .aac .mka .dts .flac .ogg .m4a .ac3 .opus .wav .wv .eac33 .thd|**mplayer:** mplayer (default)<br>|
 |&#xf013; System|Moonlight Game Streaming (moonlight)|System|`moonlight`|.sh||
 |&#xf013; System|Music Player (music)|System|`playlists`|.m3u .sh|**gmu:** gmu (default)<br>|
-|&#xf013; System|Ports (ports)|System|`ports`|.sh||
+|&#xf013; System|Ports (ports)|System|`ports`|.sh|**portmaster:** portmaster (default)<br>|
 |&#xf013; System|Screenshots (imageviewer)|System|`screenshots`|.jpg .jpeg .png .bmp .psd .tga .gif .hdr .pic .ppm .pgm .mkv .pdf .mp4 .avi||
 |&#xf013; System|Tools (tools)|System|`modules`|.sh||
 |Amstrad|Amstrad CPC (amstradcpc)|1984|`amstradcpc`|.dsk .cpr .sna .tap .cdt .kcr .voc .m3u .zip .7z|**retroarch:** crocods (default)<br>**retroarch:** cap32<br>|

@@ -137,3 +137,9 @@ then
 fi
 
 systemctl restart jelos-automount
+
+### 20240111 - Add new jslisten hotkey
+if [ -e "/storage/.config/jslisten_hotkeys" ]
+then
+   grep BTN_VOLBRIGHT_HOTKEY /storage/.config/jslisten_hotkeys || echo -e "\nBTN_VOLBRIGHT_HOTKEY=999" >>/storage/.config/jslisten_hotkeys
+fi

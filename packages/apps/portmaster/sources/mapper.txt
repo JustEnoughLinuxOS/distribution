@@ -1,20 +1,46 @@
 #!/bin/bash
 
+. /etc/profile
+
 # -- Config & Setup --
 # Destination file
-if [[ -z "$1" ]]; then
-  echo "Usage: mapper.txt [gamecontrollerdb.txt]"
+if [[ -z "$1" ]] && [[ -z "$2" ]]; then
+  echo "Usage: mapper.txt [gamecontrollerdb.txt] [controlfolder]"
   exit -1
 fi
 
 CONTROLLER_DB="$1"
-if [[ ! -f "${CONTROLLER_DB}" ]]; then
-  echo "File ${CONTROLLER_DB} does not exist."
-  exit -1
-fi
+controlfolder="$2"
+
+#Scrub the CONTROLLER_DB file
+echo "" > ${CONTROLLER_DB}
 
 # Where the emulationstation configuration file is
 ES_CONFIG="${HOME}/.config/emulationstation/es_input.cfg"
+
+#Set layout via Emulation Station
+ACTIVE_GAME=""
+GAME="${ACTIVE_GAME##*/}"
+CONTROLLER_LAYOUT=$(get_setting port_controller_layout ports "${GAME}")
+
+#Default to nintendo if no value assigned
+if [ ! -n "${CONTROLLER_LAYOUT}" ]; then
+  CONTROLLER_LAYOUT="nintendo"
+fi
+
+scriptdir="controller_layout"
+
+if [ ! -d "${controlfolder}/${scriptdir}" ]; then
+    mkdir -p "${controlfolder}/${scriptdir}"
+fi
+
+echo -e "# Xbox Layout\nABUT=\"b\"\nBBUT=\"a\"\nXBUT=\"y\"\nYBUT=\"x\"" >  "${controlfolder}/${scriptdir}/xbox_layout.txt"
+echo -e "# Nintendo Layout\nABUT=\"a\"\nBBUT=\"b\"\nXBUT=\"x\"\nYBUT=\"y\"" >  "${controlfolder}/${scriptdir}/nintendo_layout.txt"
+if [[ ! -e "${controlfolder}/${scriptdir}/custom_layout.txt" ]]; then
+  echo -e "# Custom Layout\nABUT=\"a\"\nBBUT=\"b\"\nXBUT=\"x\"\nYBUT=\"y\"" >  "${controlfolder}/${scriptdir}/custom_layout.txt"
+fi
+
+source "${controlfolder}/${scriptdir}/${CONTROLLER_LAYOUT}_layout.txt"
 
 # -- Helper function --
 # Map the actual button/hat/axis
@@ -26,10 +52,10 @@ function map {
 
   map_x_result=""
   case "${INPUT_NAME}" in
-    "a")                TR_NAME="a";;
-    "b")                TR_NAME="b";;
-    "x")                TR_NAME="x";;
-    "y")                TR_NAME="y";;
+    "a")                TR_NAME="${ABUT}";;
+    "b")                TR_NAME="${BBUT}";;
+    "x")                TR_NAME="${XBUT}";;
+    "y")                TR_NAME="${YBUT}";;
     "hotkeyenable")     TR_NAME="guide";;
     "up")               TR_NAME="dpup";;
     "down")             TR_NAME="dpdown";;
@@ -93,7 +119,7 @@ function get_map_prefix {
 
 # query controllers mapped in emulationstation, ignore devices without a GUID
 ES_QUERY="$(xmlstarlet sel -T -t -m "inputList/inputConfig[@deviceGUID!='']" -n -v "concat(@deviceName,';',@deviceGUID)" $ES_CONFIG)"
-printf "\n# Custom Entries\n" >> "${CONTROLLER_DB}"
+printf "# ${CONTROLLER_LAYOUT} layout\n" >> "${CONTROLLER_DB}"
 
 echo "## ES Dev Mapper ##"
 while IFS=";" read -r NAME GUID; do
@@ -103,8 +129,6 @@ while IFS=";" read -r NAME GUID; do
     continue
   fi
 
-  # Check if GUID exists in gamecontrollerdb.txt
-  if [ -z "$(fgrep -- ${GUID} "${CONTROLLER_DB}")" ]; then
     # Query this specific GUID on the mappings
     MAPPING_CFG=$(xmlstarlet sel -T -t -m "//inputConfig[@deviceGUID = '${GUID}']/input" -n -v "concat(@name,';',@type,';',@id,';',@value)" $ES_CONFIG)
 
@@ -112,24 +136,21 @@ while IFS=";" read -r NAME GUID; do
     while IFS=";" read -r -e INPUT_NAME TYPE ID VALUE; do
       # Map the controller
       map "${INPUT_NAME}" "${TYPE}" "${ID}" "${VALUE}"
-      
+
       # Only concatenate valid mappings
       if [[ ! -z ${map_x_result} ]]; then
         MAPPING="${MAPPING}${map_x_result}"
       fi
     done <<< ${MAPPING_CFG:1}
-    
+
     get_map_prefix
     get_map_suffix
     if [[ ! -z "${MAPPING}" ]]; then
       echo "${map_prefix}${MAPPING}${map_suffix}" >> "${CONTROLLER_DB}"
-      echo "${map_prefix}${MAPPING}${map_suffix}"
-      echo ""
     else
       echo "Failed to map anything."
-      echo ""
     fi
-  else
-    echo "Already mapped..."
-  fi
 done <<< ${ES_QUERY:1}
+
+#Reset file for next run
+sed -i '/^ACTIVE_GAME=/c\ACTIVE_GAME=""' /storage/.config/PortMaster/mapper.txt

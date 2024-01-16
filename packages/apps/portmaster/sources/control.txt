@@ -75,23 +75,17 @@ get_controls() {
 
     param_device="${profile}"
 
+    # Extract GUID of current input
     GUID=$(control-gen | awk 'BEGIN {FS="\""} /^DEVICE/ {print $2;exit}')
 
     # Set file
     export SDL_GAMECONTROLLERCONFIG_FILE="/tmp/gamecontrollerdb.txt"
 
-    # Spit the controller of the device our heuristics found (if it did).
-    if [[ ! -z ${GUID} ]]; then
-      grep "${SDLDBUSERFILE}" -e "${GUID}" > /tmp/gamecontrollerdb.txt
-    else
-      echo "" > /tmp/gamecontrollerdb.txt
-    fi
+    # Now find any controller mapped on emulationstation...
+    /storage/.config/PortMaster/mapper.txt ${SDL_GAMECONTROLLERCONFIG_FILE} ${controlfolder}
 
     # Set compatability libs and run compatability script
     export LD_LIBRARY_PATH=${clibs}
-
-    # Now find any controller mapped on emulationstation...
-    /storage/.config/PortMaster/mapper.txt SDL_GAMECONTROLLERCONFIG_FILE > /dev/null 2>&1
 
     # Some ports want SDL_GAMECONTROLLERCONFIG, so let's fill it in
     sdl_controllerconfig="$(< "${SDL_GAMECONTROLLERCONFIG_FILE}")"

@@ -275,20 +275,16 @@ case ${EMULATOR} in
         RUNTHIS='${RUN_SHELL} "${ROMNAME}"'
       ;;
       "gamecube")
-        if [ "${CORE}" = "dolphin-sa-gc" ]; then
-         RUNTHIS='${RUN_SHELL} /usr/bin/start_dolphin_gc.sh "${ROMNAME}"'
-        elif [ "${CORE}" = "primehack" ]; then
-          RUNTHIS='${RUN_SHELL} /usr/bin/start_${CORE%-*}.sh "${ROMNAME}"'
-        fi
+        RUNTHIS='${RUN_SHELL} /usr/bin/start_dolphin_gc.sh "${ROMNAME}"'
       ;;
       "wii")
-        if [ "${CORE}" = "dolphin-sa-wii" ]; then
-          RUNTHIS='${RUN_SHELL} /usr/bin/start_dolphin_wii.sh "${ROMNAME}"'
-        elif [ "${CORE}" = "primehack" ]; then
-          RUNTHIS='${RUN_SHELL} /usr/bin/start_${CORE%-*}.sh "${ROMNAME}"'
-        fi
+        RUNTHIS='${RUN_SHELL} /usr/bin/start_dolphin_wii.sh "${ROMNAME}"'
       ;;
-      "shell"|"ports")
+      "ports")
+        RUNTHIS='${RUN_SHELL} "${ROMNAME}"'
+	sed -i "/^ACTIVE_GAME=/c\ACTIVE_GAME=\"${ROMNAME}\"" /storage/.config/PortMaster/mapper.txt
+      ;;
+      "shell")
         RUNTHIS='${RUN_SHELL} "${ROMNAME}"'
       ;;
       *)
