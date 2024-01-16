@@ -108,6 +108,16 @@ function sort_settings() {
 }
 
 function set_setting() {
+
+  if [ ! -d "/storage/.config/system/configs" ]
+  then
+    mkdir -p /storage/.config/system/configs
+  fi
+  if [ ! -e "/storage/.config/system/configs/system.cfg" ]
+  then
+    cp -f /usr/config/system/configs/system.cfg /storage/.config/system/configs/system.cfg
+  fi
+
   if [[ "${1}" =~ ^[[:alnum:]] ]]
   then
     del_setting "${1}"
