@@ -282,10 +282,9 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351v.dts li
 +                };
 +        };
 +};
-diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts
---- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	2024-01-17 04:00:24.264874140 +0000
-@@ -0,0 +1,837 @@
+--- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	1969-12-31 19:00:00.000000000 -0500
++++ linux/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	2024-01-17 10:47:39.797402000 -0500
+@@ -0,0 +1,830 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2019 Hardkernel Co., Ltd
@@ -303,7 +302,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +/ {
 +    model = "MagicX XU10";
 +    compatible = "magicx,xu10", "rockchip,rk3326";
-+
++     
 +    chosen {
 +        bootargs = "earlycon=uart8250,mmio32,0xff160000 swiotlb=1 console=ttyFIQ0 rw root=PARTUUID=614e0000-0000 rootwait";
 +    };
@@ -364,114 +363,108 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +    joypad: xu10-joypad {
 +        compatible = "xu10-joypad";
 +        status = "okay";
-+           /*
-+                  - xu10-joypad sysfs list -
++        /*
++        - xu10-joypad sysfs list -
 +        * for poll device interval(ms)
 +            /sys/devices/platform/odroidgo3_joypad/poll_interval [rw]
-+                ex) echo 20 > poll_interval
-+                   * for button-adc-fuzz
++            ex) echo 20 > poll_interval
++        * for button-adc-fuzz
 +            /sys/devices/platform/odroidgo3_joypad/adc_fuzz [r]
-+                   * for button-adc-flat
++        * for button-adc-flat
 +            /sys/devices/platform/odroidgo3_joypad/adc_flat [r]
 +
 +        * for report control(1:enable, 0:disable)
 +            /sys/devices/platform/odroidgo3_joypad/enable [rw]
 +        * for adc calibration value setup(current adcs value -> cal value)
 +            /sys/devices/platform/odroidgo3_joypad/adc_cal [rw]
-+                   ex) echo 0 > adc_cal
++            ex) echo 0 > adc_cal
 +        * for amux data debug
 +        * Joypad driver is disabled when using this sysfs.
 +            /sys/devices/platform/odroidgo3_joypad/amux_debug [rw]
-+                   ex) echo 0 > amux_debug --> select amux channel
-+                   ex) cat amux_debug --> get adc data of seleted channel
-+            */
++            ex) echo 0 > amux_debug --> select amux channel
++            ex) cat amux_debug --> get adc data of seleted channel
++        */
 +
 +        /* gpio pincontrol setup */
-+                pinctrl-names = "default";
-+                pinctrl-0 = <&btn_pins>;
++        pinctrl-names = "default";
++        pinctrl-0 = <&btn_pins>;
 +
 +        /* Analog mux define */
-+                io-channel-names = "joy_left", "joy_right";
-+                io-channels = <&saradc 1>, <&saradc 2>;
++        io-channel-names = "joy_left", "joy_right";
++        io-channels = <&saradc 1>, <&saradc 2>;
 +
 +        /* adc mux channel count */
-+                amux-count = <4>;
++        amux-count = <4>;
++
 +        /* adc mux select(a,b) gpio */
-+                amux-a-gpios = <&gpio2 RK_PB3 GPIO_ACTIVE_LOW>;
-+                amux-b-gpios = <&gpio2 RK_PB5 GPIO_ACTIVE_LOW>;
++        amux-a-gpios = <&gpio2 RK_PB3 GPIO_ACTIVE_LOW>;
++        amux-b-gpios = <&gpio2 RK_PB5 GPIO_ACTIVE_LOW>;
++
 +        /* adc mux enable gpio */
-+                amux-en-gpios = <&gpio1 RK_PB0 GPIO_ACTIVE_LOW>;
++        amux-en-gpios = <&gpio1 RK_PB0 GPIO_ACTIVE_LOW>;
 +
 +        /* adc calculate scale */
-+                button-adc-scale = <2>;
++        button-adc-scale = <2>;
 +
 +        /* adc deadzone range  */
-+                button-adc-deadzone = <180>;
++        button-adc-deadzone = <180>;
 +
 +        /*
 +          specifies fuzz value that is used to filter noise from
 +          the event stream.
 +        */
-+                button-adc-fuzz = <32>;
-+                button-adc-flat = <32>;
-+                button-x-default-cal = <1822>;
-+                button-y-default-cal = <1800>;
-+                button-z-default-cal = <1822>;
-+                button-rz-default-cal = <1800>;
++        button-adc-fuzz = <32>;
++        button-adc-flat = <32>;
 +
 +        /*
 +          Analog Stick data tuning value(precent)
 +          p = positive direction, n = negative direction
 +          report value = (real_adc_data * tuning_value) / 100
 +        */
-+                abs_x-p-tuning = <200>;
-+                abs_x-n-tuning = <200>;
++        abs_x-p-tuning = <200>;
++        abs_x-n-tuning = <200>;
 +
-+                abs_y-p-tuning = <200>;
-+                abs_y-n-tuning = <200>;
++        abs_y-p-tuning = <200>;
++        abs_y-n-tuning = <200>;
 +
-+                abs_rx-p-tuning = <200>;
-+                abs_rx-n-tuning = <200>;
++        abs_rx-p-tuning = <200>;
++        abs_rx-n-tuning = <200>;
 +
-+                abs_ry-p-tuning = <200>;
-+                abs_ry-n-tuning = <200>;
++        abs_ry-p-tuning = <200>;
++        abs_ry-n-tuning = <200>;
 +
 +        /* poll device interval (ms), adc read interval */
-+                poll-interval = <10>;
-+                btn-lr-to-absx;
-+                btn-ud-to-absy;
-+                invert-absx;
-+                invert-absy;
-+                invert-absz;
-+                invert-absrz;
++        poll-interval = <10>;
++        btn-lr-to-absx;
++        btn-ud-to-absy;
 +        
 +        /* gpio button auto repeat set value : default disable */
 +        /*
-+                autorepeat;
++        autorepeat;
 +        */
 +
-+    /*
-+      *** MagicX XU10 - layoout ***
-+    |-------------------------------|
-+    | sw14  sw17         sw16  sw15 |
-+    |-----|-------------------|-----|
-+    |     |                   |     |
-+    |vol+ |                   | sw13|
-+    |vol- |                   |     |
-+    |     |    LCD Display    |     |
-+    |     |                   |     |
-+    |     |                   |     |
-+    |     |-------------------|     |
-+    |         sw9     sw10          |
-+    |                               |
-+    |     sw1              sw7      |
-+    |  sw3   sw4        sw8   sw6   |
-+    |     sw2              sw5      |
-+    |                               |
-+    |          sw11   sw12          |
-+    |                               |
-+    |-------|---------------|-------|
-+    */
++        /*
++        *** MagicX XU10 - layoout ***
++        |-------------------------------|
++        | sw14  sw17         sw16  sw15 |
++        |-----|-------------------|-----|
++        |     |                   |     |
++        |vol+ |                   | sw13|
++        |vol- |                   |     |
++        |     |    LCD Display    |     |
++        |     |                   |     |
++        |     |                   |     |
++        |     |-------------------|     |
++        |         sw9     sw10          |
++        |                               |
++        |     sw1              sw7      |
++        |  sw3   sw4        sw8   sw6   |
++        |     sw2              sw5      |
++        |                               |
++        |          sw11   sw12          |
++        |                               |
++        |-------|---------------|-------|
++        */
 +
 +       /*
 +           joypad driver is poll-device driver.
@@ -563,6 +556,26 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +          label = "GPIO BTN-LEFT2";
 +          linux,code = <BTN_TL2>; // 0x138
 +      };
++    };
++
++    battery: battery {
++        compatible = "simple-battery";
++        charge-full-design-microamp-hours = <3000000>;
++        charge-term-current-microamp = <300000>;
++        constant-charge-current-max-microamp = <2000000>;
++        constant-charge-voltage-max-microvolt = <4200000>;
++        factory-internal-resistance-micro-ohms = <134000>;
++        voltage-max-design-microvolt = <4100000>;
++        voltage-min-design-microvolt = <3500000>;
++
++        ocv-capacity-celsius = <20>;
++        ocv-capacity-table-0 =  
++            <4046950 100>, <4001920 95>, <3967900 90>, <3919950 85>,
++            <3888450 80>, <3861850 75>, <3831540 70>, <3799130 65>,
++            <3768190 60>, <3745650 55>, <3726610 50>, <3711630 45>,
++            <3696720 40>, <3685660 35>, <3674950 30>, <3663050 25>,
++            <3649470 20>, <3635260 15>, <3616920 10>, <3592440 5>,
++            <3574170 0>;
 +    };
 +
 +    gpio-keys-vol {
@@ -697,6 +710,9 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +    };
 +
 +    internal_display: panel@0 {
++        compatible = "magicx,xu10-panel", "sitronix,st7703";
++        iovcc-supply = <&vcc_lcd>;
++        vdd-supply = <&vcc_lcd>;
 +        reg = <0>;
 +        backlight = <&backlight>;
 +        reset-gpios = <&gpio3 RK_PC0 GPIO_ACTIVE_LOW>;
@@ -914,27 +930,9 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +
 +    };
 +
-+    battery: battery {
-+                compatible = "simple-battery";
-+                charge-full-design-microamp-hours = <3000000>;
-+                charge-term-current-microamp = <300000>;
-+                constant-charge-current-max-microamp = <2000000>;
-+                constant-charge-voltage-max-microvolt = <4200000>;
-+                factory-internal-resistance-micro-ohms = <134000>;
-+                voltage-max-design-microvolt = <4200000>;
-+                voltage-min-design-microvolt = <3500000>;
-+
-+                ocv-capacity-celsius = <20>;
-+                ocv-capacity-table-0 =  <4046950 100>, <4001920 95>, <3967900 90>, <3919950 85>,
-+                      <3888450 80>, <3861850 75>, <3831540 70>, <3799130 65>,
-+                      <3768190 60>, <3745650 55>, <3726610 50>, <3711630 45>,
-+                      <3696720 40>, <3685660 35>, <3674950 30>, <3663050 25>,
-+                      <3649470 20>, <3635260 15>, <3616920 10>, <3592440 5>,
-+                      <3574170 0>;
-+     };
-+
 +    rk817_charger: charger {
-+         rockchip,resistor-sense-micro-ohms = <0>;
++         monitored-battery = <&battery>;
++         rockchip,resistor-sense-micro-ohms = <10000>;
 +         rockchip,sleep-enter-current-microamp = <300000>;
 +         rockchip,sleep-filter-current-microamp = <100000>;
 +    };
@@ -943,12 +941,6 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +         rockchip,mic-in-differential;
 +    };
 +  };
-+};
-+
-+&internal_display {
-+    compatible = "anbernic,rg351v-panel-v2", "sitronix,st7703";
-+    iovcc-supply = <&vcc_lcd>;
-+    vdd-supply = <&vcc_lcd>;
 +};
 +
 +/* I2S 1 Channel Used Header(P2):1(GPIO2.C3),2(.C2), 3(.C1), 4(.C5), 5(.C4) */
@@ -982,7 +974,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +};
 +
 +&csi_dphy {
-+	status = "okay";
++    status = "okay";
 +};
 +
 +&pwm1 {
