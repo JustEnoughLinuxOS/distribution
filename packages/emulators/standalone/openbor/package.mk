@@ -4,7 +4,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="openbor"
-PKG_VERSION="f0e209333dc784d39e92df16b9959873661bd427"
+PKG_VERSION="e838382583583f6f74115cf230df56170ca10f8b"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/DCurrent/openbor"
 PKG_URL="${PKG_SITE}.git"
