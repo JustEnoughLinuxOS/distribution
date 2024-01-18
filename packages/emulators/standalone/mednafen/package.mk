@@ -26,7 +26,7 @@ case ${DEVICE} in
 			 --disable-ss \
 			 --disable-psx"
   ;;
-  S922X|RK3399|RK3588)
+  S922X|RK3399)
     DISABLED_MODULES+="  --disable-ss"
   ;;
 esac
