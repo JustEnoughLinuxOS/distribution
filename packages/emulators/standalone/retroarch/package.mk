@@ -63,26 +63,29 @@ else
   PKG_CONFIGURE_OPTS_TARGET+=" --disable-wayland"
 fi
 
+if [ "${OPENGLES_SUPPORT}" = "yes" ]; then
+    PKG_DEPENDS_TARGET+=" ${OPENGLES}"
+    PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengles --enable-opengles3"
+        case ${DEVICE} in
+            RK33*|RK3588)
+                PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengles3_1"
+            ;;
+            S922X)
+                PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengles3_1 --enable-opengles3_2"
+            ;;
+            AMD64)
+                PKG_CONFIGURE_OPTS_TARGET+=" --disable-opengles --disable-opengles3 --disable-opengles3_1 --disable-opengles3_2"
+            ;;
+        esac
+else
+    PKG_CONFIGURE_OPTS_TARGET+=" --disable-opengles --disable-opengles3 --disable-opengles3_1 --disable-opengles3_2"
+fi
+
 if [[ "${OPENGL_SUPPORT}" = "yes" ]] && [[ ! "${DEVICE}" = "S922X" ]]; then
     PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
     PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengl"
 else
     PKG_CONFIGURE_OPTS_TARGET+=" --disable-opengl"
-fi
-
-if [ "${OPENGLES_SUPPORT}" = "yes" ]; then
-    PKG_DEPENDS_TARGET+=" ${OPENGLES}"
-	PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengles --enable-opengles3"
-	case ${DEVICE} in
-	  RK33*|RK3588)
-	    PKG_CONFIGURE_OPTS_TARGET+=" --enable-opengles3_1"
-          ;;
-	  AMD64|S922X)
-            PKG_CONFIGURE_OPTS_TARGET+="  --enable-opengles3_1 --enable-opengles3_2"
-	  ;;
-	esac
-else
-    PKG_CONFIGURE_OPTS_TARGET+=" --disable-opengles --disable-opengles3 --disable-opengles3_1 --disable-opengles3_2"
 fi
 
 if [ "${VULKAN_SUPPORT}" = "yes" ]
