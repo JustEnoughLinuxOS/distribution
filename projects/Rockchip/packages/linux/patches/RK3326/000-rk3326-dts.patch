@@ -283,8 +283,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351v.dts li
 +        };
 +};
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	1969-12-31 19:00:00.000000000 -0500
-+++ linux/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	2024-01-17 10:47:39.797402000 -0500
-@@ -0,0 +1,830 @@
++++ linux/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	2024-01-18 16:30:20.464866143 -0500
+@@ -0,0 +1,848 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2019 Hardkernel Co., Ltd
@@ -362,6 +362,11 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351v.dts li
 +
 +    joypad: xu10-joypad {
 +        compatible = "xu10-joypad";
++
++        joypad-name = "XU10 Gamepad";
++        joypad-product = <0x0200>;
++        joypad-revision = <0x0010>;
++
 +        status = "okay";
 +        /*
 +        - xu10-joypad sysfs list -
@@ -657,6 +662,18 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351v.dts li
 +       regulator-always-on;
 +       regulator-min-microvolt = <3800000>;
 +       regulator-max-microvolt = <3800000>;
++    };
++    
++    vcc_host: vcc_host {
++        compatible = "regulator-fixed";
++        regulator-name = "vcc_host";
++        regulator-min-microvolt = <5000000>;
++        regulator-max-microvolt = <5000000>;
++        gpio = <&gpio0 RK_PA2 GPIO_ACTIVE_HIGH>;
++        enable-active-high;
++        regulator-always-on;
++        regulator-boot-on;
++        vin-supply = <&usb_midu>;
 +    };
 +};
 +
@@ -1039,6 +1056,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351v.dts li
 +
 +&usb20_otg {
 +    status = "okay";
++    dr_mode = "host";
 +};
 +
 +&vopb {

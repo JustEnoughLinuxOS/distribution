@@ -1,46 +1,63 @@
+#!/bin/bash
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2022-present JELOS (https://github.com/JustEnoughLinuxOS)
 
 . /etc/profile
 
+#Set mupen64-plus-sa config for XU10
+if [ ! -d "/storage/.config/mupen64plus" ]; then
+    mkdir -p "/storage/.config/mupen64plus/"
+        cp -r /usr/local/share/mupen64plus/mupen64plus.cfg* /storage/.config/mupen64plus/
+fi
+if [ -f "/storage/.config/mupen64plus/mupen64plus.cfg.xut" ]; then
+  rm /storage/.config/mupen64plus/mupen64plus.cfg
+  mv /storage/.config/mupen64plus/mupen64plus.cfg.xut /storage/.config/mupen64plus/mupen64plus.cfg
+fi
+
+#Set drastic-sa config for XU10
+if [ ! -d "/storage/.config/drastic" ]; then
+    mkdir -p "/storage/.config/drastic"
+        cp -r "/usr/config/drastic" "/storage/.config/"
+fi
+if [ -f "/storage/.config/drastic/config/drastic.cfg.xut" ]; then
+  rm /storage/.config/drastic/config/drastic.cfg
+  mv /storage/.config/drastic/config/drastic.cfg.xut /storage/.config/drastic/config/drastic.cfg
+fi
+
 #Set up gzdoom
 if [ ! -d "/storage/.config/gzdoom/" ]; then
-  cp -rf /usr/config/gzdoom /storage/.config/
-  sed -i '/Joy7=/c\Joy7=togglemap' /storage/.config/gzdoom/gzdoom.ini
-  sed -i '/Joy8=/c\Joy8=menu_main' /storage/.config/gzdoom/gzdoom.ini
-  sed -i '/Axis0scale=/c\Axis0scale=-0.8' /storage/.config/gzdoom/gzdoom.ini
-  sed -i '/Axis1scale=/c\Axis1scale=-0.6' /storage/.config/gzdoom/gzdoom.ini
-  sed -i '/vid_defheight=/c\vid_defheight=320' /storage/.config/gzdoom/gzdoom.ini
-  sed -i '/vid_defwidth=/c\vid_defwidth=480' /storage/.config/gzdoom/gzdoom.ini
+  sed -i '/vid_defheight=/c\vid_defheight=480' /storage/.config/gzdoom/gzdoom.ini
+  sed -i '/vid_defwidth=/c\vid_defwidth=640' /storage/.config/gzdoom/gzdoom.ini
 fi
 
 #Map ppsspp controls
-if  grep RG351V -q "/stprage/.config/ppsspp/PSP/SYSTEM/controls.ini"
+if  grep XU10 -q "/storage/.config/ppsspp/PSP/SYSTEM/controls.ini"
 then
   exit 1
 else
 cat <<EOF >/storage/.config/ppsspp/PSP/SYSTEM/controls.ini
-#RG351V
+#XU10
 [ControlMapping]
 Up = 10-19
 Down = 10-20
 Left = 10-21
 Right = 10-22
-Circle = 10-189
-Cross = 10-190
-Square = 10-188
-Triangle = 10-191
+Circle = 10-190
+Cross = 10-189
+Square = 10-191
+Triangle = 10-188
 Start = 10-197
 Select = 10-196
-L = 10-193
-R = 10-192
-An.Up = 10-4002
-An.Down = 10-4003
-An.Left = 10-4000
-An.Right = 10-4001
-Fast-forward = 1-61
-Pause = 10-106
-Save State = 10-4010
-Load State = 10-4008
+L = 10-194
+R = 10-195
+An.Up = 10-4003
+An.Down = 10-4002
+An.Left = 10-4001
+An.Right = 10-4000
+Pause = 10-109,10-104,1-111
+RightAn.Up = 10-4007
+RightAn.Down = 10-4006
+RightAn.Left = 10-4005
+RightAn.Right = 10-4004
 EOF
 fi
