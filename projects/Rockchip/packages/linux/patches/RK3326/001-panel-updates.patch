@@ -498,7 +498,7 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/panel-newvision-nv3051d.c linux/driv
 +	.vsync_start	= 480 + 17,
 +	.vsync_end	= 480 + 17 + 4,
 +	.vtotal		= 480 + 17 + 4 + 13,
-+	.clock		= 27438,
++	.clock		= 30000,
 +	.flags		= DRM_MODE_FLAG_NHSYNC | DRM_MODE_FLAG_NVSYNC,
 +	.width_mm	= 70,
 +	.height_mm	= 52,
