@@ -23,6 +23,12 @@ if [ -z "${PKG_NAME}" ]; then
   die "$(print_color CLR_ERROR "${1}: no package.mk file found")"
 fi
 
+# Skip excluded packages
+listcontains "${EXCLUDE_PKGS}" "${PKG_NAME}" && {
+    echo "Skipping ${PKG_NAME} it's listed in EXCLUDE_PKGS"
+    exit 0
+}
+
 if [ -n "${PKG_ARCH}" ]; then
   listcontains "${PKG_ARCH}" "!${TARGET_ARCH}" && exit 0
   listcontains "${PKG_ARCH}" "${TARGET_ARCH}" || listcontains "${PKG_ARCH}" "any" || exit 0
