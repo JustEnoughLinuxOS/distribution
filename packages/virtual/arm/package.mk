@@ -32,4 +32,4 @@ if [ "${PIPEWIRE_SUPPORT}" = "yes" ]; then
 fi
 
 ### Emulators and Cores
-PKG_DEPENDS_TARGET+=" retroarch pcsx_rearmed-lr gpsp-lr flycast-lr box86 desmume-lr"
+PKG_DEPENDS_TARGET+=" retroarch pcsx_rearmed-lr gpsp-lr box86 desmume-lr"
