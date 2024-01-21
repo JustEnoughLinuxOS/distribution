@@ -19,7 +19,7 @@ case ${DEVICE} in
   ;;
   RK356*)
     PKG_URL="${PKG_SITE}/rk356x-uboot.git"
-    PKG_VERSION="88b2f26"
+    PKG_VERSION="97c658238f7ccd436fbdede451bfd7488514a5c8"
   ;;
   RK3399)
     PKG_DEPENDS_TARGET+=" atf openssl:host"
