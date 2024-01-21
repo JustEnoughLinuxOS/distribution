@@ -32,6 +32,13 @@ pre_configure_target() {
   rm -rf .${TARGET_NAME}
 }
 
+pre_build_target() {
+  cp -f ${ROOT}/distributions/JELOS/fonts/NanumSquareNeo-bRg.ttf ${PKG_BUILD}/glui/font.ttf
+  cp -f ${ROOT}/distributions/JELOS/fonts/NanumSquareNeo-bRg.ttf ${PKG_BUILD}/ozone/regular.ttf
+  cp -f ${ROOT}/distributions/JELOS/fonts/NanumSquareNeo-cBd.ttf ${PKG_BUILD}/ozone/bold.ttf
+  cp -f ${ROOT}/distributions/JELOS/fonts/*.ttf ${PKG_BUILD}/fonts/
+}
+
 makeinstall_target() {
   make install INSTALLDIR="${INSTALL}/usr/share/retroarch-assets"
 }

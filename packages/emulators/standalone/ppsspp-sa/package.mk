@@ -66,6 +66,7 @@ fi
 pre_configure_target() {
   sed -i 's/\-O[23]//g' ${PKG_BUILD}/CMakeLists.txt
   sed -i "s|include_directories(/usr/include/drm)|include_directories(${SYSROOT_PREFIX}/usr/include/drm)|" ${PKG_BUILD}/CMakeLists.txt
+  cp -f ${ROOT}/distributions/JELOS/fonts/NanumSquareNeo-bRg.ttf ${PKG_BUILD}/assets/Roboto-Condensed.ttf
 }
 
 pre_make_target() {
@@ -91,4 +92,8 @@ makeinstall_target() {
     cp ${PKG_DIR}/sources/${DEVICE}/* ${INSTALL}/usr/config/ppsspp/PSP/SYSTEM
   fi
   rm ${INSTALL}/usr/config/ppsspp/assets/gamecontrollerdb.txt
+
+  cp -f ${PKG_DIR}/fonts/* ${INSTALL}/usr/config/ppsspp/assets/
+  cp -f ${PKG_DIR}/fonts/patch.jpn0.pgf ${INSTALL}/usr/config/ppsspp/assets/flash0/font/jpn0.pgf
+  cp -f ${PKG_DIR}/fonts/patch.kr0.pgf ${INSTALL}/usr/config/ppsspp/assets/flash0/font/kr0.pgf
 }
