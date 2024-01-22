@@ -1,0 +1,34 @@
+diff --git a/meson.build b/meson.build
+index f1fb908..6ea815e 100644
+--- a/meson.build
++++ b/meson.build
+@@ -6,11 +6,11 @@ if get_option('buildtype') == 'debug'
+   add_project_arguments('-DDEBUG', language: ['c', 'cpp'])
+ endif
+ 
+-libweston_version = 10
++libweston_version = 12
+ dir_prefix = get_option('prefix')
+ dir_lib = dir_prefix / get_option('libdir')
+ dir_module_weston = dir_lib / 'weston'
+-dir_system_include = '/usr/include'
++dir_system_include = dir_lib / 'include'
+ 
+ weston = dependency('libweston-@0@'.format(libweston_version), method: 'pkg-config')
+ wayland_server = dependency('wayland-server', method: 'pkg-config')
+@@ -47,7 +47,7 @@ shared_library(
+   name_prefix: '',
+   install: true,
+   install_dir: dir_module_weston,
+-  include_directories: ['@0@/libweston-@1@'.format(dir_system_include, libweston_version), '@0@/pixman-1'.format(dir_system_include)]
++  #include_directories: ['@0@/libweston-@1@'.format(dir_system_include, libweston_version), '@0@/pixman-1'.format(dir_system_include)]
+ )
+ 
+ executable(
+@@ -56,4 +56,4 @@ executable(
+   dependencies: [wayland_client],
+   name_prefix: '',
+   install: false
+-)
+\ No newline at end of file
++)

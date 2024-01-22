@@ -14,7 +14,7 @@ if [ ! -d "/storage/.config/drastic" ]; then
 fi
 
 if [ ! -d "/storage/.config/drastic/system" ]; then
-  mkdir -p   mkdir -p /storage/.config/drastic/system
+  mkdir -p /storage/.config/drastic/system
 fi
 
 for bios in nds_bios_arm9.bin nds_bios_arm7.bin

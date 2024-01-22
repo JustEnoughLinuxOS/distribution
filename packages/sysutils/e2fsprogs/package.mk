@@ -81,7 +81,7 @@ post_makeinstall_target() {
   rm -rf ${INSTALL}/usr/sbin/e2freefrag
   rm -rf ${INSTALL}/usr/sbin/e2undo
   rm -rf ${INSTALL}/usr/sbin/e4defrag
-  rm -rf ${INSTALL}/usr/sbin/filefrag
+  #rm -rf ${INSTALL}/usr/sbin/filefrag
   rm -rf ${INSTALL}/usr/sbin/fsck
   rm -rf ${INSTALL}/usr/sbin/logsave
   rm -rf ${INSTALL}/usr/sbin/mklost+found
