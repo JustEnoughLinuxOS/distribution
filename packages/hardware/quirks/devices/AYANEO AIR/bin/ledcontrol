@@ -55,6 +55,11 @@ function mode() {
   ${ECTOOL} -w 0xbf -z ${1} >/dev/null 2>&1
 }
 
+function close_channel() {
+  debug_out "Set close channel"
+  ${ECTOOL} -w 0xbf -z 0xFF >/dev/null 2>&1
+}
+
 function off() {
   ec_writecmd
   for twice in 1 2
@@ -64,6 +69,7 @@ function off() {
     ${ECTOOL} -w 0xb2 -z 0xc0 >/dev/null 2>&1
     mode 0x10
   done
+  close_channel
 }
 
 function brightness() {
@@ -85,6 +91,7 @@ function color() {
       brightness ${2}
     done
   done
+  close_channel
 }
 
 GETBRIGHTNESS=$(get_setting led.brightness)
@@ -186,4 +193,3 @@ EOF
     fi
   ;;
 esac
-

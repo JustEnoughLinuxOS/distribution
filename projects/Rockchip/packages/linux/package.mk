@@ -24,7 +24,7 @@ case ${DEVICE} in
     PKG_GIT_CLONE_BRANCH="main"
   ;;
   RK356*)
-    PKG_VERSION="6.7"
+    PKG_VERSION="6.7.1"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
   ;;
   RK3399|RK3326)

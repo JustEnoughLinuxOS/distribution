@@ -23,8 +23,10 @@ case "${1}" in
   ;;
   "ALL")
     swapoff -a
+    umount /storage/roms ||:
+    umount /storage/games-external ||:
     cd /
-    find /storage -mindepth 1 \( ! -regex '^/storage/.update.*' -a ! -regex '^/storage/roms.*' -a ! -regex '^/storage/games-*' \) -delete
+    find /storage -mindepth 1 \( ! -regex '^/storage/.update.*' -a ! -regex '^/storage/roms.*' -a ! -regex '^/storage/games-.*' \) -delete
     mkdir /storage/.config/
     sync
     systemctl reboot
