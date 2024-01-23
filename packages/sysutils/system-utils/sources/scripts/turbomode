@@ -1,0 +1,15 @@
+#!/bin/bash
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2024 JELOS (https://github.com/JustEnoughLinuxOS)
+
+# Set turbomode state
+case $1 in
+  disable)
+    echo "0" > /sys/devices/system/cpu/cpufreq/boost
+    set_setting enable.turbo-mode 0
+  ;;
+  enable)
+    echo "1" > /sys/devices/system/cpu/cpufreq/boost
+    set_setting enable.turbo-mode 1
+  ;;
+esac

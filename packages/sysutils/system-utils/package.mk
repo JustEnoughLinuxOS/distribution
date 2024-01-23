@@ -22,6 +22,7 @@ makeinstall_target() {
   cp ${PKG_DIR}/sources/scripts/volume_sense ${INSTALL}/usr/bin
   cp ${PKG_DIR}/sources/scripts/bluetooth_sense ${INSTALL}/usr/bin
   cp ${PKG_DIR}/sources/scripts/ledcontrol ${INSTALL}/usr/bin
+  cp ${PKG_DIR}/sources/scripts/turbomode ${INSTALL}/usr/bin
   if [ -d "${PKG_DIR}/sources/devices/${DEVICE}" ]
   then
     cp ${PKG_DIR}/sources/devices/${DEVICE}/* ${INSTALL}/usr/bin
