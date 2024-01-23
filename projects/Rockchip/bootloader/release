@@ -33,6 +33,10 @@ if [ -n "${UBOOT_CONFIG}" ]; then
   esac
 fi
 
+if [ -f ${INSTALL}/usr/share/bootloader/boot.ini ]; then
+  cp -a ${INSTALL}/usr/share/bootloader/boot.ini ${RELEASE_DIR}/3rdparty/bootloader
+fi
+
 if [ -f ${INSTALL}/usr/share/bootloader/boot.scr ]; then
   cp -a ${INSTALL}/usr/share/bootloader/boot.scr ${RELEASE_DIR}/3rdparty/bootloader
 fi

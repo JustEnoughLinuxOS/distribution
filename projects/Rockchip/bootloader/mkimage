@@ -52,16 +52,16 @@ case "${PKG_SOC}" in
   ;;
 esac
 
-#Create boot.scr
+#Create boot.ini
 if [ "${BOOT_INI}" == true ]
 then
   echo "boot: create boot.ini..."
   if [ -e "${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/boot/boot.ini" ]
   then
     cp -f ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/boot/boot.ini ${LE_TMP}/boot.ini
-    sed -i "s~@UUID_SYSTEM@~${UUID_SYSTEM}~g" ${INSTALL}/usr/share/bootloader/boot.ini
-    sed -i "s~@UUID_STORAGE@~${UUID_STORAGE}~g" ${INSTALL}/usr/share/bootloader/boot.ini
-    sed -i "s~@EXTRA_CMDLINE@~${EXTRA_CMDLINE}~g" ${INSTALL}/usr/share/bootloader/boot.ini
+    sed -i "s~@UUID_SYSTEM@~${UUID_SYSTEM}~g" ${LE_TMP}/boot.ini
+    sed -i "s~@UUID_STORAGE@~${UUID_STORAGE}~g" ${LE_TMP}/boot.ini
+    sed -i "s~@EXTRA_CMDLINE@~${EXTRA_CMDLINE}~g" ${LE_TMP}/boot.ini
     mcopy -so "${LE_TMP}/boot.ini" ::
   else
     echo "ERROR: No boot.ini found in ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/boot/."
