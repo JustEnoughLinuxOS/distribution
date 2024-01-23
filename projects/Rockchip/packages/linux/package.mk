@@ -177,7 +177,6 @@ make_target() {
       NO_LIBTRACEEVENT=1 \
       NO_LZMA=1 \
       NO_SDT=1 \
-      NO_LIBTRACEEVENT=1 \
       CROSS_COMPILE="${TARGET_PREFIX}" \
       JOBS="${CONCURRENCY_MAKE_LEVEL}" \
         make ${PERF_BUILD_ARGS}
