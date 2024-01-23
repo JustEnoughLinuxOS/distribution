@@ -22,3 +22,7 @@ makeinstall_target() {
   fi
   chmod -R 0755 ${INSTALL}/usr/lib/autostart/quirks
 }
+
+post_install() {
+  enable_service led-poweroff.service
+}

@@ -303,6 +303,9 @@ case ${LEDBRIGHTNESS} in
 esac
 
 case ${1} in
+  poweroff)
+    led_state 0x31
+  ;;
   off)
     led_state 0x31
     set_setting led.color off
