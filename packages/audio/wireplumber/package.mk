@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="wireplumber"
-PKG_VERSION="0.4.15"
+PKG_VERSION="0.4.17"
 PKG_LICENSE="MIT"
 PKG_SITE="https://gitlab.freedesktop.org/pipewire/wireplumber"
 PKG_URL="https://gitlab.freedesktop.org/pipewire/wireplumber/-/archive/${PKG_VERSION}/${PKG_NAME}-${PKG_VERSION}.tar.gz"
@@ -21,6 +21,7 @@ PKG_MESON_OPTS_TARGET="-Dintrospection=disabled \
 
 post_makeinstall_target() {
 
+  mkdir -p ${INSTALL}/usr/share/wireplumber/{main.lua.d,bluetooth.lua.d}
   # ref https://gitlab.freedesktop.org/pipewire/wireplumber/-/commit/0da29f38181e391160fa8702623050b8544ec775
   cat > ${INSTALL}/usr/share/wireplumber/main.lua.d/89-disable-session-dbus-dependent-features.lua << EOF
 alsa_monitor.properties["alsa.reserve"] = false

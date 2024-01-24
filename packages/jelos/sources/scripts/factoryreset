@@ -22,13 +22,13 @@ case "${1}" in
     systemctl reboot
   ;;
   "ALL")
-    swapoff -a
-    umount /storage/roms ||:
-    umount /storage/games-external ||:
+    swapoff -a 2>/dev/null
+    umount /storage/roms 2>/dev/null ||:
+    umount /storage/games-external 2>/dev/null ||:
     cd /
-    find /storage -mindepth 1 \( ! -regex '^/storage/.update.*' -a ! -regex '^/storage/roms.*' -a ! -regex '^/storage/games-.*' \) -delete
+    find /storage -mindepth 1 \( ! -regex '^/storage/.update.*' -a ! -regex '^/storage/roms.*' -a ! -regex '^/storage/games-.*' \) -delete 2>/dev/null
     mkdir /storage/.config/
-    sync
+    sync 2>/dev/null
     systemctl reboot
   ;;
 esac

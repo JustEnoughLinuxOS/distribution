@@ -7,6 +7,10 @@
   if [ "$(get_setting bluetooth.enabled)" == "1" ]
   then
     tocon "Starting bluetooth..."
+    if [ ! -e "/storage/.cache/services/bluez.conf" ]
+    then
+      cp -f /usr/share/services/bluez.conf /storage/.cache/services/bluez.conf
+    fi
     nohup systemctl start bluetooth &
     nohup systemctl start bluetooth-agent &
     nohup systemctl start bluetoothsense &
