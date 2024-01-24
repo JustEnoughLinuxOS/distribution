@@ -1,6 +1,6 @@
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/Makefile linux/arch/arm64/boot/dts/rockchip/Makefile
---- linux.orig/arch/arm64/boot/dts/rockchip/Makefile	2024-01-17 03:47:10.074350115 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/Makefile	2024-01-17 04:01:50.682844812 +0000
+--- linux.orig/arch/arm64/boot/dts/rockchip/Makefile	2024-01-22 23:55:56.423256979 +0000
++++ linux/arch/arm64/boot/dts/rockchip/Makefile	2024-01-23 03:05:55.471049048 +0000
 @@ -9,9 +9,12 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3308-ro
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3308-rock-pi-s.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3318-a95x-z2.dtb
@@ -15,9 +15,9 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/Makefile linux/arch/arm64/boo
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3328-evb.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3328-nanopi-r2c.dtb
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/boot/dts/rockchip/px30.dtsi
---- linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi	2024-01-17 03:47:10.078350209 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/px30.dtsi	2024-01-17 03:59:58.108276677 +0000
-@@ -114,27 +114,11 @@
+--- linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi	2024-01-22 23:55:56.427257071 +0000
++++ linux/arch/arm64/boot/dts/rockchip/px30.dtsi	2024-01-23 18:01:18.953774998 +0000
+@@ -114,32 +114,22 @@
  		compatible = "operating-points-v2";
  		opp-shared;
  
@@ -45,7 +45,18 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/bo
  		opp-1296000000 {
  			opp-hz = /bits/ 64 <1296000000>;
  			opp-microvolt = <1350000 1350000 1350000>;
-@@ -349,6 +333,32 @@
+ 			clock-latency-ns = <40000>;
+ 		};
++		opp-1416000000 {
++			opp-hz = /bits/ 64 <1416000000>;
++			opp-microvolt = <1350000 1350000 1350000>;
++			clock-latency-ns = <40000>;
++			turbo-mode;
++		};
+ 	};
+ 
+ 	arm-pmu {
+@@ -349,6 +339,32 @@
  		};
  	};
  
@@ -78,7 +89,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/bo
  	pmugrf: syscon@ff010000 {
  		compatible = "rockchip,px30-pmugrf", "syscon", "simple-mfd";
  		reg = <0x0 0xff010000 0x0 0x1000>;
-@@ -1064,20 +1074,12 @@
+@@ -1064,21 +1080,9 @@
  	gpu_opp_table: opp-table-1 {
  		compatible = "operating-points-v2";
  
@@ -90,20 +101,22 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/px30.dtsi linux/arch/arm64/bo
 -			opp-hz = /bits/ 64 <300000000>;
 -			opp-microvolt = <975000>;
 -		};
- 		opp-400000000 {
- 			opp-hz = /bits/ 64 <400000000>;
- 			opp-microvolt = <1050000>;
- 		};
+-		opp-400000000 {
+-			opp-hz = /bits/ 64 <400000000>;
+-			opp-microvolt = <1050000>;
+-		};
 -		opp-480000000 {
 -			opp-hz = /bits/ 64 <480000000>;
-+		opp-440000000 {
-+			opp-hz = /bits/ 64 <440000000>;
- 			opp-microvolt = <1125000>;
+-			opp-microvolt = <1125000>;
++		opp-560000000 {
++			opp-hz = /bits/ 64 <560000000>;
++			opp-microvolt = <1150000>;
  		};
  	};
+ 
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351m.dts linux/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351m.dts
---- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351m.dts	2024-01-17 03:47:10.078350209 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351m.dts	2024-01-17 03:59:58.108276677 +0000
+--- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351m.dts	2024-01-22 23:55:56.427257071 +0000
++++ linux/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351m.dts	2024-01-23 03:05:55.471049048 +0000
 @@ -12,6 +12,25 @@
  	model = "Anbernic RG351M";
  	compatible = "anbernic,rg351m", "rockchip,rk3326";
@@ -156,7 +169,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351m.dts li
 +};
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351v.dts linux/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351v.dts
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351v.dts	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351v.dts	2024-01-17 03:59:58.108276677 +0000
++++ linux/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351v.dts	2024-01-23 03:05:55.471049048 +0000
 @@ -0,0 +1,124 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
@@ -282,8 +295,9 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351v.dts li
 +                };
 +        };
 +};
---- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	1969-12-31 19:00:00.000000000 -0500
-+++ linux/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	2024-01-19 15:39:57.362135961 -0500
+diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts
+--- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	1970-01-01 00:00:00.000000000 +0000
++++ linux/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	2024-01-23 03:05:55.471049048 +0000
 @@ -0,0 +1,848 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
@@ -1134,8 +1148,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351v.dts li
 +   };
 +};
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go.dtsi linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go.dtsi
---- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go.dtsi	2024-01-17 03:47:10.078350209 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go.dtsi	2024-01-17 03:59:58.108276677 +0000
+--- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go.dtsi	2024-01-22 23:55:56.427257071 +0000
++++ linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go.dtsi	2024-01-23 03:05:55.471049048 +0000
 @@ -25,93 +25,40 @@
  		compatible = "pwm-backlight";
  		power-supply = <&vcc_bl>;
@@ -1292,8 +1306,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go.dtsi linux/a
  		#clock-cells = <1>;
  		#sound-dai-cells = <0>;
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts
---- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts	2024-01-17 03:47:10.078350209 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts	2024-01-17 03:59:58.108276677 +0000
+--- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts	2024-01-22 23:55:56.427257071 +0000
++++ linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts	2024-01-23 03:05:55.471049048 +0000
 @@ -16,31 +16,187 @@
  		mmc1 = &sdio;
  	};
@@ -1575,8 +1589,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2-v11.dts lin
  					<2 RK_PA5 RK_FUNC_GPIO &pcfg_pull_up>,
  					<2 RK_PA6 RK_FUNC_GPIO &pcfg_pull_up>,
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts
---- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts	2024-01-17 03:47:10.078350209 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts	2024-01-17 03:59:58.108276677 +0000
+--- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts	2024-01-22 23:55:56.427257071 +0000
++++ linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts	2024-01-23 03:05:55.471049048 +0000
 @@ -12,30 +12,175 @@
  	model = "ODROID-GO Advance";
  	compatible = "hardkernel,rk3326-odroid-go2", "rockchip,rk3326";
@@ -1809,8 +1823,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go2.dts linux/a
 +        };
 +};
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go3.dts linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go3.dts
---- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go3.dts	2024-01-17 03:47:10.078350209 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go3.dts	2024-01-17 03:59:58.108276677 +0000
+--- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go3.dts	2024-01-22 23:55:56.427257071 +0000
++++ linux/arch/arm64/boot/dts/rockchip/rk3326-odroid-go3.dts	2024-01-23 03:05:55.471049048 +0000
 @@ -12,67 +12,196 @@
  	model = "ODROID-GO Super";
  	compatible = "hardkernel,rk3326-odroid-go3", "rockchip,rk3326";
@@ -2120,7 +2134,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go3.dts linux/a
  };
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-powkiddy-rgb10.dts linux/arch/arm64/boot/dts/rockchip/rk3326-powkiddy-rgb10.dts
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-powkiddy-rgb10.dts	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3326-powkiddy-rgb10.dts	2024-01-17 03:59:58.108276677 +0000
++++ linux/arch/arm64/boot/dts/rockchip/rk3326-powkiddy-rgb10.dts	2024-01-23 03:05:55.471049048 +0000
 @@ -0,0 +1,280 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*

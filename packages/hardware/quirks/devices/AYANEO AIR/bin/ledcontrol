@@ -157,6 +157,9 @@ case $1 in
     color 1 ${LEDBRIGHTNESS}
     set_setting led.color purple
   ;;
+  poweroff)
+    off
+  ;;
   off)
     off
     set_setting led.color off

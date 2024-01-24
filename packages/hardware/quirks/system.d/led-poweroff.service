@@ -1,0 +1,12 @@
+[Unit]
+Description=Power LEDs off before shutting down.
+After=multi-user.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/true
+ExecStop=/usr/bin/ledcontrol poweroff
+
+[Install]
+WantedBy=multi-user.target

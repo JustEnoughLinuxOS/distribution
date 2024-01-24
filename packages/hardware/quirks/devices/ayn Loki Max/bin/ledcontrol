@@ -151,6 +151,9 @@ case $1 in
     ec_save
     set_setting led.color white
   ;;
+  poweroff)
+    off
+  ;;
   off)
     off
     set_setting led.color off

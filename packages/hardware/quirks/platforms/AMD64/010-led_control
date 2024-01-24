@@ -5,8 +5,7 @@
 . /etc/profile.d/001-functions
 
 ### Set the default device configuration
-cat <<EOF >/storage/.config/profile.d/001-device_config
-DEVICE_BASE_TDP="6w"
-DEVICE_VOLUMECTL="true"
-DEVICE_BRIGHTNESS="hardware"
+cat <<EOF >/storage/.config/profile.d/010-led_control
+DEVICE_LED_CONTROL="false"
+DEVICE_LED_BRIGHTNESS="false"
 EOF
