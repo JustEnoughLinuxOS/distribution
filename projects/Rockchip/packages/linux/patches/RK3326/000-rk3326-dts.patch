@@ -295,10 +295,9 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351v.dts li
 +                };
 +        };
 +};
-diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	1969-12-31 19:00:00.000000000 -0500
-+++ linux/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	2024-01-24 12:40:17.422673998 -0500
-@@ -0,0 +1,844 @@
++++ linux/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	2024-01-24 14:29:39.760826750 -0500
+@@ -0,0 +1,835 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2019 Hardkernel Co., Ltd
@@ -677,15 +676,6 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +        regulator-always-on;
 +        regulator-boot-on;
 +        vin-supply = <&usb_midu>;
-+    };
-+};
-+
-+&dmc_opp_table {
-+	/delete-node/ opp-924000000;
-+
-+    opp-1020000000 {
-+        opp-hz = /bits/ 64 <1020000000>;
-+        opp-microvolt = <1125000>;
 +    };
 +};
 +
