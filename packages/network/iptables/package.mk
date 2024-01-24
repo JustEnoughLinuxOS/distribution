@@ -11,13 +11,9 @@ PKG_LONGDESC="IP packet filter administration."
 PKG_TOOLCHAIN="autotools"
 
 
-case ${DEVICE} in
-  *)
-    PKG_VERSION="1.8.9"
-    PKG_EXTENSION="xz"
-    PKG_PATCH_DIRS+="5.x"
-  ;;
-esac
+PKG_VERSION="1.8.9"
+PKG_EXTENSION="xz"
+PKG_PATCH_DIRS+="5.x"
 
 PKG_URL="https://www.netfilter.org/projects/iptables/files/${PKG_NAME}-${PKG_VERSION}.tar.${PKG_EXTENSION}"
 
