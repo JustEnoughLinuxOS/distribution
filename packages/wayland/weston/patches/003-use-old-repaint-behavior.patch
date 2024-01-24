@@ -1,19 +1,12 @@
 diff -rupN weston-12.0.3.orig/libweston/compositor.c weston-12.0.3/libweston/compositor.c
 --- weston-12.0.3.orig/libweston/compositor.c	2024-01-15 15:42:23.723505677 +0000
-+++ weston-12.0.3/libweston/compositor.c	2024-01-20 13:27:54.816568920 +0000
-@@ -3349,10 +3349,13 @@ weston_output_finish_frame(struct weston
- 	 * If timestamp of latest vblank is given, it must always go forwards.
++++ weston-12.0.3/libweston/compositor.c	2024-01-24 00:32:15.715324559 +0000
+@@ -3350,7 +3350,7 @@ weston_output_finish_frame(struct weston
  	 * If not given, INVALID flag must be set.
  	 */
--	if (stamp)
-+	/* if (stamp)
- 		assert(timespec_sub_to_nsec(stamp, &output->frame_time) >= 0);
+ 	if (stamp)
+-		assert(timespec_sub_to_nsec(stamp, &output->frame_time) >= 0);
++		assert(timespec_sub_to_nsec(stamp, &output->frame_time) || (presented_flags & WP_PRESENTATION_FEEDBACK_INVALID));
  	else
--		assert(presented_flags & WP_PRESENTATION_FEEDBACK_INVALID);
-+		assert(presented_flags & WP_PRESENTATION_FEEDBACK_INVALID); */
-+
-+	assert(output->repaint_status == REPAINT_AWAITING_COMPLETION);
-+	assert(stamp || (presented_flags & WP_PRESENTATION_FEEDBACK_INVALID));
- 
- 	weston_compositor_read_presentation_clock(compositor, &now);
+ 		assert(presented_flags & WP_PRESENTATION_FEEDBACK_INVALID);
  
