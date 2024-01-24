@@ -2,6 +2,9 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2024 JELOS (https://github.com/JustEnoughLinuxOS)
 
-. /etc/profile
+. /etc/profile.d/001-functions
 
-dpms-client -m on
+if [ "${DEVICE_SLEEP_DPMS}" = "true" ]
+then
+  dpms-client -m off
+fi
