@@ -295,10 +295,9 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351v.dts li
 +                };
 +        };
 +};
-diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts
---- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	2024-01-23 03:05:55.471049048 +0000
-@@ -0,0 +1,848 @@
+--- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	1969-12-31 19:00:00.000000000 -0500
++++ linux/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	2024-01-24 14:29:39.760826750 -0500
+@@ -0,0 +1,835 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2019 Hardkernel Co., Ltd
@@ -317,21 +316,9 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +    model = "MagicX XU10";
 +    compatible = "magicx,xu10", "rockchip,rk3326";
 +     
-+    chosen {
-+        bootargs = "earlycon=uart8250,mmio32,0xff160000 swiotlb=1 console=ttyFIQ0 rw root=PARTUUID=614e0000-0000 rootwait";
-+    };
-+
-+    fiq-debugger {
-+        compatible = "rockchip,fiq-debugger";
-+        rockchip,serial-id = <2>;
-+        rockchip,wake-irq = <0>;
-+        /* If enable uart uses irq instead of fiq */
-+        rockchip,irq-mode-enable = <0>;
-+        rockchip,baudrate = <115200>;  /* Only 115200 and 1500000 */
-+        interrupts = <GIC_SPI 127 IRQ_TYPE_LEVEL_LOW>;
-+        pinctrl-names = "default";
-+        pinctrl-0 = <&uart2m1_xfer>;
-+        status = "okay";
++    aliases {
++        mmc0 = &sdio;
++        mmc1 = &sdmmc;
 +    };
 +
 +    backlight: backlight {
@@ -579,21 +566,21 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +    battery: battery {
 +        compatible = "simple-battery";
 +        charge-full-design-microamp-hours = <3000000>;
-+        charge-term-current-microamp = <300000>;
-+        constant-charge-current-max-microamp = <2000000>;
++        charge-term-current-microamp = <200000>;
++        constant-charge-current-max-microamp = <1500000>;
 +        constant-charge-voltage-max-microvolt = <4200000>;
-+        factory-internal-resistance-micro-ohms = <134000>;
++        factory-internal-resistance-micro-ohms = <100000>;
 +        voltage-max-design-microvolt = <4100000>;
-+        voltage-min-design-microvolt = <3500000>;
++        voltage-min-design-microvolt = <3300000>;
 +
 +        ocv-capacity-celsius = <20>;
 +        ocv-capacity-table-0 =  
-+            <4046950 100>, <4001920 95>, <3967900 90>, <3919950 85>,
-+            <3888450 80>, <3861850 75>, <3831540 70>, <3799130 65>,
-+            <3768190 60>, <3745650 55>, <3726610 50>, <3711630 45>,
-+            <3696720 40>, <3685660 35>, <3674950 30>, <3663050 25>,
-+            <3649470 20>, <3635260 15>, <3616920 10>, <3592440 5>,
-+            <3574170 0>;
++            <4046950 100>, <4001920 95>, <3967900 90>, <3940000 85>,
++            <3910000 80>, <3870000 75>, <3830000 70>, <3790000 65>,
++            <3750000 60>, <3720000 55>, <3690000 50>, <3650000 45>,
++            <3610000 40>, <3570000 35>, <3540000 30>, <3500000 25>,
++            <3460000 20>, <3420000 15>, <3380000 10>, <3340000 5>,
++            <3300000 0>;
 +    };
 +
 +    gpio-keys-vol {
@@ -646,9 +633,11 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +
 +    rk817-sound {
 +       compatible = "simple-audio-card";
++       pinctrl-names = "default";
++       pinctrl-0 = <&hp_det>;
 +       simple-audio-card,name = "rk817_int";
 +       simple-audio-card,format = "i2s";
-+       simple-audio-card,hp-det-gpio = <&gpio2 RK_PC6 GPIO_ACTIVE_HIGH>;
++       simple-audio-card,hp-det-gpio = <&gpio2 RK_PC6 GPIO_ACTIVE_LOW>;
 +       simple-audio-card,mclk-fs = <256>;
 +       simple-audio-card,widgets =
 +           "Microphone", "Mic Jack",
@@ -799,7 +788,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +        vdd_logic: DCDC_REG1 {
 +              regulator-name = "vdd_logic";
 +              regulator-min-microvolt = <850000>;
-+              regulator-max-microvolt = <1350000>;
++              regulator-max-microvolt = <1150000>;
 +              regulator-ramp-delay = <6001>;
 +              regulator-always-on;
 +              regulator-boot-on;
@@ -914,13 +903,13 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +
 +        vcc_sd: LDO_REG6 {
 +              regulator-name = "vcc_sd";
-+              regulator-min-microvolt = <3300000>;
-+              regulator-max-microvolt = <3300000>;
++              regulator-min-microvolt = <1800000>;
++              regulator-max-microvolt = <3000000>;
 +              regulator-boot-on;
 +
 +              regulator-state-mem {
 +                  regulator-on-in-suspend;
-+                  regulator-suspend-microvolt = <3300000>;
++                  regulator-suspend-microvolt = <3000000>;
 +              };
 +        };
 +
@@ -1017,7 +1006,6 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +};
 +
 +&sdmmc {
-+    bus-width = <4>;
 +    cap-sd-highspeed;
 +    card-detect-delay = <200>;
 +    cd-gpios = <&gpio0 RK_PA3 GPIO_ACTIVE_LOW>; /*[> ff370000 PD_SDCARD CD GPIO <]*/
@@ -1031,9 +1019,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +};
 +
 +&sdio {
-+    bus-width = <4>;
 +    cap-sd-highspeed;
-+    supports-sd;
 +    card-detect-delay = <200>;
 +    cd-gpios = <&gpio3 RK_PB6 GPIO_ACTIVE_LOW>; /*[> CD GPIO <]*/
 +    sd-uhs-sdr12;
@@ -1112,7 +1098,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +
 +    headphone {
 +        hp_det: hp-det {
-+            rockchip,pins = <2 RK_PC6 RK_FUNC_GPIO &pcfg_pull_down>;
++            rockchip,pins = <2 RK_PC6 RK_FUNC_GPIO &pcfg_pull_up>;
 +        };
 +    };
 +

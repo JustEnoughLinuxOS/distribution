@@ -1,0 +1,369 @@
+From e171d19e33982b401425a0b9312fc7aaae052a0c Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Louis-Francis=20Ratt=C3=A9-Boulianne?= <lfrb@collabora.com>
+Date: Wed, 24 Jan 2024 00:51:42 -0500
+Subject: [PATCH 1/4] panfrost: factor out method to check whether we can
+ discard resource
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+The logic is gonna be re-used to determine whether we need to
+unpack a AFBC-packed texture before updating it (when unmapping).
+
+Signed-off-by: Louis-Francis RattÃ©-Boulianne <lfrb@collabora.com>
+---
+ src/gallium/drivers/panfrost/pan_resource.c | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
+
+diff --git a/src/gallium/drivers/panfrost/pan_resource.c b/src/gallium/drivers/panfrost/pan_resource.c
+index 5eba8244b5ea..77bd26d6ccab 100644
+--- a/src/gallium/drivers/panfrost/pan_resource.c
++++ b/src/gallium/drivers/panfrost/pan_resource.c
+@@ -1081,6 +1081,19 @@ panfrost_box_covers_resource(const struct pipe_resource *resource,
+                                            box->width, box->height, box->depth);
+ }
+ 
++static bool
++panfrost_can_discard(struct pipe_resource *resource, const struct pipe_box *box,
++                     unsigned usage)
++{
++   struct panfrost_resource *rsrc = pan_resource(resource);
++
++   return ((usage & PIPE_MAP_DISCARD_RANGE) &&
++           !(usage & PIPE_MAP_UNSYNCHRONIZED) &&
++           !(resource->flags & PIPE_RESOURCE_FLAG_MAP_PERSISTENT) &&
++           panfrost_box_covers_resource(resource, box) &&
++           !(rsrc->bo->flags & PAN_BO_SHARED));
++}
++
+ static void *
+ panfrost_ptr_map(struct pipe_context *pctx, struct pipe_resource *resource,
+                  unsigned level,
+@@ -1165,11 +1178,7 @@ panfrost_ptr_map(struct pipe_context *pctx, struct pipe_resource *resource,
+    /* Upgrade DISCARD_RANGE to WHOLE_RESOURCE if the whole resource is
+     * being mapped.
+     */
+-   if ((usage & PIPE_MAP_DISCARD_RANGE) && !(usage & PIPE_MAP_UNSYNCHRONIZED) &&
+-       !(resource->flags & PIPE_RESOURCE_FLAG_MAP_PERSISTENT) &&
+-       panfrost_box_covers_resource(resource, box) &&
+-       !(rsrc->bo->flags & PAN_BO_SHARED)) {
+-
++   if (panfrost_can_discard(resource, box, usage)) {
+       usage |= PIPE_MAP_DISCARD_WHOLE_RESOURCE;
+    }
+ 
+-- 
+GitLab
+
+
+From 6a6bd2752d5b0921d5d024e74d273f87d1f85e48 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Louis-Francis=20Ratt=C3=A9-Boulianne?= <lfrb@collabora.com>
+Date: Wed, 24 Jan 2024 00:57:55 -0500
+Subject: [PATCH 2/4] panfrost: add copy_resource flag to
+ pan_resource_modifier_convert
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+When converting the modifier for a resource, it's not always
+needed to blit the content as well. Creating a new resource with
+the right format/modifier might be enough.
+
+Signed-off-by: Louis-Francis RattÃ©-Boulianne <lfrb@collabora.com>
+---
+ src/gallium/drivers/panfrost/pan_context.c  |  2 +-
+ src/gallium/drivers/panfrost/pan_resource.c | 59 ++++++++++-----------
+ src/gallium/drivers/panfrost/pan_resource.h |  3 +-
+ 3 files changed, 32 insertions(+), 32 deletions(-)
+
+diff --git a/src/gallium/drivers/panfrost/pan_context.c b/src/gallium/drivers/panfrost/pan_context.c
+index 7408bd7d189c..bc9006c14d23 100644
+--- a/src/gallium/drivers/panfrost/pan_context.c
++++ b/src/gallium/drivers/panfrost/pan_context.c
+@@ -284,7 +284,7 @@ panfrost_set_shader_images(struct pipe_context *pctx,
+        */
+       if (drm_is_afbc(rsrc->image.layout.modifier)) {
+          pan_resource_modifier_convert(
+-            ctx, rsrc, DRM_FORMAT_MOD_ARM_16X16_BLOCK_U_INTERLEAVED,
++            ctx, rsrc, DRM_FORMAT_MOD_ARM_16X16_BLOCK_U_INTERLEAVED, true,
+             "Shader image");
+       }
+ 
+diff --git a/src/gallium/drivers/panfrost/pan_resource.c b/src/gallium/drivers/panfrost/pan_resource.c
+index 77bd26d6ccab..9ac92812cd88 100644
+--- a/src/gallium/drivers/panfrost/pan_resource.c
++++ b/src/gallium/drivers/panfrost/pan_resource.c
+@@ -1321,46 +1321,45 @@ panfrost_ptr_map(struct pipe_context *pctx, struct pipe_resource *resource,
+ void
+ pan_resource_modifier_convert(struct panfrost_context *ctx,
+                               struct panfrost_resource *rsrc, uint64_t modifier,
+-                              const char *reason)
++                              bool copy_resource, const char *reason)
+ {
+    assert(!rsrc->modifier_constant);
+ 
+-   perf_debug_ctx(ctx, "%s AFBC with a blit. Reason: %s",
+-                  drm_is_afbc(modifier) ? "Unpacking" : "Disabling", reason);
+-
+    struct pipe_resource *tmp_prsrc = panfrost_resource_create_with_modifier(
+       ctx->base.screen, &rsrc->base, modifier);
+    struct panfrost_resource *tmp_rsrc = pan_resource(tmp_prsrc);
+ 
+-   struct pipe_blit_info blit = {
+-      .dst.resource = &tmp_rsrc->base,
+-      .dst.format = tmp_rsrc->base.format,
+-      .src.resource = &rsrc->base,
+-      .src.format = rsrc->base.format,
+-      .mask = util_format_get_mask(tmp_rsrc->base.format),
+-      .filter = PIPE_TEX_FILTER_NEAREST,
+-   };
++   if (copy_resource) {
++      struct pipe_blit_info blit = {
++         .dst.resource = &tmp_rsrc->base,
++         .dst.format = tmp_rsrc->base.format,
++         .src.resource = &rsrc->base,
++         .src.format = rsrc->base.format,
++         .mask = util_format_get_mask(tmp_rsrc->base.format),
++         .filter = PIPE_TEX_FILTER_NEAREST,
++      };
+ 
+-   /* data_valid is not valid until flushed */
+-   panfrost_flush_writer(ctx, rsrc, "AFBC decompressing blit");
++      /* data_valid is not valid until flushed */
++      panfrost_flush_writer(ctx, rsrc, "AFBC decompressing blit");
+ 
+-   for (int i = 0; i <= rsrc->base.last_level; i++) {
+-      if (BITSET_TEST(rsrc->valid.data, i)) {
+-         blit.dst.level = blit.src.level = i;
++      for (int i = 0; i <= rsrc->base.last_level; i++) {
++         if (BITSET_TEST(rsrc->valid.data, i)) {
++            blit.dst.level = blit.src.level = i;
+ 
+-         u_box_3d(0, 0, 0, u_minify(rsrc->base.width0, i),
+-                  u_minify(rsrc->base.height0, i),
+-                  util_num_layers(&rsrc->base, i), &blit.dst.box);
+-         blit.src.box = blit.dst.box;
++            u_box_3d(0, 0, 0, u_minify(rsrc->base.width0, i),
++                     u_minify(rsrc->base.height0, i),
++                     util_num_layers(&rsrc->base, i), &blit.dst.box);
++            blit.src.box = blit.dst.box;
+ 
+-         panfrost_blit_no_afbc_legalization(&ctx->base, &blit);
++            panfrost_blit_no_afbc_legalization(&ctx->base, &blit);
++         }
+       }
+-   }
+ 
+-   /* we lose track of tmp_rsrc after this point, and the BO migration
+-    * (from tmp_rsrc to rsrc) doesn't transfer the last_writer to rsrc
+-    */
+-   panfrost_flush_writer(ctx, tmp_rsrc, "AFBC decompressing blit");
++      /* we lose track of tmp_rsrc after this point, and the BO migration
++       * (from tmp_rsrc to rsrc) doesn't transfer the last_writer to rsrc
++       */
++      panfrost_flush_writer(ctx, tmp_rsrc, "AFBC decompressing blit");
++   }
+ 
+    panfrost_bo_unreference(rsrc->bo);
+ 
+@@ -1369,7 +1368,7 @@ pan_resource_modifier_convert(struct panfrost_context *ctx,
+    panfrost_bo_reference(rsrc->bo);
+ 
+    panfrost_resource_setup(pan_device(ctx->base.screen), rsrc, modifier,
+-                           blit.dst.format);
++                           tmp_rsrc->base.format);
+    /* panfrost_resource_setup will force the modifier to stay constant when
+     * called with a specific modifier. We don't want that here, we want to
+     * be able to convert back to another modifier if needed */
+@@ -1394,7 +1393,7 @@ pan_legalize_afbc_format(struct panfrost_context *ctx,
+    if (panfrost_afbc_format(dev->arch, rsrc->base.format) !=
+        panfrost_afbc_format(dev->arch, format)) {
+       pan_resource_modifier_convert(
+-         ctx, rsrc, DRM_FORMAT_MOD_ARM_16X16_BLOCK_U_INTERLEAVED,
++         ctx, rsrc, DRM_FORMAT_MOD_ARM_16X16_BLOCK_U_INTERLEAVED, true,
+          "Reinterpreting AFBC surface as incompatible format");
+       return;
+    }
+@@ -1402,7 +1401,7 @@ pan_legalize_afbc_format(struct panfrost_context *ctx,
+    if (write && (rsrc->image.layout.modifier & AFBC_FORMAT_MOD_SPARSE) == 0)
+       pan_resource_modifier_convert(
+          ctx, rsrc, rsrc->image.layout.modifier | AFBC_FORMAT_MOD_SPARSE,
+-         "Legalizing resource to allow writing");
++         true, "Legalizing resource to allow writing");
+ }
+ 
+ static bool
+diff --git a/src/gallium/drivers/panfrost/pan_resource.h b/src/gallium/drivers/panfrost/pan_resource.h
+index d6533349aca3..f41b94f3f51f 100644
+--- a/src/gallium/drivers/panfrost/pan_resource.h
++++ b/src/gallium/drivers/panfrost/pan_resource.h
+@@ -191,7 +191,8 @@ void panfrost_pack_afbc(struct panfrost_context *ctx,
+ 
+ void pan_resource_modifier_convert(struct panfrost_context *ctx,
+                                    struct panfrost_resource *rsrc,
+-                                   uint64_t modifier, const char *reason);
++                                   uint64_t modifier, bool copy_resource,
++                                   const char *reason);
+ 
+ void pan_legalize_afbc_format(struct panfrost_context *ctx,
+                               struct panfrost_resource *rsrc,
+-- 
+GitLab
+
+
+From e1ae5a0e0cd95834390b0fb293d7a4da25a858cf Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Louis-Francis=20Ratt=C3=A9-Boulianne?= <lfrb@collabora.com>
+Date: Wed, 24 Jan 2024 00:56:09 -0500
+Subject: [PATCH 3/4] panfrost: add can_discard flag to
+ pan_legalize_afbc_format
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+There might be a more efficient path when legalizing a resource if
+we don't need to worry about its content. For example, it doesn't
+make sense to copy the resource content when converting the modifier
+if the resource content is discarded anyway.
+
+Signed-off-by: Louis-Francis RattÃ©-Boulianne <lfrb@collabora.com>
+---
+ src/gallium/drivers/panfrost/pan_blit.c      | 4 ++--
+ src/gallium/drivers/panfrost/pan_cmdstream.c | 2 +-
+ src/gallium/drivers/panfrost/pan_job.c       | 2 +-
+ src/gallium/drivers/panfrost/pan_resource.c  | 6 +++---
+ src/gallium/drivers/panfrost/pan_resource.h  | 3 ++-
+ 5 files changed, 9 insertions(+), 8 deletions(-)
+
+diff --git a/src/gallium/drivers/panfrost/pan_blit.c b/src/gallium/drivers/panfrost/pan_blit.c
+index 235afc118bea..cbc96e903db8 100644
+--- a/src/gallium/drivers/panfrost/pan_blit.c
++++ b/src/gallium/drivers/panfrost/pan_blit.c
+@@ -107,11 +107,11 @@ panfrost_blit(struct pipe_context *pipe, const struct pipe_blit_info *info)
+    /* Legalize here because it could trigger a recursive blit otherwise */
+    struct panfrost_resource *src = pan_resource(info->src.resource);
+    enum pipe_format src_view_format = util_format_linear(info->src.format);
+-   pan_legalize_afbc_format(ctx, src, src_view_format, false);
++   pan_legalize_afbc_format(ctx, src, src_view_format, false, false);
+ 
+    struct panfrost_resource *dst = pan_resource(info->dst.resource);
+    enum pipe_format dst_view_format = util_format_linear(info->dst.format);
+-   pan_legalize_afbc_format(ctx, dst, dst_view_format, true);
++   pan_legalize_afbc_format(ctx, dst, dst_view_format, true, false);
+ 
+    panfrost_blit_no_afbc_legalization(pipe, info);
+ }
+diff --git a/src/gallium/drivers/panfrost/pan_cmdstream.c b/src/gallium/drivers/panfrost/pan_cmdstream.c
+index 8b356df8d43c..83f7eb5ff0e2 100644
+--- a/src/gallium/drivers/panfrost/pan_cmdstream.c
++++ b/src/gallium/drivers/panfrost/pan_cmdstream.c
+@@ -3408,7 +3408,7 @@ panfrost_create_sampler_view(struct pipe_context *pctx,
+       rzalloc(pctx, struct panfrost_sampler_view);
+ 
+    pan_legalize_afbc_format(ctx, pan_resource(texture), template->format,
+-                            false);
++                            false, false);
+ 
+    pipe_reference(NULL, &texture->reference);
+ 
+diff --git a/src/gallium/drivers/panfrost/pan_job.c b/src/gallium/drivers/panfrost/pan_job.c
+index 1866ff58daed..5e81b97c052d 100644
+--- a/src/gallium/drivers/panfrost/pan_job.c
++++ b/src/gallium/drivers/panfrost/pan_job.c
+@@ -65,7 +65,7 @@ panfrost_batch_add_surface(struct panfrost_batch *batch,
+ {
+    if (surf) {
+       struct panfrost_resource *rsrc = pan_resource(surf->texture);
+-      pan_legalize_afbc_format(batch->ctx, rsrc, surf->format, true);
++      pan_legalize_afbc_format(batch->ctx, rsrc, surf->format, true, false);
+       panfrost_batch_write_rsrc(batch, rsrc, PIPE_SHADER_FRAGMENT);
+    }
+ }
+diff --git a/src/gallium/drivers/panfrost/pan_resource.c b/src/gallium/drivers/panfrost/pan_resource.c
+index 9ac92812cd88..cc6ebb4b9295 100644
+--- a/src/gallium/drivers/panfrost/pan_resource.c
++++ b/src/gallium/drivers/panfrost/pan_resource.c
+@@ -1383,7 +1383,7 @@ pan_resource_modifier_convert(struct panfrost_context *ctx,
+ void
+ pan_legalize_afbc_format(struct panfrost_context *ctx,
+                          struct panfrost_resource *rsrc,
+-                         enum pipe_format format, bool write)
++                         enum pipe_format format, bool write, bool discard)
+ {
+    struct panfrost_device *dev = pan_device(ctx->base.screen);
+ 
+@@ -1393,7 +1393,7 @@ pan_legalize_afbc_format(struct panfrost_context *ctx,
+    if (panfrost_afbc_format(dev->arch, rsrc->base.format) !=
+        panfrost_afbc_format(dev->arch, format)) {
+       pan_resource_modifier_convert(
+-         ctx, rsrc, DRM_FORMAT_MOD_ARM_16X16_BLOCK_U_INTERLEAVED, true,
++         ctx, rsrc, DRM_FORMAT_MOD_ARM_16X16_BLOCK_U_INTERLEAVED, !discard,
+          "Reinterpreting AFBC surface as incompatible format");
+       return;
+    }
+@@ -1401,7 +1401,7 @@ pan_legalize_afbc_format(struct panfrost_context *ctx,
+    if (write && (rsrc->image.layout.modifier & AFBC_FORMAT_MOD_SPARSE) == 0)
+       pan_resource_modifier_convert(
+          ctx, rsrc, rsrc->image.layout.modifier | AFBC_FORMAT_MOD_SPARSE,
+-         true, "Legalizing resource to allow writing");
++         !discard, "Legalizing resource to allow writing");
+ }
+ 
+ static bool
+diff --git a/src/gallium/drivers/panfrost/pan_resource.h b/src/gallium/drivers/panfrost/pan_resource.h
+index f41b94f3f51f..514b0c5cd464 100644
+--- a/src/gallium/drivers/panfrost/pan_resource.h
++++ b/src/gallium/drivers/panfrost/pan_resource.h
+@@ -196,7 +196,8 @@ void pan_resource_modifier_convert(struct panfrost_context *ctx,
+ 
+ void pan_legalize_afbc_format(struct panfrost_context *ctx,
+                               struct panfrost_resource *rsrc,
+-                              enum pipe_format format, bool write);
++                              enum pipe_format format, bool write,
++                              bool discard);
+ void pan_dump_resource(struct panfrost_context *ctx,
+                        struct panfrost_resource *rsc);
+ 
+-- 
+GitLab
+
+
+From 580805dac920d105d184ae756aa296d764b2b1c0 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Louis-Francis=20Ratt=C3=A9-Boulianne?= <lfrb@collabora.com>
+Date: Wed, 24 Jan 2024 01:18:56 -0500
+Subject: [PATCH 4/4] panfrost: Legalize before updating part of a AFBC-packed
+ texture
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+When updating an AFBC-packed resource, we need to make sure it is
+legalized before blitting the staging resource to it. We can't rely
+on the blit to properly convert the resource as it will result in
+blit recursion and a crash.
+
+If the whole texture is updated however, there is no need to unpack
+as the content can be discarded. Just create a new BO with the right
+format.
+
+Signed-off-by: Louis-Francis RattÃ©-Boulianne <lfrb@collabora.com>
+---
+ src/gallium/drivers/panfrost/pan_resource.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/gallium/drivers/panfrost/pan_resource.c b/src/gallium/drivers/panfrost/pan_resource.c
+index cc6ebb4b9295..bcdf0753f8bb 100644
+--- a/src/gallium/drivers/panfrost/pan_resource.c
++++ b/src/gallium/drivers/panfrost/pan_resource.c
+@@ -1609,6 +1609,10 @@ panfrost_ptr_unmap(struct pipe_context *pctx, struct pipe_transfer *transfer)
+             prsrc->image.data.base = prsrc->bo->ptr.gpu;
+             panfrost_bo_reference(prsrc->bo);
+          } else {
++            bool discard = panfrost_can_discard(&prsrc->base, &transfer->box,
++                                                transfer->usage);
++            pan_legalize_afbc_format(ctx, prsrc, prsrc->image.layout.format,
++                                     true, discard);
+             pan_blit_from_staging(pctx, trans);
+             panfrost_flush_batches_accessing_rsrc(
+                ctx, pan_resource(trans->staging.rsrc),
+-- 
+GitLab
