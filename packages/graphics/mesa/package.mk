@@ -10,19 +10,20 @@ PKG_TOOLCHAIN="meson"
 PKG_PATCH_DIRS+=" ${DEVICE}"
 
 case ${DEVICE} in
- RK35*)
+  RK3588*)
         PKG_VERSION="120202c675749c5ef81ae4c8cdc30019b4de08f4"
         PKG_SITE="https://gitlab.com/panfork/mesa"
         PKG_URL="${PKG_SITE}.git"
         PKG_GIT_CLONE_BRANCH="csf"
   ;;
-  RK3399) #Stable Mesa appears to be broken on the RK3399 build currently, using upstream dev
-	PKG_VERSION="3ee633920618de559f6cf76225b1c2b27256facc"
+  RK33*) #Using upstream dev for panfrost
+	PKG_VERSION="7adc7678a88edccfbd20af2307e7f50e9ed48e47"
 	PKG_SITE="https://gitlab.freedesktop.org/mesa/mesa"
 	PKG_URL="${PKG_SITE}.git"
+        PKG_PATCH_DIRS+=" panfrost"
   ;;
   *)
-	PKG_VERSION="23.3.3"
+	PKG_VERSION="23.3.4"
 	PKG_SITE="http://www.mesa3d.org/"
 	PKG_URL="https://gitlab.freedesktop.org/mesa/mesa/-/archive/mesa-${PKG_VERSION}/mesa-mesa-${PKG_VERSION}.tar.gz"
   ;;
