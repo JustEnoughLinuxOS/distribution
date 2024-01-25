@@ -36,8 +36,11 @@ case ${DEVICE} in
     PKG_GIT_CLONE_BRANCH="main"
   ;;
   RK3399|RK3326)
-    PKG_VERSION="6.7"
+#    PKG_VERSION="6.6.13"
+    PKG_VERSION="6.7.1"
+#    PKG_VERSION="6.8-rc1"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
+#    PKG_URL="https://git.kernel.org/torvalds/t/linux-${PKG_VERSION}.tar.gz"
   ;;
 esac
 

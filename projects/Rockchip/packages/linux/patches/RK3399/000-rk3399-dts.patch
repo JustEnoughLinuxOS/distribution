@@ -1,6 +1,6 @@
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/Makefile linux/arch/arm64/boot/dts/rockchip/Makefile
---- linux.orig/arch/arm64/boot/dts/rockchip/Makefile	2024-01-09 14:07:11.858381650 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/Makefile	2024-01-09 18:09:58.589953944 +0000
+--- linux.orig/arch/arm64/boot/dts/rockchip/Makefile	2024-01-23 23:55:32.434476392 +0000
++++ linux/arch/arm64/boot/dts/rockchip/Makefile	2024-01-25 01:21:59.078794990 +0000
 @@ -29,6 +29,7 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3368-li
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3368-orion-r68-meta.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3368-px5-evb.dtb
@@ -11,8 +11,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/Makefile linux/arch/arm64/boo
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3399-ficus.dtb
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-anbernic-rg552.dts linux/arch/arm64/boot/dts/rockchip/rk3399-anbernic-rg552.dts
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3399-anbernic-rg552.dts	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3399-anbernic-rg552.dts	2024-01-09 18:09:58.589953944 +0000
-@@ -0,0 +1,1336 @@
++++ linux/arch/arm64/boot/dts/rockchip/rk3399-anbernic-rg552.dts	2024-01-25 01:22:30.031520037 +0000
+@@ -0,0 +1,1325 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2017 Fuzhou Rockchip Electronics Co., Ltd.
@@ -488,17 +488,6 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-anbernic-rg552.dts lin
 +		regulator-min-microvolt = <5000000>;
 +		regulator-max-microvolt = <5000000>;
 +		vin-supply = <&vcc12v_dcin>;
-+	};
-+
-+	vdd_log: vdd-log {
-+		compatible = "pwm-regulator";
-+		pwms = <&pwm2 0 25000 1>;
-+		regulator-name = "vdd_log";
-+		regulator-always-on;
-+		regulator-boot-on;
-+		regulator-min-microvolt = <800000>;
-+		regulator-max-microvolt = <1700000>;
-+		vin-supply = <&vcc5v0_sys>;
 +	};
 +
 +	vcc5v5_lcd: vcc5v5-lcd {
