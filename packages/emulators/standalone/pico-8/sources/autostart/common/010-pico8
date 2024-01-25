@@ -3,7 +3,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PICO_DIR="/storage/roms/pico-8"
-if [ -d "${PICO_DIR}" ]
+if [ -d "${PICO_DIR}" ] && [ ! -f "${PICO_DIR}/.disable_splore" ]
 then
   touch "${PICO_DIR}/Splore.png"
 fi
