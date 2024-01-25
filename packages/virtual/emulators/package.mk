@@ -66,10 +66,10 @@ case "${DEVICE}" in
     PKG_RETROARCH+=" retropie-shaders"
   ;;
   RK3326*)
-    [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="desmume-lr gpsp-lr pcsx_rearmed-lr"
+    [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="desmume-lr gpsp-lr pcsx_rearmed-lr flycast-lr"
     PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders"
     PKG_EMUS+=" amiberry drastic-sa mupen64plus-sa scummvmsa yabasanshiro-sa portmaster mednafen"
-    LIBRETRO_CORES+=" uae4arm flycast-lr"
+    LIBRETRO_CORES+=" uae4arm flycast-lr flycast2021-lr"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
 esac
@@ -223,7 +223,12 @@ makeinstall_target() {
       add_emu_core atomiswave retroarch flycast false
       add_emu_core atomiswave flycast flycast-sa false
     ;;
-    RK33*)
+    RK3399)
+      add_emu_core atomiswave flycast flycast-sa false
+      add_emu_core atomiswave retroarch flycast true
+    ;;
+    RK3326*)
+      add_emu_core atomiswave retroarch flycast2021 false
       add_emu_core atomiswave flycast flycast-sa false
       add_emu_core atomiswave retroarch flycast true
     ;;
@@ -321,7 +326,12 @@ makeinstall_target() {
       add_emu_core dreamcast retroarch flycast false
       add_emu_core dreamcast flycast flycast-sa false
     ;;
-    RK33*)
+    RK3339)
+      add_emu_core dreamcast flycast flycast-sa false
+      add_emu_core dreamcast retroarch flycast true
+    ;;
+    RK3326*)
+      add_emu_core dreamcast retroarch flycast2021 false
       add_emu_core dreamcast flycast flycast-sa false
       add_emu_core dreamcast retroarch flycast true
     ;;
@@ -634,7 +644,12 @@ makeinstall_target() {
       add_emu_core naomi retroarch flycast false
       add_emu_core naomi flycast flycast-sa false
     ;;
-    RK33*)
+    RK3399)
+      add_emu_core naomi flycast flycast-sa false
+      add_emu_core naomi retroarch flycast true
+    ;;
+    RK3326*)
+      add_emu_core naomi retroarch flycast2021 false
       add_emu_core naomi flycast flycast-sa false
       add_emu_core naomi retroarch flycast true
     ;;
