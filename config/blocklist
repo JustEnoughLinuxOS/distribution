@@ -14,3 +14,4 @@ retroarch #pinning to release versions for stability.
 vita3k-sa #Patch updates needed.
 gzdoom-sa #Stick to release versions.
 openbor #newer versions break controls, needs research.
+gptokeyb #Newer versions break hotkeys
