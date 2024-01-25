@@ -1,6 +1,6 @@
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-op1-opp.dtsi linux/arch/arm64/boot/dts/rockchip/rk3399-op1-opp.dtsi
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3399-op1-opp.dtsi	2024-01-23 23:55:32.438476475 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3399-op1-opp.dtsi	2024-01-24 14:42:44.077563119 +0000
++++ linux/arch/arm64/boot/dts/rockchip/rk3399-op1-opp.dtsi	2024-01-25 01:12:39.857762800 +0000
 @@ -9,34 +9,35 @@
  		opp-shared;
  
@@ -106,7 +106,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-op1-opp.dtsi linux/arc
  	};
  
  	gpu_opp_table: opp-table-2 {
-@@ -90,46 +88,36 @@
+@@ -90,44 +88,30 @@
  			opp-microvolt = <800000>;
  		};
  		opp01 {
@@ -162,10 +162,4 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-op1-opp.dtsi linux/arc
 +			opp-hz = /bits/ 64 <933000000>;
  			opp-microvolt = <925000>;
  		};
-+		//opp01 {
-+		//	opp-hz = /bits/ 64 <856000000>;
-+		//	opp-microvolt = <900000>;
-+		//};
  	};
- };
- 
