@@ -26,6 +26,7 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/config/drastic/config
   cp -rf ${PKG_BUILD}/drastic_aarch64/* ${INSTALL}/usr/config/drastic/
   cp -rf ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/config/drastic/config/
+  cp -rf ${PKG_DIR}/config/drastic.gptk ${INSTALL}/usr/config/drastic/
 }
 
 post_install() {
