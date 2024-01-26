@@ -4,7 +4,11 @@
 # Copyright (C) 2019-present Shanti Gilbert (https://github.com/shantigilbert)
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
+gptokeyb fileman textinput &
+
 . /etc/profile
 jslisten set "FileMan"
 
 fileman
+
+killall gptokeyb &
