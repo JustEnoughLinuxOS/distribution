@@ -223,11 +223,7 @@ makeinstall_target() {
       add_emu_core atomiswave retroarch flycast false
       add_emu_core atomiswave flycast flycast-sa false
     ;;
-    RK3399)
-      add_emu_core atomiswave flycast flycast-sa false
-      add_emu_core atomiswave retroarch flycast true
-    ;;
-    RK3326*)
+    RK33*)
       add_emu_core atomiswave retroarch flycast2021 false
       add_emu_core atomiswave flycast flycast-sa false
       add_emu_core atomiswave retroarch flycast true
@@ -326,11 +322,7 @@ makeinstall_target() {
       add_emu_core dreamcast retroarch flycast false
       add_emu_core dreamcast flycast flycast-sa false
     ;;
-    RK3339)
-      add_emu_core dreamcast flycast flycast-sa false
-      add_emu_core dreamcast retroarch flycast true
-    ;;
-    RK3326*)
+    RK33*)
       add_emu_core dreamcast retroarch flycast2021 false
       add_emu_core dreamcast flycast flycast-sa false
       add_emu_core dreamcast retroarch flycast true
@@ -644,11 +636,7 @@ makeinstall_target() {
       add_emu_core naomi retroarch flycast false
       add_emu_core naomi flycast flycast-sa false
     ;;
-    RK3399)
-      add_emu_core naomi flycast flycast-sa false
-      add_emu_core naomi retroarch flycast true
-    ;;
-    RK3326*)
+    RK33*)
       add_emu_core naomi retroarch flycast2021 false
       add_emu_core naomi flycast flycast-sa false
       add_emu_core naomi retroarch flycast true
