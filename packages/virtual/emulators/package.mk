@@ -23,7 +23,7 @@ LIBRETRO_CORES="81-lr a5200-lr arduous-lr atari800-lr beetle-gba-lr beetle-lynx-
                 gw-lr handy-lr hatari-lr idtech-lr mame-lr mame2003-plus-lr mame2010-lr mame2015-lr melonds-lr      \
                 mesen-lr mgba-lr mojozork-lr mupen64plus-lr mupen64plus-nx-lr neocd_lr nestopia-lr np2kai-lr    \
                 o2em-lr opera-lr parallel-n64-lr pcsx_rearmed-lr picodrive-lr pokemini-lr potator-lr          \
-                prosystem-lr puae-lr puae2021-lr px68k-lr quasi88-lr quicknes-lr race-lr       \
+                prosystem-lr puae-lr puae2021-lr px68k-lr quasi88-lr quicknes-lr race-lr same_cdi-lr      \
                 sameboy-lr sameduck-lr scummvm-lr smsplus-gx-lr snes9x-lr snes9x2002-lr snes9x2005_plus-lr snes9x2010-lr  \
                 stella-lr swanstation-lr tic80-lr tgbdual-lr uzem-lr vba-next-lr minivmac-lr               \
                 vbam-lr vecx-lr vice-lr yabasanshiro-lr virtualjaguar-lr xmil-lr"
@@ -1167,6 +1167,10 @@ makeinstall_target() {
   ### Milton Bradley Vectrex
   add_emu_core vectrex retroarch vecx true
   add_es_system vectrex
+
+  ### Philips - CDi
+  add_emu_core cdi retroarch same_cdi true
+  add_es_system cdi
 
   ### Philips Videopac
   add_emu_core videopac retroarch o2em true
