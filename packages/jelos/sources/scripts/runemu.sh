@@ -196,6 +196,25 @@ case ${EMULATOR} in
       ;;
     esac
 
+
+    ### Configure specific emulator requirements
+    case ${CORE} in
+      freej2me*)
+        ${VERBOSE} && log $0 "Setup freej2me requirements."
+        /usr/bin/freej2me.sh
+        JAVA_HOME='/storage/jdk'
+        export JAVA_HOME
+        PATH="$JAVA_HOME/bin:$PATH"
+        export PATH
+      ;;
+      easyrpg*)
+        # easyrpg needs runtime files to be downloaded on the first run
+        ${VERBOSE} && log $0 "Setup easyrpg requirements."
+        /usr/bin/easyrpg.sh
+      ;;
+    esac
+
+
     RUNTHIS='${EMUPERF} /usr/bin/${RABIN} -L /tmp/cores/${CORE}_libretro.so --config ${RETROARCH_TEMP_CONFIG} --appendconfig ${RETROARCH_APPEND_CONFIG} "${ROMNAME}"'
 
     CONTROLLERCONFIG="${ARGUMENTS#*--controllers=*}"
@@ -216,23 +235,6 @@ case ${EMULATOR} in
         CONTROLLERCONFIG="${CONTROLLERCONFIG%% -autosave*}"  # until -autosave is found
         AUTOSAVE="${ARGUMENTS#*-autosave *}" # -autosave x
         AUTOSAVE="${AUTOSAVE%% -*}"
-      ;;
-    esac
-
-    ### Configure specific emulator requirements
-    case ${EMULATOR} in
-      freej2me*)
-        ${VERBOSE} && log $0 "Setup freej2me requirements."
-        /usr/bin/freej2me.sh
-        JAVA_HOME='/storage/jdk'
-        export JAVA_HOME
-        PATH="$JAVA_HOME/bin:$PATH"
-        export PATH
-      ;;
-      easyrpg*)
-        # easyrpg needs runtime files to be downloaded on the first run
-        ${VERBOSE} && log $0 "Setup easyrpg requirements."
-        /usr/bin/easyrpg.sh
       ;;
     esac
 
