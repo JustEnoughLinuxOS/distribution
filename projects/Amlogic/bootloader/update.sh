@@ -78,6 +78,9 @@ if [ -n "$DT_ID" ]; then
   esac
 fi
 
+# Rename RGB10 Max 3 device tree after buildroot changes, remove this in the future
+[ -f $BOOT_ROOT/meson-g12b-powkiddy-rgb10-max-3.dtb ] && mv $BOOT_ROOT/meson-g12b-powkiddy-rgb10-max-3.dtb $BOOT_ROOT/meson-g12b-powkiddy-rgb10-max-3-pro.dtb
+
 for all_dtb in $BOOT_ROOT/*.dtb; do
   dtb=$(basename $all_dtb)
   if [ -f $SYSTEM_ROOT/usr/share/bootloader/$dtb ]; then
