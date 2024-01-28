@@ -30,7 +30,7 @@ case "${QUIRK_DEVICE}" in
     lres="N"
     sticks="2"
   ;;
-  "Hardkernel ODROID-GO-Ultra"|"Powkiddy RGB10 MAX 3")
+  "Hardkernel ODROID-GO-Ultra"|"Powkiddy RGB10 MAX 3 Pro")
     profile="s922x"
     lres="N"
     sticks="2"

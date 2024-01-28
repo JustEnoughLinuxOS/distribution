@@ -27,7 +27,7 @@ index d08f0aac00..a9c6a13279 100755
 +		setenv("fdtfile", "meson-g12b-odroid-go-ultra.dtb");
 +	} else {
 +		setenv("variant", "max3");
-+		setenv("fdtfile", "meson-g12b-powkiddy-rgb10-max-3.dtb");
++		setenv("fdtfile", "meson-g12b-powkiddy-rgb10-max-3-pro.dtb");
 +	}
 +
 +	// board_set_dtbfile("meson64_odroid%s.dtb");

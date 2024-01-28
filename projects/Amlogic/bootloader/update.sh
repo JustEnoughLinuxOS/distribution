@@ -66,7 +66,7 @@ DT_ID=$($SYSTEM_ROOT/usr/bin/dtname)
 
 if [ -n "$DT_ID" ]; then
   case $DT_ID in
-    *odroid_go_ultra*|*rgb10-max-3*)
+    *odroid-go-ultra*|*rgb10-max-3*)
       SUBDEVICE="Odroid_GOU"
       ;;
     *odroid-n2|*odroid-n2-plus)
@@ -77,6 +77,9 @@ if [ -n "$DT_ID" ]; then
       ;;
   esac
 fi
+
+# Rename RGB10 Max 3 device tree after buildroot changes, remove this in the future
+[ -f $BOOT_ROOT/meson-g12b-powkiddy-rgb10-max-3.dtb ] && mv $BOOT_ROOT/meson-g12b-powkiddy-rgb10-max-3.dtb $BOOT_ROOT/meson-g12b-powkiddy-rgb10-max-3-pro.dtb
 
 for all_dtb in $BOOT_ROOT/*.dtb; do
   dtb=$(basename $all_dtb)
@@ -113,6 +116,10 @@ fi
 if [ -f $SYSTEM_ROOT/usr/share/bootloader/${SUBDEVICE}_u-boot ]; then
   echo "Updating u-boot on: $BOOT_DISK..."
   dd if=$SYSTEM_ROOT/usr/share/bootloader/${SUBDEVICE}_u-boot of=$BOOT_DISK conv=fsync,notrunc bs=512 seek=1 &>/dev/null
+  if [ $BOOT_DISK != /dev/mmcblk0 ]; then
+    echo "Updating u-boot on: /dev/mmcblk0..."
+    dd if=$SYSTEM_ROOT/usr/share/bootloader/${SUBDEVICE}_u-boot of=/dev/mmcblk0 conv=fsync,notrunc bs=512 seek=1 &>/dev/null
+  fi
 fi
 
 if [ -f $BOOT_ROOT/ODROIDBIOS.BIN ]; then
