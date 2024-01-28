@@ -298,8 +298,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-anbernic-rg351v.dts li
 +};
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-gameconsole-r33s.dts linux/arch/arm64/boot/dts/rockchip/rk3326-gameconsole-r33s.dts
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-gameconsole-r33s.dts	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3326-gameconsole-r33s.dts	2024-01-27 13:47:36.892115722 +0000
-@@ -0,0 +1,645 @@
++++ linux/arch/arm64/boot/dts/rockchip/rk3326-gameconsole-r33s.dts	2024-01-28 16:55:43.716341633 +0000
+@@ -0,0 +1,646 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2019 Hardkernel Co., Ltd
@@ -465,8 +465,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-gameconsole-r33s.dts l
 +
 +	battery: battery {
 +		compatible = "simple-battery";
-+		charge-full-design-microamp-hours = <3500000>;
-+		charge-term-current-microamp = <350000>;
++		charge-full-design-microamp-hours = <3200000>;
++		charge-term-current-microamp = <320000>;
 +		constant-charge-current-max-microamp = <2000000>;
 +		constant-charge-voltage-max-microvolt = <4200000>;
 +		factory-internal-resistance-micro-ohms = <180000>;
@@ -480,6 +480,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-gameconsole-r33s.dts l
 +					<3696720 40>, <3685660 35>, <3674950 30>, <3663050 25>,
 +					<3649470 20>, <3635260 15>, <3616920 10>, <3592440 5>,
 +					<3574170 0>;
++       
 +       };
 +
 +	vibrator {
