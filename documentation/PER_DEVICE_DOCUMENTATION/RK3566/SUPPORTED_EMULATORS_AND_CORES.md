@@ -41,6 +41,7 @@ This document describes all available systems emulators and cores available for 
 |Commodore|Commodore 64 (c64)|1982|`c64`|.d64 .d71 .d80 .d81 .d82 .g64 .g41 .x64 .t64 .tap .prg .p00 .crt .bin .d6z .d7z .d8z .g6z .g4z .x6z .cmd .m3u .vsf .nib .nbz .zip|**retroarch:** vice_x64 (default)<br>**vicesa:** x64sc<br>|
 |Commodore|Commodore PET (pet)|1977|`pet`|.20 .a0 .b0 .d64 .d71 .d80 .d81 .d82 .g64 .g41 .x64 .t64 .tap .prg .p00 .crt .bin .gz .d6z .d7z .d8z .g6z .g4z .x6z .cmd .m3u .vsf .nib .nbz .zip|**retroarch:** vice_xpet (default)<br>|
 |Commodore|VIC-20 (vic20)|1980|`vic20`|.20 .a0 .b0 .d64 .d71 .d80 .d81 .d82 .g64 .g41 .x64 .t64 .tap .prg .p00 .crt .bin .gz .d6z .d7z .d8z .g6z .g4z .x6z .cmd .m3u .vsf .nib .nbz .zip|**retroarch:** vice_xvic (default)<br>**vicesa:** xvic<br>|
+|EPOCH/YENO|Super Cassette Vision (scv)|1984|`scv`|.cart .bin .rom .0 .zip|**retroarch:** emuscv (default)<br>|
 |Fairchild|Fairchild Channel F (channelf)|1976|`channelf`|.bin .chf .zip .7z|**retroarch:** freechaf (default)<br>|
 |id Software|Doom (doom)|1993|`doom`|.doom|**gzdoom:** gzdoom-sa (default)<br>|
 |id Software|iDtech (idtech)|1991|`idtech`|.sh|**retroarch:** idtech<br>|
@@ -81,6 +82,7 @@ This document describes all available systems emulators and cores available for 
 |Nintendo|Super Nintendo (snes)|1991|`snes`|.smc .fig .sfc .swc .zip .7z|**retroarch:** snes9x (default)<br>**retroarch:** snes9x2010<br>**retroarch:** snes9x2002<br>**retroarch:** snes9x2005_plus<br>**retroarch:** beetle_supafaust<br>**retroarch:** bsnes_mercury_performance<br>|
 |Nintendo|Virtual Boy (virtualboy)|1995|`virtualboy`|.vb .zip .7z|**retroarch:** beetle_vb (default)<br>|
 |Panasonic|3DO (3do)|1993|`3do`|.iso .bin .chd .cue|**retroarch:** opera (default)<br>|
+|Philips|CD-i (cdi)|1991|`cdi`|.chd .cue .iso|**retroarch:** same_cdi (default)<br>|
 |Philips|VideoPac (videopac)|1978|`videopac`|.bin .zip .7z|**retroarch:** o2em (default)<br>|
 |Sammy|Atomiswave (atomiswave)|2003|`atomiswave`|.lst .bin .dat .zip .7z|**retroarch:** flycast2021<br>**retroarch:** flycast<br>**flycast:** flycast-sa<br>|
 |Sega|Dreamcast (dreamcast)|1998|`dreamcast`|.cdi .gdi .chd .m3u .cue|**retroarch:** flycast2021<br>**retroarch:** flycast<br>**flycast:** flycast-sa<br>|
