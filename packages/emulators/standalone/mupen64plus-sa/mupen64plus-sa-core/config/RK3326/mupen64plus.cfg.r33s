@@ -110,7 +110,7 @@ Kbd Mapping Frame Advance = 47
 # SDL keysym for pressing the game shark button
 Kbd Mapping Gameshark = 103
 # Joystick event string for stopping the emulator
-Joy Mapping Stop = "J0B12/B13"
+Joy Mapping Stop = "J0B8/B9"
 # Joystick event string for switching between fullscreen/windowed modes
 Joy Mapping Fullscreen = ""
 # Joystick event string for saving the emulator state
