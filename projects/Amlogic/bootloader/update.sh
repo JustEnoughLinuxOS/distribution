@@ -66,7 +66,7 @@ DT_ID=$($SYSTEM_ROOT/usr/bin/dtname)
 
 if [ -n "$DT_ID" ]; then
   case $DT_ID in
-    *odroid_go_ultra*|*rgb10-max-3*)
+    *odroid-go-ultra*|*rgb10-max-3*)
       SUBDEVICE="Odroid_GOU"
       ;;
     *odroid-n2|*odroid-n2-plus)
