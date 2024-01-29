@@ -1,8 +1,8 @@
-diff --git a/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3.dts b/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3.dts
+diff --git a/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3-pro.dts b/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3-pro.dts
 new file mode 100644
 index 000000000000..df5dde6eec79
 --- /dev/null
-+++ b/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3.dts
++++ b/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3-pro.dts
 @@ -0,0 +1,39 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
@@ -14,8 +14,8 @@ index 000000000000..df5dde6eec79
 +#include "meson-g12b-odroid-go-ultra.dts"
 +
 +/ {
-+	compatible = "powkiddy,rgb10-max-3", "amlogic,a311d", "amlogic,g12b";
-+	model = "Powkiddy RGB10 MAX 3";
++	compatible = "powkiddy,rgb10-max-3-pro", "amlogic,a311d", "amlogic,g12b";
++	model = "Powkiddy RGB10 MAX 3 Pro";
 +
 +	/delete-node/ hp-detect-switch;
 +
@@ -40,6 +40,6 @@ index 000000000000..df5dde6eec79
 +	};
 +
 +        sound {
-+		model = "RGB10-MAX3";
++		model = "RGB10-MAX-3-PRO";
 +	};
 +};
