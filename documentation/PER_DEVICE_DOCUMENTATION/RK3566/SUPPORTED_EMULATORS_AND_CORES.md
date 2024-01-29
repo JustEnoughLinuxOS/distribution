@@ -101,7 +101,7 @@ This document describes all available systems emulators and cores available for 
 |Sega|SG-1000 (sg-1000)|1983|`sg-1000`|.bin .sg .zip .7z|**retroarch:** gearsystem (default)<br>**retroarch:** genesis_plus_gx<br>**retroarch:** picodrive<br>|
 |Sega|ST-V (st-v)|1995|`st-v`|.zip .ZIP||
 |Sharp|X1 (x1)|1982|`x1`|.dx1 .2d .2hd .tfd .d88d .hdm .xdf .dup .tap .cmd .zip .7z|**retroarch:** x1 (default)<br>|
-|Sharp|x68000 (x68000)|1987|`x68000`|.dim .img .d88d .hdm .dup .2hd .xdf .hdf .cmd .m3u .zip .7z|**retroarch:** px68k (default)<br>|
+|Sharp|x68000 (x68000)|1987|`x68000`|.dim .img .d88 .hdm .dup .2hd .xdf .hdf .cmd .m3u .zip .7z|**retroarch:** px68k (default)<br>|
 |Sinclair|ZX Spectrum (zxspectrum)|1982|`zxspectrum`|.tzx .tap .z80 .rzx .scl .trd .dsk .zip .7z|**retroarch:** fuse<br>|
 |Sinclair|ZX81 (zx81)|1981|`zx81`|.tzx .p .zip .7z|**retroarch:** 81 (default)<br>|
 |Smith Engineering|Vectrex (vectrex)|1982|`vectrex`|.bin .gam .vec .zip .7z|**retroarch:** vecx (default)<br>|
