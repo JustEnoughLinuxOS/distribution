@@ -47,7 +47,7 @@ index 000000000000..26884dfda818
 +		reset-gpios = <&gpio4 RK_PA0 GPIO_ACTIVE_LOW>;
 +		vcc-supply = <&vcc3v3_lcd0_n>;
 +		iovcc-supply = <&vcc3v3_lcd0_n>;
-+		rotation = <270>;
++		rotation = <90>;
 +
 +		port {
 +			mipi_in_panel: endpoint {
@@ -57,7 +57,7 @@ index 000000000000..26884dfda818
 +	};
 +};
 diff --git a/drivers/gpu/drm/panel/panel-sitronix-st7703.c b/drivers/gpu/drm/panel/panel-sitronix-st7703.c
-index b55bafd1a8be..0e80bc8c0d21 100644
+index b55bafd1a8be..99db98f46dcb 100644
 --- a/drivers/gpu/drm/panel/panel-sitronix-st7703.c
 +++ b/drivers/gpu/drm/panel/panel-sitronix-st7703.c
 @@ -59,6 +59,7 @@ struct st7703 {
@@ -151,9 +151,9 @@ index b55bafd1a8be..0e80bc8c0d21 100644
  
 +static const struct drm_display_mode rgb10max3panel_mode = {
 +	.hdisplay	    = 720,
-+	.hsync_start	= 720 + 20,
-+	.hsync_end	    = 720 + 20 + 10,
-+	.htotal		    = 720 + 20 + 10 + 20,
++	.hsync_start	= 720 + 60,
++	.hsync_end	    = 720 + 60 + 10,
++	.htotal		    = 720 + 60 + 10 + 20,
 +	.vdisplay	    = 1280,
 +	.vsync_start	= 1280 + 16,
 +	.vsync_end	    = 1280 + 16 + 4,
