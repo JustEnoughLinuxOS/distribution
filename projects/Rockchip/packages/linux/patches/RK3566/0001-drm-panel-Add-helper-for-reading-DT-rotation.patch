@@ -52,11 +52,11 @@ index d37b83f40..b2d8fa2c3 100644
 +	if (rotation == 0)
 +		*orientation = DRM_MODE_PANEL_ORIENTATION_NORMAL;
 +	else if (rotation == 90)
-+		*orientation = DRM_MODE_PANEL_ORIENTATION_RIGHT_UP;
++		*orientation = DRM_MODE_PANEL_ORIENTATION_LEFT_UP;
 +	else if (rotation == 180)
 +		*orientation = DRM_MODE_PANEL_ORIENTATION_BOTTOM_UP;
 +	else if (rotation == 270)
-+		*orientation = DRM_MODE_PANEL_ORIENTATION_LEFT_UP;
++		*orientation = DRM_MODE_PANEL_ORIENTATION_RIGHT_UP;
 +	else
 +		return -EINVAL;
 +
