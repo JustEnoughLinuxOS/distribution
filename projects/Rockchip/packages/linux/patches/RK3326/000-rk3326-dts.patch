@@ -948,9 +948,9 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-gameconsole-r33s.dts l
 +	};
 +};
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts
---- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	2024-01-29 05:08:22.844542450 +0000
-@@ -0,0 +1,835 @@
+--- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	1969-12-31 19:00:00.000000000 -0500
++++ linux/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	2024-01-29 18:25:00.758766065 -0500
+@@ -0,0 +1,825 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2019 Hardkernel Co., Ltd
@@ -1255,32 +1255,23 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +       };
 +    };
 +
-+    /* led-1 is wired directly to output of always-on regulator */
-+
 +    leds: gpio-leds {
 +         compatible = "gpio-leds";
 +         pinctrl-0 = <&led_pins>;
 +         pinctrl-names = "default";
 +
-+        green_led: led-0 {
-+            color = <LED_COLOR_ID_GREEN>;
-+            default-state = "on";
-+            function = LED_FUNCTION_POWER;
-+            gpios = <&gpio0 RK_PC5 GPIO_ACTIVE_HIGH>;
-+        };
-+
-+        amber_led: led-1 {
-+            color = <LED_COLOR_ID_AMBER>;
-+            function = LED_FUNCTION_CHARGING;
-+            gpios = <&gpio0 RK_PC6 GPIO_ACTIVE_HIGH>;
-+            retain-state-suspended;
-+        };
-+
-+        red_led: led-2 {
++        led-0 {
 +            color = <LED_COLOR_ID_RED>;
 +            default-state = "off";
++            function = LED_FUNCTION_CHARGING;
++            gpios = <&gpio0 RK_PB3 GPIO_ACTIVE_HIGH>;
++        };
++
++        led-1 {
++            color = <LED_COLOR_ID_GREEN>;
++            default-state = "off";
 +            function = LED_FUNCTION_STATUS;
-+            gpios = <&gpio0 RK_PC7 GPIO_ACTIVE_HIGH>;
++            gpios = <&gpio0 RK_PB4 GPIO_ACTIVE_HIGH>;
 +        };
 +    };
 +
@@ -1758,9 +1749,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +    gpio-led {
 +        led_pins: led-pins {
 +            rockchip,pins =
-+                <0 RK_PC5 RK_FUNC_GPIO &pcfg_pull_none>,
-+                <0 RK_PC6 RK_FUNC_GPIO &pcfg_pull_none>,
-+                <0 RK_PC7 RK_FUNC_GPIO &pcfg_pull_none>;
++                <0 RK_PB3 RK_FUNC_GPIO &pcfg_pull_none>,
++                <0 RK_PB4 RK_FUNC_GPIO &pcfg_pull_none>;
 +        };
 +    };
 +
