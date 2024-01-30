@@ -17,6 +17,12 @@ PKG_STAMP="${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD}"
 PKG_PATCH_DIRS+="${DEVICE}"
 
 case ${DEVICE} in
+  RK3566-03w)
+    PKG_VERSION="bfb9351f30808403c9fdb0131499b1e77a583e1d"
+    PKG_URL="https://github.com/radxa/kernel.git"
+    GET_HANDLER_SUPPORT="git"
+    PKG_GIT_CLONE_BRANCH="linux-5.10-gen-rkr4.1"
+  ;;
   RK358*)
     PKG_VERSION="a7c264a8249f2058cf8ca624ee5034403412a2c1"
     PKG_URL="${PKG_SITE}/rk358x-kernel.git"
