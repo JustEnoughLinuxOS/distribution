@@ -52,6 +52,7 @@ declare -a HAS_CHEEVOS=(    arcade
                             atari2600
                             atari7800
                             atarilynx
+                            cdi
                             colecovision
                             cps1
                             cps2
