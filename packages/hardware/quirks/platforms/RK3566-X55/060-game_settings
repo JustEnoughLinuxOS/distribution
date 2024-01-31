@@ -3,6 +3,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 . /etc/profile.d/001-functions
+. /storage/.config/profile.d/010-governors
 
 ### Set the minimum GPU frequency to reduce UI latency.
 echo 400000000 >${GPU_FREQ}/min_freq
