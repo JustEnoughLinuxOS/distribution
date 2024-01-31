@@ -13,6 +13,8 @@
 BATCNT=0
 unset CURRENT_MODE
 unset AC_STATUS
+ledcontrol $(get_setting led.color)
+
 while true
 do
   AC_STATUS="$(cat /sys/class/power_supply/[bB][aA][tT]*/status 2>/dev/null)"
@@ -60,13 +62,7 @@ do
         fi
         if [ "${DEVICE_LED_CHARGING}" = "true" ]
         then
-          if [[ "${AC_STATUS}" =~ Charging ]] && \
-             [ "$(cat /sys/class/power_supply/[bB][aA][tT]*/capacity)" -le "97" ]
-          then
-            ledcontrol charging
-          else
-            ledcontrol discharging
-          fi
+          ledcontrol charging
         fi
       ;;
     esac
@@ -78,15 +74,16 @@ do
     CURRENT_MODE="${AC_STATUS}"
   fi
   ### Until we have an overlay. :rofl:
+  BATLEFT=$(battery_percent)
   if (( "${BATCNT}" >= "90" )) &&
      [[ "${STATUS}" =~ Disch ]]
   then
-    BATLEFT=$(battery_percent)
     AUDIBLEALERT=$(get_setting system.battery.warning)
-    if (( "${BATLEFT}" < "25" ))
+    if (( ${BATLEFT} > "26" ))
     then
       if [ "${DEVICE_LED_CONTROL}" = "true" ]
       then
+        # Flash the RGB or power LED if available.
         led_flash red
         BATCNT=0
       elif [ "${AUDIBLEALERT}" = "1" ]
@@ -94,6 +91,13 @@ do
         say "BATTERY AT ${BATLEFT}%"
         BATCNT=0
       fi
+    fi
+  elif (( "${BATLEFT}" > "97" ))
+  then
+    if [ "${DEVICE_LED_CHARGING}" = "true" ]
+    then
+      # Reset the LED as if the battery was full.
+      ledcontrol discharging
     fi
   fi
   BATCNT=$(( ${BATCNT} + 1 ))
