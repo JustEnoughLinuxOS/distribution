@@ -8,7 +8,6 @@ Environment=XDG_RUNTIME_DIR=/var/run/0-runtime-dir
 Environment=HOME=/storage
 Environment=SDL_AUDIODRIVER=pulseaudio
 ExecStart=/usr/bin/start_es.sh
-KillMode=process
 TimeoutStopSec=3
 Restart=always
 RestartSec=2
