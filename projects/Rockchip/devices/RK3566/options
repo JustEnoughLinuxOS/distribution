@@ -72,7 +72,7 @@
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
   # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
-    FIRMWARE="misc-firmware wlan-firmware RTL8821CS-firmware"
+    FIRMWARE="misc-firmware wlan-firmware RTL8821CS-firmware RTL8723DS-firmware"
 
   # additional drivers to install:
   # for a list of additional drivers see packages/linux-drivers
