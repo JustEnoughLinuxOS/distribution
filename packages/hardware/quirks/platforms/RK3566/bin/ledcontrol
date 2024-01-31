@@ -41,11 +41,11 @@ case ${1} in
     set_setting led.color ${1}
   ;;
   discharging)
-    if [ ! "${LED_STATUS}" = "off" ]
+    if [ -n "${LED_STATUS}" ] 
     then
+      ledcontrol ${LED_STATUS}
+    else 
       led_green
-    else
-      led_off
     fi
   ;;
   charging)
