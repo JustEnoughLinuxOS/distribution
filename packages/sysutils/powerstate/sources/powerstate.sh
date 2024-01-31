@@ -41,6 +41,10 @@ do
           runtime_power_management auto 5
           scsi_link_power_management med_power_with_dipm
         fi
+        if [ "${DEVICE_LED_CHARGING}" = "true" ]
+        then
+          ledcontrol discharging
+        fi
       ;;
       *)
         if [ "$(get_setting system.powersave)" = 1 ]
@@ -54,10 +58,23 @@ do
           runtime_power_management on 0
           scsi_link_power_management ""
         fi
+        if [ "${DEVICE_LED_CHARGING}" = "true" ]
+        then
+          if [[ "${AC_STATUS}" =~ Charging ]] && \
+             [ "$(cat /sys/class/power_supply/[bB][aA][tT]*/capacity)" -le "97" ]
+          then
+            ledcontrol charging
+          else
+            ledcontrol discharging
+          fi
+        fi
       ;;
     esac
     /usr/bin/wifictl setpowersave
-    ledcontrol $(get_setting led.color)
+    if [ ! "${DEVICE_LED_CHARGING}" = "true" ]
+    then
+      ledcontrol $(get_setting led.color)
+    fi
     CURRENT_MODE="${AC_STATUS}"
   fi
   ### Until we have an overlay. :rofl:
