@@ -79,7 +79,7 @@ do
      [[ "${STATUS}" =~ Disch ]]
   then
     AUDIBLEALERT=$(get_setting system.battery.warning)
-    if (( ${BATLEFT} > "26" ))
+    if (( ${BATLEFT} < "26" ))
     then
       if [ "${DEVICE_LED_CONTROL}" = "true" ]
       then
