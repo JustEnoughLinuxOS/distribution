@@ -54,11 +54,16 @@ case ${1} in
       led_red
     fi
   ;;
+  default)
+    del_setting led.color
+    led_green
+  ;;
   poweroff)
     led_off
   ;;
   list)
 cat <<EOF
+default
 off
 green
 red
