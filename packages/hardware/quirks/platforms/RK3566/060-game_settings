@@ -3,12 +3,16 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 . /etc/profile.d/001-functions
+. /storage/.config/profile.d/010-governors
+
+### Set the minimum GPU frequency to reduce UI latency.
+echo 400000000 >${GPU_FREQ}/min_freq
 
 ### Set the default performance scaling mode for a few systems.
 for SYSTEM in dreamcast n64 ports psp psx saturn gba pcfx cdi
 do
   SETTING=$(get_setting ${SYSTEM})
-  if [ -z ${SETTING} ]
+  if [ -z "${SETTING}" ]
   then
     set_setting ${SYSTEM}.cpugovernor performance
     set_setting ${SYSTEM}.gpuperf profile_peak
