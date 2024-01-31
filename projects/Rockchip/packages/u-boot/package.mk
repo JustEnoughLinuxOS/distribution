@@ -12,6 +12,11 @@ PKG_LONGDESC="Rockchip U-Boot is a bootloader for embedded systems."
 PKG_PATCH_DIRS+="${DEVICE}"
 
 case ${DEVICE} in
+RK3566-03w)
+    PKG_VERSION="eed05a18e50492ec20b16f97ace8d5d9606bb9f9"
+    PKG_URL="https://github.com/radxa/u-boot.git"
+    PKG_GIT_CLONE_BRANCH="rk3568-2023.10"
+  ;;
  RK358*)
     PKG_URL="${PKG_SITE}/rk35xx-uboot.git"
     PKG_VERSION="d34ff0716"

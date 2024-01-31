@@ -32,9 +32,9 @@
     PARTITION_TABLE="gpt"
     UBOOT_LABEL="uboot"
     TRUST_LABEL="trust"
-    DEVICE_DTB=("rk3566-anbernic-rg353ps" "rk3566-anbernic-rg353vs" "rk3566-anbernic-rg503" "rk3566-anbernic-rg353p" "rk3566-anbernic-rg353v" "rk3566-powkiddy-rk2023" "rk3566-powkiddy-rgb30" "rk3566-powkiddy-rgb10max3")
-    UBOOT_DTB="rk3566"
-    UBOOT_CONFIG="anbernic-rgxx3-rk3566_defconfig"
+    DEVICE_DTB="rk3566-radxa-zero-3w-aic8800ds2"
+    UBOOT_DTB="rk3566-radxa-zero3"
+    UBOOT_CONFIG="radxa-zero3-rk3566_defconfig"
     PKG_SOC="rk3568"
     PKG_DATAFILE="${PKG_RKBIN}/bin/rk35/rk3566_ddr_1056MHz_v1.18.bin"
     PKG_LOADER="spl/u-boot-spl.bin"
@@ -74,7 +74,8 @@
     DEBUG_TTY="/dev/ttyS2"
 
   # kernel serial console
-    EXTRA_CMDLINE="quiet rootwait earlycon=uart8250,mmio32,0xfe660000 console=ttyS2,1500000n8 console=tty1 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
+  #  EXTRA_CMDLINE="quiet rootwait earlycon=uart8250,mmio32,0xfe660000 console=ttyS2,1500000n8 console=tty1 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
+    EXTRA_CMDLINE="root=UUID=e4dc7fb3-d6e7-4a53-8267-0b5688ac4ff3 console=ttyFIQ0,1500000n8 quiet splash loglevel=4 rw earlycon consoleblank=0 console=tty1 coherent_pool=2M irqchip.gicv3_pseudo_nmi=0 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory swapaccount=1"
 
   # additional packages to install
   #  ADDITIONAL_PACKAGES=""
