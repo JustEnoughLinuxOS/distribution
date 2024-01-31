@@ -67,10 +67,6 @@ do
       ;;
     esac
     /usr/bin/wifictl setpowersave
-    if [ ! "${DEVICE_LED_CHARGING}" = "true" ]
-    then
-      ledcontrol $(get_setting led.color)
-    fi
     CURRENT_MODE="${AC_STATUS}"
   fi
   ### Until we have an overlay. :rofl:
