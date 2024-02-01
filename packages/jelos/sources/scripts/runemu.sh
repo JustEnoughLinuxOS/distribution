@@ -219,24 +219,23 @@ case ${EMULATOR} in
 
     CONTROLLERCONFIG="${ARGUMENTS#*--controllers=*}"
 
-    ### Configure our save state slot or autosave
-    CONTROLLERCONFIG="${CONTROLLERCONFIG%% --*}"  # until a -- is found
-    SNAPSHOT=""
-    AUTOSAVE=""
-    case ${ARGUMENTS} in
-      *"-state_slot"*)
-        ${VERBOSE} && log $0 "Configuring save state slot."
-        CONTROLLERCONFIG="${CONTROLLERCONFIG%% -state_slot*}"  # until -state is found
-        SNAPSHOT="${ARGUMENTS#*-state_slot *}" # -state_slot x
-        SNAPSHOT="${SNAPSHOT%% -*}"
-      ;;
-      *"-autosave"*)
-        ${VERBOSE} && log $0 "Configuring autosave."
-        CONTROLLERCONFIG="${CONTROLLERCONFIG%% -autosave*}"  # until -autosave is found
-        AUTOSAVE="${ARGUMENTS#*-autosave *}" # -autosave x
-        AUTOSAVE="${AUTOSAVE%% -*}"
-      ;;
-    esac
+    if [[ "${ARGUMENTS}" == *"-state_slot"* ]]
+    then
+      CONTROLLERCONFIG="${CONTROLLERCONFIG%% -state_slot*}"  # until -state is found
+      SNAPSHOT="${ARGUMENTS#*-state_slot *}" # -state_slot x
+      SNAPSHOT="${SNAPSHOT%% -*}"
+        if [[ "${ARGUMENTS}" == *"-autosave"* ]]; then
+          CONTROLLERCONFIG="${CONTROLLERCONFIG%% -autosave*}"  # until -autosave is found
+          AUTOSAVE="${ARGUMENTS#*-autosave *}" # -autosave x
+          AUTOSAVE="${AUTOSAVE%% -*}"
+        else
+          AUTOSAVE=""
+        fi
+    else
+      CONTROLLERCONFIG="${CONTROLLERCONFIG%% --*}"  # until a -- is found
+      SNAPSHOT=""
+      AUTOSAVE=""
+    fi
 
     # Configure platform specific requirements
     case ${PLATFORM} in
