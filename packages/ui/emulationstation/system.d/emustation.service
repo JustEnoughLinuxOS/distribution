@@ -7,7 +7,9 @@ After=jelos-automount.service
 Environment=XDG_RUNTIME_DIR=/var/run/0-runtime-dir
 Environment=HOME=/storage
 Environment=SDL_AUDIODRIVER=pulseaudio
-ExecStart=/usr/bin/start_es.sh
+ExecStartPre=/usr/bin/es_settings
+ExecStart=/usr/bin/emulationstation --log-path /var/log --no-splash
+KillMode=process
 TimeoutStopSec=3
 Restart=always
 RestartSec=2
