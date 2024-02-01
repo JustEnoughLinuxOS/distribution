@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2024-present JELOS (https://github.com/JustEnoughLinuxOS)
+
+. /etc/profile.d/001-functions
+
+# Get Turbo Mode state. 
+TURBO_MODE_STATE=$(get_setting "enable.turbo-mode")
+if [ ! -n "${TURBO_MODE_STATE}" ]; then
+  TURBO_MODE_STATE=0
+  set_setting "enable.turbo-mode" "0"
+fi
+
+# Set turbo-mode at boot
+echo ${TURBO_MODE_STATE} > /sys/devices/system/cpu/cpufreq/boost

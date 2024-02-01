@@ -17,13 +17,13 @@ PKG_RETROARCH="core-info libretro-database retroarch retroarch-assets retroarch-
 LIBRETRO_CORES="81-lr a5200-lr arduous-lr atari800-lr beetle-gba-lr beetle-lynx-lr beetle-ngp-lr beetle-pce-lr beetle-pce-fast-lr    \
                 beetle-pcfx-lr bsnes-mercury-performance-lr beetle-supafaust-lr beetle-supergrafx-lr             \
                 beetle-vb-lr beetle-wswan-lr bluemsx-lr cap32-lr crocods-lr daphne-lr      \
-                dosbox-svn-lr dosbox-pure-lr duckstation-lr easyrpg-lr fake08-lr fbalpha2012-lr              \
+                dosbox-svn-lr dosbox-pure-lr duckstation-lr easyrpg-lr emuscv-lr fake08-lr fbalpha2012-lr              \
                 fbalpha2019-lr fbneo-lr fceumm-lr flycast2021-lr fmsx-lr freechaf-lr freeintv-lr freej2me-lr fuse-lr      \
                 gambatte-lr gearboy-lr gearcoleco-lr gearsystem-lr genesis-plus-gx-lr genesis-plus-gx-wide-lr      \
                 gw-lr handy-lr hatari-lr idtech-lr mame-lr mame2003-plus-lr mame2010-lr mame2015-lr melonds-lr      \
                 mesen-lr mgba-lr mojozork-lr mupen64plus-lr mupen64plus-nx-lr neocd_lr nestopia-lr np2kai-lr    \
                 o2em-lr opera-lr parallel-n64-lr pcsx_rearmed-lr picodrive-lr pokemini-lr potator-lr          \
-                prosystem-lr puae-lr puae2021-lr px68k-lr quasi88-lr quicknes-lr race-lr       \
+                prosystem-lr puae-lr puae2021-lr px68k-lr quasi88-lr quicknes-lr race-lr same_cdi-lr      \
                 sameboy-lr sameduck-lr scummvm-lr smsplus-gx-lr snes9x-lr snes9x2002-lr snes9x2005_plus-lr snes9x2010-lr  \
                 stella-lr swanstation-lr tic80-lr tgbdual-lr uzem-lr vba-next-lr minivmac-lr               \
                 vbam-lr vecx-lr vice-lr yabasanshiro-lr virtualjaguar-lr xmil-lr"
@@ -38,7 +38,7 @@ case "${DEVICE}" in
                      ppsspp-lr kronos-lr beetle-saturn-lr"
   ;;
   RK358*)
-    [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 desmume-lr flycast-lr gpsp-lr pcsx_rearmed-lr"
+    [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 desmume-lr gpsp-lr pcsx_rearmed-lr"
     PKG_EMUS+=" amiberry aethersx2-sa dolphin-sa drastic-sa duckstation-sa melonds-sa nanoboyadvance-sa box64 scummvmsa   \
                yabasanshiro-sa portmaster beetle-saturn-lr"
     LIBRETRO_CORES+=" uae4arm beetle-psx-lr bsnes-lr bsnes-hd-lr citra-lr dolphin-lr pcsx_rearmed-lr"
@@ -59,7 +59,7 @@ case "${DEVICE}" in
     PKG_RETROARCH+=" retropie-shaders"
   ;;
   S922X*)
-    [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 flycast-lr pcsx_rearmed-lr"
+    [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 pcsx_rearmed-lr"
     PKG_EMUS+=" amiberry aethersx2-sa citra-sa dolphin-sa duckstation-sa drastic-sa mupen64plus-sa yabasanshiro-sa     \
                 box64 portmaster"
     LIBRETRO_CORES+=" uae4arm beetle-psx-lr bsnes-lr bsnes-hd-lr dolphin-lr flycast-lr"
@@ -69,7 +69,7 @@ case "${DEVICE}" in
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="desmume-lr gpsp-lr pcsx_rearmed-lr"
     PKG_DEPENDS_TARGET+=" common-shaders glsl-shaders"
     PKG_EMUS+=" amiberry drastic-sa mupen64plus-sa scummvmsa yabasanshiro-sa portmaster mednafen"
-    LIBRETRO_CORES+=" uae4arm flycast-lr"
+    LIBRETRO_CORES+=" uae4arm flycast-lr flycast2021-lr"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
 esac
@@ -224,6 +224,7 @@ makeinstall_target() {
       add_emu_core atomiswave flycast flycast-sa false
     ;;
     RK33*)
+      add_emu_core atomiswave retroarch flycast2021 false
       add_emu_core atomiswave flycast flycast-sa false
       add_emu_core atomiswave retroarch flycast true
     ;;
@@ -322,6 +323,7 @@ makeinstall_target() {
       add_emu_core dreamcast flycast flycast-sa false
     ;;
     RK33*)
+      add_emu_core dreamcast retroarch flycast2021 false
       add_emu_core dreamcast flycast flycast-sa false
       add_emu_core dreamcast retroarch flycast true
     ;;
@@ -635,6 +637,7 @@ makeinstall_target() {
       add_emu_core naomi flycast flycast-sa false
     ;;
     RK33*)
+      add_emu_core naomi retroarch flycast2021 false
       add_emu_core naomi flycast flycast-sa false
       add_emu_core naomi retroarch flycast true
     ;;
@@ -1165,6 +1168,10 @@ makeinstall_target() {
   add_emu_core vectrex retroarch vecx true
   add_es_system vectrex
 
+  ### Philips - CDi
+  add_emu_core cdi retroarch same_cdi true
+  add_es_system cdi
+
   ### Philips Videopac
   add_emu_core videopac retroarch o2em true
   add_es_system videopac
@@ -1199,6 +1206,10 @@ makeinstall_target() {
   ### Sharp x68000
   add_emu_core x68000 retroarch px68k true
   add_es_system x68000
+
+  ### EPOCH/YENO Super Cassette Vision
+  add_emu_core scv retroarch emuscv true
+  add_es_system scv
 
   ### PC Ports
   case ${TARGET_ARCH} in

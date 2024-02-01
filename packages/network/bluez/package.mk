@@ -3,7 +3,7 @@
 # Copyright (C) 2019-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="bluez"
-PKG_VERSION="5.70"
+PKG_VERSION="5.72"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.bluez.org/"
 PKG_URL="https://www.kernel.org/pub/linux/bluetooth/${PKG_NAME}-${PKG_VERSION}.tar.xz"
@@ -71,8 +71,14 @@ post_makeinstall_target() {
   mkdir -p ${INSTALL}/etc/bluetooth
     cp src/main.conf ${INSTALL}/etc/bluetooth
 
+  cat <<EOF >${INSTALL}/etc/bluetooth/input.conf
+[General]
+ClassicBondedOnly=false
+EOF
+
   mkdir -p ${INSTALL}/usr/share/services
     cp -P ${PKG_DIR}/default.d/*.conf ${INSTALL}/usr/share/services
+
 
   # bluez looks in /etc/firmware/
     ln -sf /usr/lib/firmware ${INSTALL}/etc/firmware

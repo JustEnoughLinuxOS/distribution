@@ -1,0 +1,58 @@
+From 12254d89fcf3adb27ed5d1191449d06207eb61f1 Mon Sep 17 00:00:00 2001
+From: Urja Rannikko <urjaman@gmail.com>
+Date: Sun, 24 Dec 2023 15:54:52 +0200
+Subject: [PATCH] panfrost: Stub implementation of
+ PIPE_CAP_DEVICE_RESET_STATUS_QUERY
+
+This enables EGL_EXT_create_context_robustness, which is the only
+extension missing from panfrost (on my T760, atleast) to report
+EGL version 1.5. Recent kicad (built with wxWidgets EGL canvas)
+requires EGL 1.5 to enable acceleration.
+
+Signed-off-by: Urja Rannikko <urjaman@gmail.com>
+---
+ src/gallium/drivers/panfrost/pan_context.c | 7 +++++++
+ src/gallium/drivers/panfrost/pan_screen.c  | 3 +++
+ 2 files changed, 10 insertions(+)
+
+diff --git a/src/gallium/drivers/panfrost/pan_context.c b/src/gallium/drivers/panfrost/pan_context.c
+index e1fed545c4bcf..bfd9de4d23231 100644
+--- a/src/gallium/drivers/panfrost/pan_context.c
++++ b/src/gallium/drivers/panfrost/pan_context.c
+@@ -867,6 +867,12 @@ panfrost_fence_server_sync(struct pipe_context *pctx,
+    close(fd);
+ }
+ 
++static enum pipe_reset_status
++panfrost_get_device_reset_status(struct pipe_context *pipe)
++{
++   return PIPE_NO_RESET;
++}
++
+ struct pipe_context *
+ panfrost_create_context(struct pipe_screen *screen, void *priv, unsigned flags)
+ {
+@@ -883,6 +889,7 @@ panfrost_create_context(struct pipe_screen *screen, void *priv, unsigned flags)
+ 
+    gallium->create_fence_fd = panfrost_create_fence_fd;
+    gallium->fence_server_sync = panfrost_fence_server_sync;
++   gallium->get_device_reset_status = panfrost_get_device_reset_status;
+ 
+    gallium->flush = panfrost_flush;
+    gallium->clear = panfrost_clear;
+diff --git a/src/gallium/drivers/panfrost/pan_screen.c b/src/gallium/drivers/panfrost/pan_screen.c
+index 876833e799192..2036a63bd2955 100644
+--- a/src/gallium/drivers/panfrost/pan_screen.c
++++ b/src/gallium/drivers/panfrost/pan_screen.c
+@@ -369,6 +369,9 @@ panfrost_get_param(struct pipe_screen *screen, enum pipe_cap param)
+    case PIPE_CAP_NATIVE_FENCE_FD:
+       return 1;
+ 
++   case PIPE_CAP_DEVICE_RESET_STATUS_QUERY:
++      return 1;
++
+    default:
+       return u_pipe_screen_get_param_defaults(screen, param);
+    }
+-- 
+GitLab

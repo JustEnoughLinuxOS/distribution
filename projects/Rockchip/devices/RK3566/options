@@ -32,7 +32,7 @@
     PARTITION_TABLE="gpt"
     UBOOT_LABEL="uboot"
     TRUST_LABEL="resource"
-    DEVICE_DTB=("rk3566-rg353p-linux" "rk3566-rg353v-linux" "rk3566-rg353m-linux" "rk3566-rg503-linux" "rk3566-rk2023-linux" "rk3566-rgb30-linux")
+    DEVICE_DTB=("rk3566-rg353p-linux" "rk3566-rg353v-linux" "rk3566-rg353m-linux" "rk3566-rg503-linux" "rk3566-rk2023-linux" "rk3566-rgb30-linux" "rk3566-max3pro-linux")
     UBOOT_DTB="rk3566"
     UBOOT_CONFIG="rk3568_defconfig"
     PKG_SOC="rk356x"
@@ -72,7 +72,7 @@
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
   # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
-    FIRMWARE="misc-firmware wlan-firmware RTL8821CS-firmware"
+    FIRMWARE="misc-firmware wlan-firmware RTL8821CS-firmware RTL8723DS-firmware"
 
   # additional drivers to install:
   # for a list of additional drivers see packages/linux-drivers

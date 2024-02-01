@@ -172,7 +172,7 @@ mode = 2
 # Specifies which joystick is bound to this controller: -1=No joystick, 0 or more= SDL Joystick number
 device = 0
 # SDL joystick name (or Keyboard)
-name = "xu10_joypad"
+name = "XU10 Gamepad"
 # Specifies whether this controller is 'plugged in' to the simulated N64
 plugged = True
 # Specifies which type of expansion pak is in the controller: 1=None, 2=Mem pak, 4=Transfer pak, 5=Rumble pak
@@ -195,15 +195,15 @@ DPad L = button(14)
 DPad D = button(13)
 DPad U = button(12)
 Start = button(9)
-Z Trig = button(4)
-B Button = button(3)
-A Button = button(0)
+Z Trig = button(7)
+B Button = button(1)
+A Button = button(2)
 C Button R = axis(2+)
 C Button L = axis(2-)
 C Button D = axis(3+)
 C Button U = axis(3-)
 R Trig = button(5)
-L Trig = button(6)
+L Trig = button(4)
 Mempak switch =
 Rumblepak switch =
 # Analog axis configuration mappings

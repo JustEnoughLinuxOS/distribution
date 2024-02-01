@@ -56,7 +56,6 @@ function map {
     "b")                TR_NAME="${BBUT}";;
     "x")                TR_NAME="${XBUT}";;
     "y")                TR_NAME="${YBUT}";;
-    "hotkeyenable")     TR_NAME="guide";;
     "up")               TR_NAME="dpup";;
     "down")             TR_NAME="dpdown";;
     "left")             TR_NAME="dpleft";;
@@ -78,7 +77,6 @@ function map {
     "rightanalogdown")  TR_NAME="+righty";;
     "rightanalogright") TR_NAME="+rightx";;
     *)
-      echo "Invalid mapping ${INPUT_NAME}."
       return
       ;;
   esac
@@ -147,8 +145,6 @@ while IFS=";" read -r NAME GUID; do
     get_map_suffix
     if [[ ! -z "${MAPPING}" ]]; then
       echo "${map_prefix}${MAPPING}${map_suffix}" >> "${CONTROLLER_DB}"
-    else
-      echo "Failed to map anything."
     fi
 done <<< ${ES_QUERY:1}
 

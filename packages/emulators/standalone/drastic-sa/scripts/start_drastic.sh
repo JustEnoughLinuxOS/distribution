@@ -7,6 +7,11 @@
 
 jslisten set "-9 drastic"
 
+#load gptokeyb support files
+control-gen_init.sh
+source /storage/.config/gptokeyb/control.ini
+get_controls
+
 #Copy drastic files to .config
 if [ ! -d "/storage/.config/drastic" ]; then
   mkdir -p /storage/.config/drastic/
@@ -14,7 +19,7 @@ if [ ! -d "/storage/.config/drastic" ]; then
 fi
 
 if [ ! -d "/storage/.config/drastic/system" ]; then
-  mkdir -p   mkdir -p /storage/.config/drastic/system
+  mkdir -p /storage/.config/drastic/system
 fi
 
 for bios in nds_bios_arm9.bin nds_bios_arm7.bin
@@ -25,6 +30,11 @@ do
      fi
   fi
 done
+
+#Copy drastic files to .config
+if [ ! -f "/storage/.config/drastic/drastic.gptk" ]; then
+  cp -r /usr/config/drastic/drastic.gptk /storage/.config/drastic/
+fi
 
 #Make drastic savestate folder
 if [ ! -d "/storage/roms/savestates/nds" ]; then
@@ -41,4 +51,6 @@ ln -sf /storage/roms/nds /storage/.config/drastic/backup
 
 cd /storage/.config/drastic/
 @LIBEGL@
+$GPTOKEYB "drastic" -c "drastic.gptk" &
 ./drastic "$1"
+kill -9 $(pidof gptokeyb)

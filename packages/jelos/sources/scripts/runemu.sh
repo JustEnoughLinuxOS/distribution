@@ -196,31 +196,9 @@ case ${EMULATOR} in
       ;;
     esac
 
-    RUNTHIS='${EMUPERF} /usr/bin/${RABIN} -L /tmp/cores/${CORE}_libretro.so --config ${RETROARCH_TEMP_CONFIG} --appendconfig ${RETROARCH_APPEND_CONFIG} "${ROMNAME}"'
-
-    CONTROLLERCONFIG="${ARGUMENTS#*--controllers=*}"
-
-    ### Configure our save state slot or autosave
-    CONTROLLERCONFIG="${CONTROLLERCONFIG%% --*}"  # until a -- is found
-    SNAPSHOT=""
-    AUTOSAVE=""
-    case ${ARGUMENTS} in
-      *"-state_slot"*)
-        ${VERBOSE} && log $0 "Configuring save state slot."
-        CONTROLLERCONFIG="${CONTROLLERCONFIG%% -state_slot*}"  # until -state is found
-        SNAPSHOT="${ARGUMENTS#*-state_slot *}" # -state_slot x
-        SNAPSHOT="${SNAPSHOT%% -*}"
-      ;;
-      *"-autosave"*)
-        ${VERBOSE} && log $0 "Configuring autosave."
-        CONTROLLERCONFIG="${CONTROLLERCONFIG%% -autosave*}"  # until -autosave is found
-        AUTOSAVE="${ARGUMENTS#*-autosave *}" # -autosave x
-        AUTOSAVE="${AUTOSAVE%% -*}"
-      ;;
-    esac
 
     ### Configure specific emulator requirements
-    case ${EMULATOR} in
+    case ${CORE} in
       freej2me*)
         ${VERBOSE} && log $0 "Setup freej2me requirements."
         /usr/bin/freej2me.sh
@@ -235,6 +213,29 @@ case ${EMULATOR} in
         /usr/bin/easyrpg.sh
       ;;
     esac
+
+
+    RUNTHIS='${EMUPERF} /usr/bin/${RABIN} -L /tmp/cores/${CORE}_libretro.so --config ${RETROARCH_TEMP_CONFIG} --appendconfig ${RETROARCH_APPEND_CONFIG} "${ROMNAME}"'
+
+    CONTROLLERCONFIG="${ARGUMENTS#*--controllers=*}"
+
+    if [[ "${ARGUMENTS}" == *"-state_slot"* ]]
+    then
+      CONTROLLERCONFIG="${CONTROLLERCONFIG%% -state_slot*}"  # until -state is found
+      SNAPSHOT="${ARGUMENTS#*-state_slot *}" # -state_slot x
+      SNAPSHOT="${SNAPSHOT%% -*}"
+        if [[ "${ARGUMENTS}" == *"-autosave"* ]]; then
+          CONTROLLERCONFIG="${CONTROLLERCONFIG%% -autosave*}"  # until -autosave is found
+          AUTOSAVE="${ARGUMENTS#*-autosave *}" # -autosave x
+          AUTOSAVE="${AUTOSAVE%% -*}"
+        else
+          AUTOSAVE=""
+        fi
+    else
+      CONTROLLERCONFIG="${CONTROLLERCONFIG%% --*}"  # until a -- is found
+      SNAPSHOT=""
+      AUTOSAVE=""
+    fi
 
     # Configure platform specific requirements
     case ${PLATFORM} in

@@ -69,9 +69,6 @@ else
   xmlstarlet ed --inplace --subnode "/gameList/folder[last()]" --type elem -n hidden -v "true" /storage/roms/ports/gamelist.xml
 fi
 
-#Make sure permissions are correct in the PortMaster folder
-find /storage/roms/ports/ -not -perm 755 -exec chmod 755 {} \;
-
 #Fix compatability for some portmaster ports
 /usr/bin/portmaster_compatibility.sh
 
