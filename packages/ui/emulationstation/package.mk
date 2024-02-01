@@ -145,7 +145,7 @@ makeinstall_target() {
                 <hardware>system</hardware>
                 <path>/storage/.config/modules</path>
                 <extension>.sh</extension>
-                <command>/usr/bin/run %ROM%</command>
+                <command>%ROM%</command>
                 <platform>tools</platform>
                 <theme>tools</theme>
         </system>
