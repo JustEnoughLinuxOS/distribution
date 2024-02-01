@@ -32,9 +32,8 @@ CORE=${3,,}
 
 #Autosave
 AUTOSAVE="$@"
-AUTOSAVE="${AUTOSAVE#*-autosave *}"
+AUTOSAVE="${AUTOSAVE#*-autosave=*}"
 AUTOSAVE="${AUTOSAVE% --*}"
-AUTOSAVE="${AUTOSAVE% --*}" # Fix later (first deletes --autosave, second deletes --snapshot).
 
 #Snapshot
 SNAPSHOT="$@"
