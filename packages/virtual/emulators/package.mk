@@ -1249,6 +1249,13 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/config/emulationstation
   cp -f ${ESTMP}/es_systems.cfg ${INSTALL}/usr/config/emulationstation
 
+  if [ "${DISPLAYSERVER}" = "wl" ]
+  then
+    sed -i 's/%RUNCOMMAND%/weston-terminal --command="%ROM%"/g' ${INSTALL}/usr/config/emulationstation/es_systems.cfg
+  else
+    sed -i 's/%RUNCOMMAND%/%ROM%/g' ${INSTALL}/usr/config/emulationstation/es_systems.cfg
+  fi
+
   ### Automount should handle this.
   cp -f ${ESTMP}/system-dirs.conf ${INSTALL}/usr/config
 
@@ -1258,5 +1265,6 @@ makeinstall_target() {
   mkdir -p ${INSTALL}/usr/lib/autostart/common
   cp ${PKG_DIR}/autostart/* ${INSTALL}/usr/lib/autostart/common
   chmod 0755 ${INSTALL}/usr/lib/autostart/common/*
+ 
 }
 
