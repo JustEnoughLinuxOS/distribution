@@ -32,7 +32,7 @@ CORE=${3,,}
 
 #Autosave
 AUTOSAVE="$@"
-AUTOSAVE="${AUTOSAVE#*-autosave *}"
+AUTOSAVE="${AUTOSAVE#*-autosave=*}"
 AUTOSAVE="${AUTOSAVE% --*}"
 
 #Snapshot
