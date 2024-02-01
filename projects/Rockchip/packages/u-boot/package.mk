@@ -78,8 +78,14 @@ make_target() {
       fi
     if [[ "${PKG_SOC}" =~ "rk3568" ]]
     then
-	  # rk3566 device
-	  echo "Building for GPT (${UBOOT_DTB})..."
+      # rk3566 device
+      echo "Building for GPT (${UBOOT_DTB})..."
+      if [[ "${DEVICE}" =~ "RK3566-03w" ]]
+      then
+        echo "CONFIG_FASTBOOT_BUF_ADDR=0x13000000" >> ${PKG_BUILD}/configs/${UBOOT_CONFIG}
+        grep FASTBOOT ${PKG_BUILD}/configs/${UBOOT_CONFIG}
+        # die "yaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      fi
       echo "toolchain (${TOOLCHAIN})"
       export BL31="${PKG_BL31}"
       export ROCKCHIP_TPL="${PKG_DATAFILE}"
@@ -88,14 +94,14 @@ make_target() {
       DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="--lssl -lcrypto" ARCH=arm64 make ${UBOOT_CONFIG} ${PKG_LOADER} u-boot.dtb u-boot.img tools HOSTCC="${HOST_CC}" HOSTLDFLAGS="-L${TOOLCHAIN}/lib" HOSTCFLAGS="-I${TOOLCHAIN}/include"
       echo "end make"
       DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 _python_sysroot="${TOOLCHAIN}" _python_prefix=/ _python_exec_prefix=/ make HOSTCC="${HOST_CC}" HOSTLDFLAGS="-L${TOOLCHAIN}/lib" HOSTCFLAGS="-I${TOOLCHAIN}/include" HOSTSTRIP="true" CONFIG_MKIMAGE_DTC_PATH="scripts/dtc/dtc"
-	elif [[ "${PKG_SOC}" =~ "rk3588" ]]
-	then
-	  DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 make mrproper
+  elif [[ "${PKG_SOC}" =~ "rk3588" ]]
+  then
+    DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 make mrproper
       DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 make ${UBOOT_CONFIG} BL31=${PKG_BL31} ${PKG_LOADER} u-boot.dtb u-boot.itb CONFIG_MKIMAGE_DTC_PATH="scripts/dtc/dtc"
       DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 _python_sysroot="${TOOLCHAIN}" _python_prefix=/ _python_exec_prefix=/ make HOSTCC="${HOST_CC}" HOSTLDFLAGS="-L${TOOLCHAIN}/lib" HOSTSTRIP="true" CONFIG_MKIMAGE_DTC_PATH="scripts/dtc/dtc"
-	else
-	  # rk3326 and rk3399 devices
-	  echo "Building for MBR (${UBOOT_DTB})..."
+  else
+    # rk3326 and rk3399 devices
+    echo "Building for MBR (${UBOOT_DTB})..."
       if [[ "${ATF_PLATFORM}" =~ "rk3399" ]]; then
         export BL31="$(get_build_dir atf)/.install_pkg/usr/share/bootloader/bl31.elf"
       fi
