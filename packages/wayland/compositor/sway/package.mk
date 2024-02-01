@@ -10,13 +10,15 @@ PKG_URL="https://github.com/swaywm/sway/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain wayland wayland-protocols libdrm libxkbcommon libinput cairo pango libjpeg-turbo dbus json-c wlroots gdk-pixbuf swaybg foot bemenu"
 PKG_LONGDESC="i3-compatible Wayland compositor"
 
+# to enable xwayland package: https://gitlab.freedesktop.org/xorg/lib/libxcb-wm/-/tree/master/icccm?ref_type=heads
+
 PKG_MESON_OPTS_TARGET="-Ddefault-wallpaper=false \
                        -Dzsh-completions=false \
                        -Dbash-completions=false \
                        -Dfish-completions=false \
                        -Dswaybar=true \
                        -Dswaynag=true \
-                       -Dxwayland=enabled \
+                       -Dxwayland=disabled \
                        -Dtray=disabled \
                        -Dgdk-pixbuf=enabled \
                        -Dman-pages=disabled \
@@ -41,6 +43,3 @@ post_makeinstall_target() {
   safe_remove ${INSTALL}/usr/share/wayland-sessions
 }
 
-post_install() {
-  enable_service sway.service
-}

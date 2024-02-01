@@ -17,6 +17,10 @@ PKG_MESON_OPTS_TARGET="-Ddocs=disabled \
                        -Dterminfo=disabled \
                        -Ddefault-terminfo=xterm"
 
+pre_configure_target() {
+  export TARGET_CFLAGS=$(echo "${TARGET_CFLAGS} -Wno-error=switch")
+}
+
 post_makeinstall_target(){
   # clean up
   safe_remove ${INSTALL}/usr/share/*
