@@ -1,7 +1,7 @@
-diff -rupN linux.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c linux/drivers/gpu/drm/drm_panel_orientation_quirks.c
---- linux.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c	2023-09-02 07:14:38.000000000 +0000
-+++ linux/drivers/gpu/drm/drm_panel_orientation_quirks.c	2023-09-09 03:24:49.178775423 +0000
-@@ -133,6 +133,12 @@ static const struct drm_dmi_panel_orient
+diff -rupN linux-6.6.9.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c linux-6.6.9/drivers/gpu/drm/drm_panel_orientation_quirks.c
+--- linux-6.6.9.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c	2024-01-04 00:22:05.545161814 +0000
++++ linux-6.6.9/drivers/gpu/drm/drm_panel_orientation_quirks.c	2024-01-04 00:23:21.365247268 +0000
+@@ -141,6 +141,12 @@ static const struct drm_dmi_panel_orient
  	.orientation = DRM_MODE_PANEL_ORIENTATION_RIGHT_UP,
  };
  
@@ -14,7 +14,7 @@ diff -rupN linux.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c linux/drive
  static const struct dmi_system_id orientation_data[] = {
  	{	/* Acer One 10 (S1003) */
  		.matches = {
-@@ -170,13 +176,13 @@ static const struct dmi_system_id orient
+@@ -178,13 +184,13 @@ static const struct dmi_system_id orient
  		  DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "T103HAF"),
  		},
  		.driver_data = (void *)&lcd800x1280_rightside_up,
@@ -31,7 +31,7 @@ diff -rupN linux.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c linux/drive
  		.matches = {
  		  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "AYANEO"),
  		  DMI_MATCH(DMI_PRODUCT_NAME, "AIR"),
-@@ -188,6 +194,30 @@ static const struct dmi_system_id orient
+@@ -196,6 +202,30 @@ static const struct dmi_system_id orient
  		  DMI_MATCH(DMI_BOARD_NAME, "NEXT"),
  		},
  		.driver_data = (void *)&lcd800x1280_rightside_up,
@@ -41,7 +41,7 @@ diff -rupN linux.orig/drivers/gpu/drm/drm_panel_orientation_quirks.c linux/drive
 +                  DMI_MATCH(DMI_BOARD_NAME, "GEEK"),
 +                },
 +                .driver_data = (void *)&lcd800x1280_rightside_up,
-+        }, {    /* AYANEO AYANEO 2 */
++        }, {    /* AYANEO AYANEO 2, 2S */
 +                .matches = {
 +                  DMI_EXACT_MATCH(DMI_SYS_VENDOR, "AYANEO"),
 +                  DMI_MATCH(DMI_PRODUCT_NAME, "AYANEO 2"),
