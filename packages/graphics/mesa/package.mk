@@ -16,14 +16,8 @@ case ${DEVICE} in
         PKG_URL="${PKG_SITE}.git"
         PKG_GIT_CLONE_BRANCH="csf"
   ;;
-  RK33*) #Using upstream dev for panfrost
-	PKG_VERSION="97efa57531b826edf62b00fd4dc26d7568ff941b"
-	PKG_SITE="https://gitlab.freedesktop.org/mesa/mesa"
-	PKG_URL="${PKG_SITE}.git"
-        PKG_PATCH_DIRS+=" panfrost"
-  ;;
   *)
-	PKG_VERSION="23.3.4"
+	PKG_VERSION="24.0.0"
 	PKG_SITE="http://www.mesa3d.org/"
 	PKG_URL="https://gitlab.freedesktop.org/mesa/mesa/-/archive/mesa-${PKG_VERSION}/mesa-mesa-${PKG_VERSION}.tar.gz"
   ;;
