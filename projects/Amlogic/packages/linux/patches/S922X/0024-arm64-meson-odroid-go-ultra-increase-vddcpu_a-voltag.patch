@@ -1,4 +1,4 @@
-From 515c800b6c23502d25ccd971dcfdc6ca0dde7897 Mon Sep 17 00:00:00 2001
+From 12c26f4f6e3ec2c9d7f2a0481fe0961854a463df Mon Sep 17 00:00:00 2001
 From: adamg <adamg88@users.noreply.github.com>
 Date: Thu, 25 Jan 2024 00:32:40 +0000
 Subject: [PATCH 24/49] arm64: meson: odroid-go-ultra: increase vddcpu_a

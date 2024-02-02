@@ -1,4 +1,4 @@
-From cc3be99a18f59879a3476619e9274a4d3127dff4 Mon Sep 17 00:00:00 2001
+From 701e7d3f1b7a3106ca5963d2a3257798fa558d01 Mon Sep 17 00:00:00 2001
 From: adamg <adamg88@users.noreply.github.com>
 Date: Thu, 1 Feb 2024 19:03:03 +0000
 Subject: [PATCH 48/49] arm64: meson: g12-common: remove lower freq gpu opps

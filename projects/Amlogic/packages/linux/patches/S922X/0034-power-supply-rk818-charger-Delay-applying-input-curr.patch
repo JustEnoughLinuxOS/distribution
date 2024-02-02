@@ -1,4 +1,4 @@
-From c35257b3f311f46a6ed4b15c5af433433486f8a1 Mon Sep 17 00:00:00 2001
+From 11d91617a77b6fd25e96db709de9307067c66c0a Mon Sep 17 00:00:00 2001
 From: Ondrej Jirman <megi@xff.cz>
 Date: Tue, 2 Aug 2022 09:37:05 +0200
 Subject: [PATCH 34/49] power: supply: rk818-charger: Delay applying input

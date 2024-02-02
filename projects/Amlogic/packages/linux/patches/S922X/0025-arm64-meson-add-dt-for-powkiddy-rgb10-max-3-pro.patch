@@ -1,4 +1,4 @@
-From 2e182dc98e292ddcb126633aea6446ba4549e3f2 Mon Sep 17 00:00:00 2001
+From 80932467ac1c501eb4f1c92847aaba55cd03d359 Mon Sep 17 00:00:00 2001
 From: adamg <adamg88@users.noreply.github.com>
 Date: Fri, 26 Jan 2024 17:55:02 +0000
 Subject: [PATCH 25/49] arm64: meson: add dt for powkiddy-rgb10-max-3-pro

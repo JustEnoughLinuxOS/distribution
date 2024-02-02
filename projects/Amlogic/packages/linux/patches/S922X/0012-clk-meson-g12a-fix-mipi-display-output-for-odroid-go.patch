@@ -1,4 +1,4 @@
-From dfad46b4d3834f1c36233f171943af7a0e9f34e6 Mon Sep 17 00:00:00 2001
+From f67ff8d0a59222f943869c7d9d2e0bd4a68ebcda Mon Sep 17 00:00:00 2001
 From: "Mauro (mdrjr) Ribeiro" <mauro.ribeiro@hardkernel.com>
 Date: Tue, 23 Jan 2024 23:56:49 +0000
 Subject: [PATCH 12/49] clk: meson: g12a: fix mipi display output for

@@ -1,4 +1,4 @@
-From 2097bdaed54ed1185fedb5946354f0e724b27265 Mon Sep 17 00:00:00 2001
+From 50b5516c38e61d9fa1435703d99f6ac87f37ad0f Mon Sep 17 00:00:00 2001
 From: adamg <adamg88@users.noreply.github.com>
 Date: Wed, 24 Jan 2024 23:56:58 +0000
 Subject: [PATCH 23/49] arm64: meson: g12-common: add mali to dts

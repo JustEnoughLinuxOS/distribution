@@ -1,4 +1,4 @@
-From c141f790a38f9cc2a50642edb44bf71b3a50d78d Mon Sep 17 00:00:00 2001
+From ed83c80a599b47ee346775b614139b9376606251 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Ond=C5=99ej=20Jirman?= <megi@xff.cz>
 Date: Thu, 13 Jan 2022 13:53:03 +0100
 Subject: [PATCH 29/49] power: supply: rk818-charger: Change charger type to

@@ -1,4 +1,4 @@
-From 0ee184dfa040dc25a8d698e7b006752936471868 Mon Sep 17 00:00:00 2001
+From b47a6aac842e16521f666615f802d1c32a244d9f Mon Sep 17 00:00:00 2001
 From: Neil Armstrong <neil.armstrong@linaro.org>
 Date: Tue, 14 Nov 2023 11:14:45 +0100
 Subject: [PATCH 09/49] clk: meson: g12a: add CSI & ISP gates clocks

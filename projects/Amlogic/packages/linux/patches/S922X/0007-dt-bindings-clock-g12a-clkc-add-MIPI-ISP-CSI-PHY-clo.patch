@@ -1,4 +1,4 @@
-From 0e1d615c50e2014a36b734d27045f0ed1cae89ff Mon Sep 17 00:00:00 2001
+From 520fe8137e67749a4388a2c0e15a6cee1cbb9bed Mon Sep 17 00:00:00 2001
 From: Neil Armstrong <neil.armstrong@linaro.org>
 Date: Tue, 14 Nov 2023 11:14:43 +0100
 Subject: [PATCH 07/49] dt-bindings: clock: g12a-clkc: add MIPI ISP & CSI PHY

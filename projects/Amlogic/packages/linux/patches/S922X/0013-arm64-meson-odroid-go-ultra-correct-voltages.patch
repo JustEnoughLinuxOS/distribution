@@ -1,4 +1,4 @@
-From 6d1d09be179529c1a707f9ed83d23c167900c2c5 Mon Sep 17 00:00:00 2001
+From 03ed1c5a21386b8128e4fb0a78e40ae33d2b476e Mon Sep 17 00:00:00 2001
 From: "Mauro (mdrjr) Ribeiro" <mauro.ribeiro@hardkernel.com>
 Date: Tue, 23 Jan 2024 23:53:24 +0000
 Subject: [PATCH 13/49] arm64: meson: odroid-go-ultra: correct voltages

@@ -1,4 +1,4 @@
-From a56c03b64f3f335a3b5e813ba759e15571d23b88 Mon Sep 17 00:00:00 2001
+From 88e015d1bc67b6f7a7883ae6de915aa03b35d588 Mon Sep 17 00:00:00 2001
 From: "Mauro (mdrjr) Ribeiro" <mauro.ribeiro@hardkernel.com>
 Date: Wed, 31 Jan 2024 20:56:40 +0000
 Subject: [PATCH 46/49] arm64: meson: odroid-go-ultra: add headphone detection
