@@ -1,4 +1,4 @@
-From d8a953f276b7c6cd74f51b7c94cd9fb3edd941d7 Mon Sep 17 00:00:00 2001
+From f580f795fd23c1cd49b0c46973f6eb699ae48f1e Mon Sep 17 00:00:00 2001
 From: Neil Armstrong <neil.armstrong@linaro.org>
 Date: Fri, 24 Nov 2023 09:41:21 +0100
 Subject: [PATCH 06/49] arm64: meson: g12-common: add the MIPI DSI nodes

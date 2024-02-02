@@ -1,4 +1,4 @@
-From 11eae05c4e291f33c230f3b30df8a50d562eaff3 Mon Sep 17 00:00:00 2001
+From 3529aa1aaa05b20c217e5bf088bf6e097ad52310 Mon Sep 17 00:00:00 2001
 From: "Mauro (mdrjr) Ribeiro" <mauro.ribeiro@hardkernel.com>
 Date: Wed, 31 Jan 2024 11:59:50 -0300
 Subject: [PATCH 42/49] power: supply: rk818-battery/charger: clear unused

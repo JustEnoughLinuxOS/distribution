@@ -1,4 +1,4 @@
-From fac13764b8819963ac934ff6ed56a4314e664973 Mon Sep 17 00:00:00 2001
+From 6e06d0c825f9cad2fdaf97f37581d069103a3b0e Mon Sep 17 00:00:00 2001
 From: brooksytech <1673861+brooksytech@users.noreply.github.com>
 Date: Wed, 24 Jan 2024 16:18:45 +0000
 Subject: [PATCH 17/49] drm: meson: venc: HACK: panic when gamma is not set

@@ -1,4 +1,4 @@
-From 7f64c5713a47f3216f48048f69df6fa5d49eb9e7 Mon Sep 17 00:00:00 2001
+From c1fe0ad8dd7141bf6a8a482506173e8842c7bdbe Mon Sep 17 00:00:00 2001
 From: Neil Armstrong <neil.armstrong@linaro.org>
 Date: Fri, 24 Nov 2023 09:41:12 +0100
 Subject: [PATCH 01/49] dt-bindings: clk: g12a-clkc: add CTS_ENCL clock ids

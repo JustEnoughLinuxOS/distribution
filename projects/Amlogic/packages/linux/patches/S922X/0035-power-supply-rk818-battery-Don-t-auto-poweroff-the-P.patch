@@ -1,4 +1,4 @@
-From 88271052cc0c74b7109ea781a53dc8e863eda764 Mon Sep 17 00:00:00 2001
+From 54c654e254cded0d8162bd6e74787f06e292054b Mon Sep 17 00:00:00 2001
 From: Ondrej Jirman <megi@xff.cz>
 Date: Thu, 10 Nov 2022 20:03:47 +0100
 Subject: [PATCH 35/49] power: supply: rk818-battery: Don't auto-poweroff the

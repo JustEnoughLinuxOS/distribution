@@ -1,4 +1,4 @@
-From 67854f6e3476e8cbadff7e560f602dd539153f9c Mon Sep 17 00:00:00 2001
+From d6230d301e49e23704a42ced4f5202761c06ed99 Mon Sep 17 00:00:00 2001
 From: Anssi Hannula <anssi.hannula@iki.fi>
 Date: Sun, 17 Apr 2022 04:37:48 +0000
 Subject: [PATCH 49/49] LOCAL: ALSA: Assign internal PCM chmap/ELD/IEC958 kctls

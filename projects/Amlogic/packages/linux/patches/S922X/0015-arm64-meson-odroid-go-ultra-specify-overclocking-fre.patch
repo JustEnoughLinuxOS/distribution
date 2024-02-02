@@ -1,4 +1,4 @@
-From 90a1c072c1d2312f485bd0d47b39ef594e0f65d3 Mon Sep 17 00:00:00 2001
+From 699ae801205b23d1da08158922041aaaee26d4a6 Mon Sep 17 00:00:00 2001
 From: adamg <adamg88@users.noreply.github.com>
 Date: Wed, 24 Jan 2024 11:37:48 +0000
 Subject: [PATCH 15/49] arm64: meson: odroid-go-ultra: specify overclocking

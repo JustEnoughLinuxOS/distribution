@@ -1,4 +1,4 @@
-From 4c3c07ba7f2cc507612a448066fd2b124b2ff236 Mon Sep 17 00:00:00 2001
+From 9e83d12a03367d69e6aba5879c6f4db4ba301bda Mon Sep 17 00:00:00 2001
 From: adamg <adamg88@users.noreply.github.com>
 Date: Wed, 31 Jan 2024 20:18:22 +0000
 Subject: [PATCH 45/49] power: supply: rk818_charger: change syfs node name so

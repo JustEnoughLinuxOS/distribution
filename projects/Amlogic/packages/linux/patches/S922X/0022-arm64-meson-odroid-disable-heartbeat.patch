@@ -1,4 +1,4 @@
-From ca5e6f5823e8fcfc58e7130390ada5cb3c422491 Mon Sep 17 00:00:00 2001
+From 90520a4c074557ab1586773f805aa2de47a27009 Mon Sep 17 00:00:00 2001
 From: adamg <adamg88@users.noreply.github.com>
 Date: Wed, 24 Jan 2024 22:22:49 +0000
 Subject: [PATCH 22/49] arm64: meson: odroid: disable heartbeat

@@ -1,4 +1,4 @@
-From 22446adc1a1745a578419bd8ce652ae1a02d9615 Mon Sep 17 00:00:00 2001
+From f30d17b19e6ffcf86b833097d560030c80571d0f Mon Sep 17 00:00:00 2001
 From: Ondrej Jirman <megi@xff.cz>
 Date: Sun, 11 Dec 2022 10:39:22 +0100
 Subject: [PATCH 37/49] power: supply: rk818-battery: Don't reset dsoc to 0 on

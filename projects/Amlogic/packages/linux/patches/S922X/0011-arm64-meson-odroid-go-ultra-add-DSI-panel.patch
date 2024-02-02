@@ -1,4 +1,4 @@
-From b98ce182b139c787137cc732877632a053d3d747 Mon Sep 17 00:00:00 2001
+From b1ec05e594ac3efc54ee4efacdc6d33284d7a533 Mon Sep 17 00:00:00 2001
 From: adamg <adamg88@users.noreply.github.com>
 Date: Tue, 23 Jan 2024 23:41:40 +0000
 Subject: [PATCH 11/49] arm64: meson: odroid-go-ultra: add DSI panel

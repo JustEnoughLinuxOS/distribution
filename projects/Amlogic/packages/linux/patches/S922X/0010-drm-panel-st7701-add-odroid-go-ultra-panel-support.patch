@@ -1,4 +1,4 @@
-From 7833886e61125266a6f391d96f5db14b5013a28a Mon Sep 17 00:00:00 2001
+From a92e0edd59ffe9a5f8210ef99570165f8eae354d Mon Sep 17 00:00:00 2001
 From: adamg <adamg88@users.noreply.github.com>
 Date: Tue, 23 Jan 2024 23:28:55 +0000
 Subject: [PATCH 10/49] drm: panel: st7701: add odroid-go-ultra panel support

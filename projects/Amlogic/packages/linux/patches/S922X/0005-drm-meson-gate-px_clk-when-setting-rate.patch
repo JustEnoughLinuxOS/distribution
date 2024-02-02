@@ -1,4 +1,4 @@
-From 3ecfa3f37500eb0a37d5629fcea59953116c800e Mon Sep 17 00:00:00 2001
+From 3649827ec3d7dff809938bdd03dd359e971c3cd4 Mon Sep 17 00:00:00 2001
 From: Neil Armstrong <neil.armstrong@linaro.org>
 Date: Fri, 24 Nov 2023 09:41:20 +0100
 Subject: [PATCH 05/49] drm/meson: gate px_clk when setting rate
