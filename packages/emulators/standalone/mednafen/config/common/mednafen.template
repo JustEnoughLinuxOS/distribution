@@ -198,13 +198,13 @@ command.device_select8 keyboard 0x0 37+ctrl+shift
 command.device_select9 keyboard 0x0 38+ctrl+shift
 
 ;Exit
-command.exit joystick @GUID1@ @DEVICE_BTN_SELECT@ && joystick @GUID1@ @DEVICE_BTN_START@
+command.exit joystick @GUID1@ @DEVICE_FUNC_KEYA_MODIFIER@ && joystick @GUID1@ @DEVICE_BTN_START@
 
 ;Fast-forward
-command.fast_forward joystick @GUID1@ @DEVICE_BTN_SELECT@ && joystick @GUID1@ @DEVICE_BTN_TR2@
+command.fast_forward joystick @GUID1@ @DEVICE_FUNC_KEYA_MODIFIER@ && joystick @GUID1@ @DEVICE_BTN_TR2@
 
 ;Configure buttons on virtual port 1
-command.input_config1 keyboard 0x0 30+alt+shift || joystick @GUID1@ @DEVICE_BTN_THUMBR@ && joystick @GUID1@ @DEVICE_BTN_TL2@
+command.input_config1 keyboard 0x0 30+alt+shift || joystick @GUID1@ @DEVICE_FUNC_KEYB_MODIFIER@ && joystick @GUID1@ @DEVICE_BTN_TL2@
 
 ;Configure buttons on virtual port 10
 command.input_config10 keyboard 0x0 39+alt+shift
@@ -252,16 +252,16 @@ command.input_configc keyboard 0x0 59
 command.input_configc_am keyboard 0x0 59+shift
 
 ;Insert coin
-command.insert_coin keyboard 0x0 65 || joystick @GUID1@ @DEVICE_BTN_THUMBR@ && joystick @GUID1@ @DEVICE_BTN_TR2@
+command.insert_coin keyboard 0x0 65 || joystick @GUID1@ @DEVICE_FUNC_KEYB_MODIFIER@ && joystick @GUID1@ @DEVICE_BTN_TR2@
 
 ;Insert/Eject disk/disc
-command.insert_eject_disk joystick @GUID1@ @DEVICE_BTN_THUMBR@ && joystick @GUID1@ @DEVICE_BTN_TR@
+command.insert_eject_disk joystick @GUID1@ @DEVICE_FUNC_KEYB_MODIFIER@ && joystick @GUID1@ @DEVICE_BTN_TR@
 
 ;Load movie
 command.load_movie keyboard 0x0 64+shift
 
 ;Load state
-command.load_state joystick @GUID1@ @DEVICE_BTN_SELECT@ && joystick @GUID1@ @DEVICE_BTN_TL@
+command.load_state joystick @GUID1@ @DEVICE_FUNC_KEYA_MODIFIER@ && joystick @GUID1@ @DEVICE_BTN_TL@
 
 ;Movie 0 select
 command.m0 keyboard 0x0 39+shift
@@ -315,10 +315,10 @@ command.run_normal keyboard 0x0 21+alt
 command.save_movie keyboard 0x0 62+shift
 
 ;Save state
-command.save_state joystick @GUID1@ @DEVICE_BTN_SELECT@ && joystick @GUID1@ @DEVICE_BTN_TR@
+command.save_state joystick @GUID1@ @DEVICE_FUNC_KEYA_MODIFIER@ && joystick @GUID1@ @DEVICE_BTN_TR@
 
 ;Select disk/disc
-command.select_disk joystick @GUID1@ @DEVICE_BTN_THUMBR@ && joystick @GUID1@ @DEVICE_BTN_TL@
+command.select_disk joystick @GUID1@ @DEVICE_FUNC_KEYB_MODIFIER@ && joystick @GUID1@ @DEVICE_BTN_TL@
 
 ;Select drive
 command.select_drive keyboard 0x0 63+shift
@@ -327,13 +327,13 @@ command.select_drive keyboard 0x0 63+shift
 command.slow_forward keyboard 0x0 49
 
 ;Rewind
-command.state_rewind joystick @GUID1@ @DEVICE_BTN_SELECT@ && joystick @GUID1@ @DEVICE_BTN_TL2@
+command.state_rewind joystick @GUID1@ @DEVICE_FUNC_KEYA_MODIFIER@ && joystick @GUID1@ @DEVICE_BTN_TL2@
 
 ;Decrease selected save state slot by 1
-command.state_slot_dec joystick @GUID1@ @DEVICE_BTN_THUMBR@ && joystick @GUID1@ @DEVICE_BTN_DPAD_LEFT@
+command.state_slot_dec joystick @GUID1@ @DEVICE_FUNC_KEYB_MODIFIER@ && joystick @GUID1@ @DEVICE_BTN_DPAD_LEFT@
 
 ;Increase selected save state slot by 1
-command.state_slot_inc joystick @GUID1@ @DEVICE_BTN_THUMBR@ && joystick @GUID1@ @DEVICE_BTN_DPAD_RIGHT@
+command.state_slot_inc joystick @GUID1@ @DEVICE_FUNC_KEYB_MODIFIER@ && joystick @GUID1@ @DEVICE_BTN_DPAD_RIGHT@
 
 ;Take scaled(and filtered) screen snapshot
 command.take_scaled_snapshot keyboard 0x0 66+shift
@@ -375,7 +375,7 @@ command.toggle_debugger keyboard 0x0 7+alt
 command.toggle_dipview keyboard 0x0 63
 
 ;Toggle frames-per-second display
-command.toggle_fps_view joystick @GUID1@ @DEVICE_BTN_SELECT@ && joystick @GUID1@ @DEVICE_BTN_WEST@
+command.toggle_fps_view joystick @GUID1@ @DEVICE_FUNC_KEYA_MODIFIER@ && joystick @GUID1@ @DEVICE_BTN_WEST@
 
 ;Toggle fullscreen mode
 command.toggle_fs keyboard 0x0 40+alt
@@ -387,7 +387,7 @@ command.toggle_grab keyboard 0x0 101+ctrl+shift
 command.toggle_help keyboard 0x0 58
 
 ;Toggle state rewind functionality
-command.toggle_state_rewind joystick @GUID1@ @DEVICE_BTN_THUMBL@ && joystick @GUID1@ @DEVICE_BTN_NORTH@
+command.toggle_state_rewind keyboard 0x0 35+alt
 
 ;Enable/Disable cheats
 command.togglecheatactive keyboard 0x0 23+alt
@@ -3369,7 +3369,7 @@ pce.input.port1.gamepad.iv joystick @GUID1@ @DEVICE_BTN_NORTH@
 pce.input.port1.gamepad.left joystick @GUID1@ @DEVICE_BTN_DPAD_LEFT@
 
 ;pce, Port 1, Gamepad: Mode
-pce.input.port1.gamepad.mode_select joystick @GUID1@ @DEVICE_BTN_THUMBL@
+pce.input.port1.gamepad.mode_select keyboard 0x0 20
 
 ;Default position for switch "Mode".
 pce.input.port1.gamepad.mode_select.defpos 2
@@ -4173,7 +4173,7 @@ pce_fast.input.port1.gamepad.iv joystick @GUID1@ @DEVICE_BTN_NORTH@
 pce_fast.input.port1.gamepad.left joystick @GUID1@ @DEVICE_BTN_DPAD_LEFT@
 
 ;pce_fast, Port 1, Gamepad: Mode
-pce_fast.input.port1.gamepad.mode_select joystick @GUID1@ @DEVICE_BTN_THUMBL@
+pce_fast.input.port1.gamepad.mode_select keyboard 0x0 20
 
 ;Default position for switch "Mode".
 pce_fast.input.port1.gamepad.mode_select.defpos 2
