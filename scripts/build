@@ -10,6 +10,12 @@ if [ -z "${1}" ]; then
   die "usage: ${0} package_name[:<host|target|init|bootstrap>] [parent_pkg]"
 fi
 
+# Skip excluded packages
+listcontains "${EXCLUDE_PKGS}" "${PKG_NAME}" && {
+    echo "Skipping ${PKG_NAME} it's listed in EXCLUDE_PKGS"
+    exit 0
+}
+
 if [ "${1}" = "--all" ]; then
   if [ -n "${2}" ]; then
     for build_dir in $(ls -1d ${ROOT}/build.*); do
@@ -22,12 +28,6 @@ fi
 if [ -z "${PKG_NAME}" ]; then
   die "$(print_color CLR_ERROR "${1}: no package.mk file found")"
 fi
-
-# Skip excluded packages
-listcontains "${EXCLUDE_PKGS}" "${PKG_NAME}" && {
-    echo "Skipping ${PKG_NAME} it's listed in EXCLUDE_PKGS"
-    exit 0
-}
 
 if [ -n "${PKG_ARCH}" ]; then
   listcontains "${PKG_ARCH}" "!${TARGET_ARCH}" && exit 0
