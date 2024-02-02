@@ -1,4 +1,4 @@
-From c19ec625d944a7152c5697ea46dcc9a73752fc26 Mon Sep 17 00:00:00 2001
+From 74abcbd59fda168ba65c6f106322012c84c151a0 Mon Sep 17 00:00:00 2001
 From: adamg <adamg88@users.noreply.github.com>
 Date: Wed, 24 Jan 2024 21:57:34 +0000
 Subject: [PATCH 21/49] arm64: meson: odroid-go-ultra: add joypad

@@ -1,4 +1,4 @@
-From 680aed77a6796ff444e2d1e91eb2acd7e517ede4 Mon Sep 17 00:00:00 2001
+From a34fda226977aaa2d4d5e775607756469c390536 Mon Sep 17 00:00:00 2001
 From: ckkim <changkon12@gmail.com>
 Date: Thu, 20 Apr 2023 16:21:09 +0900
 Subject: [PATCH 47/49] arm64: dts: amlogic: odroid-go ultra: Improve sound

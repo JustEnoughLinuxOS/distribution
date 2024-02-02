@@ -1,4 +1,4 @@
-From 5e4566a4d1aea04096d90b612475767167b8757c Mon Sep 17 00:00:00 2001
+From 1a90054428401ec22afb359c05ff4c667b6de615 Mon Sep 17 00:00:00 2001
 From: Ondrej Jirman <megi@xff.cz>
 Date: Fri, 27 May 2022 03:07:54 +0200
 Subject: [PATCH 33/49] power: supply: rk818-battery: Speed up battery current

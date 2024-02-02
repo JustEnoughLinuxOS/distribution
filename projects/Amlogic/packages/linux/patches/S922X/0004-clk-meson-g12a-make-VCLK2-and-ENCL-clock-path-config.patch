@@ -1,4 +1,4 @@
-From 396ed35999fa1987d68643586b9c95052bb34496 Mon Sep 17 00:00:00 2001
+From fcbfbcf79f5a5206aee38d3c69875565dd6d6431 Mon Sep 17 00:00:00 2001
 From: Neil Armstrong <neil.armstrong@linaro.org>
 Date: Fri, 24 Nov 2023 09:41:19 +0100
 Subject: [PATCH 04/49] clk: meson: g12a: make VCLK2 and ENCL clock path

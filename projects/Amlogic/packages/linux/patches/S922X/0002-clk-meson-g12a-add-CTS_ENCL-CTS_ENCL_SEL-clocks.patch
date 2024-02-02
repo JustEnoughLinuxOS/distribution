@@ -1,4 +1,4 @@
-From 25b893fa047b8a8af6cbf925f2126c84a146eb35 Mon Sep 17 00:00:00 2001
+From 09b022b0874cf773fedc2d9d2af9bd74848f77fa Mon Sep 17 00:00:00 2001
 From: Neil Armstrong <neil.armstrong@linaro.org>
 Date: Fri, 24 Nov 2023 09:41:17 +0100
 Subject: [PATCH 02/49] clk: meson: g12a: add CTS_ENCL & CTS_ENCL_SEL clocks

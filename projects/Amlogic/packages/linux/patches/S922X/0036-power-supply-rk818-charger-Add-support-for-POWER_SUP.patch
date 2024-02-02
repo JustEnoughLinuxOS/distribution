@@ -1,4 +1,4 @@
-From 557a625ad061282bd321e9c96e5d0cf362e59706 Mon Sep 17 00:00:00 2001
+From 935f57d7a30de02fbd8300cfc5804fc9cf9b3eef Mon Sep 17 00:00:00 2001
 From: Ondrej Jirman <megi@xff.cz>
 Date: Thu, 10 Nov 2022 20:05:16 +0100
 Subject: [PATCH 36/49] power: supply: rk818-charger: Add support for

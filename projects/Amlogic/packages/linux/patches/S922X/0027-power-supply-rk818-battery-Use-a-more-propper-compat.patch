@@ -1,4 +1,4 @@
-From 6654f3a58925a1a84f0d98dfb1365eb006b57c3a Mon Sep 17 00:00:00 2001
+From 6ffe99c17ad245020a2472d4b71d8aff1e19ceb1 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Ond=C5=99ej=20Jirman?= <megi@xff.cz>
 Date: Sun, 7 Nov 2021 19:30:07 +0100
 Subject: [PATCH 27/49] power: supply: rk818-battery: Use a more propper

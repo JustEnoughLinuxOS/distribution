@@ -1,4 +1,4 @@
-From d7ab30b72c46d9d6ddfe72f567267dde1f06e447 Mon Sep 17 00:00:00 2001
+From 6927a0e7b561f4ecf1991c565d8e14bbe862cb1d Mon Sep 17 00:00:00 2001
 From: Ondrej Jirman <megi@xff.cz>
 Date: Tue, 17 May 2022 23:30:46 +0200
 Subject: [PATCH 31/49] power: supply: rk818-battery: Drop dependency on

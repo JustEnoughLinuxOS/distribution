@@ -1,4 +1,4 @@
-From 5521dace8d11b1c2244393501bee9a1556c6b6a8 Mon Sep 17 00:00:00 2001
+From 584e456bf9eeed588317bb073a8d326219fef8bd Mon Sep 17 00:00:00 2001
 From: Ondrej Jirman <megi@xff.cz>
 Date: Thu, 7 Sep 2023 17:43:00 +0200
 Subject: [PATCH 41/49] power: supply: rk817-charger: Propagate proper errors
@@ -11,7 +11,7 @@ Signed-off-by: Ondrej Jirman <megi@xff.cz>
  1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/power/supply/rk817_charger.c b/drivers/power/supply/rk817_charger.c
-index 9de86fc8f3fa..241fff9bc2ab 100644
+index ee5c8419ac42..1e0900e5b450 100644
 --- a/drivers/power/supply/rk817_charger.c
 +++ b/drivers/power/supply/rk817_charger.c
 @@ -1250,13 +1250,13 @@ static int rk817_charger_probe(struct platform_device *pdev)

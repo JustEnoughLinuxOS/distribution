@@ -1,4 +1,4 @@
-From 63b0fc884bb654a7247f14b05cedb2c2f18c24d0 Mon Sep 17 00:00:00 2001
+From 38fa893698684ad22da9e7c82c5b4edac57bb5d8 Mon Sep 17 00:00:00 2001
 From: "Mauro (mdrjr) Ribeiro" <mauro.ribeiro@hardkernel.com>
 Date: Wed, 24 Jan 2024 12:08:19 +0000
 Subject: [PATCH 16/49] arm64: meson: odroid-go-ultra: remove adc joystick
