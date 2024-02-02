@@ -110,13 +110,13 @@ Kbd Mapping Frame Advance = 47
 # SDL keysym for pressing the game shark button
 Kbd Mapping Gameshark = 103
 # Joystick event string for stopping the emulator
-Joy Mapping Stop = "J0B12/B13"
+Joy Mapping Stop = "J0B16/B9"
 # Joystick event string for switching between fullscreen/windowed modes
 Joy Mapping Fullscreen = ""
 # Joystick event string for saving the emulator state
-Joy Mapping Save State = "J0B12/B5"
+Joy Mapping Save State = "J0B16/B5"
 # Joystick event string for loading the emulator state
-Joy Mapping Load State = "J0B12/B4"
+Joy Mapping Load State = "J0B16/B4"
 # Joystick event string for advancing the save state slot
 Joy Mapping Increment Slot = ""
 # Joystick event string for resetting the emulator
@@ -128,7 +128,7 @@ Joy Mapping Speed Up = ""
 # Joystick event string for taking a screenshot
 Joy Mapping Screenshot = ""
 # Joystick event string for pausing the emulator
-Joy Mapping Pause = "J0B12/B0"
+Joy Mapping Pause = "J0B16/B0"
 # Joystick event string for muting/unmuting the sound
 Joy Mapping Mute = ""
 # Joystick event string for increasing the volume
@@ -136,7 +136,7 @@ Joy Mapping Increase Volume = ""
 # Joystick event string for decreasing the volume
 Joy Mapping Decrease Volume = ""
 # Joystick event string for fast-forward
-Joy Mapping Fast Forward = "J0B12/B14"
+Joy Mapping Fast Forward = "J0B16/B15"
 # Joystick event string for advancing by one frame when paused
 Joy Mapping Frame Advance = ""
 # Joystick event string for pressing the game shark button
@@ -196,8 +196,8 @@ DPad D = button(13)
 DPad U = button(12)
 Start = button(9)
 Z Trig = button(7)
-B Button = button(1)
-A Button = button(2)
+B Button = button(0)
+A Button = button(1)
 C Button R = axis(2+)
 C Button L = axis(2-)
 C Button D = axis(3+)
@@ -399,7 +399,7 @@ ScreenHeight = 320
 # Use fullscreen mode if True, or windowed mode if False
 Fullscreen = True
 # If true, activate the SDL_GL_SWAP_CONTROL attribute
-VerticalSync = True
+VerticalSync = False
 # Rotate screen contents: 0=0 degree, 1=90 degree, 2 = 180 degree, 3=270 degree
 Rotate = 0
 
@@ -605,9 +605,9 @@ ScreenUpdateSetting = 4
 # Force to use normal alpha blender
 NormalAlphaBlender = False
 # Use a faster algorithm to speed up texture loading and CRC computation
-FastTextureLoading = False
+FastTextureLoading = True
 # Use different texture coordinate clamping code
-AccurateTextureMapping = True
+AccurateTextureMapping = False
 # Force emulated frame buffers to be in N64 native resolution
 InN64Resolution = False
 # Try to reduce Video RAM usage (should never be used)
@@ -641,7 +641,7 @@ DumpTexturesToFiles = False
 # Display On-screen FPS
 ShowFPS = False
 # Use Mipmapping? 0=no, 1=nearest, 2=bilinear, 3=trilinear
-Mipmapping = 2
+Mipmapping = 0
 # Enable, Disable fog generation (0=Disable, 1=Enable)
 FogMethod = 1
 # Force to use texture filtering or not (0=auto: n64 choose, 1=force no filtering, 2=force filtering)

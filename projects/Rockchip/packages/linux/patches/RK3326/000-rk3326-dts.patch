@@ -949,8 +949,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-gameconsole-r33s.dts l
 +};
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	1969-12-31 19:00:00.000000000 -0500
-+++ linux/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	2024-01-29 18:25:00.758766065 -0500
-@@ -0,0 +1,825 @@
++++ linux/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	2024-02-01 21:39:27.594961980 -0500
+@@ -0,0 +1,828 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2019 Hardkernel Co., Ltd
@@ -1306,6 +1306,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +       compatible = "regulator-fixed";
 +       regulator-name = "vcc3v8_sys";
 +       regulator-always-on;
++       regulator-boot-on;
 +       regulator-min-microvolt = <3800000>;
 +       regulator-max-microvolt = <3800000>;
 +    };
@@ -1572,6 +1573,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +              regulator-name = "vcc18_lcd_n";
 +              regulator-min-microvolt = <1800000>;
 +              regulator-max-microvolt = <1800000>;
++              regulator-boot-on;
++              enable-active-high;
 +
 +              regulator-state-mem {
 +                  regulator-off-in-suspend;

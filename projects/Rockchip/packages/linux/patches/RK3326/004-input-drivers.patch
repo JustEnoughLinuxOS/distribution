@@ -2264,9 +2264,9 @@ diff -rupN linux.orig/drivers/input/joystick/odroidgo2-v11-joypad.c linux/driver
 +
 +/*----------------------------------------------------------------------------*/
 diff -rupN linux.orig/drivers/input/joystick/odroidgo3-joypad.c linux/drivers/input/joystick/odroidgo3-joypad.c
---- linux.orig/drivers/input/joystick/odroidgo3-joypad.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux/drivers/input/joystick/odroidgo3-joypad.c	2024-01-29 06:19:30.953540557 +0000
-@@ -0,0 +1,1086 @@
+--- linux.orig/drivers/input/joystick/odroidgo3-joypad.c	1969-12-31 19:00:00.000000000 -0500
++++ linux/drivers/input/joystick/odroidgo3-joypad.c	2024-02-01 13:43:52.000000000 -0500
+@@ -0,0 +1,1108 @@
 +/*
 + * SARADC joystick & GPIO Button driver for Linux(Hardkernel ODROIDGO2-Advance)
 + */
@@ -2391,6 +2391,12 @@ diff -rupN linux.orig/drivers/input/joystick/odroidgo3-joypad.c linux/drivers/in
 +	/* analog button */
 +	struct bt_adc *adcs;
 +
++	/* report reference point */
++	bool invert_absx;
++	bool invert_absy;
++	bool invert_absrx;
++	bool invert_absry;
++
 +	/* report interval (ms) */
 +	int bt_gpio_count;
 +	struct bt_gpio *gpios;
@@ -2504,7 +2510,7 @@ diff -rupN linux.orig/drivers/input/joystick/odroidgo3-joypad.c linux/drivers/in
 +
 +	value *= adc->scale;
 +
-+	return (adc->invert ? (adc->max - value) : value);
++	return value;
 +}
 +
 +/*----------------------------------------------------------------------------*/
@@ -3009,6 +3015,8 @@ diff -rupN linux.orig/drivers/input/joystick/odroidgo3-joypad.c linux/drivers/in
 +
 +		switch (nbtn) {
 +			case 0:
++				if (joypad->invert_absry)
++					adc->invert = true;
 +				adc->report_type = ABS_RY;
 +				if (device_property_read_u32(dev,
 +					"abs_ry-p-tuning",
@@ -3020,6 +3028,8 @@ diff -rupN linux.orig/drivers/input/joystick/odroidgo3-joypad.c linux/drivers/in
 +					adc->tuning_n = ADC_TUNING_DEFAULT;
 +				break;
 +			case 1:
++				if (joypad->invert_absrx)
++					adc->invert = true;
 +				adc->report_type = ABS_RX;
 +				if (device_property_read_u32(dev,
 +					"abs_rx-p-tuning",
@@ -3031,6 +3041,8 @@ diff -rupN linux.orig/drivers/input/joystick/odroidgo3-joypad.c linux/drivers/in
 +					adc->tuning_n = ADC_TUNING_DEFAULT;
 +				break;
 +			case 2:
++				if (joypad->invert_absy)
++					adc->invert = true;
 +				adc->report_type = ABS_Y;
 +				if (device_property_read_u32(dev,
 +					"abs_y-p-tuning",
@@ -3042,6 +3054,8 @@ diff -rupN linux.orig/drivers/input/joystick/odroidgo3-joypad.c linux/drivers/in
 +					adc->tuning_n = ADC_TUNING_DEFAULT;
 +				break;
 +			case 3:
++				if (joypad->invert_absx)
++					adc->invert = true;
 +				adc->report_type = ABS_X;
 +				if (device_property_read_u32(dev,
 +					"abs_x-p-tuning",
@@ -3246,6 +3260,14 @@ diff -rupN linux.orig/drivers/input/joystick/odroidgo3-joypad.c linux/drivers/in
 +				&joypad->poll_interval);
 +
 +	joypad->auto_repeat = device_property_present(dev, "autorepeat");
++
++	/* change the report reference point? (read value * -1) */
++	joypad->invert_absx = device_property_present(dev, "invert-absx");
++	joypad->invert_absy = device_property_present(dev, "invert-absy");
++	joypad->invert_absrx = device_property_present(dev, "invert-absrx");
++	joypad->invert_absry = device_property_present(dev, "invert-absry");
++	dev_info(dev, "%s : invert-absx = %d, inveret-absy = %d, invert-absrx = %d, invert-absry = %d\n",
++		__func__, joypad->invert_absx, joypad->invert_absy, joypad->invert_absrx, joypad->invert_absry);
 +
 +	joypad->bt_gpio_count = device_get_child_node_count(dev);
 +
