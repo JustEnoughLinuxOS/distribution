@@ -1,7 +1,18 @@
-diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi linux/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi
---- linux.orig/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi	2023-09-12 12:02:56.937601871 +0000
-+++ linux/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi	2023-09-12 12:03:27.490291628 +0000
-@@ -2394,14 +2391,20 @@
+From 2097bdaed54ed1185fedb5946354f0e724b27265 Mon Sep 17 00:00:00 2001
+From: adamg <adamg88@users.noreply.github.com>
+Date: Wed, 24 Jan 2024 23:56:58 +0000
+Subject: [PATCH 23/49] arm64: meson: g12-common: add mali to dts
+
+---
+ .../arm64/boot/dts/amlogic/meson-g12-common.dtsi | 16 +++++++++++-----
+ arch/arm64/boot/dts/amlogic/meson-g12b.dtsi      |  3 ++-
+ 2 files changed, 13 insertions(+), 6 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi b/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi
+index 7300408262d5..b31b077bd891 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi
+@@ -2476,14 +2476,20 @@ dwc3: usb@ff500000 {
  		};
  
  		mali: gpu@ffe40000 {
@@ -27,10 +38,11 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi linux/ar
  			resets = <&reset RESET_DVALIN_CAPB3>, <&reset RESET_DVALIN>;
  			operating-points-v2 = <&gpu_opp_table>;
  			#cooling-cells = <2>;
-diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b.dtsi linux/arch/arm64/boot/dts/amlogic/meson-g12b.dtsi
---- linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b.dtsi	2023-09-12 12:02:56.937601871 +0000
-+++ linux/arch/arm64/boot/dts/amlogic/meson-g12b.dtsi	2023-09-12 12:03:27.490291628 +0000
-@@ -137,5 +139,6 @@
+diff --git a/arch/arm64/boot/dts/amlogic/meson-g12b.dtsi b/arch/arm64/boot/dts/amlogic/meson-g12b.dtsi
+index 86e6ceb31d5e..f22c27a1472c 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-g12b.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-g12b.dtsi
+@@ -139,7 +139,8 @@ map1 {
  };
  
  &mali {
@@ -38,3 +50,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/amlogic/meson-g12b.dtsi linux/arch/arm
 +	system-coherency = <0>;
 +	power_policy = "always_on";
  };
+ 
+ &pmu {
+-- 
+2.34.1
+
