@@ -116,9 +116,11 @@ fi
 if [ -f $SYSTEM_ROOT/usr/share/bootloader/${SUBDEVICE}_u-boot ]; then
   echo "Updating u-boot on: $BOOT_DISK..."
   dd if=$SYSTEM_ROOT/usr/share/bootloader/${SUBDEVICE}_u-boot of=$BOOT_DISK conv=fsync,notrunc bs=512 seek=1 &>/dev/null
-  if [ $BOOT_DISK != /dev/mmcblk0 ]; then
-    echo "Updating u-boot on: /dev/mmcblk0..."
-    dd if=$SYSTEM_ROOT/usr/share/bootloader/${SUBDEVICE}_u-boot of=/dev/mmcblk0 conv=fsync,notrunc bs=512 seek=1 &>/dev/null
+  if [ -e /dev/mmcblk0 ]; then
+    if [ $BOOT_DISK != /dev/mmcblk0 ]; then
+      echo "Updating u-boot on: /dev/mmcblk0..."
+      dd if=$SYSTEM_ROOT/usr/share/bootloader/${SUBDEVICE}_u-boot of=/dev/mmcblk0 conv=fsync,notrunc bs=512 seek=1 &>/dev/null
+    fi
   fi
 fi
 

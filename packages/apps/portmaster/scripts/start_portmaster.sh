@@ -75,4 +75,4 @@ fi
 #Start PortMaster
 @LIBEGL@
 cd /storage/roms/ports/PortMaster
-run ./PortMaster.sh 2>/dev/null
+./PortMaster.sh 2>/dev/null
