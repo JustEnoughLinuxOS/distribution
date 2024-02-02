@@ -71,8 +71,8 @@ do
   fi
   ### Until we have an overlay. :rofl:
   BATLEFT=$(battery_percent)
-  if (( "${BATCNT}" >= "90" )) &&
-     [[ "${STATUS}" =~ Disch ]]
+  if (( "${BATCNT}" >= "20" )) &&
+     [[ "${AC_STATUS}" =~ Disch ]]
   then
     AUDIBLEALERT=$(get_setting system.battery.warning)
     if (( ${BATLEFT} < "26" ))
@@ -80,7 +80,7 @@ do
       if [ "${DEVICE_LED_CONTROL}" = "true" ]
       then
         # Flash the RGB or power LED if available.
-        led_flash red
+        led_flash
         BATCNT=0
       elif [ "${AUDIBLEALERT}" = "1" ]
       then
