@@ -12,3 +12,6 @@ if [ ! -d "/storage/.config/gzdoom/" ]; then
           /vid_defheight=/c\vid_defheight=480;
           /vid_defwidth=/c\vid_defwidth=640' /storage/.config/gzdoom/gzdoom.ini
 fi
+
+#Set Duckstastion SA to rotate
+sed -i '/^Rotate =/c\Rotate = 1' /storage/.config/duckstation/settings.ini

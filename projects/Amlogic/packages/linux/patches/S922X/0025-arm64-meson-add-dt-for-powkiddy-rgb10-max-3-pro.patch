@@ -1,9 +1,19 @@
+From 80932467ac1c501eb4f1c92847aaba55cd03d359 Mon Sep 17 00:00:00 2001
+From: adamg <adamg88@users.noreply.github.com>
+Date: Fri, 26 Jan 2024 17:55:02 +0000
+Subject: [PATCH 25/49] arm64: meson: add dt for powkiddy-rgb10-max-3-pro
+
+---
+ .../meson-g12b-powkiddy-rgb10-max-3-pro.dts   | 54 +++++++++++++++++++
+ 1 file changed, 54 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3-pro.dts
+
 diff --git a/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3-pro.dts b/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3-pro.dts
 new file mode 100644
-index 000000000000..df5dde6eec79
+index 000000000000..32dd41f5d4fe
 --- /dev/null
 +++ b/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3-pro.dts
-@@ -0,0 +1,39 @@
+@@ -0,0 +1,54 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
@@ -40,6 +50,24 @@ index 000000000000..df5dde6eec79
 +	};
 +
 +        sound {
-+		model = "RGB10-MAX-3-PRO";
++		model = "RGB10-MAX-3-Pro";
++	};
++
++	opp-table-0 {
++		opp-1800000000 {
++			opp-hz = /bits/ 64 <1800000000>;
++			opp-microvolt = <981000>;
++		};
++		/delete-node/ opp-1896000000;
++		/delete-node/ opp-1992000000;
++		/delete-node/ opp-2016000000;
++	};
++
++	opp-table-1 {
++		/delete-node/ opp-2304000000;
++		/delete-node/ opp-2400000000;
 +	};
 +};
+-- 
+2.34.1
+
