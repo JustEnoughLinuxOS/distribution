@@ -9,17 +9,23 @@
 GUID1="$(mednafen --list-joysticks | grep ID | awk 'NR==1 {print $2}')"
 sed -e "s/@GUID1@/${GUID1}/g" ${MEDNAFEN_CONFIG} >> $MEDNAFEN_HOME/mednafen.cfg
 
-# Replace modifiers with actual buttons
-for MOD in DEVICE_FUNC_KEYA_MODIFIER DEVICE_FUNC_KEYB_MODIFIER
-do
-    sed -i -e "s/${MOD}/DEVICE_${!MOD}/g" $MEDNAFEN_HOME/mednafen.cfg
-done
-
 NAME="$(mednafen --list-joysticks | grep ID | awk 'NR==1 {print $5$6}')"
 if [[ "$(mednafen --list-joysticks | grep ID | awk 'NR==1 {print $4}')" = "8BitDo" ]]
 then
 NAME="X-Box360"
 fi
+
+if [[ "${NAME}" = "X-Box360" ]]
+then
+export DEVICE_FUNC_KEYA_MODIFIER="BTN_THUMBL"
+export DEVICE_FUNC_KEYB_MODIFIER="BTN_THUMBR"
+fi
+
+# Replace modifiers with actual buttons
+for MOD in DEVICE_FUNC_KEYA_MODIFIER DEVICE_FUNC_KEYB_MODIFIER
+do
+    sed -i -e "s/${MOD}/DEVICE_${!MOD}/g" $MEDNAFEN_HOME/mednafen.cfg
+done
 
 # Controller config for 360 and GPIO handled separately
 if [[ "${NAME}" = "X-Box360" ]]

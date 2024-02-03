@@ -55,7 +55,7 @@ This document describes all available systems emulators and cores available for 
 |NEC|PC Engine (pcengine)|1987|`pcengine`|.pce .bin .zip .7z|**retroarch:** beetle_pce_fast (default)<br>**retroarch:** beetle_pce<br>**retroarch:** beetle_supergrafx<br>**mednafen:** pce<br>**mednafen:** pce_fast<br>|
 |NEC|PC Engine CD (pcenginecd)|1988|`pcenginecd`|.cue .ccd .chd .toc .m3u|**retroarch:** beetle_pce_fast (default)<br>**retroarch:** beetle_pce<br>**retroarch:** beetle_supergrafx<br>**mednafen:** pce<br>**mednafen:** pce_fast<br>|
 |NEC|PC-8800 (pc-8800)|1981|`pc88`|.d88 .m3u|**retroarch:** quasi88 (default)<br>|
-|NEC|PC-9800 (pc-9800)|1983|`pc98`|.d98 .zip .fdi .fdd .2hd .tfd .d88d .hdm .xdf .dup .hdi .thd .nhd .hdd .hdn|**retroarch:** np2kai (default)<br>|
+|NEC|PC-9800 (pc-9800)|1983|`pc98`|.d98 .zip .fdi .fdd .2hd .tfd .d88 .hdm .xdf .dup .hdi .thd .nhd .hdd .hdn|**retroarch:** np2kai (default)<br>|
 |NEC|PC-FX (pcfx)|1994|`pcfx`|.chd .cue .ccd .toc|**retroarch:** beetle_pcfx (default)<br>**mednafen:** pcfx<br>|
 |NEC|SuperGrafx (supergrafx)|1989|`sgfx`|.pce .sgx .cue .ccd .chd .zip .7z|**retroarch:** beetle_supergrafx<br>**retroarch:** beetle_pce<br>**mednafen:** pce<br>**mednafen:** pce_fast<br>|
 |NEC|TurboGrafx-16 (tg16)|1989|`tg16`|.pce .bin .zip .7z|**retroarch:** beetle_pce_fast (default)<br>**retroarch:** beetle_pce<br>**retroarch:** beetle_supergrafx<br>**mednafen:** pce<br>**mednafen:** pce_fast<br>|
@@ -100,7 +100,7 @@ This document describes all available systems emulators and cores available for 
 |Sega|Sega CD (segacd)|1991|`segacd`|.chd .cue .iso .m3u|**retroarch:** genesis_plus_gx (default)<br>**retroarch:** picodrive<br>|
 |Sega|SG-1000 (sg-1000)|1983|`sg-1000`|.bin .sg .zip .7z|**retroarch:** gearsystem (default)<br>**retroarch:** genesis_plus_gx<br>**retroarch:** picodrive<br>|
 |Sega|ST-V (st-v)|1995|`st-v`|.zip .ZIP||
-|Sharp|X1 (x1)|1982|`x1`|.dx1 .2d .2hd .tfd .d88d .hdm .xdf .dup .tap .cmd .zip .7z|**retroarch:** x1 (default)<br>|
+|Sharp|X1 (x1)|1982|`x1`|.dx1 .2d .2hd .tfd .d88 .hdm .xdf .dup .tap .cmd .zip .7z|**retroarch:** x1 (default)<br>|
 |Sharp|x68000 (x68000)|1987|`x68000`|.dim .img .d88 .hdm .dup .2hd .xdf .hdf .cmd .m3u .zip .7z|**retroarch:** px68k (default)<br>|
 |Sinclair|ZX Spectrum (zxspectrum)|1982|`zxspectrum`|.tzx .tap .z80 .rzx .scl .trd .dsk .zip .7z|**retroarch:** fuse<br>|
 |Sinclair|ZX81 (zx81)|1981|`zx81`|.tzx .p .zip .7z|**retroarch:** 81 (default)<br>|
@@ -109,7 +109,7 @@ This document describes all available systems emulators and cores available for 
 |SNK|Neo Geo CD (neocd)|1994|`neocd`|.cue .iso .chd|**retroarch:** neocd (default)<br>**retroarch:** fbneo<br>|
 |SNK|Neo Geo Pocket (ngp)|1998|`ngp`|.ngc .ngp .zip .7z|**retroarch:** beetle_ngp (default)<br>**retroarch:** race<br>**mednafen:** ngp<br>|
 |SNK|Neo Geo Pocket Color (ngpc)|1999|`ngpc`|.ngc .zip .7z|**retroarch:** beetle_ngp (default)<br>**retroarch:** race<br>**mednafen:** ngp<br>|
-|Sony|PlayStation (psx)|1994|`psx`|.bin .cue .img .mdf .pbp .toc .cbn .m3u .ccd .chd .iso|**retroarch:** pcsx_rearmed32 (default)<br>**retroarch:** pcsx_rearmed<br>**mednafen:** psx<br>**retroarch:** duckstation<br>**retroarch:** swanstation<br>|
+|Sony|PlayStation (psx)|1994|`psx`|.bin .cue .img .mdf .pbp .toc .cbn .m3u .ccd .chd .iso|**retroarch:** pcsx_rearmed32 (default)<br>**retroarch:** pcsx_rearmed<br>**retroarch:** duckstation<br>**retroarch:** swanstation<br>|
 |Sony|PlayStation Portable (psp)|2004|`psp`|.iso .cso .pbp .chd|**ppsspp:** ppsspp-sa (default)<br>|
 |Sony|PSP Minis (pspminis)|2004|`pspminis`|.iso .cso .pbp|**ppsspp:** ppsspp-sa (default)<br>**retroarch:** ppsspp<br>|
 |Sun Microsystems|J2ME (j2me)|2002|`j2me`|.jar|**retroarch:** freej2me (default)<br>|
