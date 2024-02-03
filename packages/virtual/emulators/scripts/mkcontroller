@@ -5,9 +5,9 @@
 TMPFILE=$(uuidgen)
 OUTFILE=$(uuidgen)
 
-CONTROLLER=$(grep -b4 js0 /proc/bus/input/devices | awk 'BEGIN {FS="\""}; /Name/ {printf $2}')
+CONTROLLER=$(control-gen | awk 'BEGIN {FS="\""} /^DEVICE/ {print $2;exit}')
 xmlstarlet sel -t \
-               -m "/inputList/inputConfig[@deviceName='${CONTROLLER}']/input" \
+               -m "/inputList/inputConfig[@deviceGUID='${CONTROLLER}']/input" \
                -v "concat(@name,'|',@type,'|',@id,'|',@value)" \
                -n /storage/.config/emulationstation/es_input.cfg >/tmp/${TMPFILE}
 
