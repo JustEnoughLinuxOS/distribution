@@ -1251,9 +1251,9 @@ makeinstall_target() {
 
   if [ "${DISPLAYSERVER}" = "wl" ]
   then
-    sed -i 's/%RUNCOMMAND%/weston-terminal --command="%ROM%"/g' ${INSTALL}/usr/config/emulationstation/es_systems.cfg
+    sed -i 's~%RUNCOMMAND%~weston-terminal --command="%ROM%"~g' ${INSTALL}/usr/config/emulationstation/es_systems.cfg
   else
-    sed -i 's/%RUNCOMMAND%/%ROM%/g' ${INSTALL}/usr/config/emulationstation/es_systems.cfg
+    sed -i 's~%RUNCOMMAND%~/usr/bin/run %ROM%~g' ${INSTALL}/usr/config/emulationstation/es_systems.cfg
   fi
 
   ### Automount should handle this.
