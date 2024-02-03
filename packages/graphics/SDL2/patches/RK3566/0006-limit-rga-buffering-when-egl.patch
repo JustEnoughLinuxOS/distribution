@@ -1,7 +1,7 @@
-diff -rupN SDL2-2.28.5.orig/src/video/kmsdrm/SDL_kmsdrmopengles.c SDL2-2.28.5/src/video/kmsdrm/SDL_kmsdrmopengles.c
---- SDL2-2.28.5.orig/src/video/kmsdrm/SDL_kmsdrmopengles.c	2024-01-30 16:22:00.475039122 +0000
-+++ SDL2-2.28.5/src/video/kmsdrm/SDL_kmsdrmopengles.c	2024-01-30 17:56:52.799111194 +0000
-@@ -29,11 +29,15 @@
+diff -rupN SDL2-2.30.0.orig/src/video/kmsdrm/SDL_kmsdrmopengles.c SDL2-2.30.0/src/video/kmsdrm/SDL_kmsdrmopengles.c
+--- SDL2-2.30.0.orig/src/video/kmsdrm/SDL_kmsdrmopengles.c	2024-02-03 11:28:45.509212112 +0000
++++ SDL2-2.30.0/src/video/kmsdrm/SDL_kmsdrmopengles.c	2024-02-03 11:39:16.953104142 +0000
+@@ -30,11 +30,15 @@
  #include "SDL_kmsdrmopengles.h"
  #include "SDL_kmsdrmdyn.h"
  #include <errno.h>
@@ -17,7 +17,7 @@ diff -rupN SDL2-2.28.5.orig/src/video/kmsdrm/SDL_kmsdrmopengles.c SDL2-2.28.5/sr
  /* EGL implementation of SDL OpenGL support */
  
  void KMSDRM_GLES_DefaultProfileConfig(_THIS, int *mask, int *major, int *minor)
-@@ -92,6 +96,7 @@ int KMSDRM_GLES_SwapWindow(_THIS, SDL_Wi
+@@ -93,6 +97,7 @@ int KMSDRM_GLES_SwapWindow(_THIS, SDL_Wi
      SDL_VideoData *viddata = ((SDL_VideoData *)_this->driverdata);
      KMSDRM_FBInfo *fb_info;
      int ret = 0;
@@ -25,11 +25,14 @@ diff -rupN SDL2-2.28.5.orig/src/video/kmsdrm/SDL_kmsdrmopengles.c SDL2-2.28.5/sr
  
      /* Always wait for the previous issued flip before issuing a new one,
         even if you do async flips. */
-@@ -135,7 +140,30 @@ int KMSDRM_GLES_SwapWindow(_THIS, SDL_Wi
+@@ -143,10 +148,28 @@ int KMSDRM_GLES_SwapWindow(_THIS, SDL_Wi
      }
  
      /* Get an actual usable fb for the next front buffer. */
 -    fb_info = KMSDRM_FBFromBO(_this, windata->next_bo);
+-    if (!fb_info) {
+-        SDL_LogError(SDL_LOG_CATEGORY_VIDEO, "Could not get a framebuffer");
+-        return 0;
 +    if (dispdata->orientation == 0) {
 +      fb_info = KMSDRM_FBFromBO(_this, windata->next_bo);
 +    } else {
@@ -42,7 +45,7 @@ diff -rupN SDL2-2.28.5.orig/src/video/kmsdrm/SDL_kmsdrmopengles.c SDL2-2.28.5/sr
 +          SDL_LogError(SDL_LOG_CATEGORY_VIDEO,
 +              "Failed to rga blit\n");
 +      }
-+
++    
 +      rga_buffer = viddata->rga_buffers[viddata->rga_buffer_index];
 +      fb_info = KMSDRM_FBFromBO(_this, rga_buffer);
 +
@@ -52,8 +55,6 @@ diff -rupN SDL2-2.28.5.orig/src/video/kmsdrm/SDL_kmsdrmopengles.c SDL2-2.28.5/sr
 +      }
 +
 +      viddata->rga_buffer_index = (viddata->rga_buffer_index + 1) % RGA_BUFFERS_MAX;
-+    }
-+
-     if (fb_info == NULL) {
-         SDL_LogError(SDL_LOG_CATEGORY_VIDEO, "Could not get a framebuffer");
-         return 0;
+     }
+ 
+     if (!windata->bo) {
