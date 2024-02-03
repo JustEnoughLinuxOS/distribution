@@ -15,6 +15,10 @@ fi
 
 pre_configure_target() {
 
+export CFLAGS="${CFLAGS} -flto -fipa-pta"
+export CXXFLAGS="${CXXFLAGS} -flto -fipa-pta"
+export LDFLAGS="${LDFLAGS} -flto -fipa-pta"
+
 # unsupported modules
 DISABLED_MODULES+=" --disable-apple2 \
                    --disable-sasplay \
