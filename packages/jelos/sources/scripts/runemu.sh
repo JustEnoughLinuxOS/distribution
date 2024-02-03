@@ -447,7 +447,7 @@ then
   if [ $? == 0 ]
   then
     log $0 "backup saves to the cloud."
-    /usr/bin/cloud_backup
+    /usr/bin/run /usr/bin/cloud_backup
   fi
 fi
 
