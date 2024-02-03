@@ -4,11 +4,16 @@
 
 . /etc/profile
 
-
 # Generate controller config
 # Set controller guid, just take the first one mednafen lists
 GUID1="$(mednafen --list-joysticks | grep ID | awk 'NR==1 {print $2}')"
 sed -e "s/@GUID1@/${GUID1}/g" ${MEDNAFEN_CONFIG} >> $MEDNAFEN_HOME/mednafen.cfg
+
+# Replace modifiers with actual buttons
+for MOD in DEVICE_FUNC_KEYA_MODIFIER DEVICE_FUNC_KEYB_MODIFIER
+do
+    sed -i -e "s/${MOD}/DEVICE_${!MOD}/g" $MEDNAFEN_HOME/mednafen.cfg
+done
 
 NAME="$(mednafen --list-joysticks | grep ID | awk 'NR==1 {print $5$6}')"
 if [[ "$(mednafen --list-joysticks | grep ID | awk 'NR==1 {print $4}')" = "8BitDo" ]]
