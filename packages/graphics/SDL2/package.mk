@@ -3,10 +3,10 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="SDL2"
-PKG_VERSION="2.30.0"
+PKG_VERSION="2.28.5"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.libsdl.org/"
-PKG_URL="${PKG_SITE}/release/SDL2-${PKG_VERSION}.tar.gz"
+PKG_URL="https://www.libsdl.org/release/SDL2-${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST="toolchain"
 PKG_DEPENDS_TARGET="toolchain alsa-lib systemd dbus pulseaudio libdrm SDL2:host"
 PKG_LONGDESC="Simple DirectMedia Layer is a cross-platform development library designed to provide low level access to audio, keyboard, mouse, joystick, and graphics hardware."
