@@ -1,15 +1,15 @@
-From 699ae801205b23d1da08158922041aaaee26d4a6 Mon Sep 17 00:00:00 2001
+From 09fcf6de5d20897f95ea3c89bf5eab9c231449fb Mon Sep 17 00:00:00 2001
 From: adamg <adamg88@users.noreply.github.com>
 Date: Wed, 24 Jan 2024 11:37:48 +0000
-Subject: [PATCH 15/49] arm64: meson: odroid-go-ultra: specify overclocking
+Subject: [PATCH 15/50] arm64: meson: odroid-go-ultra: specify overclocking
  frequencies as turbo mode
 
 ---
- arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts | 3 +++
+ 1 file changed, 3 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts b/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
-index 1fcfe421ec73..d13ac7f6c2ff 100644
+index 1fcfe421ec73..74e1a315bfb1 100644
 --- a/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
 +++ b/arch/arm64/boot/dts/amlogic/meson-g12b-odroid-go-ultra.dts
 @@ -352,6 +352,7 @@ opp-1992000000 {
@@ -20,22 +20,7 @@ index 1fcfe421ec73..d13ac7f6c2ff 100644
  	};
  };
  
-@@ -384,22 +385,27 @@ opp-1908000000 {
- 	opp-2016000000 {
- 		opp-hz = /bits/ 64 <2016000000>;
- 		opp-microvolt = <1025000>;
-+		turbo-mode;
- 	};
- 	opp-2100000000 {
- 		opp-hz = /bits/ 64 <2100000000>;
- 		opp-microvolt = <1025000>;
-+		turbo-mode;
- 	};
- 	opp-2208000000 {
- 		opp-hz = /bits/ 64 <2208000000>;
- 		opp-microvolt = <1050000>;
-+		turbo-mode;
- 	};
+@@ -396,10 +397,12 @@ opp-2208000000 {
  	opp-2304000000 {
  		opp-hz = /bits/ 64 <2304000000>;
  		opp-microvolt = <1050000>;
