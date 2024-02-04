@@ -1,7 +1,7 @@
-From 50b5516c38e61d9fa1435703d99f6ac87f37ad0f Mon Sep 17 00:00:00 2001
-From: adamg <adamg88@users.noreply.github.com>
+From 2b8cc5ce6a09e843344b088625812c98ec96b765 Mon Sep 17 00:00:00 2001
+From: brooksytech <1673861+brooksytech@users.noreply.github.com>
 Date: Wed, 24 Jan 2024 23:56:58 +0000
-Subject: [PATCH 23/49] arm64: meson: g12-common: add mali to dts
+Subject: [PATCH 23/52] arm64: meson: g12-common: add mali to dts
 
 ---
  .../arm64/boot/dts/amlogic/meson-g12-common.dtsi | 16 +++++++++++-----
