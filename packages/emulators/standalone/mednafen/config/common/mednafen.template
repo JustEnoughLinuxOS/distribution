@@ -582,7 +582,7 @@ filesys.path_pgconfig pgconfig
 filesys.path_sav /storage/roms/@PLATFORM@/
 
 ;Path to directory for backups of save games and nonvolatile memory.
-filesys.path_savbackup b
+filesys.path_savbackup /storage/roms/@PLATFORM@/
 
 ;Path to directory for screen snapshots.
 filesys.path_snap /media/storage/screenshots/
