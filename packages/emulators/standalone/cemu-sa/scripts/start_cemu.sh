@@ -105,7 +105,7 @@ do
 done
 
 UUID0="0_$(control-gen | awk 'BEGIN {FS="\""} /^DEVICE/ {print $2;exit}')"
-CONTROLLER0=$(cat /storage/.controller)
+CONTROLLER0=$(grep -b4 js0 /proc/bus/input/devices | awk 'BEGIN {FS="\""}; /Name/ {printf $2}')
 
 xmlstarlet ed --inplace -u "//Account/OnlineEnabled" -v "${ONLINE}" ${CEMU_CONFIG_ROOT}/settings.xml
 xmlstarlet ed --inplace -u "//Overlay/Position" -v "${FPS}" ${CEMU_CONFIG_ROOT}/settings.xml
