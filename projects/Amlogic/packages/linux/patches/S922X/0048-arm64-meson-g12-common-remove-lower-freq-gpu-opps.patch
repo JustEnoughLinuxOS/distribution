@@ -1,7 +1,7 @@
-From 701e7d3f1b7a3106ca5963d2a3257798fa558d01 Mon Sep 17 00:00:00 2001
-From: adamg <adamg88@users.noreply.github.com>
+From b28567916bc62d86db4826c22db5eb9cc3b52414 Mon Sep 17 00:00:00 2001
+From: brooksytech <1673861+brooksytech@users.noreply.github.com>
 Date: Thu, 1 Feb 2024 19:03:03 +0000
-Subject: [PATCH 48/49] arm64: meson: g12-common: remove lower freq gpu opps
+Subject: [PATCH 48/52] arm64: meson: g12-common: remove lower freq gpu opps
 
 ---
  arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi | 12 ------------

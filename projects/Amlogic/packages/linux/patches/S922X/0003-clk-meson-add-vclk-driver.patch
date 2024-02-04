@@ -1,7 +1,7 @@
-From 25c21aa6e55cd82988375310ebbad0b9bc8ed0da Mon Sep 17 00:00:00 2001
+From c77cc0ea53614e915cc114c2484d46b4ec26b27e Mon Sep 17 00:00:00 2001
 From: Neil Armstrong <neil.armstrong@linaro.org>
 Date: Fri, 24 Nov 2023 09:41:18 +0100
-Subject: [PATCH 03/49] clk: meson: add vclk driver
+Subject: [PATCH 03/52] clk: meson: add vclk driver
 
 The VCLK and VCLK_DIV clocks have supplementary bits.
 
@@ -28,7 +28,7 @@ Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
  create mode 100644 drivers/clk/meson/vclk.h
 
 diff --git a/drivers/clk/meson/Kconfig b/drivers/clk/meson/Kconfig
-index 135da8f2d0b1..83f629515e96 100644
+index 29ffd14d267b..59a40a49f8e1 100644
 --- a/drivers/clk/meson/Kconfig
 +++ b/drivers/clk/meson/Kconfig
 @@ -30,6 +30,10 @@ config COMMON_CLK_MESON_VID_PLL_DIV
@@ -51,7 +51,7 @@ index 135da8f2d0b1..83f629515e96 100644
  	help
  	  Support for the clock controller on Amlogic S905D2, S905X2 and S905Y2
 diff --git a/drivers/clk/meson/Makefile b/drivers/clk/meson/Makefile
-index cd961cc4f4db..6efeb8c7bd2a 100644
+index 9ee4b954c896..9ba43fe7a07a 100644
 --- a/drivers/clk/meson/Makefile
 +++ b/drivers/clk/meson/Makefile
 @@ -12,6 +12,7 @@ obj-$(CONFIG_COMMON_CLK_MESON_PLL) += clk-pll.o

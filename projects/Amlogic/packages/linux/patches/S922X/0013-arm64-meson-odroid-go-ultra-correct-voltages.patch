@@ -1,7 +1,7 @@
-From 03ed1c5a21386b8128e4fb0a78e40ae33d2b476e Mon Sep 17 00:00:00 2001
+From 3c44ee308121e22458f60d6406707de93a220fd8 Mon Sep 17 00:00:00 2001
 From: "Mauro (mdrjr) Ribeiro" <mauro.ribeiro@hardkernel.com>
 Date: Tue, 23 Jan 2024 23:53:24 +0000
-Subject: [PATCH 13/49] arm64: meson: odroid-go-ultra: correct voltages
+Subject: [PATCH 13/52] arm64: meson: odroid-go-ultra: correct voltages
 
 ---
  .../dts/amlogic/meson-g12b-odroid-go-ultra.dts   | 16 +++++++---------

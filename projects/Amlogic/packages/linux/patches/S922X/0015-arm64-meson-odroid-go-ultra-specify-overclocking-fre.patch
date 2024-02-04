@@ -1,7 +1,7 @@
-From 09fcf6de5d20897f95ea3c89bf5eab9c231449fb Mon Sep 17 00:00:00 2001
+From 01548d9dae69de14abfded29733f024a257240fd Mon Sep 17 00:00:00 2001
 From: adamg <adamg88@users.noreply.github.com>
 Date: Wed, 24 Jan 2024 11:37:48 +0000
-Subject: [PATCH 15/50] arm64: meson: odroid-go-ultra: specify overclocking
+Subject: [PATCH 15/52] arm64: meson: odroid-go-ultra: specify overclocking
  frequencies as turbo mode
 
 ---

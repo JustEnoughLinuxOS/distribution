@@ -1,7 +1,7 @@
-From 243cf585f8efd4e4b2cc391d34c3092b6010637e Mon Sep 17 00:00:00 2001
+From 00fac12be52d1d41794ac606438605fdb543b35d Mon Sep 17 00:00:00 2001
 From: "Mauro (mdrjr) Ribeiro" <mauro.ribeiro@hardkernel.com>
 Date: Wed, 24 Jan 2024 10:56:00 +0000
-Subject: [PATCH 14/49] arm64: meson: odroid-go-ultra: add over-clocking
+Subject: [PATCH 14/52] arm64: meson: odroid-go-ultra: add over-clocking
  frequencies
 
 ---

@@ -1,7 +1,7 @@
-From b47a6aac842e16521f666615f802d1c32a244d9f Mon Sep 17 00:00:00 2001
+From b02107a1e32e12e94ad34fc0cec7a9069fedf8b0 Mon Sep 17 00:00:00 2001
 From: Neil Armstrong <neil.armstrong@linaro.org>
 Date: Tue, 14 Nov 2023 11:14:45 +0100
-Subject: [PATCH 09/49] clk: meson: g12a: add CSI & ISP gates clocks
+Subject: [PATCH 09/52] clk: meson: g12a: add CSI & ISP gates clocks
 
 Add the gates entires for the CSI ISP domain and CSI PHYs.
 
