@@ -37,8 +37,10 @@ else
   unset EMUPERF
 fi
 
-#Set Save folder
-sed -i -e "s/@PLATFORM@/${PLATFORM}/g" $MEDNAFEN_HOME/mednafen.cfg
+#Set Save paths
+sed -i "s/filesys.path_sav .*/filesys.path_sav \/storage\/roms\/${PLATFORM}/g" $MEDNAFEN_HOME/mednafen.cfg
+sed -i "s/filesys.path_savbackup.*/filesys.path_savbackup \/storage\/roms\/${PLATFORM}/g" $MEDNAFEN_HOME/mednafen.cfg
+sed -i "s/filesys.path_state.*/filesys.path_state \/storage\/roms\/savestates\/${PLATFORM}/g" $MEDNAFEN_HOME/mednafen.cfg
 
 # Get command line switches
 FEATURES_CMDLINE=""
