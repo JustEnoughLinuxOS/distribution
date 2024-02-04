@@ -97,8 +97,8 @@ if [ -f $BOOT_ROOT/extlinux/extlinux.conf ] || [ -n "${1}" ]; then
       mkdir "${BOOT_ROOT}/extlinux"
     fi
     cp -p $SYSTEM_ROOT/usr/share/bootloader/extlinux/extlinux.conf $BOOT_ROOT/extlinux
-    sed -e "s/@BOOT_UUID@/$BOOT_UUID/" \
-        -e "s/@DISK_UUID@/$DISK_UUID/" \
+    sed -e "s/@UUID_SYSTEM@/$UUID_SYSTEM/" \
+        -e "s/@UUID_STORAGE@/$UUID_STORAGE/" \
         -i $BOOT_ROOT/extlinux/extlinux.conf
   fi
 fi
@@ -107,8 +107,8 @@ if [ -f $BOOT_ROOT/boot.ini ] || [ -n "${1}" ]; then
   if [ -f /usr/share/bootloader/boot.ini ]; then
     echo "Updating boot.ini"
     cp -p /usr/share/bootloader/boot.ini $BOOT_ROOT/boot.ini
-    sed -e "s/@BOOT_UUID@/$BOOT_UUID/" \
-        -e "s/@DISK_UUID@/$DISK_UUID/" \
+    sed -e "s/@UUID_SYSTEM@/$UUID_SYSTEM/" \
+        -e "s/@UUID_STORAGE@/$UUID_STORAGE/" \
         -i $BOOT_ROOT/boot.ini
   fi
 fi
