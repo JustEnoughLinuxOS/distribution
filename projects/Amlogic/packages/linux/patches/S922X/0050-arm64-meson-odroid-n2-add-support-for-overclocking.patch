@@ -1,7 +1,7 @@
-From cb702d6643d389b5e439ba326e72ab26b35172b0 Mon Sep 17 00:00:00 2001
+From cd022b01834c200bc9b0e0dd07d5700b450182f4 Mon Sep 17 00:00:00 2001
 From: adamg <adamg88@users.noreply.github.com>
 Date: Sun, 4 Feb 2024 09:48:31 +0000
-Subject: [PATCH 50/50] arm64: meson: odroid-n2*: add support for overclocking
+Subject: [PATCH 50/52] arm64: meson: odroid-n2*: add support for overclocking
 
 ---
  .../dts/amlogic/meson-g12b-odroid-n2-plus.dts | 24 ++++++++++++++++++

@@ -55,8 +55,6 @@ rm -f /tmp/${TMPFILE}
 
 source /tmp/${OUTFILE}
 
-echo "${CONTROLLER}" >/storage/.controller
-
 cat <<EOF >/storage/.config/profile.d/098-controller
 DEVICE_BTN_SOUTH="${b}"
 DEVICE_BTN_EAST="${a}"

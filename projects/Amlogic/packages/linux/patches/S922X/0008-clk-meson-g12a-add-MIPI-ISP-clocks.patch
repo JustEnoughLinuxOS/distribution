@@ -1,7 +1,7 @@
-From 794aa5b737ffb710a43b3dde5893c9320ce789a3 Mon Sep 17 00:00:00 2001
+From af34d91f6f2fbec3227864ba9b411dc7cebef8c6 Mon Sep 17 00:00:00 2001
 From: Neil Armstrong <neil.armstrong@linaro.org>
 Date: Tue, 14 Nov 2023 11:14:44 +0100
-Subject: [PATCH 08/49] clk: meson: g12a: add MIPI ISP clocks
+Subject: [PATCH 08/52] clk: meson: g12a: add MIPI ISP clocks
 
 Add the MIPI ISP gate, divider and mux used to feed the MIPI CSI ISP
 (Image Signal Processor) IP on the Amlogic G12B SoC.

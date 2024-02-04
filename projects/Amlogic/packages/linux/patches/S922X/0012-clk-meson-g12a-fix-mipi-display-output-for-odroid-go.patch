@@ -1,7 +1,7 @@
-From f67ff8d0a59222f943869c7d9d2e0bd4a68ebcda Mon Sep 17 00:00:00 2001
+From 42aec67c7c8265cd8864d543fa8ce758c99e515e Mon Sep 17 00:00:00 2001
 From: "Mauro (mdrjr) Ribeiro" <mauro.ribeiro@hardkernel.com>
 Date: Tue, 23 Jan 2024 23:56:49 +0000
-Subject: [PATCH 12/49] clk: meson: g12a: fix mipi display output for
+Subject: [PATCH 12/52] clk: meson: g12a: fix mipi display output for
  odroid-go-ultra
 
 ---
