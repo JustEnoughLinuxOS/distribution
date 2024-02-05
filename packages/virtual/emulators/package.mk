@@ -1086,7 +1086,7 @@ makeinstall_target() {
       add_emu_core snesh mednafen snes_faust false
     ;;
     RK33*)
-      add_emu_core snes mednafen snes_faust false
+      add_emu_core snesh mednafen snes_faust false
 	;;
   esac
   add_es_system snesh
