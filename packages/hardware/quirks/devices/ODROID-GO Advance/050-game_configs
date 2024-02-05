@@ -23,10 +23,6 @@ if [ -f "/storage/.config/drastic/config/drastic.cfg.oga" ]; then
   mv /storage/.config/drastic/config/drastic.cfg.oga /storage/.config/drastic/config/drastic.cfg
 fi
 
-#Set gzdoom resolution
-sed -i '/vid_defheight=/c\vid_defheight=320' /storage/.config/gzdoom/gzdoom.ini
-sed -i '/vid_defwidth=/c\vid_defwidth=480' /storage/.config/gzdoom/gzdoom.ini
-
 #Map ppsspp controls
 if  grep OGA-1.0 -q "/storage/.config/ppsspp/PSP/SYSTEM/controls.ini"
 then

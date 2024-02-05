@@ -22,10 +22,6 @@ if [ -f "/storage/.config/drastic/config/drastic.cfg.ogabe" ]; then
   mv /storage/.config/drastic/config/drastic.cfg.ogabe /storage/.config/drastic/config/drastic.cfg
 fi
 
-#Set gzdoom resolution
-sed -i '/vid_defheight=/c\vid_defheight=320' /storage/.config/gzdoom/gzdoom.ini
-sed -i '/vid_defwidth=/c\vid_defwidth=480' /storage/.config/gzdoom/gzdoom.ini
-
 #Set ppsspp config for OGA
 if [ ! -d "/storage/.config/ppsspp" ]; then
     mkdir -p "/storage/.config/ppsspp"

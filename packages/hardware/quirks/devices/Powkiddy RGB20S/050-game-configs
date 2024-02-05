@@ -24,12 +24,6 @@ if [ -f "/storage/.config/drastic/config/drastic.cfg.rgb20s" ]; then
   mv /storage/.config/drastic/config/drastic.cfg.rgb20s /storage/.config/drastic/config/drastic.cfg
 fi
 
-#Set up gzdoom
-if [ ! -d "/storage/.config/gzdoom/" ]; then
-  sed -i '/vid_defheight=/c\vid_defheight=640' /storage/.config/gzdoom/gzdoom.ini
-  sed -i '/vid_defwidth=/c\vid_defwidth=478' /storage/.config/gzdoom/gzdoom.ini
-fi
-
 #Map ppsspp controls
 if  grep RGB20S -q "/storage/.config/ppsspp/PSP/SYSTEM/controls.ini"
 then
