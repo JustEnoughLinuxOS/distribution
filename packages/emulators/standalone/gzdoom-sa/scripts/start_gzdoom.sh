@@ -12,17 +12,15 @@ SAVE_DIR="/storage/roms/gzdoom"
 
 if [ ! -d "/storage/.config/gzdoom/" ]; then
   cp -rf /usr/config/gzdoom /storage/.config/
-  # set user resolution
-  sed -i '/vid_defheight=/c\vid_defheight='$(fbheight) /storage/.config/gzdoom/gzdoom.ini
-  sed -i '/vid_defwidth=/c\vid_defwidth='$(fbwidth) /storage/.config/gzdoom/gzdoom.ini
 fi
 
 if [ ! -f "/storage/.config/gzdoom/gzdoom.ini" ]; then
   cp -rf /usr/config/gzdoom/gzdoom.ini /storage/.config/gzdoom/
-  # set user resolution
-  sed -i '/vid_defheight=/c\vid_defheight='$(fbheight) /storage/.config/gzdoom/gzdoom.ini
-  sed -i '/vid_defwidth=/c\vid_defwidth='$(fbwidth) /storage/.config/gzdoom/gzdoom.ini
 fi
+
+# set resolution
+sed -i '/vid_defheight=/c\vid_defheight='$(fbheight) /storage/.config/gzdoom/gzdoom.ini
+sed -i '/vid_defwidth=/c\vid_defwidth='$(fbwidth) /storage/.config/gzdoom/gzdoom.ini
 
 if [ ! -d "/storage/roms/doom/iwads" ]; then
   mkdir /storage/roms/doom/iwads
