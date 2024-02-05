@@ -20,7 +20,7 @@ LIBRETRO_CORES="81-lr a5200-lr arduous-lr atari800-lr beetle-gba-lr beetle-lynx-
                 dosbox-svn-lr dosbox-pure-lr duckstation-lr easyrpg-lr emuscv-lr fake08-lr fbalpha2012-lr              \
                 fbalpha2019-lr fbneo-lr fceumm-lr flycast2021-lr fmsx-lr freechaf-lr freeintv-lr freej2me-lr fuse-lr      \
                 gambatte-lr gearboy-lr gearcoleco-lr gearsystem-lr genesis-plus-gx-lr genesis-plus-gx-wide-lr      \
-                gw-lr handy-lr hatari-lr idtech-lr mame-lr mame2003-plus-lr mame2010-lr mame2015-lr melonds-lr      \
+                gw-lr handy-lr hatari-lr idtech-lr jaxe-lr mame-lr mame2003-plus-lr mame2010-lr mame2015-lr melonds-lr      \
                 mesen-lr mgba-lr mojozork-lr mupen64plus-lr mupen64plus-nx-lr neocd_lr nestopia-lr np2kai-lr    \
                 o2em-lr opera-lr parallel-n64-lr pcsx_rearmed-lr picodrive-lr pokemini-lr potator-lr          \
                 prosystem-lr puae-lr puae2021-lr px68k-lr quasi88-lr quicknes-lr race-lr same_cdi-lr      \
@@ -906,6 +906,10 @@ makeinstall_target() {
   esac
   add_es_system scummvm
   install_script "Start ScummVM.sh"
+
+  ### Joseph Weisbecker CHIP-8
+  add_emu_core chip-8 retroarch jaxe true
+  add_es_system chip-8
 
   ### Sega 32X
   add_emu_core sega32x retroarch picodrive true
