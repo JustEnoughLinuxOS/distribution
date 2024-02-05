@@ -1,5 +1,5 @@
 [GCPad1]
-Device = evdev/0/retrogame_joypad
+Device = evdev/0/rg552_joypad
 Buttons/A = Button 0
 Buttons/B = Button 3
 Buttons/Start = Button 8
