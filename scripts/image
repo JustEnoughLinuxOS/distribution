@@ -201,6 +201,11 @@ ln -sT /var/lib/modules ${INSTALL}/usr/lib/modules
 # Symlink overlayed firmware to /usr/lib/firmware
 ln -sT /var/lib/firmware ${INSTALL}/usr/lib/firmware
 
+if [ -n "${NO_IMAGE}" ]; then
+    echo "NO_IMAGE=${NO_IMAGE}, No image will be created"
+    exit 0
+fi
+
 if [ "${1}" = "system" -o "${1}" = "mkimage" -o "${1}" = "noobs" ]
 then
   echo "Creating image..." >&2

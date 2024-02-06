@@ -4,7 +4,6 @@
 
 . /etc/profile
 
-
 # Generate controller config
 # Set controller guid, just take the first one mednafen lists
 GUID1="$(mednafen --list-joysticks | grep ID | awk 'NR==1 {print $2}')"
@@ -15,6 +14,18 @@ if [[ "$(mednafen --list-joysticks | grep ID | awk 'NR==1 {print $4}')" = "8BitD
 then
 NAME="X-Box360"
 fi
+
+if [[ "${NAME}" = "X-Box360" ]]
+then
+export DEVICE_FUNC_KEYA_MODIFIER="BTN_THUMBL"
+export DEVICE_FUNC_KEYB_MODIFIER="BTN_THUMBR"
+fi
+
+# Replace modifiers with actual buttons
+for MOD in DEVICE_FUNC_KEYA_MODIFIER DEVICE_FUNC_KEYB_MODIFIER
+do
+    sed -i -e "s/${MOD}/DEVICE_${!MOD}/g" $MEDNAFEN_HOME/mednafen.cfg
+done
 
 # Controller config for 360 and GPIO handled separately
 if [[ "${NAME}" = "X-Box360" ]]

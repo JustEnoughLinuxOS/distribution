@@ -1,7 +1,7 @@
-From d6230d301e49e23704a42ced4f5202761c06ed99 Mon Sep 17 00:00:00 2001
+From e8d3c519137da13bf0866f7f656bcc6d21a45046 Mon Sep 17 00:00:00 2001
 From: Anssi Hannula <anssi.hannula@iki.fi>
 Date: Sun, 17 Apr 2022 04:37:48 +0000
-Subject: [PATCH 49/49] LOCAL: ALSA: Assign internal PCM chmap/ELD/IEC958 kctls
+Subject: [PATCH 49/52] LOCAL: ALSA: Assign internal PCM chmap/ELD/IEC958 kctls
  to device 0
 
 On SoC sound devices utilizing codec2codec DAI links with a HDMI codec

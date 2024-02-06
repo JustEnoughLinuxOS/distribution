@@ -1,7 +1,7 @@
-From 80932467ac1c501eb4f1c92847aaba55cd03d359 Mon Sep 17 00:00:00 2001
+From 90f15beca9b52c0657b4b4cd8a18bfb9f8c7a82c Mon Sep 17 00:00:00 2001
 From: adamg <adamg88@users.noreply.github.com>
 Date: Fri, 26 Jan 2024 17:55:02 +0000
-Subject: [PATCH 25/49] arm64: meson: add dt for powkiddy-rgb10-max-3-pro
+Subject: [PATCH 25/52] arm64: meson: add dt for powkiddy-rgb10-max-3-pro
 
 ---
  .../meson-g12b-powkiddy-rgb10-max-3-pro.dts   | 54 +++++++++++++++++++
@@ -10,7 +10,7 @@ Subject: [PATCH 25/49] arm64: meson: add dt for powkiddy-rgb10-max-3-pro
 
 diff --git a/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3-pro.dts b/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3-pro.dts
 new file mode 100644
-index 000000000000..32dd41f5d4fe
+index 000000000000..9edbae10268c
 --- /dev/null
 +++ b/arch/arm64/boot/dts/amlogic/meson-g12b-powkiddy-rgb10-max-3-pro.dts
 @@ -0,0 +1,54 @@
@@ -56,7 +56,7 @@ index 000000000000..32dd41f5d4fe
 +	opp-table-0 {
 +		opp-1800000000 {
 +			opp-hz = /bits/ 64 <1800000000>;
-+			opp-microvolt = <981000>;
++			opp-microvolt = <987500>;
 +		};
 +		/delete-node/ opp-1896000000;
 +		/delete-node/ opp-1992000000;
