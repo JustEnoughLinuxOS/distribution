@@ -3,10 +3,16 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 ###
-### LED Control now redirects to the quirk device/bin/ledcontrol
+### LED Control now redirects to the quirk device or platform /bin/ledcontrol
 ### so we don't need to have multiple variants in /usr/bin.
 ###
 
 . /etc/profile
 
-"/usr/lib/autostart/quirks/devices/${QUIRK_DEVICE}/bin/ledcontrol" $*
+if [ -f "/usr/lib/autostart/quirks/devices/${QUIRK_DEVICE}/bin/ledcontrol" ]
+then
+  "/usr/lib/autostart/quirks/devices/${QUIRK_DEVICE}/bin/ledcontrol" $*
+elif [ -f "/usr/lib/autostart/quirks/platforms/${HW_DEVICE}/bin/ledcontrol" ]
+then
+  "/usr/lib/autostart/quirks/platforms/${HW_DEVICE}/bin/ledcontrol" $*
+fi

@@ -1,7 +1,7 @@
 diff -rupN linux.orig/drivers/gpu/drm/panel/Kconfig linux/drivers/gpu/drm/panel/Kconfig
---- linux.orig/drivers/gpu/drm/panel/Kconfig	2023-12-15 19:18:56.948899851 +0000
-+++ linux/drivers/gpu/drm/panel/Kconfig	2023-12-15 19:20:05.987107578 +0000
-@@ -588,6 +588,15 @@ config DRM_PANEL_SHARP_LS043T1LE01
+--- linux.orig/drivers/gpu/drm/panel/Kconfig	2024-02-02 16:55:00.513150619 +0000
++++ linux/drivers/gpu/drm/panel/Kconfig	2024-02-02 16:55:53.738422607 +0000
+@@ -694,6 +694,15 @@ config DRM_PANEL_SHARP_LS043T1LE01
  	  Say Y here if you want to enable support for Sharp LS043T1LE01 qHD
  	  (540x960) DSI panel as found on the Qualcomm APQ8074 Dragonboard
  
@@ -18,9 +18,9 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/Kconfig linux/drivers/gpu/drm/panel/
  	tristate "Sharp LS060T1SX01 FullHD video mode panel"
  	depends on OF
 diff -rupN linux.orig/drivers/gpu/drm/panel/Makefile linux/drivers/gpu/drm/panel/Makefile
---- linux.orig/drivers/gpu/drm/panel/Makefile	2023-12-15 19:18:56.948899851 +0000
-+++ linux/drivers/gpu/drm/panel/Makefile	2023-12-15 19:20:05.987107578 +0000
-@@ -59,6 +59,7 @@ obj-$(CONFIG_DRM_PANEL_SEIKO_43WVF1G) +=
+--- linux.orig/drivers/gpu/drm/panel/Makefile	2024-02-02 16:55:00.513150619 +0000
++++ linux/drivers/gpu/drm/panel/Makefile	2024-02-02 16:55:53.738422607 +0000
+@@ -70,6 +70,7 @@ obj-$(CONFIG_DRM_PANEL_SEIKO_43WVF1G) +=
  obj-$(CONFIG_DRM_PANEL_SHARP_LQ101R1SX01) += panel-sharp-lq101r1sx01.o
  obj-$(CONFIG_DRM_PANEL_SHARP_LS037V7DW01) += panel-sharp-ls037v7dw01.o
  obj-$(CONFIG_DRM_PANEL_SHARP_LS043T1LE01) += panel-sharp-ls043t1le01.o
@@ -30,8 +30,8 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/Makefile linux/drivers/gpu/drm/panel
  obj-$(CONFIG_DRM_PANEL_SITRONIX_ST7703) += panel-sitronix-st7703.o
 diff -rupN linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c linux/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c
 --- linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c	2023-12-15 19:20:05.987107578 +0000
-@@ -0,0 +1,360 @@
++++ linux/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c	2024-02-02 18:48:30.860210002 +0000
+@@ -0,0 +1,359 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +/*
 + * Copyright (c) 2022 Maya Matuszczyk <maccraft123mc@gmail.com>
@@ -60,7 +60,7 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c linux/driv
 +	bool prepared;
 +};
 +
-+static inline struct sharp_ls054 *to_sharp_ls054(struct drm_panel *panel)
++static inline struct sharp_ls054 *panel_to_sharp_ls054(struct drm_panel *panel)
 +{
 +	return container_of(panel, struct sharp_ls054, panel);
 +}
@@ -94,8 +94,6 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c linux/driv
 +
 +	dsi_dcs_write_seq(dsi, SHARP_LS054_SETEXTC,
 +			0xFF, 0x83, 0x99);
-+	//dsi_dcs_write_seq(dsi, SHARP_LS054_SETSEQUENCE,
-+	//		0x00, 0x00, 0x65);
 +	dsi_dcs_write_seq(dsi, SHARP_LS054_SETGAMMACURVE,
 +			0x01, 0x13, 0x17, 0x34, 0x38, 0x3E, 0x2C, 0x47,
 +			0x07, 0x0C, 0x0F, 0x12, 0x14, 0x11, 0x13, 0x12,
@@ -161,7 +159,7 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c linux/driv
 +
 +	mipi_dsi_dcs_set_display_brightness(dsi, 0xFF);
 +	dsi_dcs_write_seq(dsi, MIPI_DCS_WRITE_POWER_SAVE, 0x00);
-+	dsi_dcs_write_seq(dsi, 0x53, 0x24); //MIPI_DCS_WRITE_CONTROL_DISPLAY ?
++	dsi_dcs_write_seq(dsi, 0x53, 0x24);
 +	mipi_dsi_dcs_set_tear_on(dsi, MIPI_DSI_DCS_TEAR_MODE_VBLANK);
 +
 +	return 0;
@@ -169,8 +167,7 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c linux/driv
 +
 +static int sharp_ls054_prepare(struct drm_panel *panel)
 +{
-+	struct sharp_ls054 *ctx = to_sharp_ls054(panel);
-+	struct mipi_dsi_device *dsi = ctx->dsi;
++	struct sharp_ls054 *ctx = panel_to_sharp_ls054(panel);
 +	struct device *dev = &ctx->dsi->dev;
 +	int ret;
 +
@@ -215,16 +212,12 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c linux/driv
 +err_vsp:
 +	regulator_disable(ctx->vsp_supply);
 +
-+err_iovcc:
-+	regulator_disable(ctx->iovcc_supply);
-+	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
-+
 +	return ret;
 +}
 +
 +static int sharp_ls054_unprepare(struct drm_panel *panel)
 +{
-+	struct sharp_ls054 *ctx = to_sharp_ls054(panel);
++	struct sharp_ls054 *ctx = panel_to_sharp_ls054(panel);
 +	struct mipi_dsi_device *dsi = ctx->dsi;
 +	struct device *dev = &ctx->dsi->dev;
 +	int ret;
@@ -277,7 +270,6 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c linux/driv
 +static int sharp_ls054_get_modes(struct drm_panel *panel,
 +				 struct drm_connector *connector)
 +{
-+	struct sharp_ls054 *ctx = to_sharp_ls054(panel);
 +	struct drm_display_mode *mode;
 +
 +	mode = drm_mode_duplicate(connector->dev, &sharp_ls054_mode);
@@ -285,21 +277,28 @@ diff -rupN linux.orig/drivers/gpu/drm/panel/panel-sharp-ls054b3sx01.c linux/driv
 +		return -ENOMEM;
 +
 +	drm_mode_set_name(mode);
-+	mode->type = DRM_MODE_TYPE_DRIVER | DRM_MODE_TYPE_PREFERRED;
 +
++	mode->type = DRM_MODE_TYPE_DRIVER | DRM_MODE_TYPE_PREFERRED;
 +	connector->display_info.width_mm = mode->width_mm;
 +	connector->display_info.height_mm = mode->height_mm;
 +
 +	drm_mode_probed_add(connector, mode);
-+	drm_connector_set_panel_orientation(connector, ctx->orientation);
 +
 +	return 1;
++}
++
++static enum drm_panel_orientation sharp_ls054_get_orientation(struct drm_panel *panel)
++{
++	struct sharp_ls054 *ctx = panel_to_sharp_ls054(panel);
++
++	return ctx->orientation;
 +}
 +
 +static const struct drm_panel_funcs sharp_ls054_panel_funcs = {
 +	.prepare = sharp_ls054_prepare,
 +	.unprepare = sharp_ls054_unprepare,
 +	.get_modes = sharp_ls054_get_modes,
++	.get_orientation = sharp_ls054_get_orientation,
 +};
 +
 +static int sharp_ls054_probe(struct mipi_dsi_device *dsi)

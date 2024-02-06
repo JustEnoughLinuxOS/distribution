@@ -43,4 +43,10 @@ then
   systemctl import-environment LANGUAGE
 fi
 
+### Import quirk variables.
+for VARIABLE in $(cat /etc/profile.d/999-export | grep _ | sed 's/export//g; s/^\W//g; s/\\//g')
+do
+  systemctl import-environment ${VARIABLE}
+done
+
 jslisten set "emulationstation"

@@ -1,0 +1,262 @@
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2022-present JELOS (https://github.com/JustEnoughLinuxOS)
+
+. /etc/profile
+
+#Set mupen64-plus-sa config for R33S
+if [ ! -d "/storage/.config/mupen64plus" ]; then
+    mkdir -p "/storage/.config/mupen64plus/"
+        cp -r /usr/local/share/mupen64plus/mupen64plus.cfg* /storage/.config/mupen64plus/
+fi
+if [ -f "/storage/.config/mupen64plus/mupen64plus.cfg.r33s" ]; then
+  rm /storage/.config/mupen64plus/mupen64plus.cfg
+  mv /storage/.config/mupen64plus/mupen64plus.cfg.r33s /storage/.config/mupen64plus/mupen64plus.cfg
+fi
+
+#Set drastic-sa config for OGA
+if [ ! -d "/storage/.config/drastic" ]; then
+    mkdir -p "/storage/.config/drastic"
+    cp -r "/usr/config/drastic" "/storage/.config/"
+fi
+if [ -f "/storage/.config/drastic/config/drastic.cfg.r33s" ]; then
+  mv /storage/.config/drastic/config/drastic.cfg.r33s /storage/.config/drastic/config/drastic.cfg
+fi
+
+
+#Set gzoom config for R33S
+if [ ! -d "/storage/.config/gzdoom" ]; then
+     cp -r "/usr/config/gzdoom" "/storage/.config/"
+fi
+
+#Set gzdoom settings
+if  grep R33S -q "/storage/.config/gzdoom/gzdoom.ini"
+then
+  exit 1
+else
+sed -i '/^[Doom.Bindings]/c\[Doom.Bindings] #R33S' /storage/.config/gzdoom/gzdoom.ini
+sed -i '/^vid_defheight=/c\vid_defheight=480' /storage/.config/gzdoom/gzdoom.ini
+sed -i '/^vid_defwidth=/c\vid_defwidth=640' /storage/.config/gzdoom/gzdoom.ini
+sed -i '/^Joy1=/c\Joy1=+use' /storage/.config/gzdoom/gzdoom.ini
+sed -i '/^Joy5=/c\Joy5=+speed' /storage/.config/gzdoom/gzdoom.ini
+sed -i '/^Joy6=/c\Joy6=+attack' /storage/.config/gzdoom/gzdoom.ini
+sed -i '/^Joy7=/c\Joy7=+moveleft' /storage/.config/gzdoom/gzdoom.ini
+sed -i '/^Joy8=/c\Joy8=+moveright' /storage/.config/gzdoom/gzdoom.ini
+sed -i '/^Joy9=/c\Joy9=menu_main' /storage/.config/gzdoom/gzdoom.ini
+sed -i '/^Joy11=/c\Joy11=+forward' /storage/.config/gzdoom/gzdoom.ini
+sed -i '/^Joy12=/c\Joy12=+back' /storage/.config/gzdoom/gzdoom.ini
+sed -i '/^Joy13=/c\Joy13=+left' /storage/.config/gzdoom/gzdoom.ini
+sed -i '/^Joy14=/c\Joy14=+right' /storage/.config/gzdoom/gzdoom.ini
+sed -i '/^Joy2=/c\Joy2=+attack' /storage/.config/gzdoom/gzdoom.ini
+fi
+
+#Set ppsspp config for R33S
+if [ ! -d "/storage/.config/ppsspp" ]; then
+    mkdir -p "/storage/.config/ppsspp"
+        cp -r "/usr/config/ppsspp" "/storage/.config/"
+fi
+
+#Map ppsspp controls
+if  grep R33S -q "/storage/.config/ppsspp/PSP/SYSTEM/controls.ini"
+then
+  exit 1
+else
+cat <<EOF >/storage/.config/ppsspp/PSP/SYSTEM/controls.ini
+#R33S
+[ControlMapping]
+Up = 10-19
+Down = 10-20
+Left = 10-21
+Right = 10-22
+Circle = 10-189
+Cross = 10-190
+Square = 10-188
+Triangle = 10-191
+Start = 10-197
+Select = 10-196
+L = 10-193
+R = 10-192
+Fast-forward = 1-61
+Pause = 10-106
+Save State = 10-4010
+Load State = 10-4008
+EOF
+fi
+
+#Set flycast ra config for R33S
+if [ ! -d "/storage/remappings/Flycast" ]; then
+    mkdir -p "/storage/remappings/Flycast"
+fi
+
+#Map flycast ra controls for R33S
+if  grep R33S -q "/storage/remappings/Flycast/Flycast.rmp"
+then
+  exit 1
+else
+cat <<EOF >/storage/remappings/Flycast/Flycast.rmp
+#R33S
+input_libretro_device_p1 = "1"
+input_libretro_device_p2 = "1"
+input_libretro_device_p3 = "1"
+input_libretro_device_p4 = "1"
+input_libretro_device_p5 = "1"
+input_player1_analog_dpad_mode = "0"
+input_player1_btn_down = "18"
+input_player1_btn_left = "17"
+input_player1_btn_right = "16"
+input_player1_btn_up = "19"
+input_player1_stk_l_x+ = "-1"
+input_player1_stk_l_x- = "-1"
+input_player1_stk_l_y+ = "-1"
+input_player1_stk_l_y- = "-1"
+input_player2_analog_dpad_mode = "0"
+input_player3_analog_dpad_mode = "0"
+input_player4_analog_dpad_mode = "0"
+input_player5_analog_dpad_mode = "0"
+input_remap_port_p1 = "0"
+input_remap_port_p2 = "1"
+input_remap_port_p3 = "2"
+input_remap_port_p4 = "3"
+input_remap_port_p5 = "4"
+EOF
+fi
+
+#Set Mupen64Plus GLES2 ra config for R33S
+if [ ! -d "/storage/remappings/Mupen64Plus GLES2" ]; then
+    mkdir -p "/storage/remappings/Mupen64Plus GLES2"
+fi
+
+#Map Mupen64Plus GLES2 ra controls for R33S
+if  grep R33S -q "/storage/remappings/Mupen64Plus GLES2/Mupen64Plus GLES2.rmp"
+then
+  exit 1
+else
+cat <<EOF >"/storage/remappings/Mupen64Plus GLES2/Mupen64Plus GLES2.rmp"
+#R33S
+input_libretro_device_p1 = "1"
+input_libretro_device_p2 = "1"
+input_libretro_device_p3 = "1"
+input_libretro_device_p4 = "1"
+input_libretro_device_p5 = "1"
+input_player1_analog_dpad_mode = "0"
+input_player1_btn_a = "22"
+input_player1_btn_down = "18"
+input_player1_btn_l = "12"
+input_player1_btn_l2 = "21"
+input_player1_btn_left = "17"
+input_player1_btn_r2 = "20"
+input_player1_btn_right = "16"
+input_player1_btn_up = "19"
+input_player1_btn_x = "23"
+input_player1_stk_l_x+ = "-1"
+input_player1_stk_l_x- = "-1"
+input_player1_stk_l_y+ = "-1"
+input_player1_stk_l_y- = "-1"
+input_player1_stk_r_x+ = "-1"
+input_player1_stk_r_x- = "-1"
+input_player1_stk_r_y+ = "-1"
+input_player1_stk_r_y- = "-1"
+input_player2_analog_dpad_mode = "0"
+input_player3_analog_dpad_mode = "0"
+input_player4_analog_dpad_mode = "0"
+input_player5_analog_dpad_mode = "0"
+input_remap_port_p1 = "0"
+input_remap_port_p2 = "1"
+input_remap_port_p3 = "2"
+input_remap_port_p4 = "3"
+input_remap_port_p5 = "4"
+EOF
+fi
+
+#Set Mupen64Plus-Next ra config for R33S
+if [ ! -d "/storage/remappings/Mupen64Plus-Next" ]; then
+    mkdir -p "/storage/remappings/Mupen64Plus-Next"
+fi
+
+#Map Mupen64Plus-Next ra controls for R33S
+if  grep R33S -q "/storage/remappings/Mupen64Plus-Next/Mupen64Plus-Next.rmp"
+then
+  exit 1
+else
+cat <<EOF >/storage/remappings/Mupen64Plus-Next/Mupen64Plus-Next.rmp
+#R33S
+input_libretro_device_p1 = "1"
+input_libretro_device_p2 = "1"
+input_libretro_device_p3 = "1"
+input_libretro_device_p4 = "1"
+input_libretro_device_p5 = "1"
+input_player1_analog_dpad_mode = "0"
+input_player1_btn_a = "22"
+input_player1_btn_down = "18"
+input_player1_btn_l = "12"
+input_player1_btn_l2 = "21"
+input_player1_btn_left = "17"
+input_player1_btn_r2 = "20"
+input_player1_btn_right = "16"
+input_player1_btn_up = "19"
+input_player1_btn_x = "23"
+input_player1_stk_l_x+ = "-1"
+input_player1_stk_l_x- = "-1"
+input_player1_stk_l_y+ = "-1"
+input_player1_stk_l_y- = "-1"
+input_player1_stk_r_x+ = "-1"
+input_player1_stk_r_x- = "-1"
+input_player1_stk_r_y+ = "-1"
+input_player1_stk_r_y- = "-1"
+input_player2_analog_dpad_mode = "0"
+input_player3_analog_dpad_mode = "0"
+input_player4_analog_dpad_mode = "0"
+input_player5_analog_dpad_mode = "0"
+input_remap_port_p1 = "0"
+input_remap_port_p2 = "1"
+input_remap_port_p3 = "2"
+input_remap_port_p4 = "3"
+input_remap_port_p5 = "4"
+EOF
+fi
+
+#Set ParaLLEl N64 ra config for R33S
+if [ ! -d "/storage/remappings/ParaLLEl N64" ]; then
+    mkdir -p "/storage/remappings/ParaLLEl N64"
+fi
+
+#Map ParaLLEl N64 ra controls for R33S
+if  grep R33S -q "/storage/remappings/ParaLLEl N64/ParaLLEl N64.rmp"
+then
+  exit 1
+else
+cat <<EOF >"/storage/remappings/ParaLLEl N64/ParaLLEl N64.rmp"
+#R33S
+input_libretro_device_p1 = "1"
+input_libretro_device_p2 = "1"
+input_libretro_device_p3 = "1"
+input_libretro_device_p4 = "1"
+input_libretro_device_p5 = "1"
+input_player1_analog_dpad_mode = "0"
+input_player1_btn_a = "22"
+input_player1_btn_down = "18"
+input_player1_btn_l = "12"
+input_player1_btn_l2 = "21"
+input_player1_btn_left = "17"
+input_player1_btn_r2 = "20"
+input_player1_btn_right = "16"
+input_player1_btn_up = "19"
+input_player1_btn_x = "23"
+input_player1_stk_l_x+ = "-1"
+input_player1_stk_l_x- = "-1"
+input_player1_stk_l_y+ = "-1"
+input_player1_stk_l_y- = "-1"
+input_player1_stk_r_x+ = "-1"
+input_player1_stk_r_x- = "-1"
+input_player1_stk_r_y+ = "-1"
+input_player1_stk_r_y- = "-1"
+input_player2_analog_dpad_mode = "0"
+input_player3_analog_dpad_mode = "0"
+input_player4_analog_dpad_mode = "0"
+input_player5_analog_dpad_mode = "0"
+input_remap_port_p1 = "0"
+input_remap_port_p2 = "1"
+input_remap_port_p3 = "2"
+input_remap_port_p4 = "3"
+input_remap_port_p5 = "4
+EOF
+fi

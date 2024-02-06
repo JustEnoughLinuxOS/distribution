@@ -17,6 +17,12 @@ PKG_MESON_OPTS_TARGET=" \
   -Ddocumentation=disabled \
   -Dtests=disabled"
 
+# libevdev by default installs header incorrectly, this solves that
+pre_configure_target() {
+  sed -i -E "s|subdir: 'libevdev-1.0\/|subdir: '|g" ${PKG_BUILD}/meson.build
+  sed -i -E "s|subdirs: 'libevdev-1.0',||g" ${PKG_BUILD}/meson.build
+}
+
 post_makeinstall_target() {
   rm -rf ${INSTALL}/usr/bin
 }
