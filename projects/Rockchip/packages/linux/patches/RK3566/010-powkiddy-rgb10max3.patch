@@ -47,7 +47,7 @@ index 000000000000..26884dfda818
 +		reset-gpios = <&gpio4 RK_PA0 GPIO_ACTIVE_LOW>;
 +		vcc-supply = <&vcc3v3_lcd0_n>;
 +		iovcc-supply = <&vcc3v3_lcd0_n>;
-+		rotation = <90>;
++		rotation = <270>;
 +
 +		port {
 +			mipi_in_panel: endpoint {
@@ -57,18 +57,19 @@ index 000000000000..26884dfda818
 +	};
 +};
 diff --git a/drivers/gpu/drm/panel/panel-sitronix-st7703.c b/drivers/gpu/drm/panel/panel-sitronix-st7703.c
-index b55bafd1a8be..99db98f46dcb 100644
+index b55bafd1a8be..e8d1730241b4 100644
 --- a/drivers/gpu/drm/panel/panel-sitronix-st7703.c
 +++ b/drivers/gpu/drm/panel/panel-sitronix-st7703.c
-@@ -59,6 +59,7 @@ struct st7703 {
+@@ -58,7 +58,7 @@ struct st7703 {
+ 	struct gpio_desc *reset_gpio;
  	struct regulator *vcc;
  	struct regulator *iovcc;
- 	bool prepared;
+-	bool prepared;
 +	enum drm_panel_orientation orientation;
  
  	struct dentry *debugfs;
  	const struct st7703_panel_desc *desc;
-@@ -493,6 +494,76 @@ static int rgb30panel_init_sequence(struct st7703 *ctx)
+@@ -493,6 +493,76 @@ static int rgb30panel_init_sequence(struct st7703 *ctx)
  			       0x13, 0x15, 0x14, 0x15, 0x10, 0x17, 0x00, 0x0a,
  			       0x0f, 0x29, 0x3b, 0x3f, 0x42, 0x39, 0x06, 0x0d,
  			       0x10, 0x13, 0x15, 0x14, 0x15, 0x10, 0x17);
@@ -145,7 +146,7 @@ index b55bafd1a8be..99db98f46dcb 100644
  
  	return 0;
  }
-@@ -512,6 +583,21 @@ static const struct drm_display_mode rgb30panel_mode = {
+@@ -512,6 +582,21 @@ static const struct drm_display_mode rgb30panel_mode = {
  	.height_mm	= 76,
  };
  
@@ -167,7 +168,7 @@ index b55bafd1a8be..99db98f46dcb 100644
  static const struct st7703_panel_desc rgb30panel_desc = {
  	.mode = &rgb30panel_mode,
  	.lanes = 4,
-@@ -521,6 +607,15 @@ static const struct st7703_panel_desc rgb30panel_desc = {
+@@ -521,6 +606,15 @@ static const struct st7703_panel_desc rgb30panel_desc = {
  	.init_sequence = rgb30panel_init_sequence,
  };
  
@@ -183,12 +184,40 @@ index b55bafd1a8be..99db98f46dcb 100644
  static int st7703_enable(struct drm_panel *panel)
  {
  	struct st7703 *ctx = panel_to_st7703(panel);
-@@ -649,16 +744,25 @@ static int st7703_get_modes(struct drm_panel *panel,
- 	drm_display_info_set_bus_formats(&connector->display_info,
- 					 mantix_bus_formats,
- 					 ARRAY_SIZE(mantix_bus_formats));
-+	drm_connector_set_panel_orientation(connector, ctx->orientation);
+@@ -575,13 +669,9 @@ static int st7703_unprepare(struct drm_panel *panel)
+ {
+ 	struct st7703 *ctx = panel_to_st7703(panel);
  
+-	if (!ctx->prepared)
+-		return 0;
+-
+ 	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
+ 	regulator_disable(ctx->iovcc);
+ 	regulator_disable(ctx->vcc);
+-	ctx->prepared = false;
+ 
+ 	return 0;
+ }
+@@ -591,9 +681,6 @@ static int st7703_prepare(struct drm_panel *panel)
+ 	struct st7703 *ctx = panel_to_st7703(panel);
+ 	int ret;
+ 
+-	if (ctx->prepared)
+-		return 0;
+-
+ 	dev_dbg(ctx->dev, "Resetting the panel\n");
+ 	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
+ 
+@@ -616,8 +703,6 @@ static int st7703_prepare(struct drm_panel *panel)
+ 	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
+ 	usleep_range(15000, 20000);
+ 
+-	ctx->prepared = true;
+-
+ 	return 0;
+ }
+ 
+@@ -653,12 +738,20 @@ static int st7703_get_modes(struct drm_panel *panel,
  	return 1;
  }
  
@@ -209,9 +238,9 @@ index b55bafd1a8be..99db98f46dcb 100644
  };
  
  static int allpixelson_set(void *data, u64 val)
-@@ -727,6 +831,12 @@ static int st7703_probe(struct mipi_dsi_device *dsi)
- 		return dev_err_probe(dev, PTR_ERR(ctx->iovcc),
- 				     "Failed to request iovcc regulator\n");
+@@ -709,6 +802,12 @@ static int st7703_probe(struct mipi_dsi_device *dsi)
+ 	if (IS_ERR(ctx->reset_gpio))
+ 		return dev_err_probe(dev, PTR_ERR(ctx->reset_gpio), "Failed to get reset gpio\n");
  
 +	ret = of_drm_get_panel_orientation(dev->of_node, &ctx->orientation);
 +	if (ret < 0) {
@@ -219,10 +248,10 @@ index b55bafd1a8be..99db98f46dcb 100644
 +		return ret;
 +	}
 +
- 	drm_panel_init(&ctx->panel, dev, &st7703_drm_funcs,
- 		       DRM_MODE_CONNECTOR_DSI);
+ 	mipi_dsi_set_drvdata(dsi, ctx);
  
-@@ -785,6 +895,7 @@ static void st7703_remove(struct mipi_dsi_device *dsi)
+ 	ctx->dev = dev;
+@@ -785,6 +884,7 @@ static void st7703_remove(struct mipi_dsi_device *dsi)
  static const struct of_device_id st7703_of_match[] = {
  	{ .compatible = "anbernic,rg353v-panel-v2", .data = &rg353v2_desc },
  	{ .compatible = "powkiddy,rgb30-panel", .data = &rgb30panel_desc },
