@@ -28,7 +28,7 @@ diff -rupN flycast.orig/Makefile flycast/Makefile
 +		-fuse-linker-plugin \
 +		-fno-stack-protector -fno-ident -fomit-frame-pointer \
 +		-fmerge-all-constants -ffast-math -funroll-all-loops \
-+		-mcpu=cortex-a35 -mtune=cortex-a35
++		-mcpu=cortex-a35 -mtune=cortex-a35 -mno-outline-atomics
 +	CXXFLAGS += $(CFLAGS)
 +	LDFLAGS += -mcpu=cortex-a35 -mtune=cortex-a35 -Ofast -flto -fuse-linker-plugin
  	PLATFORM_EXT := unix

@@ -1,10 +1,17 @@
-diff -rupN systemd-stable-255.2.orig/meson.build systemd-stable-255.2/meson.build
---- systemd-stable-255.2.orig/meson.build       2024-01-11 16:27:39.478706802 +0000
-+++ systemd-stable-255.2/meson.build    2024-01-11 16:28:08.724278853 +0000
-@@ -254,7 +254,7 @@ conf.set_quoted('SYSTEMD_TTY_ASK_PASSWOR
- conf.set_quoted('SYSTEMD_UPDATE_HELPER_PATH',                 libexecdir / 'systemd-update-helper')
- conf.set_quoted('SYSTEMD_USERWORK_PATH',                      libexecdir / 'systemd-userwork')
- conf.set_quoted('SYSTEMD_VERITYSETUP_PATH',                   libexecdir / 'systemd-veritysetup')
+commit 43aba5ffffc6d35ed97db035c5818c76652b06de
+Author: Matthias Reichl <hias@horus.com>
+Date:   Mon Sep 28 23:55:13 2020 +0200
+
+    move /etc/systemd/system to /storage/.config/system.d
+
+diff --git a/meson.build b/meson.build
+index dbbddb68e2..4592cd1094 100644
+--- a/meson.build
++++ b/meson.build
+@@ -266,7 +266,7 @@
+ conf.set_quoted('SYSTEMD_UPDATE_HELPER_PATH',                 rootlibexecdir / 'systemd-update-helper')
+ conf.set_quoted('SYSTEMD_USERWORK_PATH',                      rootlibexecdir / 'systemd-userwork')
+ conf.set_quoted('SYSTEMD_VERITYSETUP_PATH',                   rootlibexecdir / 'systemd-veritysetup')
 -conf.set_quoted('SYSTEM_CONFIG_UNIT_DIR',                     pkgsysconfdir / 'system')
 +conf.set_quoted('SYSTEM_CONFIG_UNIT_DIR',                     '/storage/.config/system.d')
  conf.set_quoted('SYSTEM_DATA_UNIT_DIR',                       systemunitdir)

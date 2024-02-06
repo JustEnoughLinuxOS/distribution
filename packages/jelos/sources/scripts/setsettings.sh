@@ -32,9 +32,8 @@ CORE=${3,,}
 
 #Autosave
 AUTOSAVE="$@"
-AUTOSAVE="${AUTOSAVE#*-autosave *}"
+AUTOSAVE="${AUTOSAVE#*-autosave=*}"
 AUTOSAVE="${AUTOSAVE% --*}"
-AUTOSAVE="${AUTOSAVE% --*}" # Fix later (first deletes --autosave, second deletes --snapshot).
 
 #Snapshot
 SNAPSHOT="$@"
@@ -52,6 +51,7 @@ declare -a HAS_CHEEVOS=(    arcade
                             atari2600
                             atari7800
                             atarilynx
+                            cdi
                             colecovision
                             cps1
                             cps2
@@ -339,7 +339,7 @@ EOF
 ### Configure retroarch hotkeys
 function configure_hotkeys() {
     log "Configure hotkeys..."
-    local MY_CONTROLLER=$(cat /storage/.controller)
+    local MY_CONTROLLER=$(grep -b4 js0 /proc/bus/input/devices | awk 'BEGIN {FS="\""}; /Name/ {printf $2}')
 
     ### Remove any input settings retroarch may have added.
     sed -i '/input_player[0-9]/d' ${RETROARCH_CONFIG}

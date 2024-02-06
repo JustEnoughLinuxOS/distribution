@@ -18,7 +18,7 @@ PKG_PATCH_DIRS+="${DEVICE}"
 
 case ${DEVICE} in
   S922X*)
-    PKG_VERSION="6.1.70"
+    PKG_VERSION="6.7.4"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
   ;;
 esac
@@ -164,6 +164,7 @@ make_target() {
       NO_GTK2=1 \
       NO_LIBNUMA=1 \
       NO_LIBAUDIT=1 \
+      NO_LIBTRACEEVENT=1 \
       NO_LZMA=1 \
       NO_SDT=1 \
       CROSS_COMPILE="${TARGET_PREFIX}" \
