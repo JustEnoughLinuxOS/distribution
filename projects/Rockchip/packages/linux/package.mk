@@ -18,7 +18,7 @@ PKG_PATCH_DIRS+="${DEVICE}"
 
 case ${DEVICE} in
   RK3566-03w)
-    PKG_VERSION="bfb9351f30808403c9fdb0131499b1e77a583e1d"
+    PKG_VERSION="93207a7ad6090b27c6d20ea3ba23882ff1f72a8f"
     PKG_URL="https://github.com/radxa/kernel.git"
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="linux-5.10-gen-rkr4.1"
