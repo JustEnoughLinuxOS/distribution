@@ -26,7 +26,7 @@ index 000000000000..26884dfda818
 +#include "rk3566-powkiddy-rk2023.dtsi"
 +
 +/ {
-+	model = "Powkiddy RGB10MAX3";
++	model = "Powkiddy RGB10 Max 3";
 +	compatible = "powkiddy,rgb10max3", "rockchip,rk3566";
 +};
 +
