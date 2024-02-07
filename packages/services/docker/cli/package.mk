@@ -22,7 +22,7 @@ configure_target() {
   # used for docker version
   export GITCOMMIT=${PKG_GIT_COMMIT}
   export VERSION=${PKG_VERSION}
-  export BUILDTIME="$(date --utc)"
+  export BUILDTIME="$(date)"
 
   cat > "${PKG_BUILD}/go.mod" << EOF
 module github.com/docker/cli
