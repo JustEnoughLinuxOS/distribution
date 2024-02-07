@@ -23,9 +23,13 @@ case ${DEVICE} in
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="main"
   ;;
-  RK3399|RK3326|RK356*|RK-ARMV8-A)
+  RK3399|RK3326|RK-ARMV8-A)
     PKG_VERSION="6.7.4"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
+  ;;
+  RK356*)
+    PKG_VERSION="6.8-rc3"
+    PKG_URL="https://git.kernel.org/torvalds/t/${PKG_NAME}-${PKG_VERSION}.tar.gz"
   ;;
 esac
 
