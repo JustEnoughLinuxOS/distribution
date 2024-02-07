@@ -9,13 +9,11 @@ jslisten set "-9 Vita3K"
 #Check if vita3k folder exists in /storage/.config/vita3k
 if [ ! -d "/storage/.config/vita3k" ]; then
     mkdir -p "/storage/.config/vita3k"
-    cp -r "/usr/config/vita3k" "/storage/.config/"
 fi
 
-if [ ! -d "/storage/.config/vita3k/lang/user" ]
-then
-  mkdir -p "/storage/.config/vita3k/lang/user"
-fi
+#Make sure we sync any changes from /storage/.config so new features will be enabled
+#without overwriting existing settings.
+rsync -ah --update /usr/config/vita3k/* /storage/.config/vita3k 2>/dev/null
 
 #Check if vita3k folder exists in /storage/roms/psvita
 if [ ! -d "/storage/roms/psvita/vita3k" ]; then
