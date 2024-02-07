@@ -10,11 +10,17 @@ PKG_TOOLCHAIN="meson"
 PKG_PATCH_DIRS+=" ${DEVICE}"
 
 case ${DEVICE} in
-  RK3588*)
-        PKG_VERSION="120202c675749c5ef81ae4c8cdc30019b4de08f4"
-        PKG_SITE="https://gitlab.com/panfork/mesa"
-        PKG_URL="${PKG_SITE}.git"
-        PKG_GIT_CLONE_BRANCH="csf"
+  RK3588)
+	PKG_VERSION="120202c675749c5ef81ae4c8cdc30019b4de08f4"
+	PKG_SITE="https://gitlab.com/panfork/mesa"
+	PKG_URL="${PKG_SITE}.git"
+	PKG_GIT_CLONE_BRANCH="csf"
+  ;;
+  RK33*|RK3566) #Using upstream dev for panfrost
+	PKG_VERSION="7adc7678a88edccfbd20af2307e7f50e9ed48e47"
+	PKG_SITE="https://gitlab.freedesktop.org/mesa/mesa"
+	PKG_URL="${PKG_SITE}.git"
+	PKG_PATCH_DIRS+=" panfrost"
   ;;
   *)
 	PKG_VERSION="24.0.0"

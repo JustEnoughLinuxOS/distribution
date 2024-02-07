@@ -31,40 +31,50 @@
     BOOTLOADER="u-boot"
     PARTITION_TABLE="gpt"
     UBOOT_LABEL="uboot"
-    TRUST_LABEL="resource"
-    DEVICE_DTB=("rk3566-rg353p-linux" "rk3566-rg353v-linux" "rk3566-rg353m-linux" "rk3566-rg503-linux" "rk3566-rk2023-linux" "rk3566-rgb30-linux" "rk3566-max3pro-linux")
+    TRUST_LABEL="trust"
+    DEVICE_DTB=("rk3566-anbernic-rg353ps" "rk3566-anbernic-rg353vs" "rk3566-anbernic-rg503" "rk3566-anbernic-rg353p" "rk3566-anbernic-rg353v" "rk3566-powkiddy-rk2023" "rk3566-powkiddy-rgb30" "rk3566-powkiddy-rgb10max3")
     UBOOT_DTB="rk3566"
-    UBOOT_CONFIG="rk3568_defconfig"
-    PKG_SOC="rk356x"
-    PKG_DATAFILE="${PKG_RKBIN}/bin/rk35/rk3566_ddr_1056MHz_v1.16.bin"
-    PKG_LOADER="${PKG_RKBIN}/bin/rk35/rk356x_spl_v1.12.bin"
-    PKG_BL31="${PKG_RKBIN}/bin/rk35/rk3568_bl31_v1.42.elf"
+    UBOOT_CONFIG="anbernic-rgxx3-rk3566_defconfig"
+    PKG_SOC="rk3568"
+    PKG_DATAFILE="${PKG_RKBIN}/bin/rk35/rk3566_ddr_1056MHz_v1.18.bin"
+    PKG_LOADER="spl/u-boot-spl.bin"
+    PKG_BL31="${PKG_RKBIN}/bin/rk35/rk3568_bl31_v1.43.elf"
     PKG_LOAD_ADDR="0x0a100000"
     BOOT_INI=false
     EXT_LINUX_CONF=true
 
   # Additional kernel make parameters (for example to specify the u-boot loadaddress)
     KERNEL_MAKE_EXTRACMD=" $(for DTB in "${DEVICE_DTB[@]}"; do echo -n "rockchip/${DTB}.dtb "; done)"
+    KERNEL_EXTRA_DEPENDS_TARGET="zstd libcap libtraceevent"
 
   # Define the CPU
     HW_CPU="Rockchip RK3566"
  
   # Mali GPU family
     MALI_FAMILY="bifrost-g52"
-    MALI_VERSION="g13p0"
-    OPENGLES="libmali"
-    VULKAN_SUPPORT="no"
+  #  MALI_VERSION="g2p0"
+  #  OPENGLES="libmali"
+    VULKAN_SUPPORT=""
 
-    GRAPHIC_DRIVERS=""
+  # OpenGL(X) implementation to use (mesa / no)
+    OPENGL="mesa"
+
+  # OpenGL-ES implementation to use (mesa / no)
+    OPENGLES="mesa"
+
+    GRAPHIC_DRIVERS="panfrost"
 
   # Displayserver to use (weston / x11 / no)
-    DISPLAYSERVER="no"
+    DISPLAYSERVER="wl"
 
   # Windowmanager to use (fluxbox / weston / no)
-    WINDOWMANAGER="no"
+    WINDOWMANAGER="weston"
+
+  # debug tty path
+    DEBUG_TTY="/dev/ttyS2"
 
   # kernel serial console
-    EXTRA_CMDLINE="quiet rootwait console=ttyUSB0,1500000 console=tty0 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20 video=HDMI-A-1:1920x1080@60"
+    EXTRA_CMDLINE="quiet rootwait earlycon=uart8250,mmio32,0xfe660000 console=ttyS2,1500000n8 console=tty1 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
 
   # additional packages to install
   #  ADDITIONAL_PACKAGES=""
@@ -72,13 +82,13 @@
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
   # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
-    FIRMWARE="misc-firmware wlan-firmware RTL8821CS-firmware RTL8723DS-firmware"
+    FIRMWARE="misc-firmware"
 
   # additional drivers to install:
   # for a list of additional drivers see packages/linux-drivers
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-    ADDITIONAL_DRIVERS="RTL8821AU RTL8821CU RTL88x2BU"
+    ADDITIONAL_DRIVERS="jelos-gamepad"
 
   # build and install driver addons (yes / no)
     DRIVER_ADDONS_SUPPORT="no"
@@ -87,9 +97,6 @@
   # for a list of additinoal drivers see packages/linux-driver-addons
   # Space separated list is supported,
     DRIVER_ADDONS="" #dvb-latest
-
-  # debug tty path
-    DEBUG_TTY="/dev/ttyUSB0"
 
   # build and install bluetooth support (yes / no)
     BLUETOOTH_SUPPORT="yes"
@@ -109,11 +116,9 @@
   # build and install SFTP Server (yes / no)
     SFTP_SERVER="yes"
 
-  # build and install Simple HTTP Server (yes / no)
-    SIMPLE_HTTP_SERVER="yes"
-
   # build and install OpenVPN support (yes / no)
     OPENVPN_SUPPORT="no"
+    WIREGUARD_SUPPORT="no"
 
   # build and install ZeroTier support (yes / no)
     ZEROTIER_SUPPORT="yes"

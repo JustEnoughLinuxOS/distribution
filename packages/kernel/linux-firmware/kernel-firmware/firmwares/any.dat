@@ -21,3 +21,5 @@ brcm/*
 rtl_bt/*
 rtlwifi/*
 rtw*/*
+
+rtl_nic/*

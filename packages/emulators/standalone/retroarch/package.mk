@@ -37,16 +37,6 @@ case ${PROJECT} in
   ;;
 esac
 
-case ${DEVICE} in
-  RK3566*)
-    PKG_DEPENDS_TARGET+=" libgo2"
-    PKG_CONFIGURE_OPTS_TARGET+=" --enable-odroidgo2"
-  ;;
-  *)
-    PKG_CONFIGURE_OPTS_TARGET+=" --disable-odroidgo2"
-  ;;
-esac
-
 case ${ARCH} in
   arm)
     PKG_CONFIGURE_OPTS_TARGET+=" --enable-neon"
