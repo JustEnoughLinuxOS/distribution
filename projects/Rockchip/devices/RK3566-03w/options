@@ -74,8 +74,7 @@
     DEBUG_TTY="/dev/ttyS2"
 
   # kernel serial console
-  #  EXTRA_CMDLINE="quiet rootwait earlycon=uart8250,mmio32,0xfe660000 console=ttyS2,1500000n8 console=tty1 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
-    EXTRA_CMDLINE="root=UUID=e4dc7fb3-d6e7-4a53-8267-0b5688ac4ff3 console=ttyFIQ0,1500000n8 quiet splash loglevel=4 rw earlycon consoleblank=0 console=tty1 coherent_pool=2M irqchip.gicv3_pseudo_nmi=0 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory swapaccount=1"
+    EXTRA_CMDLINE="console=ttyFIQ0,1500000n8 systemd.debug_shell=ttyFIQ0 quiet rw earlycon consoleblank=0 systemd.show_status=1 debugging"
 
   # additional packages to install
   #  ADDITIONAL_PACKAGES=""
