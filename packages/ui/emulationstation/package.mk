@@ -3,7 +3,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="emulationstation"
-PKG_VERSION="c1aacbbba4e6a22bea7d25057f81fbf9c7d52eb5"
+PKG_VERSION="b298647ee7988cf2a34fedd4442f357f63c66597"
 PKG_GIT_CLONE_BRANCH="main"
 PKG_REV="1"
 PKG_ARCH="any"
@@ -145,7 +145,7 @@ makeinstall_target() {
                 <hardware>system</hardware>
                 <path>/storage/.config/modules</path>
                 <extension>.sh</extension>
-                <command>/usr/bin/run %ROM%</command>
+                <command>%ROM%</command>
                 <platform>tools</platform>
                 <theme>tools</theme>
         </system>

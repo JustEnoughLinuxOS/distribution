@@ -27,7 +27,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-anbernic-rg552.dts lin
 +#include <dt-bindings/pwm/pwm.h>
 +#include <dt-bindings/usb/pd.h>
 +#include "rk3399.dtsi"
-+#include "rk3399-op1-opp.dtsi"
++#include "rk3399-opp.dtsi"
 +
 +/ {
 +	model = "Anbernic RG552";
@@ -91,16 +91,16 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3399-anbernic-rg552.dts lin
 +	};
 +
 +	joypad: singleadc-joypad {
-+		compatible = "singleadc-joypad";
++		compatible = "rg552_joypad";
 +
 +		pwms = <&pwm3 0 200000000 0>;
 +		pwm-names = "enable";
 +		rumble-boost-weak = <0x0000>;
 +		rumble-boost-strong = <0x0000>;
 +
-+		joypad-name = "retrogame_joypad";
++		joypad-name = "rg552_joypad";
 +		joypad-product = <0x1101>;
-+		joypad-revision = <0x0200>;
++		joypad-revision = <0x0234>;
 +
 +		status = "okay";
 +

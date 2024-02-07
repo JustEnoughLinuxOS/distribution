@@ -11,6 +11,12 @@ if [ -z "${1}" ]; then
   die "usage: ${0} package_name [parent_pkg]"
 fi
 
+# Skip excluded packages
+listcontains "${EXCLUDE_PKGS}" "${PKG_NAME}" && {
+    echo "Skipping ${PKG_NAME} it's listed in EXCLUDE_PKGS"
+    exit 0
+}
+
 if [ -z "${PKG_NAME}" ]; then
   die "$(print_color CLR_ERROR "${1}: no package.mk file found")"
 fi

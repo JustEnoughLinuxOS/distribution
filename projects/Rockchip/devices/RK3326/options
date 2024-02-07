@@ -31,7 +31,7 @@
     BOOTLOADER="u-boot"
     TRUST_LABEL="trust"
     PARTITION_TABLE="msdos"
-    DEVICE_DTB=("rk3326-anbernic-rg351m" "rk3326-anbernic-rg351v"  "rk3326-odroid-go2" "rk3326-odroid-go2-v11" "rk3326-odroid-go3" "rk3326-powkiddy-rgb10" "rk3326-magicx-xu10")
+    DEVICE_DTB=("rk3326-anbernic-rg351m" "rk3326-anbernic-rg351v" "rk3326-gameconsole-r33s"  "rk3326-odroid-go2" "rk3326-odroid-go2-v11" "rk3326-odroid-go3" "rk3326-powkiddy-rgb10" "rk3326-powkiddy-rgb20s"  "rk3326-magicx-xu10")
     UBOOT_DTB="${DEVICE_DTB[0]}"
     UBOOT_CONFIG="odroidgoa_defconfig"
     PKG_SOC="px30"
@@ -124,6 +124,9 @@
   # build and install OpenVPN support (yes / no)
     OPENVPN_SUPPORT="no"
 
+  # build and install ZeroTier support (yes / no)
+    ZEROTIER_SUPPORT="yes"
+    
   # build and install diskmounter support (udevil)
   # this service provide auto mounting support for external drives in the
   # mediacenter also automount internally drives at boottime via udev (yes / no)

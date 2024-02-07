@@ -25,7 +25,7 @@ case ${DEVICE} in
   ;;
   RK3566)
     PKG_URL="${PKG_SITE}/rk356x-kernel.git"
-    PKG_VERSION="d346337a7b3e3e7e0d12dbdcc4fc62efc86cbda3"
+    PKG_VERSION="c741d56477939654bb4056be240f93d1ad1ae91e"
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="main"
   ;;
@@ -35,8 +35,8 @@ case ${DEVICE} in
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="main"
   ;;
-  RK3399|RK3326)
-    PKG_VERSION="6.7.2"
+  RK3399|RK3326|RK-ARMV8-A)
+    PKG_VERSION="6.7.3"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
   ;;
 esac
