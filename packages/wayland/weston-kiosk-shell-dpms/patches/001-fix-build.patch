@@ -7,7 +7,7 @@ index f1fb908..6ea815e 100644
  endif
  
 -libweston_version = 10
-+libweston_version = 12
++libweston_version = 13
  dir_prefix = get_option('prefix')
  dir_lib = dir_prefix / get_option('libdir')
  dir_module_weston = dir_lib / 'weston'
