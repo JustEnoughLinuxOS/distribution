@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="vita3k-sa"
-PKG_VERSION="564417b3b6a31296a2a09912c249a0145376e3c8"
+PKG_VERSION="da73a57"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/Vita3K/Vita3K"
 PKG_URL="${PKG_SITE}.git"
@@ -33,7 +33,8 @@ pre_configure_target() {
    PKG_CMAKE_OPTS_TARGET+=" -DCMAKE_BUILD_TYPE=Release \
                    -DBUILD_SHARED_LIBS=OFF \
                    -DUSE_DISCORD_RICH_PRESENCE=OFF \
-                   -DUSE_VITA3K_UPDATE=OFF"
+                   -DUSE_VITA3K_UPDATE=OFF \
+                   -DXXH_X86DISPATCH_ALLOW_AVX=ON"
 }
 
 makeinstall_target() {
