@@ -451,9 +451,9 @@ diff -rupN linux.orig/drivers/input/joystick/Kconfig linux/drivers/input/joystic
  	  To compile this driver as a module, choose M here: the
  	  module will be called fsia6b.
  
-+config JOYSTICK_SINGLEADCJOY
-+	tristate "Single SARADC dual-joystick gamepad driver"
-+	select INPUT_POLLDEV	
++config JOYSTICK_RG552
++	tristate "Anbernic RG552 gamepad driver"
++	select INPUT_POLLDEV
 +	help
 +	  The 1-in 4-out SARADC joypad driver.
 +
@@ -467,22 +467,22 @@ diff -rupN linux.orig/drivers/input/joystick/Makefile linux/drivers/input/joysti
  obj-$(CONFIG_JOYSTICK_QWIIC)		+= qwiic-joystick.o
  obj-$(CONFIG_JOYSTICK_SENSEHAT)	+= sensehat-joystick.o
  obj-$(CONFIG_JOYSTICK_SIDEWINDER)	+= sidewinder.o
-+obj-$(CONFIG_JOYSTICK_SINGLEADCJOY)	+= singleadcjoy.o
++obj-$(CONFIG_JOYSTICK_RG552)		+= rg552_joypad.o
  obj-$(CONFIG_JOYSTICK_SPACEBALL)	+= spaceball.o
  obj-$(CONFIG_JOYSTICK_SPACEORB)		+= spaceorb.o
  obj-$(CONFIG_JOYSTICK_STINGER)		+= stinger.o
-diff -rupN linux.orig/drivers/input/joystick/singleadcjoy.c linux/drivers/input/joystick/singleadcjoy.c
---- linux.orig/drivers/input/joystick/singleadcjoy.c	1970-01-01 00:00:00.000000000 +0000
-+++ linux/drivers/input/joystick/singleadcjoy.c	2024-01-08 18:43:54.081267482 +0000
+diff -rupN linux.orig/drivers/input/joystick/rg552_joypad.c linux/drivers/input/joystick/rg552_joypad.c
+--- linux.orig/drivers/input/joystick/rg552_joypad.c	1970-01-01 00:00:00.000000000 +0000
++++ linux/drivers/input/joystick/rg552_joypad.c	2024-01-08 18:43:54.081267482 +0000
 @@ -0,0 +1,1448 @@
 +/*----------------------------------------------------------------------------*/
 +
 +/*
-+ * Copyright (c) 2008-2021 Anbernic 
++ * Copyright (c) 2008-2021 Anbernic
 + */
 +
 +/*
-+ * Single SARADC dual-joystick gamepad driver
++ * Anbernic RG552 gamepad driver
 + */
 +
 +/*----------------------------------------------------------------------------*/
@@ -504,7 +504,7 @@ diff -rupN linux.orig/drivers/input/joystick/singleadcjoy.c linux/drivers/input/
 +#include <linux/pwm.h>
 +
 +/*----------------------------------------------------------------------------*/
-+#define DRV_NAME "retrogame_joypad"
++#define DRV_NAME "rg552_joypad"
 +
 +/*----------------------------------------------------------------------------*/
 +#define	ADC_MAX_VOLTAGE		1800
@@ -739,7 +739,7 @@ diff -rupN linux.orig/drivers/input/joystick/singleadcjoy.c linux/drivers/input/
 +/*
 + * ATTRIBUTES:
 + *
-+ * /sys/devices/platform/retrogame_joypad/poll_interval [rw]
++ * /sys/devices/platform/rg552_joypad/poll_interval [rw]
 + */
 +/*----------------------------------------------------------------------------*/
 +static ssize_t joypad_store_poll_interval(struct device *dev,
@@ -777,7 +777,7 @@ diff -rupN linux.orig/drivers/input/joystick/singleadcjoy.c linux/drivers/input/
 +/*
 + * ATTRIBUTES:
 + *
-+ * /sys/devices/platform/retrogame_joypad/adc_fuzz [r]
++ * /sys/devices/platform/rg552_joypad/adc_fuzz [r]
 + */
 +/*----------------------------------------------------------------------------*/
 +static ssize_t joypad_show_adc_fuzz(struct device *dev,
@@ -799,7 +799,7 @@ diff -rupN linux.orig/drivers/input/joystick/singleadcjoy.c linux/drivers/input/
 +/*
 + * ATTRIBUTES:
 + *
-+ * /sys/devices/platform/retrogame_joypad/adc_flat [r]
++ * /sys/devices/platform/rg552_joypad/adc_flat [r]
 + */
 +/*----------------------------------------------------------------------------*/
 +static ssize_t joypad_show_adc_flat(struct device *dev,
@@ -821,7 +821,7 @@ diff -rupN linux.orig/drivers/input/joystick/singleadcjoy.c linux/drivers/input/
 +/*
 + * ATTRIBUTES:
 + *
-+ * /sys/devices/platform/retrogame_joypad/enable [rw]
++ * /sys/devices/platform/rg552_joypad/enable [rw]
 + */
 +/*----------------------------------------------------------------------------*/
 +static ssize_t joypad_store_enable(struct device *dev,
@@ -859,7 +859,7 @@ diff -rupN linux.orig/drivers/input/joystick/singleadcjoy.c linux/drivers/input/
 +/*
 + * ATTRIBUTES:
 + *
-+ * /sys/devices/platform/retrogame_joypad/adc_cal [rw]
++ * /sys/devices/platform/rg552_joypad/adc_cal [rw]
 + */
 +/*----------------------------------------------------------------------------*/
 +static ssize_t joypad_store_adc_cal(struct device *dev,
@@ -921,7 +921,7 @@ diff -rupN linux.orig/drivers/input/joystick/singleadcjoy.c linux/drivers/input/
 +/*
 + * ATTRIBUTES:
 + *
-+ * /sys/devices/platform/retrogame_joypad/amux_debug [rw]
++ * /sys/devices/platform/rg552_joypad/amux_debug [rw]
 + *
 + * echo [debug channel] > amux_debug
 + * cat amux_debug : debug channel mux set & adc read
@@ -1108,7 +1108,7 @@ diff -rupN linux.orig/drivers/input/joystick/singleadcjoy.c linux/drivers/input/
 +/*
 + * ATTRIBUTES:
 + *
-+ * /sys/devices/platform/singleadc-joypad/hdst [rw]
++ * /sys/devices/platform/rg552_joypad/hdst [rw]
 + */
 +/*----------------------------------------------------------------------------*/
 +static ssize_t joypad_store_hdst(struct device *dev,
@@ -1892,7 +1892,7 @@ diff -rupN linux.orig/drivers/input/joystick/singleadcjoy.c linux/drivers/input/
 +
 +/*----------------------------------------------------------------------------*/
 +static const struct of_device_id joypad_of_match[] = {
-+	{ .compatible = "singleadc-joypad", },
++	{ .compatible = "rg552_joypad", },
 +	{},
 +};
 +
