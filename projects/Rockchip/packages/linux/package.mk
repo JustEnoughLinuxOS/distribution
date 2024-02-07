@@ -7,8 +7,8 @@
 PKG_NAME="linux"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/JustEnoughLinuxOS"
-PKG_DEPENDS_HOST="ccache:host rsync:host openssl:host rdfind:host"
-PKG_DEPENDS_TARGET="toolchain linux:host cpio:host kmod:host xz:host lz4:host wireless-regdb keyutils util-linux binutils ncurses openssl:host ${KERNEL_EXTRA_DEPENDS_TARGET}"
+PKG_DEPENDS_HOST="ccache:host rdfind:host rsync:host openssl:host"
+PKG_DEPENDS_TARGET="toolchain rdfind:host linux:host cpio:host kmod:host xz:host lz4:host wireless-regdb keyutils util-linux binutils ncurses openssl:host ${KERNEL_EXTRA_DEPENDS_TARGET}"
 PKG_DEPENDS_INIT="toolchain"
 PKG_NEED_UNPACK="${LINUX_DEPENDS} $(get_pkg_directory initramfs) $(get_pkg_variable initramfs PKG_NEED_UNPACK)"
 PKG_LONGDESC="This package builds the kernel for Rockchip devices"
@@ -23,21 +23,13 @@ case ${DEVICE} in
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="main"
   ;;
-  RK3566)
-    PKG_URL="${PKG_SITE}/rk356x-kernel.git"
-    PKG_VERSION="c741d56477939654bb4056be240f93d1ad1ae91e"
-    GET_HANDLER_SUPPORT="git"
-    PKG_GIT_CLONE_BRANCH="main"
-  ;;
-  *X55)
-    PKG_URL="${PKG_SITE}/rk3566-x55-kernel.git"
-    PKG_VERSION="9e8f3703fe49d5d12bbb951e233248f5f3eb9efd"
-    GET_HANDLER_SUPPORT="git"
-    PKG_GIT_CLONE_BRANCH="main"
-  ;;
   RK3399|RK3326|RK-ARMV8-A)
     PKG_VERSION="6.7.4"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
+  ;;
+  RK356*)
+    PKG_VERSION="6.8-rc3"
+    PKG_URL="https://git.kernel.org/torvalds/t/${PKG_NAME}-${PKG_VERSION}.tar.gz"
   ;;
 esac
 

@@ -75,6 +75,26 @@ function start_ms() {
   fi
 }
 
+start_overlay() {
+  if [ -e "/storage/.overlay_unsupported" ]
+  then
+    # If we're not using the overlay, bind mount the external storage path
+    # so we don't need to change any configs.
+    grep ${MOUNT_PATH} /proc/mounts >/dev/null 2>&1
+    if [ ! $? = 0 ]
+    then
+      MOUNT_PATH="/storage/games-internal"
+    fi
+    log $0 "Executing bind mount of ${MOUNT_PATH} to ${OVERLAY_PATH}"
+    mount --bind ${MOUNT_PATH} ${OVERLAY_PATH}
+    exit 0
+  else
+    log $0 "Enabling overlay."
+    systemctl enable storage-roms.mount >/dev/null 2>&1
+    systemctl start storage-roms.mount >/dev/null 2>&1
+  fi
+}
+
 if [[ ! "${MOUNT_GAMES}" =~ [0-9] ]]
 then
   set_setting system.automount 1

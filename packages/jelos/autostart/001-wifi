@@ -1,0 +1,2 @@
+echo "mmc3:0001:1" > /sys/bus/sdio/drivers/rtw_8821cs/unbind
+echo "mmc3:0001:1" > /sys/bus/sdio/drivers/rtw_8821cs/bind

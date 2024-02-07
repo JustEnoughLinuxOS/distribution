@@ -8,7 +8,7 @@ PKG_VERSION="1.2.10"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.alsa-project.org/"
 PKG_URL="https://www.alsa-project.org/files/pub/utils/alsa-utils-${PKG_VERSION}.tar.bz2"
-PKG_DEPENDS_TARGET="toolchain alsa-lib ncurses systemd"
+PKG_DEPENDS_TARGET="toolchain alsa-lib ncurses systemd alsa-ucm-conf"
 PKG_LONGDESC="This package includes the utilities for ALSA, like alsamixer, aplay, arecord, alsactl, iecset and speaker-test."
 PKG_TOOLCHAIN="autotools"
 
@@ -20,10 +20,6 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-alsaconf \
                            --disable-nls \
                            --disable-rst2man \
                            --disable-xmlto"
-if [[ ! "${DEVICE}" =~ RK356 ]]
-then 
-    PKG_DEPENDS_TARGET+=" alsa-ucm-conf"
-fi
 
 post_makeinstall_target() {
   rm -rf ${INSTALL}/lib ${INSTALL}/var

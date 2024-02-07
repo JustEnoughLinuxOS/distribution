@@ -1,0 +1,1657 @@
+From: Chris Morgan <macroalpha82@gmail.com>
+To: linux-rockchip@lists.infradead.org
+Cc: dri-devel@lists.freedesktop.org, linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org, sboyd@kernel.org,
+	mturquette@baylibre.com, tzimmermann@suse.de, mripard@kernel.org,
+	maarten.lankhorst@linux.intel.com, daniel@ffwll.ch,
+	airlied@gmail.com, sam@ravnborg.org, quic_jesszhan@quicinc.com,
+	neil.armstrong@linaro.org, javierm@redhat.com, heiko@sntech.de,
+	conor+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+	robh+dt@kernel.org, Chris Morgan <macromorgan@hotmail.com>
+Subject: [PATCH V2 00/10] rockchip: Add Powkiddy X55
+Date: Mon,  4 Dec 2023 12:57:09 -0600	[thread overview]
+Message-ID: <20231204185719.569021-1-macroalpha82@gmail.com> (raw)
+
+From: Chris Morgan <macromorgan@hotmail.com>
+
+Add support for the Rockchip RK3566 based Powkiddy X55 handheld gaming
+console.
+
+Changes since V1:
+ - Corrected a bug with the DRM mode flags for the video driver.
+ - Adjusted panel front and back porch and pixel clock to fix
+   issues with display that occurred after correcting DRM mode
+   flag bug.
+ - Add a new clk frequency for PLL_VPLL to get panel to run at ~60hz.
+
+Chris Morgan (10):
+  drm/panel: himax-hx8394: Drop prepare/unprepare tracking
+  drm/panel: himax-hx8394: Drop shutdown logic
+  dt-bindings: display: Document Himax HX8394 panel rotation
+  drm/panel: himax-hx8394: Add Panel Rotation Support
+  dt-bindings: display: himax-hx8394: Add Powkiddy X55 panel
+  drm/panel: himax-hx8394: Add Support for Powkiddy X55 panel
+  clk: rockchip: Mark pclk_usb as critical on rk3568
+  clk: rockchip: rk3568: Add PLL rate for 126.4MHz
+  dt-bindings: arm: rockchip: Add Powkiddy X55
+  arm64: dts: rockchip: Add Powkiddy X55
+
+ .../devicetree/bindings/arm/rockchip.yaml     |   1 +
+ .../bindings/display/panel/himax,hx8394.yaml  |   3 +
+ arch/arm64/boot/dts/rockchip/Makefile         |   1 +
+ .../boot/dts/rockchip/rk3566-powkiddy-x55.dts | 926 ++++++++++++++++++
+ drivers/clk/rockchip/clk-rk3568.c             |   2 +
+ drivers/gpu/drm/panel/panel-himax-hx8394.c    | 180 +++-
+ 6 files changed, 1085 insertions(+), 28 deletions(-)
+ create mode 100644 arch/arm64/boot/dts/rockchip/rk3566-powkiddy-x55.dts
+
+--
+2.34.1
+From: Chris Morgan <macroalpha82@gmail.com>
+To: linux-rockchip@lists.infradead.org
+Cc: dri-devel@lists.freedesktop.org, linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org, sboyd@kernel.org,
+	mturquette@baylibre.com, tzimmermann@suse.de, mripard@kernel.org,
+	maarten.lankhorst@linux.intel.com, daniel@ffwll.ch,
+	airlied@gmail.com, sam@ravnborg.org, quic_jesszhan@quicinc.com,
+	neil.armstrong@linaro.org, javierm@redhat.com, heiko@sntech.de,
+	conor+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+	robh+dt@kernel.org, Chris Morgan <macromorgan@hotmail.com>
+Subject: [PATCH V2 01/10] drm/panel: himax-hx8394: Drop prepare/unprepare tracking
+Date: Mon,  4 Dec 2023 12:57:10 -0600	[thread overview]
+Message-ID: <20231204185719.569021-2-macroalpha82@gmail.com> (raw)
+In-Reply-To: <20231204185719.569021-1-macroalpha82@gmail.com>
+
+From: Chris Morgan <macromorgan@hotmail.com>
+
+Drop the panel specific prepare/unprepare logic. This is now tracked
+by the DRM stack [1].
+
+[1] commit d2aacaf07395 ("drm/panel: Check for already prepared/enabled in
+drm_panel")
+
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+---
+ drivers/gpu/drm/panel/panel-himax-hx8394.c | 11 -----------
+ 1 file changed, 11 deletions(-)
+
+diff --git a/drivers/gpu/drm/panel/panel-himax-hx8394.c b/drivers/gpu/drm/panel/panel-himax-hx8394.c
+index c73243d85de7..3823ff388b96 100644
+--- a/drivers/gpu/drm/panel/panel-himax-hx8394.c
++++ b/drivers/gpu/drm/panel/panel-himax-hx8394.c
+@@ -68,7 +68,6 @@ struct hx8394 {
+ 	struct gpio_desc *reset_gpio;
+ 	struct regulator *vcc;
+ 	struct regulator *iovcc;
+-	bool prepared;
+
+ 	const struct hx8394_panel_desc *desc;
+ };
+@@ -262,16 +261,11 @@ static int hx8394_unprepare(struct drm_panel *panel)
+ {
+ 	struct hx8394 *ctx = panel_to_hx8394(panel);
+
+-	if (!ctx->prepared)
+-		return 0;
+-
+ 	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
+
+ 	regulator_disable(ctx->iovcc);
+ 	regulator_disable(ctx->vcc);
+
+-	ctx->prepared = false;
+-
+ 	return 0;
+ }
+
+@@ -280,9 +274,6 @@ static int hx8394_prepare(struct drm_panel *panel)
+ 	struct hx8394 *ctx = panel_to_hx8394(panel);
+ 	int ret;
+
+-	if (ctx->prepared)
+-		return 0;
+-
+ 	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
+
+ 	ret = regulator_enable(ctx->vcc);
+@@ -301,8 +292,6 @@ static int hx8394_prepare(struct drm_panel *panel)
+
+ 	msleep(180);
+
+-	ctx->prepared = true;
+-
+ 	return 0;
+
+ disable_vcc:
+--
+2.34.1
+
+From: Chris Morgan <macroalpha82@gmail.com>
+To: linux-rockchip@lists.infradead.org
+Cc: dri-devel@lists.freedesktop.org, linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org, sboyd@kernel.org,
+	mturquette@baylibre.com, tzimmermann@suse.de, mripard@kernel.org,
+	maarten.lankhorst@linux.intel.com, daniel@ffwll.ch,
+	airlied@gmail.com, sam@ravnborg.org, quic_jesszhan@quicinc.com,
+	neil.armstrong@linaro.org, javierm@redhat.com, heiko@sntech.de,
+	conor+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+	robh+dt@kernel.org, Chris Morgan <macromorgan@hotmail.com>
+Subject: [PATCH V2 02/10] drm/panel: himax-hx8394: Drop shutdown logic
+Date: Mon,  4 Dec 2023 12:57:11 -0600	[thread overview]
+Message-ID: <20231204185719.569021-3-macroalpha82@gmail.com> (raw)
+In-Reply-To: <20231204185719.569021-1-macroalpha82@gmail.com>
+
+From: Chris Morgan <macromorgan@hotmail.com>
+
+The driver shutdown is duplicate as it calls drm_unprepare and
+drm_disable which are called anyway when associated drivers are
+shutdown/removed.
+
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+---
+ drivers/gpu/drm/panel/panel-himax-hx8394.c | 17 -----------------
+ 1 file changed, 17 deletions(-)
+
+diff --git a/drivers/gpu/drm/panel/panel-himax-hx8394.c b/drivers/gpu/drm/panel/panel-himax-hx8394.c
+index 3823ff388b96..d8e590d5e1da 100644
+--- a/drivers/gpu/drm/panel/panel-himax-hx8394.c
++++ b/drivers/gpu/drm/panel/panel-himax-hx8394.c
+@@ -390,27 +390,11 @@ static int hx8394_probe(struct mipi_dsi_device *dsi)
+ 	return 0;
+ }
+
+-static void hx8394_shutdown(struct mipi_dsi_device *dsi)
+-{
+-	struct hx8394 *ctx = mipi_dsi_get_drvdata(dsi);
+-	int ret;
+-
+-	ret = drm_panel_disable(&ctx->panel);
+-	if (ret < 0)
+-		dev_err(&dsi->dev, "Failed to disable panel: %d\n", ret);
+-
+-	ret = drm_panel_unprepare(&ctx->panel);
+-	if (ret < 0)
+-		dev_err(&dsi->dev, "Failed to unprepare panel: %d\n", ret);
+-}
+-
+ static void hx8394_remove(struct mipi_dsi_device *dsi)
+ {
+ 	struct hx8394 *ctx = mipi_dsi_get_drvdata(dsi);
+ 	int ret;
+
+-	hx8394_shutdown(dsi);
+-
+ 	ret = mipi_dsi_detach(dsi);
+ 	if (ret < 0)
+ 		dev_err(&dsi->dev, "Failed to detach from DSI host: %d\n", ret);
+@@ -427,7 +411,6 @@ MODULE_DEVICE_TABLE(of, hx8394_of_match);
+ static struct mipi_dsi_driver hx8394_driver = {
+ 	.probe	= hx8394_probe,
+ 	.remove = hx8394_remove,
+-	.shutdown = hx8394_shutdown,
+ 	.driver = {
+ 		.name = DRV_NAME,
+ 		.of_match_table = hx8394_of_match,
+--
+2.34.1
+From: Chris Morgan <macroalpha82@gmail.com>
+To: linux-rockchip@lists.infradead.org
+Cc: dri-devel@lists.freedesktop.org, linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org, sboyd@kernel.org,
+	mturquette@baylibre.com, tzimmermann@suse.de, mripard@kernel.org,
+	maarten.lankhorst@linux.intel.com, daniel@ffwll.ch,
+	airlied@gmail.com, sam@ravnborg.org, quic_jesszhan@quicinc.com,
+	neil.armstrong@linaro.org, javierm@redhat.com, heiko@sntech.de,
+	conor+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+	robh+dt@kernel.org, Chris Morgan <macromorgan@hotmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH V2 03/10] dt-bindings: display: Document Himax HX8394 panel rotation
+Date: Mon,  4 Dec 2023 12:57:12 -0600	[thread overview]
+Message-ID: <20231204185719.569021-4-macroalpha82@gmail.com> (raw)
+In-Reply-To: <20231204185719.569021-1-macroalpha82@gmail.com>
+
+From: Chris Morgan <macromorgan@hotmail.com>
+
+Document panel rotation for Himax HX8394 display panel.
+
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ .../devicetree/bindings/display/panel/himax,hx8394.yaml         | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/display/panel/himax,hx8394.yaml b/Documentation/devicetree/bindings/display/panel/himax,hx8394.yaml
+index ffb35288ffbb..3096debca55c 100644
+--- a/Documentation/devicetree/bindings/display/panel/himax,hx8394.yaml
++++ b/Documentation/devicetree/bindings/display/panel/himax,hx8394.yaml
+@@ -31,6 +31,8 @@ properties:
+
+   backlight: true
+
++  rotation: true
++
+   port: true
+
+   vcc-supply:
+--
+2.34.1
+From: Chris Morgan <macroalpha82@gmail.com>
+To: linux-rockchip@lists.infradead.org
+Cc: dri-devel@lists.freedesktop.org, linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org, sboyd@kernel.org,
+	mturquette@baylibre.com, tzimmermann@suse.de, mripard@kernel.org,
+	maarten.lankhorst@linux.intel.com, daniel@ffwll.ch,
+	airlied@gmail.com, sam@ravnborg.org, quic_jesszhan@quicinc.com,
+	neil.armstrong@linaro.org, javierm@redhat.com, heiko@sntech.de,
+	conor+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+	robh+dt@kernel.org, Chris Morgan <macromorgan@hotmail.com>
+Subject: [PATCH V2 04/10] drm/panel: himax-hx8394: Add Panel Rotation Support
+Date: Mon,  4 Dec 2023 12:57:13 -0600	[thread overview]
+Message-ID: <20231204185719.569021-5-macroalpha82@gmail.com> (raw)
+In-Reply-To: <20231204185719.569021-1-macroalpha82@gmail.com>
+
+From: Chris Morgan <macromorgan@hotmail.com>
+
+Add support for setting the rotation property for the Himax HX8394
+panel.
+
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+---
+ drivers/gpu/drm/panel/panel-himax-hx8394.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/drivers/gpu/drm/panel/panel-himax-hx8394.c b/drivers/gpu/drm/panel/panel-himax-hx8394.c
+index d8e590d5e1da..b68ea09f4725 100644
+--- a/drivers/gpu/drm/panel/panel-himax-hx8394.c
++++ b/drivers/gpu/drm/panel/panel-himax-hx8394.c
+@@ -68,6 +68,7 @@ struct hx8394 {
+ 	struct gpio_desc *reset_gpio;
+ 	struct regulator *vcc;
+ 	struct regulator *iovcc;
++	enum drm_panel_orientation orientation;
+
+ 	const struct hx8394_panel_desc *desc;
+ };
+@@ -324,12 +325,20 @@ static int hx8394_get_modes(struct drm_panel *panel,
+ 	return 1;
+ }
+
++static enum drm_panel_orientation hx8394_get_orientation(struct drm_panel *panel)
++{
++	struct hx8394 *ctx = panel_to_hx8394(panel);
++
++	return ctx->orientation;
++}
++
+ static const struct drm_panel_funcs hx8394_drm_funcs = {
+ 	.disable   = hx8394_disable,
+ 	.unprepare = hx8394_unprepare,
+ 	.prepare   = hx8394_prepare,
+ 	.enable	   = hx8394_enable,
+ 	.get_modes = hx8394_get_modes,
++	.get_orientation = hx8394_get_orientation,
+ };
+
+ static int hx8394_probe(struct mipi_dsi_device *dsi)
+@@ -347,6 +356,12 @@ static int hx8394_probe(struct mipi_dsi_device *dsi)
+ 		return dev_err_probe(dev, PTR_ERR(ctx->reset_gpio),
+ 				     "Failed to get reset gpio\n");
+
++	ret = of_drm_get_panel_orientation(dev->of_node, &ctx->orientation);
++	if (ret < 0) {
++		dev_err(dev, "%pOF: failed to get orientation %d\n", dev->of_node, ret);
++		return ret;
++	}
++
+ 	mipi_dsi_set_drvdata(dsi, ctx);
+
+ 	ctx->dev = dev;
+--
+2.34.1
+From: Chris Morgan <macroalpha82@gmail.com>
+To: linux-rockchip@lists.infradead.org
+Cc: dri-devel@lists.freedesktop.org, linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org, sboyd@kernel.org,
+	mturquette@baylibre.com, tzimmermann@suse.de, mripard@kernel.org,
+	maarten.lankhorst@linux.intel.com, daniel@ffwll.ch,
+	airlied@gmail.com, sam@ravnborg.org, quic_jesszhan@quicinc.com,
+	neil.armstrong@linaro.org, javierm@redhat.com, heiko@sntech.de,
+	conor+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+	robh+dt@kernel.org, Chris Morgan <macromorgan@hotmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH V2 05/10] dt-bindings: display: himax-hx8394: Add Powkiddy X55 panel
+Date: Mon,  4 Dec 2023 12:57:14 -0600	[thread overview]
+Message-ID: <20231204185719.569021-6-macroalpha82@gmail.com> (raw)
+In-Reply-To: <20231204185719.569021-1-macroalpha82@gmail.com>
+
+From: Chris Morgan <macromorgan@hotmail.com>
+
+Add compatible string for the Powkiddy X55 panel.
+
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ .../devicetree/bindings/display/panel/himax,hx8394.yaml          | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/display/panel/himax,hx8394.yaml b/Documentation/devicetree/bindings/display/panel/himax,hx8394.yaml
+index 3096debca55c..916bb7f94206 100644
+--- a/Documentation/devicetree/bindings/display/panel/himax,hx8394.yaml
++++ b/Documentation/devicetree/bindings/display/panel/himax,hx8394.yaml
+@@ -23,6 +23,7 @@ properties:
+     items:
+       - enum:
+           - hannstar,hsd060bhw4
++          - powkiddy,x55-panel
+       - const: himax,hx8394
+
+   reg: true
+--
+2.34.1
+From: Chris Morgan <macroalpha82@gmail.com>
+To: linux-rockchip@lists.infradead.org
+Cc: dri-devel@lists.freedesktop.org, linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org, sboyd@kernel.org,
+	mturquette@baylibre.com, tzimmermann@suse.de, mripard@kernel.org,
+	maarten.lankhorst@linux.intel.com, daniel@ffwll.ch,
+	airlied@gmail.com, sam@ravnborg.org, quic_jesszhan@quicinc.com,
+	neil.armstrong@linaro.org, javierm@redhat.com, heiko@sntech.de,
+	conor+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+	robh+dt@kernel.org, Chris Morgan <macromorgan@hotmail.com>
+Subject: [PATCH V2 06/10] drm/panel: himax-hx8394: Add Support for Powkiddy X55 panel
+Date: Mon,  4 Dec 2023 12:57:15 -0600	[thread overview]
+Message-ID: <20231204185719.569021-7-macroalpha82@gmail.com> (raw)
+In-Reply-To: <20231204185719.569021-1-macroalpha82@gmail.com>
+
+From: Chris Morgan <macromorgan@hotmail.com>
+
+Add support for the Powkiddy X55 panel as used on the Powkiddy X55
+handheld gaming console. This panel uses a Himax HX8394 display
+controller and requires a vendor provided init sequence. The display
+resolution is 720x1280 and is 67mm by 121mm as measured with calipers.
+
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+---
+ drivers/gpu/drm/panel/panel-himax-hx8394.c | 137 +++++++++++++++++++++
+ 1 file changed, 137 insertions(+)
+
+diff --git a/drivers/gpu/drm/panel/panel-himax-hx8394.c b/drivers/gpu/drm/panel/panel-himax-hx8394.c
+index b68ea09f4725..ff0dc08b9829 100644
+--- a/drivers/gpu/drm/panel/panel-himax-hx8394.c
++++ b/drivers/gpu/drm/panel/panel-himax-hx8394.c
+@@ -38,6 +38,7 @@
+ #define HX8394_CMD_SETMIPI	  0xba
+ #define HX8394_CMD_SETOTP	  0xbb
+ #define HX8394_CMD_SETREGBANK	  0xbd
++#define HX8394_CMD_UNKNOWN5	  0xbf
+ #define HX8394_CMD_UNKNOWN1	  0xc0
+ #define HX8394_CMD_SETDGCLUT	  0xc1
+ #define HX8394_CMD_SETID	  0xc3
+@@ -52,6 +53,7 @@
+ #define HX8394_CMD_SETGIP1	  0xd5
+ #define HX8394_CMD_SETGIP2	  0xd6
+ #define HX8394_CMD_SETGPO	  0xd6
++#define HX8394_CMD_UNKNOWN4	  0xd8
+ #define HX8394_CMD_SETSCALING	  0xdd
+ #define HX8394_CMD_SETIDLE	  0xdf
+ #define HX8394_CMD_SETGAMMA	  0xe0
+@@ -203,6 +205,140 @@ static const struct hx8394_panel_desc hsd060bhw4_desc = {
+ 	.init_sequence = hsd060bhw4_init_sequence,
+ };
+
++static int powkiddy_x55_init_sequence(struct hx8394 *ctx)
++{
++	struct mipi_dsi_device *dsi = to_mipi_dsi_device(ctx->dev);
++
++	/* 5.19.8 SETEXTC: Set extension command (B9h) */
++	mipi_dsi_dcs_write_seq(dsi, HX8394_CMD_SETEXTC,
++			       0xff, 0x83, 0x94);
++
++	/* 5.19.9 SETMIPI: Set MIPI control (BAh) */
++	mipi_dsi_dcs_write_seq(dsi, HX8394_CMD_SETMIPI,
++			       0x63, 0x03, 0x68, 0x6b, 0xb2, 0xc0);
++
++	/* 5.19.2 SETPOWER: Set power (B1h) */
++	mipi_dsi_dcs_write_seq(dsi, HX8394_CMD_SETPOWER,
++			       0x48, 0x12, 0x72, 0x09, 0x32, 0x54, 0x71, 0x71, 0x57, 0x47);
++
++	/* 5.19.3 SETDISP: Set display related register (B2h) */
++	mipi_dsi_dcs_write_seq(dsi, HX8394_CMD_SETDISP,
++			       0x00, 0x80, 0x64, 0x2c, 0x16, 0x2f);
++
++	/* 5.19.4 SETCYC: Set display waveform cycles (B4h) */
++	mipi_dsi_dcs_write_seq(dsi, HX8394_CMD_SETCYC,
++			       0x73, 0x74, 0x73, 0x74, 0x73, 0x74, 0x01, 0x0c, 0x86, 0x75,
++			       0x00, 0x3f, 0x73, 0x74, 0x73, 0x74, 0x73, 0x74, 0x01, 0x0c,
++			       0x86);
++
++	/* 5.19.5 SETVCOM: Set VCOM voltage (B6h) */
++	mipi_dsi_dcs_write_seq(dsi, HX8394_CMD_SETVCOM,
++			       0x6e, 0x6e);
++
++	/* 5.19.19 SETGIP0: Set GIP Option0 (D3h) */
++	mipi_dsi_dcs_write_seq(dsi, HX8394_CMD_SETGIP0,
++			       0x00, 0x00, 0x07, 0x07, 0x40, 0x07, 0x0c, 0x00, 0x08, 0x10,
++			       0x08, 0x00, 0x08, 0x54, 0x15, 0x0a, 0x05, 0x0a, 0x02, 0x15,
++			       0x06, 0x05, 0x06, 0x47, 0x44, 0x0a, 0x0a, 0x4b, 0x10, 0x07,
++			       0x07, 0x0c, 0x40);
++
++	/* 5.19.20 Set GIP Option1 (D5h) */
++	mipi_dsi_dcs_write_seq(dsi, HX8394_CMD_SETGIP1,
++			       0x1c, 0x1c, 0x1d, 0x1d, 0x00, 0x01, 0x02, 0x03, 0x04, 0x05,
++			       0x06, 0x07, 0x08, 0x09, 0x0a, 0x0b, 0x24, 0x25, 0x18, 0x18,
++			       0x26, 0x27, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18,
++			       0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x20, 0x21,
++			       0x18, 0x18, 0x18, 0x18);
++
++	/* 5.19.21 Set GIP Option2 (D6h) */
++	mipi_dsi_dcs_write_seq(dsi, HX8394_CMD_SETGIP2,
++			       0x1c, 0x1c, 0x1d, 0x1d, 0x07, 0x06, 0x05, 0x04, 0x03, 0x02,
++			       0x01, 0x00, 0x0b, 0x0a, 0x09, 0x08, 0x21, 0x20, 0x18, 0x18,
++			       0x27, 0x26, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18,
++			       0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x18, 0x25, 0x24,
++			       0x18, 0x18, 0x18, 0x18);
++
++	/* 5.19.25 SETGAMMA: Set gamma curve related setting (E0h) */
++	mipi_dsi_dcs_write_seq(dsi, HX8394_CMD_SETGAMMA,
++			       0x00, 0x0a, 0x15, 0x1b, 0x1e, 0x21, 0x24, 0x22, 0x47, 0x56,
++			       0x65, 0x66, 0x6e, 0x82, 0x88, 0x8b, 0x9a, 0x9d, 0x98, 0xa8,
++			       0xb9, 0x5d, 0x5c, 0x61, 0x66, 0x6a, 0x6f, 0x7f, 0x7f, 0x00,
++			       0x0a, 0x15, 0x1b, 0x1e, 0x21, 0x24, 0x22, 0x47, 0x56, 0x65,
++			       0x65, 0x6e, 0x81, 0x87, 0x8b, 0x98, 0x9d, 0x99, 0xa8, 0xba,
++			       0x5d, 0x5d, 0x62, 0x67, 0x6b, 0x72, 0x7f, 0x7f);
++
++	/* Unknown command, not listed in the HX8394-F datasheet */
++	mipi_dsi_dcs_write_seq(dsi, HX8394_CMD_UNKNOWN1,
++			       0x1f, 0x31);
++
++	/* 5.19.17 SETPANEL (CCh) */
++	mipi_dsi_dcs_write_seq(dsi, HX8394_CMD_SETPANEL,
++			       0x0b);
++
++	/* Unknown command, not listed in the HX8394-F datasheet */
++	mipi_dsi_dcs_write_seq(dsi, HX8394_CMD_UNKNOWN3,
++			       0x02);
++
++	/* 5.19.11 Set register bank (BDh) */
++	mipi_dsi_dcs_write_seq(dsi, HX8394_CMD_SETREGBANK,
++			       0x02);
++
++	/* Unknown command, not listed in the HX8394-F datasheet */
++	mipi_dsi_dcs_write_seq(dsi, HX8394_CMD_UNKNOWN4,
++			       0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff,
++			       0xff, 0xff);
++
++	/* 5.19.11 Set register bank (BDh) */
++	mipi_dsi_dcs_write_seq(dsi, HX8394_CMD_SETREGBANK,
++			       0x00);
++
++	/* 5.19.11 Set register bank (BDh) */
++	mipi_dsi_dcs_write_seq(dsi, HX8394_CMD_SETREGBANK,
++			       0x01);
++
++	/* 5.19.2 SETPOWER: Set power (B1h) */
++	mipi_dsi_dcs_write_seq(dsi, HX8394_CMD_SETPOWER,
++			       0x00);
++
++	/* 5.19.11 Set register bank (BDh) */
++	mipi_dsi_dcs_write_seq(dsi, HX8394_CMD_SETREGBANK,
++			       0x00);
++
++	/* Unknown command, not listed in the HX8394-F datasheet */
++	mipi_dsi_dcs_write_seq(dsi, HX8394_CMD_UNKNOWN5,
++			       0x40, 0x81, 0x50, 0x00, 0x1a, 0xfc, 0x01);
++
++	/* Unknown command, not listed in the HX8394-F datasheet */
++	mipi_dsi_dcs_write_seq(dsi, HX8394_CMD_UNKNOWN2,
++			       0xed);
++
++	return 0;
++}
++
++static const struct drm_display_mode powkiddy_x55_mode = {
++	.hdisplay	= 720,
++	.hsync_start	= 720 + 44,
++	.hsync_end	= 720 + 44 + 20,
++	.htotal		= 720 + 44 + 20 + 20,
++	.vdisplay	= 1280,
++	.vsync_start	= 1280 + 12,
++	.vsync_end	= 1280 + 12 + 10,
++	.vtotal		= 1280 + 12 + 10 + 10,
++	.clock		= 63290,
++	.flags		= DRM_MODE_FLAG_NHSYNC | DRM_MODE_FLAG_NVSYNC,
++	.width_mm	= 67,
++	.height_mm	= 121,
++};
++
++static const struct hx8394_panel_desc powkiddy_x55_desc = {
++	.mode = &powkiddy_x55_mode,
++	.lanes = 4,
++	.mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
++		      MIPI_DSI_MODE_LPM | MIPI_DSI_MODE_NO_EOT_PACKET,
++	.format = MIPI_DSI_FMT_RGB888,
++	.init_sequence = powkiddy_x55_init_sequence,
++};
++
+ static int hx8394_enable(struct drm_panel *panel)
+ {
+ 	struct hx8394 *ctx = panel_to_hx8394(panel);
+@@ -419,6 +555,7 @@ static void hx8394_remove(struct mipi_dsi_device *dsi)
+
+ static const struct of_device_id hx8394_of_match[] = {
+ 	{ .compatible = "hannstar,hsd060bhw4", .data = &hsd060bhw4_desc },
++	{ .compatible = "powkiddy,x55-panel", .data = &powkiddy_x55_desc },
+ 	{ /* sentinel */ }
+ };
+ MODULE_DEVICE_TABLE(of, hx8394_of_match);
+--
+2.34.1
+From: Chris Morgan <macroalpha82@gmail.com>
+To: linux-rockchip@lists.infradead.org
+Cc: dri-devel@lists.freedesktop.org, linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org, sboyd@kernel.org,
+	mturquette@baylibre.com, tzimmermann@suse.de, mripard@kernel.org,
+	maarten.lankhorst@linux.intel.com, daniel@ffwll.ch,
+	airlied@gmail.com, sam@ravnborg.org, quic_jesszhan@quicinc.com,
+	neil.armstrong@linaro.org, javierm@redhat.com, heiko@sntech.de,
+	conor+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+	robh+dt@kernel.org, Chris Morgan <macromorgan@hotmail.com>
+Subject: [PATCH V2 07/10] clk: rockchip: Mark pclk_usb as critical on rk3568
+Date: Mon,  4 Dec 2023 12:57:16 -0600	[thread overview]
+Message-ID: <20231204185719.569021-8-macroalpha82@gmail.com> (raw)
+In-Reply-To: <20231204185719.569021-1-macroalpha82@gmail.com>
+
+From: Chris Morgan <macromorgan@hotmail.com>
+
+In the reference manual under "2.8.6 NIU Clock gating reliance"
+it is stated that pclk_usb_niu has a dependency on hclk_usb_niu.
+
+While the manual does not state that this is a bi-directional
+relationship it was noted that the sdmmc2 failed to operate for me in
+mmc mode if the pclk_usb was not marked as critical. The parent clock
+of the hclk_sdmmc2 is hclk_usb.
+
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+---
+ drivers/clk/rockchip/clk-rk3568.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/clk/rockchip/clk-rk3568.c b/drivers/clk/rockchip/clk-rk3568.c
+index bfbcbb744327..c4fa2375dbfb 100644
+--- a/drivers/clk/rockchip/clk-rk3568.c
++++ b/drivers/clk/rockchip/clk-rk3568.c
+@@ -1595,6 +1595,7 @@ static const char *const rk3568_cru_critical_clocks[] __initconst = {
+ 	"pclk_php",
+ 	"hclk_usb",
+ 	"hclk_vo",
++	"pclk_usb",
+ };
+
+ static const char *const rk3568_pmucru_critical_clocks[] __initconst = {
+--
+2.34.1
+From: Chris Morgan <macroalpha82@gmail.com>
+To: linux-rockchip@lists.infradead.org
+Cc: dri-devel@lists.freedesktop.org, linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org, sboyd@kernel.org,
+	mturquette@baylibre.com, tzimmermann@suse.de, mripard@kernel.org,
+	maarten.lankhorst@linux.intel.com, daniel@ffwll.ch,
+	airlied@gmail.com, sam@ravnborg.org, quic_jesszhan@quicinc.com,
+	neil.armstrong@linaro.org, javierm@redhat.com, heiko@sntech.de,
+	conor+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+	robh+dt@kernel.org, Chris Morgan <macromorgan@hotmail.com>
+Subject: [PATCH V2 08/10] clk: rockchip: rk3568: Add PLL rate for 126.4MHz
+Date: Mon,  4 Dec 2023 12:57:17 -0600	[thread overview]
+Message-ID: <20231204185719.569021-9-macroalpha82@gmail.com> (raw)
+In-Reply-To: <20231204185719.569021-1-macroalpha82@gmail.com>
+
+From: Chris Morgan <macromorgan@hotmail.com>
+
+Add support for a PLL rate of 126.4MHz so that the Powkiddy X55 panel
+can run at a requested 60hz.
+
+I have confirmed this rate fits with all the constraints
+listed in the TRM for the VPLL (as an integer PLL) in Part 1 "Chapter
+2 Clock & Reset Unit (CRU)."
+
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+---
+ drivers/clk/rockchip/clk-rk3568.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/clk/rockchip/clk-rk3568.c b/drivers/clk/rockchip/clk-rk3568.c
+index c4fa2375dbfb..fa408fedf625 100644
+--- a/drivers/clk/rockchip/clk-rk3568.c
++++ b/drivers/clk/rockchip/clk-rk3568.c
+@@ -78,6 +78,7 @@ static struct rockchip_pll_rate_table rk3568_pll_rates[] = {
+ 	RK3036_PLL_RATE(200000000, 1, 100, 3, 4, 1, 0),
+ 	RK3036_PLL_RATE(148500000, 1, 99, 4, 4, 1, 0),
+ 	RK3036_PLL_RATE(135000000, 2, 45, 4, 1, 1, 0),
++	RK3036_PLL_RATE(126400000, 1, 79, 5, 3, 1, 0),
+ 	RK3036_PLL_RATE(119000000, 3, 119, 4, 2, 1, 0),
+ 	RK3036_PLL_RATE(115200000, 1, 24, 5, 1, 1, 0),
+ 	RK3036_PLL_RATE(108000000, 2, 45, 5, 1, 1, 0),
+--
+2.34.1
+From: Chris Morgan <macroalpha82@gmail.com>
+To: linux-rockchip@lists.infradead.org
+Cc: dri-devel@lists.freedesktop.org, linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org, sboyd@kernel.org,
+	mturquette@baylibre.com, tzimmermann@suse.de, mripard@kernel.org,
+	maarten.lankhorst@linux.intel.com, daniel@ffwll.ch,
+	airlied@gmail.com, sam@ravnborg.org, quic_jesszhan@quicinc.com,
+	neil.armstrong@linaro.org, javierm@redhat.com, heiko@sntech.de,
+	conor+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+	robh+dt@kernel.org, Chris Morgan <macromorgan@hotmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: [PATCH V2 09/10] dt-bindings: arm: rockchip: Add Powkiddy X55
+Date: Mon,  4 Dec 2023 12:57:18 -0600	[thread overview]
+Message-ID: <20231204185719.569021-10-macroalpha82@gmail.com> (raw)
+In-Reply-To: <20231204185719.569021-1-macroalpha82@gmail.com>
+
+From: Chris Morgan <macromorgan@hotmail.com>
+
+The Powkiddy RK2023 is a handheld gaming device made by Powkiddy and
+powered by the Rockchip RK3566 SoC. This device is somewhat similar
+to the existing Powkiddy RK3566 devices, which have been grouped
+together with a previous commit[1].
+
+[1] https://lore.kernel.org/linux-rockchip/20231117202536.1387815-1-macroalpha82@gmail.com/T/#m4764997cfafaca22fe677200de96caa5fb8f0005
+
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+---
+ Documentation/devicetree/bindings/arm/rockchip.yaml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/Documentation/devicetree/bindings/arm/rockchip.yaml b/Documentation/devicetree/bindings/arm/rockchip.yaml
+index 021a0e95ba62..5e22f247ee6e 100644
+--- a/Documentation/devicetree/bindings/arm/rockchip.yaml
++++ b/Documentation/devicetree/bindings/arm/rockchip.yaml
+@@ -681,6 +681,7 @@ properties:
+           - enum:
+               - powkiddy,rgb30
+               - powkiddy,rk2023
++              - powkiddy,x55
+           - const: rockchip,rk3566
+
+       - description: Radxa Compute Module 3(CM3)
+--
+2.34.1
+From: Chris Morgan <macroalpha82@gmail.com>
+To: linux-rockchip@lists.infradead.org
+Cc: dri-devel@lists.freedesktop.org, linux-clk@vger.kernel.org,
+	devicetree@vger.kernel.org, sboyd@kernel.org,
+	mturquette@baylibre.com, tzimmermann@suse.de, mripard@kernel.org,
+	maarten.lankhorst@linux.intel.com, daniel@ffwll.ch,
+	airlied@gmail.com, sam@ravnborg.org, quic_jesszhan@quicinc.com,
+	neil.armstrong@linaro.org, javierm@redhat.com, heiko@sntech.de,
+	conor+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+	robh+dt@kernel.org, Chris Morgan <macromorgan@hotmail.com>
+Subject: [PATCH V2 10/10] arm64: dts: rockchip: Add Powkiddy X55
+Date: Mon,  4 Dec 2023 12:57:19 -0600	[thread overview]
+Message-ID: <20231204185719.569021-11-macroalpha82@gmail.com> (raw)
+In-Reply-To: <20231204185719.569021-1-macroalpha82@gmail.com>
+
+From: Chris Morgan <macromorgan@hotmail.com>
+
+Add support for the Powkiddy X55. The Powkiddy RK2023 is a handheld
+gaming device with a 720p 5.5 inch screen powered by the Rockchip
+RK3566 SoC. It includes a Realtek 8821cs WiFi/BT module, 2 ADC
+joysticks powered by 4 dedicated ADC channels, and several GPIO
+face buttons. There are 2 SDMMC slots (sdmmc1 and sdmmc3), and an
+8GB internal eMMC.
+
+Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
+---
+ arch/arm64/boot/dts/rockchip/Makefile         |   1 +
+ .../boot/dts/rockchip/rk3566-powkiddy-x55.dts | 926 ++++++++++++++++++
+ 2 files changed, 927 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/rockchip/rk3566-powkiddy-x55.dts
+
+diff --git a/arch/arm64/boot/dts/rockchip/Makefile b/arch/arm64/boot/dts/rockchip/Makefile
+index 9dcb65f76342..a1a06e33a299 100644
+--- a/arch/arm64/boot/dts/rockchip/Makefile
++++ b/arch/arm64/boot/dts/rockchip/Makefile
+@@ -82,6 +82,7 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-pinenote-v1.1.dtb
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-pinenote-v1.2.dtb
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-powkiddy-rgb30.dtb
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-powkiddy-rk2023.dtb
++dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-powkiddy-x55.dtb
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-quartz64-a.dtb
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-quartz64-b.dtb
+ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3566-radxa-cm3-io.dtb
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-powkiddy-x55.dts b/arch/arm64/boot/dts/rockchip/rk3566-powkiddy-x55.dts
+new file mode 100644
+index 000000000000..4786b19fd017
+--- /dev/null
++++ b/arch/arm64/boot/dts/rockchip/rk3566-powkiddy-x55.dts
+@@ -0,0 +1,926 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++
++/dts-v1/;
++
++#include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/input/linux-event-codes.h>
++#include <dt-bindings/leds/common.h>
++#include <dt-bindings/pinctrl/rockchip.h>
++#include <dt-bindings/soc/rockchip,vop2.h>
++#include "rk3566.dtsi"
++
++/ {
++	model = "Powkiddy x55";
++	compatible = "powkiddy,x55", "rockchip,rk3566";
++
++	aliases {
++		mmc0 = &sdhci;
++		mmc1 = &sdmmc0;
++		mmc2 = &sdmmc2;
++		mmc3 = &sdmmc1;
++	};
++
++	chosen: chosen {
++		stdout-path = "serial2:1500000n8";
++	};
++
++	adc_joystick: adc-joystick {
++		compatible = "adc-joystick";
++		io-channels = <&saradc 0>, <&saradc 1>,
++			      <&saradc 2>, <&saradc 3>;
++		poll-interval = <60>;
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		axis@0 {
++			reg = <0>;
++			abs-flat = <30>;
++			abs-fuzz = <20>;
++			abs-range = <15 1023>;
++			linux,code = <ABS_X>;
++		};
++
++		axis@1 {
++			reg = <1>;
++			abs-flat = <30>;
++			abs-fuzz = <20>;
++			abs-range = <1023 15>;
++			linux,code = <ABS_Y>;
++		};
++
++		axis@2 {
++			reg = <2>;
++			abs-flat = <30>;
++			abs-fuzz = <20>;
++			abs-range = <15 1023>;
++			linux,code = <ABS_RX>;
++		};
++
++		axis@3 {
++			reg = <3>;
++			abs-flat = <30>;
++			abs-fuzz = <20>;
++			abs-range = <1023 15>;
++			linux,code = <ABS_RY>;
++		};
++	};
++
++	backlight: backlight {
++		compatible = "pwm-backlight";
++		power-supply = <&vcc_sys>;
++		pwms = <&pwm4 0 25000 0>;
++	};
++
++	battery: battery {
++		compatible = "simple-battery";
++		charge-full-design-microamp-hours = <4000000>;
++		charge-term-current-microamp = <300000>;
++		constant-charge-current-max-microamp = <2000000>;
++		constant-charge-voltage-max-microvolt = <4300000>;
++		factory-internal-resistance-micro-ohms = <91000>;
++		voltage-max-design-microvolt = <4138000>;
++		voltage-min-design-microvolt = <3400000>;
++
++		ocv-capacity-celsius = <20>;
++		ocv-capacity-table-0 =  <4138000 100>, <4083000 95>, <4059000 90>, <4044000 85>,
++					<4030000 80>, <4020000 75>, <4006000 70>, <3972000 65>,
++					<3934000 60>, <3904000 55>, <3878000 50>, <3857000 45>,
++					<3843000 40>, <3826000 35>, <3801000 30>, <3768000 25>,
++					<3735000 20>, <3688000 15>, <3621000 10>, <3553000 5>,
++					<3400000 0>;
++	};
++
++	gpio_keys_control: gpio-keys-control {
++		compatible = "gpio-keys";
++		pinctrl-0 = <&btn_pins_ctrl>;
++		pinctrl-names = "default";
++
++		button-a {
++			gpios = <&gpio3 RK_PD3 GPIO_ACTIVE_LOW>;
++			label = "EAST";
++			linux,code = <BTN_EAST>;
++		};
++
++		button-b {
++			gpios = <&gpio3 RK_PD2 GPIO_ACTIVE_LOW>;
++			label = "SOUTH";
++			linux,code = <BTN_SOUTH>;
++		};
++
++		button-down {
++			gpios = <&gpio4 RK_PA1 GPIO_ACTIVE_LOW>;
++			label = "DPAD-DOWN";
++			linux,code = <BTN_DPAD_DOWN>;
++		};
++
++		button-l1 {
++			gpios = <&gpio3 RK_PD0 GPIO_ACTIVE_LOW>;
++			label = "TL";
++			linux,code = <BTN_TL>;
++		};
++
++		button-l2 {
++			gpios = <&gpio3 RK_PD1 GPIO_ACTIVE_LOW>;
++			label = "TL2";
++			linux,code = <BTN_TL2>;
++		};
++
++		button-left {
++			gpios = <&gpio3 RK_PD6 GPIO_ACTIVE_LOW>;
++			label = "DPAD-LEFT";
++			linux,code = <BTN_DPAD_LEFT>;
++		};
++
++		button-right {
++			gpios = <&gpio3 RK_PD7 GPIO_ACTIVE_LOW>;
++			label = "DPAD-RIGHT";
++			linux,code = <BTN_DPAD_RIGHT>;
++		};
++
++		button-select {
++			gpios = <&gpio4 RK_PA4 GPIO_ACTIVE_LOW>;
++			label = "SELECT";
++			linux,code = <BTN_SELECT>;
++		};
++
++		button-start {
++			gpios = <&gpio4 RK_PA2 GPIO_ACTIVE_LOW>;
++			label = "START";
++			linux,code = <BTN_START>;
++		};
++
++		button-thumbl {
++			gpios = <&gpio4 RK_PA7 GPIO_ACTIVE_LOW>;
++			label = "THUMBL";
++			linux,code = <BTN_THUMBL>;
++		};
++
++		button-thumbr {
++			gpios = <&gpio4 RK_PB0 GPIO_ACTIVE_LOW>;
++			label = "THUMBR";
++			linux,code = <BTN_THUMBR>;
++		};
++
++		button-r1 {
++			gpios = <&gpio3 RK_PC6 GPIO_ACTIVE_LOW>;
++			label = "TR";
++			linux,code = <BTN_TR>;
++		};
++
++		button-r2 {
++			gpios = <&gpio3 RK_PC7 GPIO_ACTIVE_LOW>;
++			label = "TR2";
++			linux,code = <BTN_TR2>;
++		};
++
++		button-up {
++			gpios = <&gpio4 RK_PA0 GPIO_ACTIVE_LOW>;
++			label = "DPAD-UP";
++			linux,code = <BTN_DPAD_UP>;
++		};
++
++		button-x {
++			gpios = <&gpio3 RK_PD5 GPIO_ACTIVE_LOW>;
++			label = "NORTH";
++			linux,code = <BTN_NORTH>;
++		};
++
++		button-y {
++			gpios = <&gpio3 RK_PD4 GPIO_ACTIVE_LOW>;
++			label = "WEST";
++			linux,code = <BTN_WEST>;
++		};
++	};
++
++	gpio_keys_vol: gpio-keys-vol {
++		compatible = "gpio-keys";
++		autorepeat;
++		pinctrl-0 = <&btn_pins_vol>;
++		pinctrl-names = "default";
++
++		button-voldown {
++			gpios = <&gpio4 RK_PA3 GPIO_ACTIVE_LOW>;
++			label = "VOLUMEDOWN";
++			linux,code = <KEY_VOLUMEDOWN>;
++		};
++
++		button-volup {
++			gpios = <&gpio4 RK_PA5 GPIO_ACTIVE_LOW>;
++			label = "VOLUMEUP";
++			linux,code = <KEY_VOLUMEUP>;
++		};
++	};
++
++	gpio_leds: gpio-leds {
++		compatible = "gpio-leds";
++		pinctrl-names = "default";
++		pinctrl-0 = <&led_pins>;
++
++		red_led: led-0 {
++			color = <LED_COLOR_ID_RED>;
++			default-state = "off";
++			gpios = <&gpio4 RK_PB4 GPIO_ACTIVE_HIGH>;
++			function = LED_FUNCTION_STATUS;
++		};
++
++		green_led: led-1 {
++			color = <LED_COLOR_ID_GREEN>;
++			default-state = "on";
++			gpios = <&gpio4 RK_PB5 GPIO_ACTIVE_HIGH>;
++			function = LED_FUNCTION_POWER;
++		};
++
++		amber_led: led-2 {
++			color = <LED_COLOR_ID_AMBER>;
++			gpios = <&gpio4 RK_PB6 GPIO_ACTIVE_HIGH>;
++			function = LED_FUNCTION_CHARGING;
++		};
++
++	};
++
++	hdmi-con {
++		compatible = "hdmi-connector";
++		ddc-i2c-bus = <&i2c5>;
++		type = "c";
++
++		port {
++			hdmi_con_in: endpoint {
++				remote-endpoint = <&hdmi_out_con>;
++			};
++		};
++	};
++
++	sdio_pwrseq: sdio-pwrseq {
++		compatible = "mmc-pwrseq-simple";
++		clocks = <&rk817 1>;
++		clock-names = "ext_clock";
++		pinctrl-0 = <&wifi_enable_h>;
++		pinctrl-names = "default";
++		post-power-on-delay-ms = <200>;
++		reset-gpios = <&gpio0 RK_PC0 GPIO_ACTIVE_LOW>;
++	};
++
++	/* Channels reversed for both headphones and speakers. */
++	sound {
++		compatible = "simple-audio-card";
++		pinctrl-0 = <&hp_det>;
++		pinctrl-names = "default";
++		simple-audio-card,name = "rk817_ext";
++		simple-audio-card,aux-devs = <&spk_amp>;
++		simple-audio-card,format = "i2s";
++		simple-audio-card,hp-det-gpio = <&gpio4 RK_PC6 GPIO_ACTIVE_HIGH>;
++		simple-audio-card,mclk-fs = <256>;
++		simple-audio-card,widgets =
++			"Microphone", "Mic Jack",
++			"Headphone", "Headphones",
++			"Speaker", "Internal Speakers";
++		simple-audio-card,routing =
++			"MICL", "Mic Jack",
++			"Headphones", "HPOL",
++			"Headphones", "HPOR",
++			"Internal Speakers", "Speaker Amp OUTL",
++			"Internal Speakers", "Speaker Amp OUTR",
++			"Speaker Amp INL", "HPOL",
++			"Speaker Amp INR", "HPOR";
++		simple-audio-card,pin-switches = "Internal Speakers";
++
++		simple-audio-card,codec {
++			sound-dai = <&rk817>;
++		};
++
++		simple-audio-card,cpu {
++			sound-dai = <&i2s1_8ch>;
++		};
++	};
++
++	spk_amp: audio-amplifier {
++		compatible = "simple-audio-amplifier";
++		enable-gpios = <&gpio4 RK_PC2 GPIO_ACTIVE_HIGH>;
++		pinctrl-0 = <&spk_amp_enable_h>;
++		pinctrl-names = "default";
++		sound-name-prefix = "Speaker Amp";
++	};
++
++	vcc5v0_host: regulator-vcc5v0-host {
++		compatible = "regulator-fixed";
++		enable-active-high;
++		gpio = <&gpio4 RK_PC4 GPIO_ACTIVE_HIGH>;
++		pinctrl-0 = <&vcc5v0_host_en>;
++		pinctrl-names = "default";
++		regulator-name = "vcc5v0_host";
++		vin-supply = <&dcdc_boost>;
++	};
++
++	vcc_lcd: regulator-vcc-lcd {
++		compatible = "regulator-fixed";
++		enable-active-high;
++		gpio = <&gpio0 RK_PC7 GPIO_ACTIVE_HIGH>;
++		pinctrl-0 = <&vcc_lcd_en>;
++		pinctrl-names = "default";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++		regulator-name = "vcc_lcd";
++	};
++
++	vcc_sys: regulator-vcc-sys {
++		compatible = "regulator-fixed";
++		regulator-always-on;
++		regulator-boot-on;
++		regulator-min-microvolt = <3800000>;
++		regulator-max-microvolt = <3800000>;
++		regulator-name = "vcc_sys";
++	};
++
++	vcc_wifi: regulator-vcc-wifi {
++		compatible = "regulator-fixed";
++		gpio = <&gpio0 RK_PA0 GPIO_ACTIVE_LOW>;
++		pinctrl-0 = <&vcc_wifi_h>;
++		pinctrl-names = "default";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++		regulator-name = "vcc_wifi";
++	};
++};
++
++&combphy1 {
++	status = "okay";
++};
++
++&cru {
++	assigned-clocks = <&pmucru CLK_RTC_32K>, <&cru PLL_GPLL>,
++			  <&pmucru PLL_PPLL>, <&cru PLL_VPLL>;
++	assigned-clock-rates = <32768>, <1200000000>,
++			       <200000000>, <126400000>;
++};
++
++&cpu0 {
++	cpu-supply = <&vdd_cpu>;
++};
++
++&cpu1 {
++	cpu-supply = <&vdd_cpu>;
++};
++
++&cpu2 {
++	cpu-supply = <&vdd_cpu>;
++};
++
++&cpu3 {
++	cpu-supply = <&vdd_cpu>;
++};
++
++&dsi_dphy0 {
++	status = "okay";
++};
++
++&dsi0 {
++	status = "okay";
++	#address-cells = <1>;
++	#size-cells = <0>;
++
++	ports {
++		dsi0_in: port@0 {
++			reg = <0>;
++			dsi0_in_vp1: endpoint {
++				remote-endpoint = <&vp1_out_dsi0>;
++			};
++		};
++
++		dsi0_out: port@1 {
++			reg = <1>;
++			mipi_out_panel: endpoint {
++				remote-endpoint = <&mipi_in_panel>;
++			};
++		};
++	};
++
++	panel: panel@0 {
++		compatible = "powkiddy,x55-panel", "himax,hx8394";
++		reg = <0>;
++		backlight = <&backlight>;
++		iovcc-supply = <&vcc_lcd>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&lcd_rst>;
++		reset-gpios = <&gpio0 RK_PD5 GPIO_ACTIVE_LOW>;
++		rotation = <270>;
++		vcc-supply = <&vcc_lcd>;
++
++		port {
++			mipi_in_panel: endpoint {
++				remote-endpoint = <&mipi_out_panel>;
++			};
++		};
++	};
++};
++
++&gpu {
++	mali-supply = <&vdd_gpu>;
++	status = "okay";
++};
++
++&hdmi {
++	ddc-i2c-bus = <&i2c5>;
++	pinctrl-0 = <&hdmitxm0_cec>;
++	pinctrl-names = "default";
++	status = "okay";
++};
++
++&hdmi_in {
++	hdmi_in_vp0: endpoint {
++		remote-endpoint = <&vp0_out_hdmi>;
++	};
++};
++
++&hdmi_out {
++	hdmi_out_con: endpoint {
++		remote-endpoint = <&hdmi_con_in>;
++	};
++};
++
++&hdmi_sound {
++	status = "okay";
++};
++
++&i2c0 {
++	status = "okay";
++
++	rk817: pmic@20 {
++		compatible = "rockchip,rk817";
++		reg = <0x20>;
++		assigned-clocks = <&cru I2S1_MCLKOUT_TX>;
++		assigned-clock-parents = <&cru CLK_I2S1_8CH_TX>;
++		clock-names = "mclk";
++		clock-output-names = "rk808-clkout1", "rk808-clkout2";
++		clocks = <&cru I2S1_MCLKOUT_TX>;
++		interrupt-parent = <&gpio0>;
++		interrupts = <RK_PA3 IRQ_TYPE_LEVEL_LOW>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&i2s1m0_mclk>, <&pmic_int_l>;
++		wakeup-source;
++		#clock-cells = <1>;
++		#sound-dai-cells = <0>;
++
++		vcc1-supply = <&vcc_sys>;
++		vcc2-supply = <&vcc_sys>;
++		vcc3-supply = <&vcc_sys>;
++		vcc4-supply = <&vcc_sys>;
++		vcc5-supply = <&vcc_sys>;
++		vcc6-supply = <&vcc_sys>;
++		vcc7-supply = <&vcc_sys>;
++		vcc8-supply = <&vcc_sys>;
++		vcc9-supply = <&dcdc_boost>;
++
++		regulators {
++			vdd_logic: DCDC_REG1 {
++				regulator-always-on;
++				regulator-boot-on;
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <1350000>;
++				regulator-ramp-delay = <6001>;
++				regulator-initial-mode = <0x2>;
++				regulator-name = "vdd_logic";
++				regulator-state-mem {
++					regulator-off-in-suspend;
++					regulator-suspend-microvolt = <900000>;
++				};
++			};
++
++			vdd_gpu: DCDC_REG2 {
++				regulator-always-on;
++				regulator-boot-on;
++				regulator-min-microvolt = <500000>;
++				regulator-max-microvolt = <1350000>;
++				regulator-ramp-delay = <6001>;
++				regulator-initial-mode = <0x2>;
++				regulator-name = "vdd_gpu";
++				regulator-state-mem {
++					regulator-off-in-suspend;
++				};
++			};
++
++			vcc_ddr: DCDC_REG3 {
++				regulator-always-on;
++				regulator-boot-on;
++				regulator-initial-mode = <0x2>;
++				regulator-name = "vcc_ddr";
++				regulator-state-mem {
++					regulator-on-in-suspend;
++				};
++			};
++
++			vcc_3v3: DCDC_REG4 {
++				regulator-always-on;
++				regulator-boot-on;
++				regulator-min-microvolt = <3300000>;
++				regulator-max-microvolt = <3300000>;
++				regulator-initial-mode = <0x2>;
++				regulator-name = "vcc_3v3";
++				regulator-state-mem {
++					regulator-on-in-suspend;
++					regulator-suspend-microvolt = <3300000>;
++				};
++			};
++
++			vcca1v8_pmu: LDO_REG1 {
++				regulator-always-on;
++				regulator-boot-on;
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <1800000>;
++				regulator-name = "vcca1v8_pmu";
++				regulator-state-mem {
++					regulator-on-in-suspend;
++					regulator-suspend-microvolt = <1800000>;
++				};
++			};
++
++			vdda_0v9: LDO_REG2 {
++				regulator-always-on;
++				regulator-boot-on;
++				regulator-min-microvolt = <900000>;
++				regulator-max-microvolt = <900000>;
++				regulator-name = "vdda_0v9";
++				regulator-state-mem {
++					regulator-off-in-suspend;
++				};
++			};
++
++			vdda0v9_pmu: LDO_REG3 {
++				regulator-always-on;
++				regulator-boot-on;
++				regulator-min-microvolt = <900000>;
++				regulator-max-microvolt = <900000>;
++				regulator-name = "vdda0v9_pmu";
++				regulator-state-mem {
++					regulator-on-in-suspend;
++					regulator-suspend-microvolt = <900000>;
++				};
++			};
++
++			vccio_acodec: LDO_REG4 {
++				regulator-always-on;
++				regulator-boot-on;
++				regulator-min-microvolt = <3300000>;
++				regulator-max-microvolt = <3300000>;
++				regulator-name = "vccio_acodec";
++				regulator-state-mem {
++					regulator-off-in-suspend;
++				};
++			};
++
++			vccio_sd: LDO_REG5 {
++				regulator-always-on;
++				regulator-boot-on;
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <3300000>;
++				regulator-name = "vccio_sd";
++				regulator-state-mem {
++					regulator-off-in-suspend;
++				};
++			};
++
++			vcc3v3_pmu: LDO_REG6 {
++				regulator-always-on;
++				regulator-boot-on;
++				regulator-min-microvolt = <3300000>;
++				regulator-max-microvolt = <3300000>;
++				regulator-name = "vcc3v3_pmu";
++				regulator-state-mem {
++					regulator-on-in-suspend;
++					regulator-suspend-microvolt = <3300000>;
++				};
++			};
++
++			vcc_1v8: LDO_REG7 {
++				regulator-always-on;
++				regulator-boot-on;
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <1800000>;
++				regulator-name = "vcc_1v8";
++				regulator-state-mem {
++					regulator-off-in-suspend;
++				};
++			};
++
++			vcc1v8_dvp: LDO_REG8 {
++				regulator-always-on;
++				regulator-boot-on;
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <1800000>;
++				regulator-name = "vcc1v8_dvp";
++				regulator-state-mem {
++					regulator-on-in-suspend;
++				};
++			};
++
++			vcc2v8_dvp: LDO_REG9 {
++				regulator-always-on;
++				regulator-boot-on;
++				regulator-min-microvolt = <1800000>;
++				regulator-max-microvolt = <3300000>;
++				regulator-name = "vcc2v8_dvp";
++				regulator-state-mem {
++					regulator-off-in-suspend;
++				};
++			};
++
++			dcdc_boost: BOOST {
++				regulator-min-microvolt = <4700000>;
++				regulator-max-microvolt = <5400000>;
++				regulator-name = "boost";
++				regulator-state-mem {
++					regulator-off-in-suspend;
++				};
++			};
++
++			otg_switch: OTG_SWITCH {
++				regulator-name = "otg_switch";
++				regulator-state-mem {
++					regulator-off-in-suspend;
++				};
++			};
++		};
++
++		rk817_charger: charger {
++			monitored-battery = <&battery>;
++			rockchip,resistor-sense-micro-ohms = <10000>;
++			rockchip,sleep-enter-current-microamp = <150000>;
++			rockchip,sleep-filter-current-microamp = <100000>;
++		};
++
++	};
++
++	vdd_cpu: regulator@1c {
++		compatible = "tcs,tcs4525";
++		reg = <0x1c>;
++		fcs,suspend-voltage-selector = <1>;
++		regulator-always-on;
++		regulator-boot-on;
++		regulator-min-microvolt = <712500>;
++		regulator-max-microvolt = <1390000>;
++		regulator-name = "vdd_cpu";
++		regulator-ramp-delay = <2300>;
++		vin-supply = <&vcc_sys>;
++		regulator-state-mem {
++			regulator-off-in-suspend;
++		};
++	};
++};
++
++&i2c5 {
++	pinctrl-0 = <&i2c5m1_xfer>;
++	pinctrl-names = "default";
++	status = "okay";
++};
++
++&i2s0_8ch {
++	status = "okay";
++};
++
++&i2s1_8ch {
++	pinctrl-0 = <&i2s1m0_sclktx>, <&i2s1m0_lrcktx>, <&i2s1m0_sdi0>,
++		    <&i2s1m0_sdo0>;
++	pinctrl-names = "default";
++	rockchip,trcm-sync-tx-only;
++	status = "okay";
++};
++
++&pinctrl {
++	audio-amplifier {
++		spk_amp_enable_h: spk-amp-enable-h {
++			rockchip,pins =
++				<4 RK_PC2 RK_FUNC_GPIO &pcfg_pull_none>;
++		};
++	};
++
++	gpio-control {
++		btn_pins_ctrl: btn-pins-ctrl {
++			rockchip,pins =
++				<3 RK_PC6 RK_FUNC_GPIO &pcfg_pull_up>,
++				<3 RK_PC7 RK_FUNC_GPIO &pcfg_pull_up>,
++				<3 RK_PD0 RK_FUNC_GPIO &pcfg_pull_up>,
++				<3 RK_PD1 RK_FUNC_GPIO &pcfg_pull_up>,
++				<3 RK_PD2 RK_FUNC_GPIO &pcfg_pull_up>,
++				<3 RK_PD3 RK_FUNC_GPIO &pcfg_pull_up>,
++				<3 RK_PD4 RK_FUNC_GPIO &pcfg_pull_up>,
++				<3 RK_PD5 RK_FUNC_GPIO &pcfg_pull_up>,
++				<3 RK_PD6 RK_FUNC_GPIO &pcfg_pull_up>,
++				<3 RK_PD7 RK_FUNC_GPIO &pcfg_pull_up>,
++				<4 RK_PA0 RK_FUNC_GPIO &pcfg_pull_up>,
++				<4 RK_PA1 RK_FUNC_GPIO &pcfg_pull_up>,
++				<4 RK_PA2 RK_FUNC_GPIO &pcfg_pull_up>,
++				<4 RK_PA4 RK_FUNC_GPIO &pcfg_pull_up>,
++				<4 RK_PA7 RK_FUNC_GPIO &pcfg_pull_up>,
++				<4 RK_PB0 RK_FUNC_GPIO &pcfg_pull_up>;
++		};
++
++		btn_pins_vol: btn-pins-vol {
++			rockchip,pins =
++				<4 RK_PA3 RK_FUNC_GPIO &pcfg_pull_up>,
++				<4 RK_PA5 RK_FUNC_GPIO &pcfg_pull_up>;
++		};
++	};
++
++	gpio-lcd {
++		lcd_rst: lcd-rst {
++			rockchip,pins =
++				<0 RK_PD5 RK_FUNC_GPIO &pcfg_pull_none>;
++		};
++	};
++
++	gpio-leds {
++		led_pins: led-pins {
++			rockchip,pins =
++				<4 RK_PB4 RK_FUNC_GPIO &pcfg_pull_none>,
++				<4 RK_PB5 RK_FUNC_GPIO &pcfg_pull_none>,
++				<4 RK_PB6 RK_FUNC_GPIO &pcfg_pull_none>;
++		};
++	};
++
++	hp-detect {
++		hp_det: hp-det {
++			rockchip,pins =
++				<4 RK_PC6 RK_FUNC_GPIO &pcfg_pull_up>;
++		};
++	};
++
++	pmic {
++		pmic_int_l: pmic-int-l {
++			rockchip,pins =
++				<0 RK_PA3 RK_FUNC_GPIO &pcfg_pull_up>;
++		};
++	};
++
++	sdio-pwrseq {
++		wifi_enable_h: wifi-enable-h {
++			rockchip,pins =
++				<0 RK_PC0 RK_FUNC_GPIO &pcfg_pull_none>;
++		};
++	};
++
++	usb {
++		vcc5v0_host_en: vcc5v0-host-en {
++			rockchip,pins =
++				<4 RK_PC4 RK_FUNC_GPIO &pcfg_pull_up>;
++		};
++
++		vcc5v0_otg_en: vcc5v0-otg-en {
++			rockchip,pins =
++				<4 RK_PC5 RK_FUNC_GPIO &pcfg_pull_up>;
++		};
++	};
++
++	vcc-lcd {
++		vcc_lcd_en: vcc-lcd-en {
++			rockchip,pins =
++				<0 RK_PC7 RK_FUNC_GPIO &pcfg_pull_none>;
++		};
++	};
++
++	vcc-wifi {
++		vcc_wifi_h: vcc-wifi-h {
++			rockchip,pins =
++				<0 RK_PA0 RK_FUNC_GPIO &pcfg_pull_none>;
++		};
++	};
++};
++
++&pmu_io_domains {
++	status = "okay";
++	pmuio1-supply = <&vcc3v3_pmu>;
++	pmuio2-supply = <&vcca1v8_pmu>;
++	vccio1-supply = <&vccio_acodec>;
++	vccio3-supply = <&vccio_sd>;
++	vccio4-supply = <&vcca1v8_pmu>;
++	vccio5-supply = <&vcc2v8_dvp>;
++	vccio6-supply = <&vcc1v8_dvp>;
++	vccio7-supply = <&vcc_3v3>;
++};
++
++&pwm4 {
++	status = "okay";
++};
++
++&saradc {
++	vref-supply = <&vcc_1v8>;
++	status = "okay";
++};
++
++&sdhci {
++	bus-width = <8>;
++	mmc-hs200-1_8v;
++	non-removable;
++	pinctrl-0 = <&emmc_bus8>, <&emmc_clk>, <&emmc_cmd>,
++		    <&emmc_datastrobe>, <&emmc_rstnout>;
++	pinctrl-names = "default";
++	status = "okay";
++};
++
++&sdmmc0 {
++	bus-width = <4>;
++	cap-mmc-highspeed;
++	cap-sd-highspeed;
++	disable-wp;
++	pinctrl-0 = <&sdmmc0_bus4>, <&sdmmc0_clk>, <&sdmmc0_cmd>,
++		    <&sdmmc0_det>;
++	pinctrl-names = "default";
++	sd-uhs-sdr104;
++	vqmmc-supply = <&vccio_sd>;
++	status = "okay";
++};
++
++&sdmmc1 {
++	bus-width = <4>;
++	cap-sd-highspeed;
++	cap-sdio-irq;
++	keep-power-in-suspend;
++	mmc-pwrseq = <&sdio_pwrseq>;
++	non-removable;
++	pinctrl-0 = <&sdmmc1_bus4>, <&sdmmc1_cmd>, <&sdmmc1_clk>;
++	pinctrl-names = "default";
++	vmmc-supply = <&vcc_wifi>;
++	status = "okay";
++};
++
++&sdmmc2 {
++	bus-width = <4>;
++	cap-mmc-highspeed;
++	cap-sd-highspeed;
++	disable-wp;
++	pinctrl-0 = <&sdmmc2m1_bus4>, <&sdmmc2m1_cmd>, <&sdmmc2m1_clk>,
++		    <&sdmmc2m1_det>;
++	pinctrl-names = "default";
++	sd-uhs-sdr104;
++	vqmmc-supply = <&vcc2v8_dvp>;
++	status = "okay";
++};
++
++&tsadc {
++	rockchip,hw-tshut-mode = <1>;
++	rockchip,hw-tshut-polarity = <0>;
++	status = "okay";
++};
++
++&uart1 {
++	pinctrl-0 = <&uart1m0_xfer>, <&uart1m0_ctsn>, <&uart1m0_rtsn>;
++	pinctrl-names = "default";
++	uart-has-rtscts;
++	status = "okay";
++
++	bluetooth {
++		compatible = "realtek,rtl8821cs-bt", "realtek,rtl8723bs-bt";
++		device-wake-gpios = <&gpio0 RK_PB6 GPIO_ACTIVE_HIGH>;
++		enable-gpios = <&gpio0 RK_PC1 GPIO_ACTIVE_HIGH>;
++		host-wake-gpios = <&gpio0 RK_PB5 GPIO_ACTIVE_HIGH>;
++	};
++};
++
++&uart2 {
++	status = "okay";
++};
++
++&usb_host0_xhci {
++	phys = <&usb2phy0_otg>;
++	phy-names = "usb2-phy";
++	status = "okay";
++};
++
++&usb_host1_xhci {
++	status = "okay";
++};
++
++&usb2phy0 {
++	status = "okay";
++};
++
++&usb2phy0_otg {
++	status = "okay";
++};
++
++&usb2phy0_host {
++	phy-supply = <&vcc5v0_host>;
++	status = "okay";
++};
++
++&vop {
++	assigned-clocks = <&cru DCLK_VOP0>, <&cru DCLK_VOP1>;
++	assigned-clock-parents = <&pmucru PLL_HPLL>, <&cru PLL_VPLL>;
++	status = "okay";
++};
++
++&vop_mmu {
++	status = "okay";
++};
++
++&vp0 {
++	vp0_out_hdmi: endpoint@ROCKCHIP_VOP2_EP_HDMI0 {
++		reg = <ROCKCHIP_VOP2_EP_HDMI0>;
++		remote-endpoint = <&hdmi_in_vp0>;
++	};
++};
++
++&vp1 {
++	vp1_out_dsi0: endpoint@ROCKCHIP_VOP2_EP_MIPI0 {
++		reg = <ROCKCHIP_VOP2_EP_MIPI0>;
++		remote-endpoint = <&dsi0_in_vp1>;
++	};
++};
+--
+2.34.1
