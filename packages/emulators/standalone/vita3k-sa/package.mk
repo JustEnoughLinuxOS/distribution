@@ -46,6 +46,9 @@ makeinstall_target() {
   chmod 0755 ${INSTALL}/usr/bin/*
 
   mkdir -p ${INSTALL}/usr/config/vita3k/launcher
-  cp ${PKG_DIR}/scripts/start_vita3k.sh ${INSTALL}/usr/config/vita3k/launcher/Start\ Vita3K.sh
-  chmod 0755 ${INSTALL}/usr/config/vita3k/launcher/Start\ Vita3K.sh
+  cp ${PKG_DIR}/scripts/start_vita3k.sh ${INSTALL}/usr/config/vita3k/launcher/_Start\ Vita3K.sh
+  cp ${PKG_DIR}/scripts/scan_vita3k.sh ${INSTALL}/usr/config/vita3k/launcher/_Scan\ Vita\ Games.sh
+  chmod 0755 ${INSTALL}/usr/config/vita3k/launcher/*sh
+
+  cp ${PKG_DIR}/sources/vita-gamelist.txt ${INSTALL}/usr/config/vita3k
 }
