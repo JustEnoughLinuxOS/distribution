@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
+
+. /etc/profile
+
+# Set export GPIO for Power LED
+if [ ! -d "/sys/class/gpio/gpio${DEVICE_PWR_LED_GPIO}" ]; then
+  echo ${DEVICE_PWR_LED_GPIO} > /sys/class/gpio/export
+fi
+
+#Disable blue led on R33S
+echo out >/sys/class/gpio/gpio${DEVICE_PWR_LED_GPIO}/direction
+echo 1 >/sys/class/gpio/gpio${DEVICE_PWR_LED_GPIO}/value

@@ -1,0 +1,24 @@
+#!/bin/bash
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2024-present JELOS (https://github.com/JustEnoughLinuxOS)
+
+. /etc/profile
+
+mount -o remount,rw /flash
+case $1 in
+  R33S)
+    sed -i '/rk3326-gameconsole-r3/c\  load mmc 1:1 ${dtb_loadaddr} rk3326-gameconsole-r33s.dtb' /flash/boot.ini
+    rm -r /storage/remappings/*
+  ;;
+  R36S)
+    sed -i '/rk3326-gameconsole-r3/c\  load mmc 1:1 ${dtb_loadaddr} rk3326-gameconsole-r36s.dtb' /flash/boot.ini
+    rm -r /storage/remappings/*
+  ;;
+esac
+
+cat <<EOF >/flash/device.name
+$1
+EOF
+
+sync
+reboot
