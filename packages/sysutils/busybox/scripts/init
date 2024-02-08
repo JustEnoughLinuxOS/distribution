@@ -1032,8 +1032,8 @@ if [ -f "./platform_init" ]; then
 fi
 
 # clear screen and hide cursor
-clear >/dev/console
-hidecursor
+# clear >/dev/console
+# hidecursor
 
 # parse command line arguments
 for arg in $(cat /proc/cmdline); do

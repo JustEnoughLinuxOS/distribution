@@ -32,7 +32,7 @@
     PARTITION_TABLE="gpt"
     UBOOT_LABEL="uboot"
     TRUST_LABEL="trust"
-    DEVICE_DTB="rk3566-radxa-zero-3w-aic8800ds2"
+    DEVICE_DTB="rk3566-radxa-zero3"
     UBOOT_DTB="rk3566-radxa-zero3"
     UBOOT_CONFIG="radxa-zero3-rk3566_defconfig"
     PKG_SOC="rk3568"
@@ -82,7 +82,7 @@
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
   # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
-    FIRMWARE="misc-firmware"
+    FIRMWARE="misc-firmware aic8800-firmware"
 
   # additional drivers to install:
   # for a list of additional drivers see packages/linux-drivers

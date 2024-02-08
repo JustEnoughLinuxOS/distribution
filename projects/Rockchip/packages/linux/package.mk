@@ -18,10 +18,10 @@ PKG_PATCH_DIRS+="${DEVICE}"
 
 case ${DEVICE} in
   RK3566-03w)
-    PKG_VERSION="93207a7ad6090b27c6d20ea3ba23882ff1f72a8f"
-    PKG_URL="https://github.com/radxa/kernel.git"
-    GET_HANDLER_SUPPORT="git"
-    PKG_GIT_CLONE_BRANCH="linux-5.10-gen-rkr4.1"
+		GET_HANDLER_SUPPORT="git"
+    PKG_URL="https://github.com/Joshua-Riek/linux-rockchip.git"
+    PKG_GIT_CLONE_BRANCH="linux-5.10-gen-rkr6"
+		PKG_VERSION="3358fc6ccf80f7cb521f985aa2d761e3112ffcda"
   ;;
   RK358*)
     PKG_VERSION="a7c264a8249f2058cf8ca624ee5034403412a2c1"
