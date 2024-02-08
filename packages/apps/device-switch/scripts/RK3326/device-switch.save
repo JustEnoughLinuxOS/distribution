@@ -1,0 +1,20 @@
+#!/bin/bash
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2022-present JELOS (https://github.com/JustEnoughLinuxOS)
+
+. /etc/profile
+
+mount -o remount,rw /flash
+case $1 in
+  R33S)
+    sed -i "s#rk3566-rg353v-linux.dtb#rk3566-rg353p-linux.dtb#g" /flash/extlinux/extlinux.conf
+  ;;
+  R36S)
+    sed -i "s#rk3566-rg353p-linux.dtb#rk3566-rg353v-linux.dtb#g" /flash/extlinux/extlinux.conf
+  ;;
+esac
+
+set_setting system.hostname ${1}
+
+sync
+reboot
