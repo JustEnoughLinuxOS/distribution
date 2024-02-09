@@ -20,13 +20,13 @@
   DESCRIPTION="An Open Source firmware."
 
 # Distribution Home URL
-  HOME_URL="https://www.jelos.org"
+  HOME_URL="https://jelos.org"
 
 # Documentation URL
-  WIKI_URL="https://www.jelos.org"
+  WIKI_URL="https://jelos.org"
 
 # Where to report bugs
-  BUG_REPORT_URL="https://www.jelos.org"
+  BUG_REPORT_URL="https://jelos.org"
 
 # Root password to integrate in the target system
   ROOT_PASSWORD="system generated"
