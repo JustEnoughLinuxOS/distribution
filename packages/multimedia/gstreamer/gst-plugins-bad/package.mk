@@ -182,7 +182,7 @@ pre_configure_target() {
                          -Dglib-asserts=disabled \
                          -Dglib-checks=disabled \
                          -Dpackage-name=gst-plugins-bad \
-                         -Dpackage-origin=LibreELEC.tv \
+                         -Dpackage-origin=jelos.org \
                          -Ddoc=disabled"
 }
 

@@ -25,9 +25,9 @@ PKG_MESON_OPTS_TARGET+=" -Dxvfb=false \
                        -Dinput_thread=true \
                        -Dxkb_dir=${XORG_PATH_XKB} \
                        -Dxkb_output_dir="/var/cache/xkb" \
-                       -Dvendor_name="LibreELEC" \
-                       -Dvendor_name_short="LE" \
-                       -Dvendor_web="https://libreelec.tv/" \
+                       -Dvendor_name="JELOS" \
+                       -Dvendor_name_short="JELOS" \
+                       -Dvendor_web="https://jelos.org/" \
                        -Dlisten_tcp=false \
                        -Dlisten_unix=true \
                        -Dlisten_local=false \

@@ -3,7 +3,7 @@ Description=Setup debug config
 DefaultDependencies=no
 After=systemd-tmpfiles-setup.service
 ConditionKernelCommandLine=|debugging
-ConditionPathExists=|/storage/.cache/debug.libreelec
+ConditionPathExists=|/storage/.cache/debug.jelos
 
 [Service]
 Type=oneshot

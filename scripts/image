@@ -72,11 +72,7 @@ TARGET_VERSION="${OS_ARCH}-${OS_VERSION}"
 if [ -n "${CUSTOM_IMAGE_NAME}" ]; then
   IMAGE_NAME="${CUSTOM_IMAGE_NAME}"
 else
-  if [ "${DEVEL_VERSION}" = "devel" ]; then
-    IMAGE_NAME="${DISTRONAME}-${OS_ARCH}-${OS_VERSION}-${OS_VERSION}"
-  else
-    IMAGE_NAME="${DISTRONAME}-${TARGET_VERSION}"
-  fi
+  IMAGE_NAME="${DISTRONAME}-${TARGET_VERSION}"
 fi
 
 if [ -n "${IMAGE_SUFFIX}" ]; then
@@ -96,7 +92,7 @@ rm -rf ${INSTALL}
 rm -rf ${STAMPS_INSTALL}
 mkdir -p ${INSTALL}
 
-# Create base layout of LibreELEC read-only file system
+# Create base layout of JELOS read-only file system
 for directory in etc dev proc run sys tmp usr var flash storage; do
   mkdir -p ${INSTALL}/${directory}
 done
