@@ -58,7 +58,7 @@ fi
 # Add support for containers
 [ "${CONTAINER_SUPPORT}" = "yes" ] && PKG_DEPENDS_TARGET+=" ${PKG_TOOLS} docker"
 
-[ "${DEBUG_SUPPORT}" = "yes" ] && PKG_DEPENDS_TARGET+=" ${PKG_DEBUG}"
+[ "${DEBUG_PACKAGES}" = "yes" ] && PKG_DEPENDS_TARGET+=" ${PKG_DEBUG}"
 
 # 32Bit package support
 [ "${ENABLE_32BIT}" == true ] && PKG_DEPENDS_TARGET+=" lib32"

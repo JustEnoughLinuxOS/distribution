@@ -18,8 +18,7 @@ post_install() {
         -i  ${INSTALL}/usr/bin/installer
 
   mkdir -p ${INSTALL}/etc
-    find_file_path config/installer.conf
-    cp ${FOUND_PATH} ${INSTALL}/etc
+    cp ${PKG_DIR}/config/* ${INSTALL}/etc
     sed -e "s/@SYSTEM_SIZE@/${SYSTEM_SIZE}/g" \
         -e "s/@SYSTEM_PART_START@/${SYSTEM_PART_START}/g" \
         -e "s/@SYSLINUX_PARAMETERS@/${SYSLINUX_PARAMETERS}/g" \

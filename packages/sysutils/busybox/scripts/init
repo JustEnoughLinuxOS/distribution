@@ -292,7 +292,7 @@ mount_sysroot() {
 get_project_arch() {
   if [ -f ${1}/etc/os-release ]; then
     . ${1}/etc/os-release
-    echo "${COREELEC_ARCH:-${LIBREELEC_ARCH}}"
+    echo "${COREELEC_ARCH:-${OS_ARCH}}"
   fi
 }
 

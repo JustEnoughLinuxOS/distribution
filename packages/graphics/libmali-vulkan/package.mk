@@ -18,7 +18,7 @@ make_target() {
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/{lib,share}
   tar -xvJf ${PKG_BUILD}/mali.tar.xz -C ${INSTALL}
-  mv ${INSTALL}/lib/${TARGET_ARCH}-linux-gnu/* ${INSTALL}/usr/lib
+  mv ${INSTALL}/lib/${TARGET_ARCH}-jelos-linux-gnu/* ${INSTALL}/usr/lib
   rm -r ${INSTALL}/lib
   tar -xvJf ${PKG_BUILD}/rootfs_additions.tar.xz -C ${INSTALL}/usr/share
   mv ${INSTALL}/usr/share/etc/vulkan/* ${INSTALL}/usr/share/vulkan/

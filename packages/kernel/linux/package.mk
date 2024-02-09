@@ -19,8 +19,8 @@ PKG_PATCH_DIRS+="${LINUX} ${DEVICE} default"
 PKG_KERNEL_CFG_FILE=$(kernel_config_path) || die
 
 if [ -n "${KERNEL_TOOLCHAIN}" ]; then
-  PKG_DEPENDS_HOST="${PKG_DEPENDS_HOST} gcc-${KERNEL_TOOLCHAIN}:host"
-  PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} gcc-${KERNEL_TOOLCHAIN}:host"
+  PKG_DEPENDS_HOST+=" gcc-${KERNEL_TOOLCHAIN}:host"
+  PKG_DEPENDS_TARGET+=" gcc-${KERNEL_TOOLCHAIN}:host"
   HEADERS_ARCH=${TARGET_ARCH}
 fi
 
@@ -30,10 +30,9 @@ if [ "${PKG_BUILD_PERF}" != "no" ] && grep -q ^CONFIG_PERF_EVENTS= ${PKG_KERNEL_
 fi
 
 if [[ "${TARGET_ARCH}" =~ i*86|x86_64 ]]; then
-  PKG_DEPENDS_TARGET+=" elfutils:host pciutils"
-  PKG_DEPENDS_UNPACK+=" intel-ucode kernel-firmware"
+  PKG_DEPENDS_TARGET+=" elfutils:host pciutils intel-ucode kernel-firmware"
 elif [ "${TARGET_ARCH}" = "arm" -a "${DEVICE}" = "iMX6" ]; then
-  PKG_DEPENDS_UNPACK+=" firmware-imx"
+  PKG_DEPENDS_TARGET+=" firmware-imx"
 fi
 
 if [[ "${KERNEL_TARGET}" = uImage* ]]; then

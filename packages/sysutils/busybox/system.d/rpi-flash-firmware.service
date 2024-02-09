@@ -6,7 +6,7 @@ DefaultDependencies=no
 
 [Service]
 Type=idle
-ExecStart=/usr/lib/libreelec/rpi-flash-firmware
+ExecStart=/usr/lib/jelos/rpi-flash-firmware
 StandardInput=tty-force
 StandardOutput=inherit
 StandardError=inherit

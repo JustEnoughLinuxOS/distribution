@@ -107,7 +107,7 @@
   CONTAINER_SUPPORT="${CONTAINER_SUPPORT:-no}"
 
 # Support for debug tools such as strace
-  DEBUG_SUPPORT="${DEBUG_SUPPORT:-yes}"
+  DEBUG_PACKAGES="${DEBUG_PACKAGES:-yes}"
 
 # Windowmanager to use (fluxbox / none)
   WINDOWMANAGER="none"
