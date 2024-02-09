@@ -277,7 +277,7 @@ index 0000000000..b3b2d5509d
 +++ b/pi-util/clean_usr_libs.sh
 @@ -0,0 +1,26 @@
 +set -e
-+U=/usr/lib/arm-linux-gnueabihf
++U=/usr/lib/arm-jelos-linux-gnueabihf
 +rm -f $U/libavcodec.*
 +rm -f $U/libavdevice.*
 +rm -f $U/libavfilter.*
@@ -285,7 +285,7 @@ index 0000000000..b3b2d5509d
 +rm -f $U/libavutil.*
 +rm -f $U/libswresample.*
 +rm -f $U/libswscale.*
-+U=/usr/lib/arm-linux-gnueabihf/neon/vfp
++U=/usr/lib/arm-jelos-linux-gnueabihf/neon/vfp
 +rm -f $U/libavcodec.*
 +rm -f $U/libavdevice.*
 +rm -f $U/libavfilter.*
@@ -293,7 +293,7 @@ index 0000000000..b3b2d5509d
 +rm -f $U/libavutil.*
 +rm -f $U/libswresample.*
 +rm -f $U/libswscale.*
-+U=/usr/lib/aarch64-linux-gnu
++U=/usr/lib/aarch64-jelos-linux-gnu
 +rm -f $U/libavcodec.*
 +rm -f $U/libavdevice.*
 +rm -f $U/libavfilter.*
@@ -325,7 +325,7 @@ index 0000000000..9e3bbfa190
 +mkdir -p $OUT
 +cd $OUT
 +
-+A=aarch64-linux-gnu
++A=aarch64-jelos-linux-gnu
 +USR_PREFIX=`pwd`/install
 +LIB_PREFIX=$USR_PREFIX/lib/$A
 +INC_PREFIX=$USR_PREFIX/include/$A
@@ -900,11 +900,11 @@ index 0000000000..65576846e8
 +
 +if [ "$MC" == "arm64" ]; then
 +  echo "M/C aarch64"
-+  A=aarch64-linux-gnu
++  A=aarch64-jelos-linux-gnu
 +  B=arm64
 +elif [ "$MC" == "armhf" ]; then
 +  echo "M/C armv7"
-+  A=arm-linux-gnueabihf
++  A=arm-jelos-linux-gnueabihf
 +  B=armv7
 +  MCOPTS="--arch=armv6t2 --cpu=cortex-a7"
 +  RPI_DEFINES=-mfpu=neon-vfpv4
@@ -32457,7 +32457,7 @@ index b3b2d5509d..01bd6a6a22 100755
 +++ b/pi-util/clean_usr_libs.sh
 @@ -1,4 +1,20 @@
  set -e
-+U=/usr/include/arm-linux-gnueabihf
++U=/usr/include/arm-jelos-linux-gnueabihf
 +rm -rf $U/libavcodec
 +rm -rf $U/libavdevice
 +rm -rf $U/libavfilter
@@ -32465,7 +32465,7 @@ index b3b2d5509d..01bd6a6a22 100755
 +rm -rf $U/libavutil
 +rm -rf $U/libswresample
 +rm -rf $U/libswscale
-+U=/usr/include/aarch64-linux-gnu
++U=/usr/include/aarch64-jelos-linux-gnu
 +rm -rf $U/libavcodec
 +rm -rf $U/libavdevice
 +rm -rf $U/libavfilter
@@ -32473,7 +32473,7 @@ index b3b2d5509d..01bd6a6a22 100755
 +rm -rf $U/libavutil
 +rm -rf $U/libswresample
 +rm -rf $U/libswscale
- U=/usr/lib/arm-linux-gnueabihf
+ U=/usr/lib/arm-jelos-linux-gnueabihf
  rm -f $U/libavcodec.*
  rm -f $U/libavdevice.*
 
@@ -32580,11 +32580,11 @@ index 082d9b5832..0a7d230f1b 100755
  
 -if [ "$MC" == "arm64" ]; then
 -  echo "M/C aarch64"
--  A=aarch64-linux-gnu
+-  A=aarch64-jelos-linux-gnu
 -  B=arm64
 -elif [ "$MC" == "armhf" ]; then
 -  echo "M/C armv7"
--  A=arm-linux-gnueabihf
+-  A=arm-jelos-linux-gnueabihf
 -  B=armv7
 -  MCOPTS="--arch=armv6t2 --cpu=cortex-a7"
 -  RPI_DEFINES=-mfpu=neon-vfpv4
@@ -32596,13 +32596,13 @@ index 082d9b5832..0a7d230f1b 100755
 +if [ "$MC" == "armv7l" ] || [ "$MC" == "aarch64" ]; then
 +  if [ "$LB" == "32" ]; then
 +    echo "M/C armv7"
-+    A=arm-linux-gnueabihf
++    A=arm-jelos-linux-gnueabihf
 +    B=armv7
 +    MCOPTS="--arch=armv6t2 --cpu=cortex-a7"
 +    RPI_DEFINES=-mfpu=neon-vfpv4
 +  elif [ "$LB" == "64" ]; then
 +    echo "M/C aarch64"
-+    A=aarch64-linux-gnu
++    A=aarch64-jelos-linux-gnu
 +    B=arm64
 +  else
 +    echo "Unknown LONG_BIT name: $LB"

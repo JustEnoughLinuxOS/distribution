@@ -60,7 +60,7 @@ pre_configure_target() {
   PKG_CONFIGURE_OPTS_TARGET="-prefix /usr
                              -sysroot ${SYSROOT_PREFIX}
                              -hostprefix ${TOOLCHAIN}
-                             -device linux-libreelec-g++
+                             -device linux-g++
                              -device-option CROSS_COMPILE=${TARGET_PREFIX}
                              -fontconfig
                              -opensource -confirm-license
@@ -166,7 +166,7 @@ configure_target() {
   fi
 
   # Create mkspecs file
-  QMAKE_CONF_DIR="${PKG_BUILD}/qtbase/mkspecs/devices/linux-libreelec-g++"
+  QMAKE_CONF_DIR="${PKG_BUILD}/qtbase/mkspecs/devices/linux-g++"
   QMAKE_CONF="${QMAKE_CONF_DIR}/qmake.conf"
   mkdir -p ${QMAKE_CONF_DIR}
 

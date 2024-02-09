@@ -127,14 +127,14 @@ makeinstall_target() {
     cp ${PKG_DIR}/scripts/pastebinit ${INSTALL}/usr/bin/
     ln -sf pastebinit ${INSTALL}/usr/bin/paste
 
-  mkdir -p ${INSTALL}/usr/lib/coreelec
-    cp ${PKG_DIR}/scripts/functions ${INSTALL}/usr/lib/coreelec
-    cp ${PKG_DIR}/scripts/fs-resize ${INSTALL}/usr/lib/coreelec
+  mkdir -p ${INSTALL}/usr/lib/jelos/
+    cp ${PKG_DIR}/scripts/functions ${INSTALL}/usr/lib/jelos/
+    cp ${PKG_DIR}/scripts/fs-resize ${INSTALL}/usr/lib/jelos/
     sed -e "s/@DISTRONAME@/${DISTRONAME}/g" \
-        -i ${INSTALL}/usr/lib/coreelec/fs-resize
+        -i ${INSTALL}/usr/lib/jelos/fs-resize
 
     if listcontains "${FIRMWARE}" "rpi-eeprom"; then
-      cp ${PKG_DIR}/scripts/rpi-flash-firmware ${INSTALL}/usr/lib/libreelec
+      cp ${PKG_DIR}/scripts/rpi-flash-firmware ${INSTALL}/usr/lib/jelos/
     fi
 
   mkdir -p ${INSTALL}/etc

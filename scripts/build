@@ -237,18 +237,18 @@ fi
 # create wrapper scripts in build dir and use them for CC/CXX when
 # building for host and local-cc build flag is set
 if [ "${TARGET}" = "host" ] && flag_enabled "local-cc" "no"; then
-  cat > libreelec-local-cc << EOF
+  cat > jelos-local-cc << EOF
 #!/bin/sh
 exec ${CC} "\$@"
 EOF
-  chmod +x libreelec-local-cc
-  export CC=$(pwd)/libreelec-local-cc
-  cat > libreelec-local-cxx << EOF
+  chmod +x jelos-local-cc
+  export CC=$(pwd)/jelos-local-cc
+  cat > jelos-local-cxx << EOF
 #!/bin/sh
 exec ${CXX} "\$@"
 EOF
-  chmod +x libreelec-local-cxx
-  export CXX=$(pwd)/libreelec-local-cxx
+  chmod +x jelos-local-cxx
+  export CXX=$(pwd)/jelos-local-cxx
 fi
 
 # configure

@@ -7,7 +7,7 @@ ConditionPathExists=|/storage/.cache/debug.libreelec
 
 [Service]
 Type=oneshot
-ExecStart=/bin/sh -c 'cp /usr/share/debugconf/*.conf /run/libreelec/debug'
+ExecStart=/bin/sh -c 'cp /usr/share/debugconf/*.conf /run/jelos/debug'
 RemainAfterExit=yes
 
 [Install]

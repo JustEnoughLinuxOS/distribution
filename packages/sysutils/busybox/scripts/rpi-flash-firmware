@@ -5,7 +5,7 @@
 
 FLAG_FILE="/storage/.rpi_flash_firmware"
 
-. /usr/lib/libreelec/functions
+. /usr/lib/jelos/functions
 
 hidecursor
 
