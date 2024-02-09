@@ -83,6 +83,16 @@ if [ -f $SYSTEM_ROOT/usr/share/bootloader/boot.ini ]; then
     sed -e "s/@UUID_SYSTEM@/${UUID_SYSTEM}/" \
       -e "s/@UUID_STORAGE@/${UUID_STORAGE}/" \
       -i $BOOT_ROOT/boot.ini
+
+  # Set correct R3xS dtb in boot.ini
+  DTB_NAME=$(cat $BOOT_ROOT/device.name)
+  if [ $DTB_NAME = 'R33S' ]; then
+    echo "Setting R33S dtb in boot.ini..."
+    sed -i '/rk3326-gameconsole-r3/c\  load mmc 1:1 ${dtb_loadaddr} rk3326-gameconsole-r33s.dtb' $BOOT_ROOT/boot.ini
+  elif [ $DTB_NAME = 'R36S' ]; then
+    echo "Setting R36S/R35S dtb in boot.ini..."
+    sed -i '/rk3326-gameconsole-r3/c\  load mmc 1:1 ${dtb_loadaddr} rk3326-gameconsole-r36s.dtb' $BOOT_ROOT/boot.ini
+  fi
 fi
 
 # update device tree
