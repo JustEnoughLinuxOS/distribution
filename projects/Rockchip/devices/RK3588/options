@@ -74,7 +74,7 @@
     WINDOWMANAGER="weston"
   
   # kernel serial console
-    EXTRA_CMDLINE="rootwait quiet loglevel=0 console=ttyUSB0,1500000 console=tty0 coherent_pool=2M ssh consoleblank=0 panic=20"
+    EXTRA_CMDLINE="rootwait quiet systemd.debug_shell=ttyFIQ0 earlycon=uart8250,mmio32,0xfeb50000 console=ttyFIQ0 console=tty0 coherent_pool=2M"
 
   # additional packages to install
   #  ADDITIONAL_PACKAGES=""
