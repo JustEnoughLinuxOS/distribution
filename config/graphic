@@ -34,7 +34,7 @@ get_graphicdrivers() {
   V4L2_SUPPORT="no"
 
   if [ "${GRAPHIC_DRIVERS}" = "all" ]; then
-    GRAPHIC_DRIVERS="crocus i915 iris r300 r600 radeonsi nvidia nvidia-legacy nvidia-ng vmware virtio"
+    GRAPHIC_DRIVERS="crocus i915 iris r300 r600 radeonsi nvidia nvidia-legacy nvidia-ng virtio"
   fi
 
   if listcontains "${GRAPHIC_DRIVERS}" "crocus"; then
@@ -134,12 +134,6 @@ get_graphicdrivers() {
 
   if listcontains "${GRAPHIC_DRIVERS}" "virtio"; then
     GALLIUM_DRIVERS+=" virgl"
-  fi
-
-  if listcontains "${GRAPHIC_DRIVERS}" "vmware"; then
-    GALLIUM_DRIVERS+=" svga"
-    XORG_DRIVERS+=" vmware"
-    COMPOSITE_SUPPORT="yes"
   fi
 
   # VDPAU Support depends on X11
