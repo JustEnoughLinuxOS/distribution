@@ -147,7 +147,7 @@ alias mmd='mmd -i "${LE_TMP}/part1.fat"'
 # create filesystem on part1
 echo "image: creating filesystem on part1..."
 
-if [ "${BOOTLOADER}" = "syslinux" -o "${BOOTLOADER}" = "bcm2835-bootloader" -o "${BOOTLOADER}" = "u-boot" ]; then
+if [ "${BOOTLOADER}" = "syslinux" -o "${BOOTLOADER}" = "u-boot" ]; then
   mformat -i "${LE_TMP}/part1.fat" -v "${DISTRO_BOOTLABEL}" -N "${UUID_SYSTEM//-/}" :: >"${SAVE_ERROR}" 2>&1 || show_error
 fi
 sync
@@ -193,42 +193,6 @@ EOF
   mcopy "${TOOLCHAIN}/share/syslinux/ldlinux.e64" ::/EFI/BOOT
   mcopy "${TOOLCHAIN}/share/grub/bootia32.efi" ::/EFI/BOOT
   mcopy "${LE_TMP}/grub.cfg" ::/EFI/BOOT
-
-elif [ "${BOOTLOADER}" = "bcm2835-bootloader" ]; then
-  # create bootloader configuration
-  echo "image: creating bootloader configuration..."
-  cat << EOF > "${LE_TMP}/cmdline.txt"
-boot=UUID=${UUID_SYSTEM} disk=UUID=${UUID_STORAGE} quiet ${EXTRA_CMDLINE}
-EOF
-
-  mcopy "${LE_TMP}/cmdline.txt" ::
-
-  # copy files
-  echo "image: copying files to part1..."
-  mcopy "${TARGET_IMG}/${BUILD_NAME}.kernel" "::/${KERNEL_NAME}"
-  mcopy "${TARGET_IMG}/${BUILD_NAME}.system" ::/SYSTEM
-  mcopy "${RELEASE_DIR}/target/KERNEL.md5" "::/${KERNEL_NAME}.md5"
-  mcopy "${RELEASE_DIR}/target/SYSTEM.md5" ::/SYSTEM.md5
-
-  mcopy "${RELEASE_DIR}/3rdparty/bootloader/bootcode.bin" ::
-  mcopy "${RELEASE_DIR}/3rdparty/bootloader/fixup.dat" ::
-  mcopy "${RELEASE_DIR}/3rdparty/bootloader/start.elf" ::
-  mcopy "${RELEASE_DIR}/3rdparty/bootloader/config.txt" ::
-  mcopy "${RELEASE_DIR}/3rdparty/bootloader/distroconfig.txt" ::
-
-  if [ -f "${RELEASE_DIR}/3rdparty/bootloader/dt-blob.bin" ]; then
-    mcopy "${RELEASE_DIR}/3rdparty/bootloader/dt-blob.bin" ::
-  fi
-
-  for dtb in "${RELEASE_DIR}/3rdparty/bootloader/"*.dtb ; do
-    if [ -f "${dtb}" ]; then
-      mcopy "${dtb}" ::/$(basename "${dtb}")
-    fi
-  done
-
-  if [ -d "${RELEASE_DIR}/3rdparty/bootloader/overlays" ]; then
-    mcopy -s "${RELEASE_DIR}/3rdparty/bootloader/overlays" ::
-  fi
 
 elif [ "${BOOTLOADER}" = "u-boot" -a \( -n "${UBOOT_CONFIG}" -o -n "${SUBDEVICE}" \) ]; then
   # create bootloader configuration

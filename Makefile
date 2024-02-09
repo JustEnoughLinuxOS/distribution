@@ -12,9 +12,6 @@ release:
 image:
 	./scripts/image mkimage
 
-noobs:
-	./scripts/image noobs
-
 clean:
 	rm -rf $(BUILD_DIRS)
 

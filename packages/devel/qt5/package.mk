@@ -160,11 +160,6 @@ configure_target() {
   mkdir -p ${PKG_BUILD}/.${TARGET_NAME}
   cd ${PKG_BUILD}/.${TARGET_NAME}
 
-  # Avoid eglfs_brcm detection by bcm_host.h
-  if [ "${DEVICE}" = "RPi4" -o "${DEVICE}" = "RPi2" ]; then
-    sed -e "s#bcm_host.h#bcm_host2.h#" -i ${PKG_BUILD}/qtbase/src/gui/configure.json
-  fi
-
   # Create mkspecs file
   QMAKE_CONF_DIR="${PKG_BUILD}/qtbase/mkspecs/devices/linux-g++"
   QMAKE_CONF="${QMAKE_CONF_DIR}/qmake.conf"

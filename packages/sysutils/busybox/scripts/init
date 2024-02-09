@@ -1225,8 +1225,6 @@ elif [ -f /sysroot/storage/.cache/reset_oe -o -f /sysroot/storage/.cache/reset_x
   INIT_UNIT="--unit=factory-reset.target"
 elif [ -f "${BACKUP_FILE}" ]; then
   INIT_UNIT="--unit=backup-restore.target"
-elif [ -f /sysroot/storage/.rpi_flash_firmware ]; then
-  INIT_UNIT="--unit=rpi-flash-firmware.target"
 fi
 
 # stop output redirection

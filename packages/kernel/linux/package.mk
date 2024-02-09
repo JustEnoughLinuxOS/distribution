@@ -285,32 +285,6 @@ makeinstall_target() {
       cp arch/${TARGET_KERNEL_ARCH}/boot/*dtb.img ${INSTALL}/usr/share/bootloader/ 2>/dev/null || :
       [ "${DEVICE}" = "Amlogic-ng" ] && cp arch/${TARGET_KERNEL_ARCH}/boot/dts/amlogic/*.dtb ${INSTALL}/usr/share/bootloader/device_trees 2>/dev/null || :
     fi
-  elif [ "${BOOTLOADER}" = "bcm2835-bootloader" ]; then
-    # RPi firmware will decompress gzipped kernels prior to booting
-    if [ "${TARGET_KERNEL_ARCH}" = "arm64" ]; then
-      pigz --best --force ${INSTALL}/.image/${KERNEL_TARGET}
-      mv ${INSTALL}/.image/${KERNEL_TARGET}.gz ${INSTALL}/.image/${KERNEL_TARGET}
-    fi
-
-    mkdir -p ${INSTALL}/usr/share/bootloader/overlays
-
-    # install platform dtbs, but remove upstream kernel dtbs (i.e. without downstream
-    # drivers and decent USB support) as these are not required by LibreELEC
-    for dtb in arch/${TARGET_KERNEL_ARCH}/boot/dts/*.dtb arch/${TARGET_KERNEL_ARCH}/boot/dts/*/*.dtb; do
-      if [ -f ${dtb} ]; then
-        cp -v ${dtb} ${INSTALL}/usr/share/bootloader
-      fi
-    done
-    rm -f ${INSTALL}/usr/share/bootloader/bcm283*.dtb
-    # duplicated in overlays below
-    safe_remove ${INSTALL}/usr/share/bootloader/overlay_map.dtb
-
-    # install overlay dtbs
-    for dtb in arch/arm/boot/dts/overlays/*.dtb \
-               arch/arm/boot/dts/overlays/*.dtbo; do
-      cp ${dtb} ${INSTALL}/usr/share/bootloader/overlays 2>/dev/null || :
-    done
-    cp -p arch/${TARGET_KERNEL_ARCH}/boot/dts/overlays/README ${INSTALL}/usr/share/bootloader/overlays
   fi
   makeinstall_host
 }

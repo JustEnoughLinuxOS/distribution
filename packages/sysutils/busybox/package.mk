@@ -133,10 +133,6 @@ makeinstall_target() {
     sed -e "s/@DISTRONAME@/${DISTRONAME}/g" \
         -i ${INSTALL}/usr/lib/jelos/fs-resize
 
-    if listcontains "${FIRMWARE}" "rpi-eeprom"; then
-      cp ${PKG_DIR}/scripts/rpi-flash-firmware ${INSTALL}/usr/lib/jelos/
-    fi
-
   mkdir -p ${INSTALL}/etc
     cp ${PKG_DIR}/config/profile ${INSTALL}/etc
     cp ${PKG_DIR}/config/inputrc ${INSTALL}/etc
@@ -189,8 +185,6 @@ post_install() {
   enable_service show-version.service
   enable_service var.mount
   enable_service proc-sys-fs-binfmt_misc.mount
-
-  listcontains "${FIRMWARE}" "rpi-eeprom" && enable_service rpi-flash-firmware.service
 
   # cron support
   if [ "$CRON_SUPPORT" = "yes" ] ; then

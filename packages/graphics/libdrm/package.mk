@@ -37,9 +37,6 @@ listcontains "${GRAPHIC_DRIVERS}" "radeonsi" &&
 listcontains "${GRAPHIC_DRIVERS}" "vmware" &&
   PKG_MESON_OPTS_TARGET+=" -Dvmwgfx=enabled" || PKG_MESON_OPTS_TARGET+=" -Dvmwgfx=disabled"
 
-listcontains "${GRAPHIC_DRIVERS}" "vc4" &&
-  PKG_MESON_OPTS_TARGET+=" -Dvc4=enabled" || PKG_MESON_OPTS_TARGET+=" -Dvc4=disabled"
-
 listcontains "${GRAPHIC_DRIVERS}" "freedreno" &&
   PKG_MESON_OPTS_TARGET+=" -Dfreedreno=enabled" || PKG_MESON_OPTS_TARGET+=" -Dfreedreno=disabled"
 
