@@ -35,6 +35,16 @@ trap '' 2
 # Bring in OS variables.
 . /etc/os-release
 
+# Initialize controller input
+/usr/bin/control-gen_init.sh
+source /storage/.config/gptokeyb/control.ini
+get_controls
+
+if [ -f "/etc/installer.gptk" ]
+then
+  cp /etc/installer.gptk /storage/.config/gptokeyb/installer.gptk
+  ${GPTOKEYB} "installer" -c "/storage/.config/gptokeyb/installer.gptk" &
+fi
 
 dbglg() {
   # Acts just like echo cmd, with automatic redirection
@@ -567,6 +577,8 @@ while true; do
   clear
   menu_main
 done
+
+kill -9 $(pidof gptokeyb) 2>/dev/null
 
 # exit cleanly
 exit 0

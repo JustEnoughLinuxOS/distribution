@@ -24,8 +24,8 @@ post_makeinstall_target() {
   mkdir -p ${INSTALL}/etc/iptables/
     cp -PR ${PKG_DIR}/config/* ${INSTALL}/etc/iptables/
 
-  mkdir -p ${INSTALL}/usr/lib/coreelec
-    cp ${PKG_DIR}/scripts/iptables_helper ${INSTALL}/usr/lib/coreelec
+  mkdir -p ${INSTALL}/usr/lib/jelos/
+    cp ${PKG_DIR}/scripts/iptables_helper ${INSTALL}/usr/lib/jelos/
 }
 
 post_install() {

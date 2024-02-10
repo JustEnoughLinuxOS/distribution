@@ -40,10 +40,10 @@
   # Default weston terminal font size
     WESTONFONTSIZE="18"
 
-  # Mesa 3D Graphic drivers to use (all / crocus,i915,iris,r300,r600,radeonsi,vmware,virtio)
+  # Mesa 3D Graphic drivers to use (all / crocus,i915,iris,r300,r600,radeonsi,virtio)
   # Space separated list is supported,
-  # e.g. GRAPHIC_DRIVERS="crocus i915 iris r300 r600 radeonsi vmware virtio"
-    GRAPHIC_DRIVERS="crocus i915 iris r300 r600 radeonsi vmware virtio"
+  # e.g. GRAPHIC_DRIVERS="crocus i915 iris r300 r600 radeonsi virtio"
+    GRAPHIC_DRIVERS="crocus i915 iris r300 r600 radeonsi virtio"
 
   # additional packages to install
   #  ADDITIONAL_PACKAGES=""

@@ -9,19 +9,19 @@ hostnamectl --transient hostname ${HOSTNAME}
 avahi-set-host-name ${HOSTNAME}
 
 # setup /etc/hosts
-rm -f /run/libreelec/hosts
+rm -f /run/jelos/hosts
 if [ -f /storage/.config/hosts.conf ]; then
-  cat /storage/.config/hosts.conf > /run/libreelec/hosts
+  cat /storage/.config/hosts.conf > /run/jelos/hosts
 fi
 
 # setup /etc/resolv.conf
-rm -f /run/libreelec/resolv.conf
+rm -f /run/jelos/resolv.conf
 if [ -f /storage/.config/resolv.conf ]; then
-  cat /storage/.config/resolv.conf > /run/libreelec/resolv.conf
+  cat /storage/.config/resolv.conf > /run/jelos/resolv.conf
 elif [ -f /dev/.kernel_ipconfig -a -f /proc/net/pnp ]; then
-  cat /proc/net/pnp > /run/libreelec/resolv.conf
+  cat /proc/net/pnp > /run/jelos/resolv.conf
 else
-  cat << EOF > /run/libreelec/resolv.conf
+  cat << EOF > /run/jelos/resolv.conf
 nameserver 8.8.8.8
 nameserver 8.8.4.4
 EOF

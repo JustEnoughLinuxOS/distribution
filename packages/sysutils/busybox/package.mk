@@ -127,15 +127,11 @@ makeinstall_target() {
     cp ${PKG_DIR}/scripts/pastebinit ${INSTALL}/usr/bin/
     ln -sf pastebinit ${INSTALL}/usr/bin/paste
 
-  mkdir -p ${INSTALL}/usr/lib/coreelec
-    cp ${PKG_DIR}/scripts/functions ${INSTALL}/usr/lib/coreelec
-    cp ${PKG_DIR}/scripts/fs-resize ${INSTALL}/usr/lib/coreelec
+  mkdir -p ${INSTALL}/usr/lib/jelos/
+    cp ${PKG_DIR}/scripts/functions ${INSTALL}/usr/lib/jelos/
+    cp ${PKG_DIR}/scripts/fs-resize ${INSTALL}/usr/lib/jelos/
     sed -e "s/@DISTRONAME@/${DISTRONAME}/g" \
-        -i ${INSTALL}/usr/lib/coreelec/fs-resize
-
-    if listcontains "${FIRMWARE}" "rpi-eeprom"; then
-      cp ${PKG_DIR}/scripts/rpi-flash-firmware ${INSTALL}/usr/lib/libreelec
-    fi
+        -i ${INSTALL}/usr/lib/jelos/fs-resize
 
   mkdir -p ${INSTALL}/etc
     cp ${PKG_DIR}/config/profile ${INSTALL}/etc
@@ -189,8 +185,6 @@ post_install() {
   enable_service show-version.service
   enable_service var.mount
   enable_service proc-sys-fs-binfmt_misc.mount
-
-  listcontains "${FIRMWARE}" "rpi-eeprom" && enable_service rpi-flash-firmware.service
 
   # cron support
   if [ "$CRON_SUPPORT" = "yes" ] ; then

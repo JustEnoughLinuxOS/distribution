@@ -14,14 +14,6 @@ PKG_LONGDESC="A collection of utilities to handle ELF objects."
 PKG_TOOLCHAIN="autotools"
 PKG_BUILD_FLAGS="+pic"
 
-if [ "${LIBREELEC_VERSION}" = "devel" ]; then
-  PKG_PROGRAMS="--enable-programs --program-prefix="
-  PKG_PROGRAMS_LIST="readelf"
-else
-  PKG_PROGRAMS="--disable-programs"
-  PKG_PROGRAMS_LIST=
-fi
-
 PKG_CONFIGURE_OPTS_HOST="utrace_cv_cc_biarch=false \
                          --disable-programs \
                          --disable-nls \
@@ -32,7 +24,7 @@ PKG_CONFIGURE_OPTS_HOST="utrace_cv_cc_biarch=false \
                          --without-lzma"
 
 PKG_CONFIGURE_OPTS_TARGET="utrace_cv_cc_biarch=false \
-                           ${PKG_PROGRAMS} \
+                           --disable-programs \
                            --disable-nls \
                            --disable-demangler \
                            --disable-debuginfod \
