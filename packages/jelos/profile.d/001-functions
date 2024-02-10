@@ -167,6 +167,7 @@ function get_aspect_ratio() {
   FBHEIGHT=$(fbheight)
 
   ASPECT=$(printf "%.2f" $(echo "(${FBWIDTH} / ${FBHEIGHT})" | bc -l))
+  touch "/var/log/${FBWIDTH}-${FBHEIGHT}-${ASPECT}.ratio"
 
   case ${ASPECT} in
     1.00)

@@ -1,0 +1,25 @@
+--- emulationstation-6430bb1/es-app/src/guis/GuiMenu.cpp	2023-11-16 03:01:25.261350569 +0900
++++ emulationstation/es-app/src/guis/GuiMenu.cpp	2023-11-16 03:03:28.020394553 +0900
+@@ -2005,6 +2005,22 @@ void GuiMenu::openGamesSettings_batocera
+ 		if (SystemData::isNetplayActivated() && ApiSystem::getInstance()->isScriptingSupported(ApiSystem::NETPLAY))
+ 			s->addEntry(_("NETPLAY SETTINGS"), true, [this] { openNetplaySettings(); }, "iconNetplay");
+ 
++		// PPSSPP font change
++		auto pspfont_enabled = std::make_shared<SwitchComponent>(mWindow);
++		bool pfbaseEnabled = SystemConf::getInstance()->get("global.pspfont.enabled") == "1";
++		pspfont_enabled->setState(pfbaseEnabled);
++		s->addWithLabel(_("PPSSPP KOREAN FONT"), pspfont_enabled);
++		s->addSaveFunc([pspfont_enabled] {
++			if (pspfont_enabled->getState() == false) {
++				runSystemCommand("/usr/bin/ppsspp_font.sh", "", nullptr);
++			} else {
++				runSystemCommand("/usr/bin/ppsspp_font.sh enabled", "", nullptr);
++			}
++		bool pspfontenabled = pspfont_enabled->getState();
++		SystemConf::getInstance()->set("global.pspfont.enabled", pspfontenabled ? "1" : "0");
++			SystemConf::getInstance()->saveSystemConf();
++		});
++
+ 	}
+ 
+ 	mWindow->pushGui(s);

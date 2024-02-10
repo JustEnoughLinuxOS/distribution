@@ -1,19 +1,21 @@
-diff -rupN weston.orig/clients/image.c weston/clients/image.c
---- weston.orig/clients/image.c	2024-02-05 14:42:51.052285175 +0000
-+++ weston/clients/image.c	2024-02-05 14:44:09.510805841 +0000
-@@ -402,7 +402,7 @@ image_create(struct display *display, co
+diff --git a/clients/image.c b/clients/image.c
+index 63a5cefb..eedbefa2 100644
+--- a/clients/image.c
++++ b/clients/image.c
+@@ -402,7 +402,7 @@ image_create(struct display *display, const char *filename,
  	widget_set_button_handler(image->widget, button_handler);
  	widget_set_axis_handler(image->widget, axis_handler);
  	window_set_key_handler(image->window, key_handler);
 -	widget_schedule_resize(image->widget, 500, 400);
-+	widget_schedule_resize(image->widget, 380, 320);
++	widget_schedule_resize(image->widget, 480, 320);
  
  	return image;
  }
-diff -rupN weston.orig/clients/meson.build weston/clients/meson.build
---- weston.orig/clients/meson.build	2024-02-05 14:42:51.052285175 +0000
-+++ weston/clients/meson.build	2024-02-05 14:47:27.792730710 +0000
-@@ -270,83 +270,7 @@ foreach t : tools_list
+diff --git a/clients/meson.build b/clients/meson.build
+index 2fe10956..38000b41 100644
+--- a/clients/meson.build
++++ b/clients/meson.build
+@@ -267,77 +267,7 @@ foreach t : tools_list
  endforeach
  
  demo_clients = [
@@ -22,13 +24,7 @@ diff -rupN weston.orig/clients/meson.build weston/clients/meson.build
 -		'basename': 'cliptest',
 -		'dep_objs': [ dep_vertex_clipping, dep_matrix_c ]
 -	},
--	{
--		'basename': 'constraints',
--		'add_sources': [
--			xdg_shell_client_protocol_h,
--			xdg_shell_protocol_c,
--		],
--	},
+-	{ 'basename': 'confine' },
 -	{
 -		'basename': 'content_protection',
 -		'add_sources': [
