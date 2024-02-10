@@ -71,6 +71,14 @@ RK3399:
 	PROJECT=Rockchip DEVICE=RK3399 ARCH=arm ./scripts/build_distro
 	PROJECT=Rockchip DEVICE=RK3399 ARCH=aarch64 ./scripts/build_distro
 
+RK3566-toolchain:
+	DOCKER_WORK_DIR=$(shell if [ -n "${DOCKER_WORK_DIR}" ]; then echo ${DOCKER_WORK_DIR}; else echo "$$(pwd)" ; fi) \
+	DEVICE_ROOT=RK3566 PROJECT=Rockchip DEVICE=RK3566 ARCH=aarch64 ./scripts/build_toolchain_docker_images
+
+RK3566-03w-toolchain:
+	DOCKER_WORK_DIR=$(shell if [ -n "${DOCKER_WORK_DIR}" ]; then echo ${DOCKER_WORK_DIR}; else echo "$$(pwd)" ; fi) \
+	DEVICE_ROOT=RK3566 PROJECT=Rockchip DEVICE=RK3566-03w ARCH=aarch64 ./scripts/build_toolchain_docker_images
+
 update:
 	PROJECT=PC DEVICE=AMD64 ARCH=x86_64 ./scripts/update_packages
 

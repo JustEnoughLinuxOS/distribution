@@ -1,0 +1,42 @@
+#!/bin/bash
+# SPDX-License-Identifier: GPL-2.0-or-later
+# Copyright (C) 2023 Simon-L (based on build_distro script)
+
+###
+### Simple script to build JELOS docker container toolchains
+###
+
+if [ !"${ARCH}" == true ]
+then
+  echo "export ARCH before building."
+  exit 1
+fi
+
+. config/options ""
+. projects/${PROJECT}/devices/${DEVICE}/options
+
+echo "Building toolchain docker image for ${DISTRO} for ${DEVICE}"
+
+BUILD_DIR="build.${DISTRO}-${DEVICE}.${ARCH}"
+TOOLCHAIN_DIR="${BUILD_DIR}/toolchain"
+
+if [ ! -d "${TOOLCHAIN_DIR}" ]
+then
+  echo "${DEVICE} toolchain hasn't been built yet. Aborting."
+  exit 1
+fi
+
+TEMP_TOOLCHAIN="toolchain-${DEVICE}.${ARCH}"
+if [ ! -d "${TEMP_TOOLCHAIN}" ]
+then
+  echo "Copying ${TOOLCHAIN_DIR} to ${TEMP_TOOLCHAIN}... Please be patient!"
+  cp -r ${TOOLCHAIN_DIR} ${TEMP_TOOLCHAIN}
+fi
+
+IMAGE_NAME="justenoughlinuxos/jelos-toolchain:${DEVICE}-${ARCH}"
+docker build -t ${IMAGE_NAME} \
+  --build-arg source_path="${TEMP_TOOLCHAIN}" \
+  --build-arg target_path="${DOCKER_WORK_DIR}/${TOOLCHAIN_DIR}" \
+  -f toolchain.Dockerfile .
+
+rm -rf ${TEMP_TOOLCHAIN}
