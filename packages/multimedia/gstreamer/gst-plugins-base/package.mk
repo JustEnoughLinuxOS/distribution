@@ -15,7 +15,7 @@ pre_configure_target() {
                          -Dtests=disabled \
                          -Dgobject-cast-checks=disabled \
                          -Dpackage-name=gst-plugins-base \
-                         -Dpackage-origin=LibreELEC.tv \
+                         -Dpackage-origin=jelos.org \
                          -Ddoc=disabled \
                          -Dnls=disabled"
 

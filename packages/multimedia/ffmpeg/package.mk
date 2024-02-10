@@ -10,7 +10,7 @@ PKG_LONGDESC="FFmpeg is a complete, cross-platform solution to record, convert a
 
 PKG_VERSION="6.0"
 PKG_URL="http://ffmpeg.org/releases/ffmpeg-${PKG_VERSION}.tar.xz"
-PKG_PATCH_DIRS="kodi libreelec"
+PKG_PATCH_DIRS="jelos"
 
 PKG_PATCH_DIRS+=" v4l2-request v4l2-drmprime"
 
@@ -133,9 +133,6 @@ pre_configure_target() {
 
 if [ "${FFMPEG_TESTING}" = "yes" ]; then
   PKG_FFMPEG_TESTING="--enable-encoder=wrapped_avframe --enable-muxer=null"
-  if [ "${PROJECT}" = "RPi" ]; then
-    PKG_FFMPEG_TESTING+=" --enable-vout-drm --enable-outdev=vout_drm"
-  fi
 else
   PKG_FFMPEG_TESTING="--disable-programs"
 fi
@@ -191,7 +188,6 @@ configure_target() {
               ${PKG_FFMPEG_V4L2} \
               ${PKG_FFMPEG_VAAPI} \
               ${PKG_FFMPEG_VDPAU} \
-              ${PKG_FFMPEG_RPI} \
               --enable-runtime-cpudetect \
               --disable-hardcoded-tables \
               --disable-encoders \

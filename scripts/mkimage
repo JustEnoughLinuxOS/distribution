@@ -127,13 +127,6 @@ e2fsck -n "${LE_TMP}/part2.ext4" >"${SAVE_ERROR}" 2>&1 || show_error
 echo "image: merging part2 into disk image..."
 dd if="${LE_TMP}/part2.ext4" of="${DISK}" bs=512 seek="${STORAGE_PART_START}" conv=fsync,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
 
-# create disk image for virtual appliance
-if [ "${PROJECT}" = "Generic" ]; then
-  echo "image: creating open virtual appliance..."
-  # duplicate ${DISK} so anything we do to it directly doesn't effect original
-  dd if="${DISK}" of="${DISK_BASENAME}.tmp" bs=1M conv=fsync >"${SAVE_ERROR}" 2>&1 || show_error
-fi
-
 # create part1 to format and copy files
 echo "image: creating sparse file for part1..."
 SYSTEM_PART_COUNT=$(( ${SYSTEM_PART_END} - ${SYSTEM_PART_START} + 1 ))
@@ -147,7 +140,7 @@ alias mmd='mmd -i "${LE_TMP}/part1.fat"'
 # create filesystem on part1
 echo "image: creating filesystem on part1..."
 
-if [ "${BOOTLOADER}" = "syslinux" -o "${BOOTLOADER}" = "bcm2835-bootloader" -o "${BOOTLOADER}" = "u-boot" ]; then
+if [ "${BOOTLOADER}" = "syslinux" -o "${BOOTLOADER}" = "u-boot" ]; then
   mformat -i "${LE_TMP}/part1.fat" -v "${DISTRO_BOOTLABEL}" -N "${UUID_SYSTEM//-/}" :: >"${SAVE_ERROR}" 2>&1 || show_error
 fi
 sync
@@ -194,42 +187,6 @@ EOF
   mcopy "${TOOLCHAIN}/share/grub/bootia32.efi" ::/EFI/BOOT
   mcopy "${LE_TMP}/grub.cfg" ::/EFI/BOOT
 
-elif [ "${BOOTLOADER}" = "bcm2835-bootloader" ]; then
-  # create bootloader configuration
-  echo "image: creating bootloader configuration..."
-  cat << EOF > "${LE_TMP}/cmdline.txt"
-boot=UUID=${UUID_SYSTEM} disk=UUID=${UUID_STORAGE} quiet ${EXTRA_CMDLINE}
-EOF
-
-  mcopy "${LE_TMP}/cmdline.txt" ::
-
-  # copy files
-  echo "image: copying files to part1..."
-  mcopy "${TARGET_IMG}/${BUILD_NAME}.kernel" "::/${KERNEL_NAME}"
-  mcopy "${TARGET_IMG}/${BUILD_NAME}.system" ::/SYSTEM
-  mcopy "${RELEASE_DIR}/target/KERNEL.md5" "::/${KERNEL_NAME}.md5"
-  mcopy "${RELEASE_DIR}/target/SYSTEM.md5" ::/SYSTEM.md5
-
-  mcopy "${RELEASE_DIR}/3rdparty/bootloader/bootcode.bin" ::
-  mcopy "${RELEASE_DIR}/3rdparty/bootloader/fixup.dat" ::
-  mcopy "${RELEASE_DIR}/3rdparty/bootloader/start.elf" ::
-  mcopy "${RELEASE_DIR}/3rdparty/bootloader/config.txt" ::
-  mcopy "${RELEASE_DIR}/3rdparty/bootloader/distroconfig.txt" ::
-
-  if [ -f "${RELEASE_DIR}/3rdparty/bootloader/dt-blob.bin" ]; then
-    mcopy "${RELEASE_DIR}/3rdparty/bootloader/dt-blob.bin" ::
-  fi
-
-  for dtb in "${RELEASE_DIR}/3rdparty/bootloader/"*.dtb ; do
-    if [ -f "${dtb}" ]; then
-      mcopy "${dtb}" ::/$(basename "${dtb}")
-    fi
-  done
-
-  if [ -d "${RELEASE_DIR}/3rdparty/bootloader/overlays" ]; then
-    mcopy -s "${RELEASE_DIR}/3rdparty/bootloader/overlays" ::
-  fi
-
 elif [ "${BOOTLOADER}" = "u-boot" -a \( -n "${UBOOT_CONFIG}" -o -n "${SUBDEVICE}" \) ]; then
   # create bootloader configuration
   echo "image: creating bootloader configuration... (u-boot)"
@@ -269,40 +226,6 @@ fsck.fat -n "${LE_TMP}/part1.fat" >"${SAVE_ERROR}" 2>&1 || show_error
 # merge part1 into disk image
 echo "image: merging part1 into disk image..."
 dd if="${LE_TMP}/part1.fat" of="${DISK}" bs=512 seek="${SYSTEM_PART_START}" conv=fsync,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
-
-# finalize virtual appliance
-if [ "${PROJECT}" = "Generic" ]; then
-  # change syslinux default to 'run'
-  echo "image: modifying files on part1 for open virtual appliance..."
-  sed -e "/DEFAULT/ s/installer/run/" -i "${LE_TMP}/syslinux.cfg"
-  sed -e "/set default=/s/\"Installer\"/\"Run\"/" -i "${LE_TMP}/grub.cfg"
-  mcopy "${LE_TMP}/syslinux.cfg" :: >"${SAVE_ERROR}" 2>&1 || show_error
-  mcopy "${LE_TMP}/grub.cfg" ::/EFI/BOOT >"${SAVE_ERROR}" 2>&1 || show_error
-  sync
-  # run fsck
-  echo "image: checking filesystem on part1..."
-  fsck.fat -n "${LE_TMP}/part1.fat" >"${SAVE_ERROR}" 2>&1 || show_error
-  # merge modified part1 into tmp disk image
-  echo "image: merging part1 into open virtual appliance..."
-  dd if="${LE_TMP}/part1.fat" of="${DISK_BASENAME}.tmp" bs=512 seek="${SYSTEM_PART_START}" conv=fsync,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
-  # create vmdk from tmp ${DISK}
-  echo "image: creating vmdk for open virtual appliance..."
-  qemu-img convert -O vmdk -o subformat=streamOptimized "${DISK_BASENAME}.tmp" "${DISK_BASENAME}.vmdk"
-  # generate ovf from template
-  sed -e "s,@DISTRO@,${DISTRO},g" -e "s,@DISK@,${IMAGE_NAME},g" \
-      -e "s,@OVA_SIZE@,$((${OVA_SIZE}*1024*1024)),g" \
-      "${PROJECT_DIR}/${PROJECT}/config/ovf.template" > "${DISK_BASENAME}.ovf"
-  # combine ovf and vmdk into official ova
-  tar -C "${TARGET_IMG}" -cf "${DISK_BASENAME}.ova" "${IMAGE_NAME}.ovf" "${IMAGE_NAME}.vmdk"
-  # create sha256 checksum of ova image
-  (
-    cd "${TARGET_IMG}"
-    sha256sum "${IMAGE_NAME}.ova" > "${IMAGE_NAME}.ova.sha256"
-  )
-  echo "image: cleaning up open virtual appliance..."
-  # remove tmp ${DISK}, vmdk and ovf
-  rm "${DISK_BASENAME}.tmp" "${DISK_BASENAME}.vmdk" "${DISK_BASENAME}.ovf"
-fi
 
 # gzip
 echo "image: compressing..."

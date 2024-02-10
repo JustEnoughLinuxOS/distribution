@@ -70,7 +70,7 @@ if [ -d "${SOURCES}/${PKG_NAME}" -o -d "${PKG_DIR}/sources" ] || pkg_call_exists
   build_msg "CLR_UNPACK" "UNPACK" "${PKG_NAME}" "indent"
 
   # unpack into a unique location as unpacking into a single ${BUILD} directory is not thread-safe
-  PKG_UNPACK_DIR="${BUILD}/.unpack/${PKG_NAME}"
+  PKG_UNPACK_DIR="${BUILD}/.jelos-unpack/${PKG_NAME}"
   rm -rf "${PKG_UNPACK_DIR}"
   mkdir -p "${PKG_UNPACK_DIR}"
 

@@ -1,5 +1,5 @@
 [Unit]
-Description=OpenELEC installer
+Description=JELOS installer
 Requires=basic.target
 After=basic.target
 Conflicts=rescue.target multi-user.target graphical.target

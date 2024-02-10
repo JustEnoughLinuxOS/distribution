@@ -15,9 +15,9 @@ PKG_LONGDESC="OpenGL ES user-space binary for the ARM Mali GPU family"
 PKG_PATCH_DIRS+="${DEVICE}"
 
 if [ "${TARGET_ARCH}" = "aarch64" ]; then
-  INSTARCH="aarch64-jelos-linux-gnu"
+  INSTARCH="aarch64-linux-gnu"
 elif [ "${TARGET_ARCH}" = "arm" ]; then
-  INSTARCH="arm-jelos-linux-gnueabihf"
+  INSTARCH="arm-linux-gnueabihf"
 fi
 
 PKG_CMAKE_OPTS_TARGET+=" -DMALI_ARCH=${INSTARCH}"

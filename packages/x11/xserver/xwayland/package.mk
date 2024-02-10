@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
-# Copyright (C) 2023-present JELOS (https://github.com/JustEnoughLinuxOS/distribution)
+# Copyright (C) 2023-present JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="xwayland"
 PKG_VERSION="7439e9c6c59219335fe35629a90f4fdd49912bcf"
@@ -25,9 +25,9 @@ PKG_MESON_OPTS_TARGET+=" -Dxvfb=false \
                        -Dinput_thread=true \
                        -Dxkb_dir=${XORG_PATH_XKB} \
                        -Dxkb_output_dir="/var/cache/xkb" \
-                       -Dvendor_name="LibreELEC" \
-                       -Dvendor_name_short="LE" \
-                       -Dvendor_web="https://libreelec.tv/" \
+                       -Dvendor_name="JELOS" \
+                       -Dvendor_name_short="JELOS" \
+                       -Dvendor_web="https://jelos.org" \
                        -Dlisten_tcp=false \
                        -Dlisten_unix=true \
                        -Dlisten_local=false \
