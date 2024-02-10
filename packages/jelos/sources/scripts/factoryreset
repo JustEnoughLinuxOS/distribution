@@ -21,6 +21,11 @@ case "${1}" in
     sync
     systemctl reboot
   ;;
+  "audio")
+    systemctl stop pipewire-pulse pipewire-pulse.socket pipewire pipewire.socket wireplumber
+    rm -rf /storage/.local/state /storage/.config/pulse /storage/asound*
+    systemctl reboot
+  ;;
   "ALL")
     swapoff -a 2>/dev/null
     umount /storage/roms 2>/dev/null ||:
