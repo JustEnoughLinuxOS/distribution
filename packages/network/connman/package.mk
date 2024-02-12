@@ -49,7 +49,7 @@ PKG_CONFIGURE_OPTS_TARGET="WPASUPPLICANT=/usr/bin/wpa_supplicant \
 if [ "$WIREGUARD_SUPPORT" = "yes" ]; then
   PKG_CONFIGURE_OPTS_TARGET+=" --enable-wireguard=builtin"
 else
-  PKG_CONGIGURE_OPTS_TARGET+=" --disable-wireguard"
+  PKG_CONFIGURE_OPTS_TARGET+=" --disable-wireguard"
 fi
 
 PKG_MAKE_OPTS_TARGET="storagedir=/storage/.cache/connman \
@@ -77,12 +77,14 @@ post_makeinstall_target() {
         -e "s|^# TetheringTechnologies.*|TetheringTechnologies = wifi|g" \
         -e "s|^# AllowHostnameUpdates.*|AllowHostnameUpdates = false|g" \
         -e "s|^# PersistentTetheringMode.*|PersistentTetheringMode = true|g" \
-        -e "s|^# SingleConnectedTechnology.*|SingleConnectedTechnology = true|g" \
         -e "s|^# NetworkInterfaceBlacklist = vmnet,vboxnet,virbr,ifb|NetworkInterfaceBlacklist = vmnet,vboxnet,virbr,ifb,docker,veth,zt,p2p|g"
 
   mkdir -p ${INSTALL}/usr/share/connman/
     cp ${PKG_DIR}/config/settings ${INSTALL}/usr/share/connman/
 }
+
+# Bounced from above
+#        -e "s|^# SingleConnectedTechnology.*|SingleConnectedTechnology = true|g" \
 
 post_install() {
   add_user system x 430 430 "service" "/var/run/connman" "/bin/sh"

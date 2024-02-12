@@ -15,7 +15,7 @@ PKG_MESON_OPTS_TARGET="-Dlibunwind=disabled \
                        -Dtests=disabled \
                        -Dnls=disabled \
                        -Dpackage-name=gstreamer \
-                       -Dpackage-origin=LibreELEC.tv \
+                       -Dpackage-origin=jelos.org \
                        -Ddoc=disabled"
 }
 

@@ -4,7 +4,7 @@
 
 PKG_NAME="linux"
 PKG_LICENSE="GPL"
-PKG_VERSION="6.7.3"
+PKG_VERSION="6.7.4"
 PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_SITE="http://www.kernel.org"
 PKG_DEPENDS_HOST="ccache:host rdfind:host rsync:host openssl:host"
@@ -19,8 +19,8 @@ PKG_PATCH_DIRS+="${LINUX} ${DEVICE} default"
 PKG_KERNEL_CFG_FILE=$(kernel_config_path) || die
 
 if [ -n "${KERNEL_TOOLCHAIN}" ]; then
-  PKG_DEPENDS_HOST="${PKG_DEPENDS_HOST} gcc-${KERNEL_TOOLCHAIN}:host"
-  PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} gcc-${KERNEL_TOOLCHAIN}:host"
+  PKG_DEPENDS_HOST+=" gcc-${KERNEL_TOOLCHAIN}:host"
+  PKG_DEPENDS_TARGET+=" gcc-${KERNEL_TOOLCHAIN}:host"
   HEADERS_ARCH=${TARGET_ARCH}
 fi
 
@@ -30,10 +30,9 @@ if [ "${PKG_BUILD_PERF}" != "no" ] && grep -q ^CONFIG_PERF_EVENTS= ${PKG_KERNEL_
 fi
 
 if [[ "${TARGET_ARCH}" =~ i*86|x86_64 ]]; then
-  PKG_DEPENDS_TARGET+=" elfutils:host pciutils"
-  PKG_DEPENDS_UNPACK+=" intel-ucode kernel-firmware"
+  PKG_DEPENDS_TARGET+=" elfutils:host pciutils intel-ucode kernel-firmware"
 elif [ "${TARGET_ARCH}" = "arm" -a "${DEVICE}" = "iMX6" ]; then
-  PKG_DEPENDS_UNPACK+=" firmware-imx"
+  PKG_DEPENDS_TARGET+=" firmware-imx"
 fi
 
 if [[ "${KERNEL_TARGET}" = uImage* ]]; then
@@ -286,32 +285,6 @@ makeinstall_target() {
       cp arch/${TARGET_KERNEL_ARCH}/boot/*dtb.img ${INSTALL}/usr/share/bootloader/ 2>/dev/null || :
       [ "${DEVICE}" = "Amlogic-ng" ] && cp arch/${TARGET_KERNEL_ARCH}/boot/dts/amlogic/*.dtb ${INSTALL}/usr/share/bootloader/device_trees 2>/dev/null || :
     fi
-  elif [ "${BOOTLOADER}" = "bcm2835-bootloader" ]; then
-    # RPi firmware will decompress gzipped kernels prior to booting
-    if [ "${TARGET_KERNEL_ARCH}" = "arm64" ]; then
-      pigz --best --force ${INSTALL}/.image/${KERNEL_TARGET}
-      mv ${INSTALL}/.image/${KERNEL_TARGET}.gz ${INSTALL}/.image/${KERNEL_TARGET}
-    fi
-
-    mkdir -p ${INSTALL}/usr/share/bootloader/overlays
-
-    # install platform dtbs, but remove upstream kernel dtbs (i.e. without downstream
-    # drivers and decent USB support) as these are not required by LibreELEC
-    for dtb in arch/${TARGET_KERNEL_ARCH}/boot/dts/*.dtb arch/${TARGET_KERNEL_ARCH}/boot/dts/*/*.dtb; do
-      if [ -f ${dtb} ]; then
-        cp -v ${dtb} ${INSTALL}/usr/share/bootloader
-      fi
-    done
-    rm -f ${INSTALL}/usr/share/bootloader/bcm283*.dtb
-    # duplicated in overlays below
-    safe_remove ${INSTALL}/usr/share/bootloader/overlay_map.dtb
-
-    # install overlay dtbs
-    for dtb in arch/arm/boot/dts/overlays/*.dtb \
-               arch/arm/boot/dts/overlays/*.dtbo; do
-      cp ${dtb} ${INSTALL}/usr/share/bootloader/overlays 2>/dev/null || :
-    done
-    cp -p arch/${TARGET_KERNEL_ARCH}/boot/dts/overlays/README ${INSTALL}/usr/share/bootloader/overlays
   fi
   makeinstall_host
 }

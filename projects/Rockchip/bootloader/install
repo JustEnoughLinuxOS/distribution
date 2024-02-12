@@ -109,8 +109,14 @@ esac
 if [ "${BOOT_INI}" == true ]
 then
   echo "boot: create boot.ini..."
-  cp -f ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/boot/boot.ini ${INSTALL}/usr/share/bootloader/boot.ini
-  sed -i "s~@EXTRA_CMDLINE@~${EXTRA_CMDLINE}~g" ${INSTALL}/usr/share/bootloader/boot.ini
+  if [ -e "${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/boot/boot.ini" ]
+  then
+    cp -f ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/boot/boot.ini ${INSTALL}/usr/share/bootloader/boot.ini
+    sed -i "s~@EXTRA_CMDLINE@~${EXTRA_CMDLINE}~g" ${INSTALL}/usr/share/bootloader/boot.ini
+  else
+    echo "ERROR: No boot.ini found in ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/boot/."
+    exit 1
+  fi
 fi
 
 if [ "${EXT_LINUX_CONF}" == true ]

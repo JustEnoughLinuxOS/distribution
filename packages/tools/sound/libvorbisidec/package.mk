@@ -14,7 +14,7 @@ PKG_TOOLCHAIN="make"
 
 make_target() {
 cd ${PKG_BUILD}
-./autogen.sh HAVE_OGG=no --disable-mmx --prefix=/usr --datadir=/usr/share/ --datarootdir=/usr/share/ --host=armv8a-libreelec-linux --enable-fb --enable-freetype --with-freetype-prefix=${SYSROOT_PREFIX}/usr/ --enable-slang
+./autogen.sh HAVE_OGG=no --disable-mmx --prefix=/usr --datadir=/usr/share/ --datarootdir=/usr/share/ --host=armv8a-linux --enable-fb --enable-freetype --with-freetype-prefix=${SYSROOT_PREFIX}/usr/ --enable-slang
 make 
 }
 

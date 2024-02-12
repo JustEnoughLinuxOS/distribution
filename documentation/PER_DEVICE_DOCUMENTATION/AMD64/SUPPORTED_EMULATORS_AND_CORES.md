@@ -119,7 +119,7 @@ This document describes all available systems emulators and cores available for 
 |Sony|PlayStation 2 (ps2)|2000|`ps2`|.iso .mdf .nrg .bin .img .dump .gz .cso .chd|**pcsx2:** pcsx2-sa (default)<br>**retroarch:** pcsx2<br>|
 |Sony|PlayStation 3 (ps3)|2006|`ps3`|.ps3 .psn|**rpcs3:** rpcs3-sa (default)<br>|
 |Sony|PlayStation Portable (psp)|2004|`psp`|.iso .cso .pbp .chd|**ppsspp:** ppsspp-sa (default)<br>**retroarch:** ppsspp<br>|
-|Sony|PlayStation Vita (psvita)|2011|`launcher`|.sh|**vita3k:** vita3k-sa (default)<br>|
+|Sony|PlayStation Vita (psvita)|2011|`launcher`|.sh .psvita|**vita3k:** vita3k-sa (default)<br>|
 |Sony|PSP Minis (pspminis)|2004|`pspminis`|.iso .cso .pbp|**ppsspp:** ppsspp-sa (default)<br>**retroarch:** ppsspp<br>|
 |Sun Microsystems|J2ME (j2me)|2002|`j2me`|.jar|**retroarch:** freej2me (default)<br>|
 |Various|CHIP-8 / S-CHIP / XO-CHIP (chip-8)|1978|`chip-8`|.ch8 .sc8 .xo8|**retroarch:** jaxe (default)<br>|

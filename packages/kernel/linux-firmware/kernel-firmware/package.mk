@@ -8,6 +8,7 @@ PKG_SITE="https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmwar
 PKG_URL="https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/snapshot/linux-firmware-${PKG_VERSION}.tar.gz"
 PKG_NEED_UNPACK="${PROJECT_DIR}/${PROJECT}/packages/${PKG_NAME} ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/packages/${PKG_NAME}"
 PKG_LONGDESC="kernel-firmware: kernel related firmware"
+PKG_DEPENDS_HOST="toolchain"
 PKG_TOOLCHAIN="manual"
 
 configure_package() {
@@ -66,14 +67,6 @@ makeinstall_target() {
   done
 
   PKG_KERNEL_CFG_FILE=$(kernel_config_path) || die
-
-  # The following files are RPi specific and installed by brcmfmac_sdio-firmware-rpi instead.
-  # They are also not required at all if the kernel is not suitably configured.
-  if listcontains "${FIRMWARE}" "brcmfmac_sdio-firmware-rpi" || \
-     ! grep -q "^CONFIG_BRCMFMAC_SDIO=y" ${PKG_KERNEL_CFG_FILE}; then
-    rm -fr ${FW_TARGET_DIR}/brcm/brcmfmac43430*-sdio.*
-    rm -fr ${FW_TARGET_DIR}/brcm/brcmfmac43455*-sdio.*
-  fi
 
   # brcm pcie firmware is only needed by x86_64
   [ "${TARGET_ARCH}" != "x86_64" ] && rm -fr ${FW_TARGET_DIR}/brcm/*-pcie.*

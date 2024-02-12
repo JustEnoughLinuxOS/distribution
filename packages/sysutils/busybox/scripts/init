@@ -227,7 +227,7 @@ mount_folder() {
 
   mkdir -p /dev/bind_tmp
   mount_common "$target" "/dev/bind_tmp" "rw,noatime"
-  mount_common "/dev/bind_tmp/coreelec_$(basename $2)" "$2" "bind"
+  mount_common "/dev/bind_tmp/jelos_$(basename $2)" "$2" "bind"
   umount /dev/bind_tmp &>/dev/null
 
   [ "$2" = "/flash" ] && mount -o remount,ro /flash
@@ -292,7 +292,7 @@ mount_sysroot() {
 get_project_arch() {
   if [ -f ${1}/etc/os-release ]; then
     . ${1}/etc/os-release
-    echo "${COREELEC_ARCH:-${LIBREELEC_ARCH}}"
+    echo "${OS_ARCH}"
   fi
 }
 
@@ -1225,8 +1225,6 @@ elif [ -f /sysroot/storage/.cache/reset_oe -o -f /sysroot/storage/.cache/reset_x
   INIT_UNIT="--unit=factory-reset.target"
 elif [ -f "${BACKUP_FILE}" ]; then
   INIT_UNIT="--unit=backup-restore.target"
-elif [ -f /sysroot/storage/.rpi_flash_firmware ]; then
-  INIT_UNIT="--unit=rpi-flash-firmware.target"
 fi
 
 # stop output redirection

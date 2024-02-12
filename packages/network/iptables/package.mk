@@ -11,20 +11,9 @@ PKG_LONGDESC="IP packet filter administration."
 PKG_TOOLCHAIN="autotools"
 
 
-case ${DEVICE} in
-  RK356*)
-    PKG_VERSION="1.8.3"
-    PKG_EXTENSION="bz2"
-    PKG_PATCH_DIRS+="4.x"
-    PKG_CONFIGURE_OPTS_TARGET="--with-kernel=$(kernel_path)
-    CPPFLAGS=-I${SYSROOT_PREFIX}/usr/include"
-  ;;
-  *)
-    PKG_VERSION="1.8.9"
-    PKG_EXTENSION="xz"
-    PKG_PATCH_DIRS+="5.x"
-  ;;
-esac
+PKG_VERSION="1.8.9"
+PKG_EXTENSION="xz"
+PKG_PATCH_DIRS+="5.x"
 
 PKG_URL="https://www.netfilter.org/projects/iptables/files/${PKG_NAME}-${PKG_VERSION}.tar.${PKG_EXTENSION}"
 
@@ -35,8 +24,8 @@ post_makeinstall_target() {
   mkdir -p ${INSTALL}/etc/iptables/
     cp -PR ${PKG_DIR}/config/* ${INSTALL}/etc/iptables/
 
-  mkdir -p ${INSTALL}/usr/lib/coreelec
-    cp ${PKG_DIR}/scripts/iptables_helper ${INSTALL}/usr/lib/coreelec
+  mkdir -p ${INSTALL}/usr/lib/jelos/
+    cp ${PKG_DIR}/scripts/iptables_helper ${INSTALL}/usr/lib/jelos/
 }
 
 post_install() {

@@ -20,13 +20,13 @@
   DESCRIPTION="An Open Source firmware."
 
 # Distribution Home URL
-  HOME_URL="https://www.jelos.org"
+  HOME_URL="https://jelos.org"
 
 # Documentation URL
-  WIKI_URL="https://www.jelos.org"
+  WIKI_URL="https://jelos.org"
 
 # Where to report bugs
-  BUG_REPORT_URL="https://www.jelos.org"
+  BUG_REPORT_URL="https://jelos.org"
 
 # Root password to integrate in the target system
   ROOT_PASSWORD="system generated"
@@ -107,7 +107,7 @@
   CONTAINER_SUPPORT="${CONTAINER_SUPPORT:-no}"
 
 # Support for debug tools such as strace
-  DEBUG_SUPPORT="${DEBUG_SUPPORT:-yes}"
+  DEBUG_PACKAGES="${DEBUG_PACKAGES:-yes}"
 
 # Windowmanager to use (fluxbox / none)
   WINDOWMANAGER="none"

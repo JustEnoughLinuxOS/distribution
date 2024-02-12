@@ -6,16 +6,26 @@
 . /etc/profile
 jslisten set "-9 Vita3K"
 
+OUTPUT_PATH="/storage/.config/vita3k/launcher"
+GAME="${1}"
+
 #Check if vita3k folder exists in /storage/.config/vita3k
 if [ ! -d "/storage/.config/vita3k" ]; then
     mkdir -p "/storage/.config/vita3k"
-        cp -r "/usr/config/vita3k" "/storage/.config/"
 fi
+
+#Make sure we sync any changes from /storage/.config so new features will be enabled
+#without overwriting existing settings.
+rsync -ah --update /usr/config/vita3k/* /storage/.config/vita3k 2>/dev/null
 
 #Check if vita3k folder exists in /storage/roms/psvita
 if [ ! -d "/storage/roms/psvita/vita3k" ]; then
     mkdir -p "/storage/roms/psvita/vita3k"
 fi
 
+if [ -n "${GAME}" ]; then
+  OPTIONS="-r $(cat "${GAME}")"
+fi
+
 #Start Vita3K
-/usr/bin/Vita3K
+/usr/bin/Vita3K ${OPTIONS}

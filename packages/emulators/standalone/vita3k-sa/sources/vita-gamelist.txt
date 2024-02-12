@@ -1,0 +1,2055 @@
+PCSE00965	#KILLALLZOMBIES
+PCSG00891	√Letter
+PCSE00963	√Letter
+PCSB01019	√Letter
+PCSE00890	10 Second Ninja X
+PCSB00963	10 Second Ninja X
+PCSE00349	1001 Spikes
+PCSE00634	2013: Infected Wars
+PCSE00972	2064: Read Only Memories
+PCSE01169	36 Fragments of Midnight
+PCSG00590	5-nin no Koi Prince: Himitsu no Keiyaku Kekkon
+PCSE01168	7'scarlet
+PCSH10090	7'scarlet
+PCSG00876	7'scarlet
+PCSE00914	99Vidas
+PCSE01167	99vidas - Demo
+PCSE00726	A Boy and His Blob
+PCSH10075	A Certain Magical Virtual-On
+PCSG00505	A Good Librarian Like a Good Shepherd -Library Party-
+PCSE01095	A Hole New World
+PCSB01095	A Rose in the Twilight
+PCSE01046	A Rose in the Twilight
+PCSB00955	A Virus Named TOM
+PCSE00501	A Virus Named TOM
+PCSE01389	A Winter's Daydream
+PCSE00232	A-men
+PCSB00056	A-men
+PCSE00324	A-men 2
+PCSB00222	A-men 2
+PCSB00154	A-men Demo
+PCSB00898	A.O.T. Wings of Freedom
+PCSB00960	A.W. : Phoenix Festa
+PCSE00871	A.W. : Phoenix Festa
+PCSE00278	Aabs Animals
+PCSG00591	Abunai Koi no Sousashitsu: Eternal Happiness
+PCSB00792	AC® Chronicles
+PCSE00700	AC® Chronicles
+PCSB01101	Accel World vs. Sword Art Online
+PCSE01071	Accel World vs. Sword Art Online
+PCSG01016	Accel World vs. Sword Art Online
+PCSE01356	Access Denied
+PCSE01448	Active Neurons
+PCSB01008	Active Soccer 2 DX
+PCSB00858	Actual Sunlight
+PCSE00695	Actual Sunlight
+PCSE00582	Adventure Time: the Secret of the Nameless Kingdom
+PCSE00905	Adventures of Mana
+PCSB00975	Adventures of Mana
+PCSG90182	Aegis of Earth Demo
+PCSE00844	Aegis of Earth: Protonovus Assault
+PCSG00362	Aegis of Earth: Protonovus Assault
+PCSG01296	Aerial Life
+PCSE00628	AeternoBlade
+PCSG00483	AeternoBlade
+PCSB00732	AeternoBlade Demo
+PCSE00636	AeternoBlade Demo
+PCSB00412	Age of Zombies
+PCSE00362	Age of Zombies
+PCSG01325	Ai Kiss
+PCSG00940	AIR
+PCSE00980	Air Race Speed
+PCSG00461	Airship Ｑ
+PCSG00338	Aiyoku no Eustia: Angel’s Blessing
+PCSG00780	Akai Suna Ochiru Tsuki
+PCSE00927	Akiba's Beat
+PCSB01066	AKIBA'S BEAT
+PCSG00159	AKIBA'S TRIP 2
+PCSH00057	AKIBA'S TRIP 2
+PCSE00428	AKIBA'S TRIP UNDEAD & UNDRESSED
+PCSG90191	ALIA's CARNIVAL! Sacramento Trial
+PCSE00210	Alien Breed
+PCSE00445	Alien Shooter
+PCSB00964	Alone With You
+PCSE00887	Alone With You
+PCSB01457	Alphaset by POWGI
+PCSH10271	Alphaset by POWGI
+PCSE01493	Alphaset by POWGI
+PCSB01187	Alteric
+PCSG01243	Alvastia Chronicles
+PCSG01086	Amaekata wa Kanojo Nari ni.
+PCSG01293	Amamane
+PCSG00638	Amatsumi Sora ni! Kumo no Hatate ni
+PCSG01138	Amenity's Life
+PCSG90299	Amenity's Life -アメニティーズ ライフ- 体験版
+PCSG00403	AMNESIA LATER×CROWD V Edition
+PCSB00740	Amnesia Memories
+PCSG00203	AMNESIA V Edition
+PCSG00276	AMNESIA World
+PCSE00647	Amnesia: Memories
+PCSG00696	Angelique Retour
+PCSE00322	Angry Birds Trilogy
+PCSB00397	Angry Birds™ Star Wars
+PCSE00294	Angry Birds™ Star Wars
+PCSG00342	Anoko wa Ore Kara Hanarenai
+PCSE00472	Another World - 20th Anniversary Edition
+PCSE01147	Antiquia Lost
+PCSG00700	Ao no Kanata Four Rhythm
+PCSG90180	Ao no Kanata no Four Rhythm Trial Version
+PCSG01281	Aoki Tsubasa no Chevalier
+PCSG01283	Aonatsu Line
+PCSG00848	Aqua Kitty - Milk Mine Defender DX
+PCSB00798	Ar nosurge Plus: Ode to an Unborn Star
+PCSE00707	AR Nosurge Plus: Ode to an Unborn Star
+PCSG00751	Arcana Famiglia -La storia della Arcana Famiglia- Ancora
+PCSE00427	Arcana Heart 3 LOVE MAX!!!!!
+PCSG00328	Arcana Heart 3: LOVE MAX!!!!!
+PCSB00050	Army Corps of Hell
+PCSE00006	ARMY CORPS OF HELL
+PCSE01379	Asdivine Dios
+PCSE00968	Asdivine Hearts
+PCSE01335	Asdivine Hearts II
+PCSE01419	Asdivine Menace
+PCSE00007	Asphalt: Injection
+PCSG00116	Assassin's Creed® III Lady Liberty
+PCSB00074	Assassin's Creed® III Liberation
+PCSE00053	Assassin's Creed® III Liberation
+PCSG90030	Assault Army
+PCSG90032	Assault Gunners Trial Version
+PCSG00901	AstralAir no Shiroki Towa: White Eternity
+PCSG90248	AstralAir no Shiroki Towa: White Eternity Trial Version
+PCSE01333	Atari Flashback Classics
+PCSE00584	Atelier Ayesha Plus ~The Alchemist of Dusk~
+PCSB00700	Atelier Ayesha Plus ~The Alchemist of Dusk~
+PCSG00347	Atelier Ayesha Plus: The Alchemist of Dusk
+PCSB00906	Atelier Escha & Logy Plus ~Alchemists of the Dusk Sky~
+PCSG00522	Atelier Escha & Logy Plus: Alchemists of the Dusk Sky
+PCSE00826	Atelier Escha & Logy Plus: Alchemists of the Dusk Sky
+PCSB01087	Atelier Firis ~The Alchemist and the Mysterious Journey~
+PCSE01044	Atelier Firis ~The Alchemist and the Mysterious Journey~
+PCSH10026	Atelier Firis ~The Alchemist and the Mysterious Journey~
+PCSG00929	Atelier Firis: The Alchemist of the Mysterious Journey
+PCSG01116	Atelier Lydie & Suelle: The Alchemists and the Mysterious Paintings
+PCSE00296	Atelier Meruru Plus: The Apprentice of Arland
+PCSB00377	Atelier Meruru Plus: The Apprentice of Arland
+PCSG00171	Atelier Meruru Plus: The Apprentice of Arland
+PCSG01223	Atelier Nelke: The Alchemists and the New Earth
+PCSE00466	Atelier Rorona Plus ~The Alchemist of Arland~
+PCSB00582	Atelier Rorona Plus ~The Alchemist of Arland~
+PCSG00245	Atelier Rorona Plus: The Alchemist of Arland
+PCSE00998	Atelier Shallie Plus - Alchemists of the Dusk Sea
+PCSG00821	Atelier Shallie Plus ~Alchemists of the Dusk Sea~
+PCSB01043	Atelier Shallie Plus ~Alchemists of the Dusk Sea~
+PCSE00892	Atelier Sophie ~The Alchemist of the Mysterious Book~
+PCSB00973	Atelier Sophie ~The Alchemist of the Mysterious Book~
+PCSG00694	Atelier Sophie: The Alchemist of the Mysterious Book
+PCSH00220	Atelier Sophie: The Alchemist of the Mysterious Book
+PCSH00231	Atelier Sophie: The Alchemist of the Mysterious Book
+PCSE00231	Atelier Totori Plus: The Adventurer of Arland
+PCSG00127	Atelier Totori Plus: The Adventurer of Arland
+PCSB00291	Atelier Totori Plus: The Adventurer of Arland
+PCSB00274	Atomic Ninjas
+PCSE00274	Atomic Ninjas
+PCSG00762	Attack on Titan
+PCSE00812	Attack on Titan
+PCSG01102	Attack on Titan 2
+PCSE00780	Attractio
+PCSE01367	Awesome Pea
+PCSE01474	Awesome Pea 2
+PCSB00779	Axiom Verge
+PCSG00666	Ayakashi Gohan: Oomori!
+PCSG01175	Azayaka na Irodori no Naka de, Kimi Rashiku
+PCSE00861	Azkend 2: The World Beneath
+PCSG00711	Baboon!
+PCSE01343	Back in 1995
+PCSE00706	Back to Bed
+PCSB00468	Backgammon Blitz
+PCSB01092	Bad Apple Wars
+PCSE01042	Bad Apple Wars
+PCSB00669	BADLAND: Game of the Year Edition
+PCSG00425	Bakumatsu Rock: Ultra Soul
+PCSB01406	Balthazar's Dream
+PCSG01123	Banbutsu Otome * Dungeons
+PCSG00708	Bara ni Kakusareshi Verite
+PCSG01006	Bard's Gold
+PCSB00911	Baseball Riot
+PCSE00790	Bastion
+PCSB00353	Batman: Arkham Origins Blackgate
+PCSE00444	Battalion Commander
+PCSE01478	Battle Rockets
+PCSG00244	Beast Tamer and Prince
+PCSG00604	Beast Tamer and Prince ～Flower ＆ Snow～
+PCSG00539	Believer!
+PCSE00024	Ben 10™ Galactic Racing
+PCSG01221	Beniiro Tenjou Ayakashi Kitan Futaai
+PCSF00251	Bentley's Hackpack™
+PCSB01085	BERSERK and the Band of the Hawk
+PCSE00377	Best of Arcade Games
+PCSB00648	Best Of Arcade Games (FULL)
+PCSE01495	Big Dipper
+PCSE00091	Big Sky Infinity
+PCSF00351	BigFest™
+PCSG00389	Binary Star
+PCSB01105	Bit Dungeon Plus
+PCSE00302	BIT.TRIP Presents... Runner2: Future Legend of Rhythm Alien
+PCSG90096	Bitter Smile Trial
+PCSG00242	Bitter smile.
+PCSG00468	black butterfly psychedelia
+PCSG00935	BLACK WOLVES SAGA -Weiβ und Schwarz-
+PCSB00420	Blast 'Em Bunnies
+PCSG00180	BLAZBLUE CHRONOPHANTASMA
+PCSG00582	BLAZBLUE CHRONOPHANTASMA EXTEND
+PCSB00042	BlazBlue Continuum Shift Extend
+PCSG00003	BLAZBLUE CONTINUUM SHIFT EXTEND
+PCSE00279	BlazBlue: ChronoPhantasma
+PCSE00677	BlazBlue: Chronophantasma Extend
+PCSE00018	BlazBlue: Continuum Shift EXTEND
+PCSE01457	Blind Men
+PCSB01250	Bloodstained: Curse of the Moon
+PCSE00663	Bloxiq
+PCSG00987	BLUE REFLECTION(幻に舞う少女の剣)
+PCSE00864	Blue-Collar Astronaut
+PCSE01019	Bodycheck
+PCSG01205	Boku to Nurse no Kenshuu Nisshi
+PCSG00797	Boku wa Mori Sekai no Kami Tonaru
+PCSB00741	Bombing Busters
+PCSE01368	Bonds of the Skies
+PCSG00259	BOOLINK
+PCSF00570	Borderlands 2
+PCSE00383	Borderlands 2
+PCSE00604	Boss
+PCSE01349	Bouncy Bullets
+PCSE00641	Breach & Clear
+PCSE00225	BreakQuest: Extra Evolution
+PCSB00265	BreakQuest: Extra Evolution
+PCSE01429	Breeder Homegrown
+PCSE00869	Bridge Constructor
+PCSE00657	Broken Age
+PCSE01517	Brotherhood United
+PCSG00755	BROTHERS CONFLICT Precious Baby
+PCSE01455	Bucket Knight
+PCSG00361	Bullet Girls
+PCSG00568	Bullet Girls 2
+PCSH10099	Bullet Girls Phantasia
+PCSB01110	Bunny Must Die! Chelsea and the 7 devils
+PCSG90261	Bunny Must Die! Chelsea and the 7devils. Trial version
+PCSH10053	BURIED STARS
+PCSE01135	Burly Men At Sea
+PCSE00117	Burn the Rope
+PCSG01197	Cafe Cuillere
+PCSB00213	Call of Duty: Black Ops: Declassified
+PCSG00135	Call of Duty® Black Ops: Declassified
+PCSE00097	Call of Duty® Black Ops: Declassified
+PCSB00232	Call of Duty® Black Ops: Declassified
+PCSG00450	Captain Earth: Mind Labyrinth
+PCSE00946	Castle Invasion: Throne Out
+PCSB00111	CastleStorm
+PCSG01179	Catherine: Full Body
+PCSG90323	Catherine: Full Body Trial Verison
+PCSH00099	CatsBlock Vestival
+PCSB00573	Cel Damage HD
+PCSE00422	Cel Damage HD
+PCSG00409	Chain Chronicle V
+PCSG00497	Chaos Rings I
+PCSG00498	Chaos Rings II
+PCSG00500	Chaos Rings III
+PCSG00457	Chaos Rings III Prequel Trilogy
+PCSG00499	Chaos Rings Ω
+PCSE01022	Chaos;Child
+PCSG00555	Chaos;Child
+PCSB01075	CHAOS;CHILD
+PCSG90169	Chaos;Child Demo
+PCSG00995	Chaos;Child: Love Chuchu!!
+PCSG00411	Chaos;Head Dual
+PCSG00435	Chaos;Head Love Chu*Chu!
+PCSG00434	Chaos;Head Noah
+PCSG01150	Charade Maniacs
+PCSE01031	Chasm
+PCSB01233	Chicken Range
+PCSB00598	Child of Light
+PCSE00480	Child of Light
+PCSG00850	Chou Ezaru wa Akai Hana: Koi wa Tsuki ni Shirube Kareru
+PCSG00644	Chou Jigen Taisen Neptune VS Sega Hard Girls: Yume no Gattai Special
+PCSG00234	Chou Megami Shinkou Noire: Gekishin Black Heart
+PCSG00274	Chou no Doku Hana no Kusari Taishou Tsuyakoi Ibun
+PCSG01066	Chouchou Jiken Rhapsodic
+PCSE00044	Chronovolt
+PCSB00102	Chronovolt
+PCSE01281	Chronus Arc
+PCSG00540	ChuSingura46+1 -忠臣蔵46+1- V
+PCSG00454	Ciel Nosurge: Ushinawareta Hoshi e Sasagu Uta
+PCSG00705	Citizens of Earth
+PCSB00686	Citizens of Earth Demo
+PCSE00562	Citizens of Earth Demo
+PCSG00729	ClaDun Returns: This is Sengoku!
+PCSE00999	ClaDun Returns: This is Sengoku!
+PCSE01017	Cladun Returns: This is Sengoku! Demo
+PCSB01067	Cladun Returns: This is Sengoku! Demo
+PCSG90212	Cladun Returns: This is Sengoku! Trial Version
+PCSG00415	CLANNAD
+PCSA00038	Cliff Diving
+PCSG00469	Clock Zero ~Shuuen no Ichibyou~ ExTime
+PCSG00716	Clover Day's ～Making for Happiness.～
+PCSB00303	Coconut Dodge Revitalised
+PCSE00267	Coconut Dodge Revitalised
+PCSB01099	Code: Realize ～Future Blessings～
+PCSE00763	Code: Realize ~Guardian of Rebirth~
+PCSG01110	Code: Realize ~Silver Miracle~
+PCSG00805	Code: Realize ~The Future of Blessings~
+PCSE01278	Code：Realize ～Wintertide Miracles～
+PCSE01011	Collar x Malice
+PCSB01061	Collar×Malice
+PCSB00768	Color Guardians
+PCSE00612	Color Guardians
+PCSE01423	Color Slayer
+PCSE00123	Colors!
+PCSE00376	CONCEPTION II: Children of the Seven Stars
+PCSB00547	Conception II: Children of the Seven Stars Demo
+PCSE00425	Conception II: Children of the Seven Stars Demo
+PCSG90087	Conception II: Children of the Seven Stars Demo
+PCSG90092	Conception II: Children of the Seven Stars Demo
+PCSE01406	Conga Master Go
+PCSB01445	Contraptions
+PCSB00822	Corpse Party BLOOD DRIVE
+PCSE00708	Corpse Party BLOOD DRIVE
+PCSG00298	Corpse Party: Blood Drive
+PCSB00840	Corridor Z
+PCSE00854	Corridor Z
+PCSE01232	CosmicStarHeroine
+PCSB00734	Cosmophony
+PCSA00116	Counterspy
+PCSG01246	Coven and Labyrinth of Galleria
+PCSE00222	CRACKLE
+PCSG00941	Crank In
+PCSG90290	Crank In Trial Version
+PCSE00291	Crazy Market
+PCSE00916	Criminal Girls 2 Party Favors
+PCSB00984	Criminal Girls 2 Party Favors
+PCSG00681	Criminal Girls 2: Party Favors
+PCSE00516	Criminal Girls: Invite Only
+PCSB00636	Criminal Girls: Invite Only
+PCSE00453	Crimsonland
+PCSG00537	Croixleur Sigma
+PCSE00689	Croixleur Sigma
+PCSG00597	Cross Ange: Rondo of Angels and Dragons tr.
+PCSG00365	CROSS†CHANNEL ～For all people～
+PCSB01331	Crossovers by POWGI
+PCSH10175	Crossovers by POWGI
+PCSE01377	Crossovers by POWGI
+PCSE00806	Crypt of the NecroDancer
+PCSE01464	Crypto by POWGI
+PCSB01432	Crypto by POWGI
+PCSH10240	Crypto by POWGI
+PCSG00169	Cure Mate Club
+PCSE01152	Cursed Castilla (Maldita Castilla EX)
+PCSB01160	Cursed Castilla (Maldita Castilla EX)
+PCSB00853	Curses 'N Chaos
+PCSG01122	D.S.-Dal Segno-
+PCSE01348	Daggerhood
+PCSG00264	Dai-3-Ji Super Robot Taisen Z Jigoku-hen
+PCSG00494	Dai-3-Ji Super Robot Taisen Z Tengoku-hen
+PCSG00372	Daisenryaku Exceed II
+PCSG00779	Daisenryaku Perfect: Senjou no Hasha
+PCSG00504	Daisenryaku: Dai Toua Kouboushi 3
+PCSG00842	Damascus Gear Saikyou Exodus
+PCSE00518	Damascus Gear: Operation Tokyo
+PCSG00292	Damascus Gear: Operation Tokyo
+PCSG90109	Damascus Gear: Operation Tokyo
+PCSG00077	Danball Senki W Release
+PCSG00807	Dance with Devils
+PCSG01152	Dance with Devils My Carol
+PCSG00202	Danganronpa 1&2 Reload
+PCSE00399	Danganronpa 2: Goodbye Despair
+PCSB00514	Danganronpa 2: Goodbye Despair
+PCSE00692	Danganronpa Another Episode: Ultra Despair Girls
+PCSB00788	Danganronpa Another Episode: Ultra Despair Girls
+PCSG00772	Danganronpa Another Episode: Ultra Despair Girls
+PCSE01100	Danganronpa V3: Killing Harmony
+PCSE01105	Danganronpa V3: Killing Harmony Demo
+PCSH10052	Danganronpa V3: Killing Harmony Demo version
+PCSB01130	Danganronpa V3: Killing Harmony Demo version
+PCSE00261	Danganronpa: Trigger Happy Havoc
+PCSB00346	Danganronpa: Trigger Happy Havoc
+PCSG01002	Danjon ni Deai o Motomeru no wa Machigatteiru Darou ka? Infinite Combate
+PCSG01017	Daredemo Shodan ni Nareru Igo Kyoushitsu
+PCSE00792	DARIUSBURST Chronicle Saviours
+PCSE00919	Darkest Dungeon
+PCSG00599	Date-A-Live Twin Edition: Rio Reincarnation
+PCSB00540	Day D Tower Rush
+PCSB00747	Day of the Tentacle Remastered
+PCSE01181	Dead Ahead: Zombie Warfare
+PCSA00151	Dead Nation™
+PCSB00296	DEAD OR ALIVE 5 PLUS
+PCSG00167	DEAD OR ALIVE 5 PLUS
+PCSG00771	Dead Or Alive Xtreme 3 Venus
+PCSH00250	DEAD OR ALIVE Xtreme 3 Venus
+PCSH00281	DEAD OR ALIVE Xtreme 3 Venus Free-to-Play Version
+PCSE00578	Deadman's Cross
+PCSE01279	Death Mark
+PCSE00248	Deathmatch Village
+PCSE00401	Deception IV: Blood Ties
+PCSB00499	Deception IV: Blood Ties
+PCSE00743	Deception IV: The Nightmare Princess
+PCSB00829	Deception IV: The Nightmare Princess
+PCSG00685	DEEMO ~The Last Recital~
+PCSE01041	DEEMO The Last Recital
+PCSE01219	Deep Ones
+PCSB01359	Deep Space Rush
+PCSB01223	Defender's Quest: Valley of the Forgotten DX
+PCSE00889	Delta Strike : First Assault
+PCSE01005	Demetrios - The BIG Cynical Adventure
+PCSE00358	Demon Gaze
+PCSG00043	DEMON GAZE
+PCSG00849	DEMON GAZE 2
+PCSB01150	DEMON GAZE 2
+PCSB01437	Demon's Tier+
+PCSE00639	Dengeki Bunko Fighting Climax
+PCSG00341	Dengeki Bunko: Fighting Climax
+PCSB00763	Dengeki Bunko: Fighting Climax
+PCSG00758	Dengeki Bunko: Fighting Climax Ignition
+PCSE00542	Desert Ashes
+PCSG00959	DESIRE remaster ver.
+PCSF00352	Destiny of Spirits
+PCSA00106	Destiny of Spirits™
+PCSE01249	Devious Dungeon
+PCSB01342	Devious Dungeon 2
+PCSB00953	Dex
+PCSG00272	Diabolik Lovers Limited V Edition
+PCSG00530	Diabolik Lovers: Dark Fate
+PCSG00910	Diabolik Lovers: Lost Eden
+PCSG00826	Diabolik Lovers: Lunatic Parade
+PCSG00476	Diabolik Lovers: More, Blood Limited V Edition
+PCSG00472	Diabolik Lovers: Vandead Carnival
+PCSB00389	Die! Die! Die!
+PCSE00755	Digimon Story Cyber Sleuth
+PCSG00516	Digimon Story: Cyber Sleuth
+PCSH00261	Digimon World: Next Order
+PCSG00792	Digimon World: Next Order
+PCSE00820	Dino Dini's Kick Off
+PCSB00895	Dino Dini's Kick Off
+PCSE00022	Disgaea 3: Absence of Detention
+PCSB00098	Disgaea 3: Absence of Detention
+PCSG00005	Disgaea 3:Return(魔界戦記ディスガイア３ Return)
+PCSE00360	Disgaea 4: A Promise Revisited
+PCSF00309	Disney Epic Mickey : Disney Epic Mickey 2: The Power of Two
+PCSF00308	Disney Epic Mickey 2: The Power of Two
+PCSA00110	Disney's Epic Mickey 2: The Power of Two
+PCSB01165	DISTRAINT: Deluxe Edition
+PCSB00373	Divekick
+PCSE00208	DJMax Technika Tune
+PCSG90047	DJMax Technika Tune Demo
+PCSH00025	DJMax Technika Tune Demo
+PCSC80021	DMM.com
+PCSE00103	Doctor Who: The Eternity Clock
+PCSG00775	Dogimegi Inryoku-Chan: Love & Peace
+PCSG90220	Dogimegi Inryoku-Chan: Love & Peace Trial Version
+PCSA00117	Doki-Doki Universe™
+PCSE00124	Dokuro
+PCSB00215	Dokuro
+PCSB00639	Don't Die, Mr Robot
+PCSE00450	Don't Starve: Giant Edition
+PCSE00327	Doodle Devil
+PCSE00133	Doodle God
+PCSB00556	Doodle Kingdom
+PCSG01100	Doukoku Soshite... Remastered
+PCSB00952	Downwell
+PCSE00873	Downwell
+PCSE00305	Dragon Ball Z: Battle of Z
+PCSB00424	Dragon Ball Z: Battle of Z Demo
+PCSG90095	Dragon Ball Z: Battle of Z Demo
+PCSE00330	Dragon Ball Z: Battle of Z Demo
+PCSE00217	Dragon Fantasy Book 1
+PCSE00299	Dragon Fantasy Book 2
+PCSE00952	Dragon Fantasy: Black Tome of Ice
+PCSE01086	Dragon Fantasy: Volumes of Westeria
+PCSE00447	Dragon Fin Soup
+PCSB00621	Dragon Fin Soup
+PCSG00697	Dragon Quest Builders
+PCSE00912	DRAGON QUEST BUILDERS
+PCSE00934	Dragon Quest Builders Demo
+PCSB00999	Dragon Quest Builders Demo
+PCSG90213	Dragon Quest Builders Demo
+PCSH00270	Dragon Quest Builders Demo
+PCSH00298	Dragon Quest Heroes II
+PCSG90245	Dragon Quest Heroes II Demo
+PCSE01190	Dragon Sinker
+PCSE00019	Dragon's Crown
+PCSG00187	Dragon's Crown
+PCSB00408	Dragon's Crown
+PCSH00050	Dragon's Crown
+PCSG00212	Dragon's Dogma Quest
+PCSE01360	Dragonfly Chronicles
+PCSE01193	Dragooned
+PCSG00420	DRAMAtical Murder re:code
+PCSE00224	Draw Slasher
+PCSG00026	DREAM C CLUB ZERO PORTABLE
+PCSE01365	Dreamwalker
+PCSE00841	Dreii
+PCSB01097	Drive Girls
+PCSE01099	Drive Girls
+PCSE01363	Drowning
+PCSB01404	Duck Souls+
+PCSB00437	Duke Nukem 3D: Megaton Edition
+PCSE00339	Duke Nukem 3D: Megaton Edition
+PCSB01474	Dull Grey
+PCSE00008	Dungeon Hunter: Alliance
+PCSE00944	Dungeon Punks
+PCSE00693	Dungeon Travelers 2
+PCSG00407	Dungeon Travelers 2 : The Royal Library & the Monster Seal
+PCSE00718	Dungeon Travelers 2 Demo
+PCSG90141	Dungeon Travelers 2 Demo
+PCSG00841	Dungeon Travelers 2-2
+PCSG90278	Dungeon Travelers 2-2 Trial Version
+PCSB00824	Dungeon Travelers 2: The Royal Library Demo
+PCSG00482	Durarara!! Relay
+PCSE00332	Dustforce
+PCSB01051	DYING: Reborn
+PCSE00984	Dying：Reborn
+PCSG00860	DYNAMIC CHORD feat.[reve parfait] V edition
+PCSG00915	DYNAMIC CHORD feat.apple-polisher V edition
+PCSG00862	DYNAMIC CHORD feat.KYOHSO V edition
+PCSG00861	DYNAMIC CHORD feat.Liar-S V edition
+PCSG90136	Dynasty Warriors 8 Empires Edit Mode Trial Version
+PCSE00405	Dynasty Warriors 8: Xtreme Legends Complete Edition
+PCSH00058	Dynasty Warriors Gundam Reborn
+PCSE00014	Dynasty Warriors Next
+PCSG00002	Dynasty Warriors Next
+PCSB00108	Dynasty Warriors Next Demo Version
+PCSE00069	Dynasty Warriors Next Demo Version
+PCSG90006	Dynasty Warriors Next Trial Version
+PCSG90018	Dynasty Warriors Next Trial Version
+PCSH00004	Dynasty Warriors Next Trial Version
+PCSE00995	DYNASTY WARRIORS: Godseekers
+PCSH10007	Dynasty Warriors: Godseekers Trial Version
+PCSG90243	Dynasty Warriors: Godseekers Trial Version
+PCSB00084	EA SPORTS FIFA Football Demo
+PCSB00082	EA SPORTS FIFA Football Demo
+PCSB00086	EA SPORTS FIFA Football Demo
+PCSE00059	EA SPORTS FIFA Football Demo
+PCSB00083	EA SPORTS FIFA Football Démo
+PCSE00060	EA SPORTS FIFA Football Démo
+PCSE00055	EA SPORTS FIFA Soccer Demo
+PCSG00039	EA SPORTS™ FIFA Football
+PCSG00432	Earth Defense Force 2: PORTABLE V２
+PCSB00884	Earth Defense Force 2: Invaders from Planet Space
+PCSE00710	Earth Defense Force 2: Invaders from Planet Space
+PCSE00209	Earth Defense Force 2017 Portable
+PCSG00291	EbiKore+ Amagami (エビコレ+ アマガミ)
+PCSA00087	Ecolibrium™
+PCSG00753	Eikoku Tantei Mysteria: The Crown
+PCSG01026	Eiyuu Densetsu: Akatsuki no Kiseki
+PCSG00042	Eiyuu Densetsu: Zero no Kiseki Evolution
+PCSG00316	Eiyuu*Senki
+PCSH00246	Element4l
+PCSB01325	Emerald Shores
+PCSB01443	EMMA: Lost In Memories
+PCSG00963	end sleep
+PCSG90254	End Sleep Trail Version
+PCSB00945	Energy Balance
+PCSE01124	Energy Cycle
+PCSE01192	Energy Invasion
+PCSG01167	Enkan no Memoria: Kakera Tomoshi
+PCSA00140	Entwined™
+PCSG01134	Ephemeral FANTASY ON DARK
+PCSB01431	Epic Word Search Collection
+PCSB01458	Epic Word Search Collection 2
+PCSF00023	Escape Plan
+PCSA00004	Escape Plan™
+PCSE00095	escapeVektor
+PCSE00395	Ethan: Meteor Hunter
+PCSG00817	EVE burst error R
+PCSG01249	EVE rebirth terror
+PCSG01139	Evening Bell of Piofiore
+PCSC00001	Everybody's Golf
+PCSE00941	Exile's End
+PCSG00679	Exist Archive
+PCSB00995	Exist Archive
+PCSE00883	Exist Archive: The Other Side of the Sky
+PCSB01419	Explosive Jake
+PCSG00196	Exstetra
+PCSB00027	F1 2011
+PCSE00002	F1 2011
+PCSA00042	Facebook
+PCSE01051	Factotum90
+PCSG00798	Fairune
+PCSE00955	Fallen Legion
+PCSH00157	Fantasy Hero ~unsigned legacy~
+PCSG00280	FANTASY HERO～unsigned legacy～
+PCSB00333	Farming Simulator
+PCSE00285	Farming Simulator
+PCSE00419	Farming Simulator 14
+PCSH00117	Farming Simulator 14
+PCSB00843	Farming Simulator 16
+PCSE01035	Farming Simulator 18
+PCSE01334	Fast Striker
+PCSB00894	Fat City
+PCSA00156	Fat Princess: Piece of Cake
+PCSF00612	Fat Princess: Piece of Cake
+PCSG00600	Fate/EXTELLA
+PCSG01091	Fate/EXTELLA LINK
+PCSE01254	Fate/EXTELLA LINK
+PCSE00928	Fate/Extella: The Umbral Star
+PCSG00386	Fate/hollow ataraxia
+PCSG00122	Fate/Stay Night [Realta Nua]
+PCSE01282	Fernz Gate
+PCSE00404	Fez
+PCSE00266	Fieldrunners 2
+PCSG00107	FIFA 13 WORLD CLASS SOCCER
+PCSE00263	FIFA 14
+PCSG00201	FIFA 14 WORLD CLASS SOCCER
+PCSG00404	FIFA 15
+PCSE00481	FIFA 15
+PCSE01431	Fifty Words by POWGI
+PCSB01397	Fifty Words by POWGI
+PCSH10211	Fifty Words by POWGI
+PCSE01255	Fill-a-Pix: Phil's Epic Adventure
+PCSB00395	FINAL FANTASY X HD Remaster
+PCSG00219	FINAL FANTASY X HD Remaster
+PCSB00394	Final Fantasy X-2 HD Remaster
+PCSG00220	FINAL FANTASY X-2 HD Remaster
+PCSE00504	Final Horizon
+PCSA00037	Fireworks
+PCSB00656	Flame Over
+PCSE00566	Flame Over
+PCSB00328	Floating Cloud God Saves the Pilgrims in HD!
+PCSG01202	Floral flowlove
+PCSA00114	Flower
+PCSG00459	FLOWERS
+PCSG00739	Flowers Le volume sur ete
+PCSG01187	Flowers Le volume sur hiver
+PCSB00382	Flyhunter Origins
+PCSE00257	Flying Hamster HD
+PCSE00039	Foosball 2012
+PCSB00160	Foosball 2012
+PCSE00797	Forma.8
+PCSE00321	Fort Defense
+PCSB00472	Fort Defense North Menace
+PCSG01131	Fortissimo
+PCSH10065	Fortune Street: Dragon Quest & Final Fantasy 30th Anniversary
+PCSB00522	Foul Play
+PCSA00047	foursquare
+PCSE01437	FoxyLand
+PCSE01438	FoxyLand 2
+PCSE01380	Frane: Dragons' Odyssey
+PCSA00147	Freedom Wars
+PCSC00054	Freedom Wars
+PCSD00087	FREEDOM WARS™
+PCSF00446	FREEDOM WARS™
+PCSG00519	Friend to Lover ～フレラバ～
+PCSA00050	FROBISHER SAYS!™
+PCSE00528	Frozen Synapse Prime
+PCSE00229	Fruit Ninja
+PCSB00273	Fruit Ninja
+PCSG01260	Full Kiss
+PCSB01053	Full Throttle Remastered
+PCSE01261	FullBlast
+PCSE00839	Funk of Titans
+PCSB00421	Furmins
+PCSE00111	Furmins
+PCSG00227	Furuiro Meikyuu Rondo: La Roue de fortune
+PCSG00922	Furuki Yoki Jidai no Boukentan
+PCSB01333	Furwind
+PCSG00569	Fushigi no Chronicle: Furikaerimasen Katsu Madewa
+PCSG01085	Futagoza no Paradox
+PCSE00495	Futuridium EP Deluxe
+PCSG00493	Fuuraiki 3
+PCSG01065	Gakuen Club Himitsu no Nightclub
+PCSG00654	Gakuen K -Wonderful School Days- V Edition
+PCSH00249	Gakusen Toshi Asterisk Festa - Houka Kenran
+PCSG00704	Gal Gunvolt
+PCSE00881	Gal*Gun Double Peace
+PCSG00699	Gal*Gun Double Peace
+PCSB00956	Gal*Gun Double Peace
+PCSG01029	Gal*Gun Double Peace Bilingual
+PCSG01151	GALTIA V Edition
+PCSE01440	Ganbare! Super Strikers
+PCSE00958	GAROU: MARK OF THE WOLVES
+PCSE00981	Geki Yaba Runner
+PCSG00214	Gekijouban Madoka Magicka: The Battle Pentagram
+PCSB00799	Gem Legends
+PCSB00965	GemSmashers 3D
+PCSG00373	Gendai Daisenryaku 2016 ~Chitsujo no Houkai·Haken Kokka Shittsui~
+PCSG00256	GENIMUS
+PCSG00619	Genji Koi Emaki
+PCSG00695	Genkai Tokki: Moero Crystal
+PCSH00301	Genkai Tokki: Moero Crystal
+PCSG00882	Genkai Tokki: Seven Pirates
+PCSG01294	Gensou Rougoku no Kaleidoscope
+PCSB00769	Geometry Wars 3: Dimensions
+PCSB00610	Get Off My Lawn!
+PCSE00421	Get Off My Lawn!
+PCSG00921	Geten no Hana with Yume Akari - Aizouban
+PCSG90098	Getsuei Gakuen -kou-
+PCSG00991	Getsuei no Kusari: Kouran Moratorium
+PCSG00794	Getsuei no Kusari: Sakuran Paranoia
+PCSB01378	Ghoulboy
+PCSE01340	Ghoulboy
+PCSG00419	Ginsei Igo: Next Generation
+PCSG01073	Gintama Rumble
+PCSG00670	Girlfriend (Kari) - Kimi to Sugosu Natsuyasumi
+PCSG00339	Girls und Panzer: Senshado, Kiwamemasu!
+PCSG01277	Gnosia
+PCSG00786	Gochuumon wa Usagi Desu ka??
+PCSG00240	GOD EATER 2
+PCSE00789	GOD EATER 2 RAGE BURST
+PCSG00532	GOD EATER 2 RAGE BURST
+PCSH00133	GOD EATER 2 RAGE BURST
+PCSG00719	GOD EATER RESURRECTION
+PCSH00199	GOD EATER RESURRECTION
+PCSE00801	GOD EATER RESURRECTION
+PCSF00438	God of War® Collection
+PCSA00126	God of War® Collection
+PCSG00831	God Wars: Future Past
+PCSG00367	Goes!
+PCSG00218	Golden Time Vivid Memories
+PCSE00879	Grand Kingdom
+PCSB01372	Grass Cutter
+PCSE00487	Gravity Badgers
+PCSB00525	Gravity Crash Ultra
+PCSC00002	GRAVITY DAZE™
+PCSE01384	Gravity Duck
+PCSB01338	Gravity Duck
+PCSD00035	GRAVITY RUSH
+PCSF00024	GRAVITY RUSH™
+PCSA00011	GRAVITY RUSH™
+PCSF00067	GRAVITY RUSH™ (DEMO)
+PCSB00949	Green Game: Timeswapper
+PCSE00547	Grim Fandango Remastered
+PCSG00206	Grisaia no Kajitsu Le Fruit de la Grisaia
+PCSG00620	Grisaia no kajitsu spinout
+PCSG00421	Grisaia no Meikyuu Le Labyrinthe de la Grisaia
+PCSG01149	Grisaia Phantom Trigger 01 & 02
+PCSG01218	Grisaia Phantom Trigger 03 & 04
+PCSE00033	Guacamelee!
+PCSB00189	Guacamelee!
+PCSB01416	Guard Duty
+PCSG00131	GUILTY GEAR XX ΛCORE PLUS R
+PCSG01013	Gun Gun Pixies
+PCSG00126	Gundam Breaker
+PCSG00412	Gundam Breaker 2
+PCSH00208	Gundam Breaker 3
+PCSH10042	Gundam Breaker 3 BREAK EDITION
+PCSH10041	GUNDAM BREAKER 3 BREAK EDITION
+PCSG00657	Gundam Conquest V
+PCSE01283	GUNDEMONIUMS
+PCSG01289	Gunka o Haita Neko
+PCSE00340	Gunslugs
+PCSB01365	Habroxia
+PCSE01504	Habroxia 2
+PCSG00162	Haiyore! Nyaruko-San
+PCSG00577	Hakuisei Aijou Izonshou
+PCSG01275	Hakuisei Renai Shoukougun Re:Therapy
+PCSE01001	Hakuoki Edo Blossoms
+PCSG00217	Hakuouki Kyouka Roku
+PCSG00605	Hakuouki Reimeiroku
+PCSG00297	Hakuouki SSL: Sweet School Life
+PCSG00930	Hakuouki Yugiroku The Great Banquet of the Members
+PCSG00811	Hakuouki: Shinkai - Hana no Shou
+PCSG00485	Hakuouki's Memoirs Omokagegehana
+PCSE01258	Halloween Forever
+PCSG00855	Hana Oboro ~Sengoku-den Ranki~
+PCSG01024	Hanasaki Work Spring!
+PCSG00576	Hanayaka Nari, Wa ga Ichizoku: Gentou Nostalgie
+PCSG00470	Hanayaka Nari, Wa ga Ichizoku: Modern Nostalgie
+PCSG00451	Hanayamata: Yosakoi Live!
+PCSE00681	Handball 16
+PCSG00992	Harukanaru Toki no Naka de 3 Ultimate
+PCSG00542	Harukanaru Toki no Naka De 6
+PCSG00975	Harukanaru Toki no Naka de 6: Gentou Rondo
+PCSG01157	Harukanaru Toki no Naka de Ultimate
+PCSG01252	Haruoto Alice Gram: Snow Drop
+PCSG00559	Harvest OverRay
+PCSE00653	Hatoful Boyfriend
+PCSE00776	Hatoful Boyfriend: Holiday Star
+PCSG01229	Hatsujou Sprinkle
+PCSE00867	Hatsune Miku Project DIVA X
+PCSE00886	Hatsune Miku Project DIVA X Demo
+PCSE00326	Hatsune Miku: Project DIVA f
+PCSB00419	Hatsune Miku: Project DIVA f
+PCSG00074	Hatsune Miku: Project DIVA f
+PCSB00506	Hatsune Miku: Project DIVA f (DEMO)
+PCSG00205	Hatsune Miku: Project DIVA F 2nd
+PCSB00554	Hatsune Miku: Project DIVA F 2nd
+PCSE00434	Hatsune Miku: Project DIVA F 2nd
+PCSH00115	Hatsune Miku: Project DIVA F 2nd (DEMO)
+PCSG00683	Hatsune Miku: Project Diva X
+PCSB01007	Hatsune Miku: Project DIVA X
+PCSH00239	Hatsune Miku: Project Diva X (DEMO)
+PCSH00176	Hatsune Miku: Project DIVA X (初音未來 -Project DIVA- X)
+PCSB01009	Hatsune Miku: Project DIVA X Demo
+PCSG90214	Hatsune Miku: Project DIVA X Trial (DEMO)
+PCSG00988	Hatsuru Kotonaki Mirai Yori
+PCSG00997	Hatsuyuki Sakura
+PCSA00134	HELLDIVERS™
+PCSE00666	Heroes of Loot
+PCSE01256	Heroes Trials
+PCSG00388	Hideboh: Tap Dance Hero
+PCSG00406	High School DxD: New Fight
+PCSG00517	Higurashi no Naku Koro ni Sui
+PCSG00639	Himawari Pebble in the Sky
+PCSH10186	Himno
+PCSG00688	Himouto! Umaru-chan: Umaru Training Plan
+PCSE00254	HISTORY: Legends of War: Patton
+PCSB00922	Hitman GO: Definitive Edition
+PCSE00846	Hitman GO: Definitive Edition
+PCSG00506	Hitotsu Tobashi Ren’ai V
+PCSB01340	Hoggy2
+PCSA00123	Hohokum
+PCSE00533	Home - A Unique Horror Adventure
+PCSB00687	Home - A Unique Horror Adventure
+PCSG00926	Hoshi ori yume mirai
+PCSA00009	Hot Shots Golf™: World Invitational
+PCSG00200	Hotchkiss
+PCSE00249	Hotline Miami
+PCSB00318	Hotline Miami
+PCSE00402	Hotline Miami 2: Wrong Number
+PCSB00511	Hotline Miami 2: Wrong Number
+PCSB00641	htoL#NiQ －The Firefly Diary-
+PCSE00527	htoL#NiQ －The Firefly Diary-
+PCSE00551	HTR+ Slot Car Simulation
+PCSB00938	HTR+ Slot Car Simulation
+PCSE00996	Hue
+PCSB00246	Hungry Giraffe
+PCSA00007	Hustle Kings
+PCSG00518	Hyakka Ryouran Elixir: Record of Torenia Revival
+PCSG00477	Hyakka Yakou
+PCSE00568	Hyperdevotion Noire Goddess Black Heart
+PCSE00400	Hyperdimension Neptunia PP
+PCSB00515	Hyperdimension Neptunia PP
+PCSG00226	Hyperdimension Neptunia Re;Birth 1
+PCSE00443	Hyperdimension Neptunia Re;Birth 1
+PCSB00626	Hyperdimension Neptunia Re;Birth2
+PCSE00661	Hyperdimension Neptunia Re;Birth3 V GENERATION
+PCSG00486	Hyperdimension Neptunia Re;Birth3: V Century
+PCSG00394	Hyperdimension Neptunia U: Action Unleashed
+PCSB00710	HYPERDIMENSION NEPTUNIA U: Action Unleashed
+PCSE00588	HYPERDIMENSION NEPTUNIA U: Action Unleashed
+PCSG90077	Hyperdimension Neptunia: Producing Perfection Demo
+PCSE01188	I Am The Hero
+PCSG01257	I Am The Hero
+PCSE01358	I and Me
+PCSG00592	I DOLL U -
+PCSG00337	I wanna say that I'm not your brother right now!!
+PCSG00355	IA/VT -COLORFUL-
+PCSE01245	Ice Cream Surfer
+PCSE01177	Iconoclasts
+PCSG00965	id: RebirthSession
+PCSG00865	Idol Death Game TV
+PCSG01094	IDOLiSH7 Twelve Fantasia!
+PCSG00357	If my Heart Had Wings
+PCSG01063	Ikemen Sengoku: Toki o Kakeru Koi - Aratanaru Deai
+PCSG00756	Ikenie to Yuki no Setsuna
+PCSE01418	Illusion of L'Phalcia
+PCSA00113	Imaginstruments
+PCSF00210	Imaginstruments
+PCSG00602	Incognito, Falling in Love ― Snow Moon Flower Love Emaki ―
+PCSE00041	INDOOR SPORTS WORLD
+PCSH00278	Infinita Strada Hana
+PCSG00270	Infinite Stratos 2: Ignition Hearts
+PCSG00584	Infinite Stratos 2: Love and Purge
+PCSB00356	Injustice: Gods Among Us Ultimate Edition
+PCSE00271	Injustice: Gods Among Us Ultimate Edition
+PCSE01237	InkSplosion
+PCSB00157	International Snooker 2012
+PCSA00137	Invizimals: The Alliance
+PCSF00415	Invizimals™ Hidden Challenges
+PCSF00510	Invizimals™: The Resistance
+PCSA00552	Invizimals™: The Resistance
+PCSE00876	iO
+PCSB01029	Iron Sea Defenders
+PCSE01369	Iron Snout
+PCSG01186	IS IT WRONG TO TRY TO PICK UP GIRLS IN A DUNGEON? SHOOTING
+PCSG01000	ISLAND
+PCSB01132	It's Spring Again
+PCSG00932	Itadaki Street: Dragon Quest & Final Fantasy 30th Anniversary
+PCSG01083	Iwaihime Matsuri
+PCSG01297	IxSHE Tell
+PCSG00300	J-Stars Victory VS
+PCSE00595	J-Stars Victory Vs+
+PCSH00136	J-STARS Victory VS+
+PCSB00713	J-STARS Victory VS+
+PCSE01287	Jack N' Jill DX
+PCSB01268	Jack N' Jill DX
+PCSF00250	Jak 3
+PCSA00080	Jak and Daxter Collection
+PCSF00248	Jak and Daxter: The Precursor Legacy
+PCSF00249	Jak II
+PCSB00236	JAZZ Trump's Journey
+PCSE00393	Jet Car Stunts
+PCSB00136	Jet Set Radio
+PCSE00088	Jet Set Radio
+PCSE00213	Jetpack Joyride
+PCSB00244	Jetpack Joyride
+PCSB00664	Jetpack Joyride Deluxe
+PCSE00537	Jetpack Joyride Deluxe
+PCSG00064	Jikkyou Powerful Pro Yakyuu 2012
+PCSG00134	Jikkyou Powerful Pro Yakyuu 2012 Kettei Ban
+PCSG00207	Jikkyou Powerful Pro Yakyuu 2013
+PCSG00416	Jikkyou Powerful Pro Yakyuu 2014
+PCSG00748	Jikkyou Powerful Pro Yakyuu 2016
+PCSG01164	Jikkyou Powerful Pro Yakyuu 2018
+PCSG01045	Jikkyou Powerful Pro Yakyuu Championship 2017
+PCSG01219	Jikkyou Powerful Pro Yakyuu Championship 2018
+PCSG00596	Jinro Game
+PCSE00478	Joe Danger
+PCSE00477	Joe Danger 2: The Movie
+PCSG00390	JUDAS CODE（ジューダス コード）
+PCSE00594	Jungle Rumble: Freedom, Happiness, and Bananas
+PCSB01400	Just a Phrase by POWGI
+PCSH10213	Just a Phrase by POWGI
+PCSE01436	Just a Phrase by POWGI
+PCSB01362	Just Ignore Them
+PCSG00529	Justy x Nasty: Maou Hajime Mashita
+PCSG00635	Jyuzaengi: Engetsu Sangokuden 1+2
+PCSG00381	Kadenz fermata Akkord:fortissimo
+PCSG00501	Kaeru Batake de Tsukamaete
+PCSG00304	Kagero: Darkside Princess
+PCSG00360	Kaihou Shoujo SIN
+PCSG00172	Kajiri Kamui Kagura: Akebono no Hikari
+PCSG01007	Kamaitachi no Yoru: Rinne Saisei
+PCSG00675	Kamen Rider: Battride War Genesis
+PCSG01106	Kamidanomi Shisugite Ore no Mirai ga Yabai.
+PCSG00595	Kamigami no Asobi InFinite
+PCSG00684	KanColle Kai
+PCSG01268	Kannagi no Mori Satsukiame Tsuzuri
+PCSG01182	Kanojo * Step
+PCSG01253	Karigurashi Ren'ai
+PCSG01044	Karumaruka Circle
+PCSG01332	Kawaii Deathu Desu
+PCSG00553	Ken Ga Kimi For V
+PCSG00960	Ken ga Kimi: Momoyo Tsuzuri
+PCSG00829	Kenka Bancho Otome
+PCSG01042	Kenka Bancho Otome : Kanzenmuketsu no My Honey
+PCSG01241	Kenka Bancho Otome 2nd Rumble!!
+PCSE00485	Kick and Fennick
+PCSE00113	KickBeat
+PCSB01354	Kid Tripp
+PCSG00040	Kidou Senshi Gundam Seed: Battle Destiny
+PCSE00473	Kilka Card Gods
+PCSB01477	Killer Dolls United
+PCSG01132	Killers and Strawberries
+PCSD00071	Killzone Mercenary
+PCSC00045	Killzone®: Mercenary
+PCSF00403	Killzone™ Mercenary
+PCSA00107	Killzone™ Mercenary
+PCSF00243	Killzone™ Mercenary
+PCSG01087	Kimi no Hitomi ni Hit Me
+PCSG00913	Kimi o Aogi Otome wa Hime ni
+PCSG01318	Kin-iro Loveriche
+PCSG01124	Kin'iro no Corda 2 ff
+PCSG01212	Kin'iro no Corda 3: AnotherSky feat. Jinnan / Shiseikan / Amane Gakuen
+PCSG01211	Kin'iro no Corda 3: Full Voice Special
+PCSG00774	Kin'iro no Corda 4
+PCSH00275	Kin'iro no Corda 4
+PCSG01245	Kin'iro no Corda: Octave
+PCSE00315	King Oddball
+PCSG00742	Kiss Ato
+PCSG00413	KissBell
+PCSG00478	KLAP!! ~Kind Love And Punish~
+PCSG00970	KLAP!! ~Kind Love And Punish~ Fun Party
+PCSB01409	Knightin'+
+PCSB00929	Knock-knock
+PCSB00169	Knytt Underground
+PCSE00092	Knytt Underground
+PCSE01040	KOI
+PCSG01299	Koisuru Otome to Shugo no Tate: Bara no Seibo
+PCSG00761	Kono Aozora ni Yakusoku o
+PCSG00345	Kono Uta ga Owattara: When This Song is Over
+PCSG00996	Kono Yo no Hate de Koi wo Utau Shoujo YU-NO Original
+PCSG01093	Konosuba - Attack of the Destroyer
+PCSG01265	KonoSuba: Give Education to this Useless Goddess!
+PCSG01028	KonoSuba: Judgment on this Greedy Game!
+PCSG01258	Konosuba: Labyrinth of Hope and the Gathering Adventurers
+PCSG01213	Koshotengai no Hashihime Noma
+PCSG00273	Kud Wafter: Converted Edition
+PCSG00894	Kujiragami no Tearstilla
+PCSE00256	Kung Fu Rabbit
+PCSE01036	Kung Fury: Street Rage
+PCSG01158	Kurenai no Homura Sanada Ninpou Chou
+PCSG00609	Kurogane Kaikijong
+PCSG00641	Kurogane Kaikitan: Ichigoichie
+PCSG90129	Kurogane Kaikitan: Senya Ichiya
+PCSG01288	L'Phalcia no Genei
+PCSE00567	LA-MULANA EX
+PCSE00985	Lara Croft GO
+PCSE00856	Last Wings
+PCSE01085	League of Evil
+PCSH10082	Legend of Heroes: Trails in the Sky 3rd Evolution
+PCSH00178	Legend of Heroes: Trails in the Sky FC Evolution
+PCSE01426	Legend of the Skyfish
+PCSB01392	Legend of the Skyfish
+PCSE00061	LEGO Batman 2: DC Super Heroes
+PCSE00442	Lego Batman 3 Beyond Gotham
+PCSE00057	Lego Harry Potter Years 5-7
+PCSE00587	Lego Jurassic World
+PCSE00237	Lego Legends of Chima Laval’s Journey
+PCSB00764	Lego Marvel's Avengers
+PCSE00384	Lego Ninjago Nindroids
+PCSE00534	Lego Ninjago Shadow Of Ronin
+PCSE00791	Lego Star Wars The Force Awakens
+PCSE00390	Lego The Hobbit
+PCSE00067	Lego The Lord Of The Rings
+PCSB00315	LEGO® MARVEL Super Heroes: Universe in Peril
+PCSE00670	LEGO® MARVEL's Avengers
+PCSA00138	Lemmings™ Touch
+PCSG00405	Lend fleur
+PCSE00216	Let's Fish ! Hooked On
+PCSB00230	Let's Fish! Hooked On
+PCSG00028	Let's Try Bass Fishing FISH ON NEXT
+PCSB00879	Letter Quest Remastered
+PCSB00845	LEVEL 22
+PCSE01010	Lichtspeer
+PCSB01154	Licky The Lucky Lizard Lives Again
+PCSB00336	Limbo
+PCSE00268	Limbo
+PCSE01285	Link-a-Pix Deluxe
+PCSG01319	Link-a-Pix Deluxe
+PCSE01231	Little Adventure on the Prairie
+PCSG00007	Little Busters! Converted Edition (リトルバスターズ！ Converted Edition)
+PCSF00017	Little Deviants
+PCSA00010	Little Deviants™
+PCSB01215	Little Red Lie
+PCSE01218	Little Red Lie
+PCSF00021	LittleBigPlanet™ PlayStation®Vita
+PCSA00017	LittleBigPlanet™ PlayStation®Vita
+PCSA00549	LittleBigPlanet™ PlayStation®Vita Marvel Super Hero Edition
+PCSB00494	Llamasoft TxK
+PCSE01187	London Detective Mysteria
+PCSB00361	Lone Survivor
+PCSE00301	Lone Survivor
+PCSF00441	Looney Tunes™ Galactic Sports
+PCSG00008	Lord of Apocalypse
+PCSG90001	Lord Of Apocalypse ロードの誘い
+PCSE00673	Lost Dimension
+PCSG01314	LOVE CLEAR
+PCSG00422	Love Live! School idol paradise Vol.1 Printemps
+PCSG00423	Love Live! School idol paradise Vol.2 BiBi
+PCSG00424	Love Live! School idol paradise Vol.3 lily white
+PCSG01004	Love of Ren'ai Koutei of LOVE!
+PCSG00667	LOVE:QUIZ - Koisuru Shoujo no Final Answer
+PCSG00336	LOVELY QUEST Unlimited
+PCSG00556	LOVELY×CATION 1&2
+PCSH10290	Luckslinger
+PCSG01165	Lucky Dog 1
+PCSE00247	LUFTRAUSERS
+PCSE00009	Lumines Electronic Symphony
+PCSG00444	Luminous Arc Infinity
+PCSE00857	Lumo
+PCSG00475	M3: Sono Kuroki Hagane /// Mission Memento Mori
+PCSE00212	Machinarium
+PCSG00947	Macross Delta: Scramble
+PCSE00084	Madden NFL 13
+PCSG00221	Magical Beat
+PCSE00464	Magical Beat (DEMO)
+PCSE00749	Mahjong Carnival
+PCSG00029	Mahjong Fight Club: Shinsei Zenkoku Taisen Han
+PCSG00368	Mahou Shoujo Taisen Zanbatsu
+PCSG00456	Mahouka Koukou no Rettousei: Out of Order
+PCSG00856	Maison de Maou
+PCSG00852	Maji-Kyun! Renaissance
+PCSG00652	Majin Shoujo - Chronicle 2D ACT (Japan) (En,Ja,Zh) (PSN)
+PCSG00770	Majo Koi Nikki: Dragon x Caravan
+PCSG01284	Making*Lovers
+PCSG00130	MALICIOUS REBIRTH
+PCSA00127	MALICIOUS™ REBIRTH
+PCSE00736	Maliya
+PCSG00340	MANGA-KA-KERU
+PCSG00448	MARGINAL#4 IDOL OF SUPERNOVA
+PCSG01008	MARGINAL#4 ROAD TO GALAXY
+PCSG00662	Maru Goukaku! Takken Shiken - Heisei 27 Nendohan
+PCSG00898	Mary Skelter: Nightmares
+PCSB01059	Mary Skelter: Nightmares
+PCSE01158	Mecho Tales
+PCSE01264	Mecho Wars: Desert Ashes
+PCSH10177	Mecho Wars: Desert Ashes
+PCSB00921	MegaTagmension Blanc Neptune VS Zombies
+PCSG00578	MegaTagmension Blanc + Neptune VS Zombies
+PCSH00236	MegaTagmension Blanc + Neptune VS Zombies (Asia)
+PCSE00832	MegaTagmension Blanc Neptune VS Zombies
+PCSG00398	Meikyuu Cross Blood: Infinity Ultimate
+PCSG00258	MeiQ
+PCSE00918	MeiQ: Labyrinth of Death
+PCSB00990	MeiQ: Labyrinth of Death
+PCSG00606	MeiQ: Labyrinth of Death
+PCSE01428	Mekabolt
+PCSB01348	MEKORAMA
+PCSG01285	MELLKISS
+PCSG00733	Melty Moment
+PCSG00176	Memories Off 6 Complete
+PCSH10133	Memories Off Innocent Fille
+PCSG01264	Memories Off Innocent Fille for Dearest
+PCSB00313	Men's Room Mayhem
+PCSE00252	Men's Room Mayhem
+PCSE00956	Mercenary Kings
+PCSH10097	METAGAL
+PCSE01080	METAGAL
+PCSE00078	Metal Gear Solid 2: Sons of Liberty HD Edition
+PCSG00081	Metal Gear Solid 3 HD Edition
+PCSE00079	Metal Gear Solid 3: Snake Eater HD Edition
+PCSB00118	Metal Gear Solid HD Collection
+PCSG00972	METAL MAX Xeno
+PCSE00665	METAL SLUG 3
+PCSB00772	METAL SLUG 3
+PCSE00406	Metrico
+PCSH10242	Metropolis: Lux Obscura
+PCSE00010	Michael Jackson The Experience HD
+PCSG00198	Midnight Deluxe
+PCSE01194	Midnight Deluxe
+PCSG01193	Mikagami Sumika no Seifuku Katsudou
+PCSC00052	Miku Miku Hockey
+PCSC00081	Miku Miku Hockey 2.0
+PCSB01393	Miles & Kilo
+PCSE01425	Miles & Kilo
+PCSB01414	Milo's Quest
+PCSE01501	Mind Maze
+PCSG00184	MIND≒0
+PCSE00491	Minecraft: Playstation Vita Edition
+PCSG00302	Minecraft: Playstation Vita Edition
+PCSB00560	Minecraft: PlayStation Vita Edition
+PCSG00581	Minna de Spelunker Z
+PCSC00055	Minna to Issho
+PCSB00544	Minutes™
+PCSG00610	Miracle Girls Festival
+PCSH10169	Mixups by POWGI
+PCSB01332	Mixups by POWGI
+PCSE01378	Mixups by POWGI
+PCSA00002	MLB 12 The Show
+PCSA00065	MLB 13: The Show
+PCSA00511	MLB15 THE SHOW
+PCSB00983	Mobile Suit Gundam Extreme Versus Force
+PCSG00579	Mobile Suit Gundam: Battle Fortress
+PCSG00738	Mobile Suit Gundam: Extreme VS Force
+PCSE00915	Mobile Suit Gundam: Extreme VS-Force
+PCSE01414	Mochi Mochi Boy
+PCSA00001	ModNation™ Racers: Road Trip
+PCSF00002	ModNation™ Racers: Road Trip
+PCSG00989	Moe Moe 2-Ji Daisenryaku 3
+PCSG00065	Moe Moe Daisensou Gendai Ban Plus Plus
+PCSG00378	Monobeno -pure smile-
+PCSB00473	Monster Monpiece
+PCSG00148	Monster Monpiece
+PCSF00651	MonsterBag -
+PCSE00838	MOP: Operation Cleanup
+PCSB00106	Mortal Kombat
+PCSE00023	Mortal Kombat
+PCSG00706	Moshi, Kono Sekai ni Kami-sama ga Iru to suru Naraba.
+PCSB00498	MotoGP 14
+PCSB00316	MotoGP™13
+PCSC00014	MOTORSTORM® RC
+PCSF00046	MotorStorm®RC -
+PCSG00247	Motto Nee, Chanto Shouyo! +Plus
+PCSG00854	Moujuu-tachi to Ohime-sama
+PCSB00530	MouseCraft
+PCSE01002	Mr.Pumpkin Adventure
+PCSB00367	Ms. Germinator
+PCSB00182	MUD - FIM Motocross World Championship™
+PCSB00685	Multiplayer.it
+PCSE00240	Muramasa Rebirth
+PCSB00404	Muramasa Rebirth
+PCSA00153	Murasaki Baby
+PCSF00435	Murasaki Baby™
+PCSC00043	Muryou-ban E-Channel NEW Paint Park
+PCSE01479	Mushroom Heroes
+PCSH10037	Musou Stars
+PCSE01184	Musynx
+PCSB00979	Mutant Mudds Super Challenge
+PCSB01234	Muv-Luv
+PCSE01259	Muv-Luv
+PCSG00776	Muv-Luv
+PCSG00777	Muv-Luv Alternative
+PCSG90203	Muv-Luv Alternative Total Eclipse: Teito Moyu
+PCSE00530	MXGP - The Official Motocross Videogame
+PCSB01463	My Aunt is a Witch
+PCSE01386	My Big Sister
+PCSE00982	My Name Is Mayo
+PCSE00459	My Singing Monsters
+PCSB00958	Mystery Chronicle: One Way Heroics
+PCSG01178	NadeRevo! Nadeshiko Revolution
+PCSG00664	Nanairo Reincarnation
+PCSG01185	Natsuiro Kokoro Log
+PCSG00650	Natsumegu
+PCSB00594	NAtURAL DOCtRINE
+PCSE00460	NAtURAL DOCtRINE
+PCSG00030	NAX Music Player
+PCSB01321	Necrosphere
+PCSE01413	Need a packet?
+PCSE00089	Need For Speed™ Most Wanted
+PCSG00106	Need For Speed™ Most Wanted
+PCSB00183	Need For Speed™ Most Wanted
+PCSG00410	Nekketsu Inou Bukatsu: Trigger Kiss
+PCSG01068	Neo Angelique: Tenshi no Namida
+PCSG00877	Neo ATLAS 1469
+PCSB00910	Neon Chrome
+PCSE01398	Neon Junctions
+PCSG00951	Nep-Nep Connect: Chaos Chanpuru
+PCSG00656	Net High
+PCSE00070	Netflix
+PCSE01236	NeuroVoider
+PCSE01137	NeverEnd
+PCSE00847	Neverending Nightmares
+PCSB00940	Neverending Nightmares
+PCSG00903	New Game! -The Challenge Stage!-
+PCSH10101	New Game! -The Challenge Stage!- Chinese Version
+PCSB00109	New Little King's Story
+PCSE00066	New Little King's Story
+PCSG01204	NG
+PCSG80001	niconico
+PCSE00514	Nidhogg
+PCSH00254	Night of Azure / Yoru no Nai Kuni (無夜國度)
+PCSG00986	Night of Azure 2 / Yoru no Nai Kuni 2
+PCSE01149	Night Trap - 25th Anniversary Edition
+PCSE00895	NightCry
+PCSG00557	Nights of Azure / Yoru no Nai Kuni
+PCSB00705	Nihilumbra
+PCSE00620	Nihilumbra
+PCSG00586	Nihilumbra
+PCSG00082	Nikoli no Puzzle V: Akari
+PCSG00095	Nikoli no Puzzle V: Hashi o Kakero
+PCSG00067	Nikoli no Puzzle V: Heyawake
+PCSG00098	Nikoli no Puzzle V: Hitori ni Shitekure
+PCSG00060	Nikoli no Puzzle V: Kakuro
+PCSG00083	Nikoli no Puzzle V: Masyu
+PCSG00097	Nikoli no Puzzle V: Number Link
+PCSG00068	Nikoli no Puzzle V: Nurikabe
+PCSG00096	Nikoli no Puzzle V: Shikaku ni Kire
+PCSG00061	Nikoli no Puzzle V: Slither Link
+PCSG00094	Nikoli no Puzzle V: Yajilin
+PCSG00044	Nikoli no Sudoku V: Shugyoku no 12 Puzzle
+PCSG01014	Nil Admirari's Balance Kuroyuri Enyoutan
+PCSG00766	Nil Admirari's Balance Teito Illusion Kitan
+PCSE00021	Ninja Gaiden Sigma Plus
+PCSB00097	NINJA GAIDEN Σ PLUS
+PCSG00157	NINJA GAIDEN Σ2 PLUS
+PCSB00294	NINJA GAIDEN Σ2 PLUS
+PCSB00903	Ninja Senki DX
+PCSG01099	Ninja Usagimaru: Two Tails of Adventure
+PCSG01111	Ninki Seiyuu no Tsukurikata
+PCSG00397	Nisekoi: Yomeiri!
+PCSA00150	No Heroes Allowed: No Puzzles Either!™
+PCSG00803	Nobunaga no Yabou 201X
+PCSG00374	Nobunaga no Yabou: Souzou
+PCSG00607	Nobunaga no Yabou: Souzou with Power-Up Kit
+PCSG00741	Nobunaga no Yabou: Tenshouki with Power-Up Kit HD Version
+PCSH00291	Nobunaga's Ambition: Souzou Sengoku Risshiden
+PCSH00171	Nobunaga's Ambition: Sphere of Influence with Power-Up Kit
+PCSG01107	Nora to Oujo to Noraneko Heart
+PCSE01496	Norman's Great Illusion
+PCSG00833	NORN9 ACT TUNE
+PCSG00429	NORN9 LAST ERA
+PCSB00847	NORN9 VAR COMMONS
+PCSE00762	NORN9 VAR COMMONS
+PCSE01173	NORTH
+PCSE00686	Nova-111
+PCSE00828	Nuclear Throne
+PCSE00220	Nun Attack
+PCSE01004	Nurse Love Addiction
+PCSB01054	Nurse Love Addiction
+PCSE01318	Nurse Love Syndrome
+PCSG00150	Oboro Muramasa
+PCSG01021	Occultic;Nine
+PCSE01097	Oceanhorn
+PCSB00825	Octodad: Dadliest Catch
+PCSE00623	Octodad: Dadliest Catch
+PCSE00369	Oddworld: Munch's Oddysee HD
+PCSE00899	Odin Sphere Leifthrasir
+PCSH00218	Odin Sphere Leifthrasir
+PCSB00986	Odin Sphere Leifthrasir
+PCSE00341	OlliOlli
+PCSE00479	OlliOlli2: Welcome to Olliwood
+PCSG00550	Omega Labyrinth
+PCSG00939	Omega Labyrinth Z
+PCSH10044	Omega Labyrinth Z
+PCSE00275	OMG HD Zombies!
+PCSB01213	One Eyed Kutkh
+PCSH10094	One More Dungeon
+PCSG00358	ONE PIECE UNLIMITED WORLD R
+PCSB00557	ONE PIECE Unlimited World Red
+PCSH00034	ONE PIECE 海賊無雙2
+PCSG00743	One Piece: Burning Blood
+PCSE00808	One Piece: Burning Blood
+PCSG00142	One Piece: Pirate Warriors 2
+PCSG00544	One Piece: Pirate Warriors 3
+PCSE00638	ONE PIECE: PIRATE WARRIORS 3
+PCSH00205	One Tap Hero
+PCSB01306	One Word by POWGI
+PCSH10167	One Word by POWGI
+PCSE01338	One Word by POWGI
+PCSG00377	Ooedo Blacksmith
+PCSA00118	OPEN ME!™
+PCSE00579	Operation Abyss: New Tokyo Legacy
+PCSG00387	Operation Abyss: New Tokyo Legacy
+PCSE01047	Operation Babel: New Tokyo Legacy
+PCSG00514	Operation Babel: New Tokyo Legacy
+PCSG00289	Ore ni Hatarakette Iwaretemo Otsu HD
+PCSG00623	Ore ni Hatarakette Iwaretemo Tori
+PCSF00536	Oreshika: Tainted Bloodlines
+PCSC00060	Oreshika: Tainted Bloodlines
+PCSA00155	Oreshika™: Tainted Bloodlines
+PCSG00299	Oretachi ni Tsubasa wa Nai
+PCSG01076	Oretachi no Sekai wa Owatteiru
+PCSG00919	Orfleurs: Koufuku no Hanataba
+PCSB00924	Organ Trail Complete Edition
+PCSG00057	orgarhythm
+PCSE00116	Orgarhythm
+PCSG00427	Othello
+PCSG00487	Otoko Yuukaku
+PCSG00942	Otome Riron to Sono Shuuhen: Bon Voyage
+PCSG01105	Ouka Sabaki Zan
+PCSG00254	Oukaranman
+PCSG00769	Ouma ga Toki: Kakuriyo no Enishi
+PCSG90304	Our World is Ended
+PCSG00728	Owari no Seraph: Unmei no Hajimari
+PCSG00967	Owaru sekai to birthday
+PCSG00496	OZMAFIA!! -vivace-
+PCSB01462	Pachi Pachi
+PCSA00059	Paint Park
+PCSF00137	Paint Park
+PCSA00111	Paint Park Plus
+PCSE00489	Panda Run
+PCSG01247	Panic Palette
+PCSE01056	Papers, Please
+PCSB01084	Papers, Please
+PCSE01401	Paradox Soul
+PCSE00821	Paranautical Activity
+PCSG00549	Parfait
+PCSE01082	Peasant Knight
+PCSE01143	Penny-Punching Princess
+PCSB01060	Period Cube ~Shackle of Amadeus~
+PCSG00853	Period Cube ~Shackle of Amadeus~
+PCSE01012	Period Cube ~Shackles of Amadeus~
+PCSG01031	Persona 3 Dancing in Moonlight
+PCSE01274	Persona 3: Dancing in Moonlight
+PCSB00245	Persona 4 Golden
+PCSE00120	Persona 4 Golden
+PCSG00563	Persona 4 Golden
+PCSG00004	Persona 4 Golden
+PCSH00021	Persona 4 The GOLDEN
+PCSE00764	Persona 4: Dancing All Night
+PCSB00867	Persona 4: Dancing All Night
+PCSG00364	Persona 4: Dancing All Night
+PCSG01030	Persona 5: Dancing in Starlight
+PCSE01275	Persona 5: Dancing in Starlight
+PCSB01257	Persona 5: Dancing in Starlight
+PCSG00351	Phantasy Star Nova
+PCSH00143	Phantasy Star Nova
+PCSG90131	Phantasy Star Nova (DEMO)
+PCSG90130	Phantasy Star Nova Battle (DEMO)
+PCSG00141	Phantasy Star Online 2
+PCSF00718	Phineas and Ferb: Day of Doofenshmirtz
+PCSG00139	PhotoKano Kiss
+PCSG01071	Photon3
+PCSE01376	Pic-a-Pix Classic
+PCSE01435	Pic-a-Pix Classic 2
+PCSE01253	Pic-a-Pix Color
+PCSE01422	Pic-a-Pix Color 2
+PCSE01357	Pic-a-Pix Pieces
+PCSE01466	Pic-a-Pix Pieces 2
+PCSE00065	Pinball Arcade
+PCSA00109	Pinball Heroes: Complete
+PCSF00167	Pinball Heroes: Complete
+PCSE00751	Pirate Solitaire
+PCSB00645	Pix The Cat
+PCSE00553	Pix The Cat
+PCSE00874	Pixel Hunter
+PCSG00269	PixelJunk™ Monsters Ultimate HD
+PCSE00307	PixelJunk™ Monsters Ultimate HD
+PCSG00384	PixelJunk™ Shooter Ultimate
+PCSE00064	Plants vs Zombies
+PCSG00931	Plastic Memories
+PCSA00069	PlayStation All-Stars Battle Royale
+PCSC00032	PlayStation® All-Stars Battle Royale
+PCSF00228	PlayStation® Home Arcade
+PCSA00083	PlayStation® Home Arcade
+PCSA00139	PlayStation®Vita Pets
+PCSE00682	Pocket God vs Desert Ashes
+PCSE00558	Pocket RPG
+PCSG00672	POLARA
+PCSE01050	POLARA
+PCSG00509	Possession Magenta
+PCSG00262	Power Pro Stadium
+PCSG00006	Power Smash 4
+PCSE00961	Pox Nora
+PCSG00905	Priministar
+PCSG00491	Prince of Stride
+PCSG00271	Princess Arthur
+PCSG00188	Princess Strike!
+PCSG00031	Pro Yakyuu Spirits 2012
+PCSG00151	Pro Yakyuu Spirits 2013
+PCSG00288	Pro Yakyuu Spirits 2014
+PCSG00541	Pro Yakyuu Spirits 2015
+PCSG01248	Pro Yakyuu Spirits 2019
+PCSG00572	Project Discovery
+PCSE00311	Proteus
+PCSH10091	Psychedelica of the Ashen Hawk
+PCSE01166	Psychedelica of the Ashen Hawk
+PCSE01164	Psychedelica of the black butterfly
+PCSG00815	PsychicEmotion6
+PCSE00904	PSYCHO-PASS MANDATORY HAPPINESS
+PCSB00985	PSYCHO-PASS MANDATORY HAPPINESS
+PCSE00042	Puddle
+PCSC00021	Puls-AR
+PCSE00702	Pumped BMX +
+PCSG00904	Puramai Wars V
+PCSE00389	Putty Squad
+PCSG00224	Puyo Puyo Tetris
+PCSE00108	Puzzle by Nikoli V Slitherlink
+PCSE00101	Puzzle by Nikoli V Sudoku
+PCSG00045	Puzzle by Nikoli V: Sudoku
+PCSE00561	Q*bert Rebooted
+PCSE00143	Quell Memento
+PCSG01037	Rabi Laby: Puzzle Out Stories
+PCSE01111	Rabi-Ribi
+PCSB00643	Race The Sun
+PCSG01209	Radio Hammer Station
+PCSG00958	Raging Loop
+PCSG00025	Ragnarok Odyssey
+PCSE00300	Ragnarok Odyssey ACE
+PCSG00140	Ragnarok Odyssey ACE
+PCSE00273	Rainbow Moon
+PCSE00318	Rainbow Skies
+PCSE01351	Random Heroes: Gold Edition
+PCSF00484	Ratchet & Clank
+PCSF00485	Ratchet & Clank 2
+PCSF00486	Ratchet & Clank 3
+PCSF00482	Ratchet & Clank Trilogy
+PCSA00086	Ratchet & Clank: Full Frontal Assault
+PCSF00191	Ratchet and Clank : QForce
+PCSE00843	Ray Gigant
+PCSB00928	RAYGIGANT
+PCSE00277	Rayman Legends
+PCSE00052	Rayman® Origins
+PCSG00382	RE:VICE[D]
+PCSG00933	Re:Zero - kara Hajimeru Isekai Seikatsu - Death or Kiss
+PCSE00325	Real Boxing™
+PCSA00012	Reality Fighters™
+PCSG00663	Rear Pheles: Red of Another
+PCSG00782	Reco Love: Gold Beach
+PCSG00781	RecoLove: Blue Ocean
+PCSE01434	Red Bow
+PCSG90210	Red Sand Falling Moon Trial Version
+PCSE01471	Reed 2
+PCSE01456	Reed Remastered
+PCSG00795	Refrain no Chika Meikyuu to Majo no Ryodan
+PCSG00426	Ren’ai 0 Kilometer V
+PCSG00718	Renai Revenge
+PCSG00990	RepKiss
+PCSE00608	Resident Evil: Revelations 2
+PCSF00728	Resident Evil: Revelations 2
+PCSA00008	Resistance: Burning Skies
+PCSF00142	Resistance: Burning Skies™
+PCSA00103	RESOGUN
+PCSF00262	RESOGUN™
+PCSE00075	Retro City Rampage
+PCSE00546	Retro City Rampage DX
+PCSE01322	Revenant Dogma
+PCSE01065	Revenant Saga
+PCSE01229	Reverie
+PCSG00414	Rewrite
+PCSG01043	Rewrite Harvest festa!
+PCSE01251	Riddled Corpses EX
+PCSE00001	Ridge Racer
+PCSG00001	RIDGE RACER
+PCSB00048	RIDGE RACER
+PCSG90003	Ridge Racer 2011 E3 Interactive Demo
+PCSE00548	Ring Run Circus
+PCSG00257	RisingStar
+PCSE00850	Risk of Rain
+PCSG00287	Ro-Kyu-Bu! Naisho no Shutter Chance
+PCSG00352	Robotics;Notes Elite
+PCSH00165	Robotics;Notes Elite
+PCSG90115	Robotics;Notes Elite Demo
+PCSE00761	Rocketbirds 2: Evolution
+PCSE00112	Rocketbirds HBC
+PCSB00571	Rogue Legacy
+PCSE00449	Rogue Legacy
+PCSG00616	Rollers of the Realm
+PCSH00308	Romance of the Three Kingdoms XIII: Fame and Strategy
+PCSG00870	Romancing SaGa 2
+PCSE01094	Romancing SaGa 2
+PCSE01337	Romancing SaGa 3
+PCSE01055	Root Double -Before Crime After Days Xtend Edition
+PCSG01238	Root Letter Last Answer
+PCSG90224	Rosé and the Old Castle of Twilight
+PCSE00699	Roundabout
+PCSE00750	Royal Defense
+PCSE00753	Royal Defense Invisible Threat
+PCSG00229	Rozen Maiden -Wechseln sie welt ab-
+PCSG00216	Rui wa Tomo o Yobu
+PCSA00490	Run Sackboy! Run!
+PCSF00562	Run Sackboy! Run!
+PCSE01387	Rush Rover
+PCSB01464	Russian Subway Dogs
+PCSG00503	Ryū ga Gotoku 0 Free app for PlayStation®Vita
+PCSG00275	Ryū ga Gotoku: Ishin! Free app for PlayStation®Vita
+PCSG00732	Ryuuyoku no Melodia: Diva with the Blessed Dragonol
+PCSG00640	SA7 - Silent Ability Seven -
+PCSG00543	Saenai Heroine no Sodatekata: 〜blessing flowers〜
+PCSG00802	SaGa: Scarlet Grace
+PCSG00906	Saka Agari Hurricane Portable
+PCSG90088	Saka-Ban
+PCSG00646	Saki Zenkoku Hen
+PCSG00908	Saki: Zenkoku-hen Plus
+PCSG01231	Sakura Sakura
+PCSG00129	Sakura-Sou no Pet na Kanojo
+PCSB01072	Salt and Sanctuary
+PCSE01023	Salt and Sanctuary
+PCSG00041	Samurai & Dragons
+PCSE01113	SAMURAI SHODOWN V SPECIAL
+PCSG00279	Samurai Warriors 4
+PCSE00503	Samurai Warriors 4
+PCSE00827	SAMURAI WARRIORS 4 Empires
+PCSE00737	SAMURAI WARRIORS 4-Ⅱ
+PCSE00714	Samurai Warriors: Chronicles 3
+PCSH00152	Samurai Warriors: Chronicles 3
+PCSG00211	San Goku Shi 12 Taisenban
+PCSG00210	San Goku Shi 12 with Power-Up Kit
+PCSG00949	San Goku Shi 13 with Power-Up Kit
+PCSG00863	Sangoku Hime 4: Tenka Ryouran - Tenmei no Koi Emaki
+PCSG00183	Sangoku Rensenki: Otome no Heihou!
+PCSG00785	Sangoku Rensenki: Otome no Heihou! Omoide Gaeshi - CS Edition
+PCSG01194	Sanzen Sekai Yuugi: Re Multi Universe Myself
+PCSC00007	Sawari Makuru!
+PCSG00554	Sayonara UmiharaKawase +
+PCSB00782	Sayonara UmiharaKawase +
+PCSG00745	Scared Rider Xechs Rev.
+PCSG01036	Scarlet Fragments ~Omoiiro no Memories~
+PCSE01355	Scintillatron4096
+PCSE01505	ScourgeBringer
+PCSE00642	Scram Kitty DX
+PCSG00793	SD Gundam G Generation Genesis
+PCSH00241	SD GUNDAM G GENERATION GENESIS
+PCSH00242	SD GUNDAM G GENERATION GENESIS
+PCSE01153	Secret of Mana
+PCSB01163	Secret of Mana
+PCSG00168	Sei Madou Monogatari
+PCSG00460	Seiken Densetsu: Rise of Mana (聖剣伝説RISE of MANA)
+PCSG01127	Sen no Hatou, Tsukisome no Kouki
+PCSG01104	Sengo Muramasa DX: Guren no Kettou
+PCSG00132	Sengoku Hime 3: Tenka o Kirisaku Hikari to Kage
+PCSG00232	Sengoku Hime 4: Souha Hyakkei, Hana Mamoru Chikai
+PCSG00466	Sengoku Hime 5: Senkatatsu Haoh no Keifu
+PCSG01034	Sengoku Hime 7: Sen'un Tsuranuku Guren no Ishi
+PCSG00233	Sengoku Musou 2 with Moushouden & Empires HD Version
+PCSG00471	Sengoku Musou Chronicle 3
+PCSG00867	Sengoku Otome: Legend Battle
+PCSG00428	Senjou no Waltz
+PCSB00602	SENRAN KAGURA Bon Appetit! (Hanzo x Crimson Squad)
+PCSB00882	SENRAN KAGURA ESTIVAL VERSUS
+PCSB00601	SENRAN KAGURA SHINOVI VERSUS
+PCSG00133	Senran Kagura: Shinovi Versus
+PCSE01480	Sense - A Cyberpunk Ghost Story
+PCSG01210	Seven Days: Anata to Sugosu Nanokakan
+PCSE00589	Severed
+PCSE01125	Shakedown Hawaii
+PCSE00950	Shantae: Half-Genie Hero
+PCSG90111	She (That Girl) Can't Leave Me Trial Version
+PCSG01177	Shikihime no Niwa
+PCSG00278	Shin Gundam Musou
+PCSG00380	Shin Hayarigami
+PCSG00897	Shin Hayarigami 2
+PCSG00010	Shin Kamaitachi no Yoru 11 Hitome no Suspect
+PCSG00452	Shin Sangoku Musou 7 Empires
+PCSH00052	Shin Sangoku Musou 7 with Moushouden
+PCSG00893	Shin Sangoku Musou Eiketsuden
+PCSG00764	Shin Sangoku Musou Online Z
+PCSG01282	Shinigami to Shoujo
+PCSG00255	ShinobiAshi
+PCSE00015	Shinobido 2: Revenge of Zen
+PCSG00019	Shinobido 2: Revenge of Zen
+PCSH00001	Shinobido 2: Revenge of Zen
+PCSB00049	Shinobido 2: Revenge of Zen
+PCSG00580	Shinsou-ban Mahou-tsukai to Goshujin-sama
+PCSE00845	Shiren the Wanderer: The Tower of Fortune and the Dice of Fate
+PCSG00944	Shiro to Kuro no Alice
+PCSG01192	Shiro to Kuro no Alice -Twilight line-
+PCSG00846	Shirogane x Spirits!
+PCSG00822	Shitsuji ga Aruji o Erabu Toki
+PCSB00743	Shovel Knight
+PCSE00640	Shovel Knight
+PCSE00923	Shu
+PCSE00705	Shütshimi
+PCSG00588	Sid Meier's Civilization Revolution 2+
+PCSG01001	Side Kicks!
+PCSE00011	Silent Hill: Book of Memories
+PCSB00115	Silent Hill: Book of Memories
+PCSG01259	Silverio Trinity: Beyond the Horizon
+PCSG00329	Simple V Series Vol.2: The Tousou Highway Full Boost: Nagoya
+PCSB00161	Sine Mora
+PCSE00090	Sine Mora
+PCSE01240	Sir Eatsalot
+PCSE00773	Siralim
+PCSB00588	Skeleton Rider
+PCSG00583	Skullgirls 2nd Encore
+PCSE00865	Sky Force Anniversary
+PCSE01054	Skylight Freerange
+PCSE00862	Skylight Freerange 2: Gachduine
+PCSC80009	Skype
+PCSG00048	Slotter Mania V: Black Lagoon
+PCSF00338	Sly 1 & 2
+PCSA00098	Sly 3: Honor Among Thieves™
+PCSF00209	Sly Cooper: Thieves in Time
+PCSF00269	Sly Raccoon™
+PCSF00216	Smart as
+PCSG00787	Snow White in the Mirror Realm
+PCSG01254	Soi Kano: Gyutto Dakishimete
+PCSG01070	Song of Heiligenstadt
+PCSE00056	Sonic & All-Stars Racing Transformed
+PCSB00190	Sonic & All-Stars Racing Transformed™
+PCSE00221	Sonic & All-Stars Racing Transformed™ Demo
+PCSE00314	Sorcery Saga: Curse of the Great Curry God
+PCSG90074	Sorcery Saga: Curse of the Great Curry God
+PCSG00296	Soukai Buccaneers!
+PCSC00039	SOUL SACRIFICE
+PCSC00049	SOUL SACRIFICE DELTA
+PCSD00079	SOUL SACRIFICE DELTA™
+PCSA00152	Soul Sacrifice™ Delta
+PCSF00532	Soul Sacrifice™ Delta
+PCSA00003	Sound Shapes
+PCSF00076	Sound Shapes™
+PCSG00993	Sousei no Onmyouji
+PCSE00295	Sparkle
+PCSE01089	Spellspire
+PCSG00145	Spelunker Collection
+PCSE00288	Spelunky
+PCSB00359	Spelunky
+PCSB00789	Spider: Rite of the Shrouded Moon
+PCSE00577	SpongeBob HeroPants
+PCSE00068	Spy Hunter
+PCSG00128	Spy Hunter™
+PCSG00714	Star Ocean Second Evolution
+PCSC00008	STAR STRIKE DELTA
+PCSB00254	Star Wars Pinball
+PCSE01235	Stardew Valley
+PCSB01226	Stardew Valley
+PCSE00029	StarDrone Extreme
+PCSG00917	Starry☆Sky ～Autumn Stories～
+PCSG00510	Starry☆Sky ～Spring Stories～
+PCSG00916	Starry☆Sky ～Summer Stories～
+PCSG00918	Starry☆Sky ～Winter Stories～
+PCSE01277	STAY
+PCSB01254	STAY
+PCSG01237	STAY
+PCSB00690	Stealth Inc 2: A Game of Clones
+PCSE00575	Stealth Inc 2: A Game of Clones
+PCSB00317	Stealth Inc: A Clone in the Dark
+PCSE00280	Stealth Inc: A Clone in the Dark
+PCSG01062	Steam Prison: Nanatsu no Bitoku
+PCSE01391	Steam Tactics
+PCSB00542	SteamWorld Dig
+PCSE00430	SteamWorld Dig
+PCSE01101	SteamWorld Dig 2
+PCSE00583	SteamWorld Heist
+PCSB00693	SteamWorld Heist
+PCSE00644	Steins;Gate
+PCSG00147	STEINS;GATE
+PCSE00949	Steins;Gate 0
+PCSB01012	STEINS;GATE 0
+PCSG00673	STEINS;GATE 0
+PCSG01166	STEINS;GATE ELITE
+PCSG00250	Steins;Gate Senkei Kousoku no Phenogram
+PCSG00146	Steins;Gate: My Darling's Embrace(比翼恋理のだーりん)
+PCSE00290	Stick it to the Man
+PCSE01098	Still Time
+PCSG00736	STORM LOVER 2nd V
+PCSG00735	STORM LOVER V
+PCSB00908	Stranger of Sword City
+PCSE00818	Stranger of Sword City
+PCSG00878	Stranger of Sword City
+PCSG00907	Strawberry Nauts
+PCSE00005	STREET FIGHTER X TEKKEN
+PCSB00144	STREET FIGHTER X TEKKEN
+PCSE00688	Strike Solitaire
+PCSE01514	SturmFront - The Mutant War
+PCSH00006	Sudoku by Nikoli V
+PCSG01250	Suki to Suki to de Sankaku Ren’ai
+PCSG90008	Sumioni Trial Version
+PCSE00062	SUMIONI:DEMON ARTS
+PCSB01013	Summon Night 6: Lost borders
+PCSG00827	Summon Night 6: Lost borders
+PCSH00225	Summon Night 6: Lost borders
+PCSE00951	Summon Night 6: Lost Borders
+PCSE00047	SunFlowers
+PCSE00784	Super Blackout
+PCSE01433	Super Box Land Demake
+PCSG01240	Super Destronaut DX: Intruders Edition
+PCSE01460	Super Destronaut: Land Wars
+PCSB00362	Super Exploding Zoo
+PCSE00734	Super Exploding Zoo
+PCSG00069	Super Hero Generation
+PCSB01193	Super Hydorah
+PCSB01152	Super Life of Pixel
+PCSE01077	Super Life of Pixel
+PCSE00942	Super Magical
+PCSE00769	Super Meat Boy!
+PCSE00017	Super Monkey Ball Banana Splitz
+PCSG00032	Super Monkey Ball Banana Splitz
+PCSB01100	Super Mutant Alien Assault
+PCSE01072	Super Mutant Alien Assault
+PCSG00260	Super Robot Taisen
+PCSG01128	Super Robot Taisen X
+PCSH10001	Super Robot Wars V
+PCSH10089	Super Robot Wars X
+PCSH10088	SUPER ROBOT WARS X
+PCSG00495	Super Robot Wars3 Z Jigoku Hen
+PCSB01271	Super Skull Smash Go! 2 Turbo
+PCSE00802	Super Star Wars
+PCSA00006	Super Stardust Delta
+PCSF00019	Super Stardust™ Delta
+PCSE00698	Super Time Force ULTRA
+PCSE01374	Super Weekend Mode
+PCSE01415	Super Wiloo Demake
+PCSE00717	SUPERBEAT XONiC
+PCSE00898	Superdimension Neptune vs Sega Hard Girls
+PCSB00305	Superfrog HD
+PCSG01207	SuperZangyura
+PCSE00012	Supremacy MMA: Unrestricted
+PCSG00948	Suran digit
+PCSB00439	Surge Deluxe
+PCSE00860	Swap Quest
+PCSB00923	SwapQuest
+PCSG01196	sweet pool
+PCSB00507	Switch Galaxy Ultra
+PCSE00493	Switch Galaxy Ultra
+PCSE00465	Sword Art Online -Hollow Fragment-
+PCSG00868	Sword Art Online : Hollow Realization
+PCSB00618	Sword Art Online Hollow Fragment
+PCSE00740	Sword Art Online Lost Song
+PCSH00134	SWORD ART ONLINE Lost Song
+PCSG00294	Sword Art Online: Hollow Fragment
+PCSB00972	SWORD ART ONLINE: HOLLOW REALIZATION
+PCSE00903	SWORD ART ONLINE: HOLLOW REALIZATION
+PCSB00830	Sword Art Online: Lost Song
+PCSE01484	Swordbreaker The Game
+PCSE01508	Synergia
+PCSE01451	Syrup and the Ultimate Sweet
+PCSF00064	t@g
+PCSF00062	Table Football
+PCSA00064	Table Ice Hockey
+PCSD00047	Table Ice Hockey™
+PCSC00028	Table Play Golf
+PCSB00416	Table Top Racing
+PCSB00912	Tachyon Project
+PCSE00836	Tachyon Project
+PCSE00771	Taco Master
+PCSB00458	Tadeo Jones: The game
+PCSG00945	Taiheiyou no Arashi: Koukoku no Kouhai Koko ni Ari, 1942 Senkan Yamato Hankou no Gouhou
+PCSG00637	Taiheiyou no Arashi: Shijousaidai no Gekisen Normandy Koubousen
+PCSG00551	Taiko no Tatsujin V (太鼓の達人 Ｖバージョン)
+PCSG00726	Taishou Mebiusline: Vitable
+PCSG00869	Taishou x Alice: All in One
+PCSG01141	Taishou x Alice: Heads & Tails
+PCSE00034	Tales From Space: Mutant Blobs Attack
+PCSB00096	Tales from Space: Mutant Blobs Attack!!!
+PCSE00429	Tales of Hearts R
+PCSG00125	Tales of Hearts R
+PCSB00550	TALES OF HEARTS R
+PCSG00163	Tales of Hearts R: Infinite Evolve
+PCSG00009	Tales Of Innocence R
+PCSE01468	Task Force Kampas
+PCSG01203	Tayutama２ -you're the only one-
+PCSA00099	Tearaway™
+PCSF00476	Tearaway™
+PCSG00547	Teikoku Kaigun Koi Bojou: Meiji Yokosuka Koushinkyoku
+PCSG01064	Teikoku Kaleido: Kakumei no Rondo
+PCSG01180	Tengai ni Mau, Iki na Hana
+PCSG00137	Tenshi Tsuki no Shoujo
+PCSE00317	Terraria
+PCSB00722	Teslagrad
+PCSE00814	Teslagrad
+PCSE01238	TETRA's Escape
+PCSB00642	Tetris® Ultimate
+PCSE00521	Tetris® Ultimate
+PCSE00333	The Amazing Spider-Man
+PCSB00428	The Amazing Spider-Man™
+PCSB00676	The Binding of Isaac: Rebirth
+PCSE00507	The Binding of Isaac: Rebirth
+PCSE00735	THE BIT.TRIP
+PCSE01037	The Caligula Effect
+PCSG00687	The Caligula Effect
+PCSE01112	The Count Lucanor
+PCSE01021	The Deer God
+PCSE01344	The Demon Rush: Legends Corrupt
+PCSE01241	The Dreamlands: Aisling's Quest
+PCSG01095	The Fruit of Grisaia: Side Episode
+PCSE01305	The House in Fata Morgana
+PCSG00677	The IdolM@ster Must Songs - Aka-Ban
+PCSG00678	The IdolM@ster Must Songs - Ao-Ban
+PCSE00441	The Keeper of 4 Elements
+PCSE01224	THE KING OF FIGHTERS '97 GLOBAL MATCH
+PCSG00508	The Labyrinth of Grisaia -LE EDEN DE LA GRISAIA-
+PCSH10113	The Legend of Heroes AO NO KISEKI Evolution
+PCSH10111	The Legend of Heroes ZERO NO KISEKI Evolution
+PCSG00490	The Legend of Heroes: Trails in the Sky the Third Evolution
+PCSG00195	The Legend of Heroes: Trails of Cold Steel
+PCSE00786	THE LEGEND OF HEROES: TRAILS OF COLD STEEL
+PCSB00866	THE LEGEND OF HEROES: TRAILS OF COLD STEEL
+PCSG00354	The Legend of Heroes: Trails of Cold Steel II
+PCSE00896	THE LEGEND OF HEROES: TRAILS OF COLD STEEL II
+PCSG00246	The Legend of Heroes: Trails to Azure Evolution
+PCSG90069	The Legend of Heroes: Zero no Kiseki Evolution Free Version
+PCSE00353	The Lego Movie Videogame
+PCSE01162	The Long Reach
+PCSE00993	The Longest Five Minutes
+PCSE01179	The Lost Child
+PCSF00558	The Muppets Movie Adventures
+PCSG01163	The Princess Guide
+PCSG01235	The Princess, the Stray Cat, and Matters of the Heart 2
+PCSE00775	The Quiet Collection
+PCSE00631	The Sun and Moon
+PCSB00489	The Swapper
+PCSE01388	The Tower of Beatrice
+PCSB01347	The Tower of Beatrice
+PCSE00436	The Treasures of Montezuma 4
+PCSE00027	The Treasures of Montezuma Blitz
+PCSA00158	The Unfinished Swan
+PCSE00316	The Walking Dead
+PCSB00411	The Walking Dead
+PCSE00556	The Walking Dead Season 2
+PCSE00352	The Wolf Among Us
+PCSE00258	Thomas Was Alone
+PCSE00774	Three Fourths Home (Extended Edition)
+PCSE01463	Thunder Paw
+PCSE01416	Thy Sword
+PCSB01396	Tic-Tac-Letters by POWGI
+PCSE01430	Tic-Tac-Letters by POWGI
+PCSH10212	Tic-Tac-Letters by POWGI
+PCSG90164	Time Avengers Demo
+PCSE01186	Time Recoil
+PCSG00062	TIME TRAVELERS
+PCSG00966	Timepiece Ensemble
+PCSE01246	Timespinner
+PCSB00552	Tiny Troopers Joint Ops
+PCSE00388	Titan Attacks!
+PCSE00597	Titan Souls
+PCSG00575	To Heart 2: Dungeon Travelers
+PCSG00330	To Love-Ru Trouble Darkness: Battle Ecstasy
+PCSG00689	To Love-Ru Trouble Darkness: True Princess
+PCSG01089	Toaru Majutsu no Virtual-On
+PCSG01015	Tokeijikake no Ley Line: Kagerou ni Samayou Majo
+PCSG00087	Tokushu Houdoubu
+PCSG01103	Tokyo Clanpool
+PCSG90298	Tokyo Clanpool Trial
+PCSG00615	Tokyo Ghoul: Jail
+PCSG00631	Tokyo Onmyouji: Tengen Jibashi - Rei no Baai - V Edition
+PCSE01150	TOKYO TATTOO GIRLS
+PCSB01161	TOKYO TATTOO GIRLS
+PCSE00924	Tokyo Twilight Ghost Hunters Daybreak: Special Gigs
+PCSG00634	Tokyo Twilight Ghost Hunters: Daybreak Special Gigs
+PCSE00893	Tokyo Xanadu
+PCSG00608	Tokyo Xanadu
+PCSB01062	Tokyo Xanadu
+PCSG01048	TOKYO YAMANOTE BOYS for V MAIN DISC
+PCSG01049	Tokyo Yamanote Boys for V: Fan Disc
+PCSG01135	Tonari ni Kanojo no Iru Shiawase: Two Farce
+PCSG01201	Tonari ni Kanojo no Iru Shiawase: Winter Guest
+PCSF00011	Top Darts
+PCSB00791	Top Trumps Turbo
+PCSG00902	Torikago no Marriage: Hatsukoi no Tsubasa
+PCSA00112	Toro's Friend Network
+PCSE00671	TorqueL
+PCSB00355	Total Recoil
+PCSG00113	Tottemo E Mahjong
+PCSG00593	Touch Battle Sensha SP
+PCSE00016	Touch My Katamari
+PCSB00047	Touch My Katamari
+PCSE01015	TOUHOU DOUBLE FOCUS
+PCSG00977	Touhou Genso Maroku W: The Devil of Decline
+PCSE00990	TOUHOU Genso Wanderer
+PCSG00985	Touhou Genso Wanderer TOD -RELOADED-
+PCSE01104	Touhou Kobuto V: Burst Battle
+PCSG00999	Touhou Koubuto V: Burst Battle
+PCSG00752	Touhou Soujinengi V
+PCSE00940	Toukiden 2
+PCSG00834	Toukiden 2 co-op version
+PCSG00379	Toukiden: Kiwami
+PCSB00574	Toukiden: Kiwami
+PCSE00467	Toukiden: Kiwami
+PCSG00193	Toukiden: The Age of Demons
+PCSE00381	Toukiden: The Age of Demons
+PCSB00918	Towerfall Ascension
+PCSG00488	Trails in the Sky FC Evolution
+PCSG00489	Trails In the Sky SC Evolution
+PCSA00060	Treasure Park
+PCSC80006	Treasure Park
+PCSB00422	Treasures of Montezuma Arena
+PCSG00515	Trillion : God Of Destruction
+PCSB00904	Trillion: God of Destruction
+PCSE00813	Trillion: God of Destruction
+PCSG01023	Tsuihou Senkyo
+PCSG00648	Tsuki ni Yorisou Otome no Sahou: Hidamari no Hibi
+PCSG00152	Tsukiei Academy -kou-
+PCSG01025	Tsukitomo. Tsukiuta 12 Memories
+PCSG01019	Tsumikui: Sen no Noroi, Sen no Inori for V
+PCSE01452	Twin Breaker: A Sacred Symbols Adventure
+PCSE01081	Twin Robots
+PCSE00397	TxK
+PCSE00837	Type:Rider
+PCSC00080	U-NEXT
+PCSG00480	Ukiyo no Roushi
+PCSB00070	ULTIMATE MARVEL VS. CAPCOM 3
+PCSG00011	ULTIMATE MARVEL VS. CAPCOM 3
+PCSE00004	ULTIMATE MARVEL VS. CAPCOM 3
+PCSE01487	Ultracore
+PCSE00414	Ultratron
+PCSG00912	Un:BIRTHDAY SONG: Ai o Utau Shinigami - Another Record
+PCSE00822	Uncanny Valley
+PCSF00220	Uncharted: Fight for Fortune™
+PCSC00005	UNCHARTED: Golden Abyss
+PCSF00001	Uncharted: Golden Abyss™
+PCSF00012	Uncharted: Golden Abyss™
+PCSA00029	Uncharted: Golden Abyss™
+PCSD00001	UNCHARTED: Golden Abyss™
+PCSA00088	Uncharted™ Fight for Fortune
+PCSE01144	Under Night In-Birth Exe:Late(st)
+PCSG00964	UNDER NIGHT IN-BIRTH Exe:Late[st]
+PCSB01157	Undertale
+PCSE01116	Undertale
+PCSG01112	UNDERTALE
+PCSE00840	Unepic
+PCSB00841	Unepic
+PCSF00034	Unit 13
+PCSA00014	Unit 13™
+PCSH10310	UnMetal
+PCSG00633	Uppers
+PCSB00038	Urban Trial Freestyle
+PCSE00051	Urban Trial Freestyle
+PCSG01191	Usotsuki Hime to Moumoku Ouji
+PCSG01046	Usotsuki Shangri-La
+PCSG00199	Uta Kumi 575
+PCSG00651	Uta no * Prince-Sama: Music 3
+PCSG00914	Uta no * Prince-Sama: Repeat LOVE
+PCSG00617	Utawarerumono: Mask of Deception
+PCSG00838	Utawarerumono: Mask of Truth (うたわれるもの 二人の白皇)
+PCSE01409	Utawarerumono: Prelude to the Fallen
+PCSG01011	Utsusemi no Meguri
+PCSE00756	VA-11 HALL-A
+PCSB01166	VA-11 HALL-A
+PCSE01223	VA-11 HALL-A
+PCSG01072	VA-11 HALL-A
+PCSE00244	Valhalla Knights 3
+PCSG00307	Valhalla Knights 3 Gold
+PCSE01003	Valkyria Revolution
+PCSB01011	VALKYRIE DRIVE -BHIKKHUNI-
+PCSE00948	VALKYRIE DRIVE -BHIKKHUNI-
+PCSG00467	Vamwolf Cross†
+PCSG01159	Variable Barricade
+PCSE01314	VASARA Collection
+PCSB01133	Vegas Party
+PCSE00712	Velocibox
+PCSB00302	Velocity Ultra
+PCSE00038	Velocity Ultra
+PCSB00410	Velocity®2X
+PCSE00374	Velocity®2X
+PCSG00531	VENUS PROJECT
+PCSE00621	Vertical Drop Heroes HD
+PCSB00031	Virtua Tennis 4
+PCSE00003	Virtua Tennis 4
+PCSB00205	Virtue's Last Reward
+PCSE00506	Vitamin Z
+PCSG01115	VitaminX Destination
+PCSE00913	Volgarr the Viking
+PCSE00760	Volume
+PCSB00810	VVVVVV
+PCSG01084	Wagamama High Spec (ワガママハイスペック)
+PCSE01266	Waking Violet
+PCSG00768	Walpurgis no Uta
+PCSG00790	Wand of Fortune R
+PCSG00938	Wand of Fortune R2
+PCSE00938	Wanderjahr TryAgainOrWalkAway
+PCSE01248	War Theatre
+PCSE01045	Warlock's Tower
+PCSG01018	Warriors All-Stars
+PCSG00209	Warriors Orochi 2 Ultimate
+PCSB00873	WE ARE DOOMED
+NPXS10007	Welcome Park
+PCSC00047	What Did I Do to Deserve This, My Lord?
+PCSB00727	Whispering Willows
+PCSG00249	White Album 2: Shiawase no Mukougawa
+PCSE01032	Windjammers
+PCSG00194	Winning Post 7 2013
+PCSG00545	Winning Post 8 2015
+PCSG00804	Winning Post 8 2016
+PCSG01174	Winning Post 8 2018
+PCSF00007	WipEout® 2048
+PCSA00015	WipEout® 2048
+PCSD00005	WipEout® 2048
+PCSE01516	Witchcrafty
+PCSE01445	Without Escape
+PCSG00511	Wizardry: Torawareshi Bourei no Machi
+PCSG00512	Wizardry: Torawareshi Tomashii no Meikyuu
+PCSE01432	Wizards of Brandel
+PCSE00519	Woah Dave!
+PCSE01453	Word Maze by POWGI
+PCSH10228	Word Maze by POWGI
+PCSB01418	Word Maze by POWGI
+PCSE01286	Word Search by POWGI
+PCSH10166	Word Search by POWGI
+PCSB01267	Word Search by POWGI
+PCSH10168	Word Sudoku by POWGI
+PCSE01339	Word Sudoku by POWGI
+PCSB01307	Word Sudoku by POWGI
+PCSH10179	Word Wheel by POWGI
+PCSB01367	Word Wheel by POWGI
+PCSE01394	Word Wheel by POWGI
+PCSH10180	Wordsweeper by POWGI
+PCSB01366	Wordsweeper by POWGI
+PCSE01395	Wordsweeper by POWGI
+PCSG01088	World Election
+PCSG01114	World End Syndrome
+PCSG00709	World of Final Fantasy
+PCSE00880	WORLD OF FINAL FANTASY
+PCSG00647	World Trigger Borderless Mission
+PCSG00832	World Trigger: Smash Borders
+PCSB00332	WORMS REVOLUTION EXTREME
+PCSE00286	WORMS REVOLUTION EXTREME
+PCSB00204	WRC 3: FIA World Rally Championship
+PCSB00345	WRC 4 FIA WORLD RALLY CHAMPIONSHIP
+PCSE00667	WRC 5 FIA World Rally Championship
+PCSE01477	Wurroom
+PCSE00346	XBLAZE CODE : EMBRYO
+PCSG00463	XBLAZE LOST : MEMORIES
+PCSG00589	XCOM: Enemy Unknown Plus
+PCSE01481	Xeno Crisis
+PCSE01191	Xenon Valkyrie+
+PCSE00897	Xenoraid
+PCSE00694	Xeodrifter™
+PCSG00215	Yahari Game Demo Ore no Seishun Love-Kome wa Machigatteiru.
+PCSG00895	Yahari Game Demo Ore no Seishun Love-Kome wa Machigatteiru. Zoku
+PCSG00800	Yaken no Rodem
+PCSH00147	Yakuza 0! Companion App
+PCSG01080	Yomawari: Midnight Shadows
+PCSB01144	YOMAWARI: MIDNIGHT SHADOWS
+PCSG01120	Yoshiwara Higanbana Kuon no Chigiri
+PCSG01267	your diary +
+PCSC80010	YouTube
+PCSE01033	Ys Origin
+PCSH10049	Ys Origins
+PCSE01103	Ys VIII -Lacrimosa of DANA-
+PCSH00297	Ys VIII -Lacrimosa of DANA-
+PCSG00105	Ys: Memories of Celceta
+PCSH00181	Ys: Memories of Celceta
+PCSG00567	YU-NO: Konoyo no Hate de Koi o Utau Shoujo
+PCSE01462	Yumeutsutsu Re:After
+PCSG01317	Yumeutsutsu Re:After
+PCSG00393	Yumeutsutsu Re:After
+PCSE01461	Yumeutsutsu Re:Master
+PCSG00653	Yunohana SpRING!
+PCSG00909	Yunohana SpRING! ～Cherising Time～
+PCSG00502	Yuuki Yuuna wa Yuusha de Aru: Jukai no Kioku
+PCSG01075	Yuukyuu no Tierblade: Fragments of Memory
+PCSG00808	Yuukyuu no Tierblade: Lost Chronicle
+PCSG00693	Yuusha Shisu
+PCSB00390	Z-Run
+PCSG90316	Zanki Zero trial version
+PCSG01113	Zanki Zero: Last Beginning
+PCSB00094	Zen Pinball 2
+PCSE00050	Zen Pinball 2
+PCSG00883	Zero Escape: 9 Jikan 9 nin 9 no Tobira Zennin Shibo Dos Double Pack
+PCSE01006	Zero Escape: The Nonary Games
+PCSE00085	Zero Escape: Virtue's Last Reward
+PCSE00781	Zero Escape: Zero Time Dilemma
+PCSE01088	Zero Zero Zero Zero
+PCSE01371	Zeroptian Invasion
+PCSG00880	Zettai Kaikyuu Gakuen: Eden with Roses and Phantasm
+PCSG00611	Zettai Meikyuu: Himitsu no Oyayubi Hime
+PCSE00102	Zombie Tycoon 2 : Brainhov's Revenge

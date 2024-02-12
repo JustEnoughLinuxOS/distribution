@@ -7,8 +7,8 @@
 PKG_NAME="linux"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/JustEnoughLinuxOS"
-PKG_DEPENDS_HOST="ccache:host rsync:host openssl:host rdfind:host"
-PKG_DEPENDS_TARGET="toolchain linux:host cpio:host kmod:host xz:host wireless-regdb keyutils util-linux binutils ncurses openssl:host ${KERNEL_EXTRA_DEPENDS_TARGET}"
+PKG_DEPENDS_HOST="ccache:host rdfind:host rsync:host openssl:host"
+PKG_DEPENDS_TARGET="toolchain rdfind:host linux:host cpio:host kmod:host xz:host wireless-regdb keyutils util-linux binutils ncurses openssl:host ${KERNEL_EXTRA_DEPENDS_TARGET}"
 PKG_DEPENDS_INIT="toolchain"
 PKG_NEED_UNPACK="${LINUX_DEPENDS} $(get_pkg_directory initramfs) $(get_pkg_variable initramfs PKG_NEED_UNPACK)"
 PKG_LONGDESC="This package builds the kernel for Amlogic devices"
@@ -18,7 +18,7 @@ PKG_PATCH_DIRS+="${DEVICE}"
 
 case ${DEVICE} in
   S922X*)
-    PKG_VERSION="6.7.3"
+    PKG_VERSION="6.7.4"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
   ;;
 esac
@@ -253,19 +253,6 @@ makeinstall_target() {
       cp -v resource.img ${INSTALL}/usr/share/bootloader
       ARCH=${TARGET_ARCH}
     fi
-  elif [ "${BOOTLOADER}" = "bcm2835-bootloader" ]; then
-    mkdir -p ${INSTALL}/usr/share/bootloader/overlays
-
-    # install platform dtbs, but remove upstream kernel dtbs (i.e. without downstream
-    # drivers and decent USB support) as these are not required by LibreELEC
-    cp -p arch/${TARGET_KERNEL_ARCH}/boot/dts/*.dtb ${INSTALL}/usr/share/bootloader
-    rm -f ${INSTALL}/usr/share/bootloader/bcm283*.dtb
-
-    # install overlay dtbs
-    for dtb in arch/${TARGET_KERNEL_ARCH}/boot/dts/overlays/*.dtbo; do
-      cp ${dtb} ${INSTALL}/usr/share/bootloader/overlays 2>/dev/null || :
-    done
-    cp -p arch/${TARGET_KERNEL_ARCH}/boot/dts/overlays/README ${INSTALL}/usr/share/bootloader/overlays
   fi
 }
 

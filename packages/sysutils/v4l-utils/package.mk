@@ -86,22 +86,22 @@ post_makeinstall_target() {
 
   # create multi keymap to support several remotes OOTB
   if [ -n "$IR_REMOTE_PROTOCOLS" -a -n "$IR_REMOTE_KEYMAPS" ]; then
-    create_multi_keymap libreelec_multi "$IR_REMOTE_PROTOCOLS" $IR_REMOTE_KEYMAPS
+    create_multi_keymap jelos_multi "$IR_REMOTE_PROTOCOLS" $IR_REMOTE_KEYMAPS
 
     # use multi-keymap instead of default one
     sed -i '/^\*\s*rc-rc6-mce\s*rc6_mce/d' ${INSTALL}/etc/rc_maps.cfg
 
     cat << EOF >> ${INSTALL}/etc/rc_maps.cfg
 #
-# Custom LibreELEC configuration starts here
+# Custom JELOS configuration starts here
 #
 # use combined multi-table on MCE receivers
 # *		rc-rc6-mce	rc6_mce
-*		rc-rc6-mce	libreelec_multi
+*		rc-rc6-mce	jelos_multi
 # table for Xbox DVD Playback Kit
 *		rc-xbox-dvd	xbox_dvd
 # multi-table for amlogic devices
-meson-ir	*		libreelec_multi
+meson-ir	*		jelos_multi
 EOF
 
   fi
