@@ -118,7 +118,7 @@ JELOS supports a variety of ARM and Intel/AMD based devices.
 | AYANEO | [AYANEO 2S](https://jelos.org/devices/ayaneo/ayaneo-2) | Amd Ryzen 7 7840U / (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
 | Ayn | [Loki Zero](https://jelos.org/devices/ayn/loki-zero) | AMD Athlon Silver 3050e (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
 | Ayn | [Loki Max](https://jelos.org/devices/ayn/loki-max) | Amd Ryzen 7 6800U / (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
-| Game Console | [R33S, R35S, R36S](https://jelos.org/unbranded/r33s-r35s-r36s) | Rockchip RK3326 (ARM) | Mainline Linux | Panfrost | Weston + Emulation Station |
+| Game Console | [R33S, R35S, R36S](https://jelos.org/unbranded/game-console-r33s-r35s-r36s) | Rockchip RK3326 (ARM) | Mainline Linux | Panfrost | Weston + Emulation Station |
 | GPD | [Win 4](https://jelos.org/devices/gpd/win4) | Amd Ryzen 7 6800U / (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
 | GPD | [Win Max 2 (2022)](https://jelos.org/devices/gpd/win-max-2) | Amd Ryzen 7 6800U / (x86_64) | Mainline Linux| Radeonsi | Weston + Emulation Station |
 | Hardkernel | [Odroid Go Advance](https://jelos.org/devices/hardkernel/odroid-go-advance) | Rockchip RK3326 (ARM) | Mainline Linux | Panfrost | Weston + Emulation Station |
