@@ -41,13 +41,11 @@ ONLINE_STATUS=$(check_network)
 if [ "${ONLINE_STATUS}" == true ]
 then
   curl -o /tmp/release.data -H 'Cache-Control: no-cache' -Ls "${GIT_API}/releases"
-  LATEST_RELEASE_TAG=$(cat /tmp/release.data | python -c "import sys, json; print(json.load(sys.stdin)[0]['tag_name'])")
-  UPDATE_PACKAGE=$((grep "${OS_NAME}-${HW_DEVICE}.${HW_ARCH}.*tar.sha256" /tmp/release.data >/dev/null 2>&1 && echo true ) || echo false)
-  if [ "${OS_VERSION}" -lt "${LATEST_RELEASE_TAG}" ] \
-  || [ "${FORCE}" == "1" ] \
-  && [ "${UPDATE_PACKAGE}" == "true" ]
+  UPDATE_PACKAGE=$(awk 'BEGIN {FS="\""} /'${OS_NAME}-${HW_DEVICE}.${HW_ARCH}'.*tar/ {print $4; exit}' /tmp/release.data | sed -e "s~${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-~~g;s~.tar$~~g")
+  if [ ! "${UPDATE_PACKAGE}" == "${OS_VERSION}" ] \
+  || [ "${FORCE}" == "1" ]
   then
-    echo "${LATEST_RELEASE_TAG}"
+    echo "${UPDATE_PACKAGE}"
     cleanup
     exit 0
   fi
