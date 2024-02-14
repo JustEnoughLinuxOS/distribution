@@ -96,6 +96,15 @@ pre_configure_target() {
   export DEVICE=$(echo ${DEVICE^^} | sed "s#-#_##g")
 }
 
+pre_build_target() {
+  cp -f ${ROOT}/distributions/JELOS/fonts/NanumSquareNeo-bRg.ttf ${PKG_BUILD}/resources/
+  sed -e 's/NanumMyeongjo.ttf/NanumSquareNeo-bRg.ttf/g' \
+      -i ${PKG_BUILD}/es-core/src/resources/Font.cpp
+
+  cp -f ${ROOT}/distributions/JELOS/assets/emulationstation2.po ${PKG_BUILD}/locale/lang/ko/LC_MESSAGES/emulationstation2.po
+  msgfmt ${PKG_BUILD}/locale/lang/ko/LC_MESSAGES/emulationstation2.po -o ${PKG_BUILD}/locale/lang/ko/LC_MESSAGES/emulationstation2.mo
+}
+
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/config/locale
   cp -rf ${PKG_BUILD}/locale/lang/* ${INSTALL}/usr/config/locale/
@@ -104,13 +113,16 @@ makeinstall_target() {
   cp -rf ${PKG_BUILD}/resources/* ${INSTALL}/usr/config/emulationstation/resources/
   rm -rf ${INSTALL}/usr/config/emulationstation/resources/logo.png
 
-   mkdir -p ${INSTALL}/usr/bin
+  mkdir -p ${INSTALL}/usr/bin
   cp ${PKG_BUILD}/es_settings ${INSTALL}/usr/bin
   chmod 0755 ${INSTALL}/usr/bin/es_settings
 
   cp ${PKG_BUILD}/start_es.sh ${INSTALL}/usr/bin
   chmod 0755 ${INSTALL}/usr/bin/start_es.sh
 
+  cp ${PKG_BUILD}/ppsspp_font.sh ${INSTALL}/usr/bin
+  chmod 0755 ${INSTALL}/usr/bin/ppsspp_font.sh
+  
   mkdir -p ${INSTALL}/usr/lib/${PKG_PYTHON_VERSION}
   cp -rf ${PKG_DIR}/bluez/* ${INSTALL}/usr/lib/${PKG_PYTHON_VERSION}
 

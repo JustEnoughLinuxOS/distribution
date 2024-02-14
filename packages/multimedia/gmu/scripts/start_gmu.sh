@@ -30,14 +30,14 @@ ln -sf ${GMUPATH}/playlists /storage/.local/share/gmu
 sed -i "s~SDL.Height=.*\$~SDL.Height=${FBHEIGHT}~g" ${GMUCONFIG}
 sed -i "s~SDL.Width=.*\$~SDL.Width=${FBWIDTH}~g" ${GMUCONFIG}
 
-if (( ${FBWIDTH} <= 1024 ))
-then
-  sed -i "s~default-modern-large~default-modern~g" ${GMUCONFIG}
-  sed -i "s~SDL.Fullscreen=.*\$~SDL.Fullscreen=no~g" ${GMUCONFIG}
-else
+#if (( ${FBWIDTH} <= 1024 ))
+#then
+#  sed -i "s~default-modern-large~default-modern~g" ${GMUCONFIG}
+#  sed -i "s~SDL.Fullscreen=.*\$~SDL.Fullscreen=no~g" ${GMUCONFIG}
+#else
   sed -i "s~default-modern.*\$~default-modern-large~g" ${GMUCONFIG}
   sed -i "s~SDL.Fullscreen=.*\$~SDL.Fullscreen=yes~g" ${GMUCONFIG}
-fi
+#fi
 
 if [ "${1}" ]
 then
@@ -56,4 +56,5 @@ do
 done
 
 cd /usr/local/share/gmu
-/usr/local/bin/gmu.bin -d /usr/local/etc/gmu -c /storage/.config/gmu/gmu.conf ${PLAYLIST}
+#/usr/local/bin/gmu.bin -d /usr/local/etc/gmu -c /storage/.config/gmu/gmu.conf ${PLAYLIST}
+/usr/local/bin/gmu.bin -d /storage/.config/gmu -c /storage/.config/gmu/gmu.conf ${PLAYLIST}

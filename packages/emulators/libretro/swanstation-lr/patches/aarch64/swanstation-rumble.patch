@@ -1,0 +1,64 @@
+diff -rupN swanstation.orig/src/libretro/libretro_host_interface.cpp swanstation/src/libretro/libretro_host_interface.cpp
+--- swanstation.orig/src/libretro/libretro_host_interface.cpp	2023-04-22 00:10:29.501850144 +0900
++++ swanstation/src/libretro/libretro_host_interface.cpp	2023-04-22 01:06:43.357402057 +0900
+@@ -27,6 +27,9 @@
+ #include <cstring>
+ #include <tuple>
+ #include <utility>
++#include <stdio.h>
++#include <unistd.h>
++#include <errno.h>
+ Log_SetChannel(LibretroHostInterface);
+ 
+ #ifdef WIN32
+@@ -1177,6 +1180,15 @@ void LibretroHostInterface::OnRunningGam
+ void LibretroHostInterface::InitRumbleInterface()
+ {
+   m_rumble_interface_valid = g_retro_environment_callback(RETRO_ENVIRONMENT_GET_RUMBLE_INTERFACE, &m_rumble_interface);
++  // Check write access for duty cycle for rk3566
++  char* filepath = "/sys/class/pwm/pwmchip1/pwm0/duty_cycle";
++  int returnval;
++  returnval = access (filepath, F_OK);
++  if (returnval == 0){
++    returnval = access (filepath, W_OK);
++    if (errno == EACCES)
++      system("sudo chmod 777 /sys/class/pwm/pwmchip1/pwm0/duty_cycle &");
++  }
+ }
+ 
+ void LibretroHostInterface::UpdateControllers()
+@@ -1309,6 +1321,34 @@ void LibretroHostInterface::UpdateContro
+   {
+     const u16 strong = static_cast<u16>(static_cast<u32>(controller->GetVibrationMotorStrength(0) * 65535.0f));
+     const u16 weak = static_cast<u16>(static_cast<u32>(controller->GetVibrationMotorStrength(1) * 65535.0f));
++    FILE *file;
++
++    if (strong > 0){
++       if ((file = fopen("/sys/class/pwm/pwmchip0/pwm0/duty_cycle", "r+"))) {
++          fputs("10", file);
++          fclose(file);
++       } else if ((file = fopen("/sys/class/pwm/pwmchip1/pwm0/duty_cycle", "r+"))) {
++          fputs("10", file);
++          fclose(file);
++       }
++    } else if (weak > 0){
++       if ((file = fopen("/sys/class/pwm/pwmchip0/pwm0/duty_cycle", "r+"))) {
++          fputs("500000", file);
++          fclose(file);
++       } else if ((file = fopen("/sys/class/pwm/pwmchip1/pwm0/duty_cycle", "r+"))) {
++          fputs("500000", file);
++          fclose(file);
++       }
++    } else {
++       if ((file = fopen("/sys/class/pwm/pwmchip0/pwm0/duty_cycle", "r+"))) {
++          fputs("1000000", file);
++          fclose(file);
++       } else if ((file = fopen("/sys/class/pwm/pwmchip1/pwm0/duty_cycle", "r+"))) {
++          fputs("1000000", file);
++          fclose(file);
++       }
++    }
++    
+     m_rumble_interface.set_rumble_state(index, RETRO_RUMBLE_STRONG, strong);
+     m_rumble_interface.set_rumble_state(index, RETRO_RUMBLE_WEAK, weak);
+   }

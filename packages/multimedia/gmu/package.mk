@@ -2,10 +2,11 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="gmu"
-PKG_VERSION="3aed18be8a50873ccfb31d2b135b0d22442ded59"
+PKG_VERSION="99175d492b54eba514ec6d3f8b88591d74aedcc4"
 PKG_LICENSE="GPLv2"
-PKG_SITE="https://github.com/jhe2/gmu"
+PKG_SITE="https://github.com/trngaje/gmu"
 PKG_URL="${PKG_SITE}.git"
+PKG_GIT_CLONE_BRANCH="sdl20_kor"
 PKG_DEPENDS_TARGET="toolchain SDL2 opus mpg123 libvorbis flac speex"
 PKG_LONGDESC="The Gmu Music Player"
 PKG_TOOLCHAIN="configure"
