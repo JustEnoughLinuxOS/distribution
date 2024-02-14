@@ -1,16 +1,15 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
-# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
-PKG_NAME="RTL8812AU"
-PKG_VERSION="2c4567a67b7aac1d6920af7c0928687553059305"
+PKG_NAME="RTL8188EU"
+PKG_VERSION="f42fc9c45d2086c415dce70d3018031b54a7beef"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/morrownr/8812au-20210629"
-PKG_URL="${PKG_SITE}.git"
-PKG_DEPENDS_TARGET="toolchain linux kernel-firmware"
+PKG_SITE="https://github.com/lwfinger/rtl8188eu"
+PKG_URL="https://github.com/lwfinger/rtl8188eu/archive/${PKG_VERSION}.tar.gz"
+PKG_DEPENDS_TARGET="toolchain linux linux kernel-firmware"
 PKG_NEED_UNPACK="${LINUX_DEPENDS}"
-PKG_LONGDESC="Realtek 8812AU driver for 4.4-5.x"
+PKG_LONGDESC="Realtek RTL81xxEU Linux 3.x driver"
 PKG_IS_KERNEL_PKG="yes"
 PKG_TOOLCHAIN="make"
 
@@ -19,7 +18,7 @@ pre_make_target() {
 }
 
 make_target() {
-  make V=1 \
+  make modules \
        ARCH=${TARGET_KERNEL_ARCH} \
        KSRC=$(kernel_path) \
        CROSS_COMPILE=${TARGET_KERNEL_PREFIX} \
@@ -27,6 +26,6 @@ make_target() {
 }
 
 makeinstall_target() {
-  mkdir -p ${INSTALL}/$(get_full_module_dir)/${PKG_NAME}
-    cp *.ko ${INSTALL}/$(get_full_module_dir)/${PKG_NAME}
+  mkdir -p ${INSTALL}/$(get_full_module_dir)/kernel/drivers/net/wireless/
+    cp *.ko ${INSTALL}/$(get_full_module_dir)/kernel/drivers/net/wireless/
 }

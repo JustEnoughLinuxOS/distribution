@@ -3,14 +3,14 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
-PKG_NAME="RTL8821AU"
-PKG_VERSION="6cd61cfce48218c26b57db4733aa0d3cbf9a2f2c"
+PKG_NAME="RTL8821CU"
+PKG_VERSION="5b39398e2de146edeb76716420f3288f508bea61"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/morrownr/8821au-20210708"
+PKG_SITE="https://github.com/morrownr/8821cu-20210916"
 PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain linux kernel-firmware"
 PKG_NEED_UNPACK="${LINUX_DEPENDS}"
-PKG_LONGDESC="Realtek 8821AU driver for 4.4-5.x"
+PKG_LONGDESC="Realtek 8821CU driver for 4.4-5.x"
 PKG_IS_KERNEL_PKG="yes"
 PKG_TOOLCHAIN="make"
 
@@ -27,6 +27,6 @@ make_target() {
 }
 
 makeinstall_target() {
-  mkdir -p ${INSTALL}/$(get_full_module_dir)/${PKG_NAME}
-    cp *.ko ${INSTALL}/$(get_full_module_dir)/${PKG_NAME}
+  mkdir -p ${INSTALL}/$(get_full_module_dir)/kernel/drivers/net/wireless/
+    cp *.ko ${INSTALL}/$(get_full_module_dir)/kernel/drivers/net/wireless/
 }
