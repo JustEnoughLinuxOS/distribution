@@ -20,7 +20,12 @@ if [ "${INITRAMFS_PARTED_SUPPORT}" = yes ]; then
 fi
 
 post_install() {
-  ( cd ${BUILD}/initramfs
+  (
+    if [ ! -d "${BUILD}/initramfs" ]
+    then
+      mkdir ${BUILD}/initramfs
+    fi
+    cd ${BUILD}/initramfs
     if [ "${TARGET_ARCH}" = "x86_64" ]; then
       ln -sfn /usr/lib ${BUILD}/initramfs/lib64
       mkdir -p ${BUILD}/initramfs/usr
