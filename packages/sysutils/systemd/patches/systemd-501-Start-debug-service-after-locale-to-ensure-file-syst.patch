@@ -1,11 +1,11 @@
-diff -rupN systemd-stable-255.2.orig/units/debug-shell.service.in systemd-stable-255.2/units/debug-shell.service.in
---- systemd-stable-255.2.orig/units/debug-shell.service.in	2024-01-11 16:27:39.642715624 +0000
-+++ systemd-stable-255.2/units/debug-shell.service.in	2024-01-11 16:30:46.928752182 +0000
-@@ -24,6 +24,7 @@ StandardInput=tty
- TTYPath={{DEBUGTTY}}
- TTYReset=yes
- TTYVHangup=yes
+diff -rupN systemd-stable-253.16.orig/units/debug-shell.service.in systemd-stable-253.16/units/debug-shell.service.in
+--- systemd-stable-253.16.orig/units/debug-shell.service.in     2024-01-26 14:53:42.000000000 -0500
++++ systemd-stable-253.16/units/debug-shell.service.in  2024-02-14 12:25:50.660872467 -0500
+@@ -13,6 +13,7 @@ Documentation=man:systemd-debug-generato
+ DefaultDependencies=no
+ IgnoreOnIsolate=yes
+ ConditionPathExists={{DEBUGTTY}}
 +After=locale.service
- KillMode=process
- IgnoreSIGPIPE=no
- # bash ignores SIGTERM
+
+ [Service]
+ Environment=TERM=linux
