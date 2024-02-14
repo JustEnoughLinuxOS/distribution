@@ -9,7 +9,6 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/JustEnoughLinuxOS"
 PKG_DEPENDS_HOST="ccache:host rdfind:host rsync:host openssl:host"
 PKG_DEPENDS_TARGET="toolchain rdfind:host linux:host cpio:host kmod:host xz:host lz4:host wireless-regdb keyutils util-linux binutils ncurses openssl:host ${KERNEL_EXTRA_DEPENDS_TARGET}"
-PKG_DEPENDS_INIT="toolchain"
 PKG_NEED_UNPACK="${LINUX_DEPENDS} $(get_pkg_directory initramfs) $(get_pkg_variable initramfs PKG_NEED_UNPACK)"
 PKG_LONGDESC="This package builds the kernel for Rockchip devices"
 PKG_IS_KERNEL_PKG="yes"
@@ -124,11 +123,6 @@ makeinstall_host() {
 }
 
 pre_make_target() {
-  ( cd ${ROOT}
-    rm -rf ${BUILD}/initramfs
-    rm -f ${STAMPS_INSTALL}/initramfs/install_target ${STAMPS_INSTALL}/*/install_init
-    ${SCRIPTS}/install initramfs
-  )
   if [ "${TARGET_ARCH}" = "x86_64" ]; then
     # copy some extra firmware to linux tree
     mkdir -p ${PKG_BUILD}/external-firmware
@@ -189,6 +183,7 @@ make_target() {
     rm -rf ${BUILD}/initramfs
     ${SCRIPTS}/install initramfs
   )
+
   pkg_lock_status "ACTIVE" "linux:target" "build"
 
   # arm64 target does not support creating uImage.
@@ -206,13 +201,48 @@ make_target() {
     rm -rf ${INSTALL}/$(get_kernel_overlay_dir)
   fi
 
-  # the modules target is required to get a proper Module.symvers
-  # file with symbols from built-in and external modules.
-  # Without that it'll contain only the symbols from the kernel
+  ### If INITRAMFS_MODULES exists, repack initramfs.
+  if [ -n "${INITRAMFS_MODULES}" ]; then
+
+    # the modules target is required to get a proper Module.symvers
+    # file with symbols from built-in and external modules.
+    # Without that it'll contain only the symbols from the kernel
+    kernel_make ${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD} modules
+    kernel_make INSTALL_MOD_PATH=${INSTALL}/$(get_kernel_overlay_dir) modules_install
+
+    rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/build
+    rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/source
+
+    rm -rf ${BUILD}/initramfs
+    rm -f ${STAMPS_INSTALL}/initramfs/install_target ${STAMPS_INSTALL}/*/install_init
+
+    mkdir -p ${BUILD}/initramfs/etc
+    mkdir -p ${BUILD}/initramfs/usr/lib/modules
+
+    for i in ${INITRAMFS_MODULES}; do
+      module=$(find ${INSTALL}/$(get_full_module_dir)/kernel -name ${i}.ko)
+      if [ -n "${module}" ]; then
+        echo ${i} >> ${BUILD}/initramfs/etc/modules
+        cp ${module} ${BUILD}/initramfs/usr/lib/modules
+      fi
+    done
+
+    ( cd ${ROOT}
+      rm -rf ${BUILD}/initramfs
+      ${SCRIPTS}/install initramfs
+    )
+  fi
+
+  # Build or rebuild the modules.
   kernel_make ${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD} modules
-  kernel_make INSTALL_MOD_PATH=${INSTALL}/$(get_kernel_overlay_dir) modules_install
-  rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/build
-  rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/source
+
+  if [ -z "${INITRAMFS_MODULES}" ]; then
+    # need to install modules here
+    kernel_make INSTALL_MOD_PATH=${INSTALL}/$(get_kernel_overlay_dir) modules_install
+
+    rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/build
+    rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/source
+  fi
 
   if [ -n "${KERNEL_UIMAGE_TARGET}" ] ; then
 
@@ -260,31 +290,6 @@ makeinstall_target() {
       cp -v resource.img ${INSTALL}/usr/share/bootloader
       ARCH=${TARGET_ARCH}
     fi
-  fi
-}
-
-make_init() {
- : # reuse make_target()
-}
-
-makeinstall_init() {
-  if [ -n "${INITRAMFS_MODULES}" ]; then
-    mkdir -p ${INSTALL}/etc
-    mkdir -p ${INSTALL}/usr/lib/modules
-
-    for i in ${INITRAMFS_MODULES}; do
-      module=`find .install_pkg/$(get_full_module_dir)/kernel -name ${i}.ko`
-      if [ -n "${module}" ]; then
-        echo ${i} >> ${INSTALL}/etc/modules
-        cp ${module} ${INSTALL}/usr/lib/modules/`basename ${module}`
-      fi
-    done
-  fi
-
-  if [ "${UVESAFB_SUPPORT}" = yes ]; then
-    mkdir -p ${INSTALL}/usr/lib/modules
-      uvesafb=`find .install_pkg/$(get_full_module_dir)/kernel -name uvesafb.ko`
-      cp ${uvesafb} ${INSTALL}/usr/lib/modules/`basename ${uvesafb}`
   fi
 }
 

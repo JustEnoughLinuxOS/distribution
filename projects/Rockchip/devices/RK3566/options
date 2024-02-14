@@ -84,6 +84,9 @@
   # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
     FIRMWARE="misc-firmware"
 
+  # Modules to install in initramfs for early boot
+    INITRAMFS_MODULES=""
+
   # additional drivers to install:
   # for a list of additional drivers see packages/linux-drivers
   # Space separated list is supported,
