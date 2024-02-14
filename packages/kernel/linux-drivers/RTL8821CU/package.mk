@@ -27,6 +27,6 @@ make_target() {
 }
 
 makeinstall_target() {
-  mkdir -p ${INSTALL}/$(get_full_module_dir)/${PKG_NAME}
-    cp *.ko ${INSTALL}/$(get_full_module_dir)/${PKG_NAME}
+  mkdir -p ${INSTALL}/$(get_full_module_dir)/kernel/net/wireless/rtw88/
+    cp 8821cu.ko ${INSTALL}/$(get_full_module_dir)/kernel/net/wireless/rtw88/
 }

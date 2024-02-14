@@ -15,7 +15,7 @@ make_target() {
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/$(get_full_firmware_dir) ||:
-  cp -v ${PKG_DIR}/firmware/rtl8821c_fw ${INSTALL}/$(get_full_firmware_dir)
-  cp -v ${PKG_DIR}/firmware/rtl8821cs_config ${INSTALL}/$(get_full_firmware_dir)/rtl8821c_config
+  cp -v ${PKG_DIR}/firmware/rtl8821c_fw ${INSTALL}/$(get_full_firmware_dir)/
+  cp -v ${PKG_DIR}/firmware/rtl8821cs_config ${INSTALL}/$(get_full_firmware_dir)/
 }
 
