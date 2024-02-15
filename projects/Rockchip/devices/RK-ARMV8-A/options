@@ -69,9 +69,9 @@
   # additional packages to install
     ADDITIONAL_PACKAGES=""
 
-  # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
+  # additional Firmware to use ( )
   # Space separated list is supported,
-  # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
+  # e.g. FIRMWARE=""
     FIRMWARE=""
 
   # additional drivers to install:
