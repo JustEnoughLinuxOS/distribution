@@ -34,10 +34,10 @@
 # setup project defaults
 ################################################################################
 
-  # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
+  # additional Firmware to use ( )
   # Space separated list is supported,
-  # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
-    FIRMWARE="misc-firmware wlan-firmware"
+  # e.g. FIRMWARE=""
+    FIRMWARE=""
 
   # additional drivers to install:
   # for a list of additional drivers see packages/linux-drivers
