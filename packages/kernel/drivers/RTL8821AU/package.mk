@@ -5,6 +5,7 @@
 
 PKG_NAME="RTL8821AU"
 PKG_VERSION="6cd61cfce48218c26b57db4733aa0d3cbf9a2f2c"
+PKG_ARCH="aarch64 x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/morrownr/8821au-20210708"
 PKG_URL="${PKG_SITE}.git"

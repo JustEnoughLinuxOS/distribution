@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
-PKG_NAME="RTL8852xx"
-PKG_VERSION="ebe87ac234a72a63a1b2ede911a874f1b7a6fe43"
+PKG_NAME="RTW89"
+PKG_VERSION="fce040c12fbf93bfd904ded48df60dea2c8d4423"
+PKG_ARCH="aarch64 x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/lwfinger/rtw89"
 PKG_URL="https://github.com/lwfinger/rtw89/archive/${PKG_VERSION}.tar.gz"

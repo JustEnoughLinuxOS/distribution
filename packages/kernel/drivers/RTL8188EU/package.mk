@@ -5,6 +5,7 @@
 PKG_NAME="RTL8188EU"
 PKG_VERSION="f5d1c8df2e2d8b217ea0113bf2cf3e37df8cb716"
 PKG_LICENSE="GPL"
+PKG_ARCH="aarch64 x86_64"
 PKG_SITE="https://github.com/lwfinger/rtl8188eu"
 PKG_URL="https://github.com/lwfinger/rtl8188eu/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain linux linux kernel-firmware"

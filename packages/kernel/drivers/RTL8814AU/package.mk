@@ -5,6 +5,7 @@
 
 PKG_NAME="RTL8814AU"
 PKG_VERSION="866a9100c7b3f6508b81b31a22cae19dcacdacb9"
+PKG_ARCH="aarch64 x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/morrownr/8814au"
 PKG_URL="${PKG_SITE}.git"
