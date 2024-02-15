@@ -4,6 +4,7 @@
 
 PKG_NAME="RTL8192CU"
 PKG_VERSION="e5c01a328d2a17f6e6553e30c9cf546076d61021"
+PKG_ARCH="aarch64 x86_64"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/pvaret/rtl8192cu-fixes"
 PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
