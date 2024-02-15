@@ -2,7 +2,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="RTL8852xx"
-PKG_VERSION="fce040c12fbf93bfd904ded48df60dea2c8d4423"
+PKG_VERSION="ebe87ac234a72a63a1b2ede911a874f1b7a6fe43"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/lwfinger/rtw89"
 PKG_URL="https://github.com/lwfinger/rtw89/archive/${PKG_VERSION}.tar.gz"
@@ -21,6 +21,6 @@ make_target() {
 }
 
 makeinstall_target() {
-  mkdir -p ${INSTALL}/$(get_full_module_dir)/${PKG_NAME}
-    cp *.ko ${INSTALL}/$(get_full_module_dir)/${PKG_NAME}
+  mkdir -p ${INSTALL}/$(get_full_module_dir)/kernel/drivers/net/wireless/
+    cp *.ko ${INSTALL}/$(get_full_module_dir)/kernel/drivers/net/wireless/
 }

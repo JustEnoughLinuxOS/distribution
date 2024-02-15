@@ -1,14 +1,16 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
-PKG_NAME="RTL8192EU"
-PKG_VERSION="f2fc8af7ab58d2123eed1aa4428e713cdfc27976"
+PKG_NAME="RTL8814AU"
+PKG_VERSION="866a9100c7b3f6508b81b31a22cae19dcacdacb9"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/Mange/rtl8192eu-linux-driver"
-PKG_URL="https://github.com/Mange/rtl8192eu-linux-driver/archive/${PKG_VERSION}.tar.gz"
+PKG_SITE="https://github.com/morrownr/8814au"
+PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain linux kernel-firmware"
-PKG_LONGDESC="Realtek RTL8192EU Linux 3.x driver"
+PKG_NEED_UNPACK="${LINUX_DEPENDS}"
+PKG_LONGDESC="Realtek 8814AU driver for 4.4-5.x"
 PKG_IS_KERNEL_PKG="yes"
 PKG_TOOLCHAIN="make"
 
@@ -21,11 +23,10 @@ make_target() {
        ARCH=${TARGET_KERNEL_ARCH} \
        KSRC=$(kernel_path) \
        CROSS_COMPILE=${TARGET_KERNEL_PREFIX} \
-       CONFIG_POWER_SAVING=y \
-       USER_EXTRA_CFLAGS="-Wno-error=date-time"
+       CONFIG_POWER_SAVING=y
 }
 
 makeinstall_target() {
-  mkdir -p ${INSTALL}/$(get_full_module_dir)/${PKG_NAME}
-    cp *.ko ${INSTALL}/$(get_full_module_dir)/${PKG_NAME}
+  mkdir -p ${INSTALL}/$(get_full_module_dir)/kernel/drivers/net/wireless/
+    cp *.ko ${INSTALL}/$(get_full_module_dir)/kernel/drivers/net/wireless/
 }

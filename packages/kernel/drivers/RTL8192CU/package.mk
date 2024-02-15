@@ -1,16 +1,14 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
 # Copyright (C) 2009-2016 Stephan Raue (stephan@openelec.tv)
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
-# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
-PKG_NAME="RTL88x2BU"
-PKG_VERSION="cb741f8b773b76c4eb1858f489b4b141ff586365"
+PKG_NAME="RTL8192CU"
+PKG_VERSION="e5c01a328d2a17f6e6553e30c9cf546076d61021"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/morrownr/88x2bu-20210702"
-PKG_URL="${PKG_SITE}.git"
+PKG_SITE="https://github.com/pvaret/rtl8192cu-fixes"
+PKG_URL="${PKG_SITE}/archive/${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_TARGET="toolchain linux kernel-firmware"
-PKG_NEED_UNPACK="${LINUX_DEPENDS}"
-PKG_LONGDESC="Realtek 88x2BU driver for 4.4-5.x"
+PKG_LONGDESC="Realtek RTL81xxCU Linux 3.x driver"
 PKG_IS_KERNEL_PKG="yes"
 PKG_TOOLCHAIN="make"
 
@@ -27,6 +25,6 @@ make_target() {
 }
 
 makeinstall_target() {
-  mkdir -p ${INSTALL}/$(get_full_module_dir)/${PKG_NAME}
-    cp *.ko ${INSTALL}/$(get_full_module_dir)/${PKG_NAME}
+  mkdir -p ${INSTALL}/$(get_full_module_dir)/kernel/drivers/net/wireless/
+    cp *.ko ${INSTALL}/$(get_full_module_dir)/kernel/drivers/net/wireless/
 }

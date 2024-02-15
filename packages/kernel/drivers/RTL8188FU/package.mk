@@ -1,5 +1,5 @@
 PKG_NAME="RTL8188FU"
-PKG_VERSION="68ced40d862d13663294496bac2e9a91ffa0e5c7"
+PKG_VERSION="0ede0794073495da694aeb52cdd748c6ba2ff21c"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/kelebek333/rtl8188fu"
 PKG_URL="${PKG_SITE}.git"
@@ -23,8 +23,8 @@ make_target() {
 }
 
 makeinstall_target() {
-  mkdir -p ${INSTALL}/$(get_full_module_dir)/${PKG_NAME}
-  cp *.ko ${INSTALL}/$(get_full_module_dir)/${PKG_NAME}
+  mkdir -p ${INSTALL}/$(get_full_module_dir)/kernel/drivers/net/wireless/
+  cp *.ko ${INSTALL}/$(get_full_module_dir)/kernel/drivers/net/wireless/
   mkdir -p ${INSTALL}/usr/lib/kernel-overlays/base/lib/firmware/rtlwifi
   cp firmware/rtl8188fufw.bin ${INSTALL}/usr/lib/kernel-overlays/base/lib/firmware/rtlwifi
 }
