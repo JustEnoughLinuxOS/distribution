@@ -561,12 +561,12 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-gameconsole-r36s.dts l
 +                        label = "GPIO F4";
 +                        linux,code = <BTN_TRIGGER_HAPPY4>; // 0x2c3
 +                };
-+                /*sw13 {
++                sw13 {
 +                        gpios = <&gpio2 RK_PA4 GPIO_ACTIVE_LOW>;
 +                        label = "GPIO F5";
 +                        linux,code = <BTN_TRIGGER_HAPPY5>; // 0x2c4
 +                };
-+                sw14 {
++                /*sw14 {
 +                        gpios = <&gpio2 RK_PA5 GPIO_ACTIVE_LOW>;
 +                        label = "GPIO F6";
 +                        linux,code = <BTN_TRIGGER_HAPPY6>; // 0x13c
