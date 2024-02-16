@@ -17,7 +17,7 @@ PKG_PATCH_DIRS+="${DEVICE}"
 
 case ${DEVICE} in
   S922X*)
-    PKG_VERSION="6.7.4"
+    PKG_VERSION="6.7.5"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
   ;;
 esac
@@ -33,10 +33,6 @@ fi
 if [ "${PKG_BUILD_PERF}" != "no" ] && grep -q ^CONFIG_PERF_EVENTS= ${PKG_KERNEL_CFG_FILE} ; then
   PKG_BUILD_PERF="yes"
   PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} elfutils libunwind zlib openssl"
-fi
-
-if [ "${TARGET_ARCH}" = "x86_64" ]; then
-  PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} intel-ucode:host kernel-firmware elfutils:host pciutils"
 fi
 
 if [[ "${KERNEL_TARGET}" = uImage* ]]; then
@@ -118,16 +114,13 @@ pre_make_target() {
     rm -f ${STAMPS_INSTALL}/initramfs/install_target ${STAMPS_INSTALL}/*/install_init
     ${SCRIPTS}/install initramfs
   )
-  if [ "${TARGET_ARCH}" = "x86_64" ]; then
-    # copy some extra firmware to linux tree
-    mkdir -p ${PKG_BUILD}/external-firmware
-      cp -a $(get_build_dir kernel-firmware)/{amdgpu,amd-ucode,i915,radeon,e100,rtl_nic} ${PKG_BUILD}/external-firmware
 
-    cp -a $(get_build_dir intel-ucode)/intel-ucode ${PKG_BUILD}/external-firmware
-
-    FW_LIST="$(find ${PKG_BUILD}/external-firmware \( -type f -o -type l \) \( -iname '*.bin' -o -iname '*.fw' -o -path '*/intel-ucode/*' \) | sed 's|.*external-firmware/||' | sort | xargs)"
-    sed -i "s|CONFIG_EXTRA_FIRMWARE=.*|CONFIG_EXTRA_FIRMWARE=\"${FW_LIST}\"|" ${PKG_BUILD}/.config
-  fi
+  # copy some extra firmware to linux tree (unused)
+  # mkdir -p ${PKG_BUILD}/external-firmware
+  # cp -a $(get_build_dir kernel-firmware)/{amdgpu,amd-ucode,i915,radeon,e100,rtl_nic} ${PKG_BUILD}/external-firmware
+  # cp -a $(get_build_dir intel-ucode)/intel-ucode ${PKG_BUILD}/external-firmware
+  # FW_LIST="$(find ${PKG_BUILD}/external-firmware \( -type f -o -type l \) \( -iname '*.bin' -o -iname '*.fw' -o -path '*/intel-ucode/*' \) | sed 's|.*external-firmware/||' | sort | xargs)"
+  # sed -i "s|CONFIG_EXTRA_FIRMWARE=.*|CONFIG_EXTRA_FIRMWARE=\"${FW_LIST}\"|" ${PKG_BUILD}/.config
 
   yes "" | kernel_make oldconfig
 
