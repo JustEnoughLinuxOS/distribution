@@ -27,7 +27,7 @@ case ${DEVICE} in
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
   ;;
   RK356*)
-    PKG_VERSION="6.8-rc3"
+    PKG_VERSION="6.8-rc4"
     PKG_URL="https://git.kernel.org/torvalds/t/${PKG_NAME}-${PKG_VERSION}.tar.gz"
   ;;
 esac
@@ -43,10 +43,6 @@ fi
 if [ "${PKG_BUILD_PERF}" != "no" ] && grep -q ^CONFIG_PERF_EVENTS= ${PKG_KERNEL_CFG_FILE} ; then
   PKG_BUILD_PERF="yes"
   PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} elfutils libunwind zlib openssl"
-fi
-
-if [ "${TARGET_ARCH}" = "x86_64" ]; then
-  PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} intel-ucode:host kernel-firmware elfutils:host pciutils"
 fi
 
 if [[ "${KERNEL_TARGET}" = uImage* ]]; then
@@ -123,16 +119,12 @@ makeinstall_host() {
 }
 
 pre_make_target() {
-  if [ "${TARGET_ARCH}" = "x86_64" ]; then
     # copy some extra firmware to linux tree
     mkdir -p ${PKG_BUILD}/external-firmware
-      cp -a $(get_build_dir kernel-firmware)/{amd,amdgpu,amd-ucode,intel,i915,radeon,e100,rtl_nic} ${PKG_BUILD}/external-firmware
+      cp -a $(get_build_dir kernel-firmware)/rockchip ${PKG_BUILD}/external-firmware
 
-    cp -a $(get_build_dir intel-ucode)/intel-ucode ${PKG_BUILD}/external-firmware
-
-    FW_LIST="$(find ${PKG_BUILD}/external-firmware \( -type f -o -type l \) \( -iname '*.bin' -o -iname '*.fw' -o -path '*/intel-ucode/*' \) | sed 's|.*external-firmware/||' | sort | xargs)"
+    FW_LIST="$(find ${PKG_BUILD}/external-firmware \( -type f -o -type l \) \( -iname '*.bin' -o -iname '*.fw' \) | sed 's|.*external-firmware/||' | sort | xargs)"
     sed -i "s|CONFIG_EXTRA_FIRMWARE=.*|CONFIG_EXTRA_FIRMWARE=\"${FW_LIST}\"|" ${PKG_BUILD}/.config
-  fi
 
   yes "" | kernel_make oldconfig
 
