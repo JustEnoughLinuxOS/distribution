@@ -1,7 +1,7 @@
-diff -rupN uboot.orig/cmd/hwrev.c uboot/cmd/hwrev.c
---- uboot.orig/cmd/hwrev.c	2024-01-04 18:59:49.400779885 +0000
-+++ uboot/cmd/hwrev.c	2024-01-04 19:02:14.336283106 +0000
-@@ -34,6 +34,21 @@ int do_hwrev(cmd_tbl_t *cmdtp, int flag,
+diff -rupN u-boot.orig/cmd/hwrev.c u-boot/cmd/hwrev.c
+--- u-boot.orig/cmd/hwrev.c	2024-02-15 14:49:02.135798042 +0000
++++ u-boot/cmd/hwrev.c	2024-02-15 14:54:37.885602790 +0000
+@@ -34,6 +34,26 @@ int do_hwrev(cmd_tbl_t *cmdtp, int flag,
  		env_set("hwrev", "v10-go3");
  		env_set("dtb_name", "rk3326-odroidgo3-linux.dtb");
  	}
@@ -19,6 +19,11 @@ diff -rupN uboot.orig/cmd/hwrev.c uboot/cmd/hwrev.c
 +        else if (check_range(1000, 1050, hwrev_adc)) {
 +                env_set("hwrev", "xu10");
 +                env_set("dtb_name", "rk3326-magicx-xu10.dtb");
++        }
++        /* CHI */
++        else if (check_range(460, 489, hwrev_adc)) {
++                env_set("hwrev", "chi");
++                env_set("dtb_name", "rk3326-gameforce-chi.dtb");
 +        }
  	/* engineer samples */
  	else {
