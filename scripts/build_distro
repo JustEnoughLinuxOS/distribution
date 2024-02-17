@@ -96,7 +96,7 @@ then
     echo "Clean: ${package}"
     ./scripts/clean ${package} 2>/dev/null ||:
   done
-  rm -rf build.${DISTRO}-${DEVICE_ROOT}.${ARCH}/.stamps/initramfs
+  rm -rf build.${DISTRO}-${DEVICE_ROOT}.${ARCH}/{.stamps/initramfs,initramfs}
 fi
 
 # Clean out old builds before starting the new one.
