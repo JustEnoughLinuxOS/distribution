@@ -101,11 +101,6 @@ makeinstall_host() {
 }
 
 pre_make_target() {
-  ( cd ${ROOT}
-    rm -rf ${BUILD}/initramfs
-    rm -f ${STAMPS_INSTALL}/initramfs/install_target ${STAMPS_INSTALL}/*/install_init
-    ${SCRIPTS}/install initramfs
-  )
   pkg_lock_status "ACTIVE" "linux:target" "build"
 
   cp ${PKG_KERNEL_CFG_FILE} ${PKG_BUILD}/.config
@@ -278,6 +273,11 @@ makeinstall_target() {
   kernel_make INSTALL_MOD_PATH=${INSTALL}/$(get_kernel_overlay_dir) modules_install
   rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/build
   rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/source
+
+  (
+    cd ${ROOT}
+    ${SCRIPTS}/install initramfs
+  )
 
   if [ "${BOOTLOADER}" = "u-boot" ]; then
     mkdir -p ${INSTALL}/usr/share/bootloader/device_trees
