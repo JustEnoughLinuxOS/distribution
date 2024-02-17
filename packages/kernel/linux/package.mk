@@ -7,36 +7,32 @@ PKG_LICENSE="GPL"
 PKG_VERSION="6.7.5"
 PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_SITE="http://www.kernel.org"
-PKG_DEPENDS_HOST="ccache:host rdfind:host rsync:host openssl:host"
-PKG_DEPENDS_TARGET="toolchain rdfind:host linux:host kmod:host cpio:host xz:host keyutils ncurses openssl:host wireless-regdb ${KERNEL_EXTRA_DEPENDS_TARGET}"
+PKG_DEPENDS_HOST="ccache:host rsync:host"
+PKG_DEPENDS_TARGET="linux:host kmod:host xz:host keyutils openssl:host ${KERNEL_EXTRA_DEPENDS_TARGET}"
 PKG_NEED_UNPACK="${LINUX_DEPENDS} $(get_pkg_directory initramfs) $(get_pkg_variable initramfs PKG_NEED_UNPACK)"
 PKG_LONGDESC="This package contains a precompiled kernel image and the modules."
 PKG_IS_KERNEL_PKG="yes"
 PKG_STAMP="${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD}"
 
-PKG_PATCH_DIRS+="${LINUX} ${DEVICE} default"
+PKG_PATCH_DIRS="${LINUX} ${DEVICE} default"
 
 PKG_KERNEL_CFG_FILE=$(kernel_config_path) || die
 
 if [ -n "${KERNEL_TOOLCHAIN}" ]; then
-  PKG_DEPENDS_HOST+=" gcc-${KERNEL_TOOLCHAIN}:host"
   PKG_DEPENDS_TARGET+=" gcc-${KERNEL_TOOLCHAIN}:host"
   HEADERS_ARCH=${TARGET_ARCH}
+else
+  PKG_DEPENDS_TARGET+=" toolchain"
 fi
 
 if [ "${PKG_BUILD_PERF}" != "no" ] && grep -q ^CONFIG_PERF_EVENTS= ${PKG_KERNEL_CFG_FILE}; then
   PKG_BUILD_PERF="yes"
-  PKG_DEPENDS_TARGET+=" binutils elfutils libunwind zlib openssl libtraceevent libtracefs"
+  PKG_DEPENDS_TARGET+=" binutils elfutils libunwind zlib openssl"
 fi
 
 if [[ "${TARGET_ARCH}" =~ i*86|x86_64 ]]; then
-  PKG_DEPENDS_TARGET+=" elfutils:host pciutils intel-ucode kernel-firmware"
-elif [ "${TARGET_ARCH}" = "arm" -a "${DEVICE}" = "iMX6" ]; then
-  PKG_DEPENDS_TARGET+=" firmware-imx"
-fi
-
-if [[ "${KERNEL_TARGET}" = uImage* ]]; then
-  PKG_DEPENDS_TARGET+=" u-boot-tools:host"
+  PKG_DEPENDS_TARGET+=" elfutils:host pciutils"
+  PKG_DEPENDS_UNPACK+=" intel-ucode kernel-firmware"
 fi
 
 # Ensure that the dependencies of initramfs:target are built correctly, but
@@ -54,31 +50,6 @@ post_patch() {
 
     # restore the required Module.symvers from an earlier build
     cp -p ${PKG_INSTALL}/.image/Module.symvers ${PKG_BUILD}
-  fi
-}
-
-make_init() {
- : # reuse make_target()
-}
-
-makeinstall_init() {
-  if [ -n "${INITRAMFS_MODULES}" ]; then
-    mkdir -p ${INSTALL}/etc
-    mkdir -p ${INSTALL}/usr/lib/modules
-
-    for i in ${INITRAMFS_MODULES}; do
-      module=`find .install_pkg/$(get_full_module_dir)/kernel -name ${i}.ko`
-      if [ -n "${module}" ]; then
-        echo ${i} >> ${INSTALL}/etc/modules
-        cp ${module} ${INSTALL}/usr/lib/modules/`basename ${module}`
-      fi
-    done
-  fi
-
-  if [ "${UVESAFB_SUPPORT}" = yes ]; then
-    mkdir -p ${INSTALL}/usr/lib/modules
-      uvesafb=`find .install_pkg/$(get_full_module_dir)/kernel -name uvesafb.ko`
-      cp ${uvesafb} ${INSTALL}/usr/lib/modules/`basename ${uvesafb}`
   fi
 }
 
@@ -157,21 +128,18 @@ pre_make_target() {
 
     ${PKG_BUILD}/scripts/config --set-str CONFIG_EXTRA_FIRMWARE "${FW_LIST}"
     ${PKG_BUILD}/scripts/config --set-str CONFIG_EXTRA_FIRMWARE_DIR "external-firmware"
-
-  elif [ "${TARGET_ARCH}" = "arm" -a "${DEVICE}" = "iMX6" ]; then
-    mkdir -p ${PKG_BUILD}/external-firmware/imx/sdma
-      cp -a $(get_build_dir firmware-imx)/firmware/sdma/*imx6*.bin ${PKG_BUILD}/external-firmware/imx/sdma
-      cp -a $(get_build_dir firmware-imx)/firmware/vpu/*imx6*.bin ${PKG_BUILD}/external-firmware
-
-    FW_LIST="$(find ${PKG_BUILD}/external-firmware -type f | sed 's|.*external-firmware/||' | sort | xargs)"
-
-    ${PKG_BUILD}/scripts/config --set-str CONFIG_EXTRA_FIRMWARE "${FW_LIST}"
-    ${PKG_BUILD}/scripts/config --set-str CONFIG_EXTRA_FIRMWARE_DIR "external-firmware"
   fi
 
-  yes "" | kernel_make oldconfig
+  kernel_make listnewconfig
+  if [ "${INTERACTIVE_CONFIG}" = "yes" ]; then
+    # manually answer .config changes
+    kernel_make oldconfig
+  else
+    # accept default answers for .config changes
+    yes "" | kernel_make oldconfig > /dev/null
+  fi
 
-  if [ -f "${ROOT}/${DISTRO}/kernel_options" ]; then
+  if [ -f "${DISTRO_DIR}/${DISTRO}/kernel_options" ]; then
     while read OPTION; do
       [ -z "${OPTION}" -o -n "$(echo "${OPTION}" | grep '^#')" ] && continue
 
@@ -182,7 +150,7 @@ pre_make_target() {
       if [ "$(${PKG_BUILD}/scripts/config --state ${OPTION%%=*})" != "$(echo ${OPTION##*=} | tr -d '"')" ]; then
         MISSING_KERNEL_OPTIONS+="\t${OPTION}\n"
       fi
-    done < ${ROOT}/${DISTRO}/kernel_options
+    done < ${DISTRO_DIR}/${DISTRO}/kernel_options
 
     if [ -n "${MISSING_KERNEL_OPTIONS}" ]; then
       print_color CLR_WARNING "LINUX: kernel options not correct: \n${MISSING_KERNEL_OPTIONS%%}\nPlease run ./tools/check_kernel_config\n"
@@ -191,16 +159,6 @@ pre_make_target() {
 }
 
 make_target() {
-  # arm64 target does not support creating uImage.
-  # Build Image first, then wrap it using u-boot's mkimage.
-  if [[ "${TARGET_KERNEL_ARCH}" = "arm64" && "${KERNEL_TARGET}" = uImage* ]]; then
-    if [ -z "${KERNEL_UIMAGE_LOADADDR}" -o -z "${KERNEL_UIMAGE_ENTRYADDR}" ]; then
-      die "ERROR: KERNEL_UIMAGE_LOADADDR and KERNEL_UIMAGE_ENTRYADDR have to be set to build uImage - aborting"
-    fi
-    KERNEL_UIMAGE_TARGET="${KERNEL_TARGET}"
-    KERNEL_TARGET="${KERNEL_TARGET/uImage/Image}"
-  fi
-
   DTC_FLAGS=-@ kernel_make ${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD} modules
 
   if [ "${PKG_BUILD_PERF}" = "yes" ]; then
@@ -226,6 +184,7 @@ make_target() {
       NO_GTK2=1 \
       NO_LIBNUMA=1 \
       NO_LIBAUDIT=1 \
+      NO_LIBTRACEEVENT=1 \
       NO_LZMA=1 \
       NO_SDT=1 \
       CROSS_COMPILE="${TARGET_PREFIX}" \
@@ -234,35 +193,6 @@ make_target() {
       mkdir -p ${INSTALL}/usr/bin
         cp perf ${INSTALL}/usr/bin
     )
-  fi
-
-  if [ -n "${KERNEL_UIMAGE_TARGET}" ]; then
-    # determine compression used for kernel image
-    KERNEL_UIMAGE_COMP=${KERNEL_UIMAGE_TARGET:7}
-    KERNEL_UIMAGE_COMP=$(echo ${KERNEL_UIMAGE_COMP:-none} | sed 's/gz/gzip/; s/bz2/bzip2/')
-
-    # calculate new load address to make kernel Image unpack to memory area after compressed image
-    if [ "${KERNEL_UIMAGE_COMP}" != "none" ]; then
-      COMPRESSED_SIZE=$(stat -t "arch/${TARGET_KERNEL_ARCH}/boot/${KERNEL_TARGET}" | awk '{print $2}')
-      # align to 1 MiB
-      COMPRESSED_SIZE=$(( ((${COMPRESSED_SIZE} - 1 >> 20) + 1) << 20 ))
-      PKG_KERNEL_UIMAGE_LOADADDR=$(printf '%X' "$(( ${KERNEL_UIMAGE_LOADADDR} + ${COMPRESSED_SIZE} ))")
-      PKG_KERNEL_UIMAGE_ENTRYADDR=$(printf '%X' "$(( ${KERNEL_UIMAGE_ENTRYADDR} + ${COMPRESSED_SIZE} ))")
-    else
-      PKG_KERNEL_UIMAGE_LOADADDR=${KERNEL_UIMAGE_LOADADDR}
-      PKG_KERNEL_UIMAGE_ENTRYADDR=${KERNEL_UIMAGE_ENTRYADDR}
-    fi
-
-    mkimage -A ${TARGET_KERNEL_ARCH} \
-            -O linux \
-            -T kernel \
-            -C ${KERNEL_UIMAGE_COMP} \
-            -a ${PKG_KERNEL_UIMAGE_LOADADDR} \
-            -e ${PKG_KERNEL_UIMAGE_ENTRYADDR} \
-            -d arch/${TARGET_KERNEL_ARCH}/boot/${KERNEL_TARGET} \
-               arch/${TARGET_KERNEL_ARCH}/boot/${KERNEL_UIMAGE_TARGET}
-
-    KERNEL_TARGET="${KERNEL_UIMAGE_TARGET}"
   fi
 }
 
@@ -287,16 +217,4 @@ makeinstall_target() {
     fi
   fi
   makeinstall_host
-}
-
-post_install() {
-  if [ ! -d ${INSTALL}/$(get_full_firmware_dir) ]
-  then
-    mkdir -p ${INSTALL}/$(get_full_firmware_dir)/
-  fi
-
-  # regdb and signature is now loaded as firmware by 4.15+
-    if grep -q ^CONFIG_CFG80211_REQUIRE_SIGNED_REGDB= ${PKG_BUILD}/.config; then
-      cp $(get_build_dir wireless-regdb)/regulatory.db{,.p7s} ${INSTALL}/$(get_full_firmware_dir)
-    fi
 }

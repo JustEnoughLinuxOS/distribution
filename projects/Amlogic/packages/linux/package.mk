@@ -8,7 +8,7 @@ PKG_NAME="linux"
 PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/JustEnoughLinuxOS"
 PKG_DEPENDS_HOST="ccache:host rdfind:host rsync:host openssl:host"
-PKG_DEPENDS_TARGET="toolchain rdfind:host linux:host cpio:host kmod:host xz:host wireless-regdb keyutils util-linux binutils ncurses openssl:host ${KERNEL_EXTRA_DEPENDS_TARGET}"
+PKG_DEPENDS_TARGET="toolchain rdfind:host linux:host cpio:host kmod:host xz:host keyutils util-linux binutils ncurses openssl:host ${KERNEL_EXTRA_DEPENDS_TARGET}"
 PKG_NEED_UNPACK="${LINUX_DEPENDS} $(get_pkg_directory initramfs) $(get_pkg_variable initramfs PKG_NEED_UNPACK)"
 PKG_LONGDESC="This package builds the kernel for Amlogic devices"
 PKG_IS_KERNEL_PKG="yes"
@@ -119,10 +119,6 @@ pre_make_target() {
 
   yes "" | kernel_make oldconfig
 
-  # regdb (backward compatability with pre-4.15 kernels)
-  if grep -q ^CONFIG_CFG80211_INTERNAL_REGDB= ${PKG_BUILD}/.config ; then
-    cp $(get_build_dir wireless-regdb)/db.txt ${PKG_BUILD}/net/wireless/db.txt
-  fi
   makeinstall_host
 }
 
@@ -179,49 +175,14 @@ make_target() {
     rm -rf ${INSTALL}/$(get_kernel_overlay_dir)
   fi
 
-  ### If INITRAMFS_MODULES exists, repack initramfs.
-  if [ -n "${INITRAMFS_MODULES}" ]; then
-
-    # the modules target is required to get a proper Module.symvers
-    # file with symbols from built-in and external modules.
-    # Without that it'll contain only the symbols from the kernel
-    kernel_make ${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD} modules
-    kernel_make INSTALL_MOD_PATH=${INSTALL}/$(get_kernel_overlay_dir) modules_install
-
-    rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/build
-    rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/source
-
-    rm -rf ${BUILD}/initramfs
-    rm -f ${STAMPS_INSTALL}/initramfs/install_target ${STAMPS_INSTALL}/*/install_init
-
-    mkdir -p ${BUILD}/initramfs/etc
-    mkdir -p ${BUILD}/initramfs/usr/lib/modules
-
-    for i in ${INITRAMFS_MODULES}; do
-      module=$(find ${INSTALL}/$(get_full_module_dir)/kernel -name ${i}.ko)
-      if [ -n "${module}" ]; then
-        echo ${i} >> ${BUILD}/initramfs/etc/modules
-        cp ${module} ${BUILD}/initramfs/usr/lib/modules
-      fi
-    done
-
-  fi
-
-  (
-    cd ${ROOT}
-    ${SCRIPTS}/install initramfs
-  )
-
   # Build or rebuild the modules.
   kernel_make ${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD} modules
 
-  if [ -z "${INITRAMFS_MODULES}" ]; then
-    # need to install modules here
-    kernel_make INSTALL_MOD_PATH=${INSTALL}/$(get_kernel_overlay_dir) modules_install
+  # need to install modules here
+  kernel_make INSTALL_MOD_PATH=${INSTALL}/$(get_kernel_overlay_dir) modules_install
 
-    rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/build
-    rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/source
-  fi
+  rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/build
+  rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/source
 
   if [ -n "${KERNEL_UIMAGE_TARGET}" ] ; then
 
@@ -273,16 +234,4 @@ makeinstall_target() {
       ARCH=${TARGET_ARCH}
     fi
   fi
-}
-
-post_install() {
-  if [ ! -d ${INSTALL}/$(get_full_firmware_dir) ]
-  then
-    mkdir -p ${INSTALL}/$(get_full_firmware_dir)/
-  fi
-
-  # regdb and signature is now loaded as firmware by 4.15+
-    if grep -q ^CONFIG_CFG80211_REQUIRE_SIGNED_REGDB= ${PKG_BUILD}/.config; then
-      cp $(get_build_dir wireless-regdb)/regulatory.db{,.p7s} ${INSTALL}/$(get_full_firmware_dir)
-    fi
 }
