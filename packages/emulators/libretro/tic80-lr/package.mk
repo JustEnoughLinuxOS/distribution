@@ -2,7 +2,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="tic80-lr"
-PKG_VERSION="f4578a2f147f69b1cb489fb407de9900d4524578"
+PKG_VERSION="5cee27b49c4322a9d6e89f08fd083e3e91329d42"
 PKG_LICENSE="MIT"
 PKG_SITE="https://github.com/nesbox/TIC-80"
 PKG_URL="${PKG_SITE}.git"

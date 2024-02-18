@@ -3,7 +3,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="freej2me-lr"
-PKG_VERSION="d8aa5d9a55a5673b77d5999342143ebdf131bfbd"
+PKG_VERSION="8b9bc8a19baf26e3d92f88934a64a32f1cbc2795"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_SITE="https://github.com/hex007/freej2me"
