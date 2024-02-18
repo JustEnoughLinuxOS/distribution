@@ -26,7 +26,7 @@ LIBRETRO_CORES="81-lr a5200-lr arduous-lr atari800-lr beetle-gba-lr beetle-lynx-
                 prosystem-lr puae-lr puae2021-lr px68k-lr quasi88-lr quicknes-lr race-lr same_cdi-lr      \
                 sameboy-lr sameduck-lr scummvm-lr smsplus-gx-lr snes9x-lr snes9x2002-lr snes9x2005_plus-lr snes9x2010-lr  \
                 stella-lr swanstation-lr tic80-lr tgbdual-lr uzem-lr vba-next-lr minivmac-lr               \
-                vbam-lr vecx-lr vice-lr yabasanshiro-lr virtualjaguar-lr xmil-lr"
+                vbam-lr vecx-lr vice-lr vircon32-lr virtualjaguar-lr xmil-lr yabasanshiro-lr"
 
 ### Emulators or cores for specific devices
 case "${DEVICE}" in
@@ -1212,6 +1212,10 @@ makeinstall_target() {
   ### EPOCH/YENO Super Cassette Vision
   add_emu_core scv retroarch emuscv true
   add_es_system scv
+  
+  ### Vircon32
+  add_emu_core vircon32 retroarch vircon32 true
+  add_es_system vircon32
 
   ### PC Ports
   case ${TARGET_ARCH} in
