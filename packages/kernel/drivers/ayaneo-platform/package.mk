@@ -1,10 +1,10 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
+# Copyright (C) 2024 JELOS (https://github.com/JustEnoughLinuxOS)
 
-PKG_NAME="ayn-platform"
-PKG_VERSION="02befd684c15743f9c8fd8e018c50b86feb0ae7b"
+PKG_NAME="ayaneo-platform"
+PKG_VERSION="0a2cd164bb1db9248f4a017bb32fb9ab0c1fdd8c"
 PKG_LICENSE="GPL"
-PKG_SITE="https://github.com/ShadowBlip/ayn-platform"
+PKG_SITE="https://github.com/ShadowBlip/ayaneo-platform"
 PKG_URL="${PKG_SITE}.git"
 PKG_ARCH="x86_64 i686"
 PKG_DEPENDS_TARGET="toolchain linux kernel-firmware"

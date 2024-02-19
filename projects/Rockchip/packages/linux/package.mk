@@ -27,7 +27,7 @@ case ${DEVICE} in
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
   ;;
   RK356*)
-    PKG_VERSION="6.8-rc4"
+    PKG_VERSION="6.8-rc5"
     PKG_URL="https://git.kernel.org/torvalds/t/${PKG_NAME}-${PKG_VERSION}.tar.gz"
   ;;
 esac
