@@ -92,7 +92,7 @@ index 036ac403ed21..2676e6161a44 100644
  };
  
 +static const struct drm_display_mode go_ultra_mode = {
-+	.clock          = 28748,
++	.clock          = 29170,
 +
 +	.hdisplay       = 480,
 +	.hsync_start    = 480 + 12,
@@ -100,9 +100,9 @@ index 036ac403ed21..2676e6161a44 100644
 +	.htotal         = 480 + 12 + 12 + 38,
 +
 +	.vdisplay       = 854,
-+	.vsync_start    = 854 + 0,
-+	.vsync_end      = 854 + 0 + 19,
-+	.vtotal         = 854 + 0 + 19 + 11,
++	.vsync_start    = 854 + 2,
++	.vsync_end      = 854 + 2 + 19,
++	.vtotal         = 854 + 2 + 19 + 22,
 +
 +	.width_mm       = 70,
 +	.height_mm      = 140,
