@@ -4,6 +4,7 @@
 
 . /etc/profile.d/001-functions
 
+CPU_VENDOR=$(cpu_vendor)
 case ${CPU_VENDOR} in
   AuthenticAMD)
     tocon "Configuring system TDP..."
