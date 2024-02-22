@@ -12,28 +12,85 @@ function led_state() {
 }
 
 function led_off() {
-    led_state battery_full 0
-    led_state battery_charging 0
-    led_state low_power 0
+    led_state green:power 0
+    led_state red:status 0
+    led_state amber:charging 0
 }
 
 function led_red() {
     led_off
-    led_state battery_charging 1
+    led_state red:status $1
 }
 
 function led_green() {
     led_off
-    led_state battery_full 1
+    led_state green:power $1
 }
+
+function led_amber() {
+    led_off
+    led_state amber:charging $1
+}
+
+function brightness() {
+  led_off
+  case ${1} in
+    default)
+      led_green $2
+    ;;
+    off)
+      led_off
+    ;;
+    green)
+      led_green $2
+    ;;
+    red)
+      led_red $2
+    ;;
+    amber)
+      led_amber $2
+    ;;
+  esac
+}
+
+GETBRIGHTNESS=$(get_setting led.brightness)
+if [ ! -z "${2}" ]
+then
+  LEDBRIGHTNESS=${2}
+elif [ ! -z "${GETBRIGHTNESS}" ]
+then
+  LEDBRIGHTNESS=${GETBRIGHTNESS}
+else
+  LEDBRIGHTNESS=max
+  set_setting led.brightness max
+fi
+
+case ${LEDBRIGHTNESS} in
+  max)
+    LEDBRIGHTNESS=255
+    set_setting led.brightness max
+  ;;
+  mid)
+    LEDBRIGHTNESS=63
+    set_setting led.brightness mid
+  ;;
+  min)
+    LEDBRIGHTNESS=15
+    set_setting led.brightness min
+  ;;
+esac
 
 case ${1} in
   green)
-    led_green
+    led_green ${LEDBRIGHTNESS}
     set_setting led.color ${1}
   ;;
   red)
-    led_red
+    led_red ${LEDBRIGHTNESS}
+    set_setting led.color ${1}
+  ;;
+  amber)
+    led_amber ${LEDBRIGHTNESS}
     set_setting led.color ${1}
   ;;
   off)
@@ -41,25 +98,33 @@ case ${1} in
     set_setting led.color ${1}
   ;;
   discharging)
-    if [ -n "${LED_STATUS}" ] 
+    if [ -n "${LED_STATUS}" ]
     then
       ledcontrol ${LED_STATUS}
-    else 
-      led_green
+    else
+      led_green ${LEDBRIGHTNESS}
     fi
   ;;
   charging)
     if [ ! "${LED_STATUS}" = "off" ]
     then
-      led_red
+      led_red ${LEDBRIGHTNESS}
     fi
   ;;
   default)
     del_setting led.color
-    led_green
+    led_green ${LEDBRIGHTNESS}
   ;;
   poweroff)
     led_off
+  ;;
+  brightness)
+    COLOR=$(get_setting led.color)
+    if [ ! -z "${COLOR}" ]
+    then
+      led_off
+      brightness ${COLOR} ${LEDBRIGHTNESS}
+    fi
   ;;
   list)
 cat <<EOF
@@ -67,6 +132,7 @@ default
 off
 green
 red
+amber
 EOF
   ;;
 esac
