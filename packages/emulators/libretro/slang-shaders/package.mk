@@ -20,7 +20,7 @@
 ################################################################################
 
 PKG_NAME="slang-shaders"
-PKG_VERSION="5b4c9b2a75aba5f57fcb5b68662a06f0ed7c929f"
+PKG_VERSION="89a5f03de8ed4d26a5a217a8469ef6466c89b179"
 PKG_REV="1"
 PKG_ARCH="any"
 PKG_LICENSE="GPL"

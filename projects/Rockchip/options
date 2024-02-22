@@ -49,10 +49,10 @@
   # Modules to install in initramfs for early boot
     INITRAMFS_MODULES=""
 
-  # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
+  # additional Firmware to use ( )
   # Space separated list is supported,
-  # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
-    FIRMWARE="misc-firmware wlan-firmware dvb-firmware rockchip-firmware"
+  # e.g. FIRMWARE=""
+    FIRMWARE=" rockchip-firmware"
 
   # additional packages to install
   #  ADDITIONAL_PACKAGES=""

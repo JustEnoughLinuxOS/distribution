@@ -77,12 +77,15 @@
     EXTRA_CMDLINE="quiet rootwait earlycon=uart8250,mmio32,0xfe660000 console=ttyS2,1500000n8 console=tty1 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
 
   # additional packages to install
-  #  ADDITIONAL_PACKAGES=""
+    #ADDITIONAL_PACKAGES=""
 
-  # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
+  # additional Firmware to use ( )
   # Space separated list is supported,
-  # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
-    FIRMWARE="misc-firmware"
+  # e.g. FIRMWARE=""
+    FIRMWARE=""
+
+  # Modules to install in initramfs for early boot
+    INITRAMFS_MODULES=""
 
   # additional drivers to install:
   # for a list of additional drivers see packages/linux-drivers

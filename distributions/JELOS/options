@@ -42,7 +42,7 @@
 
 # Define package sets to clean based on the type of build being executed.
 # This should be updated to be more dynamic in the future.
-  CLEAN_OS_BASE="emulators u-boot-script system-utils modules quirks autostart jelos"
+  CLEAN_OS_BASE="initramfs emulators u-boot-script system-utils modules quirks autostart jelos"
   CLEAN_NETWORK="RTL8821CS-firmware"
   CLEAN_EMU_32BIT="lib32 box86 pcsx_rearmed-lr arm"
 

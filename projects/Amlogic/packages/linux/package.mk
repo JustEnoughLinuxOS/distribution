@@ -9,7 +9,6 @@ PKG_LICENSE="GPL"
 PKG_SITE="https://github.com/JustEnoughLinuxOS"
 PKG_DEPENDS_HOST="ccache:host rdfind:host rsync:host openssl:host"
 PKG_DEPENDS_TARGET="toolchain rdfind:host linux:host cpio:host kmod:host xz:host wireless-regdb keyutils util-linux binutils ncurses openssl:host ${KERNEL_EXTRA_DEPENDS_TARGET}"
-PKG_DEPENDS_INIT="toolchain"
 PKG_NEED_UNPACK="${LINUX_DEPENDS} $(get_pkg_directory initramfs) $(get_pkg_variable initramfs PKG_NEED_UNPACK)"
 PKG_LONGDESC="This package builds the kernel for Amlogic devices"
 PKG_IS_KERNEL_PKG="yes"
@@ -18,7 +17,7 @@ PKG_PATCH_DIRS+="${DEVICE}"
 
 case ${DEVICE} in
   S922X*)
-    PKG_VERSION="6.7.4"
+    PKG_VERSION="6.7.5"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
   ;;
 esac
@@ -34,10 +33,6 @@ fi
 if [ "${PKG_BUILD_PERF}" != "no" ] && grep -q ^CONFIG_PERF_EVENTS= ${PKG_KERNEL_CFG_FILE} ; then
   PKG_BUILD_PERF="yes"
   PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} elfutils libunwind zlib openssl"
-fi
-
-if [ "${TARGET_ARCH}" = "x86_64" ]; then
-  PKG_DEPENDS_TARGET="${PKG_DEPENDS_TARGET} intel-ucode:host kernel-firmware elfutils:host pciutils"
 fi
 
 if [[ "${KERNEL_TARGET}" = uImage* ]]; then
@@ -114,21 +109,13 @@ makeinstall_host() {
 }
 
 pre_make_target() {
-  ( cd ${ROOT}
-    rm -rf ${BUILD}/initramfs
-    rm -f ${STAMPS_INSTALL}/initramfs/install_target ${STAMPS_INSTALL}/*/install_init
-    ${SCRIPTS}/install initramfs
-  )
-  if [ "${TARGET_ARCH}" = "x86_64" ]; then
-    # copy some extra firmware to linux tree
-    mkdir -p ${PKG_BUILD}/external-firmware
-      cp -a $(get_build_dir kernel-firmware)/{amdgpu,amd-ucode,i915,radeon,e100,rtl_nic} ${PKG_BUILD}/external-firmware
 
-    cp -a $(get_build_dir intel-ucode)/intel-ucode ${PKG_BUILD}/external-firmware
-
-    FW_LIST="$(find ${PKG_BUILD}/external-firmware \( -type f -o -type l \) \( -iname '*.bin' -o -iname '*.fw' -o -path '*/intel-ucode/*' \) | sed 's|.*external-firmware/||' | sort | xargs)"
-    sed -i "s|CONFIG_EXTRA_FIRMWARE=.*|CONFIG_EXTRA_FIRMWARE=\"${FW_LIST}\"|" ${PKG_BUILD}/.config
-  fi
+  # copy some extra firmware to linux tree (unused)
+  # mkdir -p ${PKG_BUILD}/external-firmware
+  # cp -a $(get_build_dir kernel-firmware)/{amdgpu,amd-ucode,i915,radeon,e100,rtl_nic} ${PKG_BUILD}/external-firmware
+  # cp -a $(get_build_dir intel-ucode)/intel-ucode ${PKG_BUILD}/external-firmware
+  # FW_LIST="$(find ${PKG_BUILD}/external-firmware \( -type f -o -type l \) \( -iname '*.bin' -o -iname '*.fw' -o -path '*/intel-ucode/*' \) | sed 's|.*external-firmware/||' | sort | xargs)"
+  # sed -i "s|CONFIG_EXTRA_FIRMWARE=.*|CONFIG_EXTRA_FIRMWARE=\"${FW_LIST}\"|" ${PKG_BUILD}/.config
 
   yes "" | kernel_make oldconfig
 
@@ -175,10 +162,6 @@ make_target() {
     )
   fi
 
-  ( cd ${ROOT}
-    rm -rf ${BUILD}/initramfs
-    ${SCRIPTS}/install initramfs
-  )
   pkg_lock_status "ACTIVE" "linux:target" "build"
 
   # arm64 target does not support creating uImage.
@@ -196,13 +179,49 @@ make_target() {
     rm -rf ${INSTALL}/$(get_kernel_overlay_dir)
   fi
 
-  # the modules target is required to get a proper Module.symvers
-  # file with symbols from built-in and external modules.
-  # Without that it'll contain only the symbols from the kernel
+  ### If INITRAMFS_MODULES exists, repack initramfs.
+  if [ -n "${INITRAMFS_MODULES}" ]; then
+
+    # the modules target is required to get a proper Module.symvers
+    # file with symbols from built-in and external modules.
+    # Without that it'll contain only the symbols from the kernel
+    kernel_make ${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD} modules
+    kernel_make INSTALL_MOD_PATH=${INSTALL}/$(get_kernel_overlay_dir) modules_install
+
+    rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/build
+    rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/source
+
+    rm -rf ${BUILD}/initramfs
+    rm -f ${STAMPS_INSTALL}/initramfs/install_target ${STAMPS_INSTALL}/*/install_init
+
+    mkdir -p ${BUILD}/initramfs/etc
+    mkdir -p ${BUILD}/initramfs/usr/lib/modules
+
+    for i in ${INITRAMFS_MODULES}; do
+      module=$(find ${INSTALL}/$(get_full_module_dir)/kernel -name ${i}.ko)
+      if [ -n "${module}" ]; then
+        echo ${i} >> ${BUILD}/initramfs/etc/modules
+        cp ${module} ${BUILD}/initramfs/usr/lib/modules
+      fi
+    done
+
+  fi
+
+  (
+    cd ${ROOT}
+    ${SCRIPTS}/install initramfs
+  )
+
+  # Build or rebuild the modules.
   kernel_make ${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD} modules
-  kernel_make INSTALL_MOD_PATH=${INSTALL}/$(get_kernel_overlay_dir) modules_install
-  rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/build
-  rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/source
+
+  if [ -z "${INITRAMFS_MODULES}" ]; then
+    # need to install modules here
+    kernel_make INSTALL_MOD_PATH=${INSTALL}/$(get_kernel_overlay_dir) modules_install
+
+    rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/build
+    rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/source
+  fi
 
   if [ -n "${KERNEL_UIMAGE_TARGET}" ] ; then
 
@@ -253,31 +272,6 @@ makeinstall_target() {
       cp -v resource.img ${INSTALL}/usr/share/bootloader
       ARCH=${TARGET_ARCH}
     fi
-  fi
-}
-
-make_init() {
- : # reuse make_target()
-}
-
-makeinstall_init() {
-  if [ -n "${INITRAMFS_MODULES}" ]; then
-    mkdir -p ${INSTALL}/etc
-    mkdir -p ${INSTALL}/usr/lib/modules
-
-    for i in ${INITRAMFS_MODULES}; do
-      module=`find .install_pkg/$(get_full_module_dir)/kernel -name ${i}.ko`
-      if [ -n "${module}" ]; then
-        echo ${i} >> ${INSTALL}/etc/modules
-        cp ${module} ${INSTALL}/usr/lib/modules/`basename ${module}`
-      fi
-    done
-  fi
-
-  if [ "${UVESAFB_SUPPORT}" = yes ]; then
-    mkdir -p ${INSTALL}/usr/lib/modules
-      uvesafb=`find .install_pkg/$(get_full_module_dir)/kernel -name uvesafb.ko`
-      cp ${uvesafb} ${INSTALL}/usr/lib/modules/`basename ${uvesafb}`
   fi
 }
 

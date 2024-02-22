@@ -4,7 +4,7 @@
 
 PKG_NAME="linux"
 PKG_LICENSE="GPL"
-PKG_VERSION="6.7.4"
+PKG_VERSION="6.7.5"
 PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_SITE="http://www.kernel.org"
 PKG_DEPENDS_HOST="ccache:host rdfind:host rsync:host openssl:host"
@@ -101,11 +101,6 @@ makeinstall_host() {
 }
 
 pre_make_target() {
-  ( cd ${ROOT}
-    rm -rf ${BUILD}/initramfs
-    rm -f ${STAMPS_INSTALL}/initramfs/install_target ${STAMPS_INSTALL}/*/install_init
-    ${SCRIPTS}/install initramfs
-  )
   pkg_lock_status "ACTIVE" "linux:target" "build"
 
   cp ${PKG_KERNEL_CFG_FILE} ${PKG_BUILD}/.config
@@ -278,6 +273,11 @@ makeinstall_target() {
   kernel_make INSTALL_MOD_PATH=${INSTALL}/$(get_kernel_overlay_dir) modules_install
   rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/build
   rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/source
+
+  (
+    cd ${ROOT}
+    ${SCRIPTS}/install initramfs
+  )
 
   if [ "${BOOTLOADER}" = "u-boot" ]; then
     mkdir -p ${INSTALL}/usr/share/bootloader/device_trees

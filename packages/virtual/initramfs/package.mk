@@ -7,7 +7,7 @@ PKG_VERSION=""
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.openelec.tv"
 PKG_URL=""
-PKG_DEPENDS_TARGET="toolchain libc:init busybox:init util-linux:init e2fsprogs:init dosfstools:init exfat:init fakeroot:host spleen-font:init"
+PKG_DEPENDS_TARGET="libc:init glibc:init busybox:init util-linux:init e2fsprogs:init dosfstools:init exfat:init fakeroot:host spleen-font:init"
 PKG_SECTION="virtual"
 PKG_LONGDESC="debug is a Metapackage for installing initramfs"
 
@@ -20,7 +20,8 @@ if [ "${INITRAMFS_PARTED_SUPPORT}" = yes ]; then
 fi
 
 post_install() {
-  ( cd ${BUILD}/initramfs
+  (
+    cd ${BUILD}/initramfs
     if [ "${TARGET_ARCH}" = "x86_64" ]; then
       ln -sfn /usr/lib ${BUILD}/initramfs/lib64
       mkdir -p ${BUILD}/initramfs/usr

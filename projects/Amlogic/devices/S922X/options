@@ -65,10 +65,10 @@
   # additional packages to install
   #  ADDITIONAL_PACKAGES=""
 
-  # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
+  # additional Firmware to use ( )
   # Space separated list is supported,
-  # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
-    FIRMWARE="misc-firmware wlan-firmware libmali-vulkan"
+  # e.g. FIRMWARE=""
+    FIRMWARE="libmali-vulkan"
 
   # additional drivers to install:
   # for a list of additional drivers see packages/linux-drivers
