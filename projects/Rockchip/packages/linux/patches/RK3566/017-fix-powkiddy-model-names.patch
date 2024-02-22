@@ -1,5 +1,18 @@
+diff --git a/arch/arm64/boot/dts/rockchip/rk3566-powkiddy-rgb10max3.dts b/arch/arm64/boot/dts/rockchip/rk3566-powkiddy-rgb10max3.dts
+index e5a474e681dd..8ae45b281487 100644
+--- a/arch/arm64/boot/dts/rockchip/rk3566-powkiddy-rgb10max3.dts
++++ b/arch/arm64/boot/dts/rockchip/rk3566-powkiddy-rgb10max3.dts
+@@ -8,7 +8,7 @@
+ #include "rk3566-powkiddy-rk2023.dtsi"
+ 
+ / {
+-	model = "Powkiddy RGB10MAX3";
++	model = "Powkiddy RGB10 Max 3";
+ 	compatible = "powkiddy,rgb10max3", "rockchip,rk3566";
+ };
+ 
 diff --git a/arch/arm64/boot/dts/rockchip/rk3566-powkiddy-rgb30.dts b/arch/arm64/boot/dts/rockchip/rk3566-powkiddy-rgb30.dts
-index 0ac64f043b80..ae7627216cd6 100644
+index 1f567a14ac84..952b1b285f3b 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3566-powkiddy-rgb30.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3566-powkiddy-rgb30.dts
 @@ -8,7 +8,7 @@
@@ -12,7 +25,7 @@ index 0ac64f043b80..ae7627216cd6 100644
  };
  
 diff --git a/arch/arm64/boot/dts/rockchip/rk3566-powkiddy-rk2023.dts b/arch/arm64/boot/dts/rockchip/rk3566-powkiddy-rk2023.dts
-index ba32d0793dca..691f6949a5e7 100644
+index bc9933d9e262..72890f747ee3 100644
 --- a/arch/arm64/boot/dts/rockchip/rk3566-powkiddy-rk2023.dts
 +++ b/arch/arm64/boot/dts/rockchip/rk3566-powkiddy-rk2023.dts
 @@ -8,7 +8,7 @@
