@@ -1,4 +1,4 @@
-From 3e239031788947f44e40f1987e33c03851fe541d Mon Sep 17 00:00:00 2001
+From a999dd646ddd65a640f10664780ec9dba643b655 Mon Sep 17 00:00:00 2001
 From: "Mauro (mdrjr) Ribeiro" <mauro.ribeiro@hardkernel.com>
 Date: Tue, 5 Sep 2023 15:03:17 -0300
 Subject: [PATCH] ODROID-GOU: modify lcd logic to accomodate kernel 6.x drivers
@@ -7,14 +7,14 @@ Change-Id: I7b6827e2996a4d1f4b0a1c95997bdfbf1693f3bf
 ---
  board/hardkernel/odroidgou/display.c     | 10 +++++++
  board/hardkernel/odroidgou/display.h     |  2 +-
- board/hardkernel/odroidgou/odroid_pmic.c | 10 ++++++-
+ board/hardkernel/odroidgou/odroid_pmic.c |  9 +++++--
  board/hardkernel/odroidgou/odroidgou.c   | 11 ++++----
  board/hardkernel/odroidgou/recovery.c    | 34 +++++++++++-------------
  board/hardkernel/odroidgou/recovery.h    |  1 +
- 6 files changed, 42 insertions(+), 26 deletions(-)
+ 6 files changed, 40 insertions(+), 27 deletions(-)
 
 diff --git a/board/hardkernel/odroidgou/display.c b/board/hardkernel/odroidgou/display.c
-index 859cfc766de..6f73ec11263 100755
+index 859cfc766d..6f73ec1126 100755
 --- a/board/hardkernel/odroidgou/display.c
 +++ b/board/hardkernel/odroidgou/display.c
 @@ -14,6 +14,9 @@
@@ -42,7 +42,7 @@ index 859cfc766de..6f73ec11263 100755
  {
  	char str[64];
 diff --git a/board/hardkernel/odroidgou/display.h b/board/hardkernel/odroidgou/display.h
-index 1fb25c45211..05aeaab0e6d 100755
+index 1fb25c4521..05aeaab0e6 100755
 --- a/board/hardkernel/odroidgou/display.h
 +++ b/board/hardkernel/odroidgou/display.h
 @@ -32,6 +32,6 @@ enum disp_index_e {
@@ -54,22 +54,19 @@ index 1fb25c45211..05aeaab0e6d 100755
  #endif
  
 diff --git a/board/hardkernel/odroidgou/odroid_pmic.c b/board/hardkernel/odroidgou/odroid_pmic.c
-index b39b7c566b9..5f243ce7ec9 100755
+index b39b7c566b..58e51c797e 100755
 --- a/board/hardkernel/odroidgou/odroid_pmic.c
 +++ b/board/hardkernel/odroidgou/odroid_pmic.c
-@@ -199,6 +199,11 @@ int board_check_power(void)
+@@ -199,6 +199,8 @@ int board_check_power(void)
  	printf("PWRON source : %d\n",pwron_src);
  
  	if ((pwron_src != PWRON_KEY) && (bootmode == BOOTMODE_NORMAL)) {
-+		if((pwron_src == PWRON_USB) && (get_battery_cap() > 0))
-+			return 0;
-+		else
-+			gou_init_lcd();
-+		
++		gou_init_lcd();
++
  		/* RK817 BOOST, OTG_POWER(USB A-type VBUS) disable */
  		rk817_i2c_write(RK817_POWER_EN3, 0xf0);
  		printf("battery charge state\n");
-@@ -219,12 +224,15 @@ int board_check_power(void)
+@@ -219,12 +221,15 @@ int board_check_power(void)
  			charger_led_bilnk(0);
  			if ( offset < DISP_BATT_3)
  				gou_bmp_display(offset+1);
@@ -86,8 +83,15 @@ index b39b7c566b9..5f243ce7ec9 100755
  			if(!is_charging())
  				run_command("poweroff", 0);
  		}
+@@ -302,4 +307,4 @@ int do_poweroff(cmd_tbl_t * cmdtp, int flag, int argc, char * const argv[])
+ 	return (0);
+ }
+ 
+-U_BOOT_CMD(poweroff, 1, 1, do_poweroff, "Switch off power", "");
+\ No newline at end of file
++U_BOOT_CMD(poweroff, 1, 1, do_poweroff, "Switch off power", "");
 diff --git a/board/hardkernel/odroidgou/odroidgou.c b/board/hardkernel/odroidgou/odroidgou.c
-index d08f0aac000..4e7c7ef0d0b 100755
+index d08f0aac00..4e7c7ef0d0 100755
 --- a/board/hardkernel/odroidgou/odroidgou.c
 +++ b/board/hardkernel/odroidgou/odroidgou.c
 @@ -302,14 +302,13 @@ int board_late_init(void)
@@ -111,7 +115,7 @@ index d08f0aac000..4e7c7ef0d0b 100755
  	setenv("variant", "gou");
  	board_set_dtbfile("meson64_odroid%s.dtb");
 diff --git a/board/hardkernel/odroidgou/recovery.c b/board/hardkernel/odroidgou/recovery.c
-index a9d72663aae..cbd5c8c68df 100755
+index a9d72663aa..cbd5c8c68d 100755
 --- a/board/hardkernel/odroidgou/recovery.c
 +++ b/board/hardkernel/odroidgou/recovery.c
 @@ -30,7 +30,7 @@ int boot_device(void)
@@ -184,7 +188,7 @@ index a9d72663aae..cbd5c8c68df 100755
  }
  
 diff --git a/board/hardkernel/odroidgou/recovery.h b/board/hardkernel/odroidgou/recovery.h
-index 3fa0933c412..15d961d8efb 100755
+index 3fa0933c41..15d961d8ef 100755
 --- a/board/hardkernel/odroidgou/recovery.h
 +++ b/board/hardkernel/odroidgou/recovery.h
 @@ -30,6 +30,7 @@
@@ -195,3 +199,6 @@ index 3fa0933c412..15d961d8efb 100755
  
  #endif
  
+-- 
+2.34.1
+
