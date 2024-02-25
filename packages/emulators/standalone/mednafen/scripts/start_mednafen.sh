@@ -106,6 +106,40 @@ then
     else
         FEATURES_CMDLINE+=" -${CORE}.no8lim 0"
     fi
+elif [ "${CORE}" = "snes_faust" ]
+then
+    if [ $(get_setting spex "${PLATFORM}" "${GAME}") = "1" ]
+    then
+        FEATURES_CMDLINE+=" -${CORE}.spex 1"
+    else
+        FEATURES_CMDLINE+=" -${CORE}.spex 0"
+    fi
+    if [ $(get_setting spex.sound "${PLATFORM}" "${GAME}") = "1" ]
+    then
+        FEATURES_CMDLINE+=" -${CORE}.spex.sound 1"
+    else
+        FEATURES_CMDLINE+=" -${CORE}.spex.sound 0"
+    fi
+    SFXCR=$(get_setting superfx.clock_rate ${PLATFORM} "${GAME}")
+    if [ ${SFXCR} > 1 ]
+    then
+        FEATURES_CMDLINE+=" -${CORE}.superfx.clock_rate ${SFXCR}"
+    else
+        FEATURES_CMDLINE+=" -${CORE}.superfx.clock_rate 100"
+    fi
+    if [ $(get_setting superfx.icache "${PLATFORM}" "${GAME}") = "1" ]
+    then
+        FEATURES_CMDLINE+=" -${CORE}.superfx.icache 1"
+    else
+        FEATURES_CMDLINE+=" -${CORE}.superfx.icache 0"
+    fi
+    CX4CR=$(get_setting cx4.clock_rate ${PLATFORM} "${GAME}")
+    if [ ${CX4CR} > 1 ]
+    then
+        FEATURES_CMDLINE+=" -${CORE}.cx4.clock_rate ${CX4CR}"
+    else
+        FEATURES_CMDLINE+=" -${CORE}.cx4.clock_rate 100"
+    fi
 elif [ "${CORE}" = "vb" ]
 then
     CE=$(get_setting cpu_emulation "${PLATFORM}" "${GAME}")
