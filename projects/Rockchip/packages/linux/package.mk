@@ -16,11 +16,16 @@ PKG_STAMP="${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD}"
 PKG_PATCH_DIRS+="${DEVICE}"
 
 case ${DEVICE} in
-  RK358*)
+  RK3588)
     PKG_VERSION="eef98210c4984831d1706f884c95eec132c791e1"
     PKG_URL="${PKG_SITE}/rk358x-kernel.git"
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="main"
+  ;;
+  RK3588-ACE)
+    PKG_VERSION="99e54e1a546eca7fa8d5b86be1b825914e097d06"
+    PKG_URL="https://github.com/brooksytech/linux-rockchip/archive/${PKG_VERSION}.tar.gz"
+    PKG_GIT_CLONE_BRANCH="panfork-6.1"
   ;;
   RK3399|RK3326|RK-ARMV8-A)
     PKG_VERSION="6.7.6"

@@ -8,6 +8,15 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_TOOLCHAIN="make"
 GET_HANDLER_SUPPORT="git"
 
+case ${DEVOCE} in
+  RK3588-ACE)
+    PKG_PATCH_DIRS+=" ${DEVICE}"
+  ;;
+  *)
+    PKG_PATCH_DIRS+=" common"
+  ;;
+esac
+
 makeinstall_target() {
   mkdir -p $INSTALL/usr/bin
   cp rinputer2 ${INSTALL}/usr/bin/jelos_gamepad
