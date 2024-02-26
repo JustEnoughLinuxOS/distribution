@@ -41,6 +41,11 @@ RK3588:
 	PROJECT=Rockchip DEVICE=RK3588 ARCH=arm ./scripts/build_distro
 	PROJECT=Rockchip DEVICE=RK3588 ARCH=aarch64 ./scripts/build_distro
 
+RK3588-ACE:
+	unset DEVICE_ROOT
+	PROJECT=Rockchip DEVICE=RK3588-ACE ARCH=arm ./scripts/build_distro
+	PROJECT=Rockchip DEVICE=RK3588-ACE ARCH=aarch64 ./scripts/build_distro
+
 S922X:
 	unset DEVICE_ROOT
 	PROJECT=Amlogic DEVICE=S922X ARCH=arm ./scripts/build_distro
