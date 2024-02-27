@@ -393,38 +393,12 @@ performance
 
 clear_screen
 
-### Reset the number of cores to use.
-NUMTHREADS=$(get_setting "system.threads")
-${VERBOSE} && log $0 "Restore active threads (${NUMTHREADS})"
-if [ -n "${NUMTHREADS}" ]
-then
-        onlinethreads ${NUMTHREADS} 0
-else
-        onlinethreads all 1
-fi
-
-### Restore system TDP
-OVERCLOCK=$(get_setting "system.overclock")
-if [ ! -z "${OVERCLOCK}" ]
-then
-  ${VERBOSE} && log $0 "Restore system TDP (${OVERCLOCK})"
-  /usr/bin/overclock ${OVERCLOCK}
-fi
-
-### Restore system EPP
-EPP=$(get_setting "system.power.epp")
-if [ ! -z ${EPP} ]
-then
-  ${VERBOSE} && log $0 "Restore system EPP (${EPP})"
-  /usr/bin/set_epp ${EPP}
-fi
-
 ### Restore cooling profile.
 if [ "${DEVICE_HAS_FAN}" = "true" ]
 then
   ${VERBOSE} && log $0 "Restore system cooling profile (${COOLINGPROFILE})"
   set_setting cooling.profile ${COOLINGPROFILE}
-  systemctl restart fancontrol
+  systemctl restart fancontrol &
 fi
 
 ### Restore system GPU performance mode
@@ -432,12 +406,38 @@ GPUPERF=$(get_setting "system.gpuperf")
 if [ ! -z ${GPUPERF} ]
 then
   ${VERBOSE} && log $0 "Restore system GPU performance mode (${GPUPERF})"
-  gpu_performance_level ${GPUPERF}
+  gpu_performance_level ${GPUPERF} &
 else
   ${VERBOSE} && log $0 "Restore system GPU performance mode (auto)"
-  gpu_performance_level auto
+  gpu_performance_level auto &
 fi
 rm -f /tmp/.gpu_performance_level 2>/dev/null
+
+### Restore system EPP
+EPP=$(get_setting "system.power.epp")
+if [ ! -z ${EPP} ]
+then
+  ${VERBOSE} && log $0 "Restore system EPP (${EPP})"
+  /usr/bin/set_epp ${EPP} &
+fi
+
+### Restore system TDP
+OVERCLOCK=$(get_setting "system.overclock")
+if [ ! -z "${OVERCLOCK}" ]
+then
+  ${VERBOSE} && log $0 "Restore system TDP (${OVERCLOCK})"
+  /usr/bin/overclock ${OVERCLOCK} &
+fi
+
+### Reset the number of cores to use.
+NUMTHREADS=$(get_setting "system.threads")
+${VERBOSE} && log $0 "Restore active threads (${NUMTHREADS})"
+if [ -n "${NUMTHREADS}" ]
+then
+        onlinethreads ${NUMTHREADS} 0 &
+else
+        onlinethreads all 1 &
+fi
 
 ### Backup save games
 CLOUD_BACKUP=$(get_setting "cloud.backup")
