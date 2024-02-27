@@ -88,7 +88,8 @@ FUNCTION_HOTKEY_HAT_RIGHT_EVENT="*(ABS_HAT0X), value 1*"
 FUNCTION_HOTKEY_HAT_LEFT_EVENT="*(ABS_HAT0X), value -1*"
 
 DPAD_EVENTS=$(get_setting key.dpad.events)
-if [ -z "${DPAD_EVENTS}" ]
+if [ -z "${DPAD_EVENTS}" ] || \
+   [ "${DPAD_EVENTS}" = "0" ]
 then
   DPAD_EVENTS=false
 else
