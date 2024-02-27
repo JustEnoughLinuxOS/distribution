@@ -87,7 +87,7 @@ EOF
 function quit() {
         ${VERBOSE} && log $0 "Cleaning up and exiting"
         bluetooth enable
-        jslisten set "emulationstation"
+        set_kill set "emulationstation"
         clear_screen
         DEVICE_CPU_GOVERNOR=$(get_setting system.cpugovernor)
         ${DEVICE_CPU_GOVERNOR}
@@ -138,13 +138,13 @@ esac
 loginit "$1" "$2" "$3" "$4"
 clear_screen
 bluetooth disable
-jslisten stop
+set_kill stop
 
 ### Determine which emulator we're launching and make appropriate adjustments before launching.
 ${VERBOSE} && log $0 "Configuring for ${EMULATOR}"
 case ${EMULATOR} in
   mednafen)
-    jslisten set "-9 mednafen"
+    set_kill set "-9 mednafen"
     RUNTHIS='${RUN_SHELL} /usr/bin/start_mednafen.sh "${ROMNAME}" "${CORE}" "${PLATFORM}"'
   ;;
   retroarch)
@@ -172,8 +172,8 @@ case ${EMULATOR} in
       ;;
     esac
 
-    ### Set jslisten to kill the appropriate retroarch
-    jslisten set "retroarch retroarch32"
+    ### Set set_kill to kill the appropriate retroarch
+    set_kill set "retroarch retroarch32"
 
     ### Assume we're running 64bit Retroarch
     RABIN="retroarch"
@@ -393,38 +393,12 @@ performance
 
 clear_screen
 
-### Reset the number of cores to use.
-NUMTHREADS=$(get_setting "system.threads")
-${VERBOSE} && log $0 "Restore active threads (${NUMTHREADS})"
-if [ -n "${NUMTHREADS}" ]
-then
-        onlinethreads ${NUMTHREADS} 0
-else
-        onlinethreads all 1
-fi
-
-### Restore system TDP
-OVERCLOCK=$(get_setting "system.overclock")
-if [ ! -z "${OVERCLOCK}" ]
-then
-  ${VERBOSE} && log $0 "Restore system TDP (${OVERCLOCK})"
-  /usr/bin/overclock ${OVERCLOCK}
-fi
-
-### Restore system EPP
-EPP=$(get_setting "system.power.epp")
-if [ ! -z ${EPP} ]
-then
-  ${VERBOSE} && log $0 "Restore system EPP (${EPP})"
-  /usr/bin/set_epp ${EPP}
-fi
-
 ### Restore cooling profile.
 if [ "${DEVICE_HAS_FAN}" = "true" ]
 then
   ${VERBOSE} && log $0 "Restore system cooling profile (${COOLINGPROFILE})"
   set_setting cooling.profile ${COOLINGPROFILE}
-  systemctl restart fancontrol
+  systemctl restart fancontrol &
 fi
 
 ### Restore system GPU performance mode
@@ -432,12 +406,38 @@ GPUPERF=$(get_setting "system.gpuperf")
 if [ ! -z ${GPUPERF} ]
 then
   ${VERBOSE} && log $0 "Restore system GPU performance mode (${GPUPERF})"
-  gpu_performance_level ${GPUPERF}
+  gpu_performance_level ${GPUPERF} &
 else
   ${VERBOSE} && log $0 "Restore system GPU performance mode (auto)"
-  gpu_performance_level auto
+  gpu_performance_level auto &
 fi
 rm -f /tmp/.gpu_performance_level 2>/dev/null
+
+### Restore system EPP
+EPP=$(get_setting "system.power.epp")
+if [ ! -z ${EPP} ]
+then
+  ${VERBOSE} && log $0 "Restore system EPP (${EPP})"
+  /usr/bin/set_epp ${EPP} &
+fi
+
+### Restore system TDP
+OVERCLOCK=$(get_setting "system.overclock")
+if [ ! -z "${OVERCLOCK}" ]
+then
+  ${VERBOSE} && log $0 "Restore system TDP (${OVERCLOCK})"
+  /usr/bin/overclock ${OVERCLOCK} &
+fi
+
+### Reset the number of cores to use.
+NUMTHREADS=$(get_setting "system.threads")
+${VERBOSE} && log $0 "Restore active threads (${NUMTHREADS})"
+if [ -n "${NUMTHREADS}" ]
+then
+        onlinethreads ${NUMTHREADS} 0 &
+else
+        onlinethreads all 1 &
+fi
 
 ### Backup save games
 CLOUD_BACKUP=$(get_setting "cloud.backup")

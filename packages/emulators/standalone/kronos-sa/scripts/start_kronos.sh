@@ -5,7 +5,7 @@
 
 # Source predefined functions and variables
 . /etc/profile
-jslisten set "-9 kronos"
+set_kill set "-9 kronos"
 
 ROM_DIR="/storage/roms/saturn/kronos"
 CONFIG_DIR="/storage/.config/kronos/qt"

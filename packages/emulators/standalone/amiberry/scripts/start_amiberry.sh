@@ -6,7 +6,7 @@
 
 . /etc/profile
 
-jslisten set "-9 amiberry"
+set_kill set "-9 amiberry"
 
 # Set some common variables
 AMIBERRY_DIR="/storage/.config/amiberry"

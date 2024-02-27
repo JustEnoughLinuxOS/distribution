@@ -8,7 +8,7 @@
 
 # Ensure we're using pulseaudio
 export SDL_AUDIODRIVER=pulseaudio
-jslisten set "-9 cemu"
+set_kill set "-9 cemu"
 
 if [ -z "${PASINK}" ]
 then

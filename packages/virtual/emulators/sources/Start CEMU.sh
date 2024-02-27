@@ -5,6 +5,6 @@
 
 source /etc/profile
 
-jslisten set "cemu"
+set_kill set "cemu"
 
 /usr/bin/cemu >/dev/null 2>&1

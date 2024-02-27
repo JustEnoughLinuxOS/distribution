@@ -49,11 +49,11 @@ sed -i "s#Resolution:.*\$#Resolution: $(fbwidth)x$(fbheight)#g" /storage/.config
 # Run rpcs3
 if [ "$SUI" = "1" ]; then
   export QT_QPA_PLATFORM=wayland
-  jslisten set "-9 rpcs3"
+  set_kill set "-9 rpcs3"
   /usr/bin/rpcs3
 else
   export QT_QPA_PLATFORM=xcb
   export SDL_AUDIODRIVER=pulseaudio
-  jslisten set "-9 rpcs3"
+  set_kill set "-9 rpcs3"
 	/usr/bin/rpcs3 --no-gui "$GAME_PATH"
 fi

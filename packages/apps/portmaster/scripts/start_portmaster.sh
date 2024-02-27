@@ -4,7 +4,7 @@
 # Copyright (C) 2022-present JELOS (https://github.com/JustEnoughLinuxOS)
 
 . /etc/profile
-jslisten set "PortMaster"
+set_kill set "PortMaster"
 
 #Make sure PortMaster exists in .config/PortMaster
 if [ ! -d "/storage/.config/PortMaster" ]; then

@@ -5,6 +5,6 @@
 
 source /etc/profile
 
-jslisten set "pcsx2-sa"
+set_kill set "pcsx2-sa"
 
 /usr/bin/pcsx2-sa >/dev/null 2>&1

@@ -69,12 +69,6 @@ ln -sf /usr/share/locale /storage/.config/emulationstation/locale >>/var/log/con
 ### Add items below this line that are safe to remove after a period of time.
 ################################################################################
 
-### 20240111 - Add new jslisten hotkey
-if [ -e "/storage/.config/jslisten_hotkeys" ]
-then
-   grep BTN_VOLBRIGHT_HOTKEY /storage/.config/jslisten_hotkeys || echo -e "\nBTN_VOLBRIGHT_HOTKEY=999" >>/storage/.config/jslisten_hotkeys
-fi
-
 ### 20240207 - Update Vita launchers and data.
 rsync -ah --update /usr/config/vita3k/* /storage/.config/vita3k 2>/dev/null
 rm -f "/storage/.config/vita3k/launcher/Start Vita3K.sh"

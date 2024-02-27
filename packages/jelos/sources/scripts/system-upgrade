@@ -123,7 +123,7 @@ then
   curl -o /tmp/release.data -H 'Cache-Control: no-cache' -Ls "${GIT_API}/releases"
   UPDATE_PACKAGE=$(awk 'BEGIN {FS="\""} /'${OS_NAME}-${HW_DEVICE}.${HW_ARCH}'.*tar/ {print $4; exit}' /tmp/release.data | sed -e "s~${OS_NAME}-${HW_DEVICE}.${HW_ARCH}-~~g;s~.tar$~~g")
   if [ "${UPDATE_PACKAGE}" -le "${OS_VERSION}" ] \
-  || [ "${FORCE}" == "1" ]
+  && [ ! "${FORCE}" == "1" ]
   then
     cleanup
     echo "No new updates are available..."

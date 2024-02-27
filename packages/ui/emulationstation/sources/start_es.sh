@@ -43,6 +43,6 @@ then
   systemctl import-environment LANGUAGE
 fi
 
-jslisten set "emulationstation"
+set_kill set "emulationstation"
 
 emulationstation --log-path /var/log --no-splash

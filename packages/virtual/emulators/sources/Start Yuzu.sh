@@ -5,6 +5,6 @@
 
 source /etc/profile
 
-jslisten set "yuzu"
+set_kill set "yuzu"
 
 /usr/bin/yuzu >/dev/null 2>&1

@@ -2,7 +2,7 @@
 # Copyright (C) 2022-present JELOS (https://github.com/JustEnoughLinuxOS)
 
 . /etc/profile
-jslisten set "-9 xemu"
+set_kill set "-9 xemu"
 
 #Check if xemu exists in .config
 if [ ! -d "/storage/.config/xemu" ]; then

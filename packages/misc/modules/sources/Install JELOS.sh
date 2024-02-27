@@ -5,6 +5,6 @@
 
 source /etc/profile
 
-jslisten set "installer"
+set_kill set "installer"
 
 weston-terminal -f --command "/usr/bin/installer"

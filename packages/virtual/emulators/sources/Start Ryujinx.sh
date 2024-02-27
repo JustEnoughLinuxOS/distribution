@@ -5,6 +5,6 @@
 
 source /etc/profile
 
-jslisten set "Ryujinx"
+set_kill set "Ryujinx"
 
 /storage/.config/Ryujinx/Ryujinx >/dev/null 2>&1

@@ -4,7 +4,7 @@
 # Copyright (C) 2022-present JELOS (https://github.com/JustEnoughLinuxOS)
 
 . /etc/profile
-jslisten set "-9 citra"
+set_kill set "-9 citra"
 
 #load gptokeyb support files
 control-gen_init.sh

@@ -4,7 +4,7 @@
 # Copyright (C) 2022-present JELOS (https://github.com/JustEnoughLinuxOS)
 
 . /etc/profile
-jslisten set "-9 Vita3K"
+set_kill set "-9 Vita3K"
 
 OUTPUT_PATH="/storage/.config/vita3k/launcher"
 GAME="${1}"

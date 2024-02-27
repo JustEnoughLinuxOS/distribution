@@ -4,7 +4,7 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 . /etc/profile
-jslisten set "mpv"
+set_kill set "mpv"
 
 FBWIDTH="$(fbwidth)"
 FBHEIGHT="$(fbheight)"
