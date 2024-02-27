@@ -202,6 +202,8 @@ execute_action() {
                 ${FN_B_ACTION_DOWN}
             ;;
         esac
+    else
+        volume ${1}
     fi
 }
 
@@ -373,10 +375,10 @@ mkcontroller 2>/dev/null ||:
             fi
         ;;
         (${FUNCTION_VOLUME_UP_EVENT})
-            volume up
+            execute_action up
         ;;
         (${FUNCTION_VOLUME_DOWN_EVENT})
-            volume down
+            execute_action down
         ;;
     esac
 done
