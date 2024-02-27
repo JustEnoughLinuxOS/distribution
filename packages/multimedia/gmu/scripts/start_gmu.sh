@@ -4,7 +4,7 @@
 
 . /etc/profile
 
-jslisten set "-HUP gmu.bin"
+set_kill set "-HUP gmu.bin"
 
 GMUPATH="/storage/.config/gmu"
 GMUCONFIG="${GMUPATH}/gmu.conf"

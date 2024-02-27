@@ -6,7 +6,7 @@
 
 . /etc/profile
 
-jslisten set "-9 mupen64plus"
+set_kill set "-9 mupen64plus"
 
 # Emulation Station features
 GAME=$(echo "${1}"| sed "s#^/.*/##")

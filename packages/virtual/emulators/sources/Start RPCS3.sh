@@ -23,6 +23,6 @@ for FOLDER_LINK in "${FOLDER_LINKS[@]}"; do
   ln -sf "$TARGET_FOLDER" "$SOURCE_FOLDER"
 done
 
-jslisten set "rpcs3"
+set_kill set "rpcs3"
 
 /usr/bin/rpcs3 >/dev/null 2>&1

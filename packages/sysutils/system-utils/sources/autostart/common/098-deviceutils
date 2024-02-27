@@ -20,14 +20,6 @@ else
   nohup systemctl stop headphones &
 fi
 
-if [ "${DEVICE_VOLUMECTL}" == "true" ]
-then
-  tocon "Starting volume service..."
-  nohup systemctl start volume &
-else
-  nohup systemctl stop volume &
-fi
-
 if [ "${DEVICE_HAS_HDMI}" == "true" ]
 then
   tocon "Starting hdmi service..."
@@ -43,3 +35,6 @@ then
 else
   nohup systemctl stop batteryledstatus &
 fi
+
+tocon "Starting input service..."
+nohup systemctl start input &

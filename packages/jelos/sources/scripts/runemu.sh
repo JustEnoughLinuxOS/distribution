@@ -87,7 +87,7 @@ EOF
 function quit() {
         ${VERBOSE} && log $0 "Cleaning up and exiting"
         bluetooth enable
-        jslisten set "emulationstation"
+        set_kill set "emulationstation"
         clear_screen
         DEVICE_CPU_GOVERNOR=$(get_setting system.cpugovernor)
         ${DEVICE_CPU_GOVERNOR}
@@ -138,13 +138,13 @@ esac
 loginit "$1" "$2" "$3" "$4"
 clear_screen
 bluetooth disable
-jslisten stop
+set_kill stop
 
 ### Determine which emulator we're launching and make appropriate adjustments before launching.
 ${VERBOSE} && log $0 "Configuring for ${EMULATOR}"
 case ${EMULATOR} in
   mednafen)
-    jslisten set "-9 mednafen"
+    set_kill set "-9 mednafen"
     RUNTHIS='${RUN_SHELL} /usr/bin/start_mednafen.sh "${ROMNAME}" "${CORE}" "${PLATFORM}"'
   ;;
   retroarch)
@@ -172,8 +172,8 @@ case ${EMULATOR} in
       ;;
     esac
 
-    ### Set jslisten to kill the appropriate retroarch
-    jslisten set "retroarch retroarch32"
+    ### Set set_kill to kill the appropriate retroarch
+    set_kill set "retroarch retroarch32"
 
     ### Assume we're running 64bit Retroarch
     RABIN="retroarch"

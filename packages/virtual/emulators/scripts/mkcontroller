@@ -75,8 +75,5 @@ DEVICE_BTN_DPAD_LEFT="${left}"
 DEVICE_BTN_DPAD_RIGHT="${right}"
 EOF
 
-### Link jslisten to load after mkcontroller
-ln -sf /usr/config/jslisten_profile /storage/.config/profile.d/099-jslisten
-
 rm /tmp/${OUTFILE}
 

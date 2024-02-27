@@ -5,7 +5,7 @@
 
 . /etc/profile
 
-jslisten set "-9 melonDS"
+set_kill set "-9 melonDS"
 
 if [ ! -d "/storage/.config/melonDS" ]; then
     mkdir -p "/storage/.config/melonDS"

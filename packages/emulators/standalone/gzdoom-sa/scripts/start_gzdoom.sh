@@ -4,7 +4,7 @@
 # Copyright (C) 2021-present 351ELEC (https://github.com/351ELEC)
 
 . /etc/profile
-jslisten set "-9 gzdoom"
+set_kill set "-9 gzdoom"
 
 RUN_DIR="/storage/roms/doom"
 CONFIG="/storage/.config/gzdoom/gzdoom.ini"

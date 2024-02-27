@@ -5,6 +5,6 @@
 
 source /etc/profile
 
-jslisten set "hatarisa"
+set_kill set "hatarisa"
 
 /usr/bin/hatarisa >/dev/null 2>&1

@@ -4,7 +4,6 @@
 
 cat <<EOF >/storage/.config/profile.d/001-device_config
 # Device Features
-DEVICE_VOLUMECTL="true"
 DEVICE_POWER_LED="false"
 DEVICE_PLAYBACK_PATH_SPK="HP"
 DEVICE_PLAYBACK_PATH_HP="SPK"

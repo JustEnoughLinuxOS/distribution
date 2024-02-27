@@ -164,5 +164,5 @@ export MESA_GLSL_VERSION_OVERRIDE=330
 
 #Run Aethersx2 emulator
   export SDL_AUDIODRIVER=pulseaudio
-  jslisten set "-9 aethersx2"
+  set_kill set "-9 aethersx2"
   ${EMUPERF} /usr/bin/@APPIMAGE@ -fullscreen "${1}"

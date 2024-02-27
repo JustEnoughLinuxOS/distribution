@@ -4,7 +4,7 @@
 # Copyright (C) 2022-present JELOS (https://github.com/JustEnoughLinuxOS)
 
 . /etc/profile
-jslisten set "-9 Ryujinx"
+set_kill set "-9 Ryujinx"
 
 if [ ! -d "/storage/.config/Ryujinx" ]; then
     mkdir -p "/storage/.config/Ryujinx"

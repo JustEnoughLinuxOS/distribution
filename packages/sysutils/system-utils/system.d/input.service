@@ -7,7 +7,7 @@ StartLimitIntervalSec=0
 [Service]
 Environment=HOME=/storage
 EnvironmentFile=/etc/profile
-ExecStart=/usr/bin/volume_sense
+ExecStart=/usr/bin/input_sense
 Restart=always
 RestartSec=1
 
