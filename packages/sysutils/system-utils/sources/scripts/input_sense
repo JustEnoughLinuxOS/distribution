@@ -72,6 +72,10 @@ then
   BTN_HOTKEY_C_MODIFIER="BTN_START"
 fi
 
+HOTKEY_A_PRESSED=false
+HOTKEY_B_PRESSED=false
+HOTKEY_C_PRESSED=false
+
 FUNCTION_HOTKEY_A_EVENT='*('${BTN_HOTKEY_A_MODIFIER}'), value *'
 FUNCTION_HOTKEY_B_EVENT='*('${BTN_HOTKEY_B_MODIFIER}'), value *'
 FUNCTION_HOTKEY_C_EVENT='*('${BTN_HOTKEY_C_MODIFIER}'), value *'
@@ -299,6 +303,15 @@ mkcontroller 2>/dev/null ||:
               FN_B_PRESSED=false
            fi
         ;;
+        (${FUNCTION_VOLUME_UP_EVENT})
+            execute_action up
+        ;;
+        (${FUNCTION_VOLUME_DOWN_EVENT})
+            execute_action down
+        ;;
+    esac
+
+    case ${line} in
         (${FUNCTION_HOTKEY_A_EVENT})
            if [[ "${line}" =~ ${PRESS} ]]
            then
@@ -373,12 +386,6 @@ mkcontroller 2>/dev/null ||:
               ${DEBUG} && log $0 "${FUNCTION_DPAD_LEFT_EVENT}${FUNCTION_HOTKEY_HAT_LEFT_EVENT}: Brightness Down"
               brightness down
             fi
-        ;;
-        (${FUNCTION_VOLUME_UP_EVENT})
-            execute_action up
-        ;;
-        (${FUNCTION_VOLUME_DOWN_EVENT})
-            execute_action down
         ;;
     esac
 done
