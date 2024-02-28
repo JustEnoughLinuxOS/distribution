@@ -14,5 +14,7 @@ PKG_TOOLCHAIN="manual"
 makeinstall_target() {
   mkdir -p ${INSTALL}/$(get_kernel_overlay_dir)/lib/firmware/brcm
     cp -av brcm/brcmfmac43456-sdio.bin ${INSTALL}/$(get_kernel_overlay_dir)/lib/firmware/brcm/
+    cp -av brcm/brcmfmac43456-sdio.clm_blob ${INSTALL}/$(get_kernel_overlay_dir)/lib/firmware/brcm/
     cp -av brcm/brcmfmac43456-sdio.txt ${INSTALL}/$(get_kernel_overlay_dir)/lib/firmware/brcm/
+    cp -av brcm/BCM4345C5.hcd ${INSTALL}/$(get_kernel_overlay_dir)/lib/firmware/brcm/
 }

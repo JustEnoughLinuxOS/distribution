@@ -1,6 +1,6 @@
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/Makefile linux/arch/arm64/boot/dts/rockchip/Makefile
---- linux.orig/arch/arm64/boot/dts/rockchip/Makefile	2024-02-21 01:57:23.545576650 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/Makefile	2024-02-21 01:57:40.402128271 +0000
+--- linux.orig/arch/arm64/boot/dts/rockchip/Makefile	2024-02-28 20:10:38.318659129 +0000
++++ linux/arch/arm64/boot/dts/rockchip/Makefile	2024-02-28 20:29:01.089808951 +0000
 @@ -313,6 +313,7 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-e
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-evb4-lp4x-v10-linux.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-evb8-lp4x-v10.dtb
@@ -11,7 +11,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/Makefile linux/arch/arm64/boo
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-nanopi-r6c.dtb
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/lcd-hx8399c_mipi.dtsi linux/arch/arm64/boot/dts/rockchip/lcd-hx8399c_mipi.dtsi
 --- linux.orig/arch/arm64/boot/dts/rockchip/lcd-hx8399c_mipi.dtsi	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/lcd-hx8399c_mipi.dtsi	2024-02-21 01:57:40.414128664 +0000
++++ linux/arch/arm64/boot/dts/rockchip/lcd-hx8399c_mipi.dtsi	2024-02-28 20:29:01.089808951 +0000
 @@ -0,0 +1,136 @@
 +/*
 + * Copyright (c) 2017 Fuzhou Rockchip Electronics Co., Ltd
@@ -151,8 +151,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/lcd-hx8399c_mipi.dtsi linux/a
 +};
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts linux/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts
 --- linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts	2024-02-22 23:59:15.208828226 +0000
-@@ -0,0 +1,1493 @@
++++ linux/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts	2024-02-28 21:29:26.093927222 +0000
+@@ -0,0 +1,1492 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2021 Rockchip Electronics Co., Ltd.
@@ -642,20 +642,6 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts lin
 +		vin-supply = <&vcc5v0_spk>;
 +		pinctrl-names = "default";
 +		pinctrl-0 = <&pa_5v_en>;
-+	};
-+
-+	wireless_bluetooth: wireless-bluetooth {
-+		compatible = "bluetooth-platdata";
-+		clocks = <&hym8563>;
-+		clock-names = "ext_clock";
-+		uart_rts_gpios = <&gpio3 RK_PD2 GPIO_ACTIVE_LOW>;
-+		pinctrl-names = "default", "rts_gpio";
-+		pinctrl-0 = <&uart9m2_rtsn>, <&bt_reset_gpio>, <&bt_wake_gpio>, <&bt_wake_host_irq>;
-+		pinctrl-1 = <&uart9_gpios>;
-+		BT,reset_gpio    = <&gpio3 RK_PB7 GPIO_ACTIVE_HIGH>;
-+		BT,wake_gpio     = <&gpio3 RK_PB1 GPIO_ACTIVE_HIGH>;
-+		BT,wake_host_irq = <&gpio3 RK_PB0 GPIO_ACTIVE_HIGH>;
-+		status = "okay";
 +	};
 +
 +	wireless_wlan: wireless-wlan {
@@ -1345,21 +1331,20 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts lin
 +		};
 +	};
 +
-+	wireless-bluetooth {
-+		uart9_gpios: uart9-gpios {
-+			rockchip,pins = <3 RK_PD2 RK_FUNC_GPIO &pcfg_pull_none>;
++	bt {
++		bt_enable_h: bt-enable-h {
++			rockchip,pins =
++				<3 RK_PB7 RK_FUNC_GPIO &pcfg_pull_none>;
 +		};
 +
-+		bt_reset_gpio: bt-reset-gpio {
-+			rockchip,pins = <3 RK_PB7 RK_FUNC_GPIO &pcfg_pull_none>;
++		bt_host_wake_l: bt-host-wake-l {
++			rockchip,pins =
++				<3 RK_PB0 RK_FUNC_GPIO &pcfg_pull_down>;
 +		};
 +
-+		bt_wake_gpio: bt-wake-gpio {
-+			rockchip,pins = <3 RK_PB1 RK_FUNC_GPIO &pcfg_pull_up>;
-+		};
-+
-+		bt_wake_host_irq: bt-wake-host-irq {
-+			rockchip,pins = <3 RK_PB0 RK_FUNC_GPIO &pcfg_pull_down>;
++		bt_wake_l: bt-wake-l {
++			rockchip,pins =
++				<3 RK_PB1 RK_FUNC_GPIO &pcfg_pull_up>;
 +		};
 +	};
 +
@@ -1521,9 +1506,23 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts lin
 +};
 +
 +&uart9 {
++	pinctrl-0 = <&uart9m2_xfer>, <&uart9m2_ctsn>, <&uart9m2_rtsn>;
++	/delete-property/ dma-names;
++	/delete-property/ dmas;
++	uart-has-rtscts;
 +	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart9m2_xfer &uart9m2_ctsn>;
++
++	bluetooth {
++		compatible = "brcm,bcm4345c5";
++		clocks = <&hym8563>;
++		clock-names = "lpo";
++		device-wakeup-gpios = <&gpio3 RK_PB1 GPIO_ACTIVE_HIGH>;
++		interrupt-parent = <&gpio3>;
++		interrupts = <RK_PB0 IRQ_TYPE_EDGE_FALLING>;
++		pinctrl-0 = <&bt_enable_h>, <&bt_host_wake_l>, <&bt_wake_l>;
++		pinctrl-names = "default";
++		shutdown-gpios = <&gpio3 RK_PB7 GPIO_ACTIVE_HIGH>;
++	};
 +};
 +
 +&u2phy0 {
