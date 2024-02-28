@@ -31,3 +31,11 @@ sort_settings
 ### We do not want to mount the cloud drive on startup
 ### so we'll reset the mount option to 0.
 set_setting clouddrive.mounted 0
+
+### Set up the runtime directory.
+if [ ! -d "/var/run/0-runtime-dir" ]
+then
+  mkdir -p /var/run/0-runtime-dir
+fi
+
+chmod 0700 /var/run/0-runtime-dir
