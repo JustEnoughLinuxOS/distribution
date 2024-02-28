@@ -5,6 +5,7 @@
 
 . /etc/profile
 set_kill set "mpv"
+systemctl start mpv
 
 FBWIDTH="$(fbwidth)"
 FBHEIGHT="$(fbheight)"
@@ -21,4 +22,5 @@ case ${ASPECT} in
 esac
 
 /usr/bin/mpv --fullscreen --geometry=${RES} --hwdec=auto-safe --input-ipc-server=/tmp/mpvsocket "${1}"
+systemctl stop mpv
 exit 0

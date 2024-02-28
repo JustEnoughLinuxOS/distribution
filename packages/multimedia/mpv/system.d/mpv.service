@@ -1,0 +1,14 @@
+[Unit]
+Description=MPV controller input service
+After=jelos.target
+StartLimitIntervalSec=0
+
+[Service]
+Environment=HOME=/storage
+EnvironmentFile=/etc/profile
+ExecStart=/usr/bin/mpv_sense
+Restart=always
+RestartSec=1
+
+[Install]
+WantedBy=multi-user.target
