@@ -396,7 +396,7 @@ EOF
   # install complete
   MSG_TITLE="@DISTRONAME@ Install Complete"
   MSG_DETAIL="You may now remove the install media and shutdown.\n"
-  whiptail --backtitle "$BACKTITLE" --title "$MSG_TITLE" --msgbox "$MSG_DETAIL" 7 52
+  whiptail --backtitle "$BACKTITLE" --title "$MSG_TITLE" --msgbox "$MSG_DETAIL" 7 73
 }
 
 msg_no_device() {

@@ -134,22 +134,22 @@ fi
 
 if [ -z "${FN_B_ACTION_UP}" ]
 then
-  FN_B_ACTION_UP="wifictl enable"
+  FN_B_ACTION_UP="ledcontrol"
 fi
 
 if [ -z "${FN_B_ACTION_DOWN}" ]
 then
-  FN_B_ACTION_DOWN="wifictl disable"
+  FN_B_ACTION_DOWN="ledcontrol poweroff"
 fi
 
 if [ -z "${FN_AB_ACTION_UP}" ]
 then
-  FN_AB_ACTION_UP="ledcontrol"
+  FN_AB_ACTION_UP="wifictl enable"
 fi
 
 if [ -z "${FN_AB_ACTION_DOWN}" ]
 then
-  FN_AB_ACTION_DOWN="ledcontrol poweroff"
+  FN_AB_ACTION_DOWN="wifictl disable"
 fi
 
 ### Simple functions to execute button actions, including global kill.
