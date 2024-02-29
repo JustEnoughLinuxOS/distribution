@@ -173,21 +173,9 @@ do_install_quick() {
   INSTALL_DEVICE=$(cat "$TMPDIR/device_for_install")
   INSTALL_DEVICE_FULL=$(echo ${DEVICE_LIST} | sed "s|.*${INSTALL_DEVICE} \([^ ]*\).*|${INSTALL_DEVICE} \1|")
 
-  case ${HW_ARCH} in
-    arm|aarch64)
-      PART1="3"
-      PART2="4"
-    ;;
-    *)
-      PART1="1"
-      PART2="2"
-    ;;
-  esac
-
   case ${INSTALL_DEVICE} in
     "/dev/mmcblk"*|"/dev/nvme"*)
-      PART1="p${PART1}"
-      PART2="p${PART2}"
+      PARTID="p"
       ;;
   esac
 
@@ -228,6 +216,8 @@ do_install_quick() {
 
     case ${HW_ARCH} in
       arm|aarch64)
+        PART1=1
+	msg_progress_install "8"  "Creating uboot partition on ${INSTALL_DEVICE}${PARTID}${PART1}"
         parted -s "${INSTALL_DEVICE}" unit s mkpart uboot 16384 24575 >> $LOGFILE 2>&1
         if [ -e "/usr/share/bootloader/trust.img" ]
         then
@@ -238,11 +228,14 @@ do_install_quick() {
         fi
         if [ -n "${TRUST_LABEL}" ]
         then
+          PART1=$(( ${PART1} + 1 ))
+          msg_progress_install "8"  "Creating ${TRUST_LABEL} partition on ${INSTALL_DEVICE}${PARTID}${PART1}"
           parted -s "${INSTALL_DEVICE}" unit s mkpart ${TRUST_LABEL} 24576 32767 >> $LOGFILE 2>&1
         fi
       ;;
       *)
         msg_progress_install "9" "Writing Master Boot Record on ${INSTALL_DEVICE}"
+        PART1=0
         if [ "$GPT" = "1" ]; then
           cat /usr/share/syslinux/gptmbr.bin > ${INSTALL_DEVICE}
         else
@@ -256,52 +249,53 @@ do_install_quick() {
     partsize_storage_start=$((partsize_system_end + 1))
     partsize_storage_end=-1024
 
-    msg_progress_install "10" "Creating partition on ${INSTALL_DEVICE}"
+    PART1=$(( ${PART1} + 1 ))
+    BOOT_PART=${PART1}
+    
+    msg_progress_install "10" "Creating flash partition on ${INSTALL_DEVICE}${PARTID}${PART1}"
     if [ "$GPT" = "1" ]; then
-      parted -s ${INSTALL_DEVICE} unit s mkpart $DISKLABEL_SYSTEM fat16 -- $partsize_system_start $partsize_system_end >> $LOGFILE 2>&1
+      parted -s ${INSTALL_DEVICE} unit s mkpart $DISKLABEL_SYSTEM fat32 -- $partsize_system_start $partsize_system_end >> $LOGFILE 2>&1
     else
-      parted -s ${INSTALL_DEVICE} unit s mkpart primary fat16 -- $partsize_system_start $partsize_system_end >> $LOGFILE 2>&1
+      parted -s ${INSTALL_DEVICE} unit s mkpart primary fat32 -- $partsize_system_start $partsize_system_end >> $LOGFILE 2>&1
     fi
 
-    msg_progress_install "13" "Creating partition on ${INSTALL_DEVICE}"
+    PART2=$(( ${PART1} + 1 ))
+    msg_progress_install "13" "Creating storage partition on ${INSTALL_DEVICE}${PARTID}${PART2}"
     if [ "$GPT" = "1" ]; then
       parted -s ${INSTALL_DEVICE} unit s mkpart $DISKLABEL_STORAGE ext4 -- $partsize_storage_start $partsize_storage_end >> $LOGFILE 2>&1
     else
-      parted -s ${INSTALL_DEVICE} unit s mkpart storage ext4 -- $partsize_storage_start $partsize_storage_end >> $LOGFILE 2>&1
+      parted - ${INSTALL_DEVICE} unit s mkpart storage ext4 -- $partsize_storage_start $partsize_storage_end >> $LOGFILE 2>&1
     fi
 
-    msg_progress_install "16" "Setup bootflag on partition 1 of ${INSTALL_DEVICE}"
-    parted -s ${INSTALL_DEVICE} set 1 boot on >> $LOGFILE 2>&1
-    if [ "$GPT" = "1" ]; then
-      case ${HW_ARCH} in
-        arm|aarch64)
-          BOOT_PART=3
-        ;;
-        *)
-          BOOT_PART=1
-        ;;
-      esac
-      parted -s ${INSTALL_DEVICE} set ${BOOT_PART} legacy_boot on >> $LOGFILE 2>&1
-    fi
+    msg_progress_install "16" "Setup bootflag on partition ${BOOT_PART} of ${INSTALL_DEVICE}"
+    parted -s ${INSTALL_DEVICE} set ${BOOT_PART} boot on >> $LOGFILE 2>&1
+
+    case ${HW_ARCH} in
+      i686|x86_64)
+        if [ "$GPT" = "1" ]; then
+          parted -s ${INSTALL_DEVICE} set ${BOOT_PART} legacy_boot on >> $LOGFILE 2>&1
+        fi
+      ;;
+    esac
 
     msg_progress_install "20" "Tell the kernel we have a new partition table on ${INSTALL_DEVICE}"
     partprobe ${INSTALL_DEVICE} >> $LOGFILE 2>&1
 
     # create filesystem
     msg_progress_install "23" "Creating filesystem on ${INSTALL_DEVICE}1"
-    mkfs.vfat -F 16 ${INSTALL_DEVICE}${PART1} >> $LOGFILE 2>&1
+    mkfs.vfat ${INSTALL_DEVICE}${PARTID}${PART1} >> $LOGFILE 2>&1
 
     msg_progress_install "25" "Set uuid and disklabel $DISKLABEL_SYSTEM on ${INSTALL_DEVICE}${PART1}"
-    dosfslabel ${INSTALL_DEVICE}${PART1}  $DISKLABEL_SYSTEM >> $LOGFILE 2>&1
+    dosfslabel ${INSTALL_DEVICE}${PARTID}${PART1}  $DISKLABEL_SYSTEM >> $LOGFILE 2>&1
 
-    msg_progress_install "28" "Creating filesystem on ${INSTALL_DEVICE}${PART2}"
-    mke2fs -t ext4 -m 0 ${INSTALL_DEVICE}${PART2} >> $LOGFILE 2>&1
+    msg_progress_install "28" "Creating filesystem on ${INSTALL_DEVICE}${PARTID}${PART2}"
+    mke2fs -t ext4 -m 0 ${INSTALL_DEVICE}${PARTID}${PART2} >> $LOGFILE 2>&1
 
-    msg_progress_install "30" "Set uuid and disklabel $DISKLABEL_STORAGE on ${INSTALL_DEVICE}${PART2}"
-    tune2fs -U random -L $DISKLABEL_STORAGE  ${INSTALL_DEVICE}${PART2} >> $LOGFILE 2>&1
+    msg_progress_install "30" "Set uuid and disklabel $DISKLABEL_STORAGE on ${INSTALL_DEVICE}${PARTID}${PART2}"
+    tune2fs -U random -L $DISKLABEL_STORAGE  ${INSTALL_DEVICE}${PARTID}${PART2} >> $LOGFILE 2>&1
 
-    UUID_SYSTEM="$(blkid --output udev ${INSTALL_DEVICE}${PART1} | grep ^ID_FS_UUID= | cut -d= -f2)"
-    UUID_STORAGE="$(blkid --output udev ${INSTALL_DEVICE}${PART2} | grep ^ID_FS_UUID= | cut -d= -f2)"
+    UUID_SYSTEM="$(blkid --output udev ${INSTALL_DEVICE}${PARTID}${PART1} | grep ^ID_FS_UUID= | cut -d= -f2)"
+    UUID_STORAGE="$(blkid --output udev ${INSTALL_DEVICE}${PARTID}${PART2} | grep ^ID_FS_UUID= | cut -d= -f2)"
 
     echo "" >> $LOGFILE
     echo "UUID_SYSTEM : ${UUID_SYSTEM}" >> $LOGFILE
@@ -312,18 +306,18 @@ do_install_quick() {
     mkdir -p $TMPDIR/part1 >> $LOGFILE 2>&1
 
     msg_progress_install "40" "Mounting ${INSTALL_DEVICE}${PART1} to $TMPDIR/part1"
-    mount -t vfat ${INSTALL_DEVICE}${PART1} $TMPDIR/part1 >> $LOGFILE 2>&1
+    mount -t vfat ${INSTALL_DEVICE}${PARTID}${PART1} $TMPDIR/part1 >> $LOGFILE 2>&1
 
     case ${HW_ARCH} in
       arm|aarch64)
         msg_progress_install "50" "Installing bootloader to $TMPDIR/part1"
-        /usr/share/bootloader/update.sh "${INSTALL_DEVICE}" "${TMPDIR}/part1" "$UUID_SYSTEM" "$UUID_STORAGE" "$SYSLINUX_PARAMETERS @EXTRA_CMDLINE@"
+        /usr/share/bootloader/update.sh "${INSTALL_DEVICE}" "${TMPDIR}/part1" "$UUID_SYSTEM" "$UUID_STORAGE" "$SYSLINUX_PARAMETERS"
         mount -o remount,rw $TMPDIR/part1
       ;;
       i686|x86_64)
         # installing syslinux
         msg_progress_install "50" "Installing syslinux to $TMPDIR/part1"
-        syslinux -i ${INSTALL_DEVICE}${PART1} >> $LOGFILE 2>&1
+        syslinux -i ${INSTALL_DEVICE}${PARTID}${PART1} >> $LOGFILE 2>&1
 
         # configuring bootloader
         msg_progress_install "80" "Setup bootloader with boot label = $DISKLABEL_SYSTEM and disk label = $DISKLABEL_STORAGE"
@@ -376,8 +370,8 @@ EOF
       msg_progress_install "89" "Creating $TMPDIR/part2"
       mkdir -p $TMPDIR/part2 >> $LOGFILE 2>&1
 
-      msg_progress_install "90" "Mounting ${INSTALL_DEVICE}${PART2} to $TMPDIR/part2"
-      mount -t ext4 ${INSTALL_DEVICE}${PART2} $TMPDIR/part2 >> $LOGFILE 2>&1
+      msg_progress_install "90" "Mounting ${INSTALL_DEVICE}${PARTID}${PART2} to $TMPDIR/part2"
+      mount -t ext4 ${INSTALL_DEVICE}${PARTID}${PART2} $TMPDIR/part2 >> $LOGFILE 2>&1
 
       msg_progress_install "92" "Restoring backup"
       [ -f /flash/backup.tar.bz2 ] && tar -xjf /flash/backup.tar.bz2 -C $TMPDIR/part2 >> $LOGFILE 2>&1
