@@ -112,7 +112,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/lcd-hx8399c_mipi.dtsi linux/a
 +				hactive = <1080>;
 +				vactive = <1920>;
 +				hfront-porch = <32>;
-+				hsync-len = <2>;
++				hsync-len = <8>;
 +				hback-porch = <32>;
 +				vfront-porch = <16>;
 +				vsync-len = <2>;
