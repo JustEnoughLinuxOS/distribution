@@ -59,12 +59,7 @@ post_makeinstall_target() {
     cp ${PKG_DIR}/scripts/weston-config ${INSTALL}/usr/lib/weston
 
   mkdir -p ${INSTALL}/usr/share/weston
-  if [ ${DEVICE} = "RK3588-ACE" ]; then
-    cp ${PKG_DIR}/config/weston.ini.ace ${INSTALL}/usr/share/weston/weston.ini
-    cp ${PKG_DIR}/config/kiosk.ini.ace ${INSTALL}/usr/share/weston/kiosk.ini
-  else
     cp ${PKG_DIR}/config/*ini ${INSTALL}/usr/share/weston
-  fi
 
   safe_remove ${INSTALL}/usr/share/wayland-sessions
 
