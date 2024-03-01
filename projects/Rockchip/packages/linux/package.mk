@@ -28,7 +28,7 @@ case ${DEVICE} in
     PKG_GIT_CLONE_BRANCH="panfork-6.1"
   ;;
   RK3399|RK3326|RK-ARMV8-A)
-    PKG_VERSION="6.7.6"
+    PKG_VERSION="6.7.7"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
   ;;
   RK356*)
