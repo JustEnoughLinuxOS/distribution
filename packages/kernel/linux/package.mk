@@ -4,8 +4,6 @@
 
 PKG_NAME="linux"
 PKG_LICENSE="GPL"
-PKG_VERSION="6.7.6"
-PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_SITE="http://www.kernel.org"
 PKG_DEPENDS_HOST="ccache:host rdfind:host rsync:host openssl:host"
 PKG_DEPENDS_TARGET="toolchain rdfind:host linux:host kmod:host cpio:host xz:host keyutils ncurses openssl:host wireless-regdb ${KERNEL_EXTRA_DEPENDS_TARGET}"
@@ -14,7 +12,29 @@ PKG_LONGDESC="This package contains a precompiled kernel image and the modules."
 PKG_IS_KERNEL_PKG="yes"
 PKG_STAMP="${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD}"
 
-PKG_PATCH_DIRS+="${LINUX} ${DEVICE} default"
+PKG_PATCH_DIRS="${LINUX} ${DEVICE} default"
+
+case ${DEVICE} in
+  RK3588)
+    PKG_VERSION="eef98210c4984831d1706f884c95eec132c791e1"
+    PKG_URL="https://github.com/justEnoughLinuxOS/rk358x-kernel.git"
+    GET_HANDLER_SUPPORT="git"
+    PKG_GIT_CLONE_BRANCH="main"
+  ;;
+  RK3588-ACE)
+    PKG_VERSION="99e54e1a546eca7fa8d5b86be1b825914e097d06"
+    PKG_URL="https://github.com/brooksytech/linux-rockchip/archive/${PKG_VERSION}.tar.gz"
+    #PKG_GIT_CLONE_BRANCH="panfork-6.1"
+  ;;
+  RK356*)
+    PKG_VERSION="6.8-rc5"
+    PKG_URL="https://git.kernel.org/torvalds/t/${PKG_NAME}-${PKG_VERSION}.tar.gz"
+  ;;
+  *)
+    PKG_VERSION="6.7.7"
+    PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
+  ;;
+esac
 
 PKG_KERNEL_CFG_FILE=$(kernel_config_path) || die
 
@@ -101,6 +121,11 @@ makeinstall_host() {
 }
 
 pre_make_target() {
+ ( cd ${ROOT}
+    rm -rf ${BUILD}/initramfs
+    rm -f ${STAMPS_INSTALL}/initramfs/install_target ${STAMPS_INSTALL}/*/install_init
+    ${SCRIPTS}/install initramfs
+  )
   pkg_lock_status "ACTIVE" "linux:target" "build"
 
   cp ${PKG_KERNEL_CFG_FILE} ${PKG_BUILD}/.config
@@ -275,11 +300,6 @@ makeinstall_target() {
   rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/build
   rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/source
 
-  (
-    cd ${ROOT}
-    ${SCRIPTS}/install initramfs
-  )
-
   if [ "${BOOTLOADER}" = "u-boot" ]; then
     mkdir -p ${INSTALL}/usr/share/bootloader
     for dtb in arch/${TARGET_KERNEL_ARCH}/boot/dts/*.dtb arch/${TARGET_KERNEL_ARCH}/boot/dts/*/*.dtb; do
@@ -287,6 +307,16 @@ makeinstall_target() {
         cp -v ${dtb} ${INSTALL}/usr/share/bootloader
       fi
     done
+
+    if [ "${PROJECT}" = "Rockchip" ]; then
+      . ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
+      if [ "${TRUST_LABEL}" = "resource" ]; then
+        ARCH=arm64 scripts/mkimg --dtb ${DEVICE_DTB[0]}.dtb
+        ARCH=arm64 scripts/mkmultidtb.py ${PKG_SOC}
+        cp -v resource.img ${INSTALL}/usr/share/bootloader
+        ARCH=${TARGET_ARCH}
+      fi
+    fi
   fi
   makeinstall_host
 }
