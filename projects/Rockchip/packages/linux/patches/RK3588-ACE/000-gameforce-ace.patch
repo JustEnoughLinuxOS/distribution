@@ -910,7 +910,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts lin
 +&i2c3 {
 +	pinctrl-names = "default";
 +	pinctrl-0 = <&i2c3m0_xfer>;
-+	status = "disabled";
++	status = "okay";
 +
 +    gt9xx: touchscreen@14 {
 +		compatible = "goodix,gt911";
