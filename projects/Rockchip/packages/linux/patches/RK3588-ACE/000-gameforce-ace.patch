@@ -254,7 +254,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts lin
 +			reg = <0>;
 +			abs-flat = <40>;
 +			abs-fuzz = <40>;
-+			abs-range = <1530 890>;
++			abs-range = <890 1530>;
 +			linux,code = <ABS_Z>;
 +		};
 +
@@ -262,13 +262,13 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts lin
 +			reg = <1>;
 +			abs-flat = <40>;
 +			abs-fuzz = <40>;
-+			abs-range = <1550 1010>;
++			abs-range = <1010 1550>;
 +			linux,code = <ABS_RZ>;
 +		};
 +	};
 +
 +	// lqb : 手柄GPIO按键
-+	gpio-keys {
++	gpio-keys-control {
 +		status = "okay";
 +		compatible = "gpio-keys";
 +
@@ -293,7 +293,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts lin
 +			debounce-interval = <10>;
 +			gpios = <&gpio1 RK_PA3 0x01>;
 +			linux,input-type = <EV_KEY>;
-+			linux,code = <BTN_SELECT>;	
++			linux,code = <BTN_SELECT>;
 +		};
 +
 +		up {
@@ -488,17 +488,17 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts lin
 +		enable-gpios = <&gpio3 RK_PC0 GPIO_ACTIVE_HIGH>;
 +		pinctrl-names = "default";
 +		pinctrl-0 = <&lcd_bl_en>;
-+		
++
 +	};
 +
 +	es8388_sound: es8388-sound {
 +		status = "okay";
 +		compatible = "rockchip,multicodecs-card","everest,es8388";
 +		rockchip,card-name = "rockchip,es8388-codec";
-+		hp-det-gpio = <&gpio3 RK_PA6 GPIO_ACTIVE_LOW>;  
-+		io-channels = <&saradc 3>;  
++		hp-det-gpio = <&gpio3 RK_PA6 GPIO_ACTIVE_LOW>;
++		io-channels = <&saradc 3>;
 +		io-channel-names = "adc-detect";
-+		keyup-threshold-microvolt = <1800000>; 
++		keyup-threshold-microvolt = <1800000>;
 +		poll-interval = <100>;
 +		spk-con-gpio = <&gpio4 RK_PA5 GPIO_ACTIVE_HIGH>;
 +		hp-con-gpio = <&gpio0 RK_PD4 GPIO_ACTIVE_HIGH>;
@@ -507,8 +507,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts lin
 +		rockchip,cpu = <&i2s0_8ch>;
 +		rockchip,codec = <&es8388>;
 +		spk-volume = <50>;
-+		spk-volume-l = <50>;	
-+		spk-volume-r = <50>;	
++		spk-volume-l = <50>;
++		spk-volume-r = <50>;
 +		use-ext-amplifier;
 +		hp-volume = <20>;
 +		out-l2spk-r2hp;
@@ -721,7 +721,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts lin
 +	status = "okay";
 +};
 +
-+&route_dsi0 {	
++&route_dsi0 {
 +	status = "okay";
 +};
 +
@@ -981,7 +981,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts lin
 +
 +
 +&i2c5 {
-+	status = "okay";	
++	status = "okay";
 +	pinctrl-names = "default";
 +	pinctrl-0 = <&i2c5m3_xfer>;
 +};
@@ -1086,7 +1086,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts lin
 +		cellwise,dual-cell = <1>;
 +		cellwise,monitor-interval-ms = <5000>;
 +		power-supplies = <&bq25703>;
-+	}; 
++	};
 +
 +	bq25703: bq25703@6b {
 +		status = "okay";
@@ -1096,7 +1096,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts lin
 +
 +		interrupt-parent = <&gpio0>;
 +		//interrupts = <RK_PB7 IRQ_TYPE_LEVEL_LOW>;
-+		interrupts = <RK_PD5 IRQ_TYPE_EDGE_FALLING>;	
++		interrupts = <RK_PD5 IRQ_TYPE_EDGE_FALLING>;
 +		otg-mode-en-gpios = <&gpio4 RK_PA6 GPIO_ACTIVE_HIGH>;
 +		pinctrl-names = "default";
 +		pinctrl-0 = <&charger_ok>;
@@ -1144,7 +1144,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts lin
 +	status = "okay";
 +	pinctrl-names = "default";
 +	pinctrl-0 = <&i2c8m2_xfer>;
-+	
++
 +};
 +&i2s0_8ch {
 +	status = "okay";
