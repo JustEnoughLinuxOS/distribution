@@ -2,12 +2,13 @@
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
 PKG_NAME="virtualcontroller"
-PKG_VERSION="31985f2e1da8cfcf599a068845ddd3713ba3616c"
+PKG_VERSION="85f2c70c25230d90781dbddbc97436fa50283530"
 PKG_LICENSE="GPLv2"
 PKG_SITE="https://github.com/macromorgan/input-wrapper"
 PKG_URL="${PKG_SITE}.git"
 PKG_DEPENDS_TARGET="toolchain linux"
 PKG_TOOLCHAIN="make"
+PKG_PATCH_DIRS+="${DEVICE}"
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/bin

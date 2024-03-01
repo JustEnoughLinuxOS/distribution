@@ -1,0 +1,15 @@
+diff -rupN virtualcontroller.orig/virtual_controller.c virtualcontroller/virtual_controller.c
+--- virtualcontroller.orig/virtual_controller.c	2024-02-29 20:24:20.583589289 +0000
++++ virtualcontroller/virtual_controller.c	2024-02-29 20:26:23.243334498 +0000
+@@ -16,9 +16,9 @@
+ #include <sys/epoll.h>
+ #include <sys/ioctl.h>
+ 
+-#define DEVICE_NAME		"Virtual Gamepad"
++#define DEVICE_NAME		"gameforce_ace_gamepad"
+ #define DEVICE_VID		0x1234
+-#define DEVICE_PID		0x5678
++#define DEVICE_PID		0x7438
+ 
+ #define MAX_EVENTS		64
+ 
