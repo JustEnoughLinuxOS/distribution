@@ -675,11 +675,11 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts lin
 +    enable-gpios = <&gpio4 RK_PB3 GPIO_ACTIVE_HIGH>;
 +	// pinctrl-names = "default";
 +	// pinctrl-0 = <&hdmi0_en>;
-+    status = "okay";
++    status = "disabled";
 +};
 +
 +&hdmi0_in_vp0 {
-+    status = "okay";
++    status = "disabled";
 +};
 +
 +&hdmi0_sound {
