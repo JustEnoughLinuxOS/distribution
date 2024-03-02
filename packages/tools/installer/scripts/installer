@@ -216,21 +216,32 @@ do_install_quick() {
 
     case ${HW_ARCH} in
       arm|aarch64)
-        PART1=1
-	msg_progress_install "8"  "Creating uboot partition on ${INSTALL_DEVICE}${PARTID}${PART1}"
-        parted -s "${INSTALL_DEVICE}" unit s mkpart uboot 16384 24575 >> $LOGFILE 2>&1
-        if [ -e "/usr/share/bootloader/trust.img" ]
+        if [ -e "/usr/share/bootloader/rkspi_loader.img" ]
         then
-          TRUST_LABEL="trust"
-        elif [ -e "/usr/share/bootloader/resource.img" ]
-        then
-          TRUST_LABEL="resource"
-        fi
-        if [ -n "${TRUST_LABEL}" ]
-        then
-          PART1=$(( ${PART1} + 1 ))
-          msg_progress_install "8"  "Creating ${TRUST_LABEL} partition on ${INSTALL_DEVICE}${PARTID}${PART1}"
-          parted -s "${INSTALL_DEVICE}" unit s mkpart ${TRUST_LABEL} 24576 32767 >> $LOGFILE 2>&1
+          msg_progress_install "8" "Installing Rockchip SPI Loader to ${INSTALL_DEVICE}"
+          dd if=/usr/share/bootloader/rkspi_loader.img of=${INSTALL_DEVICE} conv=notrunc >> $LOGFILE 2>&1
+          msg_progress_install "9" "Tell the kernel we have a new partition table on ${INSTALL_DEVICE}"
+          partprobe ${INSTALL_DEVICE} >> $LOGFILE 2>&1
+          printf "fix " | parted  ---pretend-input-tty ${INSTALL_DEVICE} print >> $LOGFILE 2>&1
+          PART1=7
+          INSTALL_UBOOT=false
+        else
+          PART1=1
+          msg_progress_install "8"  "Creating uboot partition on ${INSTALL_DEVICE}${PARTID}${PART1}"
+          parted -s "${INSTALL_DEVICE}" unit s mkpart uboot 16384 24575 >> $LOGFILE 2>&1
+          if [ -e "/usr/share/bootloader/trust.img" ]
+          then
+            TRUST_LABEL="trust"
+          elif [ -e "/usr/share/bootloader/resource.img" ]
+          then
+            TRUST_LABEL="resource"
+          fi
+          if [ -n "${TRUST_LABEL}" ]
+          then
+            PART1=$(( ${PART1} + 1 ))
+            msg_progress_install "8"  "Creating ${TRUST_LABEL} partition on ${INSTALL_DEVICE}${PARTID}${PART1}"
+            parted -s "${INSTALL_DEVICE}" unit s mkpart ${TRUST_LABEL} 24576 32767 >> $LOGFILE 2>&1
+          fi
         fi
       ;;
       *)
@@ -310,9 +321,12 @@ do_install_quick() {
 
     case ${HW_ARCH} in
       arm|aarch64)
-        msg_progress_install "50" "Installing bootloader to $TMPDIR/part1"
-        /usr/share/bootloader/update.sh "${INSTALL_DEVICE}" "${TMPDIR}/part1" "$UUID_SYSTEM" "$UUID_STORAGE" "$SYSLINUX_PARAMETERS"
-        mount -o remount,rw $TMPDIR/part1
+        if [ ! "${INSTALL_UBOOT}" = false ]
+        then
+          msg_progress_install "50" "Installing bootloader to $TMPDIR/part1"
+          /usr/share/bootloader/update.sh "${INSTALL_DEVICE}" "${TMPDIR}/part1" "$UUID_SYSTEM" "$UUID_STORAGE" "$SYSLINUX_PARAMETERS"
+          mount -o remount,rw $TMPDIR/part1
+        fi
       ;;
       i686|x86_64)
         # installing syslinux
@@ -328,7 +342,7 @@ PROMPT 0
 
 LABEL linux
  KERNEL /KERNEL
- APPEND boot=UUID=$UUID_SYSTEM disk=UUID=$UUID_STORAGE $SYSLINUX_PARAMETERS @EXTRA_CMDLINE@
+ APPEND boot=UUID=$UUID_SYSTEM disk=UUID=$UUID_STORAGE $SYSLINUX_PARAMETERS rootwait quiet systemd.debug_shell=ttyFIQ0 earlycon=uart8250,mmio32,0xfeb50000 console=ttyFIQ0 console=tty0 coherent_pool=2M fbcon=rotate:1
 EOF
 
         cat << EOF > $TMPDIR/part1/EFI/BOOT/grub.cfg
@@ -337,7 +351,7 @@ set default="${DISTRO}"
 
 menuentry "${DISTRO}" {
        search --set -f /KERNEL
-       linux /KERNEL boot=UUID=$UUID_SYSTEM disk=UUID=$UUID_STORAGE @EXTRA_CMDLINE@
+       linux /KERNEL boot=UUID=$UUID_SYSTEM disk=UUID=$UUID_STORAGE rootwait quiet systemd.debug_shell=ttyFIQ0 earlycon=uart8250,mmio32,0xfeb50000 console=ttyFIQ0 console=tty0 coherent_pool=2M fbcon=rotate:1
 }
 EOF
 
@@ -388,7 +402,7 @@ EOF
   } | whiptail --backtitle "$BACKTITLE" --gauge "Please wait while your system is being setup ..." 6 73 0
 
   # install complete
-  MSG_TITLE="@DISTRONAME@ Install Complete"
+  MSG_TITLE="JELOS Install Complete"
   MSG_DETAIL="You may now remove the install media and shutdown.\n"
   whiptail --backtitle "$BACKTITLE" --title "$MSG_TITLE" --msgbox "$MSG_DETAIL" 7 73
 }
@@ -464,9 +478,9 @@ prompt_backup_unpack() {
 menu_main() {
   # show the mainmenu
   MSG_TITLE="MAIN MENU"
-  MSG_MENU="\nWelcome to @DISTRONAME@ installation tool! \
+  MSG_MENU="\nWelcome to JELOS installation tool! \
 \n
-This tool is used to copy @DISTRONAME@ from the installation media \
+This tool is used to copy JELOS from the installation media \
 to your disk or other device. You'll be up and running in no time! \
 Please note that the contents of the disk you choose will be wiped \
 out during the installation. \
@@ -475,7 +489,7 @@ out during the installation. \
 
   whiptail --backtitle "$BACKTITLE" --cancel-button "$MSG_CANCEL" \
     --title "$MSG_TITLE" --menu "$MSG_MENU" 18 73 4 \
-      1 "Install @DISTRONAME@" \
+      1 "Install JELOS" \
       2 "View installation log" \
       3 "Save installation log" \
       4 "Shutdown" 2> $TMPDIR/mainmenu
@@ -509,7 +523,7 @@ logfile_save() {
 
   mount -o remount,ro /flash
 
-  MSG_TITLE="@DISTRONAME@ Log Saved"
+  MSG_TITLE="JELOS Log Saved"
   MSG_DETAIL="Log location: ${LOGBACKUP}\n"
   whiptail --backtitle "$BACKTITLE" --title "$MSG_TITLE" --msgbox "$MSG_DETAIL" 7 52
 }
@@ -523,7 +537,7 @@ do_poweroff() {
 
 # setup needed variables
 OS_VERSION=$(lsb_release)
-BACKTITLE="@DISTRONAME@ Installer - ${OS_VERSION}"
+BACKTITLE="JELOS Installer - ${OS_VERSION}"
 
 TMPDIR="/tmp/installer"
 LOGFILE="$TMPDIR/install.log"
@@ -552,7 +566,7 @@ rm -rf $TMPDIR
 mkdir -p $TMPDIR
 
 #create log file
-echo "@DISTRONAME@ Installer - ${OS_VERSION} started at:" > $LOGFILE
+echo "JELOS Installer - ${OS_VERSION} started at:" > $LOGFILE
 date >> $LOGFILE
 
 dbglg "System status"
