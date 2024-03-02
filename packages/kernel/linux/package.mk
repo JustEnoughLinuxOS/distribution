@@ -124,7 +124,10 @@ pre_make_target() {
  ( cd ${ROOT}
     rm -rf ${BUILD}/initramfs
     rm -f ${STAMPS_INSTALL}/initramfs/install_target ${STAMPS_INSTALL}/*/install_init
-    ${SCRIPTS}/install initramfs
+    for INIT_PACKAGE in $(find ${PKG_BUILD}/../image/.stamps -name "*_init" | sed 's#^.*stamps/##g; s#/.*init$##g') initramfs
+    do
+      ${SCRIPTS}/install ${INIT_PACKAGE}
+    done
   )
   pkg_lock_status "ACTIVE" "linux:target" "build"
 

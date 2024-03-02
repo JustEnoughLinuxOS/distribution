@@ -254,7 +254,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts lin
 +			reg = <0>;
 +			abs-flat = <40>;
 +			abs-fuzz = <40>;
-+			abs-range = <890 1530>;
++			abs-range = <1530 890>;
 +			linux,code = <ABS_Z>;
 +		};
 +
@@ -262,7 +262,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts lin
 +			reg = <1>;
 +			abs-flat = <40>;
 +			abs-fuzz = <40>;
-+			abs-range = <1010 1550>;
++			abs-range = <1550 1010>;
 +			linux,code = <ABS_RZ>;
 +		};
 +	};
