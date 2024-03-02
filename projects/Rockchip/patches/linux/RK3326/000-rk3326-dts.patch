@@ -1999,10 +1999,11 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-gameforce-chi.dts linu
 +		};
 +	};
 +};
+
 diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts
---- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	2024-02-17 06:32:20.483322663 +0000
-@@ -0,0 +1,828 @@
+--- linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	1969-12-31 19:00:00.000000000 -0500
++++ linux/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts	2024-03-02 10:29:31.858552489 -0500
+@@ -0,0 +1,870 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2019 Hardkernel Co., Ltd
@@ -2028,9 +2029,9 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +
 +    backlight: backlight {
 +       compatible = "pwm-backlight";
-+       pwms = <&pwm1 0 62745 0>;
++       pwms = <&pwm1 0 25000 0>;
 +       brightness-levels = <
-+                 2   3   4   5   6   7
++         0   1   2   3   4   5   6   7
 +         8   9  10  11  12  13  14  15
 +        16  17  18  19  20  21  22  23
 +        24  25  26  27  28  29  30  31
@@ -2358,10 +2359,30 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +       compatible = "regulator-fixed";
 +       regulator-name = "vcc3v8_sys";
 +       regulator-always-on;
-+       regulator-boot-on;
 +       regulator-min-microvolt = <3800000>;
 +       regulator-max-microvolt = <3800000>;
 +    };
++
++	vcc-phy-regulator {
++		compatible = "regulator-fixed";
++		regulator-name = "vcc_phy";
++		regulator-always-on;
++		regulator-boot-on;
++	};
++
++	vcc18_lcd0: vcc18-lcd0 {
++		compatible = "regulator-fixed";
++		regulator-name = "vcc18_lcd0_n";
++		gpio = <&gpio0 RK_PB5 GPIO_ACTIVE_HIGH>;
++		enable-active-high;
++		pinctrl-0 = <&vcc18_lcd_n>;
++		pinctrl-names = "default";
++		regulator-boot-on;
++
++		regulator-state-mem {
++			regulator-off-in-suspend;
++		};
++	};
 +    
 +    vcc_host: vcc_host {
 +        compatible = "regulator-fixed";
@@ -2427,11 +2448,13 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +
 +    internal_display: panel@0 {
 +        compatible = "magicx,xu10-panel", "sitronix,st7703";
-+        iovcc-supply = <&vcc18_lcd_n>;
-+        vcc-supply = <&vcc18_lcd_n>;
++        iovcc-supply = <&vcc18_lcd0>;
++        vcc-supply = <&vcc18_lcd0>;
 +        reg = <0>;
 +        backlight = <&backlight>;
 +        reset-gpios = <&gpio3 RK_PB7 GPIO_ACTIVE_LOW>;
++        pinctrl-names = "default";
++        pinctrl-0 = <&lcd_rst>;
 +
 +        port {
 +            mipi_in_panel: endpoint {
@@ -2533,16 +2556,16 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +              };
 +        };
 +
-+        vcc3v0_dvp: LDO_REG1 {
-+              regulator-name = "vcc3v0_dvp";
++        vcc_1v0: LDO_REG1 {
++              regulator-name = "vcc_1v0";
 +              regulator-always-on;
 +              regulator-boot-on;
-+              regulator-min-microvolt = <3000000>;
-+              regulator-max-microvolt = <3000000>;
++              regulator-min-microvolt = <1000000>;
++              regulator-max-microvolt = <1000000>;
 +
 +              regulator-state-mem {
 +                  regulator-on-in-suspend;
-+                  regulator-suspend-microvolt = <3000000>;
++                  regulator-suspend-microvolt = <1000000>;
 +              };
 +        };
 +
@@ -2559,8 +2582,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +              };
 +        };
 +
-+        vdd1v0_soc: LDO_REG3 {
-+              regulator-name = "vdd_1v0_soc";
++        vcc1v0_soc: LDO_REG3 {
++              regulator-name = "vcc1v0_soc";
 +              regulator-min-microvolt = <1000000>;
 +              regulator-max-microvolt = <1000000>;
 +              regulator-always-on;
@@ -2602,6 +2625,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +              regulator-name = "vcc_sd";
 +              regulator-min-microvolt = <1800000>;
 +              regulator-max-microvolt = <3000000>;
++              regulator-always-on;
 +              regulator-boot-on;
 +
 +              regulator-state-mem {
@@ -2621,21 +2645,28 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +              };
 +        };
 +
-+        vcc18_lcd_n: LDO_REG8 {
-+              regulator-name = "vcc18_lcd_n";
-+              regulator-min-microvolt = <1800000>;
-+              regulator-max-microvolt = <1800000>;
++        vcc3v0_dvp: LDO_REG8 {
++              regulator-name = "vcc3v0_dvp";
++              regulator-min-microvolt = <3000000>;
++              regulator-max-microvolt = <3000000>;
++              regulator-always-on;
 +              regulator-boot-on;
-+              enable-active-high;
 +
 +              regulator-state-mem {
-+                  regulator-off-in-suspend;
-+                  regulator-suspend-microvolt = <1800000>;
++                  regulator-on-in-suspend;
++                  regulator-suspend-microvolt = <3000000>;
 +              };
 +        };
 +
-+        LDO_REG9 {
-+              /* unused */
++        vdd1v5_dvp: LDO_REG9 {
++              regulator-min-microvolt = <1500000>;
++              regulator-max-microvolt = <1500000>;
++              regulator-name = "vdd1v5_dvp";
++
++              regulator-state-mem {
++                  regulator-off-in-suspend;
++                  regulator-suspend-microvolt = <1500000>;
++              };
 +        };
 +
 +        usb_midu: BOOST {
@@ -2798,6 +2829,18 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-magicx-xu10.dts linux/
 +    headphone {
 +        hp_det: hp-det {
 +            rockchip,pins = <2 RK_PC6 RK_FUNC_GPIO &pcfg_pull_up>;
++        };
++    };
++
++    gpio-lcd {
++        lcd_rst: lcd-rst {
++            rockchip,pins = <3 RK_PB7 RK_FUNC_GPIO &pcfg_pull_none>;
++        };
++    };
++
++    vcc18-lcd {
++        vcc18_lcd_n: vcc18-lcd-n {
++            rockchip,pins = <0 RK_PB5 RK_FUNC_GPIO &pcfg_pull_none>;
 +        };
 +    };
 +
