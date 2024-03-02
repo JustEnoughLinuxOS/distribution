@@ -4,13 +4,21 @@
 
 . /etc/os-release
 
+get_tdp_range() {
+  if [ -n "${DEVICE_TDP_RANGE}" ]
+  then
+    for TDP in default ${DEVICE_TDP_RANGE[*]}
+    do
+      echo ${TDP}
+    done
+  fi
+}
+
 get_threads() {
-  for THREAD in $(seq 1 1 $(find /sys/devices/system/cpu -name online | wc -l))
+  for THREAD in $(seq 1 1 $(find /sys/devices/system/cpu -name online | wc -l)) all default
   do
     echo ${THREAD}
   done
-  echo all
-  echo default
 }
 
 set_online_threads() {
