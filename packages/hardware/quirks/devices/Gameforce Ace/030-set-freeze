@@ -1,9 +1,0 @@
-#!/bin/sh
-
-# SPDX-License-Identifier: GPL-2.0-or-later
-# Copyright (C) 2022-present JELOS (https://github.com/JustEnoughLinuxOS)
-
-. /etc/profile.d/001-functions
-
-#Mem sleep does not appear to work on this device / kernel
-set_setting "system.suspendmode" "freeze"
