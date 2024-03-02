@@ -1,6 +1,6 @@
 diff -rupN rinputer2.orig/main.c rinputer2/main.c
 --- rinputer2.orig/main.c	2024-03-02 16:34:18.582729256 +0000
-+++ rinputer2/main.c	2024-03-02 23:08:29.187330115 +0000
++++ rinputer2/main.c	2024-03-02 23:13:51.630859332 +0000
 @@ -123,7 +123,7 @@ void *worker(void *data)
  			{
  				case EV_KEY:
@@ -29,15 +29,6 @@ diff -rupN rinputer2.orig/main.c rinputer2/main.c
  			continue;
  
  		tmpdev = calloc(1, sizeof(struct rinputer_device));
-@@ -316,7 +319,7 @@ int main(void)
- 
- 	ioctl(outfd, UI_SET_EVBIT, EV_KEY);
- 
--	//ioctl(outfd, UI_SET_KEYBIT, BTN_DPAD_UP);	// dpad up
-+	//ioctl(outfd, UI_SET_KEYBITUI_SET_KEYBIT, BTN_DPAD_UP);	// dpad up
- 	//ioctl(outfd, UI_SET_KEYBIT, BTN_DPAD_DOWN);	// dpad down
- 	//ioctl(outfd, UI_SET_KEYBIT, BTN_DPAD_LEFT);	// dpad left
- 	//ioctl(outfd, UI_SET_KEYBIT, BTN_DPAD_RIGHT);	// dpad right
 @@ -328,9 +331,12 @@ int main(void)
  
  	ioctl(outfd, UI_SET_KEYBIT, BTN_TL);		// L1
@@ -54,17 +45,6 @@ diff -rupN rinputer2.orig/main.c rinputer2/main.c
  
  	ioctl(outfd, UI_SET_KEYBIT, BTN_SELECT);
  	ioctl(outfd, UI_SET_KEYBIT, BTN_START);
-@@ -340,8 +346,8 @@ int main(void)
- 	ioctl(outfd, UI_SET_EVBIT, EV_ABS);
- 
- 	// analogs
--	setup_abs(outfd, ABS_X);
--	setup_abs(outfd, ABS_Y);
-+	//setup_abs(outfd, ABS_X);
-+	//setup_abs(outfd, ABS_Y);
- 	setup_abs(outfd, ABS_RX);
- 	setup_abs(outfd, ABS_RY);
- 
 @@ -356,9 +362,9 @@ int main(void)
  	// maybe we should pretend to be xbox gamepad?
  	memset(&usetup, 0, sizeof(usetup));
