@@ -8,7 +8,7 @@ PKG_DEPENDS_TARGET="toolchain"
 PKG_TOOLCHAIN="make"
 GET_HANDLER_SUPPORT="git"
 
-case ${DEVOCE} in
+case ${DEVICE} in
   RK3588-ACE)
     PKG_PATCH_DIRS+=" ${DEVICE}"
   ;;

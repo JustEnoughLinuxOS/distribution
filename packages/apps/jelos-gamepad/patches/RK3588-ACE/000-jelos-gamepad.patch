@@ -1,6 +1,15 @@
 diff -rupN rinputer2.orig/main.c rinputer2/main.c
---- rinputer2.orig/main.c	2024-02-22 18:08:36.307753030 +0000
-+++ rinputer2/main.c	2024-02-23 20:00:20.626534557 +0000
+--- rinputer2.orig/main.c	2024-03-02 16:34:18.582729256 +0000
++++ rinputer2/main.c	2024-03-02 23:13:51.630859332 +0000
+@@ -123,7 +123,7 @@ void *worker(void *data)
+ 			{
+ 				case EV_KEY:
+ 					ioctl(my_device->infd, EVIOCGBIT(EV_KEY, sizeof(codes)), &codes);
+-					
++
+ 					// dividing by 8 because all values
+ 					// are stored as bits, not bytes
+ 					if((codes[BTN_SOUTH / 8]) & 1)
 @@ -144,6 +144,9 @@ void *worker(void *data)
  					if((codes[ABS_X / 8]) & 1)
  						useful = 1;
@@ -11,36 +20,23 @@ diff -rupN rinputer2.orig/main.c rinputer2/main.c
  					struct input_absinfo tmp;
  					for(int tmp_code = ABS_X; tmp_code < ABS_HAT3Y; tmp_code++)
  					{
-@@ -240,7 +243,7 @@ int rescan_devices(struct rinputer_devic
- 			continue;
- 
- 		// let's not make a loop
--		if(strncmp("Rinputer", name, 8) == 0)
-+		if(strncmp("gameforce_ace_gamepad", name, 8) == 0)
+@@ -244,7 +247,7 @@ int rescan_devices(struct rinputer_devic
  			continue;
  		// ignore steam-created controllers
  		// they have this name, with a digit at the end
-@@ -316,10 +319,10 @@ int main(void)
+-		if(strncmp("Microsoft X-Box 360 pad ", name, 24) == 0)
++		if(strncmp("Microsoft X-Box 360 pad", name, 24) == 0)
+ 			continue;
  
- 	ioctl(outfd, UI_SET_EVBIT, EV_KEY);
+ 		tmpdev = calloc(1, sizeof(struct rinputer_device));
+@@ -328,9 +331,12 @@ int main(void)
  
--	//ioctl(outfd, UI_SET_KEYBIT, BTN_DPAD_UP);	// dpad up
--	//ioctl(outfd, UI_SET_KEYBIT, BTN_DPAD_DOWN);	// dpad down
--	//ioctl(outfd, UI_SET_KEYBIT, BTN_DPAD_LEFT);	// dpad left
--	//ioctl(outfd, UI_SET_KEYBIT, BTN_DPAD_RIGHT);	// dpad right
-+	ioctl(outfd, UI_SET_KEYBIT, BTN_DPAD_UP);	// dpad up
-+	ioctl(outfd, UI_SET_KEYBIT, BTN_DPAD_DOWN);	// dpad down
-+	ioctl(outfd, UI_SET_KEYBIT, BTN_DPAD_LEFT);	// dpad left
-+	ioctl(outfd, UI_SET_KEYBIT, BTN_DPAD_RIGHT);	// dpad right
- 
- 	ioctl(outfd, UI_SET_KEYBIT, BTN_NORTH);		// x
- 	ioctl(outfd, UI_SET_KEYBIT, BTN_SOUTH);		// b
-@@ -329,8 +332,11 @@ int main(void)
  	ioctl(outfd, UI_SET_KEYBIT, BTN_TL);		// L1
  	ioctl(outfd, UI_SET_KEYBIT, BTN_TR);		// R1
- 	
+-	
 -	ioctl(outfd, UI_SET_KEYBIT, BTN_TR2);		// L2
 -	ioctl(outfd, UI_SET_KEYBIT, BTN_TL2);		// R2
++
 +	//ioctl(outfd, UI_SET_KEYBIT, BTN_TR2);		// L2
 +	//ioctl(outfd, UI_SET_KEYBIT, BTN_TL2);		// R2
 +
@@ -49,23 +45,16 @@ diff -rupN rinputer2.orig/main.c rinputer2/main.c
  
  	ioctl(outfd, UI_SET_KEYBIT, BTN_SELECT);
  	ioctl(outfd, UI_SET_KEYBIT, BTN_START);
-@@ -350,15 +356,15 @@ int main(void)
- 	setup_abs(outfd, ABS_RZ);
- 
- 	// dpad
--	setup_abs(outfd, ABS_HAT0X);
--	setup_abs(outfd, ABS_HAT0Y);
-+	//setup_abs(outfd, ABS_HAT0X);
-+	//setup_abs(outfd, ABS_HAT0Y);
- 
+@@ -356,9 +362,9 @@ int main(void)
  	// maybe we should pretend to be xbox gamepad?
  	memset(&usetup, 0, sizeof(usetup));
  	usetup.id.bustype = BUS_USB;
- 	usetup.id.vendor = 0x1234;
+-	usetup.id.vendor = 0x1234;
 -	usetup.id.product = 0x5678;
 -	strcpy(usetup.name, "Rinputer");
-+	usetup.id.product = 0x8765;
-+	strcpy(usetup.name, "gameforce_ace_gamepad");
++	usetup.id.vendor = 0x045e;
++	usetup.id.product = 0x028e;
++	strcpy(usetup.name, "Microsoft X-Box 360 pad");
  
  	ioctl(outfd, UI_DEV_SETUP, &usetup);
  	ioctl(outfd, UI_DEV_CREATE);

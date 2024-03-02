@@ -268,7 +268,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts lin
 +	};
 +
 +	// lqb : 手柄GPIO按键
-+	gpio-keys-control {
++	gpio-keys {
 +		status = "okay";
 +		compatible = "gpio-keys";
 +
