@@ -1,0 +1,30 @@
+diff --git a/os_dep/ioctl_linux.c b/os_dep/ioctl_linux.c
+index a76f58a..4b4bad3 100644
+--- a/os_dep/ioctl_linux.c
++++ b/os_dep/ioctl_linux.c
+@@ -7811,10 +7811,10 @@ static struct iw_statistics *rtw_get_wireless_stats(struct net_device *dev)
+ struct iw_handler_def rtw_handlers_def = {
+ 	.standard = rtw_handlers,
+ 	.num_standard = sizeof(rtw_handlers) / sizeof(iw_handler),
+-	.private = rtw_private_handler,
++	/* .private = rtw_private_handler,
+ 	.private_args = (struct iw_priv_args *)rtw_private_args,
+ 	.num_private = sizeof(rtw_private_handler) / sizeof(iw_handler),
+-	.num_private_args = sizeof(rtw_private_args) / sizeof(struct iw_priv_args),
++	.num_private_args = sizeof(rtw_private_args) / sizeof(struct iw_priv_args), */
+ 	.get_wireless_stats = rtw_get_wireless_stats,
+ };
+ 
+diff --git a/os_dep/os_intfs.c b/os_dep/os_intfs.c
+index c8ee4db..6070eb8 100644
+--- a/os_dep/os_intfs.c
++++ b/os_dep/os_intfs.c
+@@ -754,7 +754,7 @@ struct net_device *rtw_init_netdev(struct adapter *old_padapter)
+ 	DBG_88E("register rtw_netdev_ops to netdev_ops\n");
+ 	pnetdev->netdev_ops = &rtw_netdev_ops;
+ 	pnetdev->watchdog_timeo = HZ*3; /* 3 second timeout */
+-	pnetdev->wireless_handlers = (struct iw_handler_def *)&rtw_handlers_def;
++	/* pnetdev->wireless_handlers = (struct iw_handler_def *)&rtw_handlers_def; */
+ 
+ 	/* step 2. */
+ 	loadparam(padapter, pnetdev);
