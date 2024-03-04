@@ -181,7 +181,7 @@ index 000000000000..84eeaef5f066
 +#include "lcd-hx8399c_mipi.dtsi"
 +
 +/ {
-+	model = "Gameforce Ace";
++	model = "GameForce ACE";
 +	compatible = "gameforce,ace", "rockchip,rk3588";
 +
 +	adc_keys: adc-keys {
