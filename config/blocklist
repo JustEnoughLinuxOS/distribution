@@ -13,6 +13,5 @@ pico-8 # Metapackage, doesn't need to update
 ppsspp-sa # Manually update to release versions.
 retroarch # Manually update to release versions.
 rpcs3-sa # Need to update to llvm 16
-ryujinx-sa # Broken on JELOS after build 1.1740.
 vice-sa # Doesn't support updating with the script.
 vita3k-sa # Should be manually updated.
