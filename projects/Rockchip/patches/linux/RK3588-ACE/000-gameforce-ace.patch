@@ -158,7 +158,7 @@ new file mode 100644
 index 000000000000..84eeaef5f066
 --- /dev/null
 +++ b/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts
-@@ -0,0 +1,1408 @@
+@@ -0,0 +1,1409 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2021 Rockchip Electronics Co., Ltd.
@@ -333,6 +333,7 @@ index 000000000000..84eeaef5f066
 +		green_led@2 {
 +			gpios = <&gpio3 RK_PC1 GPIO_ACTIVE_HIGH>;
 +			label = "green_led";
++			default-state = "on";
 +			linux,default-trigger = "cw2015-battery-full";
 +			linux,default-trigger-delay-ms = <0>;
 +		};
