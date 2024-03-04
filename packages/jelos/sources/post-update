@@ -66,6 +66,15 @@ rsync -a --delete /usr/config/locale/* /storage/.config/locale/ >>/var/log/confi
 rm -rf /storage/.config/emulationstation/locale >>/var/log/configure.log 2>&1 ||:
 ln -sf /usr/share/locale /storage/.config/emulationstation/locale >>/var/log/configure.log 2>&1 ||:
 
+### Fix Japanese language bug
+if [ ! -e "/storage/.config/ppsspp/assets/NotoSansJP-Regular.ttf" ]
+then
+  cd /storage/.config/ppsspp/assets
+  cp /usr/config/ppsspp/assets/NotoSansJP-Regular.ttf .
+  ln -s NotoSansJP-Regular.ttf Roboto-Condensed.ttf
+  cd -
+fi
+
 ### Add items below this line that are safe to remove after a period of time.
 ################################################################################
 
