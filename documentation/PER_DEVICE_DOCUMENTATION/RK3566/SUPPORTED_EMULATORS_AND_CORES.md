@@ -27,8 +27,8 @@ This document describes all available systems emulators and cores available for 
 |Atari|Atari Lynx (atarilynx)|1989|`atarilynx`|.lnx .lyx .o .zip .7z|**retroarch:** handy (default)<br>**retroarch:** beetle_lynx<br>|
 |Atari|Atari ST (atarist)|1985|`atarist`|.st .msa .stx .dim .ipf .m3u .zip .7z|**retroarch:** hatari (default)<br>**hatarisa:** hatarisa<br>|
 |Bandai|SuFami Turbo (sufami)|1996|`sufami`|.st .zip .7z|**retroarch:** snes9x (default)<br>|
-|Bandai|Wonderswan (wonderswan)|1999|`wonderswan`|.ws .zip .7z|**retroarch:** beetle_wswan (default)<br>|
-|Bandai|Wonderswan Color (wonderswancolor)|2000|`wonderswancolor`|.wsc .zip .7z|**retroarch:** beetle_wswan (default)<br>|
+|Bandai|Wonderswan (wonderswan)|1999|`wonderswan`|.ws .wsc .zip .7z|**retroarch:** beetle_wswan (default)<br>|
+|Bandai|Wonderswan Color (wonderswancolor)|2000|`wonderswancolor`|.ws .wsc .zip .7z|**retroarch:** beetle_wswan (default)<br>|
 |belogic|Uzebox (uzebox)|2008|`uzebox`|.uze|**retroarch:** uzem (default)<br>|
 |Capcom|CPS-I (cps1)|1988|`cps1`|.zip .7z|**retroarch:** fbneo (default)<br>**retroarch:** mame2003_plus<br>**retroarch:** mame2010<br>**retroarch:** fbalpha2012<br>**AdvanceMame:** AdvanceMame<br>|
 |Capcom|CPS-II (cps2)|1993|`cps2`|.zip .7z|**retroarch:** fbneo (default)<br>**retroarch:** mame2003_plus<br>**retroarch:** mame2010<br>**retroarch:** fbalpha2012<br>**AdvanceMame:** AdvanceMame<br>|
@@ -107,8 +107,8 @@ This document describes all available systems emulators and cores available for 
 |Smith Engineering|Vectrex (vectrex)|1982|`vectrex`|.bin .gam .vec .zip .7z|**retroarch:** vecx (default)<br>|
 |SNK|Neo Geo (neogeo)|1990|`neogeo`|.7z .zip|**retroarch:** fbneo (default)<br>**retroarch:** mame2003_plus<br>**retroarch:** fbalpha2012<br>**retroarch:** fbalpha2019<br>**retroarch:** mame2010<br>**retroarch:** mame2015<br>**retroarch:** mame<br>|
 |SNK|Neo Geo CD (neocd)|1994|`neocd`|.cue .iso .chd|**retroarch:** neocd (default)<br>**retroarch:** fbneo<br>|
-|SNK|Neo Geo Pocket (ngp)|1998|`ngp`|.ngc .ngp .zip .7z|**retroarch:** beetle_ngp (default)<br>**retroarch:** race<br>|
-|SNK|Neo Geo Pocket Color (ngpc)|1999|`ngpc`|.ngc .zip .7z|**retroarch:** beetle_ngp (default)<br>**retroarch:** race<br>|
+|SNK|Neo Geo Pocket (ngp)|1998|`ngp`|.ngp .ngc .zip .7z|**retroarch:** beetle_ngp (default)<br>**retroarch:** race<br>|
+|SNK|Neo Geo Pocket Color (ngpc)|1999|`ngpc`|.ngp .ngc .zip .7z|**retroarch:** beetle_ngp (default)<br>**retroarch:** race<br>|
 |Sony|PlayStation (psx)|1994|`psx`|.bin .cue .img .mdf .pbp .toc .cbn .m3u .ccd .chd .iso|**retroarch:** pcsx_rearmed32 (default)<br>**retroarch:** pcsx_rearmed<br>**duckstation:** duckstation-sa<br>**retroarch:** duckstation<br>**retroarch:** swanstation<br>|
 |Sony|PlayStation Portable (psp)|2004|`psp`|.iso .cso .pbp .chd|**ppsspp:** ppsspp-sa (default)<br>|
 |Sony|PSP Minis (pspminis)|2004|`pspminis`|.iso .cso .pbp|**ppsspp:** ppsspp-sa (default)<br>**retroarch:** ppsspp<br>|
