@@ -1,7 +1,8 @@
-diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/Makefile linux/arch/arm64/boot/dts/rockchip/Makefile
---- linux.orig/arch/arm64/boot/dts/rockchip/Makefile	2024-02-28 20:10:38.318659129 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/Makefile	2024-02-28 20:29:01.089808951 +0000
-@@ -313,6 +313,7 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-e
+diff --git a/arch/arm64/boot/dts/rockchip/Makefile b/arch/arm64/boot/dts/rockchip/Makefile
+index 364768ec4f47..2918159ddb4e 100644
+--- a/arch/arm64/boot/dts/rockchip/Makefile
++++ b/arch/arm64/boot/dts/rockchip/Makefile
+@@ -313,6 +313,7 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-evb4-lp4x-v10.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-evb4-lp4x-v10-linux.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-evb8-lp4x-v10.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-9tripod-linux.dtb
@@ -9,9 +10,11 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/Makefile linux/arch/arm64/boo
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-khadas-edge2.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-lubancat-4.dtb
  dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588s-nanopi-r6c.dtb
-diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/lcd-hx8399c_mipi.dtsi linux/arch/arm64/boot/dts/rockchip/lcd-hx8399c_mipi.dtsi
---- linux.orig/arch/arm64/boot/dts/rockchip/lcd-hx8399c_mipi.dtsi	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/lcd-hx8399c_mipi.dtsi	2024-02-28 20:29:01.089808951 +0000
+diff --git a/arch/arm64/boot/dts/rockchip/lcd-hx8399c_mipi.dtsi b/arch/arm64/boot/dts/rockchip/lcd-hx8399c_mipi.dtsi
+new file mode 100644
+index 000000000000..af4a6c170200
+--- /dev/null
++++ b/arch/arm64/boot/dts/rockchip/lcd-hx8399c_mipi.dtsi
 @@ -0,0 +1,137 @@
 +/*
 + * Copyright (c) 2017 Fuzhou Rockchip Electronics Co., Ltd
@@ -150,10 +153,12 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/lcd-hx8399c_mipi.dtsi linux/a
 +	};
 +
 +};
-diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts linux/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts
---- linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts	1970-01-01 00:00:00.000000000 +0000
-+++ linux/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts	2024-02-28 22:05:19.125383648 +0000
-@@ -0,0 +1,1489 @@
+diff --git a/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts b/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts
+new file mode 100644
+index 000000000000..84eeaef5f066
+--- /dev/null
++++ b/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts
+@@ -0,0 +1,1408 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2021 Rockchip Electronics Co., Ltd.
@@ -199,196 +204,115 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts lin
 +		};
 +	};
 +
-+	/* Joystick range values based on hardware observation. */
-+	adc_joystick: adc-joystick {
-+		compatible = "adc-joystick";
-+		#address-cells = <1>;
-+		io-channels = <&saradc 2>, <&saradc 3>,
-+			      <&saradc 4>, <&saradc 5>;
-+		poll-interval = <60>;
-+		#size-cells = <0>;
-+
-+		axis@0 {
-+			reg = <0>;
-+			abs-flat = <40>;
-+			abs-fuzz = <40>;
-+			abs-range = <0 4095>;
-+			linux,code = <ABS_RY>;
-+		};
-+
-+		axis@1 {
-+			reg = <1>;
-+			abs-flat = <40>;
-+			abs-fuzz = <40>;
-+			abs-range = <0 4095>;
-+			linux,code = <ABS_RX>;
-+		};
-+
-+		axis@2 {
-+			reg = <2>;
-+			abs-flat = <40>;
-+			abs-fuzz = <40>;
-+			abs-range = <0 4095>;
-+			linux,code = <ABS_X>;
-+		};
-+
-+		axis@3 {
-+			reg = <3>;
-+			abs-flat = <40>;
-+			abs-fuzz = <40>;
-+			abs-range = <0 4095>;
-+			linux,code = <ABS_Y>;
-+		};
-+	};
-+
-+	/* Trigger range values based on hardware observation. */
-+	adc_triggers: adc-trigger {
-+		compatible = "adc-joystick";
-+		#address-cells = <1>;
-+		io-channels = <&ti_adc 6>,
-+			      <&ti_adc 7>;
-+		poll-interval = <60>;
-+		#size-cells = <0>;
-+
-+		axis@0 {
-+			reg = <0>;
-+			abs-flat = <40>;
-+			abs-fuzz = <40>;
-+			abs-range = <1530 890>;
-+			linux,code = <ABS_Z>;
-+		};
-+
-+		axis@1 {
-+			reg = <1>;
-+			abs-flat = <40>;
-+			abs-fuzz = <40>;
-+			abs-range = <1550 1010>;
-+			linux,code = <ABS_RZ>;
-+		};
-+	};
-+
-+	// lqb : 手柄GPIO按键
-+	gpio-keys {
++	joypad: gameforce-ace-joypad {
++		compatible = "jelos-joypad";
++		poll-interval = <10>;
 +		status = "okay";
-+		compatible = "gpio-keys";
 +
-+		mode {
-+			label = "GPIO Key MODE";
-+			debounce-interval = <0x0a>;
++		joypad-name = "GameForce ACE Gamepad";
++		//joypad-vendor = <0x045e>;
++		joypad-product = <0x1000>;
++		joypad-revision = <0x0100>;
++
++		/* Analog sticks */
++		io-channels = <&saradc 2>, <&saradc 3>, <&saradc 4>, <&saradc 5>, <&ti_adc 6>, <&ti_adc 7>;
++		io-channel-names = "key-RY", "key-RX", "key-X", "key-Y", "key-Z", "key-RZ";
++		button-adc-scale = <4>;
++		button-adc-deadzone = <64>;
++		button-adc-fuzz = <32>;
++		button-adc-flat = <32>;
++		abs_x-p-tuning = <350>;
++		abs_x-n-tuning = <350>;
++		abs_y-p-tuning = <350>;
++		abs_y-n-tuning = <350>;
++		abs_z-p-tuning = <350>;
++		abs_z-n-tuning = <350>;
++		abs_rx-p-tuning = <350>;
++		abs_rx-n-tuning = <350>;
++		abs_ry-p-tuning = <350>;
++		abs_ry-n-tuning = <350>;
++		abs_rz-p-tuning = <350>;
++		abs_rz-n-tuning = <350>;
++
++		/* Buttons */
++		sw1 {
 +			gpios = <&gpio1 RK_PA0 0x01>;
-+			linux,input-type = <0x01>;
++			label = "GPIO Key MODE";
 +			linux,code = <BTN_MODE>;
 +		};
-+
-+		start {
-+			label = "GPIO Key START";
-+			debounce-interval = <10>;
++		sw2 {
++			gpios = <&gpio1 RK_PB0 0x01>;
++			label = "GPIO Key HOME";
++			linux,code = <BTN_C>;
++		};
++		sw3 {
 +			gpios = <&gpio1 RK_PB6 0x01>;
-+			linux,input-type = <EV_KEY>;
++			label = "GPIO Key START";
 +			linux,code = <BTN_START>;
 +		};
-+
-+		select {
-+			label = "GPIO Key SELECT";
-+			debounce-interval = <10>;
++		sw4 {
 +			gpios = <&gpio1 RK_PA3 0x01>;
-+			linux,input-type = <EV_KEY>;
++			label = "GPIO Key SELECT";
 +			linux,code = <BTN_SELECT>;
 +		};
-+
-+		up {
-+			label = "GPIO Key Up";
-+			debounce-interval = <0x0a>;
++		sw5 {
 +			gpios = <&gpio1 RK_PA2 0x01>;
-+			linux,input-type = <0x01>;
++			label = "GPIO Key Up";
 +			linux,code = <BTN_DPAD_UP>;
 +		};
-+
-+		down {
++		sw6 {
++			gpios =  <&gpio1 RK_PB1 0x01>;
 +			label = "GPIO Key Down";
-+			debounce-interval = <0x0a>;
-+			gpios = <&gpio1 RK_PB1 0x01>;
-+			linux,input-type = <0x01>;
 +			linux,code = <BTN_DPAD_DOWN>;
 +		};
-+
-+		left {
-+			label = "GPIO Key Left";
-+			debounce-interval = <0x0a>;
++		sw7 {
 +			gpios = <&gpio1 RK_PD7 0x01>;
-+			linux,input-type = <0x01>;
++			label = "GPIO Key Left";
 +			linux,code = <BTN_DPAD_LEFT>;
 +		};
-+
-+		right {
-+			label = "GPIO Key Right";
-+			debounce-interval = <0x0a>;
++		sw8 {
 +			gpios = <&gpio1 RK_PB7 0x01>;
-+			linux,input-type = <0x01>;
++			label = "GPIO Key Right";
 +			linux,code = <BTN_DPAD_RIGHT>;
 +		};
-+
-+		keyX {
-+			label = "GPIO Key X";
-+			debounce-interval = <0x0a>;
++		sw9 {
 +			gpios = <&gpio1 RK_PB4 0x01>;
-+			linux,input-type = <0x01>;
++			label = "GPIO Key X";
 +			linux,code = <BTN_NORTH>;
 +		};
-+
-+		keyY {
-+			label = "GPIO Key Y";
-+			debounce-interval = <0x0a>;
++		sw10 {
 +			gpios = <&gpio1 RK_PB3 0x01>;
-+			linux,input-type = <0x01>;
++			label = "GPIO Key Y";
 +			linux,code = <BTN_WEST>;
 +		};
-+
-+		keyA {
-+			label = "GPIO Key B";
-+			debounce-interval = <0x0a>;
++		sw11 {
 +			gpios = <&gpio1 RK_PC6 0x01>;
-+			linux,input-type = <0x01>;
++			label = "GPIO Key B";
 +			linux,code = <BTN_EAST>;
 +		};
-+
-+		keyB {
-+			label = "GPIO Key A";
-+			debounce-interval = <0x0a>;
++		sw12 {
 +			gpios = <&gpio1 RK_PA5 0x01>;
-+			linux,input-type = <0x01>;
++			label = "GPIO Key A";
 +			linux,code = <BTN_SOUTH>;
 +		};
-+
-+		keyTHUMBL {
-+			label = "GPIO Key THU";
-+			debounce-interval = <0x0a>;
++		sw13 {
 +			gpios = <&gpio1 RK_PA4 0x01>;
-+			linux,input-type = <0x01>;
++			label = "GPIO Key THU";
 +			linux,code = <BTN_THUMBL>;
 +		};
-+
-+		keyTL {
-+			label = "GPIO Key TL";
-+			debounce-interval = <0x0a>;
++		sw14 {
 +			gpios = <&gpio1 RK_PB5 0x01>;
-+			linux,input-type = <0x01>;
++			label = "GPIO Key TL";
 +			linux,code = <BTN_TL>;
 +		};
-+
-+		keyTR {
-+			label = "GPIO Key TR";
-+			debounce-interval = <0x0a>;
++		sw15 {
 +			gpios = <&gpio1 RK_PB2 0x01>;
-+			linux,input-type = <EV_KEY>;
++			label = "GPIO Key TR";
 +			linux,code = <BTN_TR>;
 +		};
-+
-+		keyTHUMBR {
++		sw16 {
++			gpios = <&gpio1 RK_PD6 0x01>;
 +			label = "GPIO Key THUMBR";
-+			debounce-interval = <10>;
-+			gpios = <&gpio1 RK_PD6 0x01>;//新小板：交换右马达GPIO1 D6
-+			linux,input-type = <EV_KEY>;
 +			linux,code = <BTN_THUMBR>;
 +		};
 +	};
