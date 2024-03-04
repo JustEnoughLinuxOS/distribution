@@ -32,16 +32,16 @@ LIBRETRO_CORES="81-lr a5200-lr arduous-lr atari800-lr beetle-gba-lr beetle-lynx-
 case "${DEVICE}" in
   AMD64)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="lutris-wine"
-    PKG_EMUS+=" amiberry cemu-sa citra-sa dolphin-sa melonds-sa minivmacsa mupen64plus-sa kronos-sa        \
+    PKG_EMUS+=" amiberry cemu-sa dolphin-sa melonds-sa minivmacsa mupen64plus-sa kronos-sa        \
                nanoboyadvance-sa pcsx2-sa rpcs3-sa scummvmsa vita3k-sa xemu-sa mednafen"
-    LIBRETRO_CORES+=" beetle-psx-lr bsnes-lr bsnes-hd-lr citra-lr desmume-lr dolphin-lr flycast-lr lrps2-lr \
+    LIBRETRO_CORES+=" beetle-psx-lr bsnes-lr bsnes-hd-lr desmume-lr dolphin-lr flycast-lr lrps2-lr \
                      ppsspp-lr kronos-lr beetle-saturn-lr"
   ;;
   RK358*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 desmume-lr gpsp-lr pcsx_rearmed-lr"
     PKG_EMUS+=" amiberry aethersx2-sa dolphin-sa drastic-sa melonds-sa mupen64plus-sa nanoboyadvance-sa box64 scummvmsa   \
                yabasanshiro-sa portmaster beetle-saturn-lr"
-    LIBRETRO_CORES+=" uae4arm beetle-psx-lr bsnes-lr bsnes-hd-lr citra-lr dolphin-lr pcsx_rearmed-lr"
+    LIBRETRO_CORES+=" uae4arm beetle-psx-lr bsnes-lr bsnes-hd-lr dolphin-lr pcsx_rearmed-lr"
     PKG_RETROARCH+=" retropie-shaders"
   ;;
   RK3399)
@@ -60,7 +60,7 @@ case "${DEVICE}" in
   ;;
   S922X*)
     [ "${ENABLE_32BIT}" == "true" ] && EMUS_32BIT="box86 pcsx_rearmed-lr"
-    PKG_EMUS+=" amiberry aethersx2-sa citra-sa dolphin-sa drastic-sa mupen64plus-sa yabasanshiro-sa     \
+    PKG_EMUS+=" amiberry aethersx2-sa dolphin-sa drastic-sa mupen64plus-sa yabasanshiro-sa     \
                 box64 portmaster"
     LIBRETRO_CORES+=" uae4arm beetle-psx-lr bsnes-lr bsnes-hd-lr dolphin-lr flycast-lr"
     PKG_RETROARCH+=" retropie-shaders"
@@ -123,19 +123,6 @@ makeinstall_target() {
   ### Panasonic 3DO
   add_emu_core 3do retroarch opera true
   add_es_system 3do
-
-  ### Nintendo 3DS
-  case ${DEVICE} in
-    AMD64)
-      add_emu_core 3ds retroarch citra true
-      add_emu_core 3ds citra citra-sa false
-      add_es_system 3ds
-    ;;
-    S922X*)
-      add_emu_core 3ds citra citra-sa true
-      add_es_system 3ds
-    ;;
-  esac
 
   ### Commodore Amiga
   case ${DEVICE} in
