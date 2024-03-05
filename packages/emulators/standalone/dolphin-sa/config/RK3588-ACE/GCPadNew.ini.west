@@ -2,7 +2,7 @@
 Device = evdev/0/GameForce ACE Gamepad
 Buttons/A = Button 1
 Buttons/B = Button 0
-Buttons/Start = Button 7
+Buttons/Start = Button 9
 Buttons/X = Button 3
 Buttons/Y = Button 4
 Buttons/Z = Button 6
