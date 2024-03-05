@@ -2,11 +2,11 @@
 Device = evdev/0/GameForce ACE Gamepad
 Buttons/A = Button 0
 Buttons/B = Button 4
-Buttons/Start = Button 9
+Buttons/Start = Button 8
 Buttons/X = Button 1
 Buttons/Y = Button 3
 Buttons/Z = Button 6
-Buttons/Hotkey = Button 8
+Buttons/Hotkey = Button 9
 C-Stick/Dead Zone = 25.000000000000000
 C-Stick/Down = Axis 4+
 C-Stick/Left = Axis 3-

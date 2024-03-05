@@ -506,36 +506,37 @@ diff -rupN dolphin.orig/Source/Core/Core/Core.cpp dolphin/Source/Core/Core/Core.
    Pad::LoadGBAConfig();
 diff -rupN dolphin.orig/Source/Core/Core/HW/GCPadEmu.cpp dolphin/Source/Core/Core/HW/GCPadEmu.cpp
 --- dolphin.orig/Source/Core/Core/HW/GCPadEmu.cpp	2024-03-05 04:05:26.582982663 +0000
-+++ dolphin/Source/Core/Core/HW/GCPadEmu.cpp	2024-03-05 04:06:08.240295843 +0000
-@@ -24,6 +24,7 @@ static const u16 button_bitmasks[] = {
-     PAD_BUTTON_X,
++++ dolphin/Source/Core/Core/HW/GCPadEmu.cpp	2024-03-05 14:39:55.915795457 +0000
+@@ -25,6 +25,7 @@ static const u16 button_bitmasks[] = {
      PAD_BUTTON_Y,
      PAD_TRIGGER_Z,
-+    PAD_BUTTON_HOTKEY,
      PAD_BUTTON_START,
++    PAD_BUTTON_HOTKEY,
      0  // MIC HAX
  };
+ 
 @@ -47,6 +48,9 @@ GCPad::GCPad(const unsigned int index) :
    // i18n: The START/PAUSE button on GameCube controllers
    m_buttons->AddInput(ControllerEmu::Translate, START_BUTTON, _trans("START"));
  
 +  // Hotkey Button
 +  m_buttons->AddInput(ControllerEmu::Translate, HOTKEY_BUTTON, _trans("HOTKEY"));
-+  
++
    // sticks
    groups.emplace_back(m_main_stick = new ControllerEmu::OctagonAnalogStick(
                            MAIN_STICK_GROUP, _trans("Control Stick"), MAIN_STICK_GATE_RADIUS));
 diff -rupN dolphin.orig/Source/Core/Core/HW/GCPadEmu.h dolphin/Source/Core/Core/HW/GCPadEmu.h
 --- dolphin.orig/Source/Core/Core/HW/GCPadEmu.h	2024-03-05 04:05:26.582982663 +0000
-+++ dolphin/Source/Core/Core/HW/GCPadEmu.h	2024-03-05 04:06:08.240295843 +0000
-@@ -65,6 +65,7 @@ public:
-   static constexpr const char* X_BUTTON = "X";
++++ dolphin/Source/Core/Core/HW/GCPadEmu.h	2024-03-05 14:38:20.524919664 +0000
+@@ -66,6 +66,8 @@ public:
    static constexpr const char* Y_BUTTON = "Y";
    static constexpr const char* Z_BUTTON = "Z";
-+  static constexpr const char* HOTKEY_BUTTON = "Hotkey";
    static constexpr const char* START_BUTTON = "Start";
++  static constexpr const char* HOTKEY_BUTTON = "Hotkey";
++
  
    // i18n: The left trigger button (labeled L on real controllers)
+   static constexpr const char* L_DIGITAL = _trans("L");
 diff -rupN dolphin.orig/Source/Core/Core/State.cpp dolphin/Source/Core/Core/State.cpp
 --- dolphin.orig/Source/Core/Core/State.cpp	2024-03-05 04:05:26.586982789 +0000
 +++ dolphin/Source/Core/Core/State.cpp	2024-03-05 04:06:08.240295843 +0000
