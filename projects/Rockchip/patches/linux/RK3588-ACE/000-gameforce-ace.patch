@@ -59,7 +59,7 @@ index 000000000000..af4a6c170200
 + */
 +
 +&dsi0 {
-+	status = "disabled";
++	status = "okay";
 +	//rockchip,lane-rate = <1000>;
 +	dsi0_panel: panel@0 {
 +		status = "okay";
