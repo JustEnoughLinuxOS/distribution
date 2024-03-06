@@ -6,6 +6,6 @@
 
 if [ ! -f "/storage/joypads/odroidgo2_v11_joypad.cfg" ]; then
     cp /usr/share/libretro/autoconfig/odroidgo2_v11_joypad.cfg /storage/joypads/
-    sed -i -r 's/input_enable_hotkey_btn.*/input_enable_hotkey_btn = "13"/' /storage/joypads/odroidgo2_v11_joypad.cfg
+    sed -i -r 's/input_enable_hotkey_btn.*/input_enable_hotkey_btn = "10"/' /storage/joypads/odroidgo2_v11_joypad.cfg
 fi
 
