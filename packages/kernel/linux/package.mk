@@ -23,8 +23,8 @@ case ${DEVICE} in
   ;;
   RK3588-ACE)
     PKG_VERSION="99e54e1a546eca7fa8d5b86be1b825914e097d06"
-    PKG_URL="https://github.com/brooksytech/linux-rockchip/archive/${PKG_VERSION}.tar.gz"
-    #PKG_GIT_CLONE_BRANCH="panfork-6.1"
+    PKG_URL="https://github.com/JustEnoughLinuxOS/linux-rockchip/archive/${PKG_VERSION}.tar.gz"
+    PKG_GIT_CLONE_BRANCH="panfork-6.1"
   ;;
   RK356*|S922X)
     PKG_VERSION="6.8-rc6"
