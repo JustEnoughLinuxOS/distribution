@@ -31,7 +31,7 @@ case ${DEVICE} in
     PKG_URL="https://git.kernel.org/torvalds/t/${PKG_NAME}-${PKG_VERSION}.tar.gz"
   ;;
   *)
-    PKG_VERSION="6.7.7"
+    PKG_VERSION="6.7.9"
     PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
   ;;
 esac
