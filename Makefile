@@ -59,6 +59,15 @@ RK3566-X55:
 	DEVICE_ROOT=RK3566 PROJECT=Rockchip DEVICE=RK3566-X55 ARCH=arm ./scripts/build_distro
 	DEVICE_ROOT=RK3566 PROJECT=Rockchip DEVICE=RK3566-X55 ARCH=aarch64 ./scripts/build_distro
 
+RK3566-BSP:
+	unset DEVICE_ROOT
+	PROJECT=Rockchip DEVICE=RK3566-BSP ARCH=arm ./scripts/build_distro
+	PROJECT=Rockchip DEVICE=RK3566-BSP ARCH=aarch64 ./scripts/build_distro
+
+RK3566-BSP-X55:
+	DEVICE_ROOT=RK3566-BSP PROJECT=Rockchip DEVICE=RK3566-BSP-X55 ARCH=arm ./scripts/build_distro
+	DEVICE_ROOT=RK3566-BSP PROJECT=Rockchip DEVICE=RK3566-BSP-X55 ARCH=aarch64 ./scripts/build_distro
+
 RK-ARMV8-A:
 	unset DEVICE_ROOT
 	PROJECT=Rockchip DEVICE=RK-ARMV8-A ARCH=arm ./scripts/build_distro
