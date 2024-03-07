@@ -31,8 +31,8 @@
     BOOTLOADER="u-boot"
     PARTITION_TABLE="gpt"
     UBOOT_LABEL="uboot"
-    TRUST_LABEL="resource"
-    DEVICE_DTB=("rk3566-rg353p-linux" "rk3566-rg353v-linux" "rk3566-rg353m-linux" "rk3566-rg503-linux" "rk3566-rk2023-linux" "rk3566-rgb30-linux" "rk3566-max3pro-linux")
+    TRUST_LABEL="trust"
+    DEVICE_DTB=("rk3566-evb2-lp4x-v10-linux")
     UBOOT_DTB="rk3566"
     UBOOT_CONFIG="rk3568_defconfig"
     PKG_SOC="rk356x"
@@ -64,7 +64,7 @@
     WINDOWMANAGER="no"
 
   # kernel serial console
-    EXTRA_CMDLINE="quiet rootwait console=ttyUSB0,1500000 console=tty0 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20 video=HDMI-A-1:1280x720@60"
+    EXTRA_CMDLINE="quiet rootwait console=ttyUSB0,1500000 fbcon=rotate:3 console=tty0 ssh consoleblank=0 systemd.show_status=0 loglevel=0 panic=20"
 
   # additional packages to install
   #  ADDITIONAL_PACKAGES=""
@@ -72,13 +72,13 @@
   # additional Firmware to use (dvb-firmware, misc-firmware, wlan-firmware)
   # Space separated list is supported,
   # e.g. FIRMWARE="dvb-firmware misc-firmware wlan-firmware"
-    FIRMWARE=""
+    FIRMWARE="RTL8821CS-firmware"
 
   # additional drivers to install:
   # for a list of additional drivers see packages/linux-drivers
   # Space separated list is supported,
   # e.g. ADDITIONAL_DRIVERS="DRIVER1 DRIVER2"
-    ADDITIONAL_DRIVERS="RTL8821AU RTL8821CU RTL88x2BU"
+  #  ADDITIONAL_DRIVERS="RTL8821AU RTL8821CU RTL88x2BU"
 
   # build and install driver addons (yes / no)
     DRIVER_ADDONS_SUPPORT="no"
@@ -139,14 +139,14 @@
   # build with swap support (yes / no)
     SWAP_SUPPORT="yes"
 
-  # Some devices have internal storage.
-    INSTALLER_SUPPORT="yes"
-
   # swap support enabled per default (yes / no)
     SWAP_ENABLED_DEFAULT="yes"
 
   # swapfile size if SWAP_SUPPORT=yes in MB
     SWAPFILESIZE="384"
+
+  # Some devices have internal storage.
+    INSTALLER_SUPPORT="yes"
 
   # cron support (yes / no)
     CRON_SUPPORT="no"
