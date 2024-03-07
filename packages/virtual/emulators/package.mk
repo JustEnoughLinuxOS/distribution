@@ -25,7 +25,7 @@ LIBRETRO_CORES="81-lr a5200-lr arduous-lr atari800-lr beetle-gba-lr beetle-lynx-
                 o2em-lr opera-lr parallel-n64-lr pcsx_rearmed-lr picodrive-lr pokemini-lr potator-lr          \
                 prosystem-lr puae-lr puae2021-lr px68k-lr quasi88-lr quicknes-lr race-lr same_cdi-lr      \
                 sameboy-lr sameduck-lr scummvm-lr smsplus-gx-lr snes9x-lr snes9x2002-lr snes9x2005_plus-lr snes9x2010-lr  \
-                stella-lr swanstation-lr tic80-lr tgbdual-lr uzem-lr vba-next-lr minivmac-lr               \
+                stella-lr swanstation-lr tgbdual-lr theodore-lr tic80-lr uzem-lr vba-next-lr minivmac-lr               \
                 vbam-lr vecx-lr vice-lr vircon32-lr virtualjaguar-lr xmil-lr yabasanshiro-lr"
 
 ### Emulators or cores for specific devices
@@ -232,8 +232,8 @@ makeinstall_target() {
   add_es_system channelf
 
   ### ColecoVision
-  add_emu_core colecovision retroarch bluemsx true
-  add_emu_core colecovision retroarch gearcoleco false
+  add_emu_core colecovision retroarch gearcoleco true
+  add_emu_core colecovision retroarch bluemsx false
   add_emu_core colecovision retroarch smsplus false
   add_es_system colecovision
 
@@ -1188,6 +1188,10 @@ makeinstall_target() {
   ### Vircon32
   add_emu_core vircon32 retroarch vircon32 true
   add_es_system vircon32
+
+  ### MO/TO Family
+  add_emu_core moto retroarch theodore true
+  add_es_system moto
 
   ### PC Ports
   case ${TARGET_ARCH} in

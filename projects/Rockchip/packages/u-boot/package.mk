@@ -13,10 +13,9 @@ PKG_PATCH_DIRS+="${DEVICE}"
 
 UBOOT_IMG="u-boot.itb"
 case ${DEVICE} in
-  RK358*)
-    PKG_URL="${PKG_SITE}/rk35xx-uboot.git"
+ RK358*)
     PKG_VERSION="d34ff0716"
-    PKG_GIT_CLONE_BRANCH="v2017.09-rk3588"
+    PKG_URL="${PKG_SITE}/rk35xx-uboot/archive/${PKG_VERSION}.tar.gz"
   ;;
   RK3566-BSP*)
     PKG_URL="${PKG_SITE}/rk356x-uboot.git"
