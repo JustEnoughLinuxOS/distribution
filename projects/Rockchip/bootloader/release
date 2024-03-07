@@ -13,6 +13,8 @@ if [ -n "${UBOOT_CONFIG}" ]; then
     rk35*)
       if [ -f ${BOOTLOADER_DIR}/u-boot.itb ]; then
         cp -a ${BOOTLOADER_DIR}/u-boot.itb ${RELEASE_DIR}/3rdparty/bootloader
+      elif [ -f ${BOOTLOADER_DIR}/uboot.img ]; then
+        cp -a ${BOOTLOADER_DIR}/uboot.img ${RELEASE_DIR}/3rdparty/bootloader
       fi
       if [ -f ${KERNEL_DIR}/resource.img ]; then
         cp -a ${KERNEL_DIR}/resource.img ${RELEASE_DIR}/3rdparty/bootloader

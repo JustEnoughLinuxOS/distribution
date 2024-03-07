@@ -6,7 +6,7 @@
 ## performance.
 . /etc/profile.d/001-functions
 
-BRIGHTNESS_DEV="$(find /sys/class/backlight/*/ -name brightness -print -quit)"
+BRIGHTNESS_DEV="$(find /sys/class/backlight/*/ -name brightness -print -quit 2>/dev/null)"
 BRIGHTNESS_PATH="${BRIGHTNESS_DEV%/brightness}"
 
 declare -a BRIGHTNESS_TABLE
@@ -17,7 +17,7 @@ if [ -z ${BRIGHTNESS_TABLE} ]; then
 fi
 NUM_STEPS=${#BRIGHTNESS_TABLE[@]}
 
-MAX=$(<$(find /sys/class/backlight/*/ -name max_brightness -print -quit))
+MAX=$(<$(find /sys/class/backlight/*/ -name max_brightness -print -quit 2>/dev/null))
 function compute() {
   echo "${BRIGHTNESS_TABLE[$NEXT]} * ${MAX}" | bc -l
 }
