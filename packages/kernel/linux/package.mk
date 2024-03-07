@@ -26,7 +26,7 @@ case ${DEVICE} in
     PKG_URL="https://github.com/JustEnoughLinuxOS/linux-rockchip/archive/${PKG_VERSION}.tar.gz"
     PKG_GIT_CLONE_BRANCH="panfork-6.1"
   ;;
-  RK356*|S922X)
+  RK356*)
     PKG_VERSION="6.8-rc6"
     PKG_URL="https://git.kernel.org/torvalds/t/${PKG_NAME}-${PKG_VERSION}.tar.gz"
   ;;
