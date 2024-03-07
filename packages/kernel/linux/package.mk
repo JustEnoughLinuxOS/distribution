@@ -22,9 +22,9 @@ case ${DEVICE} in
     PKG_GIT_CLONE_BRANCH="main"
   ;;
   RK3588-ACE)
-    PKG_VERSION="99e54e1a546eca7fa8d5b86be1b825914e097d06"
-    PKG_URL="https://github.com/JustEnoughLinuxOS/linux-rockchip/archive/${PKG_VERSION}.tar.gz"
-    PKG_GIT_CLONE_BRANCH="panfork-6.1"
+    PKG_VERSION="8f20ea790638c80f3913b0e66d90800591a824c3"
+    PKG_URL="https://github.com/armbian/linux-rockchip/archive/${PKG_VERSION}.tar.gz"
+    PKG_GIT_CLONE_BRANCH="rk-5.10-rkr6"
   ;;
   RK356*)
     PKG_VERSION="6.8-rc6"
