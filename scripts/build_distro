@@ -61,8 +61,6 @@ then
 elif [ -n "$BASE_DEVICE" ]
 then
   build_dir="build.${DISTRO}-${DEVICE}.${ARCH}"
-  # not the best check but the build gets created before this
-#  if [ ! -d "${build_dir}/.threads" ]; then
     build_dir_base="build.${DISTRO}-${BASE_DEVICE}.${ARCH}"
     echo "$build_dir_base"
     if [ -d "$build_dir_base" ]; then
@@ -89,9 +87,6 @@ then
       echo "Base directory: $build_dir_base doesn't exists. Exiting..."
       exit 1
     fi
-  #else
-  #  echo "Build directory already exist, continue without setting up base device."
-  #fi
 fi
 
 # Clean necessary packages.
