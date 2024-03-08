@@ -38,7 +38,7 @@ case ${DEVICE} in
     GET_HANDLER_SUPPORT="git"
     PKG_GIT_CLONE_BRANCH="main"
   ;;
-  RK356*|S922X)
+  RK356*)
     PKG_VERSION="6.8-rc6"
     PKG_URL="https://git.kernel.org/torvalds/t/${PKG_NAME}-${PKG_VERSION}.tar.gz"
   ;;
