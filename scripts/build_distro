@@ -70,12 +70,12 @@ then
       if [ ! -d "$build_dir" ]; then
         mkdir -p ${build_dir}
       else
-	find ${build_dir} -maxdepth 1 -type l -exec rm {} \;
+        find ${build_dir} -maxdepth 1 -type l -exec rm {} \;
       fi
       if [ ! -d "$build_dir/.stamps" ]; then
         mkdir -p ${build_dir}/.stamps
       else
-	find ${build_dir}/.stamps -maxdepth 1 -type l -exec rm {} \;
+        find ${build_dir}/.stamps -maxdepth 1 -type l -exec rm {} \;
       fi
       # We allow ln to fail in case some linkpaths exists, because we should prioritize the end device
       ln -sr -t ${build_dir} ${build_dir_base}/*/ || true
