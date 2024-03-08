@@ -83,6 +83,13 @@ RK3399:
 	PROJECT=Rockchip DEVICE=RK3399 ARCH=arm ./scripts/build_distro
 	PROJECT=Rockchip DEVICE=RK3399 ARCH=aarch64 ./scripts/build_distro
 
+RK33XX:
+	unset DEVICE_ROOT
+	unset BASE_DEVICE
+	$(MAKE) RK-ARMV8-A
+	BASE_DEVICE=RK-ARMV8-A $(MAKE) RK3326
+	BASE_DEVICE=RK-ARMV8-A $(MAKE) RK3399
+
 update:
 	PROJECT=PC DEVICE=AMD64 ARCH=x86_64 ./scripts/update_packages
 

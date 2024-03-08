@@ -155,7 +155,7 @@
     HTOP_TOOL="yes"
 
   # Exclude packages that are device specific, etc.
-    EXCLUDE_PKGS="retroarch parallel-n64-lr yabasanshiro-lr "
+    EXCLUDE_PKGS="retroarch parallel-n64-lr yabasanshiro-lr duckstation-sa "
     EXCLUDE_PKGS+="flycast-sa flycast2021-lr mednafen drastic-sa"
 
     NO_IMAGE="yes"
