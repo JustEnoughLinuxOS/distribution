@@ -66,15 +66,17 @@ make_target() {
       cp ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/u-boot/${UBOOT_CONFIG} configs
     fi
     [ "${BUILD_WITH_DEBUG}" = "yes" ] && PKG_DEBUG=1 || PKG_DEBUG=0
-      if [[ "${PKG_BL31}" =~ ^/bin ]]
-      then
-        PKG_BL31="$(get_build_dir rkbin)/${PKG_BL31}"
-      fi
-      if [[ "${PKG_LOADER}" =~ ^/bin ]]
-      then
-        PKG_LOADER="$(get_build_dir rkbin)/${PKG_LOADER}"
-      fi
-    if [[ "${PKG_SOC}" =~ rk356* ]]
+    if [[ "${PKG_BL31}" =~ ^/bin ]]
+    then
+      PKG_BL31="$(get_build_dir rkbin)/${PKG_BL31}"
+    fi
+    if [[ "${PKG_LOADER}" =~ ^/bin ]]
+    then
+      PKG_LOADER="$(get_build_dir rkbin)/${PKG_LOADER}"
+    fi
+
+    if [[ "${PKG_SOC}" =~ "rk3568" ]] || \
+       [[ "${PKG_SOC}" =~ "rk356x" ]]
     then
       # rk3566 device
       echo "Building for GPT (${UBOOT_DTB})..."
@@ -91,7 +93,7 @@ make_target() {
         *)
           DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 make mrproper
           echo "begin make"
-          DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="--lssl -lcrypto" ARCH=arm64 make ${UBOOT_CONFIG} ${PKG_LOADER} u-boot.dtb u-boot.itb tools HOSTCC="${HOST_CC}" HOSTLDFLAGS="-L${TOOLCHAIN}/lib" HOSTCFLAGS="-I${TOOLCHAIN}/include"
+          DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 make ${UBOOT_CONFIG} ${PKG_LOADER} u-boot.dtb u-boot.img tools HOSTCC="${HOST_CC}" HOSTLDFLAGS="-L${TOOLCHAIN}/lib" HOSTCFLAGS="-I${TOOLCHAIN}/include"
           echo "end make"
           DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 _python_sysroot="${TOOLCHAIN}" _python_prefix=/ _python_exec_prefix=/ make HOSTCC="${HOST_CC}" HOSTLDFLAGS="-L${TOOLCHAIN}/lib" HOSTCFLAGS="-I${TOOLCHAIN}/include" HOSTSTRIP="true" CONFIG_MKIMAGE_DTC_PATH="scripts/dtc/dtc"
         ;;
@@ -99,7 +101,7 @@ make_target() {
     elif [[ "${PKG_SOC}" =~ "rk3588" ]]
     then
       DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 make mrproper
-      DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 make ${UBOOT_CONFIG} BL31=${PKG_BL31} ${PKG_LOADER} u-boot.dtb u-boot.img CONFIG_MKIMAGE_DTC_PATH="scripts/dtc/dtc"
+      DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="--lssl -lcrypto" ARCH=arm64 make ${UBOOT_CONFIG} BL31=${PKG_BL31} ${PKG_LOADER} u-boot.dtb u-boot.img CONFIG_MKIMAGE_DTC_PATH="scripts/dtc/dtc"
       DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 _python_sysroot="${TOOLCHAIN}" _python_prefix=/ _python_exec_prefix=/ make HOSTCC="${HOST_CC}" HOSTLDFLAGS="-L${TOOLCHAIN}/lib" HOSTSTRIP="true" CONFIG_MKIMAGE_DTC_PATH="scripts/dtc/dtc"
     else
       # rk3326 and rk3399 devices
@@ -109,7 +111,7 @@ make_target() {
       fi
       DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm make mrproper
       DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm make ${UBOOT_CONFIG}
-      if [[ "${PKG_SOC}" =~ "rk3399" ]]; then
+      if [[ "${PKG_SOC}" =~ rk3399 ]]; then
         DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm _python_sysroot="${TOOLCHAIN}" _python_prefix=/ _python_exec_prefix=/ make HOSTCC="${HOST_CC}" HOSTCFLAGS="-I${TOOLCHAIN}/include" HOSTLDFLAGS="${HOST_LDFLAGS}" CONFIG_MKIMAGE_DTC_PATH="scripts/dtc/dtc"
       else
         DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm _python_sysroot="${TOOLCHAIN}" _python_prefix=/ _python_exec_prefix=/ make HOSTCC="$HOST_CC" HOSTLDFLAGS="-L${TOOLCHAIN}/lib" HOSTSTRIP="true" CONFIG_MKIMAGE_DTC_PATH="scripts/dtc/dtc"
