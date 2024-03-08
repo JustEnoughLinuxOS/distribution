@@ -6,7 +6,7 @@ PKG_VERSION="1.32.0-UNSTABLE"
 PKG_LICENSE="mixed"
 PKG_SITE="https://mednafen.github.io/"
 PKG_URL="${PKG_SITE}/releases/files/${PKG_NAME}-${PKG_VERSION}.tar.xz"
-PKG_DEPENDS_TARGET="toolchain SDL2"
+PKG_DEPENDS_TARGET="toolchain SDL2 flac"
 PKG_TOOLCHAIN="configure"
 
 if [ "${DEVICE}" = "S922X*" ]; then
