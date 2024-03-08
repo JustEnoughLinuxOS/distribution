@@ -11,11 +11,13 @@ if [ -n "${UBOOT_CONFIG}" ]; then
   fi
   case "${PKG_SOC}" in
     rk35*)
-      if [ -f ${BOOTLOADER_DIR}/u-boot.itb ]; then
-        cp -a ${BOOTLOADER_DIR}/u-boot.itb ${RELEASE_DIR}/3rdparty/bootloader
-      elif [ -f ${BOOTLOADER_DIR}/uboot.img ]; then
-        cp -a ${BOOTLOADER_DIR}/uboot.img ${RELEASE_DIR}/3rdparty/bootloader
-      fi
+      for BOOT_IMAGE in u-boot.itb u-boot.img uboot.img
+      do
+        if [ -f "${BOOTLOADER_DIR}/${BOOT_IMAGE}" ]; then
+          cp -a ${BOOTLOADER_DIR}/${BOOT_IMAGE} ${RELEASE_DIR}/3rdparty/bootloader
+          break
+        fi
+      done
       if [ -f ${KERNEL_DIR}/resource.img ]; then
         cp -a ${KERNEL_DIR}/resource.img ${RELEASE_DIR}/3rdparty/bootloader
       fi
@@ -26,9 +28,13 @@ if [ -n "${UBOOT_CONFIG}" ]; then
       fi 
     ;;
     *)
-      if [ -f ${BOOTLOADER_DIR}/uboot.img ]; then
-        cp -a ${BOOTLOADER_DIR}/uboot.img ${RELEASE_DIR}/3rdparty/bootloader
-      fi
+      for BOOT_IMAGE in u-boot.itb u-boot.img uboot.img
+      do
+        if [ -f "${BOOTLOADER_DIR}/${BOOT_IMAGE}" ]; then
+          cp -a ${BOOTLOADER_DIR}/${BOOT_IMAGE} ${RELEASE_DIR}/3rdparty/bootloader
+          break
+        fi
+      done
       if [ -f ${BOOTLOADER_DIR}/trust.img ]; then
         cp -a ${BOOTLOADER_DIR}/trust.img ${RELEASE_DIR}/3rdparty/bootloader
       fi

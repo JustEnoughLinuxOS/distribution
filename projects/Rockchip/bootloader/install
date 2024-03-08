@@ -58,16 +58,14 @@ fi
 
 case "${PKG_SOC}" in
   rk35*)
-    if [ -f "u-boot.itb" ]
-    then
-      echo "uboot: copy u-boot.itb image to ${INSTALL}/usr/share/bootloader..."
-      cp -av u-boot.itb ${INSTALL}/usr/share/bootloader/u-boot.itb
-      generate_rkspi_loader
-    elif [ -f "u-boot.img" ]
-    then
-      echo "uboot: copy u-boot.img image to ${INSTALL}/usr/share/bootloader..."
-      cp -av u-boot.img ${INSTALL}/usr/share/bootloader/u-boot.img
-    fi
+    for BOOT_IMAGE in u-boot.itb u-boot.img uboot.img
+    do
+      if [ -f "${BOOT_IMAGE}" ]; then
+        echo "uboot: copy ${BOOT_IMAGE} image to ${INSTALL}/usr/share/bootloader..."
+        cp -av ${BOOT_IMAGE} ${INSTALL}/usr/share/bootloader/${BOOT_IMAGE}
+        break
+      fi
+    done
   ;;
   rk3399)
     PKG_ATF_INI="${PKG_RKBIN}"/RKTRUST/"${DEVICE}"TRUST.ini
