@@ -4,6 +4,8 @@
 
 . /etc/profile
 
+set_kill set "-9 mednafen"
+
 export MEDNAFEN_HOME=/storage/.config/mednafen
 export MEDNAFEN_CONFIG=/usr/config/mednafen/mednafen.template
 

@@ -118,7 +118,24 @@ do
 done
 
 else
-# No GPIO device has analog triggers (I think), Just set them to the same
+
+# GameForce Ace has analog triggers, set them before mapping the rest of the GPIO controller
+if [[ "${NAME}" = "ACEGamepad" ]]
+then
+
+DEVICE_BTN_TL2="abs_2-"
+DEVICE_BTN_TR2="abs_5-"
+DEVICE_BTN_TL2_MINUS=${DEVICE_BTN_TL2}
+DEVICE_BTN_TR2_MINUS=${DEVICE_BTN_TR2}
+
+for CONTROL in DEVICE_BTN_TL2 DEVICE_BTN_TR2    \
+               DEVICE_BTN_TL2_MINUS DEVICE_BTN_TR2_MINUS
+do
+    sed -i -e "s/@${CONTROL}@/${!CONTROL}/g" $MEDNAFEN_HOME/mednafen.cfg
+done
+fi
+
+# No other GPIO device has analog triggers (I think), Just set them to the same
 DEVICE_BTN_TL2_MINUS=${DEVICE_BTN_TL2}
 DEVICE_BTN_TR2_MINUS=${DEVICE_BTN_TR2}
 
