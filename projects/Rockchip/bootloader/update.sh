@@ -77,6 +77,25 @@ for all_conf in $CONFS; do
       -i $BOOT_ROOT/extlinux/${conf}
 done
 
+# Set correct FDT boot dtb for RK3588
+DT_ID=$($SYSTEM_ROOT/usr/bin/dtname)
+if [ -n "${DT_ID}" ]; then
+  case ${DT_ID} in
+    *gameforce,ace)
+      echo "Setting boot FDT to GameForce Ace..."
+      sed -i '/FDT/c\  FDT /rk3588s-gameforce-ace.dtb' $BOOT_ROOT/extlinux/extlinux.conf
+      ;;
+    *orangepi-5)
+      echo "Setting boot FDT to Orange Pi 5..."
+      sed -i '/FDT/c\  FDT /rk3588s-orangepi-5.dtb' $BOOT_ROOT/extlinux/extlinux.conf
+      ;;
+    *rock-5)
+      echo "Setting boot FDT to Rock 5B..."
+      sed -i '/FDT/c\  FDT /rk3588-rock-5b.dtb' $BOOT_ROOT/extlinux/extlinux.conf
+    ;;
+  esac
+fi
+
 if [ -f $SYSTEM_ROOT/usr/share/bootloader/boot.ini ]; then
   echo "Updating boot.ini..."
   cp -p $SYSTEM_ROOT/usr/share/bootloader/boot.ini $BOOT_ROOT/boot.ini &>/dev/null

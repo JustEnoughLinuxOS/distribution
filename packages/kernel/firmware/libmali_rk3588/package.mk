@@ -13,7 +13,7 @@ PKG_ACE_FIRMWARE="https://github.com/JeffyCN/mirrors/raw/ca33693a03b2782edc237d1
 makeinstall_target() {
   mkdir -p ${INSTALL}/$(get_full_firmware_dir)
   case ${DEVICE} in
-    RK3588-ACE)
+    RK3588*)
       # RK Linux 6.1 reequires libmali v18 for the moment
       curl -Lo ${INSTALL}/$(get_full_firmware_dir)/mali_csffw.bin ${PKG_ACE_FIRMWARE}
     ;;

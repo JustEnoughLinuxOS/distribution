@@ -15,13 +15,7 @@ PKG_STAMP="${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD}"
 PKG_PATCH_DIRS="${LINUX} ${DEVICE} default"
 
 case ${DEVICE} in
-  RK3588)
-    PKG_VERSION="eef98210c4984831d1706f884c95eec132c791e1"
-    PKG_URL="https://github.com/justEnoughLinuxOS/rk358x-kernel.git"
-    GET_HANDLER_SUPPORT="git"
-    PKG_GIT_CLONE_BRANCH="main"
-  ;;
-  RK3588-ACE)
+  RK3588*)
     PKG_VERSION="8f20ea790638c80f3913b0e66d90800591a824c3"
     PKG_URL="https://github.com/armbian/linux-rockchip/archive/${PKG_VERSION}.tar.gz"
     PKG_GIT_CLONE_BRANCH="rk-5.10-rkr6"
