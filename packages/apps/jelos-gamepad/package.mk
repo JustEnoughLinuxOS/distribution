@@ -7,15 +7,7 @@ PKG_URL="$PKG_SITE.git"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_TOOLCHAIN="make"
 GET_HANDLER_SUPPORT="git"
-
-case ${DEVICE} in
-  RK3588-ACE)
-    PKG_PATCH_DIRS+=" ${DEVICE}"
-  ;;
-  *)
-    PKG_PATCH_DIRS+=" common"
-  ;;
-esac
+PKG_PATCH_DIRS+=" common"
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/bin

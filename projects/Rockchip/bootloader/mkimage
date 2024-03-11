@@ -92,8 +92,8 @@ if [ "${EXT_LINUX_CONF}" == true ]
 then
 mkdir -p "${LE_TMP}/extlinux"
 
-if [ "${TRUST_LABEL}" = "resource" ] || \
-   [ "${#DEVICE_DTB[@]}" -gt 1 ]
+if [[ "${PKG_SOC}" != "rk3588" ]] && \
+   [[ "${TRUST_LABEL}" = "resource"  || "${#DEVICE_DTB[@]}" -gt 1 ]]
 then
   echo "image: Set FDTDIR to /..."
   FDTMODE="FDTDIR /"

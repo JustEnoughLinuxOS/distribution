@@ -34,12 +34,12 @@
 
   # Single dtb settings
     TRUST_LABEL="trust"
-    DEVICE_DTB=("rk3588s-orangepi-5")
+    DEVICE_DTB=("rk3588s-gameforce-ace" "rk3588s-orangepi-5" "rk3588-rock-5b")
     UBOOT_DTB="${DEVICE_DTB[0]}"
     
   # Multi dtb settings
     #TRUST_LABEL="resource"
-    #DEVICE_DTB=("rk3588s-orangepi-5" "rk3588-rock-5b" "rk3588s-indiedroid-nova")
+#    DEVICE_DTB=("rk3588s-orangepi-5" "rk3588-rock-5b" "rk3588s-indiedroid-nova")
     #UBOOT_DTB="rk3588-evb"
 
     UBOOT_CONFIG="orangepi_5_defconfig"
@@ -53,6 +53,8 @@
 
   # Additional kernel make parameters (for example to specify the u-boot loadaddress)
     KERNEL_MAKE_EXTRACMD=" $(for DTB in "${DEVICE_DTB[@]}"; do echo -n "rockchip/${DTB}.dtb "; done)"
+#    KERNEL_MAKE_EXTRACMD+=" rockchip/${DEVICE_DTB[0]}.dtb"
+
    
   # Define the CPU
     HW_CPU="Rockchip RK3588"
@@ -74,7 +76,7 @@
     WINDOWMANAGER="weston"
   
   # kernel serial console
-    EXTRA_CMDLINE="rootwait quiet systemd.debug_shell=ttyFIQ0 earlycon=uart8250,mmio32,0xfeb50000 console=ttyFIQ0 console=tty0 coherent_pool=2M"
+    EXTRA_CMDLINE="rootwait quiet systemd.debug_shell=ttyFIQ0 earlycon=uart8250,mmio32,0xfeb50000 console=ttyFIQ0 console=tty0 coherent_pool=2M fbcon=rotate:1"
 
   # additional packages to install
   #  ADDITIONAL_PACKAGES=""
@@ -82,7 +84,7 @@
   # additional Firmware to use ( )
   # Space separated list is supported,
   # e.g. FIRMWARE=""
-    FIRMWARE="libmali_rk3588 RTL8821CS-firmware"
+    FIRMWARE="libmali_rk3588 RTL8821CS-firmware ap6256-firmware"
 
   # additional drivers to install:
   # for a list of additional drivers see packages/linux-drivers
@@ -100,6 +102,9 @@
 
   # debug tty path
     DEBUG_TTY="/dev/ttyFIQ0"
+
+  # Disable 32BIT support
+    ENABLE_32BIT="true"
 
   # build and install bluetooth support (yes / no)
     BLUETOOTH_SUPPORT="yes"
