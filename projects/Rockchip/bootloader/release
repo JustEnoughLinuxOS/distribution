@@ -11,7 +11,7 @@ if [ -n "${UBOOT_CONFIG}" ]; then
   fi
   case "${PKG_SOC}" in
     rk35*)
-      for BOOT_IMAGE in u-boot.itb u-boot.img uboot.img
+      for BOOT_IMAGE in u-boot.itb u-boot.img
       do
         if [ -f "${BOOTLOADER_DIR}/${BOOT_IMAGE}" ]; then
           cp -a ${BOOTLOADER_DIR}/${BOOT_IMAGE} ${RELEASE_DIR}/3rdparty/bootloader
@@ -28,7 +28,7 @@ if [ -n "${UBOOT_CONFIG}" ]; then
       fi 
     ;;
     *)
-      for BOOT_IMAGE in u-boot.itb u-boot.img uboot.img
+      for BOOT_IMAGE in u-boot.itb u-boot.img
       do
         if [ -f "${BOOTLOADER_DIR}/${BOOT_IMAGE}" ]; then
           cp -a ${BOOTLOADER_DIR}/${BOOT_IMAGE} ${RELEASE_DIR}/3rdparty/bootloader
