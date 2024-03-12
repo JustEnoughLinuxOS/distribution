@@ -22,7 +22,7 @@ fi
 
 case "${PKG_SOC}" in
   rk35*)
-    for BOOT_IMAGE in u-boot.itb u-boot.img uboot.img
+    for BOOT_IMAGE in u-boot.itb u-boot.img
     do
       if [ -f "${RELEASE_DIR}/3rdparty/bootloader/${BOOT_IMAGE}" ]; then
         echo "image: burn ${BOOT_IMAGE} to image..."
@@ -45,9 +45,10 @@ case "${PKG_SOC}" in
     fi
   ;;
   *)
-    for BOOT_IMAGE in u-boot.itb u-boot.img uboot.img
+    for BOOT_IMAGE in u-boot.itb u-boot.img
     do
       if [ -f "${RELEASE_DIR}/3rdparty/bootloader/${BOOT_IMAGE}" ]; then
+        echo "image: burn ${BOOT_IMAGE} to image..."
         dd if="${RELEASE_DIR}/3rdparty/bootloader/${BOOT_IMAGE}" of="${DISK}" bs=512 seek=16384 conv=sync,noerror,notrunc >"${SAVE_ERROR}" 2>&1 || show_error
         break
       fi
