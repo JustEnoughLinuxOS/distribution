@@ -560,12 +560,12 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-gameconsole-r36s.dts l
 +                sw12 {
 +                        gpios = <&gpio2 RK_PA3 GPIO_ACTIVE_LOW>;
 +                        label = "GPIO F4";
-+                        linux,code = <BTN_TRIGGER_HAPPY4>; // 0x2c3
++                        linux,code = <BTN_THUMBL>; // 0x2c3
 +                };
 +                sw13 {
 +                        gpios = <&gpio2 RK_PA4 GPIO_ACTIVE_LOW>;
 +                        label = "GPIO F5";
-+                        linux,code = <BTN_TRIGGER_HAPPY5>; // 0x2c4
++                        linux,code = <BTN_THUMBR>; // 0x2c4
 +                };
 +                /*sw14 {
 +                        gpios = <&gpio2 RK_PA5 GPIO_ACTIVE_LOW>;
@@ -585,7 +585,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-gameconsole-r36s.dts l
 +                sw19 {
 +                        gpios = <&gpio3 RK_PB1 GPIO_ACTIVE_LOW>;
 +                        label = "GPIO F1";
-+                        linux,code = <BTN_TRIGGER_HAPPY1>;
++                        linux,code = <BTN_SELECT>;
 +                };
 +                sw20 {
 +                        gpios = <&gpio3 RK_PB7 GPIO_ACTIVE_LOW>;
@@ -600,7 +600,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-gameconsole-r36s.dts l
 +                sw22 {
 +                        gpios = <&gpio3 RK_PB4 GPIO_ACTIVE_LOW>;
 +                        label = "GPIO F2";
-+                        linux,code = <BTN_TRIGGER_HAPPY2>;
++                        linux,code = <BTN_START>;
 +                };
 +        };
 +};
@@ -3761,12 +3761,12 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go3.dts linux/a
 +                sw12 {
 +                        gpios = <&gpio2 RK_PA3 GPIO_ACTIVE_LOW>;
 +                        label = "GPIO F4";
-+                        linux,code = <BTN_TRIGGER_HAPPY4>; // 0x2c3
++                        linux,code = <BTN_THUMBL>; // 0x2c3
 +                };
 +                sw13 {
 +                        gpios = <&gpio2 RK_PA4 GPIO_ACTIVE_LOW>;
 +                        label = "GPIO F5";
-+                        linux,code = <BTN_TRIGGER_HAPPY5>; // 0x2c4
++                        linux,code = <BTN_THUMBR>; // 0x2c4
 +                };
 +                sw14 {
 +                        gpios = <&gpio2 RK_PA5 GPIO_ACTIVE_LOW>;
@@ -3786,7 +3786,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go3.dts linux/a
 +                sw19 {
 +                        gpios = <&gpio3 RK_PB1 GPIO_ACTIVE_LOW>;
 +                        label = "GPIO F1";
-+                        linux,code = <BTN_TRIGGER_HAPPY1>;
++                        linux,code = <BTN_SELECT>;
 +                };
 +                sw20 {
 +                        gpios = <&gpio3 RK_PB7 GPIO_ACTIVE_LOW>;
@@ -3801,7 +3801,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3326-odroid-go3.dts linux/a
 +                sw22 {
 +                        gpios = <&gpio3 RK_PB4 GPIO_ACTIVE_LOW>;
 +                        label = "GPIO F2";
-+                        linux,code = <BTN_TRIGGER_HAPPY2>;
++                        linux,code = <BTN_START>;
 +                };
 +        };
  
