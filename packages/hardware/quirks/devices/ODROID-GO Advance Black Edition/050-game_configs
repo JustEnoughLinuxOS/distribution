@@ -10,7 +10,7 @@ if [ ! -d "/storage/.config/mupen64plus" ]; then
 fi
 if [ -f "/storage/.config/mupen64plus/mupen64plus.cfg.ogabe" ]; then
   rm /storage/.config/mupen64plus/mupen64plus.cfg
-  mv /storage/.config/mupen64plus/mupen64plus.cfg.ogabe /storage/.config/mupen64plus/mupen64plus.cfg
+  cp /storage/.config/mupen64plus/mupen64plus.cfg.ogabe /storage/.config/mupen64plus/mupen64plus.cfg
 fi
 
 #Set drastic-sa config for OGA
@@ -19,7 +19,7 @@ if [ ! -d "/storage/.config/drastic" ]; then
     cp -r "/usr/config/drastic" "/storage/.config/"
 fi
 if [ -f "/storage/.config/drastic/config/drastic.cfg.ogabe" ]; then
-  mv /storage/.config/drastic/config/drastic.cfg.ogabe /storage/.config/drastic/config/drastic.cfg
+  cp /storage/.config/drastic/config/drastic.cfg.ogabe /storage/.config/drastic/config/drastic.cfg
 fi
 
 #Set ppsspp config for OGA
