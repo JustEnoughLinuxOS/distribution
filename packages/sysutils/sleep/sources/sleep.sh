@@ -22,12 +22,9 @@ headphones() {
   fi
 }
 
-volumectl() {
-  if [ "${DEVICE_VOLUMECTL}" == "true" ]
-  then
-    log $0 "Volume control: ${1}"
-    systemctl ${1} volume >${EVENTLOG} 2>&1
-  fi
+inputsense() {
+    log $0 "Input sense: ${1}"
+    systemctl ${1} input >${EVENTLOG} 2>&1
 }
 
 powerstate() {
@@ -102,7 +99,7 @@ quirks() {
 case $1 in
   pre)
     headphones stop
-    volumectl stop
+    inputsense stop
     bluetooth stop
     runtime_power_management on
     wake_events disabled
@@ -116,7 +113,7 @@ case $1 in
     modules start
     powerstate start
     headphones start
-    volumectl start
+    inputsense start
     bluetooth start
 
     if [ "$(get_setting network.enabled)" == "1" ]
@@ -133,7 +130,5 @@ case $1 in
     log $0 "Restoring brightness to ${BRIGHTNESS}."
     brightness set ${BRIGHTNESS} >${EVENTLOG} 2>&1
     quirks post
-
-    systemctl restart jslisten >${EVENTLOG} 2>&1
   ;;
 esac

@@ -4,7 +4,7 @@
 # Copyright (C) 2022-present JELOS (https://github.com/JustEnoughLinuxOS)
 
 . /etc/profile
-jslisten set "-9 duckstation-nogui"
+set_kill set "-9 duckstation-nogui"
 
 #Copy config folder to .config/duckstation
 if [ ! -d "/storage/.config/duckstation" ]; then

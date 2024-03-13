@@ -5,6 +5,6 @@
 
 source /etc/profile
 
-jslisten set "retroarch32"
+set_kill set "retroarch32"
 export LIBGL_DRIVERS_PATH="/usr/lib32/dri"
 /usr/bin/retroarch32 --appendconfig /usr/config/retroarch/retroarch32bit-append.cfg

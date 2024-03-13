@@ -4,7 +4,7 @@
 # Copyright (C) 2022-present JELOS (https://github.com/JustEnoughLinuxOS)
 
 . /etc/profile
-jslisten set "-9 dolphin-emu-nogui"
+set_kill set "-9 dolphin-emu-nogui"
 
 #Check if dolphin-emu exists in .config
 if [ ! -d "/storage/.config/dolphin-emu" ]; then

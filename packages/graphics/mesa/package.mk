@@ -10,20 +10,21 @@ PKG_TOOLCHAIN="meson"
 PKG_PATCH_DIRS+=" ${DEVICE}"
 
 case ${DEVICE} in
-  RK3588)
+  RK3588*)
 	PKG_VERSION="120202c675749c5ef81ae4c8cdc30019b4de08f4"
 	PKG_SITE="https://gitlab.com/panfork/mesa"
 	PKG_URL="${PKG_SITE}.git"
 	PKG_GIT_CLONE_BRANCH="csf"
   ;;
-  RK33*|RK3566) #Using upstream dev for panfrost
-	PKG_VERSION="ad5fbc440767ee020ebf761bd7f3aaba0895c92d"
+  # keep RK3399 and RK-ARMV8-A on same version to maintain cross comaptibility
+  RK33*|RK-ARMV8-A|RK3566) #Using upstream dev for panfrost
+	PKG_VERSION="0b953bdbb81439c3d812631282429feeaf393db8"
 	PKG_SITE="https://gitlab.freedesktop.org/mesa/mesa"
 	PKG_URL="${PKG_SITE}.git"
 	PKG_PATCH_DIRS+=" panfrost"
   ;;
   *)
-	PKG_VERSION="24.0.1"
+	PKG_VERSION="24.0.2"
 	PKG_SITE="http://www.mesa3d.org/"
 	PKG_URL="https://gitlab.freedesktop.org/mesa/mesa/-/archive/mesa-${PKG_VERSION}/mesa-mesa-${PKG_VERSION}.tar.gz"
   ;;

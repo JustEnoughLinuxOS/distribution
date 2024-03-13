@@ -27,3 +27,8 @@ else
 fi
 
 PKG_MESON_OPTS_TARGET+=" -Dsdl2=enabled"
+
+post_makeinstall_target() {
+  cp ${PKG_DIR}/scripts/* ${INSTALL}/usr/bin
+  chmod 0755 ${INSTALL}/usr/bin/* 2>/dev/null ||:
+}

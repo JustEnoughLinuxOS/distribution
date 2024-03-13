@@ -4,7 +4,7 @@
 
 . /etc/profile
 
-jslisten set "-9 @EMU@"
+set_kill set "-9 @EMU@"
 
 CONFIG_PATH="/storage/.config/vice"
 SOURCE_PATH="/usr/config/vice"

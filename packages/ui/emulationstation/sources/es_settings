@@ -49,4 +49,4 @@ do
   systemctl import-environment ${VARIABLE}
 done
 
-jslisten set "emulationstation"
+set_kill set "emulationstation"

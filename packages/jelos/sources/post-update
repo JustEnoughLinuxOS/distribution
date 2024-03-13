@@ -66,13 +66,29 @@ rsync -a --delete /usr/config/locale/* /storage/.config/locale/ >>/var/log/confi
 rm -rf /storage/.config/emulationstation/locale >>/var/log/configure.log 2>&1 ||:
 ln -sf /usr/share/locale /storage/.config/emulationstation/locale >>/var/log/configure.log 2>&1 ||:
 
+### Fix Japanese language bug
+if [ ! -e "/storage/.config/ppsspp/assets/NotoSansJP-Regular.ttf" ]
+then
+  cd /storage/.config/ppsspp/assets
+  cp /usr/config/ppsspp/assets/NotoSansJP-Regular.ttf .
+  ln -s NotoSansJP-Regular.ttf Roboto-Condensed.ttf
+  cd -
+fi
+
 ### Add items below this line that are safe to remove after a period of time.
 ################################################################################
 
-### 20240111 - Add new jslisten hotkey
-if [ -e "/storage/.config/jslisten_hotkeys" ]
-then
-   grep BTN_VOLBRIGHT_HOTKEY /storage/.config/jslisten_hotkeys || echo -e "\nBTN_VOLBRIGHT_HOTKEY=999" >>/storage/.config/jslisten_hotkeys
+## 20240312 clean config files on specific rk3326 devices
+model=$(cat /sys/firmware/devicetree/base/model)
+clean_list="ODROID-GO Advance Black Edition Powkiddy RGB10 Game Console R36S ODROID-GO Super"
+if echo "${clean_list}" | grep "$model"; then
+  rm -rf /storage/.config/mupen64plus
+  rm -rf /storage/.config/drastic
+  rm -f /storage/.config/ppsspp/PSP/SYSTEM/controls.ini
+  rm -f /storage/.config/mednafen/mednafen.cfg
+fi
+if [ "${model}" = "Powkiddy RGB10" ]; then
+  rm -f /storage/joypads/odroidgo2_v11_joypad.cfg
 fi
 
 ### 20240207 - Update Vita launchers and data.

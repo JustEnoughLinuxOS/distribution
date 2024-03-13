@@ -129,6 +129,6 @@ fi
 
 ARG=${1//[\\]/}
 
-jslisten set "-9 ppsspp"
+set_kill set "-9 ppsspp"
 
 ${EMUPERF} ppsspp --pause-menu-exit "${ARG}"

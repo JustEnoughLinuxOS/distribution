@@ -5,7 +5,7 @@
 
 . /etc/profile
 
-jslisten set "-9 drastic"
+set_kill set "-9 drastic"
 
 #load gptokeyb support files
 control-gen_init.sh

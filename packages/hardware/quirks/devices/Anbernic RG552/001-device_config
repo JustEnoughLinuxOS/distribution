@@ -5,7 +5,6 @@
 cat <<EOF >/storage/.config/profile.d/001-device_config
 # Device Features
 DEVICE_FAKE_JACKSENSE="true"
-DEVICE_VOLUMECTL="true"
 DEVICE_AUDIO_MIXER="DAC"
 DEVICE_PLAYBACK_PATH_SPK="1*"
 DEVICE_PLAYBACK_PATH_HP="0*"

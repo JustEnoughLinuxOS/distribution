@@ -1,0 +1,12 @@
+diff -rupN linux.orig/drivers/power/supply/cw2015_battery.c linux/drivers/power/supply/cw2015_battery.c
+--- linux.orig/drivers/power/supply/cw2015_battery.c	2023-12-15 19:18:59.060967411 +0000
++++ linux/drivers/power/supply/cw2015_battery.c	2023-12-15 19:20:05.987107578 +0000
+@@ -553,7 +553,7 @@ static enum power_supply_property cw_bat
+ };
+ 
+ static const struct power_supply_desc cw2015_bat_desc = {
+-	.name		= "cw2015-battery",
++	.name		= "battery",
+ 	.type		= POWER_SUPPLY_TYPE_BATTERY,
+ 	.properties	= cw_battery_properties,
+ 	.num_properties	= ARRAY_SIZE(cw_battery_properties),

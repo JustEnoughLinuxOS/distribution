@@ -5,6 +5,6 @@
 
 source /etc/profile
 
-jslisten set "aethersx2-sa"
+set_kill set "aethersx2-sa"
 
 /usr/bin/aethersx2-sa >/dev/null 2>&1

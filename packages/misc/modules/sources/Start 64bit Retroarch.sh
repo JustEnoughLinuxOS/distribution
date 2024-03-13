@@ -5,6 +5,6 @@
 
 source /etc/profile
 
-jslisten set "retroarch"
+set_kill set "retroarch"
 
 /usr/bin/retroarch --appendconfig /usr/config/retroarch/retroarch64bit-append.cfg

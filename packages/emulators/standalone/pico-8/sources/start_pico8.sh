@@ -44,5 +44,5 @@ cp -f /usr/config/SDL-GameControllerDB/gamecontrollerdb.txt ${GAME_DIR}/sdl_cont
 
 # mark the binary executable to cover cases where the user adding the binaries doesn't know or forgets.
 chmod 0755 ${LAUNCH_DIR}/${STATIC_BIN}
-jslisten set "-9 ${STATIC_BIN} start_pico8.sh"
+set_kill set "-9 ${STATIC_BIN} start_pico8.sh"
 ${LAUNCH_DIR}/${STATIC_BIN} -home -root_path ${GAME_DIR} -joystick 0 ${OPTIONS} "${CART}"

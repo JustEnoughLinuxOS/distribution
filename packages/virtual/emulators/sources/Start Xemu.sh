@@ -5,6 +5,6 @@
 
 source /etc/profile
 
-jslisten set "xemu-sa"
+set_kill set "xemu-sa"
 
 /usr/bin/xemu-sa >/dev/null 2>&1

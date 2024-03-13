@@ -4,8 +4,6 @@
 
 PKG_NAME="linux"
 PKG_LICENSE="GPL"
-PKG_VERSION="6.7.5"
-PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
 PKG_SITE="http://www.kernel.org"
 PKG_DEPENDS_HOST="ccache:host rdfind:host rsync:host openssl:host"
 PKG_DEPENDS_TARGET="toolchain rdfind:host linux:host kmod:host cpio:host xz:host keyutils ncurses openssl:host wireless-regdb ${KERNEL_EXTRA_DEPENDS_TARGET}"
@@ -14,7 +12,35 @@ PKG_LONGDESC="This package contains a precompiled kernel image and the modules."
 PKG_IS_KERNEL_PKG="yes"
 PKG_STAMP="${KERNEL_TARGET} ${KERNEL_MAKE_EXTRACMD}"
 
-PKG_PATCH_DIRS+="${LINUX} ${DEVICE} default"
+PKG_PATCH_DIRS="${LINUX} ${DEVICE} default"
+
+case ${DEVICE} in
+  RK3588*)
+    PKG_VERSION="8f20ea790638c80f3913b0e66d90800591a824c3"
+    PKG_URL="https://github.com/armbian/linux-rockchip/archive/${PKG_VERSION}.tar.gz"
+    PKG_GIT_CLONE_BRANCH="rk-5.10-rkr6"
+  ;;
+  RK3566-BSP)
+    PKG_URL="https://github.com/JustEnoughLinuxOS/rk356x-kernel.git"
+    PKG_VERSION="c741d56477939654bb4056be240f93d1ad1ae91e"
+    GET_HANDLER_SUPPORT="git"
+    PKG_GIT_CLONE_BRANCH="main"
+  ;;
+  RK3566-BSP-X55)
+    PKG_URL="https://github.com/JustEnoughLinuxOS/rk3566-x55-kernel.git"
+    PKG_VERSION="9e8f3703fe49d5d12bbb951e233248f5f3eb9efd"
+    GET_HANDLER_SUPPORT="git"
+    PKG_GIT_CLONE_BRANCH="main"
+  ;;
+  RK356*)
+    PKG_VERSION="6.8-rc6"
+    PKG_URL="https://git.kernel.org/torvalds/t/${PKG_NAME}-${PKG_VERSION}.tar.gz"
+  ;;
+  *)
+    PKG_VERSION="6.7.9"
+    PKG_URL="https://www.kernel.org/pub/linux/kernel/v6.x/${PKG_NAME}-${PKG_VERSION}.tar.xz"
+  ;;
+esac
 
 PKG_KERNEL_CFG_FILE=$(kernel_config_path) || die
 
@@ -101,6 +127,14 @@ makeinstall_host() {
 }
 
 pre_make_target() {
+ ( cd ${ROOT}
+    rm -f ${STAMPS_INSTALL}/initramfs/install_target ${STAMPS_INSTALL}/*/install_init
+    for INIT_PACKAGE in $(find ${PKG_BUILD}/../image/.stamps -name "*_init" | sed 's#^.*stamps/##g; s#/.*init$##g')
+    do
+      ${SCRIPTS}/install ${INIT_PACKAGE}:init
+    done
+    ${SCRIPTS}/install initramfs
+  )
   pkg_lock_status "ACTIVE" "linux:target" "build"
 
   cp ${PKG_KERNEL_CFG_FILE} ${PKG_BUILD}/.config
@@ -226,6 +260,7 @@ make_target() {
       NO_GTK2=1 \
       NO_LIBNUMA=1 \
       NO_LIBAUDIT=1 \
+      NO_LIBTRACEEVENT=1 \
       NO_LZMA=1 \
       NO_SDT=1 \
       CROSS_COMPILE="${TARGET_PREFIX}" \
@@ -274,16 +309,22 @@ makeinstall_target() {
   rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/build
   rm -f ${INSTALL}/$(get_kernel_overlay_dir)/lib/modules/*/source
 
-  (
-    cd ${ROOT}
-    ${SCRIPTS}/install initramfs
-  )
-
   if [ "${BOOTLOADER}" = "u-boot" ]; then
-    mkdir -p ${INSTALL}/usr/share/bootloader/device_trees
-    if [ -d arch/${TARGET_KERNEL_ARCH}/boot/dts/amlogic ]; then
-      cp arch/${TARGET_KERNEL_ARCH}/boot/*dtb.img ${INSTALL}/usr/share/bootloader/ 2>/dev/null || :
-      [ "${DEVICE}" = "Amlogic-ng" ] && cp arch/${TARGET_KERNEL_ARCH}/boot/dts/amlogic/*.dtb ${INSTALL}/usr/share/bootloader/device_trees 2>/dev/null || :
+    mkdir -p ${INSTALL}/usr/share/bootloader
+    for dtb in arch/${TARGET_KERNEL_ARCH}/boot/dts/*.dtb arch/${TARGET_KERNEL_ARCH}/boot/dts/*/*.dtb; do
+      if [ -f ${dtb} ]; then
+        cp -v ${dtb} ${INSTALL}/usr/share/bootloader
+      fi
+    done
+
+    if [ "${PROJECT}" = "Rockchip" ]; then
+      . ${PROJECT_DIR}/${PROJECT}/devices/${DEVICE}/options
+      if [ "${TRUST_LABEL}" = "resource" ]; then
+        ARCH=arm64 scripts/mkimg --dtb ${DEVICE_DTB[0]}.dtb
+        ARCH=arm64 scripts/mkmultidtb.py ${PKG_SOC}
+        cp -v resource.img ${INSTALL}/usr/share/bootloader
+        ARCH=${TARGET_ARCH}
+      fi
     fi
   fi
   makeinstall_host

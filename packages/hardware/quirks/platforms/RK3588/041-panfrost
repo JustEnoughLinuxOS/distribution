@@ -1,4 +1,8 @@
 # SPDX-License-Identifier: GPL-2.0
 # Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
 
+
+
+cat <<EOF >/storage/.config/profile.d/041-panfrost
 export PAN_MESA_DEBUG=gofaster
+EOF

@@ -7,6 +7,7 @@ PKG_URL="$PKG_SITE.git"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_TOOLCHAIN="make"
 GET_HANDLER_SUPPORT="git"
+PKG_PATCH_DIRS+=" common"
 
 makeinstall_target() {
   mkdir -p $INSTALL/usr/bin

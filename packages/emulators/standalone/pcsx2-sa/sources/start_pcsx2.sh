@@ -6,7 +6,7 @@
 
 GAME=${1//[\\]/}
 
-jslisten set "-9 pcsx2-qt"
+set_kill set "-9 pcsx2-qt"
 
 FPS=$(get_setting show_fps ps2 "${GAME}")
 

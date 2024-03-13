@@ -14,6 +14,12 @@ PKG_SHORTDESC="PPSSPPDL"
 PKG_LONGDESC="PPSSPP Standalone"
 GET_HANDLER_SUPPORT="git"
 
+### Note:
+### This package includes the NotoSansJP-Regular.ttf font.  This font is licensed under
+### SIL Open Font License, Version 1.1.  The license can be found in the licenses
+### directory in the root of this project, OFL.txt.
+###
+
 PKG_PATCH_DIRS+="${DEVICE}"
 
 PKG_CMAKE_OPTS_TARGET=" -DUSE_SYSTEM_FFMPEG=OFF \
@@ -91,4 +97,5 @@ makeinstall_target() {
     cp ${PKG_DIR}/sources/${DEVICE}/* ${INSTALL}/usr/config/ppsspp/PSP/SYSTEM
   fi
   rm ${INSTALL}/usr/config/ppsspp/assets/gamecontrollerdb.txt
+  ln -sf NotoSansJP-Regular.ttf ${INSTALL}/usr/config/ppsspp/assets/Roboto-Condensed.ttf
 }

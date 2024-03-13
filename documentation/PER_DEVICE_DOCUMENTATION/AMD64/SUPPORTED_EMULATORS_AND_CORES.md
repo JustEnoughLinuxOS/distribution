@@ -27,13 +27,13 @@ This document describes all available systems emulators and cores available for 
 |Atari|Atari Lynx (atarilynx)|1989|`atarilynx`|.lnx .lyx .o .zip .7z|**retroarch:** handy (default)<br>**retroarch:** beetle_lynx<br>**mednafen:** lynx<br>|
 |Atari|Atari ST (atarist)|1985|`atarist`|.st .msa .stx .dim .ipf .m3u .zip .7z|**retroarch:** hatari (default)<br>**hatarisa:** hatarisa<br>|
 |Bandai|SuFami Turbo (sufami)|1996|`sufami`|.st .zip .7z|**retroarch:** snes9x (default)<br>|
-|Bandai|Wonderswan (wonderswan)|1999|`wonderswan`|.ws .zip .7z|**retroarch:** beetle_wswan (default)<br>**mednafen:** wswan<br>|
-|Bandai|Wonderswan Color (wonderswancolor)|2000|`wonderswancolor`|.wsc .zip .7z|**retroarch:** beetle_wswan (default)<br>**mednafen:** wswan<br>|
+|Bandai|Wonderswan (wonderswan)|1999|`wonderswan`|.ws .wsc .zip .7z|**retroarch:** beetle_wswan (default)<br>**mednafen:** wswan<br>|
+|Bandai|Wonderswan Color (wonderswancolor)|2000|`wonderswancolor`|.ws .wsc .zip .7z|**retroarch:** beetle_wswan (default)<br>**mednafen:** wswan<br>|
 |belogic|Uzebox (uzebox)|2008|`uzebox`|.uze|**retroarch:** uzem (default)<br>|
 |Capcom|CPS-I (cps1)|1988|`cps1`|.zip .7z|**retroarch:** fbneo (default)<br>**retroarch:** mame2003_plus<br>**retroarch:** mame2010<br>**retroarch:** fbalpha2012<br>|
 |Capcom|CPS-II (cps2)|1993|`cps2`|.zip .7z|**retroarch:** fbneo (default)<br>**retroarch:** mame2003_plus<br>**retroarch:** mame2010<br>**retroarch:** fbalpha2012<br>|
 |Capcom|CPS-III (cps3)|1996|`cps3`|.zip .7z|**retroarch:** fbneo (default)<br>**retroarch:** mame2003_plus<br>**retroarch:** mame2010<br>**retroarch:** fbalpha2012<br>|
-|Coleco|ColecoVision (colecovision)|1982|`coleco`|.bin .col .rom .zip .7z|**retroarch:** bluemsx (default)<br>**retroarch:** gearcoleco<br>**retroarch:** smsplus<br>|
+|Coleco|ColecoVision (colecovision)|1982|`coleco`|.bin .col .rom .zip .7z|**retroarch:** gearcoleco (default)<br>**retroarch:** bluemsx<br>**retroarch:** smsplus<br>|
 |Commodore|Amiga (amiga)|1985|`amiga`|.zip .adf .uae .ipf .dms .adz .lha .m3u .hdf .hdz|**retroarch:** puae (default)<br>**retroarch:** puae2021<br>|
 |Commodore|Amiga CD32 (amigacd32)|1994|`amigacd32`|.iso .cue .lha .chd|**retroarch:** puae (default)<br>**retroarch:** puae2021<br>|
 |Commodore|Commodore 128 (c128)|1985|`c128`|.d64 .d71 .d80 .d81 .d82 .g64 .g41 .x64 .t64 .tap .prg .p00 .crt .bin .d6z .d7z .d8z .g6z .g4z .x6z .cmd .m3u .vsf .nib .nbz .zip|**retroarch:** vice_x128 (default)<br>**vicesa:** x128<br>|
@@ -73,7 +73,6 @@ This document describes all available systems emulators and cores available for 
 |Nintendo|Game Boy Color (Hacks) (gbch)|1998|`gbch`|.gb .gbc .zip .7z|**retroarch:** gambatte (default)<br>**retroarch:** sameboy<br>**retroarch:** gearboy<br>**retroarch:** tgbdual<br>**retroarch:** mgba<br>**retroarch:** vbam<br>**mednafen:** gb<br>|
 |Nintendo|GameCube (gamecube)|2001|`gamecube`|.gcm .iso .gcz .ciso .wbfs .rvz .dol|**dolphin:** dolphin-sa-gc (default)<br>**retroarch:** dolphin<br>|
 |Nintendo|NES (Hacks) (nesh)|1985|`nesh`|.nes .unif .unf .zip .7z|**retroarch:** nestopia (default)<br>**retroarch:** fceumm<br>**retroarch:** quicknes<br>**retroarch:** mesen<br>**mednafen:** nesh<br>|
-|Nintendo|Nintendo 3DS (3ds)|2010|`3ds`|.3ds .3dsx .elf .axf .cci .cxi .app|**retroarch:** citra (default)<br>**citra:** citra-sa<br>|
 |Nintendo|Nintendo 64 (n64)|1996|`n64`|.z64 .n64 .v64 .zip .7z|**retroarch:** mupen64plus_next (default)<br>**retroarch:** mupen64plus<br>**retroarch:** parallel_n64<br>**mupen64plus:** mupen64plus-sa<br>|
 |Nintendo|Nintendo DS (nds)|2005|`nds`|.nds .zip .7z|**retroarch:** melonds (default)<br>**retroarch:** desmume<br>**melonds:** melonds-sa<br>|
 |Nintendo|Nintendo Entertainment System (nes)|1985|`nes`|.nes .unif .unf .zip .7z|**retroarch:** nestopia (default)<br>**retroarch:** fceumm<br>**retroarch:** quicknes<br>**retroarch:** mesen<br>**mednafen:** nes<br>|
@@ -83,7 +82,6 @@ This document describes all available systems emulators and cores available for 
 |Nintendo|Super NES MSU-1 (snesmsu1)|2012|`snesmsu1`|.smc .fig .sfc .swc .zip .7z|**retroarch:** snes9x (default)<br>**retroarch:** beetle_supafaust<br>**mednafen:** snes_faust<br>|
 |Nintendo|Super Nintendo (Hacks) (snesh)|1991|`snesh`|.smc .fig .sfc .swc .zip .7z|**retroarch:** snes9x (default)<br>**retroarch:** snes9x2010<br>**retroarch:** snes9x2002<br>**retroarch:** snes9x2005_plus<br>**retroarch:** beetle_supafaust<br>**retroarch:** bsnes_mercury_performance<br>**retroarch:** bsnes<br>**retroarch:** bsnes_hd_beta<br>**mednafen:** snes<br>**mednafen:** snes_faust<br>|
 |Nintendo|Super Nintendo (snes)|1991|`snes`|.smc .fig .sfc .swc .zip .7z|**retroarch:** snes9x (default)<br>**retroarch:** snes9x2010<br>**retroarch:** snes9x2002<br>**retroarch:** snes9x2005_plus<br>**retroarch:** beetle_supafaust<br>**retroarch:** bsnes_mercury_performance<br>**retroarch:** bsnes<br>**retroarch:** bsnes_hd_beta<br>**mednafen:** snes_faust<br>**mednafen:** snes<br>|
-|Nintendo|Switch (switch)|2017|`switch`|.xci .nsp .nca .nso .nro|**yuzu:** yuzu-sa (default)<br>**ryujinx:** ryujinx-sa<br>|
 |Nintendo|Virtual Boy (virtualboy)|1995|`virtualboy`|.vb .zip .7z|**retroarch:** beetle_vb (default)<br>**mednafen:** vb<br>|
 |Nintendo|Wii (wii)|2006|`wii`|.gcm .iso .gcz .ciso .wbfs .rvz .dol .wad|**dolphin:** dolphin-sa-wii (default)<br>**retroarch:** dolphin<br>|
 |Nintendo|Wii U (wiiu)|2012|`wiiu`|.wud .wux .wua|**cemu:** cemu-sa (default)<br>|
@@ -113,15 +111,16 @@ This document describes all available systems emulators and cores available for 
 |Smith Engineering|Vectrex (vectrex)|1982|`vectrex`|.bin .gam .vec .zip .7z|**retroarch:** vecx (default)<br>|
 |SNK|Neo Geo (neogeo)|1990|`neogeo`|.7z .zip|**retroarch:** fbneo (default)<br>**retroarch:** mame2003_plus<br>**retroarch:** fbalpha2012<br>**retroarch:** fbalpha2019<br>**retroarch:** mame2010<br>**retroarch:** mame2015<br>**retroarch:** mame<br>|
 |SNK|Neo Geo CD (neocd)|1994|`neocd`|.cue .iso .chd|**retroarch:** neocd (default)<br>**retroarch:** fbneo<br>|
-|SNK|Neo Geo Pocket (ngp)|1998|`ngp`|.ngc .ngp .zip .7z|**retroarch:** beetle_ngp (default)<br>**retroarch:** race<br>**mednafen:** ngp<br>|
-|SNK|Neo Geo Pocket Color (ngpc)|1999|`ngpc`|.ngc .zip .7z|**retroarch:** beetle_ngp (default)<br>**retroarch:** race<br>**mednafen:** ngp<br>|
-|Sony|PlayStation (psx)|1994|`psx`|.bin .cue .img .mdf .pbp .toc .cbn .m3u .ccd .chd .iso|**retroarch:** beetle_psx (default)<br>**duckstation:** duckstation-sa<br>**mednafen:** psx<br>**retroarch:** duckstation<br>**retroarch:** swanstation<br>|
+|SNK|Neo Geo Pocket (ngp)|1998|`ngp`|.ngp .ngc .zip .7z|**retroarch:** beetle_ngp (default)<br>**retroarch:** race<br>**mednafen:** ngp<br>|
+|SNK|Neo Geo Pocket Color (ngpc)|1999|`ngpc`|.ngp .ngc .zip .7z|**retroarch:** beetle_ngp (default)<br>**retroarch:** race<br>**mednafen:** ngp<br>|
+|Sony|PlayStation (psx)|1994|`psx`|.bin .cue .img .mdf .pbp .toc .cbn .m3u .ccd .chd .iso|**retroarch:** beetle_psx (default)<br>**mednafen:** psx<br>**duckstation:** duckstation-sa<br>**retroarch:** duckstation<br>**retroarch:** swanstation<br>|
 |Sony|PlayStation 2 (ps2)|2000|`ps2`|.iso .mdf .nrg .bin .img .dump .gz .cso .chd|**pcsx2:** pcsx2-sa (default)<br>**retroarch:** pcsx2<br>|
 |Sony|PlayStation 3 (ps3)|2006|`ps3`|.ps3 .psn|**rpcs3:** rpcs3-sa (default)<br>|
 |Sony|PlayStation Portable (psp)|2004|`psp`|.iso .cso .pbp .chd|**ppsspp:** ppsspp-sa (default)<br>**retroarch:** ppsspp<br>|
 |Sony|PlayStation Vita (psvita)|2011|`launcher`|.sh .psvita|**vita3k:** vita3k-sa (default)<br>|
 |Sony|PSP Minis (pspminis)|2004|`pspminis`|.iso .cso .pbp|**ppsspp:** ppsspp-sa (default)<br>**retroarch:** ppsspp<br>|
 |Sun Microsystems|J2ME (j2me)|2002|`j2me`|.jar|**retroarch:** freej2me (default)<br>|
+|Thomson|MO/TO family (TO7, TO7/70, TO8, TO8D, TO9, TO9+, MO5 and MO6) (moto)|1982|`moto`|.fd .sap .k7 .m7 .m5 .rom|**retroarch:** theodore (default)<br>|
 |Various|CHIP-8 / S-CHIP / XO-CHIP (chip-8)|1978|`chip-8`|.ch8 .sc8 .xo8|**retroarch:** jaxe (default)<br>|
 |Various|EasyRPG (easyrpg)|2003|`easyrpg`|.zip .easyrpg .ldb|**retroarch:** easyrpg (default)<br>|
 |Various|OpenBOR (openbor)|2003|`openbor`|.pak|**OpenBOR:** OpenBOR (default)<br>|

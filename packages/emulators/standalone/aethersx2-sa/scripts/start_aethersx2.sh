@@ -42,6 +42,7 @@ fi
   RATE=$(get_setting ee_cycle_rate ps2 "${GAME}")
   SKIP=$(get_setting ee_cycle_skip ps2 "${GAME}")
   GRENDERER=$(get_setting graphics_backend ps2 "${GAME}")
+  IRES=$(get_setting internal_resolution ps2 "${GAME}")
   VSYNC=$(get_setting vsync ps2 "${GAME}")
 
 
@@ -93,6 +94,14 @@ fi
         if [ "$GRENDERER" = "3" ]
         then
                 sed -i '/^Renderer =/c\Renderer = 13' /storage/.config/aethersx2/inis/PCSX2.ini
+        fi
+
+  #Internal Resolution
+        if [ "$IRES" > "0" ]
+        then
+                sed -i "/^upscale_multiplier =/c\upscale_multiplier = $IRES" /storage/.config/aethersx2/inis/PCSX2.ini
+        else
+                sed -i '/^upscale_multiplier =/c\upscale_multiplier = 1' /storage/.config/aethersx2/inis/PCSX2.ini
         fi
 
   #Show FPS
@@ -164,5 +173,5 @@ export MESA_GLSL_VERSION_OVERRIDE=330
 
 #Run Aethersx2 emulator
   export SDL_AUDIODRIVER=pulseaudio
-  jslisten set "-9 aethersx2"
+  set_kill set "-9 aethersx2"
   ${EMUPERF} /usr/bin/@APPIMAGE@ -fullscreen "${1}"

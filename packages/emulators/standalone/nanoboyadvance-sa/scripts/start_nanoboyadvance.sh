@@ -4,7 +4,7 @@
 # Copyright (C) 2022-present JELOS (https://github.com/JustEnoughLinuxOS)
 
 . /etc/profile
-jslisten set "-9 NanoBoyAdvance"
+set_kill set "-9 NanoBoyAdvance"
 
 #Check if nanoboyadvance exists in .config
 if [ ! -d "/storage/.config/nanoboyadvance" ]; then

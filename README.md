@@ -118,6 +118,7 @@ JELOS supports a variety of ARM and Intel/AMD based devices.
 | AYANEO | [AYANEO 2S](https://jelos.org/devices/ayaneo/ayaneo-2) | Amd Ryzen 7 7840U / (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
 | Ayn | [Loki Zero](https://jelos.org/devices/ayn/loki-zero) | AMD Athlon Silver 3050e (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
 | Ayn | [Loki Max](https://jelos.org/devices/ayn/loki-max) | Amd Ryzen 7 6800U / (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |
+| Gameforce | [ACE](https://jelos.org/devices/gameforce/gameforce-ace/) | Rockchip RK3588S | Rockchip BSP | Panfrost | | Weston + Emulation Station |
 | Game Console | [R33S](https://jelos.org/devices/unbranded/game-console-r33s) | Rockchip RK3326 (ARM) | Mainline Linux | Panfrost | Weston + Emulation Station |
 | Game Console | [R35S, R36S](https://jelos.org/devices/unbranded/game-console-r35s-r36s) | Rockchip RK3326 (ARM) | Mainline Linux | Panfrost | Weston + Emulation Station |
 | GPD | [Win 4](https://jelos.org/devices/gpd/win4) | Amd Ryzen 7 6800U / (x86_64) | Mainline Linux | Radeonsi | Weston + Emulation Station |

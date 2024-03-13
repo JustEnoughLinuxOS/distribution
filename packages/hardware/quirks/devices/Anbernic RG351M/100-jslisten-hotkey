@@ -1,8 +1,0 @@
-#!/bin/bash
-# SPDX-License-Identifier: GPL-2.0
-# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
-
-#Set dummy key for RG351M/P
-cat <<EOF >/storage/.config/profile.d/100-jslisten-hotkey
-BTN_VOLBRIGHT_HOTKEY=999 # Select
-EOF

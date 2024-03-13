@@ -77,6 +77,27 @@ for all_conf in $CONFS; do
       -i $BOOT_ROOT/extlinux/${conf}
 done
 
+# Set correct FDT boot dtb for RK3588
+DT_ID=$($SYSTEM_ROOT/usr/bin/dtname)
+if [ -n "${DT_ID}" ]; then
+  case ${DT_ID} in
+    *gameforce,ace)
+      echo "Setting boot FDT to GameForce Ace..."
+      sed -i '/FDT/c\  FDT /rk3588s-gameforce-ace.dtb' $BOOT_ROOT/extlinux/extlinux.conf
+      ;;
+    *orangepi-5)
+      echo "Setting boot FDT to Orange Pi 5..."
+      sed -i '/FDT/c\  FDT /rk3588s-orangepi-5.dtb' $BOOT_ROOT/extlinux/extlinux.conf
+      sed -i 's/ fbcon=rotate:1//' $BOOT_ROOT/extlinux/extlinux.conf
+      ;;
+    *rock-5)
+      echo "Setting boot FDT to Rock 5B..."
+      sed -i '/FDT/c\  FDT /rk3588-rock-5b.dtb' $BOOT_ROOT/extlinux/extlinux.conf
+      sed -i 's/ fbcon=rotate:1//' $BOOT_ROOT/extlinux/extlinux.conf
+    ;;
+  esac
+fi
+
 if [ -f $SYSTEM_ROOT/usr/share/bootloader/boot.ini ]; then
   echo "Updating boot.ini..."
   cp -p $SYSTEM_ROOT/usr/share/bootloader/boot.ini $BOOT_ROOT/boot.ini &>/dev/null
@@ -122,21 +143,22 @@ if [ -f $SYSTEM_ROOT/usr/share/bootloader/idbloader.img ]; then
   dd if=$SYSTEM_ROOT/usr/share/bootloader/idbloader.img of=$BOOT_DISK ${IDBSEEK} conv=fsync &>/dev/null
   echo "done"
 fi
-if [ -f $SYSTEM_ROOT/usr/share/bootloader/uboot.img ]; then
-  echo -n "Updating uboot.img... "
-  dd if=$SYSTEM_ROOT/usr/share/bootloader/uboot.img of=$BOOT_DISK bs=512 seek=16384 conv=fsync &>/dev/null
-  echo "done"
-fi
+
+for BOOT_IMAGE in u-boot.itb u-boot.img
+do
+  if [ -f "$SYSTEM_ROOT/usr/share/bootloader/${BOOT_IMAGE}" ]; then
+    echo "Updating ${BOOT_IMAGE}..."
+    dd if=$SYSTEM_ROOT/usr/share/bootloader/${BOOT_IMAGE} of=$BOOT_DISK bs=512 seek=16384 conv=fsync &>/dev/null
+    break
+  fi
+done
+
 if [ -f $SYSTEM_ROOT/usr/share/bootloader/rk3399-uboot.bin ]; then
   echo -n "Updating uboot.bin... "
   dd if=$SYSTEM_ROOT/usr/share/bootloader/rk3399-uboot.bin of=$BOOT_DISK bs=512 seek=64 conv=fsync &>/dev/null
   echo "done"
 fi
-if [ -f $SYSTEM_ROOT/usr/share/bootloader/u-boot.itb ]; then
-  echo -n "Updating uboot.itb... "
-  dd if=$SYSTEM_ROOT/usr/share/bootloader/u-boot.itb of=$BOOT_DISK bs=512 seek=16384 conv=fsync &>/dev/null
-  echo "done"
-fi
+
 if [ -f $SYSTEM_ROOT/usr/share/bootloader/trust.img ]; then
   echo -n "Updating trust.img... "
   dd if=$SYSTEM_ROOT/usr/share/bootloader/trust.img of=$BOOT_DISK bs=512 seek=24576 conv=fsync &>/dev/null

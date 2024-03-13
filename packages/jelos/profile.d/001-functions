@@ -12,7 +12,6 @@ J_DIR="/storage/.config/system"
 J_CONF="${J_DIR}/configs/system.cfg"
 J_CONF_LOCK="/tmp/.system.cfg.lock"
 ES_CONF="/storage/.emulationstation/es_settings.cfg"
-JSLISTENCONF="${J_DIR}/configs/jslisten.cfg"
 
 function tocon() {
   echo -ne "\033[1000H\033[2K==> ${*}" >/dev/console
@@ -105,6 +104,21 @@ function sort_settings() {
   cat "${J_CONF}" | grep ^[a-z0-9] | sort >"${J_CONF}.tmp"
   mv "${J_CONF}.tmp" "${J_CONF}"
   rm -f "${J_CONF_LOCK}"
+}
+
+function set_kill() {
+  if [ "${1}" = "set" ]
+  then
+    cat <<EOF >/tmp/.process-kill-data
+${2}
+EOF
+  elif [ "${1}" = "stop" ]
+  then
+    if [ -e "/tmp/.process-kill-data" ]
+    then
+      rm -f "/tmp/.process-kill-data"
+    fi
+  fi
 }
 
 function set_setting() {

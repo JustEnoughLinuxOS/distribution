@@ -1,0 +1,14 @@
+#!/bin/sh
+# SPDX-License-Identifier: GPL-2.0
+# Copyright (C) 2023 JELOS (https://github.com/JustEnoughLinuxOS)
+. /etc/profile
+DPAD_EVENTS=$(get_setting key.dpad.events)
+if [ -z "${DPAD_EVENTS}" ]
+then
+  set_setting key.dpad.events 1
+fi
+
+if [ "$(systemctl is-active input)" = "active" ]
+then
+  systemctl restart input
+fi

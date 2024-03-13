@@ -8,7 +8,7 @@
 
 # Ensure we're using pulseaudio
 export SDL_AUDIODRIVER=pulseaudio
-jslisten set "-9 cemu"
+set_kill set "-9 cemu"
 
 if [ -z "${PASINK}" ]
 then
@@ -66,6 +66,7 @@ ONLINE=$(get_setting online_enabled wiiu "${FILE}")
 FPS=$(get_setting show_fps wiiu "${FILE}")
 CON=$(get_setting wiiu_controller_profile wiiu "${FILE}")
 RENDERER=$(get_setting graphics_backend wiiu "${FILE}")
+BACKEND=$(get_setting gdk_backend wiiu "${FILE}")
 
 if [ -z "${FPS}" ]
 then
@@ -79,6 +80,15 @@ case ${RENDERER} in
   ;;
   *)
     RENDERER=1
+  ;;
+esac
+
+case ${BACKEND} in
+  x11)
+    export GDK_BACKEND=x11
+  ;;
+  *)
+    export GDK_BACKEND=wayland
   ;;
 esac
 
