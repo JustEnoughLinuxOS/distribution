@@ -80,7 +80,7 @@ fi
 
 ## 20240312 clean config files on specific rk3326 devices
 model=$(cat /sys/firmware/devicetree/base/model)
-clean_list="ODROID-GO Advance Black Edition Powkiddy RGB10"
+clean_list="ODROID-GO Advance Black Edition Powkiddy RGB10 Game Console R36S ODROID-GO Super"
 if echo "${clean_list}" | grep "$model"; then
   rm -rf /storage/.config/mupen64plus
   rm -rf /storage/.config/drastic

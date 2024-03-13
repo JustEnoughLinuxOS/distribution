@@ -110,13 +110,13 @@ Kbd Mapping Frame Advance = 47
 # SDL keysym for pressing the game shark button
 Kbd Mapping Gameshark = 103
 # Joystick event string for stopping the emulator
-Joy Mapping Stop = "J0B12/B13"
+Joy Mapping Stop = "J0B08/B13"
 # Joystick event string for switching between fullscreen/windowed modes
 Joy Mapping Fullscreen = ""
 # Joystick event string for saving the emulator state
-Joy Mapping Save State = "J0B12/B5"
+Joy Mapping Save State = "J08/B5"
 # Joystick event string for loading the emulator state
-Joy Mapping Load State = "J0B12/B4"
+Joy Mapping Load State = "J08/B4"
 # Joystick event string for advancing the save state slot
 Joy Mapping Increment Slot = ""
 # Joystick event string for resetting the emulator
@@ -128,7 +128,7 @@ Joy Mapping Speed Up = ""
 # Joystick event string for taking a screenshot
 Joy Mapping Screenshot = ""
 # Joystick event string for pausing the emulator
-Joy Mapping Pause = "J0B12/B0"
+Joy Mapping Pause = "J08/B0"
 # Joystick event string for muting/unmuting the sound
 Joy Mapping Mute = ""
 # Joystick event string for increasing the volume
@@ -136,7 +136,7 @@ Joy Mapping Increase Volume = ""
 # Joystick event string for decreasing the volume
 Joy Mapping Decrease Volume = ""
 # Joystick event string for fast-forward
-Joy Mapping Fast Forward = "J0B12/B14"
+Joy Mapping Fast Forward = "J08/B07"
 # Joystick event string for advancing by one frame when paused
 Joy Mapping Frame Advance = ""
 # Joystick event string for pressing the game shark button
@@ -190,10 +190,10 @@ plugged = True
 mouse = False
 AnalogDeadzone = 0,0
 AnalogPeak = 32768,32768
-DPad R = button(11)
-DPad L = button(10)
-DPad D = button(9)
-DPad U = button(8)
+DPad R = button(15)
+DPad L = button(14)
+DPad D = button(13)
+DPad U = button(12)
 Start = button(13)
 Z Trig = button(4)
 B Button = button(3)
