@@ -32,28 +32,25 @@ else
 cat <<EOF >/storage/.config/ppsspp/PSP/SYSTEM/controls.ini
 #R36S
 [ControlMapping]
-Up = 10-19
-Down = 10-20
-Left = 10-21
-Right = 10-22
+Up = 10-106
+Down = 10-107
+Left = 10-4010
+Right = 10-197
 Circle = 10-189
 Cross = 10-190
 Square = 10-188
 Triangle = 10-191
-Start = 10-197
-Select = 10-196
+Start = 10-22
+Select = 10-21
 L = 10-193
 R = 10-192
 An.Up = 10-4003
 An.Down = 10-4002
 An.Left = 10-4001
 An.Right = 10-4000
-Pause = 10-106
-Save State = 10-4010
-Load State = 10-4008
-RightAn.Up = 10-4007
-RightAn.Down = 10-4006
-RightAn.Left = 10-4005
-RightAn.Right = 10-4004
+Pause = 10-109,10-104,1-111
+Save State = 10-20
+Load State = 10-19
+Fast-forward = 1-61
 EOF
 fi
