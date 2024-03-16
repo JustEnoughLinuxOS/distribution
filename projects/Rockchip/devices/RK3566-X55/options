@@ -68,7 +68,7 @@
     DISPLAYSERVER="wl"
 
   # Windowmanager to use (fluxbox / weston / no)
-    WINDOWMANAGER="weston"
+    WINDOWMANAGER="swaywm-env"
 
   # debug tty path
     DEBUG_TTY="/dev/ttyS2"
