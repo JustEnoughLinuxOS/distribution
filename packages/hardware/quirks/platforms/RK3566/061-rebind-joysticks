@@ -1,0 +1,27 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2024 Danil Zagoskin (https://github.com/stolen)
+
+# avoid activity if the quirk has done its job already
+[ -d /sys/class/input/js0 ] || exit 0
+grep -q JELOS /sys/class/input/js0/device/name && exit 0
+
+# save udev rules to make virtual gamepad appear as js0
+cat <<EOF >/storage/.config/udev.rules.d/90-disable-joysticks.rules
+# Unbind platform joysticks before jelos_gamepad starts
+ACTION=="?*", SUBSYSTEMS=="platform", DRIVER=="?*", KERNEL=="adc-joystick", RUN+="/bin/sh -c '/bin/pgrep jelos_gamepad || echo adc-joystick > /sys/bus/platform/drivers/adc-joystick/unbind'"
+ACTION=="?*", SUBSYSTEMS=="platform", DRIVER=="?*", KERNEL=="gpio-keys-control", RUN+="/bin/sh -c '/bin/pgrep jelos_gamepad || echo gpio-keys-control > /sys/bus/platform/drivers/gpio-keys/unbind'"
+
+# When virtual device is created, pull the trigger to re-bind platform joysticks
+ACTION=="add", SUBSYSTEM=="input", ATTRS{name}=="JELOS Gamepad", RUN+="/bin/udevadm trigger"
+
+# On trigger try to re-bind (only if not bound, i.e. empty driver)
+ACTION=="change", SUBSYSTEMS=="platform", DRIVER=="", KERNEL=="adc-joystick", RUN+="/bin/sh -c 'echo adc-joystick > /sys/bus/platform/drivers/adc-joystick/bind'"
+ACTION=="change", SUBSYSTEMS=="platform", DRIVER=="", KERNEL=="gpio-keys-control", RUN+="/bin/sh -c 'echo gpio-keys-control > /sys/bus/platform/drivers/gpio-keys/bind'"
+EOF
+
+# refresh udev and jelos_gamepad to make things work on first boot
+/bin/systemctl stop jelos_gamepad
+/bin/udevadm control --reload-rules
+/bin/udevadm trigger
+/bin/systemctl start jelos_gamepad
