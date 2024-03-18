@@ -13,7 +13,7 @@ PKG_PATCH_DIRS+="${DEVICE}"
 
 case ${DEVICE} in
  RK358*)
-    PKG_VERSION="d34ff0716"
+    PKG_VERSION="359c336d1332d8a42e882985f29175f7f89644fc"
     PKG_URL="${PKG_SITE}/rk35xx-uboot/archive/${PKG_VERSION}.tar.gz"
   ;;
   RK3566-BSP*)
