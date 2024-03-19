@@ -1,0 +1,6 @@
+#!/bin/bash
+# SPDX-License-Identifier: Apache-2.0
+# Copyright (C) 2024 Danil Zagoskin (https://github.com/stolen)
+
+cat <<EOF >/storage/.config/udev.rules.d/90-disable-joysticks.rules
+EOF
