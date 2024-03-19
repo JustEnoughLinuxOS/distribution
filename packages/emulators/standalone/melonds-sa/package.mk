@@ -20,7 +20,7 @@ case ${DEVICE} in
   ;;
 esac
 
-if [ ! "${OPENGL}" = "no" ]; then
+if [ "${OPENGL_SUPPORT}" = "yes" ]; then
   PKG_DEPENDS_TARGET+=" ${OPENGL} glu libglvnd"
 fi
 
@@ -51,4 +51,17 @@ makeinstall_target() {
 
   cp -rf ${PKG_DIR}/scripts/* ${INSTALL}/usr/bin
   chmod +x ${INSTALL}/usr/bin/start_melonds.sh
+}
+
+post_install() {
+  case ${TARGET_ARCH} in
+    aarch64)
+      PANFROST="export MESA_GL_VERSION_OVERRIDE=3.3"
+      ;;
+    *)
+      PANFROST=""
+    ;;
+  esac
+  sed -e "s/@PANFROST@/${PANFROST}/g" \
+        -i ${INSTALL}/usr/bin/start_melonds.sh
 }

@@ -44,6 +44,7 @@ fi
 
 #Set QT Platform to Wayland
   export QT_QPA_PLATFORM=wayland
+  @PANFROST@
 
 #Run MelonDS emulator
 	if [ "$SUI" = "1" ]
