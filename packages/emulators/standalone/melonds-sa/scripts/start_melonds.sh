@@ -33,6 +33,7 @@ fi
   SLAYOUT=$(get_setting screen_layout nds "${GAME}")
   SWAP=$(get_setting screen_swap nds "${GAME}")
   SROTATION=$(get_setting screen_rotation nds "${GAME}")
+  SHOWFPS=$(get_setting show_fps nds "${GAME}")
   SUI=$(get_setting start_ui nds "${GAME}")
   VSYNC=$(get_setting vsync nds "${GAME}")
 
@@ -87,6 +88,12 @@ fi
         then
                 sed -i '/^ScreenVSync=/c\ScreenVSync=1' /storage/.config/melonDS/melonDS.ini
         fi
+
+  #Show FPS
+	if [ "$SHOWFPS" = "1" ]
+	then
+		export GALLIUM_HUD="simple,fps"
+	fi
 
 #Set QT Platform to Wayland
   export QT_QPA_PLATFORM=wayland
