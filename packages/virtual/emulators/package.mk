@@ -687,8 +687,8 @@ makeinstall_target() {
     ;;
     RK3588*)
       add_emu_core nds drastic drastic-sa false
-      add_emu_core nds retroarch melonds true
-      add_emu_core nds melonds melonds-sa false
+      add_emu_core nds retroarch melonds false
+      add_emu_core nds melonds melonds-sa true
       add_emu_core nds retroarch desmume false
     ;;
     RK3*)

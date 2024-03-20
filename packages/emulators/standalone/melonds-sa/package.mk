@@ -5,7 +5,7 @@ PKG_NAME="melonds-sa"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/melonDS-emu/melonDS"
 PKG_URL="${PKG_SITE}.git"
-PKG_DEPENDS_TARGET="SDL2 qt5 libslirp libepoxy libarchive ecm libpcap"
+PKG_DEPENDS_TARGET="SDL2 qt5 libslirp libepoxy libarchive ecm libpcap control-gen"
 PKG_LONGDESC="DS emulator, sorta. The goal is to do things right and fast"
 PKG_TOOLCHAIN="cmake"
 
@@ -48,6 +48,7 @@ makeinstall_target() {
 
   mkdir -p ${INSTALL}/usr/config/melonDS
   cp -rf ${PKG_DIR}/config/${DEVICE}/* ${INSTALL}/usr/config/melonDS
+  cp -rf ${PKG_DIR}/config/melonDS.gptk ${INSTALL}/usr/config/melonDS
 
   cp -rf ${PKG_DIR}/scripts/* ${INSTALL}/usr/bin
   chmod +x ${INSTALL}/usr/bin/start_melonds.sh
@@ -63,5 +64,15 @@ post_install() {
     ;;
   esac
   sed -e "s/@PANFROST@/${PANFROST}/g" \
+        -i ${INSTALL}/usr/bin/start_melonds.sh
+  case ${DEVICE} in
+    RK3588)
+      HOTKEY="export HOTKEY="guide""
+      ;;
+    *)
+      HOTKEY=""
+    ;;
+  esac
+  sed -e "s/@HOTKEY@/${HOTKEY}/g" \
         -i ${INSTALL}/usr/bin/start_melonds.sh
 }
