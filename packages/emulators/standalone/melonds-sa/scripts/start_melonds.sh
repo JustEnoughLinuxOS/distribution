@@ -7,6 +7,11 @@
 
 set_kill set "-9 melonDS"
 
+#load gptokeyb support files
+control-gen_init.sh
+source /storage/.config/gptokeyb/control.ini
+get_controls
+
 if [ ! -d "/storage/.config/melonDS" ]; then
     mkdir -p "/storage/.config/melonDS"
         cp -r "/usr/config/melonDS" "/storage/.config/"
@@ -14,6 +19,11 @@ fi
 
 if [ ! -d "/storage/roms/savestates/nds" ]; then
     mkdir -p "/storage/roms/savestates/nds"
+fi
+
+#Make sure melonDS gptk config exists
+if [ ! -f "/storage/.config/melonDS/melonDS.gptk" ]; then
+  cp -r "/usr/config/melonDS/melonDS.gptk" "/storage/.config/melonDS/melonDS.gptk"
 fi
 
 #Emulation Station Features
@@ -81,11 +91,13 @@ fi
 #Set QT Platform to Wayland
   export QT_QPA_PLATFORM=wayland
   @PANFROST@
+  @HOTKEY@
 
 #Run MelonDS emulator
 	if [ "$SUI" = "1" ]
 	then
 		/usr/bin/melonDS
 	else
+		$GPTOKEYB "melonDS" -c "/storage/.config/melonDS/melonDS.gptk" &
 		/usr/bin/melonDS -f "${1}"
 	fi

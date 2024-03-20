@@ -33,11 +33,19 @@ post_install() {
     case ${DEVICE} in
       S922X)
         LIBEGL="export SDL_VIDEO_GL_DRIVER=\/usr\/lib\/egl\/libGL.so.1 SDL_VIDEO_EGL_DRIVER=\/usr\/lib\/egl\/libEGL.so.1"
+        HOTKEY=""
+      ;;
+      RK3588)
+        LIBEGL=""
+        HOTKEY="export HOTKEY="guide""
       ;;
       *)
         LIBEGL=""
+        HOTKEY=""
       ;;
     esac
     sed -e "s/@LIBEGL@/${LIBEGL}/g" \
+        -i ${INSTALL}/usr/bin/start_drastic.sh
+    sed -e "s/@HOTKEY@/${HOTKEY}/g" \
         -i ${INSTALL}/usr/bin/start_drastic.sh
 }
