@@ -112,14 +112,11 @@ else
     SET_PARAMS+=" --set Video-Glide64mk2[aspect]=0"
 fi
 if [ "${FPS}" = "true" ]; then
-    export LIBGL_SHOW_FPS="1"
-    export GALLIUM_HUD="cpu+GPU-load+fps"
+    export GALLIUM_HUD="simple,fps"
     SET_PARAMS+=" --set Video-GLideN64[ShowFPS]=True"
     SET_PARAMS+=" --set Video-Glide64mk2[show_fps]=1"
     SET_PARAMS+=" --set Video-Rice[ShowFPS]=True"
 else
-    export LIBGL_SHOW_FPS="0"
-    export GALLIUM_HUD="off"
     SET_PARAMS+=" --set Video-GLideN64[ShowFPS]=False"
     SET_PARAMS+=" --set Video-Glide64mk2[show_fps]=0"
     SET_PARAMS+=" --set Video-Rice[ShowFPS]=False"
