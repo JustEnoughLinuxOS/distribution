@@ -1210,7 +1210,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts lin
 +
 +&rockchip_suspend {
 +	status = "okay";
-+	rockchip,sleep-debug-en = <1>;
++	rockchip,sleep-debug-en = <0>;
 +};
 +
 +&saradc {
