@@ -46,7 +46,7 @@
   CLEAN_NETWORK="RTL8821CS-firmware"
   CLEAN_EMU_32BIT="lib32 box86 pcsx_rearmed-lr arm"
   # Sway depends on it, weston will use it if it's built but we don't want that.
-  CLEAN_WESTON="libdisplay-info"
+  CLEAN_WESTON="libdisplay-info sway"
 
 # Make sure we clean a minimal number of packages for devices with
 # a BSP kernel and a rotated display when using DEVICE_ROOT.
