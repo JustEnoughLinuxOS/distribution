@@ -68,7 +68,7 @@
     DISPLAYSERVER="wl"
 
   # Windowmanager to use (fluxbox / weston / no)
-    WINDOWMANAGER="weston"
+    WINDOWMANAGER="swaywm-env"
 
   # debug tty path
     DEBUG_TTY="/dev/ttyS2"
@@ -83,6 +83,9 @@
   # Space separated list is supported,
   # e.g. FIRMWARE=""
     FIRMWARE=""
+
+  # Modules to install in initramfs for early boot
+    INITRAMFS_MODULES=""
 
   # additional drivers to install:
   # for a list of additional drivers see packages/linux-drivers

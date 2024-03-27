@@ -17,7 +17,7 @@ case ${DEVICE} in
 	PKG_GIT_CLONE_BRANCH="csf"
   ;;
   # keep RK3399 and RK-ARMV8-A on same version to maintain cross comaptibility
-  RK33*|RK-ARMV8-A|RK3566) #Using upstream dev for panfrost
+  RK33*|RK-ARMV8-A|RK3566*) #Using upstream dev for panfrost
 	PKG_VERSION="eac703f69128d5aa6879c9becbad627ce08a7920"
 	PKG_SITE="https://gitlab.freedesktop.org/mesa/mesa"
 	PKG_URL="${PKG_SITE}.git"
