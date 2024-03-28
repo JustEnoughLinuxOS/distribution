@@ -83,7 +83,7 @@ make_target() {
       echo "toolchain (${TOOLCHAIN})"
       export BL31="${PKG_BL31}"
       export ROCKCHIP_TPL="${PKG_DATAFILE}"
-
+      export LD_LIBRARY_PATH=${TOOLCHAIN}/lib:$LD_LIBRARY_PATH
       case ${DEVICE} in
         RK3566-BSP*)
           DEBUG=${PKG_DEBUG} CROSS_COMPILE="${TARGET_KERNEL_PREFIX}" LDFLAGS="" ARCH=arm64 make mrproper
