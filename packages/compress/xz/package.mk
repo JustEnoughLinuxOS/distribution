@@ -32,6 +32,12 @@ pre_configure_host() {
   ./autogen.sh
 }
 
+pre_configure_target() {
+  cd ${PKG_BUILD}
+  make distclean
+  ./autogen.sh
+}
+
 post_makeinstall_target() {
   rm -rf ${INSTALL}
 }
