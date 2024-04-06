@@ -7,7 +7,7 @@ PKG_NAME="xz"
 PKG_VERSION="5.4.4"
 PKG_LICENSE="GPL"
 PKG_SITE="https://tukaani.org/xz/"
-PKG_URL="https://tukaani.org/xz/${PKG_NAME}-${PKG_VERSION}.tar.xz"
+PKG_URL="https://github.com/bminor/xz/archive/refs/tags/v${PKG_VERSION}.tar.gz"
 PKG_DEPENDS_HOST="ccache:host"
 PKG_DEPENDS_TARGET="toolchain"
 PKG_LONGDESC="A free general-purpose data compression software with high compression ratio."
@@ -26,6 +26,11 @@ PKG_CONFIGURE_OPTS_HOST="--disable-shared --enable-static \
 
 PKG_CONFIGURE_OPTS_TARGET="--disable-shared --enable-static \
                            --enable-symbol-versions=no"
+
+pre_configure_host() {
+  cd ${PKG_BUILD}
+  ./autogen.sh
+}
 
 post_makeinstall_target() {
   rm -rf ${INSTALL}
