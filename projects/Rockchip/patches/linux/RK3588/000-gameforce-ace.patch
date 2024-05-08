@@ -325,7 +325,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts lin
 +		 * - SDIO_RESET_L_WL_REG_ON
 +		 * - PDN (power down when low)
 +		 */
-+		post-power-on-delay-ms = <200>;
++		//post-power-on-delay-ms = <200>;
 +		reset-gpios = <&gpio3 RK_PB4 GPIO_ACTIVE_LOW>;
 +	};
 +
@@ -692,9 +692,9 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts lin
 +		interrupts = <RK_PA6 IRQ_TYPE_LEVEL_LOW>;
 +		irq-gpios = <&gpio1 RK_PA6 IRQ_TYPE_LEVEL_LOW>;
 +		reset-gpios = <&gpio1 RK_PA7 GPIO_ACTIVE_HIGH>;
-+		touchscreen-inverted-x;
-+		// touchscreen-inverted-y;
-+		touchscreen-swapped-x-y;
++		//touchscreen-inverted-x;
++		//touchscreen-inverted-y;
++		//touchscreen-swapped-x-y;
 +		touchscreen-size-x = <1080>;
 +		touchscreen-size-y = <1920>;
 +		status = "okay";
@@ -1113,10 +1113,10 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts lin
 +				<3 RK_PB4 RK_FUNC_GPIO &pcfg_pull_up>;
 +		};
 +
-+		wifi_host_wake_irq: wifi-host-wake-irq {
-+			rockchip,pins =
-+				<0 RK_PA0 RK_FUNC_GPIO &pcfg_pull_down>;
-+		};
++		//wifi_host_wake_irq: wifi-host-wake-irq {
++		//	rockchip,pins =
++		//		<0 RK_PA0 RK_FUNC_GPIO &pcfg_pull_down>;
++		//};
 +	};
 +};
 +
@@ -1210,7 +1210,7 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts lin
 +
 +&rockchip_suspend {
 +	status = "okay";
-+	rockchip,sleep-debug-en = <1>;
++	rockchip,sleep-debug-en = <0>;
 +};
 +
 +&saradc {
@@ -1230,19 +1230,19 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts lin
 +};
 +
 +&sdio {
-+	max-frequency = <150000000>;
-+	no-sd;
-+	no-mmc;
++	//max-frequency = <150000000>;
++	//no-sd;
++	//no-mmc;
 +	bus-width = <4>;
-+	disable-wp;
++	//disable-wp;
 +	cap-sd-highspeed;
 +	cap-sdio-irq;
-+	keep-power-in-suspend;
++	//keep-power-in-suspend;
 +	mmc-pwrseq = <&sdio_pwrseq>;
 +	non-removable;
 +	pinctrl-names = "default";
 +	pinctrl-0 = <&sdiom1_pins>;
-+	sd-uhs-sdr104;
++	//sd-uhs-sdr104;
 +	status = "okay";
 +
 +	brcmf: wifi@1 {
@@ -1250,8 +1250,8 @@ diff -rupN linux.orig/arch/arm64/boot/dts/rockchip/rk3588s-gameforce-ace.dts lin
 +		reg = <1>;
 +		interrupt-parent = <&gpio0>;
 +		interrupts = <RK_PA0 IRQ_TYPE_LEVEL_HIGH>;
-+		interrupt-names = "host-wake";
-+		pinctrl-0 = <&wifi_host_wake_irq>;
++		//interrupt-names = "host-wake";
++		//pinctrl-0 = <&wifi_host_wake_irq>;
 +		pinctrl-names = "default";
 +	};
 +};

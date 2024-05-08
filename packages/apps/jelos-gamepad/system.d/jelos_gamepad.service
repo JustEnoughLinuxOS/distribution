@@ -3,6 +3,7 @@ Description=Ragnarok Input Daemon
 
 [Service]
 Type=simple
+ExecStartPre=/usr/bin/udevadm settle
 ExecStart=/usr/bin/jelos_gamepad
 
 [Install]
