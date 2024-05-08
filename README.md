@@ -5,7 +5,7 @@
 Just Enough Linux Operating System (JELOS) was an immutable Linux distribution for handheld gaming devices developed by a small community of enthusiasts.  Our goal was to produce an operating system that has the features and capabilities that we need, and to have fun as we develop it.
 
 ## Project End of Life
-The JELOS project has come to an end, however the sources will continue to be made available.  Binaries are no longer provided, however you will find a list of alternatives to consider instead.
+The JELOS project has come to an end, however the sources will continue to be made available.  Binaries are no longer provided, however you will find a list of alternatives to consider instead below.
 
 ### ARM based devices
 * [RockNix](https://github.com/ROCKNIX)
